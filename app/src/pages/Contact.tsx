@@ -31,8 +31,8 @@ const NEXT_STEPS = [
 
 const RESPONSE_PROMISES = [
   { value: "Free", label: "Consulting, always" },
-  { value: "2-hour target", label: "Missed-call callback, 9am–9pm ET" },
-  { value: "Within 24 hours", label: "Urgent NYC on-site help when the fix needs hands" },
+  { value: "9am–9pm ET", label: "A real person answers. After hours, leave a message." },
+  { value: "On-site timing", label: "Confirmed after we know the issue and location." },
 ] as const;
 
 export default function Contact() {
@@ -217,8 +217,8 @@ export default function Contact() {
               <MapPin size={21} strokeWidth={1.9} aria-hidden="true" />
               <p>
                 Based in Manhattan and working across New York City. When an
-                urgent NYC problem needs hands, on-site help is usually
-                available within 24 hours.{" "}
+                urgent NYC problem needs hands, we confirm on-site timing after
+                we know the issue and location.{" "}
                 <Link className="lf-contact-ready__coverage-link" to="/areas/">
                   See where we work.
                 </Link>

@@ -45,7 +45,7 @@ const SERVICES = [
 const PROMISES = [
   "La segunda opinión siempre es gratis.",
   "El plan escrito de su página explica el plazo, lo que necesitamos y qué pasa si fallamos.",
-  "Nuestro objetivo es devolver la llamada en 2 horas, de 9 a. m. a 9 p. m.",
+  "De 9 a. m. a 9 p. m. hora del Este, una persona contesta. Fuera de ese horario, deje un mensaje.",
   "Los archivos, los datos y las instrucciones quedan en sus manos.",
 ];
 
@@ -186,7 +186,7 @@ export default function Espanol() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                Nuestro objetivo es devolver la llamada en 2 horas, de 9 a. m. a 9 p. m. hora del Este.
+                De 9 a. m. a 9 p. m. hora del Este, una persona contesta. Fuera de ese horario, deje un mensaje.
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />

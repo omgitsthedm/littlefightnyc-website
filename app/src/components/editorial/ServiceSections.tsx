@@ -22,7 +22,7 @@ import "./ServiceSections.css";
  *    real and it stays on the service page where a buyer is reading terms.
  *
  * Every figure traces to the service's own copy in src/data/site.ts — the
- * 24-hour on-site window, the one owned place, the free first read. Nothing is
+ * confirmed on-site timing, the one owned place, the free first read. Nothing is
  * invented for the sake of a big number.
  *
  * The proof line under each headline names a DIFFERENT client, so the page
@@ -71,13 +71,10 @@ const SERVICES: readonly Service[] = [
     eyebrow: "On-site tech support",
     chip: "Picking up",
     tone: "urgent",
-    // Every approved version of this figure in the repo is hedged — "usually",
-    // "we can be". An unhedged "back to work in 24 hours" is a repair guarantee
-    // nobody wrote, so the hedge and the conditions ride with the number.
-    kicker: "Urgent jobs, usually within",
-    figure: "24",
-    unit: "hours",
-    sub: "On site in New York. A person answers 9am–9pm Eastern.",
+    kicker: "If it needs hands,",
+    figure: "timing",
+    unit: "confirmed",
+    sub: "After we know the issue and location. A person answers 9am–9pm Eastern.",
     // "It works again" is an unconditional guarantee. The house form states the
     // boundary instead, and the boundary is the reassuring part.
     headline: "You call. We come. We fix it, or tell you who can.",

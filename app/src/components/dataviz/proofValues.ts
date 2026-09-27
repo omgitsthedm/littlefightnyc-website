@@ -5,7 +5,7 @@
  * components stay fast-refresh clean.
  */
 
-/** Splits "Within 24 hours" into ["Within ", 24, " hours"]; null when digit-free. */
+/** Splits a numeric display value into its leading text, number, and suffix; null when digit-free. */
 export function splitLeadingNumber(text: string): [string, number, string] | null {
   const match = text.match(/^(\D*)(\d+)([\s\S]*)$/);
   if (!match) return null;

@@ -101,9 +101,7 @@ export default function HomeWall() {
 
         <ul className="lf-wall__pillars" aria-label="Three reasons">
           <li className="lf-wall__pillar">Websites nationwide, built around your business</li>
-          {/* The 24-hour figure rides with its hedge, and the 9am–9pm line is on
-              this same screen — the evidence ledger's condition for publishing it. */}
-          <li className="lf-wall__pillar">Urgent NYC jobs, usually on-site within 24 hours</li>
+          <li className="lf-wall__pillar">On-site timing confirmed after we know the issue and location</li>
           <li className="lf-wall__pillar">Software you own — code, data, and accounts</li>
         </ul>
 

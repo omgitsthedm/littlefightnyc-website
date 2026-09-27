@@ -181,7 +181,7 @@ Approved standing claims:
   states eligibility, when the clock starts, what each side must provide, and
   the remedy if Little Fight’s qualifying work is late.
 - Consulting is always free.
-- Callback target is within 2 hours, 9am to 9pm Eastern Time.
+- A real person answers 9am to 9pm Eastern Time. After hours, leave a message.
 - Clients own their code, data, domain, hosting, and documentation.
 - On-site support covers all five NYC boroughs. Websites are available
   nationwide.

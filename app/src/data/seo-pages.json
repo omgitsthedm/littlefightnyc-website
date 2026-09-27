@@ -127,7 +127,7 @@
       "title": "Small Business IT Support NYC | Little Fight NYC",
       "description": "Local NYC help for email, domains, Wi-Fi, POS, booking, payments, devices, and locked accounts. Start with the break, not a sales pitch.",
       "h1": "Fast help when the basics break.",
-      "shortAnswer": "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we fix it. Real local help, same day where we can.",
+      "shortAnswer": "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we assess the issue and confirm the next step. Any on-site timing depends on the issue and location.",
       "type": "Service",
       "serviceName": "Small business IT support",
       "image": "/assets/typing.webp",
@@ -494,7 +494,7 @@
         },
         {
           "question": "What response time should I expect from IT support?",
-          "answer": "Get it in writing. Ours is a two-hour callback between 9am and 9pm ET and on-site within twenty-four hours. Vague promises like fast response mean nothing."
+          "answer": "Get the response arrangement in writing. We answer 9am–9pm Eastern; after hours, leave a message. If a job needs hands, we confirm on-site timing after we know the issue and location."
         },
         {
           "question": "What should I do before switching IT providers?",
@@ -1472,9 +1472,9 @@
     {
       "path": "/thanks/",
       "title": "Thanks for Reaching Out | Little Fight NYC",
-      "description": "Little Fight received your message. See what happens next, what not to send publicly, and how missed-call callbacks work 9am–9pm Eastern.",
+      "description": "Little Fight received your message. See what happens next, what not to send publicly, and how to reach a real person 9am–9pm Eastern.",
       "h1": "We’ve got it from here.",
-      "shortAnswer": "Short answer: Little Fight received the message. A real person reviews it, and missed calls receive a callback within two hours during the 9am–9pm Eastern window.",
+      "shortAnswer": "Short answer: Little Fight received the message. A real person reviews it; 9am–9pm Eastern, a human answers. After hours, leave a message.",
       "type": "WebPage",
       "image": "/assets/og-tugboat.jpg",
       "noindex": true

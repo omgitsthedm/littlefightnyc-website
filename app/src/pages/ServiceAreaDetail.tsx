@@ -34,7 +34,7 @@ function serviceAreaLead(serviceSlug: string, areaName: string) {
     case "custom-local-websites":
       return `A website built around your ${adj} business, so customers find you, see what you do, and book without calling.`;
     case "it-support":
-      return `When email, Wi-Fi, the card reader, or booking breaks in ${loc}, we fix it. Urgent jobs: usually on-site within 24 hours.`;
+      return `When email, Wi-Fi, the card reader, or booking breaks in ${loc}, we assess the issue and confirm the next step. If it needs hands, we confirm on-site timing after we know the location.`;
     case "business-systems":
       return `One focused tool for how your ${adj} business already works, and you own it. It replaces the spreadsheets and monthly tools that stopped fitting.`;
     case "tech-consulting":

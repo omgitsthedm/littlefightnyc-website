@@ -69,7 +69,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "it-support": {
     heading: "Something broken right now?",
-    lede: "Call, 9am–9pm Eastern. We assess the issue and confirm the next step. Urgent New York jobs usually receive on-site help within 24 hours; we confirm timing with you.",
+    lede: "Call, 9am–9pm Eastern. We assess the issue and location, confirm the next step, and confirm any on-site timing with you. After hours, leave a message.",
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",

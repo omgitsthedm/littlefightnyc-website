@@ -16,8 +16,8 @@ const STANDARDS = [
     // unconditional guarantee.
     value: "A written 14-day promise on qualifying scopes. The scope names the timing, what each side provides, and the remedy.",
   },
-  { label: "Urgent NYC on-site help", value: "Within 24 hours when the fix needs hands" },
-  { label: "Missed-call callback", value: "We aim for 2 hours, 9am–9pm Eastern" },
+  { label: "Urgent NYC on-site help", value: "Timing confirmed after we know the issue and location" },
+  { label: "When you call", value: "A real person answers 9am–9pm Eastern. After hours, leave a message." },
 ] as const;
 
 export default function About() {

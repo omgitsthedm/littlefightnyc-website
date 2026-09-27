@@ -176,14 +176,14 @@ export const services: Service[] = [
     title: "Computer broken, card reader frozen, Wi-Fi down",
     headline: "Fast help when the basics break.",
     plain: "We fix what is stopping the day first. Then we write down what changed. Email, Wi-Fi, card readers, booking, payments, logins, and devices.",
-    outcome: "Call or text first. Urgent New York jobs: usually on-site within 24 hours. We confirm timing with you, and the written scope names the work.",
+    outcome: "Call or text first. We assess the issue and location, then confirm any on-site timing with you. The written scope names the work.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
-      "Urgent New York jobs: usually on-site within 24 hours",
+      "On-site timing confirmed after we know the issue and location",
       "We fix what is stopping the day, then write down what changed",
     ],
     includes: [
-      "Urgent New York jobs: usually on-site within 24 hours",
+      "On-site timing confirmed after we know the issue and location",
       "Email and website-address fixes",
       "Card reader, booking, and payment fixes",
       "Device, login, and Wi-Fi setup",
@@ -192,7 +192,7 @@ export const services: Service[] = [
     accent: "teal",
     icon: Wrench,
     shortAnswer:
-      "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we fix it. Real local help, same day where we can.",
+      "Short answer: When email, Wi-Fi, the card reader, booking, or a device stops working, we assess the issue and confirm the next step. Any on-site timing depends on the issue and location.",
     whatItDoes: [
       "You get a person who starts with the urgent thing. No ticket number, no queue. We answer the phone, come on-site when the fix needs hands, and keep notes so the next call does not start from zero.",
       "We fix the parts that make the day run: email, website addresses, card readers, booking links, Wi-Fi, payments, and locked accounts.",

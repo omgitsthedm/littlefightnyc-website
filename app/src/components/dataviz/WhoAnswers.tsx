@@ -6,12 +6,12 @@ import { rr, glow, DISP, MONO, ORANGE, RED, GREEN, useInstrumentCanvas } from ".
  *
  * The tools the day runs on sit healthy; then one breaks (a Saturday-rush
  * register fault). Instead of a ticket into the void, an orange response travels
- * a real-SLA timeline — a person picks up 9am–9pm ET, a callback within 2 hours,
- * on-site within 24 hours when it needs hands — until the tool is back up. One
+ * a real response path — a person answers 9am–9pm ET, then confirms the next
+ * step and any on-site timing after the issue and location are clear. One
  * causal image: when it breaks, a human is already moving on it.
  *
- * Every fact drawn (9am–9pm ET, 2-hour callback, on-site within 24 hours) is
- * already in the it-support copy — no invented numbers, and nothing claimed
+ * Every fact drawn is already in the it-support copy — no invented response
+ * target or turnaround, and nothing claimed
  * about the incumbent's speed.
  *
  * Rendered on a <canvas> (2D). Responsive to its container shape. Pauses when
@@ -21,10 +21,10 @@ import { rr, glow, DISP, MONO, ORANGE, RED, GREEN, useInstrumentCanvas } from ".
 
 const TOOLS = ["REGISTER", "CARD READER", "WI-FI", "WEBSITE"] as const;
 
-// The response spine, left→right. Two milestones are the real SLAs.
+// The response spine, left→right. The milestones describe the real intake path.
 const MARKS = [
-  { at: 0.42, label: "CALLBACK ≤ 2 HRS" },
-  { at: 0.74, label: "ON-SITE ≤ 24 HRS" },
+  { at: 0.42, label: "CALL / ASSESS" },
+  { at: 0.74, label: "TIMING CONFIRMED" },
 ];
 
 const T = { calm: 1500, brk: 1100, respond: 3400, fixed: 1500 };
@@ -327,7 +327,7 @@ export default function WhoAnswers() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="A shop's register, card reader, Wi-Fi, and website are running. One goes down during the day. A real person picks up from 9am to 9pm Eastern, calls back within 2 hours, and can be on-site within 24 hours when the problem needs hands."
+      aria-label="A shop's register, card reader, Wi-Fi, and website are running. One goes down during the day. A real person answers from 9am to 9pm Eastern, assesses the issue, and confirms any on-site timing after the issue and location are clear."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

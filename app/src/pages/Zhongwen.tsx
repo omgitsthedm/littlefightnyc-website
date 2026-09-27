@@ -45,7 +45,7 @@ const SERVICES = [
 const PROMISES = [
   "先帮您看一遍，永远免费。",
   "网站书面方案会写明时间、双方要做的事，以及我们误期时怎么办。",
-  "早9点到晚9点，我们争取在2小时内回电。",
+  "美东时间早9点到晚9点，有真人接听；其他时间请留言。",
   "文件、数据和使用说明都交到您手里。",
 ];
 
@@ -182,7 +182,7 @@ export default function Zhongwen() {
               </li>
               <li>
                 <Clock size={18} strokeWidth={1.75} aria-hidden="true" />
-                美东时间早9点到晚9点，我们争取在2小时内回电。
+                美东时间早9点到晚9点，有真人接听；其他时间请留言。
               </li>
               <li>
                 <ShieldCheck size={18} strokeWidth={1.75} aria-hidden="true" />
