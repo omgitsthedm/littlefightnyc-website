@@ -1202,7 +1202,7 @@ test(
 );
 
 test(
-  "desktop homepage leads with six trades and the phone above the fold @chromium-desktop",
+  "desktop homepage leads with five trades and the phone above the fold @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
@@ -1238,15 +1238,15 @@ test(
       .poll(() => firstTile.evaluate((node: HTMLImageElement) => node.naturalWidth))
       .toBeGreaterThan(0);
 
-    // Six DIFFERENT trades is the whole point — a repeated label would mean
+    // Five DIFFERENT trades is the whole point — a repeated label would mean
     // the page is arguing by volume instead of by range.
     const trades = await wall.locator(".lf-wall__trade").allInnerTexts();
-    expect(trades).toHaveLength(6);
-    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(6);
+    expect(trades).toHaveLength(5);
+    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(5);
 
     // No single client may own the first screen.
     const clients = await wall.locator(".lf-wall__client").allInnerTexts();
-    expect(new Set(clients.map((client) => client.trim())).size).toBe(6);
+    expect(new Set(clients.map((client) => client.trim())).size).toBe(5);
 
     const call = wall.locator('a[href^="tel:"]');
     const firstLook = wall.locator('a[href="/tech-audit/?intent=website&source=home"]');
@@ -1330,12 +1330,12 @@ test(
     await expect(page.locator(".lf-money-meter")).toBeHidden();
     await expect(page.locator(".lf-contact-block")).toBeVisible();
 
-    // Six trades, six different clients — the range IS the argument, so a
+    // Five trades, five different clients — the range IS the argument, so a
     // duplicate label would mean the page is arguing by volume instead.
     const tiles = wall.locator(".lf-wall__tile");
-    await expect(tiles).toHaveCount(6);
+    await expect(tiles).toHaveCount(5);
     const trades = await wall.locator(".lf-wall__trade").allInnerTexts();
-    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(6);
+    expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(5);
 
     // Each tile is a real tap target that leads to that client's case.
     const tileTargets = await page.evaluate(() =>
@@ -1344,7 +1344,7 @@ test(
         href: link.getAttribute("href") ?? "",
       })),
     );
-    expect(tileTargets).toHaveLength(6);
+    expect(tileTargets).toHaveLength(5);
     expect(tileTargets.every((tile) => tile.height >= 44)).toBe(true);
     expect(tileTargets.every((tile) => /^\/case-studies\/[a-z0-9-]+\/$/.test(tile.href))).toBe(true);
 
