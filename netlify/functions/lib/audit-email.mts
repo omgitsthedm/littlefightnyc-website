@@ -42,9 +42,10 @@ export function renderAuditEmail(input: AuditEmailInput) {
   const body = complete || partial
     ? "A score is a snapshot, not a verdict on your business. We can help you decide which changes are worth making."
     : "A real person can still look at your website and help you choose a next step. The first look is free, with no obligation.";
+  const domainLink = `<a href="${escape(`https://${domain}`)}" style="color:#A1A1AA;font-weight:400;text-decoration:underline;overflow-wrap:anywhere">${escape(domain)}</a>`;
   const identity = company && company.toLowerCase() !== domain.toLowerCase()
-    ? `${escape(company)}<br><span style="color:#A1A1AA;font-weight:400">${escape(domain)}</span>`
-    : escape(domain);
+    ? `${escape(company)}<br>${domainLink}`
+    : domainLink;
   const score = complete ? `<tr><td style="padding:0 32px 28px"><table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#1A1C23;border-radius:12px"><tr><td style="padding:20px 24px"><strong style="font-size:40px;line-height:1.15;color:#FFFFFF">${input.overallScore}<span style="font-size:18px;font-weight:400;color:#A1A1AA"> / 100</span></strong><p style="margin:8px 0 0;font-size:16px;line-height:1.5;color:#A1A1AA">Average of four mobile checks${input.grade ? ` · Grade ${escape(input.grade)}` : ""}</p></td></tr></table></td></tr>` : "";
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>${escape(title)}</title></head>

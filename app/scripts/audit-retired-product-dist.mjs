@@ -118,14 +118,23 @@ try {
   if (!retiredHostSource.includes('host: "^(?:www\\\\.)?dakota\\\\.littlefightnyc\\\\.com$"')) {
     findings.push("retired-host edge response must match only the two retired hostnames");
   }
-  if (!/await\s+context\.next\(\s*\)/.test(retiredHostSource)) {
-    findings.push("retired-host edge response must preserve the configured forced 410 response");
+  if (!retiredHostSource.includes("status: 410")) {
+    findings.push("retired-host edge response must end the request chain with a 410");
   }
-  if (!retiredHostSource.includes('response.headers.set("Cache-Control", RETIREMENT_CACHE_CONTROL)')) {
+  if (!retiredHostSource.includes("RETIRED_HOSTNAMES.has(new URL(request.url).hostname)")) {
+    findings.push("retired-host edge response must guard the 410 with exact runtime hostnames");
+  }
+  if (!retiredHostSource.includes("return context.next()")) {
+    findings.push("retired-host edge response must pass non-retired hosts through");
+  }
+  if (!retiredHostSource.includes('"Cache-Control": RETIREMENT_CACHE_CONTROL')) {
     findings.push("retired-host edge response is missing no-store policy");
   }
-  if (!retiredHostSource.includes('response.headers.set("X-Robots-Tag", RETIREMENT_ROBOTS)')) {
+  if (!retiredHostSource.includes('"X-Robots-Tag": RETIREMENT_ROBOTS')) {
     findings.push("retired-host edge response is missing noindex policy");
+  }
+  if (!retiredHostSource.includes('"Content-Security-Policy": RETIREMENT_CSP')) {
+    findings.push("retired-host edge response is missing retirement CSP");
   }
 
   for (const root of [functionsRoot, workflowsRoot]) {
