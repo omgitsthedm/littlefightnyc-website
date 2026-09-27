@@ -305,7 +305,9 @@ if (baseUrl === "https://littlefightnyc.com") {
     });
     const body = await response.text();
     if (response.status !== 410) failures.push(`${host}: expected 410, got ${response.status}`);
-    if (response.headers.get("cache-control") !== "no-store, max-age=0") {
+    const retirementCache = (response.headers.get("cache-control") || "")
+      .split(",").map((directive) => directive.trim().toLowerCase()).sort().join(",");
+    if (retirementCache !== "max-age=0,no-store") {
       failures.push(`${host}: missing retirement no-store policy`);
     }
     if (response.headers.get("x-robots-tag") !== "noindex, nofollow, noarchive, nosnippet") {
