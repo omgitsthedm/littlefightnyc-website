@@ -78,5 +78,5 @@ export default async function reconcileDakotaWorkspace(): Promise<void> {
 }
 
 export const config: Config = {
-  schedule: "*/15 * * * *",
+  schedule: "@hourly",
 };

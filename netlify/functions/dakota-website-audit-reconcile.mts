@@ -32,5 +32,5 @@ export default async function reconcileDakotaWebsiteAuditOutbox(): Promise<void>
 }
 
 export const config: Config = {
-  schedule: "*/5 * * * *",
+  schedule: "@hourly",
 };

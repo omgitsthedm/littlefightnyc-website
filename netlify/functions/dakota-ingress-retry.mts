@@ -59,5 +59,5 @@ export default async function retryDakotaIngress(): Promise<void> {
 }
 
 export const config: Config = {
-  schedule: "*/5 * * * *",
+  schedule: "@hourly",
 };

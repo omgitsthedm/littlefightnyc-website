@@ -19,7 +19,10 @@ import {
   type DakotaRevenueProviderStateInput,
 } from "./revenue-bridge-schema";
 import type { DakotaRevenueBridgeMutationResult } from "./revenue-bridge-store";
-import type { DakotaWorkspaceRecords } from "./workspace-contact-match";
+import {
+  hasPersistedContactEmail,
+  type DakotaWorkspaceRecords,
+} from "./workspace-contact-match";
 import { createHash } from "node:crypto";
 
 const MAX_NEW_SIGNALS_PER_PROVIDER_PER_RUN = 4;
@@ -48,13 +51,14 @@ export interface DakotaWorkspaceReconcilerDependencies {
 }
 
 export interface DakotaWorkspaceReconciliationSummary {
-  gmailStatus: DakotaGmailPollResult["status"];
-  calendarStatus: DakotaCalendarPollResult["status"];
+  gmailStatus: DakotaGmailPollResult["status"] | "skipped_no_matchable_contacts";
+  calendarStatus: DakotaCalendarPollResult["status"] | "skipped_no_matchable_contacts";
   persistedSignals: number;
   pendingMatchedSignals: number;
   gmailCursorAdvanced: boolean;
   calendarCursorAdvanced: boolean;
   alertsDeferred: boolean;
+  skippedNoMatchableContacts: boolean;
 }
 
 function stableId(value: string): string {
@@ -272,6 +276,22 @@ export async function reconcileDakotaWorkspaceProviders(
   input: DakotaWorkspaceReconcilerInput,
   dependencies: DakotaWorkspaceReconcilerDependencies,
 ): Promise<DakotaWorkspaceReconciliationSummary> {
+  // Both providers only emit records after an exact match against a persisted
+  // email contact. Avoid OAuth/API polling and the no-op bridge writes when
+  // there is no address that can produce a durable signal.
+  if (!hasPersistedContactEmail(input.records)) {
+    return {
+      gmailStatus: "skipped_no_matchable_contacts",
+      calendarStatus: "skipped_no_matchable_contacts",
+      persistedSignals: 0,
+      pendingMatchedSignals: 0,
+      gmailCursorAdvanced: false,
+      calendarCursorAdvanced: false,
+      alertsDeferred: false,
+      skippedNoMatchableContacts: true,
+    };
+  }
+
   const now = (dependencies.now ?? (() => new Date()))();
   const checkedAt = now.toISOString();
   const gmailProvider = input.bridge?.providers.gmail;
@@ -413,5 +433,6 @@ export async function reconcileDakotaWorkspaceProviders(
     gmailCursorAdvanced: nextGmailCursor !== gmailCursor,
     calendarCursorAdvanced: nextCalendarCursor !== storedCalendarCursor,
     alertsDeferred,
+    skippedNoMatchableContacts: false,
   };
 }

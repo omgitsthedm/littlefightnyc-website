@@ -357,7 +357,7 @@ test(
   async ({ page }) => {
     await page.goto("/services/", { waitUntil: "networkidle" });
     await page.locator('a[href="/"]').first().click();
-    await page.waitForURL("**/");
+    await page.waitForURL((url) => url.pathname === "/");
 
     let releaseChunk = () => {};
     const chunkReleased = new Promise<void>((resolve) => {

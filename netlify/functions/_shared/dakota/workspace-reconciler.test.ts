@@ -67,6 +67,12 @@ function records(): DakotaWorkspaceRecords {
   };
 }
 
+function recordsWithoutMatchableEmail(): DakotaWorkspaceRecords {
+  return {
+    [CANDIDATE_KEY]: { contacts: [] },
+  };
+}
+
 function gmailSignal(index: number): DakotaGmailSignal {
   const minute = String(10 + index).padStart(2, "0");
   const occurredAt = `2026-08-03T11:${minute}:00.000Z`;
@@ -222,6 +228,42 @@ function realApply(
 }
 
 describe("Dakota Workspace durable reconciliation", () => {
+  it("skips provider polling and bridge writes when no persisted email can match an event", async () => {
+    const store = await seededStore();
+    const before = structuredClone(store.data);
+    const initialWrites = store.writes;
+    const pollGmail = vi.fn(async () => gmailResult());
+    const pollCalendar = vi.fn(async () => calendarResult());
+    const applyMutations = vi.fn<DakotaWorkspaceReconcilerDependencies["applyMutations"]>();
+
+    await expect(reconcileDakotaWorkspaceProviders({
+      records: recordsWithoutMatchableEmail(),
+      bridge: structuredClone(store.data),
+    }, {
+      now: () => new Date(POLL_TIME),
+      pollGmail,
+      pollCalendar,
+      applyMutations,
+    })).resolves.toEqual({
+      gmailStatus: "skipped_no_matchable_contacts",
+      calendarStatus: "skipped_no_matchable_contacts",
+      persistedSignals: 0,
+      pendingMatchedSignals: 0,
+      gmailCursorAdvanced: false,
+      calendarCursorAdvanced: false,
+      alertsDeferred: false,
+      skippedNoMatchableContacts: true,
+    });
+
+    expect(pollGmail).not.toHaveBeenCalled();
+    expect(pollCalendar).not.toHaveBeenCalled();
+    expect(applyMutations).not.toHaveBeenCalled();
+    expect(store.writes).toBe(initialWrites);
+    expect(store.data).toEqual(before);
+    expect(store.data?.providers.gmail?.cursor).toBe("gh1:h:100");
+    expect(store.data?.providers.google_calendar?.cursor).toBe("sync-100");
+  });
+
   it("never advances a provider cursor before its matched event write succeeds", async () => {
     const store = await seededStore();
     const applyMutations = vi.fn<DakotaWorkspaceReconcilerDependencies["applyMutations"]>(

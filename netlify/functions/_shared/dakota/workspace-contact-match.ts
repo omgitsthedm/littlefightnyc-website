@@ -118,6 +118,15 @@ export function createPersistedContactEmailMatcher(
   return (observedEmails) => matchIndexedEmails(index, observedEmails);
 }
 
+/**
+ * Gmail and Calendar observations can only create an operator event when at
+ * least one current, valid persisted email address is available for an exact
+ * match. Callers may use this before opening a provider connection.
+ */
+export function hasPersistedContactEmail(records: DakotaWorkspaceRecords): boolean {
+  return persistedEmailIndex(records).size > 0;
+}
+
 export function matchPersistedContactEmails(
   records: DakotaWorkspaceRecords,
   observedEmails: readonly string[],

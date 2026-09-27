@@ -125,5 +125,5 @@ export default async function reconcileDakotaArchives(): Promise<void> {
 }
 
 export const config: Config = {
-  schedule: "*/10 * * * *",
+  schedule: "@hourly",
 };
