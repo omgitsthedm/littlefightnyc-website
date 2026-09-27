@@ -23,16 +23,17 @@ import "./HomeWall.css";
 function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
   const base = `/assets/case-${study.slug}`;
   const isOwnedProduct = study.slug === "after-hours-agenda";
+  const isRachel = study.slug === "hair-by-rachel-charles";
   return (
     <li className="lf-wall__tile">
       <Link to={`/case-studies/${study.slug}/`}>
-        <LivePreview slug={study.slug} className="lf-wall__shot">
+        <LivePreview slug={study.slug} className={`lf-wall__shot${isRachel ? " lf-wall__shot--rachel" : ""}`}>
           <img
-            src={`${base}-900.webp`}
-            srcSet={`${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`}
+            src={isRachel ? "/assets/case-hair-by-rachel-charles-desktop-1440.webp" : `${base}-900.webp`}
+            srcSet={isRachel ? undefined : `${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`}
             sizes="(min-width: 64rem) 16vw, (min-width: 48rem) 30vw, 45vw"
-            width={900}
-            height={640}
+            width={isRachel ? 1440 : 900}
+            height={isRachel ? 900 : 640}
             alt={`${study.client} — ${isOwnedProduct ? "a Little Fight owned product" : "a live client site"}`}
             loading="lazy"
             decoding="async"
@@ -145,6 +146,33 @@ export default function HomeWall() {
           </p>
         </div>
         </div>
+
+        <Link
+          className="lf-wall__hero-proof"
+          to="/case-studies/hair-by-rachel-charles/"
+          aria-label="See the Hair By Rachel Charles customer path case study"
+        >
+          <span className="lf-wall__hero-proof-label">A website we built</span>
+          <span className="lf-wall__hero-proof-title">Hair By Rachel Charles</span>
+          <span className="lf-wall__hero-proof-summary">Clear services. Direct handoff to Square booking.</span>
+          <span className="lf-wall__hero-proof-frame">
+            <picture>
+              <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+              <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+              <img
+                src="/assets/case-hair-by-rachel-charles-mobile-390.webp"
+                width={780}
+                height={1688}
+                alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </span>
+          <span className="lf-wall__hero-proof-link">
+            See the customer path <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+          </span>
+        </Link>
 
         <div className="lf-wall__scene">
           <CustomerPath />

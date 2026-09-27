@@ -75,15 +75,83 @@
   margin: 0;
 }
 
+.lf-sd-rachel-proof {
+  display: grid;
+  gap: var(--lf-space-3);
+  margin: 0;
+}
+
+.lf-sd-rachel-proof picture {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-sd-rachel-proof img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lf-sd-rachel-proof figcaption {
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+}
+
+.lf-sd-rachel-proof a {
+  color: inherit;
+  text-decoration-color: var(--lf-fight);
+  text-underline-offset: 0.2em;
+}
+
 @media (max-width: 47.99rem) {
   .lf-pagehero.lf-pagehero--website {
     padding-block-start: var(--lf-space-4);
+    padding-block-end: var(--lf-space-7);
   }
 
   .lf-pagehero--website.lf-pagehero--with-image .lf-pagehero__inner {
     min-block-size: 0;
     align-content: start;
   }
+
+  /* Preserve the whole client capture in the first decision without making
+     the phone hero taller than the offer it proves. */
+  .lf-sd-rachel-proof picture { aspect-ratio: 1; }
+}
+
+/* At composed tablet/desktop widths the existing client capture belongs in
+   the opening decision. PageHero normally begins its shared two-column frame
+   at 64rem; this website-specific bridge makes the shipped Rachel site visible
+   at 768–1023px without changing the global hero contract. */
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .lf-pagehero--website.lf-pagehero--with-image .lf-pagehero__inner {
+    grid-template-columns: minmax(0, 1.06fr) minmax(15rem, 0.94fr);
+    gap: var(--lf-space-6);
+    align-items: start;
+  }
+
+  .lf-pagehero--website.lf-pagehero--with-image .lf-pagehero__text {
+    padding-inline-end: var(--lf-space-5);
+    border-inline-end: 1px solid var(--lf-hairline);
+  }
+
+  .lf-pagehero--website .lf-pagehero__title {
+    max-inline-size: 9ch;
+    font-size: clamp(3.75rem, 7vw, 5.75rem);
+  }
+
+  .lf-pagehero--website .lf-pagehero__image {
+    align-self: start;
+    margin-block-start: var(--lf-space-6);
+  }
+
+  .lf-sd-rachel-proof picture { aspect-ratio: 1; }
 }
 
 @media (min-width: 64rem) {
@@ -106,6 +174,8 @@
     align-self: start;
     margin-block-start: var(--lf-space-7);
   }
+
+  .lf-sd-rachel-proof picture { aspect-ratio: 16 / 10; }
 }
 
 .lf-sd-web {

@@ -494,12 +494,38 @@
 
 .lf-es__proof li > :is(img, .lf-cinematic-media) {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 3;
   display: block;
   object-fit: cover;
   object-position: top center;
   border-bottom: 1px solid var(--lf-hairline);
   background: var(--lf-paper-2);
+}
+
+.lf-es__proof-rachel > picture,
+.lf-es__proof-rachel > picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-es__proof-rachel > picture {
+  aspect-ratio: 390 / 844;
+  border-bottom: 1px solid var(--lf-hairline);
+  background: var(--lf-paper-2);
+}
+
+.lf-es__proof-rachel > picture img {
+  object-fit: contain;
+}
+
+@media (min-width: 48rem) {
+  .lf-es__proof-rachel > picture { aspect-ratio: 1; }
+}
+
+@media (min-width: 53.75rem) {
+  .lf-es__proof-rachel > picture { aspect-ratio: 16 / 10; }
 }
 
 .lf-es__proof li > div {

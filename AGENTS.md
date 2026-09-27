@@ -34,7 +34,7 @@ Do not load history, recovery branches, evidence folders, or all Markdown at sta
 
 ## Source and safety
 
-- Application: `app/src/**`, `app/public/**`, `app/index.html`, `app/dakota.html`
+- Application: `app/src/**`, `app/public/**`, `app/index.html`
 - Tests and build tooling: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
 - Serverless code: `netlify/functions/**`
 - Deployment and quality: `netlify.toml`, `.lifi/**`
@@ -45,11 +45,10 @@ data, provider payloads, or Netlify tokens. Website Audit functions can send ema
 Blobs, or call providers; routine tests must remain read-only. Do not submit production forms
 without explicit authorization.
 
-Dakota is the private operator surface in this same build and Netlify site. Its detailed
-authentication, privacy, data, and recovery contract is in `SOURCE_OF_TRUTH.md` under
-“Dakota architecture and private boundary.” Preserve server-side email-and-role enforcement,
-the ten-record queue cap, private-only data, and the ban on automatic outreach. Never move
-Identity, roles, Blobs, secrets, or domains to another property.
+The former private sales product is retired. Do not restore its browser entry,
+Identity flow, server functions, schedules, hosts, assets, or instructions. Legacy
+URLs must stay on the plain retirement response. Historical records stay outside
+the active website source and release scope.
 
 The retired AI phone agent is not a current service. Public phone actions are ordinary call
 and text links.
@@ -83,7 +82,11 @@ task explicitly changes them. Do not duplicate those rules here.
 
 ## Git and production
 
-Netlify auto-builds GitHub `main`.
+Netlify auto-builds GitHub `main`. Develop and verify unfinished work in a local
+preview. A passing build is not visual approval: inspect the rendered desktop,
+tablet, and phone layouts and the actual image assets. Prepare at most one hosted
+review preview after local checks. Publish only after a scoped owner instruction
+approves that release candidate; approval is not permission for later iterations.
 
 - Never run a manual production deploy.
 - Never relink the site or change its ID, domains, build settings, environment, or production

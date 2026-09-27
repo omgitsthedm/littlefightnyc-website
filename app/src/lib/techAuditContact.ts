@@ -75,7 +75,7 @@ export function isInternalTechAuditTest(contact: string, message: string): boole
 }
 
 /**
- * One shared contact contract powers both the public form and Dakota's inbound
+ * One shared contact contract powers the public form and its server-side
  * mapper. A value accepted in the browser must be structurally usable by the
  * server; keeping that decision here prevents a successful-looking form post
  * from disappearing because the two sides interpreted the contact differently.

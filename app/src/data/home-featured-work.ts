@@ -13,7 +13,7 @@ export const HOME_FEATURED_WORK = [
       "A new client can book without a DM detour. The site explains Rachel’s work. Then it hands off to the booking tool they already know.",
     image: "/assets/case-hair-by-rachel-charles.webp",
     imageWidth: 1600,
-    imageHeight: 1200,
+    imageHeight: 1000,
     source: "https://hairbyrachelcharles.com",
     sourceLabel: "hairbyrachelcharles.com",
     verifiedAt: "2026-08-13",

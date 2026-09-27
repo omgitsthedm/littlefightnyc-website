@@ -42,19 +42,18 @@ export default function WebsiteProofSet() {
       <ul className="lf-website-proof-set__list">
         {proofStudies.map((study) => {
           const datedMetric = study.metrics?.find((metric) => metric.label.includes("Dated"));
+          const isRachel = study.slug === "hair-by-rachel-charles";
           return (
-            <li key={study.slug}>
-              <Link className="lf-website-proof-set__image" to={`/case-studies/${study.slug}/`}>
-                <img
-                  {...skelImg}
-                  src={study.image}
-                  {...responsiveImageProps(study.image, "(min-width: 768px) 30vw, 100vw", [480, 640, 900])}
-                  alt={`The ${study.client} website as it shipped`}
-                  width={1600}
-                  height={1200}
-                  loading="lazy"
-                  decoding="async"
-                />
+            <li key={study.slug} className={isRachel ? "lf-website-proof-set__item--rachel" : undefined}>
+              <Link className={`lf-website-proof-set__image${isRachel ? " lf-website-proof-set__image--rachel" : ""}`} to={`/case-studies/${study.slug}/`}>
+                {isRachel ? (
+                  <picture>
+                    <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+                    <img {...skelImg} src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
+                  </picture>
+                ) : (
+                  <img {...skelImg} src={study.image} {...responsiveImageProps(study.image, "(min-width: 768px) 30vw, 100vw", [480, 640, 900])} alt={`The ${study.client} website as it shipped`} width={1600} height={1200} loading="lazy" decoding="async" />
+                )}
               </Link>
               <div className="lf-website-proof-set__copy">
                 <p className="lf-website-proof-set__type">{study.type}</p>

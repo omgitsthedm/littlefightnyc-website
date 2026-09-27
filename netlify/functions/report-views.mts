@@ -2,7 +2,7 @@
 // GET /examples/audit/api/report-views?id=SLUG  → single report views
 // GET /examples/audit/api/report-views?all=true  → all reports with views.
 //   REQUIRES AUDIT_ADMIN_TOKEN as `Authorization: Bearer <token>` or ?token=.
-//   Used by Dakota polling — that caller must send the token.
+//   The reporting client must send the token.
 
 import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";

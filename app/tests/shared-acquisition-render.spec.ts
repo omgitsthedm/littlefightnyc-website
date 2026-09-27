@@ -178,6 +178,82 @@ test("the first decisions and inquiry field fit their intended openings @all-pro
   expect(firstField!.y + firstField!.height).toBeLessThanOrEqual(844);
 });
 
+test("the homepage opening puts named client proof beside contact choices at composed desktop width @chromium-desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 900 });
+  await page.goto("/", { waitUntil: "networkidle" });
+
+  const wall = page.locator(".lf-wall");
+  const proof = wall.locator(".lf-wall__hero-proof");
+  const primary = wall.locator(".lf-wall__check");
+  const phone = wall.locator(".lf-wall__call");
+
+  await expect(proof).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
+  await expect(proof.getByRole("img", { name: "The Hair By Rachel Charles booking website with Rachel’s name and portrait visible" })).toBeVisible();
+  await expect(primary).toBeVisible();
+  await expect(phone).toBeVisible();
+
+  const [proofBox, primaryBox, phoneBox, overflow] = await Promise.all([
+    proof.boundingBox(),
+    primary.boundingBox(),
+    phone.boundingBox(),
+    page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+  ]);
+  expect(proofBox).not.toBeNull();
+  expect(primaryBox).not.toBeNull();
+  expect(phoneBox).not.toBeNull();
+  expect(proofBox!.x).toBeGreaterThan(primaryBox!.x + 100);
+  expect(primaryBox!.y + primaryBox!.height).toBeLessThanOrEqual(900);
+  expect(phoneBox!.y + phoneBox!.height).toBeLessThanOrEqual(900);
+  expect(overflow, "homepage proof must not introduce horizontal scroll at 960px").toBe(true);
+});
+
+test("the homepage phone order keeps the first look and direct phone ahead of proof @chromium-mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/", { waitUntil: "networkidle" });
+
+  const wall = page.locator(".lf-wall");
+  const [primaryBox, phoneBox, proofBox, overflow] = await Promise.all([
+    wall.locator(".lf-wall__check").boundingBox(),
+    wall.locator(".lf-wall__call").boundingBox(),
+    wall.locator(".lf-wall__hero-proof").boundingBox(),
+    page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+  ]);
+  expect(primaryBox).not.toBeNull();
+  expect(phoneBox).not.toBeNull();
+  expect(proofBox).not.toBeNull();
+  expect(primaryBox!.y + primaryBox!.height).toBeLessThanOrEqual(844);
+  expect(phoneBox!.y + phoneBox!.height).toBeLessThanOrEqual(844);
+  expect(proofBox!.y).toBeGreaterThan(phoneBox!.y + phoneBox!.height);
+  expect(overflow, "homepage proof must not introduce horizontal scroll on phone").toBe(true);
+});
+
+test("the website service opening shows Rachel work beside its first decision at 960px @chromium-desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 960, height: 900 });
+  await page.goto("/services/custom-local-websites/", { waitUntil: "networkidle" });
+
+  const hero = page.locator(".lf-pagehero--website");
+  const image = hero.locator(".lf-pagehero__image");
+  const primary = hero.locator(".lf-pagehero__decision--primary");
+  const urgent = hero.locator(".lf-pagehero__decision--urgent");
+  await expect(image.getByRole("img", { name: "The Hair By Rachel Charles website with Rachel’s name and portrait visible" })).toBeVisible();
+  await expect(primary).toBeVisible();
+  await expect(urgent).toBeVisible();
+
+  const [imageBox, primaryBox, urgentBox, overflow] = await Promise.all([
+    image.boundingBox(),
+    primary.boundingBox(),
+    urgent.boundingBox(),
+    page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+  ]);
+  expect(imageBox).not.toBeNull();
+  expect(primaryBox).not.toBeNull();
+  expect(urgentBox).not.toBeNull();
+  expect(imageBox!.x).toBeGreaterThan(primaryBox!.x + 100);
+  expect(primaryBox!.y + primaryBox!.height).toBeLessThanOrEqual(900);
+  expect(urgentBox!.y + urgentBox!.height).toBeLessThanOrEqual(900);
+  expect(overflow, "website service proof must not introduce horizontal scroll at 960px").toBe(true);
+});
+
 test("nationwide questions render from the canonical route metadata @all-projects", async ({ page }) => {
   const source = JSON.parse(
     readFileSync(new URL("../src/data/seo-pages.json", import.meta.url), "utf8"),
@@ -497,7 +573,7 @@ test("the website decision follows evidence and terms before optional depth @all
   await settleVisibleType(page);
   const proof = page.locator(".lf-sd-web");
   const contact = page.locator(".lf-contact-block");
-  await expect(page.locator(".lf-pagehero__caption a")).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
+  await expect(page.locator(".lf-sd-rachel-proof figcaption a")).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
   await expect(proof).toContainText("30 Jul 2026");
   await expect(proof).toContainText("Hair By Rachel Charles");
   await expect(proof).toContainText("Chromatic Painting & Design");

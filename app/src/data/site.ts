@@ -526,28 +526,6 @@ export const auditRoutes = [
 
 export const studioProjects: StudioProject[] = [
   {
-    slug: "dakota",
-    name: "Dakota",
-    kind: "Sales operating system",
-    status: "Active",
-    oneline: "A small services firm can run a real sales process—consented inquiries, public research, evidence, next action—in one bounded queue, and nothing sends by itself.",
-    description:
-      "Dakota helps a small services firm work like a careful sales team without pretending a lead is a client. It brings consented inquiries and verified public research into one bounded review queue, prepares pursuit kits for an operator to approve, and tracks real activity from follow-up through proposal and cleared payment. Nothing sends from Dakota.",
-    stack: ["React", "Netlify", "Operator-controlled"],
-    image: "/assets/dakota-operator-access.webp",
-    imageWidth: 1200,
-    imageHeight: 675,
-    imageFit: "contain",
-    body: [
-      "Dakota answers a practical question. Can a small services business work a real acquisition process without buying a heavyweight CRM or pretending public research is a warm lead? The system starts with either a consented inquiry or a business found through public sources, then keeps evidence, fit, contact route, offer, and next action attached to the same record.",
-      "Dakota can prepare an operator-approved pursuit kit, but it cannot send an email, text, call, or form. A person chooses the contact route, checks the evidence, approves the words, and records what actually happened. Opening Gmail, Google Voice, or Calendar never counts as outreach, a reply, or a meeting.",
-      "The commercial record stays equally strict. A proposal is not revenue. A signature is not payment. Cleared cash is recorded only after a person verifies it, with the next onboarding action already assigned. The product runs inside Little Fight’s existing site and hosting stack, with no separate CRM or outreach-platform bill.",
-    ],
-    // Internal ops telemetry (weekly funnel counts, reply latency) removed
-    // from the public site 2026-07-12 - editorial directive: "nothing internal should
-    // show." The story stays; the log numbers don’t.
-  },
-  {
     slug: "cockpit",
     name: "Estimator’s Cockpit",
     kind: "Field-precision web app",

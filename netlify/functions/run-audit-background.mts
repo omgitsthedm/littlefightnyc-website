@@ -22,22 +22,6 @@ import {
   type AuditData,
   type AuditMetric,
 } from "./lib/templates.mts";
-import type { DakotaWebsiteAuditReconciliationPatch } from "./_shared/dakota/revenue-bridge-schema.ts";
-import { DAKOTA_REVENUE_BRIDGE_STORE } from "./_shared/dakota/revenue-bridge-store.ts";
-import {
-  mapWebsiteAuditFindings,
-  normalizedWebsiteAuditGrade,
-} from "./_shared/dakota/website-audit-bridge.ts";
-import {
-  DAKOTA_OPERATOR_ALERT_STORE,
-  sendDakotaWebsiteAuditOperatorAlert,
-  type DakotaWebsiteAuditOperatorAlertKind,
-} from "./_shared/dakota/operator-alert.ts";
-import {
-  attemptDakotaWebsiteAuditOutboxEntry,
-  DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
-  enqueueDakotaWebsiteAuditOutboxPatch,
-} from "./_shared/dakota/website-audit-outbox.ts";
 
 const GMAIL_FROM = "hello@littlefightnyc.com";
 const GOOGLE_FETCH_MAX_ATTEMPTS = 3;
@@ -115,83 +99,6 @@ async function setStatus(
     message,
     ...(emailDelivery ? { email_delivery: emailDelivery } : {}),
   });
-}
-
-async function persistAndDeliverRevenueBridgePatch(
-  enabled: boolean,
-  label: string,
-  patch: DakotaWebsiteAuditReconciliationPatch,
-): Promise<void> {
-  if (!enabled) return;
-  try {
-    const queued = await enqueueDakotaWebsiteAuditOutboxPatch(
-      patch,
-      websiteAuditOutboxDependencies(),
-    );
-    if (queued.outcome !== "enqueued") return;
-    await attemptDakotaWebsiteAuditOutboxEntry(
-      queued.entry.entry_id,
-      websiteAuditOutboxDependencies(),
-      true,
-    );
-  } catch {
-    // The report source stores remain authoritative. If enqueue succeeded, the
-    // scheduled reconciler retries; delivery is never attempted before enqueue.
-    console.error(`[audit] Dakota ${label} outbox/reconciliation failed`);
-  }
-}
-
-function websiteAuditOutboxDependencies() {
-  return {
-    getOutboxStore: () => getStore({
-      name: DAKOTA_WEBSITE_AUDIT_OUTBOX_STORE,
-      consistency: "strong" as const,
-    }),
-    getRevenueBridgeStore: () => getStore({
-      name: DAKOTA_REVENUE_BRIDGE_STORE,
-      consistency: "strong" as const,
-    }),
-  };
-}
-
-export function shouldReconcileWebsiteAuditRevenueBridge(
-  deployContext: string | undefined,
-  requestSource: "website_audit" | "programmatic",
-): boolean {
-  return shouldPersistAuditLead(deployContext) && requestSource === "website_audit";
-}
-
-export async function notifyWebsiteAuditFailure(
-  reconcileRevenueBridge: boolean,
-  reportId: string,
-  kind: DakotaWebsiteAuditOperatorAlertKind,
-): Promise<void> {
-  // Preview and programmatic audit runs stay isolated: they neither write a
-  // Dakota alert marker nor attempt an operator-mailbox delivery.
-  if (!reconcileRevenueBridge) return;
-  try {
-    // The revenue-bridge failure fact remains authoritative. This durable,
-    // redacted wake-up is deliberately best-effort and uses the existing
-    // operator-alert retry schedule when Gmail is unavailable.
-    await sendDakotaWebsiteAuditOperatorAlert({ reportId, kind }, {
-      getStore: () => getStore({
-        name: DAKOTA_OPERATOR_ALERT_STORE,
-        consistency: "strong" as const,
-      }),
-      maxAttempts: 1,
-      requestTimeoutMs: 5_000,
-    });
-  } catch {
-    console.error("[audit] Dakota Website Audit operator wake-up failed");
-  }
-}
-
-function revenueBridgeSummary(value: string): string {
-  return value
-    .replace(/[\u0000-\u001f\u007f<>]/gu, " ")
-    .replace(/\s+/gu, " ")
-    .trim()
-    .slice(0, 2_000) || "Website Audit completed with evidence ready for operator review.";
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1215,12 +1122,6 @@ export default async (req: Request, context: Context) => {
 
   const { url, email, slug, domain } = body;
   const requestSource = body.requestSource ?? "programmatic";
-  const submittedAt =
-    typeof body.submittedAt === "string" &&
-    body.submittedAt.length <= 64 &&
-    Number.isFinite(Date.parse(body.submittedAt))
-      ? body.submittedAt
-      : new Date().toISOString();
   if (
     typeof url !== "string" ||
     typeof email !== "string" ||
@@ -1256,10 +1157,6 @@ export default async (req: Request, context: Context) => {
   console.log(`[audit] ▶ Pipeline start: ${domain} → ${slug}`);
 
   const persistAuditLead = shouldPersistAuditLead(context.deploy.context);
-  const reconcileRevenueBridge = shouldReconcileWebsiteAuditRevenueBridge(
-    context.deploy.context,
-    requestSource,
-  );
 
   try {
     // ── Step 1: PageSpeed Insights ────────────────────────────
@@ -1386,44 +1283,6 @@ export default async (req: Request, context: Context) => {
     const siteOrigin = new URL(req.url).origin;
     const auditUrl = `${siteOrigin}/examples/audit/report/${slug}`;
 
-    // Report HTML and metadata are durable before Dakota learns that the
-    // report exists. Scores stay null unless Lighthouse actually measured the
-    // category, and partial runs never acquire an invented overall grade.
-    await persistAndDeliverRevenueBridgePatch(
-      reconcileRevenueBridge,
-      "generated-state",
-      {
-        patch_type: "generated",
-        report_id: slug,
-        domain,
-        generated_at: generatedAt,
-        report_url: auditUrl,
-        measurement_state: measurementState,
-        scores: {
-          performance: psi.metrics.performance.availability === "measured"
-            ? psi.metrics.performance.value
-            : null,
-          seo: psi.metrics.seo.availability === "measured"
-            ? psi.metrics.seo.value
-            : null,
-          accessibility: psi.metrics.accessibility.availability === "measured"
-            ? psi.metrics.accessibility.value
-            : null,
-          best_practices: psi.metrics.bestPractices.availability === "measured"
-            ? psi.metrics.bestPractices.value
-            : null,
-        },
-        overall_score: measurementState === "complete" ? overallScore : null,
-        grade: measurementState === "complete"
-          ? normalizedWebsiteAuditGrade(grade)
-          : null,
-        summary: revenueBridgeSummary(
-          haiku.executiveSummary || fallbackExecutiveSummary(psi),
-        ),
-        findings: mapWebsiteAuditFindings(haiku.findings),
-      },
-    );
-
     // ── Step 6: Finishing touches ─────────────────────────────
     await setStatus(slug, "running", "finishing");
 
@@ -1487,32 +1346,6 @@ export default async (req: Request, context: Context) => {
       );
     }
 
-    const deliveryUpdatedAt = new Date().toISOString();
-    await persistAndDeliverRevenueBridgePatch(
-      reconcileRevenueBridge,
-      "delivery-state",
-      {
-        patch_type: "delivery",
-        report_id: slug,
-        domain,
-        status: emailDeliveryStatus,
-        updated_at: deliveryUpdatedAt,
-        sent_at: emailDeliveryStatus === "sent" ? deliveryUpdatedAt : null,
-        failed_at: emailDeliveryStatus === "failed" ? deliveryUpdatedAt : null,
-        failure_reason: emailDeliveryStatus === "failed"
-          ? emailDeliveryFailureLabel || "email_delivery_error"
-          : "",
-      },
-    );
-
-    if (emailDeliveryStatus === "failed") {
-      await notifyWebsiteAuditFailure(
-        reconcileRevenueBridge,
-        slug,
-        "email_delivery_failed",
-      );
-    }
-
     if (leadPersisted) {
       try {
         await updateAuditLeadEmailDelivery(slug, emailDeliveryStatus);
@@ -1535,18 +1368,6 @@ export default async (req: Request, context: Context) => {
     console.log(`[audit] ✅ Pipeline complete: ${auditUrl}`);
   } catch (err) {
     console.error("[audit] ❌ Pipeline error:", err);
-    await persistAndDeliverRevenueBridgePatch(
-      reconcileRevenueBridge,
-      "failed-state",
-      {
-        patch_type: "failed",
-        report_id: slug,
-        domain,
-        failed_at: new Date().toISOString(),
-        failure_reason: "audit_pipeline_failed",
-      },
-    );
-    await notifyWebsiteAuditFailure(reconcileRevenueBridge, slug, "pipeline_failed");
     await setStatus(
       slug,
       "error",

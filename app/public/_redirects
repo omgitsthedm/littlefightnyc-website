@@ -7,13 +7,17 @@
 # catch-all LAST. netlify.toml carries no [[redirects]] anymore.
 # ============================================================
 
-# --- Dakota (2026-08-03): one Little Fight repository and Netlify project.
-# The shell contains no candidate data; exact email + role checks run in the
-# client for presentation and independently in every private API for security.
-https://dakota.littlefightnyc.com/*     https://www.dakota.littlefightnyc.com/:splat  301!
-https://www.dakota.littlefightnyc.com/  /app/                                         302!
-/app                                   /dakota.html                                  200!
-/app/*                                 /dakota.html                                  200!
+# --- Retired private product: the old application and its hosts are gone.
+# Return a permanent noindex response without forwarding authentication tokens
+# or sending visitors into the public marketing shell.
+https://dakota.littlefightnyc.com/*      /product-retired.html  410!
+https://www.dakota.littlefightnyc.com/*  /product-retired.html  410!
+/app                                    /product-retired.html  410!
+/app/*                                  /product-retired.html  410!
+/dakota.html                            /product-retired.html  410!
+/studio/dakota                          /product-retired.html  410!
+/studio/dakota/                         /product-retired.html  410!
+/studio/dakota/*                        /product-retired.html  410!
 
 # --- Legacy host retirement (2026-08-02): preserve old search results without
 # serving duplicate copies of the entire site under retired Audit/Lab hosts.

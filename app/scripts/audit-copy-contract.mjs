@@ -9,7 +9,7 @@
  *
  * Deliberate scope boundary:
  * - route-meta is the marketing-route catalog;
- * - Dakota, VERA, Lab, PHC, and the frozen VenueCircuit presentation are not
+ * - VERA, Lab, PHC, and the frozen VenueCircuit presentation are not
  *   read here; the one public MySpace utility is checked explicitly;
  * - this script never writes route metadata or page content.
  */
@@ -24,7 +24,6 @@ const distRoot = path.join(appRoot, "dist");
 const EXCLUDED_ROUTES = new Set([
   "/case-studies/public-house-creative/",
   "/case-studies/venuecircuit/",
-  "/studio/dakota/",
   "/studio/cockpit/",
   "/studio/venuecircuit/",
 ]);
@@ -326,7 +325,7 @@ try {
 if (failures.length > 0) {
   console.error(`FAIL copy-contract — ${failures.length} rendered copy issue(s):\n`);
   for (const failure of failures) console.error(`  - ${failure}`);
-  console.error("\nScope: marketing route-meta pages only; Dakota, VERA, Lab/static, PHC, and VenueCircuit are deliberately excluded.");
+  console.error("\nScope: marketing route-meta pages only; VERA, Lab/static, PHC, and VenueCircuit are deliberately excluded.");
   process.exit(1);
 }
 

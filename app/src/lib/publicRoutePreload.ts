@@ -6,17 +6,8 @@ type PublicRoute = { leaf: RouteImporter; shell?: boolean };
 const shell = () => import("@/components/editorial/EditorialShell");
 const selectedPreloads = new Map<string, Promise<void>>();
 
-function excludedPath(path: string): boolean {
-  return path === "/app" ||
-    path.startsWith("/app/") ||
-    path === "/dakota.html" ||
-    path.startsWith("/.netlify/identity") ||
-    path.startsWith("/identity-callback");
-}
-
 function routeForPath(pathname: string): PublicRoute | null {
   const path = pathname.replace(/\/+$/, "") || "/";
-  if (excludedPath(path)) return null;
   if (path === "/") return { leaf: () => import("@/pages/Home") };
   if (path === "/es") return { leaf: () => import("@/pages/Espanol") };
   if (path === "/zh") return { leaf: () => import("@/pages/Zhongwen") };

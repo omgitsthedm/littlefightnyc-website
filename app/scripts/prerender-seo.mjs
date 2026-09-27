@@ -160,7 +160,7 @@ const componentRouteStyles = Object.fromEntries(
 );
 
 // This renderer lives under node_modules so it is a build artifact, never a
-// public entry or a Dakota dependency. Vite transforms import.meta.glob and
+// public entry. Vite transforms import.meta.glob and
 // CSS imports that a bare server bundler cannot understand.
 const ssrRendererRoot = path.join(appRoot, "node_modules", ".prerender", "website-check-ssr");
 await viteBuild({
@@ -709,7 +709,7 @@ function foundationSchemas(page) {
       "areaServed": "US-NY",
       "availableLanguage": ["English", "Spanish", "Chinese"]
     },
-    "areaServed": page.path === "/nationwide/" ? [{ "@type": "Country", "name": "United States" }, ...areaServed] : areaServed,
+    "areaServed": areaServed,
     "sameAs": site.sameAs
   };
 
@@ -896,6 +896,12 @@ function foundationSchemas(page) {
   const graph = [organization, localBusiness, website, breadcrumbFor(page), primaryImage, webPage];
 
   if (page.type === "Service") {
+    // Little Fight remains a New York service-area business. The nationwide
+    // page describes a distinct remote website offering, so scope only that
+    // Service to the United States rather than widening the Organization.
+    const serviceArea = page.path === "/nationwide/"
+      ? [{ "@type": "Country", "name": "United States" }]
+      : areaServed;
     graph.push({
       "@type": "Service",
       "@id": `${canonical}#service`,
@@ -903,7 +909,7 @@ function foundationSchemas(page) {
       "description": page.description,
       "provider": { "@id": `${siteUrl}/#localbusiness` },
       "mainEntityOfPage": { "@id": `${canonical}#webpage` },
-      "areaServed": areaServed,
+      "areaServed": serviceArea,
       "offers": {
         "@type": "Offer",
         "priceCurrency": "USD",
@@ -2125,7 +2131,6 @@ function ownerStartBlock(page) {
       "/privacy/",
       "/terms/",
       "/thanks/",
-      "/studio/dakota/",
       "/studio/cockpit/",
       "/studio/venuecircuit/",
       "/case-studies/public-house-creative/",
@@ -2488,12 +2493,11 @@ function sitemapIndex() {
 }
 
 function robots() {
-  const privatePaths = "Disallow: /app/\nDisallow: /dakota.html\nDisallow: /api/dakota/";
-  const botBlocks = aiBots.map((bot) => `User-agent: ${bot}\nAllow: /\n${privatePaths}\n`).join("\n");
+  const botBlocks = aiBots.map((bot) => `User-agent: ${bot}\nAllow: /\n`).join("\n");
 
   // Explicit catch-all — without a "User-agent: *" group some parsers treat a
   // rules file with no matching group inconsistently.
-  const catchAll = `User-agent: *\nAllow: /\n${privatePaths}\n`;
+  const catchAll = "User-agent: *\nAllow: /\n";
 
   return `${botBlocks}\n${catchAll}\nSitemap: ${siteUrl}/sitemap-index.xml\nSitemap: ${siteUrl}/sitemap.xml\nSitemap: ${siteUrl}/image-sitemap.xml\nSitemap: ${siteUrl}/examples/audit/sitemap.xml\n`;
 }

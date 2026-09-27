@@ -44,4 +44,20 @@ for (const expected of blogArticleRedirects) {
   assert.ok(rules.indexOf(rule) < blogWildcardIndex, `${expected[0]} must retain its article redirect`);
 }
 
-console.log("Brooklyn area URLs and the legacy blog hub redirect to their surviving hubs; article redirects remain specific.");
+for (const source of ["/app", "/app/*", "/dakota.html", "/studio/dakota", "/studio/dakota/"]) {
+  const rule = rules.find(([from]) => from === source);
+  assert.deepEqual(rule, [source, "/product-retired.html", "410!"]);
+  assert.ok(
+    rules.indexOf(rule) < rules.findIndex(([from, destination, status]) =>
+      from === "/*" && destination === "/404.html" && status === "404",
+    ),
+    `${source} must remain ahead of the 404 catch-all`,
+  );
+}
+
+for (const host of ["https://dakota.littlefightnyc.com/*", "https://www.dakota.littlefightnyc.com/*"]) {
+  const rule = rules.find(([from]) => from === host);
+  assert.deepEqual(rule, [host, "/product-retired.html", "410!"]);
+}
+
+console.log("Brooklyn area URLs and the legacy blog hub redirect to their surviving hubs; retired product routes return a forced 410.");

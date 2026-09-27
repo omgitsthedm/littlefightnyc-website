@@ -274,9 +274,15 @@ export default function Zhongwen() {
           </div>
           <ul>
             {PROOF.map((item) => (
-              <li key={item.client}>
+              <li key={item.client} className={item.client === "Hair By Rachel Charles" ? "lf-es__proof-rachel" : undefined}>
                 {item.video ? (
                   <DeferredCinematicMedia media={item.video} alt={item.alt} />
+                ) : item.client === "Hair By Rachel Charles" ? (
+                  <picture>
+                    <source media="(min-width: 53.75rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+                    <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+                    <img src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt={item.alt} width="780" height="1688" loading="lazy" decoding="async" />
+                  </picture>
                 ) : (
                   <img
                     src={item.image}

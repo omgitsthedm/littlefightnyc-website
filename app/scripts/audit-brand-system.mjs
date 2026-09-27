@@ -424,14 +424,6 @@ for (const scene of [
   }
 }
 
-for (const suffix of ["", "-480", "-640", "-900"]) {
-  await requireFile(
-    path.join(appRoot, "public", "assets", `dakota-operator-access${suffix}.webp`),
-    `public/assets/dakota-operator-access${suffix}.webp`,
-    5_000,
-  );
-}
-
 const veraPreviewName = "examples-vera-field-manual-5b845af5.webp";
 const veraShareName = "og-vera-34d78811.jpg";
 for (const [relativePath, expectedName] of [

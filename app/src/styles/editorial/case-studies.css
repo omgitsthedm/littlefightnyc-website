@@ -108,6 +108,64 @@ body:has(.lf-case-detail) .lf-pagehero__image img {
   object-position: top center;
 }
 
+.lf-case-rachel-hero-proof {
+  display: grid;
+  gap: var(--lf-space-3);
+  margin: 0;
+}
+
+.lf-case-rachel-hero-proof picture {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border: 1px solid var(--lf-hairline);
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper-2);
+}
+
+.lf-case-rachel-hero-proof img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.lf-case-rachel-hero-proof figcaption {
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+}
+
+.lf-case-rachel-hero-proof a {
+  color: inherit;
+  text-decoration-color: var(--lf-fight);
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 48rem) {
+  .lf-case-rachel-hero-proof picture { aspect-ratio: 1; }
+
+  .lf-pagehero.lf-pagehero--acquisition:has(.lf-case-rachel-hero-proof) {
+    padding-block: var(--lf-space-6);
+  }
+
+  .lf-pagehero.lf-pagehero--acquisition:has(.lf-case-rachel-hero-proof) .lf-pagehero__inner {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: var(--lf-space-6);
+    align-items: center;
+    min-block-size: 0;
+  }
+
+  .lf-pagehero.lf-pagehero--acquisition:has(.lf-case-rachel-hero-proof) .lf-pagehero__title {
+    max-inline-size: 24ch;
+    font-size: clamp(3rem, 4.1vw, 4rem);
+  }
+}
+
+@media (min-width: 64rem) {
+  .lf-case-rachel-hero-proof picture { aspect-ratio: 16 / 10; }
+}
+
 /* Same fix for the Studio detail hero — it's typically a real screenshot too. */
 body:has(.lf-studio-detail) .lf-pagehero__image img {
   filter: brightness(0.94);
@@ -455,7 +513,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
 }
 
 /* ============================================================
-   Dakota / Studio metrics — "live"-feel data block
+   Studio metrics — "live"-feel data block
    ============================================================ */
 
 .lf-studio-detail__metrics {
@@ -1036,7 +1094,7 @@ body:has(.lf-studio-detail) .lf-pagehero__image img {
   color: var(--lf-fight);
 }
 
-/* Dakota funnel inside the metrics card (Wave 4 — visual data). */
+/* Funnel inside the metrics card (Wave 4 — visual data). */
 .lf-studio-detail__metrics .lf-studio-detail__funnel {
   margin: 0;
 }

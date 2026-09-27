@@ -56,6 +56,24 @@ function firstTagText(html, tagName) {
   return match ? cleanText(match[1]) : "";
 }
 
+function structuredDataNodes(label, html) {
+  const nodes = [];
+  for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+    if (!/\btype=["']application\/ld\+json["']/i.test(match[1])) continue;
+    try {
+      const parsed = JSON.parse(match[2]);
+      nodes.push(...(Array.isArray(parsed["@graph"]) ? parsed["@graph"] : [parsed]));
+    } catch {
+      failures.push(`${label}: ld+json block does not parse`);
+    }
+  }
+  return nodes;
+}
+
+function stableJson(value) {
+  return JSON.stringify(value);
+}
+
 function routeFile(routePath) {
   if (routePath === "/") return path.join(distRoot, "index.html");
   return path.join(distRoot, routePath.replace(/^\/|\/$/g, ""), "index.html");
@@ -193,6 +211,63 @@ for (const page of routeMeta.pages) {
       );
     }
   }
+}
+
+// The public entity is a New York service-area business on every route. A
+// nationwide remote-website offer belongs to its own Service node; it must not
+// silently widen the Organization that also represents local IT support.
+const organizationId = `${routeMeta.site.url.replace(/\/$/, "")}/#organization`;
+const localBusinessId = `${routeMeta.site.url.replace(/\/$/, "")}/#localbusiness`;
+let businessAreaSignature;
+for (const page of routeMeta.pages) {
+  let html;
+  try {
+    html = await readFile(routeFile(page.path), "utf8");
+  } catch {
+    continue;
+  }
+  const nodes = structuredDataNodes(page.path, html);
+  const organization = nodes.find((node) => node["@id"] === organizationId);
+  const localBusiness = nodes.find((node) => node["@id"] === localBusinessId);
+  if (!organization || !localBusiness) {
+    failures.push(`${page.path}: missing Organization or ProfessionalService ld+json node`);
+    continue;
+  }
+  const organizationArea = stableJson(organization.areaServed);
+  const localBusinessArea = stableJson(localBusiness.areaServed);
+  const localAreas = Array.isArray(localBusiness.areaServed) ? localBusiness.areaServed : [];
+  if (!localAreas.some((area) => area["@type"] === "City" && area.name === "New York")
+    || localAreas.some((area) => area["@type"] === "Country")) {
+    failures.push(`${page.path}: business areaServed must retain its New York service area`);
+  }
+  expectEqual(`${page.path} Organization areaServed`, organizationArea, localBusinessArea);
+  if (page.path === "/services/it-support/") {
+    const support = nodes.find((node) => node["@id"] === `${routeMeta.site.url}/services/it-support/#service`);
+    expectEqual("IT Support service area", stableJson(support?.areaServed), localBusinessArea);
+  }
+  if (businessAreaSignature === undefined) {
+    businessAreaSignature = localBusinessArea;
+  } else {
+    expectEqual(`${page.path} business areaServed consistency`, localBusinessArea, businessAreaSignature);
+  }
+}
+
+const nationwideHtml = await readFile(routeFile("/nationwide/"), "utf8");
+const nationwideNodes = structuredDataNodes("/nationwide/", nationwideHtml);
+const nationwideUrl = `${routeMeta.site.url.replace(/\/$/, "")}/nationwide/`;
+const nationwideService = nationwideNodes.find((node) => node["@id"] === `${nationwideUrl}#service`);
+if (!nationwideService) {
+  failures.push("/nationwide/: missing distinct remote-website Service ld+json node");
+} else {
+  expectEqual("/nationwide/ Service type", nationwideService["@type"], "Service");
+  expectEqual("/nationwide/ Service name", nationwideService.name, "Remote small business websites");
+  expectEqual(
+    "/nationwide/ Service areaServed",
+    stableJson(nationwideService.areaServed),
+    stableJson([{ "@type": "Country", name: "United States" }]),
+  );
+  expectEqual("/nationwide/ Service provider", nationwideService.provider?.["@id"], localBusinessId);
+  expectEqual("/nationwide/ Service URL", nationwideService.offers?.url, nationwideUrl);
 }
 
 const journalRoutes = routeMeta.pages.filter((page) => page.path.startsWith("/journal/"));

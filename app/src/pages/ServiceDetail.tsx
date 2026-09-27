@@ -44,9 +44,29 @@ const LAB_PROOF: Record<string, { slug: LabBuildSlug; because: string }> = {
 const FEATURE_IMAGE: Record<string, string> = {
   "tech-consulting": "/assets/local-business.webp",
   "it-support": "/assets/typing.webp",
-  "custom-local-websites": "/assets/case-hair-by-rachel-charles.webp",
+  "custom-local-websites": "/assets/case-hair-by-rachel-charles-desktop-1440.webp",
   "business-systems": "/assets/pos.webp",
 };
+
+function RachelWebsiteProof() {
+  return (
+    <figure className="lf-sd-rachel-proof">
+      <picture>
+        <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+        <img
+          src="/assets/case-hair-by-rachel-charles-tablet-1024.webp"
+          alt="The Hair By Rachel Charles website with Rachel’s name and portrait visible"
+          width={1024}
+          height={1024}
+          decoding="async"
+        />
+      </picture>
+      <figcaption>
+        A website we built for <Link to="/case-studies/hair-by-rachel-charles/">Hair By Rachel Charles</Link>
+      </figcaption>
+    </figure>
+  );
+}
 
 const LEGACY_SLUG_MAP: Record<string, string> = {
   websites: "custom-local-websites",
@@ -214,8 +234,8 @@ export default function ServiceDetail() {
           ? "A first website or a better one. Help customers find you, see your work and take the next step."
           : service.shortAnswer.replace(/^Short answer:\s*/i, "")}
         pillars={service.slug !== "custom-local-websites" && service.pillars ? [...service.pillars] : undefined}
-        visual={labProof ? <LabVisual slug={labProof.slug} because={labProof.because} /> : undefined}
-        image={labProof ? undefined : {
+        visual={labProof ? <LabVisual slug={labProof.slug} because={labProof.because} /> : isWebsiteService ? <RachelWebsiteProof /> : undefined}
+        image={labProof || isWebsiteService ? undefined : {
           src: FEATURE_IMAGE[service.slug] ?? service.image,
           alt: service.slug === "custom-local-websites"
             ? "The Hair By Rachel Charles booking website as it shipped"
@@ -223,11 +243,7 @@ export default function ServiceDetail() {
           width: 1200,
           height: 900,
         }}
-        imageCaption={isWebsiteService ? (
-          <>
-            Public work, live · <Link to="/case-studies/hair-by-rachel-charles/">Hair By Rachel Charles</Link>
-          </>
-        ) : undefined}
+        imageCaption={undefined}
       />
 
       {isWebsiteService ? (

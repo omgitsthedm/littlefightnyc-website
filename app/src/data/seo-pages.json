@@ -88,7 +88,8 @@
       "description": "Remote website help for small businesses across the United States. Make it easy for customers to understand you, reach you, and take the next step.",
       "h1": "Built in New York. Works anywhere.",
       "shortAnswer": "Short answer: You get a custom website, built remotely, wherever your business is in the United States. The first look is free, and the written plan says what happens, when, and what stays yours.",
-      "type": "WebPage",
+      "type": "Service",
+      "serviceName": "Remote small business websites",
       "image": "/assets/hero-nationwide-wtc.webp",
       "share": {
         "image": "/assets/social/og-nationwide.jpg",
@@ -1613,15 +1614,6 @@
       "shortAnswer": "Short answer: VenueCircuit is Little Fight’s own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
       "type": "Article",
       "image": "/assets/og-case-venuecircuit.webp"
-    },
-    {
-      "path": "/studio/dakota/",
-      "title": "Dakota Sales Operating System | Little Fight NYC",
-      "description": "Dakota turns verified public research and consented inquiries into an operator-controlled sales queue, without contacting prospects automatically.",
-      "h1": "Dakota",
-      "shortAnswer": "Short answer: With Dakota, a small services firm can run a real sales process—consented inquiries, public research, evidence, next action—in one bounded queue, and nothing sends by itself.",
-      "type": "Article",
-      "image": "/assets/dakota-operator-access.webp"
     },
     {
       "path": "/studio/cockpit/",

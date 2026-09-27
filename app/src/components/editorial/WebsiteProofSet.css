@@ -65,8 +65,22 @@
   transition: transform var(--m-settle-ms) var(--m-settle-ease);
 }
 
-.lf-website-proof-set__image:hover img,
-.lf-website-proof-set__image:focus-visible img {
+.lf-website-proof-set__image--rachel {
+  aspect-ratio: 4 / 5;
+}
+
+.lf-website-proof-set__image--rachel picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-website-proof-set__image--rachel img {
+  object-fit: contain;
+}
+
+.lf-website-proof-set__image:not(.lf-website-proof-set__image--rachel):hover img,
+.lf-website-proof-set__image:not(.lf-website-proof-set__image--rachel):focus-visible img {
   transform: scale(1.025);
 }
 
@@ -130,6 +144,61 @@
   color: var(--lf-fight);
 }
 
+/* A phone keeps the proof set near the website decision. Rachel remains a
+   complete, legible phone capture; the other two live sites become compact
+   reference cards without repeating their longer customer-path summaries. */
+@media (max-width: 47.99rem) {
+  .lf-website-proof-set__head > span,
+  .lf-website-proof-set__copy > p:not(.lf-website-proof-set__type):not(.lf-website-proof-set__check) {
+    display: none;
+  }
+
+  .lf-website-proof-set__list {
+    gap: var(--lf-space-3);
+    margin-top: var(--lf-space-4);
+  }
+
+  .lf-website-proof-set__image--rachel {
+    aspect-ratio: 3 / 4;
+  }
+
+  .lf-website-proof-set__copy {
+    gap: var(--lf-space-2);
+    padding: var(--lf-space-3) var(--lf-space-4);
+  }
+
+  .lf-website-proof-set__copy h3 {
+    font-size: var(--lf-text-md);
+  }
+
+  .lf-website-proof-set__links {
+    gap: var(--lf-space-1) var(--lf-space-3);
+    padding-top: 0;
+  }
+
+  .lf-editorial .lf-website-proof-set__links a {
+    min-height: 44px;
+    font-size: var(--lf-text-xs);
+  }
+
+  .lf-website-proof-set__list > li:not(.lf-website-proof-set__item--rachel) {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+  }
+
+  .lf-website-proof-set__list > li:not(.lf-website-proof-set__item--rachel) .lf-website-proof-set__image {
+    align-self: stretch;
+    height: 100%;
+    aspect-ratio: auto;
+    border-right: 1px solid var(--lf-hairline);
+    border-bottom: 0;
+  }
+
+  .lf-website-proof-set__list > li:not(.lf-website-proof-set__item--rachel) .lf-website-proof-set__image img {
+    object-fit: contain;
+  }
+}
+
 @media (min-width: 48rem) {
   .lf-website-proof-set__list {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -138,6 +207,10 @@
 
   .lf-website-proof-set__copy {
     padding: var(--lf-space-4);
+  }
+
+  .lf-website-proof-set__image--rachel {
+    aspect-ratio: 16 / 10;
   }
 }
 

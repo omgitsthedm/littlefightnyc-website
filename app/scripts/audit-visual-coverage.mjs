@@ -8,7 +8,7 @@
  * shell), and uses the authored JSON contract for journal bodies, which load
  * after a reader opens the post.
  *
- * Dakota, VERA, PHC, and the frozen VenueCircuit presentation are explicitly
+ * VERA, PHC, and the frozen VenueCircuit presentation are explicitly
  * excluded from coverage targets. The final boundary check only makes sure the
  * reusable marker is not introduced into those protected sources.
  */
@@ -236,11 +236,11 @@ const protectedSourcePaths = [
 for (const relativePath of protectedSourcePaths) {
   const source = await text(relativePath);
   if (/data-lf-visual-proof|ConnectedPathDiagram/u.test(source)) {
-    fail(`${relativePath}: generic visual-proof markers cannot enter protected Venue/Dakota/VERA presentation paths`);
+    fail(`${relativePath}: generic visual-proof markers cannot enter protected presentation paths`);
   }
 }
 
-for (const protectedDirectory of ["src/dakota", "public/vera"]) {
+for (const protectedDirectory of ["public/vera"]) {
   const fullDirectory = path.join(appRoot, protectedDirectory);
   const entries = await readdir(fullDirectory, { recursive: true });
   for (const entry of entries) {

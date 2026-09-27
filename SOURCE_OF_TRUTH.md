@@ -1,26 +1,22 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-08-13
+Last source verification: 2026-09-27 (owner-approved release candidate)
 
-This file routes agents to the current website source. The marketing site,
-private Dakota desk, and public VERA browser product use one public website
-repository, one build, and one Netlify production property. VERA's separate
-engine publishes only sanitized upstream data. Recheck the point-in-time deploy,
-commit, Identity configuration, Blob state, and custom-domain attachment before
-a future production release.
+This file routes agents to the current website source. The marketing site and
+public VERA browser product use one public website repository, one build, and
+one Netlify production property. VERA's separate engine publishes only
+sanitized upstream data. Recheck the point-in-time deploy, commit, and
+custom-domain attachment before a future production release.
 
 ## Canonical map
 
 | Field | Verified value |
 | --- | --- |
-| Property | Little Fight NYC website, private Dakota desk, public VERA product, and embedded supporting experiences |
+| Property | Little Fight NYC website, public VERA product, and embedded supporting experiences |
 | Production URL | `https://littlefightnyc.com` |
 | VERA public product | `https://littlefightnyc.com/vera/` |
 | Netlify URL | `https://littlefightnyc.netlify.app` |
 | Current domain alias | `https://hey.littlefightnyc.com` |
-| Dakota primary host | `https://www.dakota.littlefightnyc.com` |
-| Dakota redirect host | `https://dakota.littlefightnyc.com` |
-| Dakota operator route | `/app/` |
 | Netlify site | `littlefightnyc` |
 | Netlify site ID | `0907d8fe-7018-48db-a6be-1f906e4b2619` |
 | Production deploy | Resolve from Netlify before release; do not pin stale IDs here |
@@ -33,11 +29,10 @@ a future production release.
 | Publish directory | `app/dist` |
 
 There is one canonical website repository, build, and Netlify production
-property. The Dakota hosts, VERA route, and `littlefightnyc.com` must resolve to
-the same site ID above. The former standalone Dakota property and the
-`vera-pipeline` property are historical material only: they are not sources,
-builds, deployment targets, or rollback paths and must not receive new product
-work.
+property. The VERA route and `littlefightnyc.com` must resolve to the same site
+ID above. The former sales product and the `vera-pipeline` property are
+historical material only: they are not sources, builds, deployment targets, or
+rollback paths and must not receive new product work.
 
 ## Deployment relationship
 
@@ -48,20 +43,16 @@ Documentation-only housekeeping commits may intentionally advance GitHub `main` 
 For an authorized application release:
 
 1. Confirm the candidate commit, clean worktree, GitHub relationship, and Netlify site ID.
-2. Run `npm run quality:release` under Node 24. This includes the Dakota unit
-   and server-contract suite through `npm run test:dakota`.
+2. Run `npm run quality:release` under Node 24.
 3. Push the exact authorized commit to `main`.
 4. Wait for that exact commit to reach a ready production deploy.
 5. Run `npm run quality:live` to verify the exact revision and representative public routes.
-   Authenticated Dakota host, Identity, queue, and operator-state checks are separate,
-   explicitly authorized evidence gates; never expose or submit prospect data.
 
 Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, build settings, environment variables, or the production branch as part of routine work.
 
 ## Current source
 
-- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`, `app/dakota.html`
-- Dakota private browser entry: `app/src/dakota/**`
+- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`
 - Build and verification scripts: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
 - Live serverless surfaces: `netlify/functions/**`
 - Deployment configuration: `netlify.toml`
@@ -117,58 +108,17 @@ observation work without publishing private engine material. Do not create a
 top-level `docs/` tree: the repository-boundary audit reserves that retired
 path.
 
-## Dakota architecture and private boundary
+## Retired product boundary
 
-Dakota is a private second HTML entry in the canonical Vite build, served at
-`/app/` and the two Dakota hosts above. It intentionally does not join the
-public marketing React Router shell, analytics boot, consent interface,
-prerender catalog, sitemap, or service-worker cache. Its static assets contain
-no candidate or operator data and its document is `noindex` and `no-store`.
-
-Access uses Netlify Identity on the canonical site. The only accepted identity
-is normalized email `hello@littlefightnyc.com` with the server-controlled role
-`dakota_operator`. The browser gate is presentation; these server functions are
-the security boundary:
-
-- `identity-signup`, `identity-login`, and `identity-validate`: exact-account
-  Identity lifecycle enforcement and role assignment
-- `dakota-publish` at `/api/dakota/publish`: HMAC-signed, replay-protected queue
-  ingestion using protected environment variable `DAKOTA_PUBLISH_TOKEN`
-- `dakota-queue` at `/api/dakota/queue`: exact-email-and-role private queue read
-- `dakota-operator-state` at `/api/dakota/operator-state`: exact-email-and-role
-  bounded private state read/write with same-origin write enforcement
-- `dakota-inbound`: verified Netlify form-event capture for Tech Audit requests;
-  the public Website Audit pipeline uses the same bounded private writer after
-  a real production request is accepted
-
-Netlify Blobs are site-scoped. Queue store `dakota-private` uses key `current/v1` and replay prefix `replay/v1/`. Operator store `dakota-operator-state` uses compatibility key `state/v1` with the normalized `dakota.operator-state.v3` envelope. Stored v1 and v2 records normalize into v3.
-
-Each v3 record carries durable verified contacts, `selectedContactId`, append-only manual activity, a durable task ledger, stage evidence, commercial state, cleared-payment truth, and an onboarding next action. Saved verified contacts cannot be changed or removed; append a newly verified route when contact information changes. `selectedContactId` must reference a usable verified email, phone, or SMS route, and any open direct-channel task must use that exact route. Website-form and LinkedIn URLs remain research evidence and cannot become the selected outreach route.
-
-The task ledger is the canonical source for each record’s next action and due time. Existing task identity, order, and instructions are immutable. Resolving a task preserves it in the ledger. Dakota permits at most one open task, requires exactly one for live operational stages, and permits none for early or terminal stages. A `paid` record remains operational: it requires cleared-cash evidence, a zero balance, an onboarding next action, and one open task.
-
-Every newly recorded non-note activity carries the durable `taskId` and exact selected `contactId` that produced it. Direct email, phone, and SMS evidence must match that route’s channel. Legacy unlinked activity remains visible and immutable but cannot unlock a newly advanced stage. Changing proposal, signature, invoice, or payment truth requires a newly appended linked activity of the matching type; cleared cash cannot be reduced in place.
-
-Every operator-state write uses optimistic concurrency. A new record sends `expected_updated_at: null`; an existing record sends its exact stored `updated_at`. A mismatch returns HTTP `409`. Refresh Dakota before retrying, and never overwrite a newer record blindly.
-
-Identity users, roles, sessions, Blob data, the publisher secret, and custom-domain attachment must be verified against site ID `0907d8fe-7018-48db-a6be-1f906e4b2619`; they do not migrate because source files moved.
-
-The research engine is deliberately not part of the deployed website. Its
-private repository is
-`/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Internal/dakota-2`,
-and runtime SQLite, queues, snapshots, and logs stay outside Git under
-`~/Library/Application Support/LiFi NYC/Dakota 2.0`. The engine performs
-bounded read-only public-source research and publishes only a validated,
-signed queue of at most ten records. Dakota has no automatic outreach path and
-must not send email, SMS, calls, forms, or CRM writes.
-
-The operator surface is a decision and commercial-record system, not an outreach robot. It never sends email or SMS, places calls, schedules meetings, or submits forms automatically. Gmail, Google Voice, and Calendar are manual handoffs only.
-
-Gmail opens a compose window only for an exact persisted email route classified `explicit_inquiry` or `existing_relationship`. Google Voice Messages opens only for an exact SMS route with the same consent classifications; Google Voice Calls may open only for an exact phone task. Neither path automates a call or message. Calendar uses the verified booking page in the context of the same selected route; it never creates an event or invitation.
-
-SMS requires an `explicit_inquiry` or `existing_relationship` SMS route accepted by the task schema. A `public_business` email never unlocks Gmail, and a public phone number never becomes text consent; it may support only a deliberate manual phone task after human qualification.
-
-Stored drafts are bounded, URL-free plain text. Dakota appends the verified booking link only when it builds an approved outbound email body for Gmail or manual copy; it never stores that URL in the draft. Copying text, opening Gmail, Voice, or Calendar, and copying or opening the booking link have no server-side effect and are not conversions. Contact, reply, meeting, proposal, signature, payment, and onboarding evidence enter the record only after the operator confirms the real-world action.
+The former private sales product is retired by the owner. This local candidate
+removes its browser entry, Identity flow, product server functions, scheduled work,
+public assets, and operating contract. Legacy paths and former hosts are
+configured to return a plain HTTP 410 response with noindex and no-store.
+Three minimal Identity rejection handlers remain solely to deny login, signup,
+and validation without storage or provider calls. They have no schedules or
+product behavior; account settings and existing records stay untouched.
+These removals are not live until an authorized production release is verified.
+Do not restore or rebuild that product. Historical stored records are preserved.
 
 ## On-demand business and brand evidence
 
@@ -188,10 +138,9 @@ Read only the document relevant to the task.
 
 - The active GitHub repository carries only the production branch and current
   source. Legacy branches and standalone Audit/Lab checkouts are not sources.
-- The former standalone Dakota dashboard checkout is historical material only,
-  not a recovery or development source. Its Netlify project has been deleted.
-  Recover the web surface through this repository and the site ID above; keep
-  the separate private engine boundary intact.
+- The former standalone sales dashboard checkout is historical material only,
+  not a recovery or development source. Do not restore it through this
+  repository or the current Netlify property.
 - Normal source recovery uses verified current Git history. Production rollback
   is a new Git release; historical Netlify deploys are not recovery sources.
 

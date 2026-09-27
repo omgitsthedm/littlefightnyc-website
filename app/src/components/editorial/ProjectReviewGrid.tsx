@@ -25,18 +25,33 @@ export default function ProjectReviewGrid({
     <div className="lf-project-review-grid" data-variant={variant}>
       {studies.map((study) => {
         const liveClientSite = hasCurrentPublicSource(study);
+        const isRachel = study.slug === "hair-by-rachel-charles";
         // VenueCircuit is intentionally frozen while its separate recovery is underway.
         const preservedVenueLink = study.slug === "venuecircuit" && Boolean(study.url);
         const liveUrl = liveClientSite || preservedVenueLink ? study.url : "";
 
         return (
         <article className="lf-project-review" key={study.slug}>
-          <div className="lf-project-review__media">
+          <div className={`lf-project-review__media${isRachel ? " lf-project-review__media--rachel" : ""}`}>
             {study.video ? (
               <CinematicMedia
                 media={study.video}
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />
+            ) : isRachel ? (
+              <picture>
+                <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+                <source media="(min-width: 37.5rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+                <img
+                  {...skelImg}
+                  src="/assets/case-hair-by-rachel-charles-mobile-390.webp"
+                  alt="Hair By Rachel Charles website with Rachel’s name and portrait visible"
+                  width={780}
+                  height={1688}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
             ) : study.image && !study.inventoryOnly ? (
               /* Captured cases play their live site on hover (LivePreview);
                  the rest keep the still. */

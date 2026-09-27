@@ -1,8 +1,9 @@
 import type { Handler } from "@netlify/functions";
 
-import { enforceDakotaIdentityEvent } from "./_shared/dakota/identity-events";
-
-const handler: Handler = async (event) =>
-  enforceDakotaIdentityEvent(event.body, false);
-
-export { handler };
+// The former private product is retired. Preserve the closed Identity boundary
+// without changing account settings or deleting existing account records.
+export const handler: Handler = async () => ({
+  statusCode: 403,
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ error: "This private application is retired." }),
+});

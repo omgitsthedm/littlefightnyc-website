@@ -42,7 +42,7 @@
   inset: 0;
   content: "";
   background:
-    linear-gradient(90deg, rgb(5 5 7 / 82%) 0%, rgb(5 5 7 / 56%) 40%, rgb(5 5 7 / 10%) 72%, rgb(5 5 7 / 0%) 100%),
+    linear-gradient(90deg, rgb(5 5 7 / 82%) 0%, rgb(5 5 7 / 76%) 40%, rgb(5 5 7 / 74%) 100%),
     linear-gradient(180deg, rgb(5 5 7 / 30%) 0%, rgb(5 5 7 / 0%) 26%, rgb(5 5 7 / 28%) 60%, rgb(5 5 7 / 100%) 100%);
 }
 
@@ -51,7 +51,7 @@
 @media (max-width: 63.99rem) {
   .lf-wall__backdrop::after {
     background:
-      linear-gradient(180deg, rgb(5 5 7 / 56%) 0%, rgb(5 5 7 / 50%) 55%, rgb(5 5 7 / 100%) 100%);
+      linear-gradient(180deg, rgb(5 5 7 / 78%) 0%, rgb(5 5 7 / 74%) 55%, rgb(5 5 7 / 100%) 100%);
   }
 }
 
@@ -403,6 +403,28 @@
 }
 
 @media (min-width: 48rem) {
+  .lf-wall__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(15.5rem, 0.9fr);
+    grid-template-areas:
+      "copy hero"
+      "scene scene"
+      "proof proof"
+      "grid grid";
+    column-gap: clamp(var(--lf-space-5), 5vw, var(--lf-space-8));
+    align-items: start;
+  }
+
+  .lf-wall__copy { grid-area: copy; }
+  .lf-wall__hero-proof {
+    grid-area: hero;
+    align-self: center;
+    margin-top: var(--lf-space-5);
+  }
+  .lf-wall__scene { grid-area: scene; }
+  .lf-editorial .lf-wall__proof { grid-area: proof; }
+  .lf-wall__grid { grid-area: grid; }
+
   .lf-wall__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -410,38 +432,142 @@
 
 /* ── the phone path ─────────────────────────────────────────────────────── */
 
-/* Phones get the stacked version — title, then the phone beside the beat
-   rail, detail, controls — under the reach block, ahead of the proof. It is
-   the old hero's mobile layout, kept out of the first screen so the two
-   decisions and the hours line still lead. The smallest phones (≤360px) skip
-   it for the 15-screen budget, like the pillars. */
+/* The detailed player follows the opening on larger screens. Phones use the
+   complete capture once, without repeating the same story in a second panel. */
 .lf-wall__scene {
   display: block;
   margin-top: clamp(var(--lf-space-6), 6vw, var(--lf-space-8));
 }
 
-@media (max-width: 22.5rem) {
+/* A real, named client site carries the first visual proof. The longer path
+   player still follows, but a prospective owner does not need to scroll to
+   understand that Little Fight has shipped this kind of work. */
+.lf-editorial .lf-wall__hero-proof {
+  display: grid;
+  gap: var(--lf-space-3);
+  margin-top: var(--lf-space-6);
+  color: var(--lf-bone);
+  text-decoration: none;
+}
+
+.lf-wall__hero-proof-label {
+  color: var(--lf-fight);
+  font: 500 var(--lf-text-2xs) / 1.35 var(--lf-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lf-wall__hero-proof-title {
+  font-family: var(--lf-heading);
+  font-size: var(--lf-text-lg);
+  font-weight: var(--lf-display-weight);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.lf-wall__hero-proof-summary {
+  max-width: 34ch;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-sm);
+  line-height: 1.4;
+}
+
+.lf-wall__hero-proof-frame {
+  display: block;
+  align-self: start;
+  aspect-ratio: 390 / 844;
+  overflow: hidden;
+  border-radius: var(--lf-radius-card);
+  background: var(--lf-paper);
+  box-shadow: 0 20px 48px rgb(0 0 0 / 42%);
+  outline: 1px solid rgb(255 255 255 / 12%);
+  outline-offset: -1px;
+}
+
+.lf-wall__hero-proof-frame picture,
+.lf-wall__hero-proof-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lf-wall__hero-proof-frame img {
+  object-fit: contain;
+  object-position: center;
+  transition: transform var(--m-settle-ms) var(--m-settle-ease);
+}
+
+.lf-wall__shot--rachel img {
+  object-fit: contain;
+  background: var(--lf-paper-2);
+}
+
+@media (min-width: 48rem) {
+  .lf-wall__hero-proof-frame {
+    aspect-ratio: 1;
+  }
+}
+
+.lf-wall__hero-proof-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--lf-fight);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.22em;
+}
+
+.lf-editorial .lf-wall__hero-proof:hover .lf-wall__hero-proof-link {
+  color: var(--lf-fight);
+}
+
+.lf-editorial .lf-wall__hero-proof:focus-visible {
+  outline: 2px solid var(--lf-blue-soft);
+  outline-offset: 5px;
+}
+
+@media (max-width: 47.99rem) {
   .lf-wall__scene {
+    display: none;
+  }
+
+  .lf-wall__hero-proof-frame {
+    width: min(100%, 15rem);
+    justify-self: center;
+  }
+}
+
+/* The smallest phones keep the complete Rachel capture in the client grid
+   immediately after the contact choices, without a duplicate tall feature. */
+@media (max-width: 22.5rem) {
+  .lf-editorial .lf-wall__hero-proof {
     display: none;
   }
 }
 
 @media (min-width: 64rem) {
-  /* 1024–1279: the phone-and-rail needs ~36rem to breathe, so the player
-     sits under the copy at full width. From 1280 it moves beside the copy. */
+  /* The client capture shares the opening with the promise. The deeper phone
+     path then gets its own full-width row, where its detail can stay legible. */
   .lf-wall__inner {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(18rem, 0.9fr);
     grid-template-areas:
-      "copy"
-      "scene"
-      "proof"
-      "grid";
+      "copy hero"
+      "scene scene"
+      "proof proof"
+      "grid grid";
     align-items: center;
     column-gap: clamp(2rem, 4vw, 4rem);
   }
 
   .lf-wall__copy { grid-area: copy; }
+  .lf-wall__hero-proof { grid-area: hero; }
+  .lf-wall__hero-proof-frame { aspect-ratio: 16 / 10; }
   .lf-editorial .lf-wall__proof { grid-area: proof; }
   .lf-wall__grid { grid-area: grid; }
 
@@ -463,20 +589,20 @@
 
 @media (min-width: 80rem) {
   .lf-wall__inner {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.82fr);
     grid-template-areas:
-      "copy scene"
+      "copy hero"
+      "scene scene"
       "proof proof"
       "grid grid";
   }
 
   .lf-wall__scene {
-    margin-top: 0;
+    margin-top: clamp(var(--lf-space-6), 4vw, var(--lf-space-8));
   }
 
-  /* With the player beside the copy, the first tile has to start inside a
-     900px-tall screen (the desktop smoke test pins it): trim the top padding
-     and the proof label's margin at this width. Measured: tile top 917 → ~850. */
+  /* Keep the offer, contact choices and complete client capture inside the
+     opening desktop viewport, with the broader portfolio below. */
   .lf-wall {
     padding-block-start: clamp(var(--lf-space-7), 5vw, var(--lf-space-8));
   }
@@ -491,14 +617,6 @@
     font-size: clamp(3.25rem, 4.3vw, 4.25rem);
   }
 
-  .lf-wall .lf-cpath__scene {
-    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
-    column-gap: clamp(1.5rem, 2.5vw, 2.5rem);
-  }
-
-  .lf-wall .lf-cpath__path-step button strong {
-    font-size: clamp(1.35rem, 1.5vw, 1.75rem);
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -508,6 +626,15 @@
 
   .lf-editorial .lf-wall__tile a:hover .lf-wall__shot img,
   .lf-editorial .lf-wall__tile a:focus-visible .lf-wall__shot img {
+    transform: none;
+  }
+
+  .lf-wall__hero-proof-frame img {
+    transition: none;
+  }
+
+  .lf-editorial .lf-wall__hero-proof:hover .lf-wall__hero-proof-frame img,
+  .lf-editorial .lf-wall__hero-proof:focus-visible .lf-wall__hero-proof-frame img {
     transform: none;
   }
 }

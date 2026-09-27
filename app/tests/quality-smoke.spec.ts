@@ -950,7 +950,7 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(138);
+    ).toHaveLength(137);
 
     type H1Mismatch = {
       path: string;
@@ -961,6 +961,20 @@ test(
     const mismatches: H1Mismatch[] = [];
 
     await openRoute(page, ROUTES[0]);
+    // Prerendered content and a child mount marker can precede BrowserRouter's
+    // history subscription. Real navigation establishes router readiness before
+    // the bulk parity check dispatches synthetic history events.
+    await expect(page.locator("[data-lf-route-mount]:not([hidden])")).toBeAttached();
+    const documentTimeOrigin = await page.evaluate(() => performance.timeOrigin);
+    await page.locator('header a[href="/services/custom-local-websites/"]').first().click();
+    await expect(page.getByRole("heading", {
+      level: 1,
+      name: "Websites that make the next step obvious.",
+    })).toBeVisible();
+    expect(
+      await page.evaluate(() => performance.timeOrigin),
+      "The warm-up link must use the mounted router rather than a new document.",
+    ).toBe(documentTimeOrigin);
 
     for (const route of indexedRoutes) {
       try {
@@ -992,32 +1006,24 @@ test(
         }, firstResponseMarkup);
 
         await page.evaluate((nextPath) => {
-          window.history.pushState(
-            { __lfQualityParity: true },
-            "",
-            nextPath,
-          );
-          window.dispatchEvent(
-            new PopStateEvent("popstate", { state: window.history.state }),
-          );
+          window.history.pushState({ __lfQualityParity: true }, "", nextPath);
+          window.dispatchEvent(new PopStateEvent("popstate", {
+            state: window.history.state,
+          }));
         }, route.path);
         await page.waitForURL((url) => url.pathname === route.path);
         await page.waitForFunction(
           (expectedTitle) => document.title === expectedTitle,
           route.title,
         );
-        await page.evaluate(async () => {
-          await new Promise<void>((resolve) => {
-            window.requestAnimationFrame(() => {
-              window.requestAnimationFrame(() => resolve());
-            });
-          });
-        });
-        await page.waitForFunction(() => {
-          const headings = document.querySelectorAll("main h1");
-          return headings.length === 1
-            && Boolean(headings[0]?.textContent?.trim());
-        });
+        // Metadata can update before the lazy page finishes rendering. Wait
+        // for the user-visible contract itself, including standalone layouts,
+        // rather than accepting an arbitrary pair of animation frames.
+        await expect.poll(async () => {
+          const headings = await page.locator("main h1").allTextContents();
+          return headings.length === 1 ? normalizeHeadingText(headings[0]) : "";
+        }, { timeout: 8_000, message: `${route.path} must render its server-response H1` })
+          .toBe(normalizeHeadingText(firstResponseH1.text));
 
         const hydratedHeadings = await page.locator("main h1").allTextContents();
         const firstResponseText = normalizeHeadingText(firstResponseH1.text);
@@ -1202,16 +1208,13 @@ test(
 );
 
 test(
-  "desktop homepage leads with five trades and the phone above the fold @chromium-desktop",
+  "desktop homepage presents real client proof and contact choices above the fold @chromium-desktop",
   async ({ page }) => {
     const runtime = watchRuntime(page);
     await openRoute(page, ROUTES[0]);
 
-    // The old hero was a promise, a phone playing a four-beat path, and the
-    // beat list — three columns built around one salon, which on a desktop
-    // read as a control panel and told a painting contractor this was not for
-    // them. The first screen is now the argument itself: five live sites
-    // across five visibly different trades.
+    // The opening couples a real project with the offer and direct contact.
+    // The wider portfolio still demonstrates work across different trades.
     const wall = page.locator(".lf-wall");
     const tiles = wall.locator(".lf-wall__tile");
     const firstTile = tiles.first().locator("img");
@@ -1244,7 +1247,7 @@ test(
     expect(trades).toHaveLength(5);
     expect(new Set(trades.map((trade) => trade.trim().toLowerCase())).size).toBe(5);
 
-    // No single client may own the first screen.
+    // Preserve the wider portfolio alongside the featured project.
     const clients = await wall.locator(".lf-wall__client").allInnerTexts();
     expect(new Set(clients.map((client) => client.trim())).size).toBe(5);
 
@@ -1256,21 +1259,21 @@ test(
     const geometry = await page.evaluate(() => {
       const phone = document.querySelector<HTMLElement>(".lf-wall__call");
       const check = document.querySelector<HTMLElement>(".lf-wall__check");
-      const firstTile = document.querySelector<HTMLElement>(".lf-wall__tile");
-      if (!phone || !check || !firstTile) throw new Error("desktop wall fixture is incomplete");
+      const proof = document.querySelector<HTMLElement>(".lf-wall__hero-proof");
+      if (!phone || !check || !proof) throw new Error("desktop wall fixture is incomplete");
       return {
         viewportHeight: window.innerHeight,
         phoneBottom: phone.getBoundingClientRect().bottom,
         checkBottom: check.getBoundingClientRect().bottom,
-        tileTop: firstTile.getBoundingClientRect().top,
+        proofBottom: proof.getBoundingClientRect().bottom,
       };
     });
 
     // The number and the low-commitment alternative both land in the first
-    // screen, and the wall has started before the fold so it is discoverable.
+    // screen alongside the complete featured proof.
     expect(geometry.phoneBottom).toBeLessThanOrEqual(geometry.viewportHeight);
     expect(geometry.checkBottom).toBeLessThanOrEqual(geometry.viewportHeight);
-    expect(geometry.tileTop).toBeLessThanOrEqual(geometry.viewportHeight);
+    expect(geometry.proofBottom).toBeLessThanOrEqual(geometry.viewportHeight);
 
     await expectNoHorizontalOverflow(page, "desktop wall hero");
     expectRuntimeClean(runtime);
@@ -1717,8 +1720,6 @@ test(
     const form = page.locator('form[name="tech-audit-scratch"]');
     await expect(form).toBeVisible();
     await expect(form.locator('input[name="report_id"]')).toHaveValue(reportId);
-    await expect(form.locator('input[name="dakota_capture_id"]')).toHaveValue("");
-    await expect(form.locator('input[name="dakota_submitted_at"]')).toHaveValue("");
 
     const action = await form.getAttribute("action");
     const confirmationUrl = new URL(action!, baseURL!);
@@ -1737,17 +1738,9 @@ test(
       element.addEventListener("submit", (event) => event.preventDefault(), { once: true });
       (element as HTMLFormElement).requestSubmit();
     });
-    await expect(form.locator('input[name="dakota_capture_id"]')).toHaveValue(/^[0-9a-f-]{32,36}$/u);
-    await expect(form.locator('input[name="dakota_submitted_at"]')).not.toHaveValue("");
-    const dakotaCapture = await form.evaluate((element) => {
-      const data = new FormData(element as HTMLFormElement);
-      return {
-        id: String(data.get("dakota_capture_id") ?? ""),
-        submittedAt: String(data.get("dakota_submitted_at") ?? ""),
-      };
-    });
-    expect(dakotaCapture.id).toMatch(/^[0-9a-f-]{32,36}$/u);
-    expect(Number.isFinite(Date.parse(dakotaCapture.submittedAt))).toBe(true);
+    // Retirement must preserve the real form contract without the removed
+    // private-product capture fields.
+    await expect(form.locator('input[name="report_id"]')).toHaveValue(reportId);
     await expect.poll(() => page.evaluate(() => (
       window.sessionStorage.getItem("lf_tech_audit_report_id")
     ))).toBe(reportId);

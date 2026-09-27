@@ -8,7 +8,7 @@ import "@/styles/editorial/studio.css";
 // This page reuses the .lf-case-detail__byline + .lf-case-detail-related
 // blocks, whose styles live in case-studies.css. Vite code-splits CSS per
 // lazy route chunk, so WITHOUT this import those blocks render completely
-// unstyled here ("01Sales operating systemDakota…" as one mashed line).
+// unstyled here (project type and name as one mashed line).
 import "@/styles/editorial/case-studies.css";
 
 export default function StudioDetail() {

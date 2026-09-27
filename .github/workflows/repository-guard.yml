@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 jobs:
-  dakota-contracts:
-    name: Dakota contracts and production build
+  website-contracts:
+    name: Website contracts and production build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -26,9 +26,9 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Install application dependencies
         run: npm ci --prefix app --ignore-scripts
-      - name: Verify Dakota function contracts
+      - name: Verify public function contracts
         run: npm run typecheck:functions
-      - name: Run the private-workspace test suite
-        run: npm run test:dakota
+      - name: Run acquisition contracts
+        run: npm run test:acquisition
       - name: Run repository guards and build the production artifact
         run: npm run build

@@ -7,13 +7,11 @@ import FirstLookScope from "@/components/editorial/FirstLookScope";
 import techAuditContent from "@/data/tech-audit-content.json";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
-import { ScoreGauge } from "@/components/dataviz/ScoreGauge";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
 import { registerFirstLookWebMcp, type FirstLookStageStatus } from "@/lib/firstLookWebMcp";
-import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
   isInternalTechAuditTest,
@@ -36,14 +34,6 @@ import "@/styles/editorial/tech-audit.css";
 import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
-// Hair By Rachel Charles, measured 2026-07-30, Lighthouse 13.4.1 (mobile).
-// Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md
-const AUDIT_PROOF_SCORES = [
-  { value: "96", label: "Loading speed" },
-  { value: "100", label: "Accessibility" },
-  { value: "100", label: "Build checks" },
-  { value: "100", label: "Search basics" },
-] as const;
 type Step = 1 | 2 | 3;
 
 const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
@@ -102,13 +92,6 @@ function leadIntentFromQuery(params: URLSearchParams): TechAuditLeadIntent {
 
 function queryValue(params: URLSearchParams, key: string, maxLength: number): string {
   return (params.get(key) ?? "").trim().slice(0, maxLength);
-}
-
-function createDakotaCaptureId(): string {
-  if (typeof crypto.randomUUID === "function") return crypto.randomUUID();
-  const bytes = new Uint8Array(16);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
 /**
@@ -289,8 +272,6 @@ export default function TechAudit() {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitIssue, setSubmitIssue] = useState("");
-  const [dakotaCaptureId, setDakotaCaptureId] = useState("");
-  const [dakotaSubmittedAt, setDakotaSubmittedAt] = useState("");
   // Payoff beat — plays once when step 3 is REACHED with both choices made
   // (not when a saved draft restores straight into step 3).
   const [payoff, setPayoff] = useState(false);
@@ -551,8 +532,6 @@ export default function TechAudit() {
 
     trackAuditStarted("valid_submit");
 
-    const captureId = dakotaCaptureId || createDakotaCaptureId();
-    const submittedAt = new Date().toISOString();
     const submittedContact = (
       form.elements.namedItem("contact") as HTMLInputElement | null
     )?.value ?? "";
@@ -570,14 +549,6 @@ export default function TechAudit() {
     const submittedReplyRoute = submittedContactRoute
       ? techAuditPreferredRoute(submittedContactRoute, submittedPreference)
       : null;
-    setDakotaCaptureId(captureId);
-    setDakotaSubmittedAt(submittedAt);
-    // Keep the native form payload correct before React flushes this discrete
-    // event, then retain the same values through the submitting re-render.
-    const captureInput = form.elements.namedItem("dakota_capture_id") as HTMLInputElement | null;
-    const submittedAtInput = form.elements.namedItem("dakota_submitted_at") as HTMLInputElement | null;
-    if (captureInput) captureInput.value = captureId;
-    if (submittedAtInput) submittedAtInput.value = submittedAt;
     const subjectInput = form.elements.namedItem("subject") as HTMLInputElement | null;
     if (subjectInput) subjectInput.value = submittedInternalTest
       ? "Internal Little Fight NYC test — not a lead"
@@ -678,44 +649,15 @@ export default function TechAudit() {
               to="/case-studies/hair-by-rachel-charles/"
               aria-label="Read the Hair By Rachel Charles case study"
             >
-              <img
-                {...skelImg}
-                src="/assets/case-hair-by-rachel-charles.webp"
-                {...responsiveImageProps(
-                  "/assets/case-hair-by-rachel-charles.webp",
-                  "(min-width: 1200px) 34vw, 42vw",
-                  [480, 640, 900],
-                )}
-                alt="The Hair By Rachel Charles booking website as it shipped"
-                width={1600}
-                height={1200}
-                loading="lazy"
-                decoding="async"
-              />
+              <picture>
+                <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+                <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+                <img {...skelImg} src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
+              </picture>
             </Link>
-            {/* Was "100 Lighthouse scores". Measured 2026-07-30, Lighthouse 13.4.1,
-                  mobile: performance 96, accessibility 100, best practices 100, SEO 100.
-                  Artifact: .lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md */}
-            <span className="lf-audit-intro__caption">Hair By Rachel Charles · Lighthouse mobile lab check · July 30, 2026. These technical scores measure loading and page checks, not rankings or bookings.</span>
-            {/* Same verified 2026-07-30 measurement as the caption, restated as
-                instruments. Values must track the evidence artifact above. */}
-            <span className="lf-audit-intro__scores" aria-hidden="true">
-              {AUDIT_PROOF_SCORES.map((score) => (
-                <span key={score.label} className="lf-audit-intro__score">
-                  <ScoreGauge value={score.value} className="lf-gauge--sm" />
-                  <span className="lf-audit-intro__score-label">{score.label}</span>
-                </span>
-              ))}
-            </span>
+            <span className="lf-audit-intro__caption">Hair By Rachel Charles — a real client website, with clear services, work to explore, and a direct path to book.</span>
             <span className="lf-audit-intro__proof-links">
-              <Link to="/case-studies/hair-by-rachel-charles/">Read the case study</Link>
-              <a
-                href="https://github.com/omgitsthedm/littlefightnyc-website/blob/b0efb41ad63aafe13c8e63b2c8f6e024226349cd/.lifi/evidence/lighthouse/hairbyrachelcharles-2026-07-30.md"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                How we checked it
-              </a>
+              <Link to="/case-studies/hair-by-rachel-charles/">See the website and what we improved</Link>
             </span>
           </article>
         </div>
@@ -874,18 +816,6 @@ export default function TechAudit() {
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
                   <input type="hidden" name="subject" value={internalTest ? "Internal Little Fight NYC test — not a lead" : "New Little Fight NYC Tech Audit"} />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
-                  <input
-                    type="hidden"
-                    name="dakota_capture_id"
-                    value={dakotaCaptureId}
-                    readOnly
-                  />
-                  <input
-                    type="hidden"
-                    name="dakota_submitted_at"
-                    value={dakotaSubmittedAt}
-                    readOnly
-                  />
                   <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
                   {/* Always render the field so Netlify's build-time form

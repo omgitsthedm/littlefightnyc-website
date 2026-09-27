@@ -243,12 +243,15 @@
 
 .lf-audit-intro__proof-image {
   display: block;
+  aspect-ratio: 390 / 844;
+  background: var(--lf-paper-2);
 }
 
+.lf-audit-intro__proof-image picture,
 .lf-audit-intro__proof img {
+  display: block;
   width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -318,12 +321,14 @@
     gap: var(--lf-space-8);
   }
   .lf-audit-intro__proof { display: block; }
+  .lf-audit-intro__proof-image { aspect-ratio: 1; }
 }
 
 @media (min-width: 1280px) {
   .lf-audit-intro {
     padding-inline: var(--lf-margin-desktop);
   }
+  .lf-audit-intro__proof-image { aspect-ratio: 16 / 10; }
 }
 
 .lf-audit {
