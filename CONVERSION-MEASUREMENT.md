@@ -75,7 +75,7 @@ The standalone Audit Lab has a separate diagnostic funnel:
 2. `audit_scan_started` — valid URL and email passed client validation
 3. `audit_scan_accepted` — the audit service returned a successful response and an audit ID
 4. `generate_lead` — the request endpoint accepted the audit job
-5. `audit_report_ready` — status polling confirmed the report is ready
+5. `audit_report_ready` — status polling confirmed available report measurements
 
 The Audit Lab emits `generate_lead` once when the request endpoint accepts
 the job. For an unauthenticated public production request, the endpoint first
@@ -87,25 +87,32 @@ another key-event definition. Separate Audit Lab and human inquiries by
 
 `website_check_started` occurs at both the `/website-check/` handoff and the
 Lab's actual request start; those are two stages, not necessarily two owners
-or reports. `website_check_ready` accompanies the Lab's ready status, and
+or reports. `website_check_ready` accompanies the same available-measurement status, and
 `report_opened` measures the report-opening action. Neither event proves a
 human has reviewed the business or that email arrived. No-site human
 inquiries must not be required to produce any automated-check events.
 
-The local candidate now handles a ready report whose email copy could not
-be sent: final public status includes only `email_delivery=unavailable`, and
-the Lab presents an Open report link and human contact option. This is still
-a generated report, so `audit_report_ready` and `website_check_ready` remain
-valid. The email state and private provider details do not enter analytics.
-An omitted email state retains the existing redirect for sent and older
-reports; omission is not proof of inbox receipt.
+The local recovery candidate distinguishes complete, partial, and unavailable
+measurements through the bounded public `measurement_status` field. An
+unavailable measurement emits `audit_scan_failed` with
+`failure_category=measurement`; it emits neither ready event. Partial results
+can emit ready events, but do not establish a complete four-category check.
+Older status records without the field retain the prior ready-event behavior.
+
+If the email copy could not be sent, public status also includes
+`email_delivery=unavailable`. The Lab presents an Open report link for measured
+results, or See next steps for an unavailable check, with a human contact
+option. Email failure alone does not invalidate available measurements. The
+email state and private provider details do not enter analytics. An omitted
+email state retains the existing redirect for sent and older reports;
+omission is not proof of inbox receipt.
 
 All these browser observations depend on consent and working JavaScript.
 Consent-denied and native no-JavaScript inquiries can be received without
 appearing in GA4. Report observed counts and the known coverage limit; do not
 extrapolate a total inquiry count or close rate from consented traffic alone.
 
-Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `provider`, `network`, or `timeout`) to diagnose loss. It is not a conversion.
+Use `audit_scan_failed` with `failure_category` (`rejected`, `rate_limit`, `provider`, `measurement`, `network`, or `timeout`) to diagnose loss. It is not a conversion.
 
 ## Reliability view
 

@@ -17,6 +17,7 @@ const distRoot = path.join(appRoot, "dist");
 const routeMeta = JSON.parse(await readFile(path.join(dataRoot, "route-meta.json"), "utf8"));
 const journal = JSON.parse(await readFile(path.join(dataRoot, "journal-index.json"), "utf8"));
 const failures = [];
+const legacyFallbackSocialImage = "/assets/og-tugboat.jpg";
 
 function decodeHtml(value = "") {
   return value
@@ -128,6 +129,12 @@ const paths = routeMeta.pages.map((page) => page.path);
 const duplicatePaths = paths.filter((routePath, index) => paths.indexOf(routePath) !== index);
 if (duplicatePaths.length > 0) {
   failures.push(`route-meta duplicate paths: ${[...new Set(duplicatePaths)].join(", ")}`);
+}
+
+for (const page of [routeMeta.notFound, ...routeMeta.pages]) {
+  if (page.share?.image === legacyFallbackSocialImage) {
+    failures.push(`${page.path}: metadata still points at the immutable legacy fallback image`);
+  }
 }
 
 // These routes render their actual React tree before the browser leaf commits.

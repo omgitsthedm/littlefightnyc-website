@@ -75,6 +75,7 @@ for (const relative of [
   "favicon.svg",
   "favicon.ico",
   "apple-touch-icon.png",
+  "assets/social/og-home.jpg",
   "assets/og-tugboat.jpg",
 ]) {
   if (!(await exists(path.join(distRoot, relative)))) failures.push(`dist/${relative} is missing`);

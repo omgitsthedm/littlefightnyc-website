@@ -552,7 +552,7 @@ function absoluteUrl(routePath = "/") {
   return `${siteUrl}${routePath === "/" ? "/" : routePath}`;
 }
 
-function absoluteAsset(asset = "/assets/og-tugboat.jpg") {
+function absoluteAsset(asset = "/assets/social/og-home.jpg") {
   return asset.startsWith("http") ? asset : `${siteUrl}${asset}`;
 }
 

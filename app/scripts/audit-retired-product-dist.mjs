@@ -7,6 +7,7 @@ const marketingEntry = new URL("index.html", distRoot);
 const retirementEntry = new URL("product-retired.html", distRoot);
 const redirectsSource = new URL("../public/_redirects", import.meta.url);
 const headersSource = new URL("../../netlify.toml", import.meta.url);
+const retiredHostEdge = new URL("../../netlify/edge-functions/retired-host-response.ts", import.meta.url);
 const functionsRoot = new URL("../../netlify/functions/", import.meta.url);
 const workflowsRoot = new URL("../../.github/workflows/", import.meta.url);
 const distPath = fileURLToPath(distRoot);
@@ -108,6 +109,23 @@ try {
     if (!block?.includes('X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"')) {
       findings.push(`retirement response is missing noindex policy for ${route}`);
     }
+  }
+
+  const retiredHostSource = await readFile(retiredHostEdge, "utf8");
+  if (!retiredHostSource.includes('path: "/*"')) {
+    findings.push("retired-host edge response must cover every legacy host path");
+  }
+  if (!retiredHostSource.includes('host: "^(?:www\\\\.)?dakota\\\\.littlefightnyc\\\\.com$"')) {
+    findings.push("retired-host edge response must match only the two retired hostnames");
+  }
+  if (!/await\s+context\.next\(\s*\)/.test(retiredHostSource)) {
+    findings.push("retired-host edge response must preserve the configured forced 410 response");
+  }
+  if (!retiredHostSource.includes('response.headers.set("Cache-Control", RETIREMENT_CACHE_CONTROL)')) {
+    findings.push("retired-host edge response is missing no-store policy");
+  }
+  if (!retiredHostSource.includes('response.headers.set("X-Robots-Tag", RETIREMENT_ROBOTS)')) {
+    findings.push("retired-host edge response is missing noindex policy");
   }
 
   for (const root of [functionsRoot, workflowsRoot]) {

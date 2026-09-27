@@ -16,8 +16,8 @@
  * returns the string verbatim. Stored XSS.
  *
  * This gate checks both invariants: model fields fail closed, and unavailable
- * Lighthouse measurements render as N/A without a fabricated score, grade,
- * benchmark, or commercial-impact claim.
+ * unavailable Lighthouse data renders as a recovery state without a fabricated
+ * score, grade, finding, roadmap, benchmark, or commercial-impact claim.
  */
 
 import assert from "node:assert/strict";
@@ -34,6 +34,8 @@ import {
   calculateGrade,
   generateAuditHTML,
 } from "../../netlify/functions/lib/templates.mts";
+import { currentIncompleteReportData } from "../../netlify/functions/lib/stored-audit-report.mts";
+import { requestPageSpeed } from "../../netlify/functions/lib/pagespeed-request.mts";
 import { generateOGSvg } from "../../netlify/functions/og-image.mts";
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -47,6 +49,30 @@ const background = await readFile(
 const templates = await readFile(
   path.join(repoRoot, "netlify", "functions", "lib", "templates.mts"),
   "utf8",
+);
+
+// Google documents API keys in query strings as URL-scan exposure. This keeps
+// the provider request key out of the URL without making a provider call.
+const pageSpeedTestKey = "test-only-pagespeed-key";
+const originalFetch = globalThis.fetch;
+let pageSpeedRequest;
+globalThis.fetch = async (input, init) => {
+  pageSpeedRequest = { input, init };
+  return new Response("{}", { status: 200 });
+};
+try {
+  await requestPageSpeed("https://example.com", pageSpeedTestKey);
+} finally {
+  globalThis.fetch = originalFetch;
+}
+assert.ok(pageSpeedRequest, "PageSpeed request was not captured");
+const pageSpeedUrl = new URL(String(pageSpeedRequest.input));
+const pageSpeedHeaders = new Headers(pageSpeedRequest.init?.headers);
+assert.equal(pageSpeedUrl.searchParams.has("key"), false);
+assert.equal(pageSpeedUrl.toString().includes(pageSpeedTestKey), false);
+assert.deepEqual(
+  [...pageSpeedHeaders].filter(([, value]) => value.includes(pageSpeedTestKey)),
+  [["x-goog-api-key", pageSpeedTestKey]],
 );
 
 // ── 1. Every HaikuResult field is explicitly coerced ──────────────────────────
@@ -133,6 +159,44 @@ completeMetrics.bestPractices = {
 assert.equal(deriveOverallScore(completeMetrics), 40);
 assert.equal(calculateGrade(deriveOverallScore(completeMetrics)), "D");
 
+const storedUnavailable = currentIncompleteReportData({
+  companyName: "Stored Bakery",
+  domain: "stored.example",
+  measurementStatus: "unavailable",
+  createdAt: observedAt,
+  expiresAt: "2026-09-01T12:00:00.000Z",
+}, "stored-unavailable-abc123");
+assert.ok(storedUnavailable);
+assert.equal(storedUnavailable.overallScore, null);
+assert.equal(storedUnavailable.grade, null);
+assert.ok(Object.values(storedUnavailable.metrics).every((metric) => metric.availability === "unavailable"));
+assert.match(generateAuditHTML(storedUnavailable), /We couldn&rsquo;t complete this check\./);
+
+const storedPartial = currentIncompleteReportData({
+  companyName: "Stored Partial Bakery",
+  domain: "stored-partial.example",
+  measurementStatus: "partial",
+  metrics: partialMetrics,
+  createdAt: observedAt,
+}, "stored-partial-abc123");
+assert.ok(storedPartial);
+assert.equal(storedPartial.overallScore, null);
+assert.equal(storedPartial.metrics.performance.value, 0);
+assert.equal(storedPartial.metrics.seo.value, 80);
+assert.equal(storedPartial.metrics.accessibility.availability, "unavailable");
+assert.match(generateAuditHTML(storedPartial), /An overall score needs all four\./);
+
+assert.equal(currentIncompleteReportData({
+  domain: "stored-complete.example",
+  measurementStatus: "complete",
+  createdAt: observedAt,
+}, "stored-complete-abc123"), null);
+assert.equal(currentIncompleteReportData({
+  domain: "stored-partial-without-metrics.example",
+  measurementStatus: "partial",
+  createdAt: observedAt,
+}, "stored-partial-without-metrics-abc123"), null);
+
 const coerced = coerceHaikuResult({
   companyName: "Example",
   niche: "Bakery",
@@ -189,16 +253,64 @@ const unavailableReport = generateAuditHTML({
   ctaText: "Review the evidence",
   auditDate: "August 2, 2026",
 });
-assert.match(unavailableReport, />N\/A</);
-assert.match(unavailableReport, /Not measured/);
-assert.match(unavailableReport, /Performance/);
-assert.match(unavailableReport, /SEO/);
-assert.match(unavailableReport, /Accessibility/);
-assert.match(unavailableReport, /Best Practices/);
+assert.match(unavailableReport, /We couldn&rsquo;t complete this check\./);
+assert.match(unavailableReport, /This doesn’t mean anything is wrong with your website/);
+assert.match(unavailableReport, /https:\/\/pagespeed\.web\.dev\/analysis\?url=https%3A%2F%2Fexample\.com/);
+assert.match(unavailableReport, /Get a free human first look/);
+assert.doesNotMatch(unavailableReport, />N\/A</);
+assert.doesNotMatch(unavailableReport, /Not measured|Overall signal|Turn the report into a repair/);
+assert.doesNotMatch(unavailableReport, /instrument-score|instrument-findings|instrument-roadmap/);
+assert.doesNotMatch(unavailableReport, /Save PDF/);
 assert.doesNotMatch(
   unavailableReport,
   /estimated annual|revenue impact|benchmark|ahead of|mobile score|security score/i,
 );
+
+const partialReport = generateAuditHTML({
+  companyName: "Partial Bakery",
+  domain: "partial.example",
+  city: "",
+  state: "",
+  niche: "Bakery",
+  email: "owner@example.com",
+  slug: "partial-bakery-abc123",
+  overallScore: null,
+  grade: null,
+  metrics: partialMetrics,
+  brandColors: {
+    primary: "#F97316",
+    accent: "#f7c948",
+    background: "#0f0f0f",
+  },
+  findings: [{ severity: "warning", title: "Do not render", description: "Partial data is not a finding." }],
+  ctaText: "Do not render",
+  auditDate: "August 2, 2026",
+  roadmap: [{ phase: "Do not render", title: "Do not render", items: ["Do not render"] }],
+});
+assert.match(partialReport, /2 of 4 checks finished\. An overall score needs all four\./);
+assert.match(partialReport, /<dt>Performance<\/dt>[\s\S]*?<dd>0<\/dd>/);
+assert.match(partialReport, /<dt>SEO<\/dt>[\s\S]*?<dd>80<\/dd>/);
+assert.doesNotMatch(partialReport, />N\/A</);
+assert.doesNotMatch(partialReport, /Overall signal|Not measured|What deserves attention|Repair order|Turn the report into a repair/);
+assert.doesNotMatch(partialReport, /Accessibility|Best Practices|Do not render/);
+
+const sameIdentityReport = generateAuditHTML({
+  companyName: "Example.com",
+  domain: "https://www.example.com/",
+  city: "",
+  state: "",
+  niche: "Bakery",
+  email: "owner@example.com",
+  slug: "same-identity-abc123",
+  overallScore: null,
+  grade: null,
+  metrics: unavailable.metrics,
+  brandColors: { primary: "#F97316", accent: "#f7c948", background: "#0f0f0f" },
+  findings: [],
+  ctaText: "",
+  auditDate: "August 2, 2026",
+});
+assert.doesNotMatch(sameIdentityReport, /class="instrument-domain/);
 
 const completeReport = generateAuditHTML({
   companyName: "Measured Bakery",
@@ -239,10 +351,10 @@ const unavailableOg = generateOGSvg({
   createdAt: observedAt,
   expiresAt: "2026-09-01T12:00:00.000Z",
 });
-assert.match(unavailableOg, />N\/A</);
-assert.match(unavailableOg, /NOT MEASURED/);
-assert.match(unavailableOg, /Accessibility · Best Practices/);
-assert.doesNotMatch(unavailableOg, /NaN|Grade null|Mobile · SEO · Security/);
+assert.match(unavailableOg, /CHECK INCOMPLETE/);
+assert.match(unavailableOg, /The automated check didn’t finish\./);
+assert.match(unavailableOg, /No score, findings, or repair plan\./);
+assert.doesNotMatch(unavailableOg, /N\/A|<circle|Performance · SEO|NaN|Grade null|Mobile · SEO · Security/);
 
 const partialOg = generateOGSvg({
   companyName: "Partial Bakery",
@@ -253,9 +365,10 @@ const partialOg = generateOGSvg({
   createdAt: observedAt,
   expiresAt: "2026-09-01T12:00:00.000Z",
 });
-assert.match(partialOg, /PARTIAL DATA/);
-assert.match(partialOg, /No overall score/);
-assert.doesNotMatch(partialOg, /No score substituted/);
+assert.match(partialOg, /PARTIAL CHECK/);
+assert.match(partialOg, /Some categories returned\./);
+assert.match(partialOg, /Only completed categories are shown\./);
+assert.doesNotMatch(partialOg, /N\/A|<circle|No score substituted/);
 
 const measuredOg = generateOGSvg({
   companyName: "Measured Bakery",
@@ -342,5 +455,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "Function-safety audit passed: unavailable Lighthouse data remains N/A, Haiku output fails closed, report claims stay evidence-bound, every blob store is purged, and no function answers every origin.",
+  "Function-safety audit passed: unavailable Lighthouse data renders as recovery, partial reports stay partial, Haiku output fails closed, report claims stay evidence-bound, every blob store is purged, and no function answers every origin.",
 );

@@ -231,7 +231,7 @@ const gmailDeliveryStart = background.indexOf(
   "function normalizedGoogleErrorCode",
 );
 const gmailDeliveryEnd = background.indexOf(
-  "function escHtml",
+  "// Main pipeline",
   gmailDeliveryStart,
 );
 if (gmailDeliveryStart < 0 || gmailDeliveryEnd < 0) {

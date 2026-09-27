@@ -1720,6 +1720,18 @@ test(
     const form = page.locator('form[name="tech-audit-scratch"]');
     await expect(form).toBeVisible();
     await expect(form.locator('input[name="report_id"]')).toHaveValue(reportId);
+    const message = form.locator('textarea[name="message"]');
+    await expect(message).toHaveValue("I’d like a free first look at my website.\nWebsite: https://example.com");
+    await expect(message).not.toHaveValue(/missing, dated, hard to find/i);
+
+    // A report link must preserve the owner’s own note on return; it may not
+    // restore the automatic prompt from an earlier website context.
+    await message.fill("Please help me understand the booking path.");
+    await expect.poll(() => page.evaluate(() => (
+      window.sessionStorage.getItem("lf_tech_audit_draft")
+    ))).toContain("Please help me understand the booking path.");
+    await page.reload({ waitUntil: "networkidle" });
+    await expect(form.locator('textarea[name="message"]')).toHaveValue("Please help me understand the booking path.");
 
     const action = await form.getAttribute("action");
     const confirmationUrl = new URL(action!, baseURL!);
@@ -2751,8 +2763,9 @@ test(
 );
 
 for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 }]) {
+  for (const measurementStatus of [undefined, "partial", "unavailable"]) {
   test(
-    `Audit Lab keeps a ready report accessible at ${recoveryViewport.width}px when its email copy is unavailable @all-projects`,
+    `Audit Lab keeps ${measurementStatus || "legacy complete"} results accessible at ${recoveryViewport.width}px when email is unavailable @all-projects`,
     async ({ browser, browserName, baseURL }) => {
       const context = await browser.newContext({ viewport: recoveryViewport });
       const page = await context.newPage();
@@ -2784,6 +2797,7 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
             status: "done",
             url: "/examples/audit/report/email-recovery-fixture",
             email_delivery: "unavailable",
+            measurement_status: measurementStatus,
           }),
         });
       });
@@ -2798,7 +2812,10 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
 
       const recovery = page.locator("#auditEmailRecovery");
       await expect(recovery).toBeVisible({ timeout: 8_000 });
-      await expect(page.locator("#progressHeading")).toHaveText("Your report is ready.");
+      await expect(page.locator("#progressHeading")).toHaveText(
+        measurementStatus === "unavailable" ? "This check couldn’t finish."
+          : measurementStatus === "partial" ? "Part of your check is ready." : "Your report is ready.",
+      );
       await expect(recovery).toContainText("We could not send a copy by email.");
       await expect(recovery).not.toContainText(/failed|configured/i);
       await expect(recovery.locator("#auditEmailRecoveryLink")).toHaveAttribute(
@@ -2809,7 +2826,13 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
         "href",
         "mailto:hello@littlefightnyc.com",
       );
-      await expect(page.locator(".audit-scan__status")).toHaveText("Report ready");
+      await expect(page.locator(".audit-scan__status")).toHaveText(
+        measurementStatus === "unavailable" ? "Check finished" : measurementStatus === "partial" ? "Partial results" : "Report ready",
+      );
+      if (measurementStatus) {
+        await expect(page.locator("#progressBar")).toBeHidden();
+        await expect(page.locator("#progressSteps")).toBeHidden();
+      }
       await expect(page.locator(".audit-scan")).toHaveAttribute("data-scanning", "false");
       const reportLink = page.locator("#auditEmailRecoveryLink");
       // The focused heading starts the page's native smooth scroll. Visible
@@ -2834,7 +2857,14 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
       const events = await page.evaluate(
         () => (window as unknown as { __auditEvents: unknown[] }).__auditEvents,
       );
-      expect(events.map(event => (event as { eventName: string }).eventName)).toContain("website_check_ready");
+      const eventNames = events.map(event => (event as { eventName: string }).eventName);
+      if (measurementStatus === "unavailable") {
+        expect(eventNames).not.toContain("website_check_ready");
+        expect(eventNames).not.toContain("audit_report_ready");
+        expect(eventNames).toContain("audit_scan_failed");
+      } else {
+        expect(eventNames).toContain("website_check_ready");
+      }
       const serialized = JSON.stringify(events);
       expect(serialized).not.toContain("private-recovery.example");
       expect(serialized).not.toContain("private-recovery@example.com");
@@ -2849,6 +2879,7 @@ for (const recoveryViewport of [{ width: 1280, height: 720 }, { width: 390, heig
       await context.close();
     },
   );
+  }
 }
 
 test("Audit Lab stops its scan indicator on a failed job and keeps retry details @all-projects", async ({ page, browserName }) => {

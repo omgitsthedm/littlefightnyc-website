@@ -122,13 +122,13 @@ export const NOT_FOUND_PAGE = {
   shortAnswer:
     "Short answer: tell us what you were trying to do, and we will help you find the right next step.",
   type: "WebPage",
-  image: "/assets/og-tugboat.jpg",
+  image: "/assets/social/og-home.jpg",
   noindex: true,
 };
 
 export function shareForPage(page, siteName = "Little Fight NYC") {
   const authored = page.share ?? {};
-  const image = authored.image || page.image || "/assets/og-tugboat.jpg";
+  const image = authored.image || page.image || "/assets/social/og-home.jpg";
   const extension = image.split(/[?#]/, 1)[0].split(".").pop()?.toLowerCase();
   const type =
     authored.type ||
@@ -295,7 +295,7 @@ export function enrichAuthoredRoutePages(seoPages, siteContent, siteName = "Litt
       shortAnswer: study.title,
       h1: study.showcase.label,
       type: "Article",
-      image: study.image || "/assets/og-tugboat.jpg",
+      image: study.image || "/assets/social/og-home.jpg",
       noindex: true,
       published: study.published,
       updated: study.updated,
@@ -514,6 +514,7 @@ export function industryPage(entry) {
     h1: firstAuthoredH1(entry.html, fallbackH1),
     type: "WebPage",
     image: entry.image || "/assets/manhattan.webp",
+    updated: entry.updated,
     industry: entry,
   };
 }
@@ -530,7 +531,8 @@ export function localePages() {
       shortAnswer:
         "Little Fight NYC en español: páginas web, ayuda cuando algo falla, una primera consulta gratis y herramientas que se adaptan a su negocio.",
       type: "WebPage",
-      image: "/assets/og-tugboat.jpg",
+      image: "/assets/social/og-home.jpg",
+      updated: "2026-09-27",
     },
     {
       path: "/zh/",
@@ -542,7 +544,8 @@ export function localePages() {
       shortAnswer:
         "Little Fight NYC 中文：为纽约小生意提供网站、技术支持、免费咨询和适合您生意的工具。网站和资料归您。",
       type: "WebPage",
-      image: "/assets/og-tugboat.jpg",
+      image: "/assets/social/og-home.jpg",
+      updated: "2026-09-27",
     },
   ];
 }

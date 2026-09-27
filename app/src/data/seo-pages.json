@@ -8,7 +8,7 @@
     "location": "New York, NY",
     "latitude": 40.7128,
     "longitude": -74.006,
-    "image": "https://littlefightnyc.com/assets/og-tugboat.jpg",
+    "image": "https://littlefightnyc.com/assets/social/og-home.jpg",
     "sameAs": [
       "https://www.instagram.com/littlefightnyc",
       "https://www.google.com/maps/place//data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416"
@@ -17,13 +17,13 @@
   "pages": [
     {
       "path": "/",
-      "updated": "2026-08-19",
+      "updated": "2026-09-27",
       "title": "NYC Small Business Websites, IT Support & Software | Little Fight NYC",
       "description": "Get a website that helps people choose you, quick help when something breaks, and fewer tools to fight with every day.",
       "h1": "We handle the tech. You run the shop.",
       "shortAnswer": "Short answer: You get a website customers can find and book from, on-site help in New York when something breaks, and software you own — code, data, and accounts.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg",
+      "image": "/assets/social/og-home.jpg",
       "share": {
         "image": "/assets/social/og-home.jpg",
         "type": "image/jpeg",
@@ -51,7 +51,7 @@
     },
     {
       "path": "/services/custom-local-websites/",
-      "updated": "2026-09-06",
+      "updated": "2026-09-27",
       "title": "Small Business Website Design NYC | Little Fight NYC",
       "description": "Website design for small businesses in NYC and beyond: a custom site built around your business, so customers find you, see what you do, and book without calling. Free first look; a written 14-day promise on qualifying scopes.",
       "h1": "Websites that make the next step obvious.",
@@ -83,7 +83,7 @@
     },
     {
       "path": "/nationwide/",
-      "updated": "2026-08-18",
+      "updated": "2026-09-27",
       "title": "Custom Small Business Websites, All 50 States | Little Fight NYC",
       "description": "Remote website help for small businesses across the United States. Make it easy for customers to understand you, reach you, and take the next step.",
       "h1": "Built in New York. Works anywhere.",
@@ -264,12 +264,13 @@
     },
     {
       "path": "/tech-audit/",
+      "updated": "2026-09-27",
       "title": "Free First Look for Small Businesses | Little Fight NYC",
       "description": "Get a free first look at your website, social page or everyday tools. Tell us what needs fixing. A person replies with a clear next step.",
       "h1": "Get a clear next step.",
       "shortAnswer": "Short answer: the Tech Audit is a free, human look at your website, Google listing, tools, and monthly bills. You get a plain next step, not a pitch.",
       "type": "ContactPage",
-      "image": "/assets/og-tugboat.jpg",
+      "image": "/assets/social/og-tech-audit.jpg",
       "share": {
         "image": "/assets/social/og-tech-audit.jpg",
         "type": "image/jpeg",
@@ -290,6 +291,7 @@
     },
     {
       "path": "/examples/",
+      "updated": "2026-09-27",
       "title": "Work Examples & Owner Answers | Little Fight NYC",
       "description": "See live websites, project stories, and simple answers, so you can picture what would make your own business easier to choose.",
       "h1": "See what works. Try what is next.",
@@ -1000,7 +1002,7 @@
       "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: we ask only for what we need to understand the problem, and we put the work plan in writing before work starts.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/social/og-home.jpg"
     },
     {
       "path": "/contact/",
@@ -1026,7 +1028,7 @@
       "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: Little Fight collects only what it needs to understand the issue. Account access uses safer handoffs.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/social/og-home.jpg"
     },
     {
       "path": "/terms/",
@@ -1035,7 +1037,7 @@
       "h1": "Privacy and terms, plain.",
       "shortAnswer": "Short answer: we write down the work, price, timing, and access needs before work begins.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/social/og-home.jpg"
     },
     {
       "path": "/areas/",
@@ -1477,7 +1479,7 @@
       "h1": "We’ve got it from here.",
       "shortAnswer": "Short answer: Little Fight received the message. A real person reviews it; 9am–9pm Eastern, a human answers. After hours, leave a message.",
       "type": "WebPage",
-      "image": "/assets/og-tugboat.jpg",
+      "image": "/assets/social/og-home.jpg",
       "noindex": true
     },
     {
@@ -1643,7 +1645,7 @@
       "noindex": true,
       "published": "2026-08-15",
       "updated": "2026-08-15",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/social/og-home.jpg"
     },
     {
       "path": "/start/",
@@ -1656,7 +1658,7 @@
       "noindex": true,
       "published": "2026-08-17",
       "updated": "2026-08-17",
-      "image": "/assets/og-tugboat.jpg"
+      "image": "/assets/social/og-home.jpg"
     }
   ],
   "matrix": {

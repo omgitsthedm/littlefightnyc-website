@@ -1,5 +1,7 @@
 import type { Context, Config } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
+import { generateAuditHTML } from "./lib/templates.mts";
+import { currentIncompleteReportData, type StoredAuditReportMeta } from "./lib/stored-audit-report.mts";
 
 // Privacy-safe hash: we never store raw IPs, just a daily-rotating fingerprint
 function hashVisitor(ip: string, ua: string): string {
@@ -101,14 +103,15 @@ export default async (req: Request, context: Context) => {
 
   // Check expiration before serving
   const metaStore = getStore("audit-meta");
-  const meta = (await metaStore.get(slug, { type: "json" })) as {
-    expiresAt?: string;
-    companyName?: string;
-    domain?: string;
-  } | null;
+  const meta = (await metaStore.get(slug, { type: "json" })) as StoredAuditReportMeta | null;
 
-  if (meta?.expiresAt && new Date(meta.expiresAt) < new Date()) {
-    return new Response(expiredPage(meta.companyName || meta.domain || slug), {
+  if (typeof meta?.expiresAt === "string" && new Date(meta.expiresAt) < new Date()) {
+    const expiredName = typeof meta.companyName === "string"
+      ? meta.companyName
+      : typeof meta.domain === "string"
+        ? meta.domain
+        : slug;
+    return new Response(expiredPage(expiredName), {
       status: 410,
       headers: {
         ...SECURITY_HEADERS,
@@ -184,7 +187,15 @@ export default async (req: Request, context: Context) => {
     console.error("[views] tracking error:", err);
   }
 
-  return new Response(normalizeStoredReport(html), {
+  // Stored reports are immutable records. Only old incomplete reports are
+  // regenerated at read time so they use the current honest recovery layout;
+  // complete reports always retain the exact HTML saved at generation time.
+  const currentIncomplete = currentIncompleteReportData(meta, slug);
+  const responseHtml = currentIncomplete
+    ? generateAuditHTML(currentIncomplete)
+    : normalizeStoredReport(html);
+
+  return new Response(responseHtml, {
     status: 200,
     headers: {
       ...SECURITY_HEADERS,

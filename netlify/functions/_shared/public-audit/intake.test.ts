@@ -8,6 +8,8 @@ import recordEngagement from "../../record-engagement.mts";
 import { handler as login } from "../../identity-login.mts";
 import { handler as signup } from "../../identity-signup.mts";
 import { handler as validate } from "../../identity-validate.mts";
+import { renderAuditEmail } from "../../lib/audit-email.mts";
+import { requestPageSpeed } from "../../lib/pagespeed-request.mts";
 
 class MemoryStore {
   entries = new Map<string, unknown>();
@@ -34,7 +36,73 @@ beforeEach(() => {
   ) as never);
   vi.stubGlobal("fetch", vi.fn(async () => new Response(null, { status: 202 })));
 });
-afterEach(() => { vi.unstubAllGlobals(); vi.mocked(getStore).mockReset(); });
+
+describe("website check email outcomes", () => {
+  const base = {
+    companyName: "littlefightnyc.com", domain: "littlefightnyc.com",
+    grade: null, overallScore: null, measuredCategoryCount: 0,
+    auditUrl: "https://littlefightnyc.com/examples/audit/report/littlefightnyc-com-test",
+  };
+  it("gives an interrupted check a useful recovery without presenting an audit or score", () => {
+    const email = renderAuditEmail(base);
+    expect(email.subject).toContain("couldn’t finish");
+    expect(email.html).toContain("We couldn’t complete this check.");
+    expect(email.html).toContain("doesn’t mean your website is broken");
+    expect(email.html).toContain("Get a free human first look");
+    expect(email.html).toContain("pagespeed.web.dev/analysis?url=");
+    expect(email.html).not.toMatch(/N\/A|just finished|full report|Grade|\/ 100/);
+    expect(email.text).toContain("There are no scores or findings to share yet.");
+  });
+  it("labels partial results and withholds the overall badge even if a caller supplies a score", () => {
+    const email = renderAuditEmail({ ...base, measuredCategoryCount: 2, overallScore: 90, grade: "A" });
+    expect(email.subject).toContain("partial results");
+    expect(email.html).toContain("2 of the 4 checks");
+    expect(email.html).not.toMatch(/Grade A|\/ 100|N\/A/);
+    expect(email.text).not.toContain("90/100");
+  });
+  it("renders a measured complete check with an honest summary and plain-text alternative", () => {
+    const email = renderAuditEmail({ ...base, measuredCategoryCount: 4, overallScore: 87, grade: "B" });
+    expect(email.subject).toContain("is ready");
+    expect(email.html).toContain("87");
+    expect(email.html).toContain("See my website check");
+    expect(email.text).toContain("Average of four mobile checks: 87/100");
+  });
+  it("escapes supplied business text and prevents mail-header injection", () => {
+    const email = renderAuditEmail({ ...base, companyName: '<img src=x onerror="alert(1)">', domain: "example.com\r\nBcc: victim@example.com" });
+    expect(email.subject).not.toMatch(/[\r\n]/);
+    expect(email.html).not.toContain('<img src=x');
+    expect(email.html).toContain("&lt;img");
+  });
+});
+afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); vi.mocked(getStore).mockReset(); });
+
+describe("PageSpeed provider recovery", () => {
+  it("requires a project key instead of silently depending on exhausted anonymous quota", async () => {
+    await expect(requestPageSpeed("https://example.com", undefined)).rejects.toThrow("pagespeed_not_configured");
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it("does not retry quota exhaustion or expose provider response data", async () => {
+    vi.mocked(fetch).mockResolvedValue(new Response('private provider details', { status: 429 }));
+    await expect(requestPageSpeed("https://example.com", "test-only")).rejects.toThrow(/^pagespeed_quota_exhausted$/);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+  it("recovers once from a transient service error", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch).mockResolvedValueOnce(new Response(null, { status: 503 })).mockResolvedValueOnce(new Response('{}', { status: 200 }));
+    const request = requestPageSpeed("https://example.com", "test-only");
+    await vi.runAllTimersAsync();
+    expect((await request).status).toBe(200);
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+  it("bounds repeated service failures to two attempts", async () => {
+    vi.useFakeTimers();
+    vi.mocked(fetch).mockResolvedValue(new Response(null, { status: 503 }));
+    const request = expect(requestPageSpeed("https://example.com", "test-only")).rejects.toThrow(/^pagespeed_http_503$/);
+    await vi.runAllTimersAsync();
+    await request;
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+});
 
 describe("public audit operation after private application retirement", () => {
   it("queues a real public request with one-time background authorization and no additional stores", async () => {

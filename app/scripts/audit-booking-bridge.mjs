@@ -16,6 +16,7 @@ import { extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { BOOKING_HREF } from "../src/data/contact.ts";
 import { generateAuditHTML } from "../../netlify/functions/lib/templates.mts";
+import { renderAuditEmail } from "../../netlify/functions/lib/audit-email.mts";
 
 const appRoot = fileURLToPath(new URL("../", import.meta.url));
 const repoRoot = join(appRoot, "..");
@@ -138,10 +139,17 @@ const emailSource = await readFile(
   join(repoRoot, "netlify/functions/run-audit-background.mts"),
   "utf8",
 );
-assert.match(emailSource, /href="\$\{escHtml\(BOOKING_HREF\)\}"/);
-assert.match(emailSource, /target="_blank" rel="noopener noreferrer"/);
-assert.match(emailSource, /Book a free 30-minute second opinion/);
-assert.match(emailSource, /Google Meet/);
+assert.match(emailSource, /renderAuditEmail\(/);
+const email = renderAuditEmail({
+  companyName: "Example", domain: "example.com", grade: "A", overallScore: 95,
+  measuredCategoryCount: 4, auditUrl: "https://littlefightnyc.com/examples/audit/report/example-com-test",
+});
+const emailBookingTags = anchorTags(email.html).filter((tag) => tag.includes(BOOKING_HREF));
+assert.equal(emailBookingTags.length, 1, "completed check email retains one optional appointment link");
+assert.match(emailBookingTags[0], /target="_blank"/);
+assert.match(emailBookingTags[0], /rel="noopener noreferrer"/);
+assert.match(email.html, /free 30-minute conversation/);
+assert.ok(email.text.includes(BOOKING_HREF), "plain-text email retains the booking handoff");
 
 console.log(
   "PASS booking-bridge — one calendar source; public, report, and email handoffs remain optional and safe.",

@@ -1,5 +1,5 @@
 import { chromium } from "@playwright/test";
-import { mkdir, readFile } from "node:fs/promises";
+import { copyFile, mkdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -213,6 +213,10 @@ for (const card of cards) {
   });
   console.log(`social card: assets/social/${card.file}`);
 }
+
+// Preserve the old fallback URL for already-cached documents. New metadata
+// uses assets/social/og-home.jpg, whose filename was never repurposed.
+await copyFile(path.join(outputRoot, "og-home.jpg"), path.join(publicRoot, "assets", "og-tugboat.jpg"));
 
 await context.close();
 await browser.close();

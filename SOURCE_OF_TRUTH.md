@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-09-27 (owner-approved release candidate)
+Last source verification: 2026-09-27 (owner-approved audit recovery release)
 
 This file routes agents to the current website source. The marketing site and
 public VERA browser product use one public website repository, one build, and
@@ -110,15 +110,24 @@ path.
 
 ## Retired product boundary
 
-The former private sales product is retired by the owner. This local candidate
-removes its browser entry, Identity flow, product server functions, scheduled work,
-public assets, and operating contract. Legacy paths and former hosts are
-configured to return a plain HTTP 410 response with noindex and no-store.
+The former private sales product is retired by the owner. The approved release
+removed its browser entry, Identity flow, product server functions, scheduled
+work, public assets, and operating contract. Legacy paths and former hosts return
+a plain HTTP 410 response. Canonical legacy paths have noindex and no-store;
+this correction release also applies those headers to the exact former hosts.
 Three minimal Identity rejection handlers remain solely to deny login, signup,
 and validation without storage or provider calls. They have no schedules or
 product behavior; account settings and existing records stay untouched.
-These removals are not live until an authorized production release is verified.
 Do not restore or rebuild that product. Historical stored records are preserved.
+
+This correction release distinguishes complete, partial, and unavailable audit
+measurements in the report, email, and browser handoff. The LFNYC OpenSEO Google
+project has PageSpeed enabled with a dedicated PageSpeed-only key. Its value is
+stored as a production Functions-only Netlify secret and never in this repository.
+The owner approved setup and publication on 2026-09-27. Verify the deployed
+revision and a real measured audit before calling the live correction complete.
+Current release and runtime evidence are recorded in the existing desktop growth
+evidence ledger; do not infer publication from a local commit or passing build.
 
 ## On-demand business and brand evidence
 

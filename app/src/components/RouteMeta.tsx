@@ -111,7 +111,7 @@ export default function RouteMeta() {
     const page = pages.find((item) => item.path === path) ?? notFoundPage;
     const canonical = absoluteUrl(page.path);
     const share = page.share ?? {
-      image: page.image ?? "/assets/og-tugboat.jpg",
+      image: page.image ?? "/assets/social/og-home.jpg",
       type: "image/jpeg",
       width: 1200,
       height: 630,

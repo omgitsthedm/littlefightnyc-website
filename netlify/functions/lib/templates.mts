@@ -94,10 +94,40 @@ function esc(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function availableMetrics(data: AuditData): AuditMetric[] {
-  return Object.values(data.metrics).filter(
-    (metric) => metric.availability === "measured" && metric.value !== null,
-  );
+function isMeasuredMetric(metric: AuditMetric): metric is AuditMetric & { value: number } {
+  return metric.availability === "measured"
+    && typeof metric.value === "number"
+    && Number.isFinite(metric.value);
+}
+
+function availableMetrics(data: AuditData): Array<AuditMetric & { value: number }> {
+  return Object.values(data.metrics).filter(isMeasuredMetric);
+}
+
+type ReportMeasurementState = "complete" | "partial" | "recovery";
+
+function reportMeasurementState(data: AuditData): ReportMeasurementState {
+  const allCategoriesMeasured = availableMetrics(data).length === Object.keys(data.metrics).length;
+  const hasOverallScore = typeof data.overallScore === "number" && Number.isFinite(data.overallScore);
+  if (allCategoriesMeasured && hasOverallScore) return "complete";
+  return availableMetrics(data).length > 0 ? "partial" : "recovery";
+}
+
+function sameSiteIdentity(companyName: string, domain: string): boolean {
+  const normalize = (value: string) => value
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/$/, "")
+    .replace(/[^a-z0-9]/g, "");
+  return Boolean(companyName && domain) && normalize(companyName) === normalize(domain);
+}
+
+function pageSpeedHref(data: AuditData): string {
+  const domain = data.domain.trim();
+  const url = /^https?:\/\//i.test(domain) ? domain : `https://${domain}`;
+  return `https://pagespeed.web.dev/analysis?${new URLSearchParams({ url }).toString()}`;
 }
 
 function measurementObservedLabel(data: AuditData): string {
@@ -168,17 +198,26 @@ function scoreCounterScript(targetScore: number): string {
 }
 
 /** Expiration notice — subtle footer text */
-function expiryNoticeHTML(data: AuditData): string {
+function expiryNoticeHTML(data: AuditData, measurementState: ReportMeasurementState): string {
   const expiry = data.expiresAt
     ? new Date(data.expiresAt).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
     : null;
-  return `<p class="expiry-notice">This report reflects your site as of ${esc(data.auditDate)}.${expiry ? ` The report link is scheduled to expire ${expiry}; the site may change before then.` : " The site may change after this measurement."}</p>`;
+  const base = measurementState === "recovery"
+    ? `Check requested ${esc(data.auditDate)}.`
+    : measurementState === "partial"
+      ? `This partial report includes only the completed automated checks from ${esc(data.auditDate)}. It does not calculate an overall score.`
+      : `This report reflects your site as of ${esc(data.auditDate)}.`;
+  return `<p class="expiry-notice">${base}${expiry ? ` The report link is scheduled to expire ${expiry}.` : measurementState === "complete" ? " The site may change after this measurement." : ""}</p>`;
 }
 
 /** Shared meta tags block */
-function metaBlock(data: AuditData): string {
+function metaBlock(data: AuditData, measurementState: ReportMeasurementState): string {
   const title = `${esc(data.companyName)} Website Audit | ${esc(data.auditDate)}`;
-  const desc = `Website audit for ${esc(data.companyName)} (${esc(data.domain)}) covering Lighthouse Performance, SEO, Accessibility, and Best Practices.`;
+  const desc = measurementState === "recovery"
+    ? `Automated website check for ${esc(data.companyName)} did not finish, so no score or findings are shown.`
+    : measurementState === "partial"
+      ? `Partial automated website check for ${esc(data.companyName)}. Only completed Lighthouse categories are shown; no overall score is calculated.`
+      : `Website audit for ${esc(data.companyName)}${sameSiteIdentity(data.companyName, data.domain) ? "" : ` (${esc(data.domain)})`} covering Lighthouse Performance, SEO, Accessibility, and Best Practices.`;
   return `<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>${title}</title>
@@ -201,11 +240,120 @@ function metaBlock(data: AuditData): string {
 // Living Instrument: the flagship report system
 // ---------------------------------------------------------------------------
 
+function reportIdentityHTML(data: AuditData): string {
+  return `${sameSiteIdentity(data.companyName, data.domain) ? "" : `<p class="instrument-domain fade-up">${esc(data.domain)}</p>`}`;
+}
+
+function reportFooterHTML(data: AuditData, measurementState: ReportMeasurementState): string {
+  return `<footer>
+    ${expiryNoticeHTML(data, measurementState)}
+    <p class="footer-prepared">Prepared by Little Fight NYC / ${esc(data.auditDate)}</p>
+    <p class="footer-brand">Designed, Hosted and Cared For by <a href="https://littlefightnyc.com" target="_blank" rel="noopener">LittleFightNYC.com</a></p>
+  </footer>`;
+}
+
+function reportActionsHTML(data: AuditData): string {
+  return `<div class="instrument-cta__actions">
+    <a class="instrument-cta__button" href="${esc(techAuditHref(data))}" data-audit-event="human_first_look">Get a free human first look</a>
+    <a class="instrument-cta__booking-link" href="${esc(pageSpeedHref(data))}" target="_blank" rel="noopener noreferrer" data-audit-event="pagespeed_retry">Try Google’s check again</a>
+  </div>`;
+}
+
+function generateRecoveryReport(data: AuditData): string {
+  return `<!doctype html>
+<html lang="en">
+<head>
+  ${metaBlock(data, "recovery")}
+  <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
+  <link rel="stylesheet" href="/examples/audit/brand.css">
+  <link rel="stylesheet" href="/examples/audit/report.css">
+  <script src="/examples/audit/analytics.js" defer></script>
+</head>
+<body class="lf-audit-report lf-report-instrument lf-report-recovery">
+  ${noscriptBlock()}
+  ${logoBarHTML(data, "recovery")}
+  <main class="instrument-recovery">
+    <section class="instrument-recovery__panel fade-up" aria-labelledby="recovery-title">
+      <p class="instrument-kicker">Website check</p>
+      <h1 id="recovery-title">We couldn&rsquo;t complete this check.</h1>
+      <p class="instrument-recovery__company">${esc(data.companyName)}</p>
+      ${reportIdentityHTML(data)}
+      <p class="instrument-recovery__copy">Google’s testing service didn’t return measurements. This doesn’t mean anything is wrong with your website.</p>
+      <p class="instrument-recovery__copy">A real person can still take a look. Ask us for a free first look, or try Google’s check again.</p>
+      ${reportActionsHTML(data)}
+    </section>
+  </main>
+  ${reportFooterHTML(data, "recovery")}
+  ${fullAnimationScript(null)}
+</body>
+</html>`;
+}
+
+function generatePartialInstrument(data: AuditData): string {
+  const categories = [
+    { label: "Performance", metric: data.metrics.performance },
+    { label: "SEO", metric: data.metrics.seo },
+    { label: "Accessibility", metric: data.metrics.accessibility },
+    { label: "Best Practices", metric: data.metrics.bestPractices },
+  ].filter((category) => isMeasuredMetric(category.metric));
+  const categoryHTML = categories.map((category) => `
+          <div class="fade-up">
+            <dt>${category.label}</dt>
+            <dd>${category.metric.value}</dd>
+            <span class="instrument-scores__track" aria-hidden="true"><i class="instrument-scores__fill" style="--score:${category.metric.value}%"></i></span>
+          </div>`).join("");
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  ${metaBlock(data, "partial")}
+  <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/lf-fonts.css">
+  <link rel="stylesheet" href="/examples/audit/brand.css">
+  <link rel="stylesheet" href="/examples/audit/report.css">
+  <script src="/examples/audit/analytics.js" defer></script>
+</head>
+<body class="lf-audit-report lf-report-instrument lf-report-partial">
+  ${noscriptBlock()}
+  ${logoBarHTML(data, "partial")}
+  <header class="instrument-hero instrument-hero--incomplete">
+    <div>
+      <p class="instrument-kicker fade-up">Website check / incomplete</p>
+      <h1 class="instrument-title fade-up">${esc(data.companyName)}</h1>
+      ${reportIdentityHTML(data)}
+      <p class="instrument-location fade-up">${categories.length} of 4 checks finished. An overall score needs all four.</p>
+    </div>
+  </header>
+  <main class="instrument-main">
+    <section class="instrument-section instrument-section--partial" aria-labelledby="instrument-partial-title">
+      <header class="instrument-section__head fade-up">
+        <p class="instrument-section__kicker">Your available results</p>
+        <h2 id="instrument-partial-title">Here’s what came back.</h2>
+        <p>These are the checks that finished. The missing checks are not scored.</p>
+      </header>
+      <dl class="instrument-scores instrument-scores--partial" aria-label="Completed audit category scores">${categoryHTML}</dl>
+    </section>
+    <section class="instrument-cta instrument-cta--first-look fade-up" aria-labelledby="instrument-first-look-title">
+      <p class="instrument-section__kicker">Next move</p>
+      <h2 id="instrument-first-look-title">Let’s make sense of it.</h2>
+      <p>A real person can help you decide what matters for your business. Your first look is free.</p>
+      ${reportActionsHTML(data)}
+    </section>
+  </main>
+  ${reportFooterHTML(data, "partial")}
+  ${fullAnimationScript(null)}
+</body>
+</html>`;
+}
+
 function generateLivingInstrument(data: AuditData): string {
+  const measurementState = reportMeasurementState(data);
+  if (measurementState === "recovery") return generateRecoveryReport(data);
+  if (measurementState === "partial") return generatePartialInstrument(data);
   const circumference = 2 * Math.PI * 76;
-  const scoreOffset = data.overallScore === null
-    ? circumference
-    : circumference - (data.overallScore / 100) * circumference;
+  const overallScore = data.overallScore ?? 0;
+  const scoreOffset = circumference - (overallScore / 100) * circumference;
   const categories = [
     { label: "Performance", metric: data.metrics.performance },
     { label: "SEO", metric: data.metrics.seo },
@@ -274,7 +422,7 @@ function generateLivingInstrument(data: AuditData): string {
   return `<!doctype html>
 <html lang="en">
 <head>
-  ${metaBlock(data)}
+  ${metaBlock(data, "complete")}
   <link rel="preload" href="/assets/fonts/oswald-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/lf-fonts.css">
   <link rel="stylesheet" href="/examples/audit/brand.css">
@@ -283,13 +431,13 @@ function generateLivingInstrument(data: AuditData): string {
 </head>
 <body class="lf-audit-report lf-report-instrument">
   ${noscriptBlock()}
-  ${logoBarHTML(data)}
+  ${logoBarHTML(data, "complete")}
 
   <header class="instrument-hero">
     <div>
       <p class="instrument-kicker fade-up">Website Audit / ${esc(data.auditDate)}</p>
       <h1 class="instrument-title fade-up">${esc(data.companyName)}</h1>
-      <p class="instrument-domain fade-up">${esc(data.domain)}</p>
+      ${reportIdentityHTML(data)}
       ${reportContext ? `<p class="instrument-location fade-up">${esc(reportContext)}</p>` : ""}
     </div>
     <div class="instrument-score fade-up" role="img" aria-label="${esc(scoreAria)}" style="--score-offset:${scoreOffset.toFixed(2)}">
@@ -357,11 +505,7 @@ function generateLivingInstrument(data: AuditData): string {
     </section>
   </main>
 
-  <footer>
-    ${expiryNoticeHTML(data)}
-    <p class="footer-prepared">Prepared by Little Fight NYC / ${esc(data.auditDate)}</p>
-    <p class="footer-brand">Designed, Hosted and Cared For by <a href="https://littlefightnyc.com" target="_blank" rel="noopener">LittleFightNYC.com</a></p>
-  </footer>
+  ${reportFooterHTML(data, "complete")}
   ${fullAnimationScript(data.overallScore)}
   <script>
   window.addEventListener('DOMContentLoaded', function(){
@@ -402,13 +546,14 @@ function noscriptBlock(): string {
 }
 
 /** Logo bar for top of page */
-function logoBarHTML(data: AuditData): string {
+function logoBarHTML(data: AuditData, measurementState: ReportMeasurementState): string {
+  const humanFirstLook = measurementState === "complete" ? "Free Tech Audit" : "Free human first look";
   return `<nav class="logo-bar lf-report-nav" aria-label="Audit report navigation">
       <a class="lf-report-brand" href="https://littlefightnyc.com" target="_blank" rel="noopener">Little Fight NYC <span>Website Audit</span></a>
       <div class="lf-report-actions">
         <a class="lf-report-link" href="/examples/audit/">Audit Lab</a>
-        <button type="button" class="pdf-btn" onclick="window.print()" aria-label="Save this audit as a PDF">Save PDF</button>
-        <a class="lf-report-link lf-report-link--primary" href="${esc(techAuditHref(data))}">Free Tech Audit</a>
+        ${measurementState === "recovery" ? "" : '<button type="button" class="pdf-btn" onclick="window.print()" aria-label="Save this audit as a PDF">Save PDF</button>'}
+        <a class="lf-report-link lf-report-link--primary" href="${esc(techAuditHref(data))}">${humanFirstLook}</a>
       </div>
     </nav>`;
 }

@@ -58,6 +58,13 @@ const expectedAuditHandlerNames = [
   "run-audit.mts",
   "serve-audit.mts",
 ];
+const expectedAuditHelperNames = [
+  "audit-email.mts",
+  "audit-leads.mts",
+  "pagespeed-request.mts",
+  "stored-audit-report.mts",
+  "templates.mts",
+];
 const helperFiles = walk(path.join(functionsRoot, "lib")).filter((file) =>
   file.endsWith(".mts"),
 );
@@ -66,13 +73,24 @@ const netlifySourceFiles = [...functionFiles, ...helperFiles];
 if (files.length !== 21) failures.push(`expected 21 archived files, found ${files.length}`);
 if (htmlFiles.length !== 10) failures.push(`expected 10 HTML pages, found ${htmlFiles.length}`);
 const functionNames = new Set(functionFiles.map((file) => path.basename(file)));
+const helperNames = new Set(helperFiles.map((file) => path.basename(file)));
 for (const handlerName of expectedAuditHandlerNames) {
   if (!functionNames.has(handlerName)) {
     failures.push(`missing Audit function handler: ${handlerName}`);
   }
 }
-if (helperFiles.length !== 2) {
-  failures.push(`expected 2 function helpers, found ${helperFiles.length}`);
+for (const helperName of expectedAuditHelperNames) {
+  if (!helperNames.has(helperName)) {
+    failures.push(`missing Audit function helper: ${helperName}`);
+  }
+}
+for (const helperName of helperNames) {
+  if (!expectedAuditHelperNames.includes(helperName)) {
+    failures.push(`unexpected Audit function helper: ${helperName}`);
+  }
+}
+if (helperFiles.length !== expectedAuditHelperNames.length) {
+  failures.push(`expected ${expectedAuditHelperNames.length} function helpers, found ${helperFiles.length}`);
 }
 
 for (const file of htmlFiles) {

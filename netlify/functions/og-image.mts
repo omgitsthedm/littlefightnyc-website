@@ -1,6 +1,6 @@
 // og-image.mts — Dynamic SVG OG image for audit report social sharing
-// Returns a branded 1200×630 SVG with company name and measured score/grade,
-// or an honest N/A state when Lighthouse was unavailable.
+// Returns a branded 1200×630 SVG with company name and score/grade when a
+// complete measurement exists, or a compact honest status when it does not.
 // Used by og:image meta tags on audit report pages.
 //
 // Endpoint: /examples/audit/api/og?slug=company-domain-abc123
@@ -35,6 +35,17 @@ function gradeColor(grade: string | null): string {
   return "#ef4444";
 }
 
+function sameSiteIdentity(companyName: string, domain: string): boolean {
+  const normalize = (value: string) => value
+    .trim()
+    .toLowerCase()
+    .replace(/^https?:\/\//, "")
+    .replace(/^www\./, "")
+    .replace(/\/$/, "")
+    .replace(/[^a-z0-9]/g, "");
+  return Boolean(companyName && domain) && normalize(companyName) === normalize(domain);
+}
+
 export function generateOGSvg(meta: AuditMeta): string {
   const gc = gradeColor(meta.grade);
   const company = escSvg(
@@ -43,31 +54,47 @@ export function generateOGSvg(meta: AuditMeta): string {
       : meta.companyName,
   );
   const domain = escSvg(meta.domain);
-  const hasScore =
+  const validScore =
     typeof meta.overallScore === "number" &&
     Number.isFinite(meta.overallScore) &&
     meta.overallScore >= 0 &&
     meta.overallScore <= 100;
-  const scoreArc = hasScore
-    ? `<circle cx="900" cy="280" r="120" fill="none" stroke="${gc}" stroke-width="8"
+  const measurementState = meta.measurementStatus === "partial"
+    ? "partial"
+    : meta.measurementStatus === "unavailable"
+      ? "unavailable"
+      : validScore
+        ? "complete"
+        : "unavailable";
+  const scorePanel = measurementState === "complete"
+    ? `<circle cx="900" cy="280" r="120" fill="none" stroke="#27272A" stroke-width="8"/>
+  <circle cx="900" cy="280" r="120" fill="none" stroke="${gc}" stroke-width="8"
     stroke-dasharray="${Math.round(((meta.overallScore as number) / 100) * 754)} 754"
-    stroke-linecap="round" transform="rotate(-90 900 280)"/>`
-    : "";
-  const scoreValue = hasScore ? String(meta.overallScore) : "N/A";
-  const scoreSuffix = hasScore
-    ? "/100"
-    : meta.measurementStatus === "partial"
-      ? "PARTIAL DATA"
-      : "NOT MEASURED";
-  const gradeBadge = hasScore
-    ? meta.grade
+    stroke-linecap="round" transform="rotate(-90 900 280)"/>
+  <text x="900" y="265" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
+    font-size="72" font-weight="200" fill="${gc}">${meta.overallScore}</text>
+  <text x="900" y="305" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
+    font-size="18" font-weight="500" fill="#A1A1AA" letter-spacing="0.1em">/100</text>
+  ${meta.grade
       ? `<rect x="855" y="420" width="90" height="40" rx="8" fill="${gc}" opacity="0.15"/>
   <text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
     font-size="22" font-weight="700" fill="${gc}">Grade ${escSvg(meta.grade)}</text>`
       : `<text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="18" font-weight="700" fill="#A1A1AA">Grade unavailable</text>`
-    : `<text x="900" y="447" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="18" font-weight="700" fill="#A1A1AA">${meta.measurementStatus === "partial" ? "No overall score" : "No score substituted"}</text>`;
+    font-size="18" font-weight="700" fill="#A1A1AA">Grade unavailable</text>`}`
+    : `<rect x="730" y="190" width="380" height="180" rx="24" fill="#12141A" stroke="#27272A"/>
+  <rect x="730" y="190" width="6" height="180" rx="3" fill="#F97316"/>
+  <text x="770" y="245" font-family="system-ui,-apple-system,sans-serif" font-size="15" font-weight="800" fill="#F97316" letter-spacing="0.14em">${measurementState === "partial" ? "PARTIAL CHECK" : "CHECK INCOMPLETE"}</text>
+  <text x="770" y="292" font-family="system-ui,-apple-system,sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">${measurementState === "partial" ? "Some categories returned." : "The automated check didn’t finish."}</text>
+  <text x="770" y="326" font-family="system-ui,-apple-system,sans-serif" font-size="17" font-weight="500" fill="#A1A1AA">${measurementState === "partial" ? "No overall score is shown." : "No score or findings are shown."}</text>`;
+  const subtitle = measurementState === "complete"
+    ? "Performance · SEO · Accessibility · Best Practices"
+    : measurementState === "partial"
+      ? "Only completed categories are shown."
+      : "No score, findings, or repair plan.";
+  const domainLine = sameSiteIdentity(meta.companyName, meta.domain)
+    ? ""
+    : `<text x="80" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="22"
+    font-weight="500" fill="#F97316">${domain}</text>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
@@ -87,24 +114,15 @@ export function generateOGSvg(meta: AuditMeta): string {
   <!-- Top accent bar -->
   <rect width="1200" height="4" fill="url(#accent)"/>
 
-  <!-- Score circle -->
-  <circle cx="900" cy="280" r="120" fill="none" stroke="#27272A" stroke-width="8"/>
-  ${scoreArc}
-  <text x="900" y="265" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="72" font-weight="200" fill="${gc}">${scoreValue}</text>
-  <text x="900" y="305" text-anchor="middle" font-family="system-ui,-apple-system,sans-serif"
-    font-size="18" font-weight="500" fill="#A1A1AA" letter-spacing="0.1em">${scoreSuffix}</text>
-
-  <!-- Grade badge -->
-  ${gradeBadge}
+  <!-- Complete score or incomplete-status panel -->
+  ${scorePanel}
 
   <!-- Company name -->
   <text x="80" y="240" font-family="Inter,system-ui,-apple-system,sans-serif" font-size="48" font-weight="700"
     fill="#FFFFFF">${company}</text>
 
   <!-- Domain -->
-  <text x="80" y="290" font-family="system-ui,-apple-system,sans-serif" font-size="22"
-    font-weight="500" fill="#F97316">${domain}</text>
+  ${domainLine}
 
   <!-- Label -->
   <text x="80" y="180" font-family="system-ui,-apple-system,sans-serif" font-size="14"
@@ -115,7 +133,7 @@ export function generateOGSvg(meta: AuditMeta): string {
 
   <!-- Subtitle -->
   <text x="80" y="380" font-family="system-ui,-apple-system,sans-serif" font-size="18"
-    fill="#A1A1AA">Performance · SEO · Accessibility · Best Practices</text>
+    fill="#A1A1AA">${subtitle}</text>
 
   <!-- LiFi branding -->
   <text x="80" y="560" font-family="system-ui,-apple-system,sans-serif" font-size="14"

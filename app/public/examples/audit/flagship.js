@@ -198,13 +198,15 @@
       var stopped = progressVisible && progressError && progressError.classList.contains('visible');
       var complete = progressVisible && !stopped && progressBar && progressBar.value >= 100;
       var scanning = progressVisible && !complete && !stopped;
+      var measurement = progressSection && progressSection.dataset.measurementStatus;
+      var completionLabel = measurement === 'unavailable' ? 'Check finished' : measurement === 'partial' ? 'Partial results' : 'Report ready';
       var current = steps.find(function (step) { return step.classList.contains('active'); });
       scan.setAttribute('data-scanning', String(scanning));
-      status.textContent = stopped ? 'Check stopped' : complete ? 'Report ready' : scanning ? 'Scanning' : 'Ready';
+      status.textContent = stopped ? 'Check stopped' : complete ? completionLabel : scanning ? 'Scanning' : 'Ready';
       if (stopped) {
         stageLabel.textContent = 'Check stopped';
       } else if (complete) {
-        stageLabel.textContent = 'Report ready';
+        stageLabel.textContent = completionLabel;
       } else if (scanning) {
         var label = current ? current.textContent.replace(/\s+/g, ' ').trim().replace(/\.{3}|…/g, '') : 'Reading public page';
         stageLabel.textContent = label;
@@ -220,7 +222,7 @@
     if (urlInput) urlInput.addEventListener('input', updateDomain);
 
     var observer = new MutationObserver(updateState);
-    if (progressSection) observer.observe(progressSection, { attributes: true, attributeFilter: ['class'] });
+    if (progressSection) observer.observe(progressSection, { attributes: true, attributeFilter: ['class', 'data-measurement-status'] });
     steps.forEach(function (step) { observer.observe(step, { attributes: true, attributeFilter: ['class'] }); });
     if (progressBar) observer.observe(progressBar, { attributes: true, attributeFilter: ['value'] });
     if (progressError) observer.observe(progressError, { attributes: true, attributeFilter: ['class'] });

@@ -6,7 +6,8 @@ import type { Context } from "@netlify/functions";
 import { getStore } from "@netlify/blobs";
 import { Buffer } from "node:buffer";
 import { createTransport } from "nodemailer";
-import { BOOKING_HREF } from "../../app/src/data/contact.ts";
+import { renderAuditEmail } from "./lib/audit-email.mts";
+import { requestPageSpeed } from "./lib/pagespeed-request.mts";
 import {
   safeDatabaseErrorLabel,
   shouldPersistAuditLead,
@@ -90,6 +91,7 @@ async function setStatus(
   url: string | null = null,
   message: string | null = null,
   emailDelivery?: PublicAuditEmailDelivery,
+  measurementStatus?: "complete" | "partial" | "unavailable",
 ) {
   const store = getStore({ name: "audit-status", consistency: "strong" });
   await store.setJSON(slug, {
@@ -98,6 +100,7 @@ async function setStatus(
     url,
     message,
     ...(emailDelivery ? { email_delivery: emailDelivery } : {}),
+    ...(measurementStatus ? { measurement_status: measurementStatus } : {}),
   });
 }
 
@@ -178,23 +181,7 @@ export function deriveOverallScore(metrics: AuditData["metrics"]): number | null
 }
 
 async function fetchPageSpeed(url: string): Promise<PageSpeedResult> {
-  const apiKey = getEnv("PAGESPEED_API_KEY");
-
-  const params = new URLSearchParams({ url, strategy: "mobile" });
-  params.append("category", "performance");
-  params.append("category", "seo");
-  params.append("category", "best-practices");
-  params.append("category", "accessibility");
-  if (apiKey) params.set("key", apiKey);
-
-  const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params}`;
-  console.log(`[audit] PageSpeed request for: ${url.slice(0, 100)}`);
-  const res = await fetch(apiUrl, { signal: AbortSignal.timeout(60_000) });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`PageSpeed API ${res.status}: ${text.slice(0, 300)}`);
-  }
+  const res = await requestPageSpeed(url, getEnv("PAGESPEED_API_KEY"));
 
   const data = await res.json();
   const lr = data.lighthouseResult;
@@ -966,64 +953,14 @@ async function sendAuditEmail(
   const safeEmail = email.replace(/[\r\n]/g, '').slice(0, 254);
   const safeCompanyName = companyName.replace(/[\r\n]/g, '').slice(0, 100);
 
-  const subject = `Your Website Audit Is Ready — ${safeCompanyName}`;
-  const safeSubject = subject.replace(/[\r\n]/g, '').slice(0, 200);
-  const measurementValue = overallScore === null ? "N/A" : String(overallScore);
-  const measurementLabel = grade
-    ? `Overall Grade · ${escHtml(grade)} · ${overallScore}/100`
-    : measuredCategoryCount > 0
-      ? `Partial Lighthouse measurement · ${measuredCategoryCount}/4 categories · no overall score substituted`
-      : "Lighthouse measurement unavailable — no score substituted";
-
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#050507;font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif">
-  <div style="max-width:580px;margin:0 auto;padding:48px 24px">
-
-    <!-- Header -->
-    <div style="text-align:center;margin-bottom:36px">
-      <p style="color:#F97316;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:0 0 8px">Website Audit Report</p>
-      <h1 style="color:#FFFFFF;font-size:22px;font-weight:700;margin:0;line-height:1.3">${escHtml(safeCompanyName)}</h1>
-      <p style="color:#8A8A94;font-size:13px;margin:6px 0 0">${escHtml(domain)}</p>
-    </div>
-
-    <!-- Grade card -->
-    <div style="background:#1A1C23;border-radius:32px;padding:36px;text-align:center;margin-bottom:28px;border:1px solid #27272A">
-      <div style="font-size:72px;font-weight:700;color:#F97316;line-height:1;margin-bottom:6px">${escHtml(measurementValue)}</div>
-      <p style="color:#A1A1AA;font-size:13px;margin:0;letter-spacing:0.04em">${measurementLabel}</p>
-    </div>
-
-    <!-- Body copy -->
-    <p style="color:#A1A1AA;font-size:15px;line-height:1.7;margin:0 0 20px">
-      Hi there — we just finished an audit of <strong style="color:#FFFFFF">${escHtml(domain)}</strong> covering Lighthouse Performance, SEO, Accessibility, and Best Practices.
-    </p>
-
-    <p style="color:#A1A1AA;font-size:15px;line-height:1.7;margin:0 0 32px">
-      Your report shows the measurements Google PageSpeed Insights returned, leaves unavailable values blank, and gives you a clear evidence-based repair order.
-    </p>
-
-    <!-- CTA -->
-    <div style="text-align:center;margin-bottom:36px">
-      <a href="${auditUrl}" style="display:inline-block;background:#F97316;color:#FFFFFF;text-decoration:none;padding:14px 36px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:0.01em">View Your Full Report →</a>
-    </div>
-
-    <!-- Soft close -->
-    <p style="color:#A1A1AA;font-size:14px;line-height:1.7;margin:0 0 28px">
-      Prefer a set time? <a href="${escHtml(BOOKING_HREF)}" target="_blank" rel="noopener noreferrer" style="color:#70A5FF;text-decoration:underline;text-underline-offset:3px;font-weight:700">Book a free 30-minute second opinion</a>. Choose a Monday–Friday appointment between 9am and 5pm Eastern. We’ll meet on Google Meet, review the report with you, and name the clearest next move. No prep or commitment. You can also reply to this email.
-    </p>
-
-    <!-- Footer -->
-    <div style="border-top:1px solid #27272A;padding-top:24px;text-align:center">
-      <p style="color:#8A8A94;font-size:12px;margin:0;line-height:1.6">
-        Little Fight NYC — A New York small-business technology partner.<br>
-        <a href="https://littlefightnyc.com" style="color:#F97316;text-decoration:none">littlefightnyc.com</a>
-      </p>
-    </div>
-
-  </div>
-</body>
-</html>`;
+  const { subject, html, text } = renderAuditEmail({
+    companyName: safeCompanyName,
+    domain,
+    grade,
+    overallScore,
+    measuredCategoryCount,
+    auditUrl,
+  });
 
   const mimeBuilder = createTransport({
     streamTransport: true,
@@ -1033,8 +970,9 @@ async function sendAuditEmail(
     from: { name: "Little Fight NYC", address: GMAIL_FROM },
     replyTo: GMAIL_FROM,
     to: safeEmail,
-    subject: safeSubject,
+    subject,
     html,
+    text,
   });
 
   const tokenResponse = await fetchGoogleWithRetry(
@@ -1084,14 +1022,6 @@ async function sendAuditEmail(
   );
 
   return { status: "sent" };
-}
-
-function escHtml(s: string): string {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1364,6 +1294,7 @@ export default async (req: Request, context: Context) => {
       `/examples/audit/report/${slug}`,
       null,
       publicAuditEmailDelivery(emailDeliveryStatus),
+      measurementState,
     );
     console.log(`[audit] ✅ Pipeline complete: ${auditUrl}`);
   } catch (err) {

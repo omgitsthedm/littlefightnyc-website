@@ -85,6 +85,7 @@ const DRAFT_KEY = TECH_AUDIT_SESSION_KEYS.draft;
 const REPORT_CONTEXT_KEY = TECH_AUDIT_SESSION_KEYS.report;
 const WEBSITE_INTENT = "website";
 const WEBSITE_ROUTE = auditRoutes[0];
+const REPORT_FIRST_LOOK_MESSAGE = "I’d like a free first look at my website.";
 
 function leadIntentFromQuery(params: URLSearchParams): TechAuditLeadIntent {
   return parseTechAuditLeadIntent(params.get("intent")) ?? "general";
@@ -238,22 +239,29 @@ export default function TechAudit() {
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
   const activeDraft = draft?.intent === intentMode ? draft : null;
+  const reportEntry = Boolean(reportId);
   // A regular website lead receives an automatic prompt. Do not carry that
   // prompt into the no-site route, where it would tell an owner to improve a
-  // website they do not have. Keep genuine typed context and contact fields.
-  const discardAutomaticWebsiteContext = noWebsiteLead && activeDraft?.messageDirty !== true;
+  // website they do not have. A report entry is different: a failed automated
+  // check does not establish a website problem, so it receives a neutral
+  // starter unless the owner has already edited their own note.
+  const discardAutomaticWebsiteContext = (noWebsiteLead || reportEntry) && activeDraft?.messageDirty !== true;
   const initialSymptom = discardAutomaticWebsiteContext
     ? null
     : activeDraft?.symptom ?? (websiteIntent ? WEBSITE_ROUTE.label : null);
   const initialUrgency = discardAutomaticWebsiteContext
     ? null
     : activeDraft?.urgency ?? null;
-  const initialMessage = appendAuditContext(
-    discardAutomaticWebsiteContext
-      ? ""
-      : activeDraft?.message || composeMessage(initialSymptom, initialUrgency),
-    websiteUrl,
-  );
+  const initialMessage = reportEntry
+    ? activeDraft?.messageDirty
+      ? activeDraft.message
+      : appendAuditContext(REPORT_FIRST_LOOK_MESSAGE, websiteUrl)
+    : appendAuditContext(
+      discardAutomaticWebsiteContext
+        ? ""
+        : activeDraft?.message || composeMessage(initialSymptom, initialUrgency),
+      websiteUrl,
+    );
   // Open on the real form. Owners can describe the problem in their own words
   // without completing a symptom quiz first.
   const [step, setStep] = useState<Step>(3);
