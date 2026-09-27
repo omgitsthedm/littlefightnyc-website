@@ -409,7 +409,9 @@ for (const delay of ["entry", "route"] as const) {
       body: JSON.stringify({ delay, initialSummaryY: readingPosition, mountedSummaryY: retainedPosition }),
       contentType: "application/json",
     });
-    expect(Math.abs(retainedPosition - readingPosition)).toBeLessThanOrEqual(2);
+    // Scroll offsets are integral CSS pixels while layout boxes use 1/64px
+    // fractions. Compare the same pixel precision on both sides of the handoff.
+    expect(Math.abs(Math.round(retainedPosition) - Math.round(readingPosition))).toBeLessThanOrEqual(2);
     // The transferred summary must still be a working native control.
     await page.keyboard.press("Space");
     await expect(mounted.locator('[data-lf-disclosure="footer:What we fix"]')).toHaveJSProperty("open", false);
