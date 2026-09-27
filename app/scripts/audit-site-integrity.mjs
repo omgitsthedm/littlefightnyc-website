@@ -292,6 +292,19 @@ for (const missing of missingReferences.keys()) {
 const routeMeta = JSON.parse(await readFile(routeMetaPath, "utf8"));
 const navIndex = JSON.parse(await readFile(navIndexPath, "utf8"));
 
+// The optional machine-readable directory must recommend the same public
+// destinations as the sitemap, never noindex records or canonical aliases.
+const publicSitemap = await readFile(path.join(distRoot, "sitemap.xml"), "utf8");
+const machineDirectory = await readFile(path.join(distRoot, "llms.txt"), "utf8");
+const sitemapDestinations = new Set([...publicSitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]));
+const directoryDestinations = new Set([...machineDirectory.matchAll(/^- \[[^\n]+\]\((https:\/\/[^)]+)\):/gm)].map((match) => match[1]));
+for (const destination of directoryDestinations) {
+  if (!sitemapDestinations.has(destination)) failures.push(`llms.txt promotes a non-sitemap destination: ${destination}`);
+}
+for (const destination of sitemapDestinations) {
+  if (!directoryDestinations.has(destination)) failures.push(`llms.txt omits a public sitemap destination: ${destination}`);
+}
+
 // Every indexable page must be reachable by following links in the prerendered
 // HTML, not only after React mounts. 23 pages — case studies, industries,
 // studio projects, glossary terms — were in the sitemap but had no inbound link
