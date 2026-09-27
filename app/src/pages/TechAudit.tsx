@@ -671,34 +671,6 @@ export default function TechAudit() {
                 9am–9pm Eastern: a human answers. After hours: leave a message.
               </p>
             </div>
-            <details className="lf-audit-intro__example" data-lf-first-look-example="hair-by-rachel-charles">
-              <summary>See a first-look example</summary>
-              <div className="lf-audit-intro__example-content">
-                <p className="lf-audit-intro__example-label">Public work example</p>
-                <h2 id="lf-audit-example-title">Keep the booking system. Make the path clearer.</h2>
-                <p className="lf-audit-intro__example-lead">
-                  Hair By Rachel Charles kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
-                </p>
-                <dl className="lf-audit-intro__example-steps">
-                  <div>
-                    <dt>Keep</dt>
-                    <dd>Square continued to manage availability.</dd>
-                  </div>
-                  <div>
-                    <dt>Clarify</dt>
-                    <dd>The site gave new clients a clear view of Rachel’s work and services.</dd>
-                  </div>
-                  <div>
-                    <dt>Hand off</dt>
-                    <dd>The booking step led into the calendar clients already knew.</dd>
-                  </div>
-                </dl>
-                <p className="lf-audit-intro__example-close">
-                  A first look puts the first useful decision in writing. Paid scope stays separate.
-                </p>
-                <Link to="/case-studies/hair-by-rachel-charles/">Read Rachel’s public case study</Link>
-              </div>
-            </details>
           </div>
           <article className="lf-audit-intro__proof">
             <Link
@@ -1172,6 +1144,34 @@ export default function TechAudit() {
                 { label: "Clear next step", sub: "Free consultation" },
               ]}
             />
+            <details className="lf-audit__example" data-lf-first-look-example="hair-by-rachel-charles">
+              <summary>See a first-look example</summary>
+              <div className="lf-audit__example-content">
+                <p className="lf-audit__example-label">Public work example</p>
+                <h2 id="lf-audit-example-title">Keep the booking system. Make the path clearer.</h2>
+                <p className="lf-audit__example-lead">
+                  Hair By Rachel Charles kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
+                </p>
+                <dl className="lf-audit__example-steps">
+                  <div>
+                    <dt>Keep</dt>
+                    <dd>Square continued to manage availability.</dd>
+                  </div>
+                  <div>
+                    <dt>Clarify</dt>
+                    <dd>The site gave new clients a clear view of Rachel’s work and services.</dd>
+                  </div>
+                  <div>
+                    <dt>Hand off</dt>
+                    <dd>The booking step led into the calendar clients already knew.</dd>
+                  </div>
+                </dl>
+                <p className="lf-audit__example-close">
+                  A first look puts the first useful decision in writing. Paid scope stays separate.
+                </p>
+                <Link to="/case-studies/hair-by-rachel-charles/">Read Rachel’s public case study</Link>
+              </div>
+            </details>
           </aside>
         </div>
       </section>

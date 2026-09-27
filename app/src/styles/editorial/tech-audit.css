@@ -61,7 +61,7 @@
 
 /* A real public project makes the first-look deliverable tangible without
    implying an outcome or scope for the next owner. */
-.lf-audit-intro__example {
+.lf-audit__example {
   max-width: 52ch;
   margin-top: var(--lf-space-5);
   border: 1px solid var(--lf-hairline);
@@ -70,7 +70,7 @@
   box-shadow: 0 0.9rem 2.4rem rgb(0 0 0 / 16%);
 }
 
-.lf-audit-intro__example summary {
+.lf-audit__example summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -85,33 +85,33 @@
   text-transform: uppercase;
 }
 
-.lf-audit-intro__example summary::-webkit-details-marker {
+.lf-audit__example summary::-webkit-details-marker {
   display: none;
 }
 
-.lf-audit-intro__example summary::after {
+.lf-audit__example summary::after {
   color: var(--lf-fight);
   content: "+";
   font: 500 var(--lf-text-md) / 1 var(--lf-mono);
 }
 
-.lf-audit-intro__example[open] summary::after {
+.lf-audit__example[open] summary::after {
   content: "−";
 }
 
-.lf-audit-intro__example summary:focus-visible {
+.lf-audit__example summary:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
 
-.lf-audit-intro__example-content {
+.lf-audit__example-content {
   display: grid;
   gap: var(--lf-space-3);
   padding: 0 var(--lf-space-4) var(--lf-space-4);
   border-top: 1px solid var(--lf-hairline);
 }
 
-.lf-audit-intro__example-label {
+.lf-audit__example-label {
   margin: 0;
   color: var(--lf-fight);
   font: 500 var(--lf-text-2xs) / 1.4 var(--lf-mono);
@@ -119,7 +119,7 @@
   text-transform: uppercase;
 }
 
-.lf-editorial .lf-audit-intro__example h2 {
+.lf-editorial .lf-audit__example h2 {
   max-width: 22ch;
   margin: 0;
   color: var(--lf-bone);
@@ -129,8 +129,8 @@
   text-wrap: balance;
 }
 
-.lf-audit-intro__example-lead,
-.lf-audit-intro__example-close {
+.lf-audit__example-lead,
+.lf-audit__example-close {
   max-width: none;
   margin: 0;
   color: var(--lf-bone-soft);
@@ -138,13 +138,13 @@
   line-height: 1.5;
 }
 
-.lf-audit-intro__example-steps {
+.lf-audit__example-steps {
   display: grid;
   gap: var(--lf-space-2);
   margin: 0;
 }
 
-.lf-audit-intro__example-steps div {
+.lf-audit__example-steps div {
   display: grid;
   grid-template-columns: 5.8rem minmax(0, 1fr);
   gap: var(--lf-space-2);
@@ -152,21 +152,21 @@
   border-top: 1px solid var(--lf-hairline);
 }
 
-.lf-audit-intro__example-steps dt {
+.lf-audit__example-steps dt {
   color: var(--lf-fight);
   font: 500 var(--lf-text-2xs) / 1.45 var(--lf-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.lf-audit-intro__example-steps dd {
+.lf-audit__example-steps dd {
   margin: 0;
   color: var(--lf-bone-soft);
   font-size: var(--lf-text-sm);
   line-height: 1.45;
 }
 
-.lf-editorial .lf-audit-intro__example a {
+.lf-editorial .lf-audit__example a {
   justify-self: start;
   min-height: var(--lf-control-min);
   display: inline-flex;
@@ -178,12 +178,12 @@
   transition: color var(--m-signal-ms) var(--m-signal-ease);
 }
 
-.lf-editorial .lf-audit-intro__example a:hover,
-.lf-editorial .lf-audit-intro__example a:focus-visible {
+.lf-editorial .lf-audit__example a:hover,
+.lf-editorial .lf-audit__example a:focus-visible {
   color: var(--lf-fight-hover);
 }
 
-.lf-editorial .lf-audit-intro__example a:focus-visible {
+.lf-editorial .lf-audit__example a:focus-visible {
   outline: 2px solid var(--lf-fight);
   outline-offset: 3px;
 }
