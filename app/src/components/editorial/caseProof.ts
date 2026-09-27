@@ -41,3 +41,12 @@ export function formatCaseProofDate(date?: string) {
 export function hasCaseCapture(study: CaseStudy) {
   return Boolean(study.showcase.proof.captureDate);
 }
+
+export function hasCurrentPublicSource(study: CaseStudy) {
+  return Boolean(
+    study.url
+      && study.showcase.availability === "public"
+      && study.showcase.linkPolicy === "custom-domain"
+      && ["public-live", "owned-live"].includes(study.showcase.proof.status),
+  );
+}

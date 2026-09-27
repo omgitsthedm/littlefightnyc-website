@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { caseStudies } from "@/data/site-cases";
+import { hasCurrentPublicSource } from "./caseProof";
 import "./WorkWall.css";
 
 /**
@@ -10,7 +11,7 @@ import "./WorkWall.css";
  * shows real shipped client sites in a device frame and slowly drifts through
  * them, so the page that asks for trust is showing the reason for it.
  *
- * Every entry is a real capture of a live, client-owned site. Nothing is
+ * Every entry is a real capture from a current, live client-owned site. Nothing is
  * illustrative and nothing is invented: the slugs come from the canonical case
  * catalog, so a case that goes private disappears from here too.
  */
@@ -31,7 +32,7 @@ export default function WorkWall({ slugs, label = "Recent shipped work" }: Props
   const picks = slugs
     .map((slug) => caseStudies.find((entry) => entry.slug === slug))
     .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry))
-    .filter((entry) => entry.showcase?.availability === "public");
+    .filter(hasCurrentPublicSource);
 
   if (picks.length === 0) return null;
 

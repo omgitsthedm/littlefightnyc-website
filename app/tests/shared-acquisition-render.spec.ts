@@ -28,6 +28,7 @@ for (const route of [
   { path: "/services/custom-local-websites/", landmarks: ["h1", ".lf-pagehero__actions", ".lf-sd-web", ".lf-quiet-foot"] },
   { path: "/case-studies/hair-by-rachel-charles/", landmarks: ["h1", ".lf-pagehero__actions", ".lf-live-explorer__viewport", ".lf-quiet-foot"] },
   { path: "/tech-audit/", landmarks: ["h1", ".lf-audit__form", ".lf-quiet-foot"] },
+  { path: "/nationwide/", landmarks: ["h1", "[data-lf-website-proof-set]", ".lf-quiet-foot"] },
 ]) {
   test(`the initial ${route.path} composition matches the finished buying journey @all-projects`, async ({ page }) => {
     // Ordinary motion must not replay a first-paint entrance during mounting.
@@ -64,6 +65,94 @@ for (const route of [
   });
 }
 
+test("industry and neighborhood first paints keep the real hero through mount at phone and tablet widths @chromium-desktop @chromium-mobile", async ({ page }) => {
+  const routes = [
+    {
+      path: "/industries/salons-wellness/",
+      h1: "Salon websites that make booking clear.",
+      image: "/assets/case-hair-by-rachel-charles.webp",
+    },
+    {
+      path: "/industries/retail-ecommerce/",
+      h1: "The website and the shelf need to stop arguing.",
+      image: "/assets/interior-jeans-rack.webp",
+    },
+    {
+      path: "/areas/soho/",
+      h1: "Websites, local search, and tech help for SoHo businesses.",
+      image: "/assets/hero-soho-crosswalk.webp",
+    },
+  ];
+
+  for (const viewport of [
+    { width: 390, height: 844, name: "phone" },
+    { width: 928, height: 768, name: "tablet" },
+  ]) {
+    await page.setViewportSize(viewport);
+    for (const route of routes) {
+      const html = await (await page.request.get(route.path)).text();
+      const entry = html.match(/<script\s+type="module"[^>]*src="([^"]+)"/i)?.[1];
+      expect(entry, `${route.path} needs its app entry`).toBeTruthy();
+      let release = () => {};
+      const held = new Promise<void>(resolve => { release = resolve; });
+      await page.route(`**${entry}`, async request => { await held; await request.continue(); });
+      await page.goto(route.path, { waitUntil: "commit" });
+
+      const initialHero = page.locator("#root .lf-pagehero");
+      await expect(initialHero).toBeVisible();
+      await expect(page.locator("#root .lf-seo")).toHaveCount(0);
+      await expect(initialHero.getByRole("heading", { level: 1, name: route.h1 })).toBeVisible();
+      await expect(initialHero.locator(".lf-pagehero__image img")).toHaveAttribute("src", route.image);
+      await settleVisibleType(page);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route.path} first paint overflows at ${viewport.name}`).toBe(true);
+
+      release();
+      const mounted = page.locator("[data-lf-route-mount]");
+      await expect(mounted).toBeVisible();
+      const mountedHero = mounted.locator(".lf-pagehero");
+      await expect(mountedHero.getByRole("heading", { level: 1, name: route.h1 })).toBeVisible();
+      await expect(mountedHero.locator(".lf-pagehero__image img")).toHaveAttribute("src", route.image);
+      await settleVisibleType(page);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `${route.path} mounted page overflows at ${viewport.name}`).toBe(true);
+      await page.unrouteAll({ behavior: "wait" });
+    }
+  }
+});
+
+test("the no-JS answer fallback keeps brand and phone separate at tablet width @chromium-desktop", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({
+    javaScriptEnabled: false,
+    viewport: { width: 928, height: 768 },
+  });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/answers/website-form-not-working-small-business/`);
+  const header = page.locator("header.lf-seo__nav");
+  const brand = header.locator(".lf-seo__brand");
+  const phone = header.locator(".lf-seo__phone");
+  const links = header.locator(".lf-seo__nav-links");
+  await expect(header).toBeVisible();
+  await expect(brand).toBeVisible();
+  await expect(phone).toBeVisible();
+  await expect(links).toBeVisible();
+  const layout = await header.evaluate((element) => {
+    const rect = (selector: string) => {
+      const box = element.querySelector(selector)!.getBoundingClientRect();
+      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom };
+    };
+    return {
+      brand: rect(".lf-seo__brand"),
+      phone: rect(".lf-seo__phone"),
+      links: rect(".lf-seo__nav-links"),
+      scrollWidth: document.documentElement.scrollWidth,
+      viewportWidth: innerWidth,
+    };
+  });
+  expect(layout.brand.right <= layout.phone.left || layout.phone.right <= layout.brand.left, "brand and phone overlap in the no-JS header").toBe(true);
+  expect(layout.links.top, "primary links need a readable second row at tablet width").toBeGreaterThan(layout.brand.bottom);
+  expect(layout.scrollWidth, "no-JS answer page overflows at tablet width").toBeLessThanOrEqual(layout.viewportWidth + 1);
+  await context.close();
+});
+
 test("the first decisions and inquiry field fit their intended openings @all-projects", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 720 });
   for (const path of ["/website-check/", "/case-studies/hair-by-rachel-charles/", "/services/custom-local-websites/"]) {
@@ -81,6 +170,9 @@ test("the first decisions and inquiry field fit their intended openings @all-pro
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/tech-audit/", { waitUntil: "networkidle" });
+  const firstLook = page.locator('[data-lf-first-look="compact"]');
+  await expect(firstLook).toHaveJSProperty("open", false);
+  await expect(firstLook.locator(".lf-first-look__compact-copy")).toBeHidden();
   const firstField = await page.locator("#fit-name").boundingBox();
   expect(firstField).not.toBeNull();
   expect(firstField!.y + firstField!.height).toBeLessThanOrEqual(844);
@@ -94,14 +186,54 @@ test("nationwide questions render from the canonical route metadata @all-project
   expect(nationwide?.faq, "Missing authored nationwide FAQ metadata").toHaveLength(4);
 
   await page.goto("/nationwide/", { waitUntil: "networkidle" });
-  await expect(page.getByRole("heading", { name: "A clear path to a booking tool, from anywhere." })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Read the project proof" })).toHaveAttribute(
-    "href",
-    "/case-studies/hair-by-rachel-charles/",
-  );
+  const proof = page.locator('[data-lf-website-proof-set="public-live"]');
+  await expect(proof.getByRole("heading", { name: "Three live sites. Three customer paths." })).toBeVisible();
+  await expect(proof).toContainText("Hair By Rachel Charles");
+  await expect(proof).toContainText("Chromatic Painting & Design");
+  await expect(proof).toContainText("CC Films");
   for (const item of nationwide!.faq!) {
     const question = page.locator(".lf-faq__item").filter({ hasText: item.question });
     await expect(question).toContainText(item.answer);
+  }
+});
+
+test("comparison answers lead to full decision guides and back @chromium-desktop", async ({ page }) => {
+  const pairs = [
+    {
+      answer: "airtable-vs-notion-reddit-small-business",
+      journal: "airtable-vs-notion-vs-monday-small-business",
+      title: "Airtable vs. Notion vs. monday.com: Pick the Job First",
+    },
+    {
+      answer: "glossgenius-vs-square-appointments-reddit",
+      journal: "square-appointments-vs-glossgenius-nyc-salons",
+      title: "Square Appointments vs. GlossGenius for Salons",
+    },
+    {
+      answer: "shopify-vs-squarespace-reddit",
+      journal: "shopify-vs-squarespace-nyc-retail",
+      title: "Shopify vs. Squarespace for a Local Shop",
+    },
+    {
+      answer: "square-vs-toast-reddit",
+      journal: "square-vs-toast-manhattan-restaurants",
+      title: "Square vs. Toast for a Manhattan Restaurant",
+    },
+  ];
+
+  for (const pair of pairs) {
+    await page.goto(`/answers/${pair.answer}/`, { waitUntil: "networkidle" });
+    await expect(page.getByText("Need the full decision guide?")).toBeVisible();
+    await expect(page.getByRole("link", { name: pair.title })).toHaveAttribute(
+      "href",
+      `/journal/${pair.journal}/`,
+    );
+
+    await page.goto(`/journal/${pair.journal}/`, { waitUntil: "networkidle" });
+    await expect(page.getByRole("link", { name: "Read the quick owner answer" })).toHaveAttribute(
+      "href",
+      `/answers/${pair.answer}/`,
+    );
   }
 });
 
@@ -172,10 +304,16 @@ for (const delay of ["entry", "route"] as const) {
     const contact = page.locator("#root #fit-contact");
     await contact.fill("hello@yourshop");
     await contact.blur();
+    const scope = page.locator('#root [data-lf-disclosure="first-look:scope"]');
+    await scope.locator("summary").click();
+    await scope.locator("summary").focus();
+    await expect(scope).toHaveJSProperty("open", true);
     release();
     const mounted = page.locator("[data-lf-route-mount]");
     await expect(mounted).toBeVisible();
     await expect(mounted.locator("#fit-contact")).toHaveValue("hello@yourshop");
+    await expect(mounted.locator('[data-lf-disclosure="first-look:scope"]')).toHaveJSProperty("open", true);
+    await expect(mounted.locator('[data-lf-disclosure="first-look:scope"] > summary')).toBeFocused();
     await expect(mounted.locator("#fit-contact-error")).toContainText(/incomplete|typo/i);
     await expect(mounted.locator("#fit-contact")).toHaveAttribute("aria-invalid", "true");
     await expect(mounted.locator("#fit-name-error, #fit-business-error, #fit-message-error")).toHaveCount(0);
@@ -350,10 +488,16 @@ test("a native proof disclosure finishes its held keyboard press across loading 
 test("the website decision follows evidence and terms before optional depth @all-projects", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/services/custom-local-websites/", { waitUntil: "networkidle" });
+  await settleVisibleType(page);
   const proof = page.locator(".lf-sd-web");
   const contact = page.locator(".lf-contact-block");
   await expect(page.locator(".lf-pagehero__caption a")).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
   await expect(proof).toContainText("30 Jul 2026");
+  await expect(proof).toContainText("Hair By Rachel Charles");
+  await expect(proof).toContainText("Chromatic Painting & Design");
+  await expect(proof).toContainText("CC Films");
+  await expect(proof.locator('[data-lf-website-proof-set="public-live"]')).toHaveCount(1);
+  await expect(proof.locator('.lf-sd-web__steps')).toContainText("Paid scope stays separate");
   await expect(proof).toContainText("qualifying written scopes");
   await expect(proof).not.toContainText("in two weeks");
   const sequence = await page.locator("main").evaluate(root => [

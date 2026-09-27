@@ -1,7 +1,7 @@
 import type { CaseStudy } from "@/data/site";
 import { ArrowUpRight } from "lucide-react";
 import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
-import { caseProofLabel, formatCaseProofDate } from "./caseProof";
+import { caseProofLabel, formatCaseProofDate, hasCurrentPublicSource } from "./caseProof";
 import "./ProofPassport.css";
 
 type ProofStatusProps = {
@@ -28,6 +28,7 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
   const businessOutcomes =
     study.metrics?.filter((metric) => metric.evidence === "business-outcome") ?? [];
   const captureDate = study.showcase.proof.captureDate;
+  const hasLiveSource = hasCurrentPublicSource(study);
 
   return (
     <section
@@ -42,7 +43,7 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
         <ProofStatus study={study} />
       </header>
 
-      {study.featureProof && (
+      {study.featureProof && hasLiveSource && (
         <a
           className="lf-proof-passport__source"
           href={study.featureProof.sourceUrl}
@@ -74,7 +75,7 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
             </dd>
           </div>
         )}
-        {study.featureProof && (
+        {study.featureProof && hasLiveSource && (
           <div>
             <dt>Verified live</dt>
             <dd>
@@ -102,7 +103,7 @@ export default function ProofPassport({ study }: { study: CaseStudy }) {
           </dl>
         </section>
 
-        {study.featureProof && releaseFacts.length > 0 ? (
+        {study.featureProof && hasLiveSource && releaseFacts.length > 0 ? (
           <section aria-label="Dated build checks">
             <h3>Dated build checks</h3>
             <p>

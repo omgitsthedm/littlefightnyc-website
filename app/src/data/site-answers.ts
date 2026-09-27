@@ -14,6 +14,40 @@ export type AnswerGuide = {
   faq: Array<{ question: string; answer: string }>;
 };
 
+/**
+ * A fast answer and a full Journal guide can address the same decision without
+ * doing the same job. Keep this relationship explicit so an owner can choose
+ * the depth they need instead of landing on two competing versions of a page.
+ */
+export type AnswerCompanionGuide = {
+  slug: string;
+  title: string;
+  detail: string;
+};
+
+export const answerCompanionGuides: Readonly<Record<string, AnswerCompanionGuide>> = {
+  "airtable-vs-notion-reddit-small-business": {
+    slug: "airtable-vs-notion-vs-monday-small-business",
+    title: "Airtable vs. Notion vs. monday.com: Pick the Job First",
+    detail: "Go deeper on roles, operating costs, and current vendor sources.",
+  },
+  "glossgenius-vs-square-appointments-reddit": {
+    slug: "square-appointments-vs-glossgenius-nyc-salons",
+    title: "Square Appointments vs. GlossGenius for Salons",
+    detail: "Use the full booking-flow test and current vendor sources.",
+  },
+  "shopify-vs-squarespace-reddit": {
+    slug: "shopify-vs-squarespace-nyc-retail",
+    title: "Shopify vs. Squarespace for a Local Shop",
+    detail: "Work through inventory, sales, returns, and current platform terms.",
+  },
+  "square-vs-toast-reddit": {
+    slug: "square-vs-toast-manhattan-restaurants",
+    title: "Square vs. Toast for a Manhattan Restaurant",
+    detail: "Run the restaurant flow, complete quote, and outage plan.",
+  },
+};
+
 const googleProfile = {
   label: "Google Business Profile — checked Aug. 25, 2026",
   url: "https://www.google.com/business/",

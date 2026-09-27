@@ -703,7 +703,7 @@ export const caseStudies: CaseStudy[] = [
   {
     type: "Funding LLC",
     client: "Grand Funding LLC",
-    url: "https://www.grandfundingllc.com",
+    url: "",
     slug: "grand-funding-llc",
     metrics: [
       {
@@ -717,8 +717,8 @@ export const caseStudies: CaseStudy[] = [
         evidence: "build",
       },
       {
-        value: "Own domain",
-        label: "Live at grandfundingllc.com",
+        value: "Jul 27, 2026",
+        label: "Dated custom-domain capture",
         evidence: "release",
       },
     ],
@@ -737,16 +737,17 @@ export const caseStudies: CaseStudy[] = [
         { label: "Connect", detail: "A visitor reaches a measured contact path after they have the context to use it." },
       ],
       textAlternative:
-        "The live library moves a visitor from a broad funding question to a clear service or policy page, then to the appropriate contact path.",
+        "The dated project capture moves a visitor from a broad funding question to a clear service or policy page, then to the appropriate contact path.",
     },
     showcase: {
       label: "A desert-night lending library",
       kind: "Website",
       context: "Arizona funding business",
       availability: "public",
-      linkPolicy: "custom-domain",
+      privacyLabel: "Dated project capture",
+      linkPolicy: "case-only",
       proof: {
-        status: "public-live",
+        status: "case-only",
         captureDate: "2026-07-27",
         captureDevices: ["desktop", "tablet", "mobile"],
       },
@@ -765,7 +766,7 @@ export const caseStudies: CaseStudy[] = [
     problem: "A funding LLC needed a credible public presence that could explain a complex category without the glass towers, stock handshakes, and vague promises that make finance sites look interchangeable.",
     kept: "The team’s approved positioning, contact paths, policy boundaries, and the language they use to describe the business.",
     changed: "Built a clear library for services, audiences, locations, questions, and reference material. Each page gives a partner or prospect the next useful answer instead of a vague sales push.",
-    result: "A distinctive public resource at grandfundingllc.com. Partners and prospects can move from a broad question to a precise answer on any screen, while claims and regulated language remain explicitly client-controlled.",
+    result: "A dated project capture of an answer system that moved partners and prospects from a broad question to a precise answer on any screen, while claims and regulated language remained explicitly client-controlled.",
     body: [
       "A partner or prospect can find the right service, policy, or contact path on any screen without decoding finance language. That is the whole brief: be credible without one borrowed cliche. Grand Funding is a financial funding business, and finance sites have a template problem — glass towers, stock handshakes, the word 'solutions.' Those defaults exist because trust is hard to show. But to the exact partners this site must convince, a template reads as risk.",
       "We kept the team’s approved positioning and their own words. No invented mission statement and no unapproved lending claims. The design builds trust by making company, service, policy, and founder information easier to find.",

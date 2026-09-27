@@ -1106,12 +1106,12 @@ test(
         .filter({ visible: true })
         .first(),
     ).toBeVisible();
-    // The first screen is six live client sites, which is content rather than
+    // The first screen is five live sites, which is content rather than
     // motion — reduced motion takes nothing away from it. Each of the four
     // service drawings paints one settled frame and starts no rAF loop, so the
     // whole argument is still readable with every animation switched off.
     const wall = page.locator(".lf-wall__tile");
-    await expect(wall).toHaveCount(6);
+    await expect(wall).toHaveCount(5);
     await expect(wall.first().locator("img")).toBeVisible();
 
     const services = page.locator(".lf-svc");
@@ -1210,8 +1210,8 @@ test(
     // The old hero was a promise, a phone playing a four-beat path, and the
     // beat list — three columns built around one salon, which on a desktop
     // read as a control panel and told a painting contractor this was not for
-    // them. The first screen is now the argument itself: six live client sites
-    // across six visibly different trades.
+    // them. The first screen is now the argument itself: five live sites
+    // across five visibly different trades.
     const wall = page.locator(".lf-wall");
     const tiles = wall.locator(".lf-wall__tile");
     const firstTile = tiles.first().locator("img");
@@ -1219,7 +1219,7 @@ test(
     const desktopAvenueSource = wall.locator('.lf-wall__backdrop source[media="(min-width: 64rem)"]');
 
     await expect(wall).toBeVisible();
-    await expect(tiles).toHaveCount(6);
+    await expect(tiles).toHaveCount(5);
     await expect(avenue).toHaveAttribute("loading", "eager");
     await expect(avenue).toHaveAttribute("fetchpriority", "high");
     await expect(avenue).toHaveAttribute(

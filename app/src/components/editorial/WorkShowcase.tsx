@@ -6,7 +6,6 @@ import "./WorkShowcase.css";
 export const FEATURED_LIVE_CASE_SLUGS = [
   "hair-by-rachel-charles",
   "cc-films",
-  "grand-funding-llc",
   "logan-loans",
   "chromatic-painting-design",
   "clearhelp",
@@ -14,6 +13,7 @@ export const FEATURED_LIVE_CASE_SLUGS = [
 ] as const;
 
 const INTERNAL_CASE_SLUGS = [
+  "grand-funding-llc",
   "legacy-music-group",
   "army-navy-bags",
   "brothers-pizzeria",
@@ -65,7 +65,7 @@ export default function WorkShowcase({
         <header className="lf-work-showcase__head">
           <h2 id={`lf-work-showcase-${mode}-title`}>
             {mode === "featured"
-              ? "Seven live sites. Seven real customer paths."
+              ? `${featuredStudies.length} live sites. ${featuredStudies.length} real customer paths.`
               : "More work. No pretend launches."}
           </h2>
           <p>

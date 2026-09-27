@@ -56,6 +56,15 @@
   text-decoration: none;
 }
 
+.lf-feature-proof__capture-label {
+  color: var(--lf-blue-soft);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .lf-feature-proof__context {
   display: grid;
   gap: var(--lf-space-5);

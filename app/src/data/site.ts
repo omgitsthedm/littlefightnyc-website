@@ -20,8 +20,8 @@ import {
 
 /* Re-export the split-out content arrays so every existing `@/data/site`
  * import keeps working; Vite tree-shakes each consumer to just its slice. */
-export type { AnswerGuide } from "./site-answers";
-export { answerGuides, answerServiceBridge } from "./site-answers";
+export type { AnswerGuide, AnswerCompanionGuide } from "./site-answers";
+export { answerCompanionGuides, answerGuides, answerServiceBridge } from "./site-answers";
 export type {
   CaseCaptureDevice,
   CaseProofStatus,

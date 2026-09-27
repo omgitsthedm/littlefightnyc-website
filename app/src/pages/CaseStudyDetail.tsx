@@ -17,6 +17,7 @@ import {
   caseProofLabel,
   caseProofPriority,
   hasCaseCapture,
+  hasCurrentPublicSource,
 } from "@/components/editorial/caseProof";
 import { caseStudies, services } from "@/data/site";
 import {
@@ -89,8 +90,7 @@ export default function CaseStudyDetail() {
 
   if (!study) return <Navigate to="/examples/" replace />;
 
-  const hasLiveClientDomain = study.showcase.linkPolicy === "custom-domain"
-    && Boolean(study.url);
+  const hasLiveClientDomain = hasCurrentPublicSource(study);
   // VenueCircuit remains exactly available while its separate recovery is in progress.
   const preservedVenueLink = study.slug === "venuecircuit" && Boolean(study.url);
   const liveCaseUrl = hasLiveClientDomain || preservedVenueLink ? study.url : "";
@@ -264,7 +264,7 @@ export default function CaseStudyDetail() {
             <header>
               <h2 id="lf-case-live-title">
                 {includesCapture
-                  ? study.url
+                  ? liveCaseUrl
                     ? preservedVenueLink
                       ? "Explore the responsive build."
                       : "See the customer path in action."
@@ -288,7 +288,7 @@ export default function CaseStudyDetail() {
                   url={liveCaseUrl || undefined}
                   captureDate={study.showcase.proof.captureDate!}
                   devices={study.showcase.proof.captureDevices}
-                  featureProof={study.featureProof}
+                  featureProof={hasLiveClientDomain ? study.featureProof : undefined}
                 />
               )}
               {!usesFocusedBookingProof && <ProjectWalkthrough key={study.slug} study={study} />}

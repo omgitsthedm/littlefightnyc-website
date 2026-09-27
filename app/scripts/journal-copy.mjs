@@ -225,6 +225,16 @@ export function renderJournalCopy(record) {
 
   const fitHref = safeHref(record.cta?.href ?? "/tech-audit/");
   const fitLabel = record.cta?.label ?? "Get a plain-English second opinion";
+  const relatedQuickAnswer = record.relatedQuickAnswer;
+  if (
+    relatedQuickAnswer &&
+    (!relatedQuickAnswer.intro || !relatedQuickAnswer.href || !relatedQuickAnswer.label)
+  ) {
+    throw new Error(`Incomplete related quick answer for Journal copy: ${record.slug}`);
+  }
+  const relatedQuickAnswerHtml = relatedQuickAnswer
+    ? `<p>${escapeHtml(ownerWords(relatedQuickAnswer.intro))} <a href="${escapeHtml(safeHref(relatedQuickAnswer.href))}">${escapeHtml(ownerWords(relatedQuickAnswer.label))}</a>.</p>`
+    : "";
 
   return [
     `<h2>What this means for your business</h2>`,
@@ -232,6 +242,7 @@ export function renderJournalCopy(record) {
     record.watch?.length ? `<h2>What to watch</h2>${list(record.watch)}` : "",
     `<h2>Do this next</h2>`,
     list(record.next, true),
+    relatedQuickAnswerHtml,
     `<h2>When Little Fight fits</h2>`,
     `<p>${escapeHtml(ownerWords(record.fit))}</p>`,
     `<p><a href="${escapeHtml(fitHref)}">${escapeHtml(fitLabel)}</a></p>`,

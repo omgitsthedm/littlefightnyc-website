@@ -177,7 +177,7 @@
 }
 
 .lf-sd-web__proof-copy > p:not(.lf-sd-web__label),
-.lf-sd-web__terms-head p {
+.lf-sd-web__terms-head p:not(.lf-sd-web__label) {
   max-width: 58ch;
   margin: var(--lf-space-4) 0 0;
   color: var(--lf-bone-soft);
@@ -331,6 +331,11 @@
   border-top: 1px solid var(--lf-hairline);
 }
 
+.lf-sd-web__terms > div {
+  display: grid;
+  gap: var(--lf-space-6);
+}
+
 .lf-sd-web__steps {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -370,6 +375,16 @@
   color: var(--lf-bone-soft);
   font-size: var(--lf-text-base);
   line-height: 1.55;
+}
+
+@media (max-width: 47.99rem) {
+  .lf-sd-web__inner {
+    gap: var(--lf-space-6);
+  }
+
+  .lf-sd-web__terms {
+    padding-top: var(--lf-space-6);
+  }
 }
 
 @media (min-width: 768px) {

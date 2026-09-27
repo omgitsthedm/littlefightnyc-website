@@ -70,11 +70,11 @@ const requiredLiveCaseSlugs = [
   "hair-by-rachel-charles",
   "after-hours-agenda",
   "clearhelp",
-  "grand-funding-llc",
   "logan-loans",
   "chromatic-painting-design",
 ];
 const requiredInternalFleetCaseSlugs = [
+  "grand-funding-llc",
   "legacy-music-group",
   "army-navy-bags",
   "brothers-pizzeria",
@@ -388,7 +388,7 @@ const homeFeaturedModule = await import(
 const homeFeaturedWork = homeFeaturedModule.HOME_FEATURED_WORK;
 
 // ── the homepage hero wall ────────────────────────────────────────────────
-// The hero is six live client sites across six trades. It reads a tiny module
+// The hero is five live sites across five trades. It reads a tiny module
 // rather than site-cases.ts, because importing the 52KB catalog into the hero
 // pulled the whole portfolio into the eager marketing entry and broke the
 // bundle budget. That saving is only safe if the small copy cannot drift, so
@@ -408,8 +408,8 @@ const homeWallModule = await import(
 );
 const homeWall = homeWallModule.HOME_WALL;
 
-if (!Array.isArray(homeWall) || homeWall.length !== 6) {
-  fail("homepage wall must carry exactly six live client sites");
+if (!Array.isArray(homeWall) || homeWall.length !== 5) {
+  fail("homepage wall must carry exactly five current live sites");
 }
 
 const wallTrades = new Set();
@@ -422,6 +422,10 @@ for (const tile of homeWall ?? []) {
   if (study.showcase?.availability !== "public") {
     fail(`homepage wall: ${tile.slug} is not public and must not appear on the homepage`);
   }
+  if (!study.url || study.showcase?.linkPolicy !== "custom-domain" ||
+    !["public-live", "owned-live"].includes(study.showcase?.proof?.status)) {
+    fail(`homepage wall: ${tile.slug} has no current public live source`);
+  }
   if (study.client !== tile.client) {
     fail(
       `homepage wall: ${tile.slug} client "${tile.client}" does not match the catalog "${study.client}"`,
@@ -431,7 +435,7 @@ for (const tile of homeWall ?? []) {
   // arguing by volume instead, which is the thing it was rebuilt to stop doing.
   const trade = String(tile.trade ?? "").trim().toLowerCase();
   if (!trade) fail(`homepage wall: ${tile.slug} is missing its trade label`);
-  if (wallTrades.has(trade)) fail(`homepage wall: "${tile.trade}" appears twice — the row must show six different trades`);
+  if (wallTrades.has(trade)) fail(`homepage wall: "${tile.trade}" appears twice — the row must show different trades`);
   wallTrades.add(trade);
 }
 
@@ -608,7 +612,7 @@ for (const study of capturedCases) {
   }
   if (
     study.showcase?.availability === "public"
-    && !["public-live", "owned-live"].includes(study.showcase?.proof?.status)
+    && !["public-live", "owned-live", "case-only"].includes(study.showcase?.proof?.status)
   ) {
     fail(`${study.slug}: public case has an incompatible proof status`);
   }

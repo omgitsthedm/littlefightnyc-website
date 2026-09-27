@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { caseStudies, services } from "@/data/site";
+import { services } from "@/data/site";
 import { answerGuides, answerServiceBridge } from "@/data/site-answers";
 import PageHero from "@/components/editorial/PageHero";
 import LabVisual, { type LabBuildSlug } from "@/components/editorial/LabVisual";
@@ -7,8 +7,8 @@ import EditorialBody from "@/components/editorial/EditorialBody";
 import EditorialFigure from "@/components/editorial/EditorialFigure";
 import PullQuote from "@/components/editorial/PullQuote";
 import QuietContact from "@/components/editorial/QuietContact";
+import WebsiteProofSet from "@/components/editorial/WebsiteProofSet";
 import ServiceDiagram from "@/components/dataviz/ServiceDiagram";
-import { ProofMetricValue } from "@/components/dataviz/ProofMetricValue";
 import {
   CopyPasteTax,
   DowntimeClock,
@@ -17,8 +17,6 @@ import {
 } from "@/components/dataviz/OwnerCalculators";
 import MoneyLeakMeter from "@/components/dataviz/MoneyLeakMeter";
 import OwnerPath from "@/components/dataviz/OwnerPath";
-import { responsiveImageProps } from "@/lib/responsiveImages";
-import { skelImg } from "@/lib/imgSkeleton";
 import { acquisitionIntentForServiceSlug } from "@/lib/acquisitionIntent";
 import "@/styles/editorial/service-detail.css";
 
@@ -84,77 +82,10 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
 };
 
 function WebsiteAcquisitionBlock() {
-  const proof = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
-  if (!proof) return null;
-  const hasLiveClientDomain = Boolean(
-    proof.url
-      && proof.showcase.availability === "public"
-      && proof.showcase.linkPolicy === "custom-domain"
-      && proof.showcase.proof.status === "public-live",
-  );
-
   return (
-    <section className="lf-sd-web" aria-labelledby="lf-sd-web-title">
+    <section className="lf-sd-web" aria-label="Website work and project process">
       <div className="lf-sd-web__inner">
-        <div className="lf-sd-web__proof">
-          <Link className="lf-sd-web__shot" to={`/case-studies/${proof.slug}/`}>
-            <img
-              {...skelImg}
-              src={proof.image}
-              {...responsiveImageProps(proof.image, "(min-width: 960px) 48vw, 100vw", [480, 640, 900])}
-              alt={`The ${proof.client} website as it shipped`}
-              width={1600}
-              height={1200}
-              loading="lazy"
-              decoding="async"
-            />
-          </Link>
-          <div className="lf-sd-web__proof-copy">
-            <p className="lf-sd-web__label">Public work, live</p>
-            <h2 id="lf-sd-web-title">A clearer path from discovery to booking.</h2>
-            <dl className="lf-sd-web__change">
-              <div><dt>Before</dt><dd>{proof.problem}</dd></div>
-              <div><dt>Now</dt><dd>{proof.result}</dd></div>
-            </dl>
-            {proof.metrics && (
-              <dl className="lf-sd-web__metrics">
-                {proof.metrics.map((metric) => (
-                  <div key={metric.label}>
-                    <dt>
-                      <ProofMetricValue value={metric.value} label={metric.label} />
-                    </dt>
-                    <dd>{metric.label}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
-            <div className="lf-sd-web__actions">
-              <Link
-                className="lf-sd-web__primary"
-                to="/tech-audit/?intent=website&source=website_service_proof"
-                data-lf-event="website_plan_intent"
-                data-lf-label="website_service_proof"
-              >
-                Get my website plan
-              </Link>
-              <Link className="lf-sd-web__secondary" to={`/case-studies/${proof.slug}/`}>
-                Read the dated project proof
-              </Link>
-              {hasLiveClientDomain && (
-                <a
-                  className="lf-sd-web__secondary"
-                  href={proof.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-lf-event="portfolio_live_source"
-                  data-lf-label={proof.slug}
-                >
-                  Visit {new URL(proof.url).hostname.replace(/^www\./, "")} ↗
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
+        <WebsiteProofSet />
 
         <div className="lf-sd-web__terms">
           <header className="lf-sd-web__terms-head">
@@ -166,25 +97,27 @@ function WebsiteAcquisitionBlock() {
               <Link to="/journal/what-a-free-tech-audit-actually-looks-like/">See what the free first look covers</Link>
             </div>
           </header>
+          <div>
           <ol className="lf-sd-web__steps">
             <li>
               <h3>A free first look</h3>
-              <p>We look at how customers find you and get in touch. You get a clear next step, including whether a small cleanup is enough.</p>
+              <p>Send a public link or tell us what needs to work better. We agree what to review and give you a written next step, including whether a small cleanup is enough. Paid scope stays separate.</p>
             </li>
             <li>
               <h3>A written plan and exact price</h3>
-              <p>Before work starts, the plan names the scope, who does what, review rounds, launch timing, and ongoing website support. The 14-day promise applies only to qualifying written scopes.</p>
+              <p>You receive the scope, exact price, responsibilities, review rounds, launch timing, and support terms before work starts. The 14-day promise applies only to qualifying written scopes.</p>
             </li>
             <li>
               <h3>Build, review, then launch</h3>
-              <p>We build the agreed pages. You review the working site and its contact or booking path before we launch the agreed version.</p>
-              <p>You provide one decision-maker, accurate services and hours, usable photos or logos, and access to the website address and business tools. Never send passwords through the form.</p>
+              <p>Review the working pages and contact or booking path before launch.</p>
+              <p>You provide a decision-maker, accurate business details, usable photos or logos, and access to your tools. Never send passwords through the form.</p>
             </li>
             <li>
               <h3>Your website, with support agreed</h3>
-              <p>One person stays with the job. You own the code, website address and content. The written plan sets out ongoing website support, so you know who handles the next change.</p>
+              <p>You own the code, website address, and content. Your written plan names who handles support and future changes.</p>
             </li>
           </ol>
+          </div>
         </div>
       </div>
     </section>

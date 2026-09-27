@@ -6,9 +6,12 @@ import Home from "@/pages/Home";
 import Services from "@/pages/Services";
 import ServiceDetail from "@/pages/ServiceDetail";
 import CaseStudyDetail from "@/pages/CaseStudyDetail";
+import IndustryDetail from "@/pages/IndustryDetail";
 import TechAudit from "@/pages/TechAudit";
 import Nationwide from "@/pages/Nationwide";
 import WebsiteCheck from "@/pages/WebsiteCheck";
+import AreaDetail from "@/pages/AreaDetail";
+import { areaPages } from "@/data/site";
 
 /**
  * Build-time public markup for the acquisition routes that need the actual
@@ -18,23 +21,34 @@ import WebsiteCheck from "@/pages/WebsiteCheck";
  * main.tsx still uses createRoot and retains each snapshot until its real lazy
  * leaf has committed.
  */
+const AREA_DETAIL_PATHS = areaPages.map(({ slug }) => `/areas/${slug}/`);
+
 export const COMPONENT_RENDERED_PUBLIC_PATHS = [
   "/",
   "/website-check/",
   "/services/",
   "/services/custom-local-websites/",
+  "/industries/galleries-creative-studios/",
+  "/industries/law-firms/",
+  "/industries/medical-wellness-practices/",
+  "/industries/professional-services/",
+  "/industries/restaurants-bars/",
+  "/industries/retail-ecommerce/",
+  "/industries/salons-wellness/",
   "/case-studies/hair-by-rachel-charles/",
   "/tech-audit/",
   "/nationwide/",
 ] as const;
 
 export type ComponentRenderedPublicPath =
-  (typeof COMPONENT_RENDERED_PUBLIC_PATHS)[number];
+  | (typeof COMPONENT_RENDERED_PUBLIC_PATHS)[number]
+  | (typeof AREA_DETAIL_PATHS)[number];
 
 export function isComponentRenderedPublicPath(
   pathname: string,
 ): pathname is ComponentRenderedPublicPath {
-  return (COMPONENT_RENDERED_PUBLIC_PATHS as readonly string[]).includes(pathname);
+  return (COMPONENT_RENDERED_PUBLIC_PATHS as readonly string[]).includes(pathname) ||
+    AREA_DETAIL_PATHS.includes(pathname);
 }
 
 function renderWithinEditorialShell(
@@ -47,9 +61,11 @@ function renderWithinEditorialShell(
           <Route path="/website-check/" element={<WebsiteCheck />} />
           <Route path="/services/" element={<Services />} />
           <Route path="/services/:slug/" element={<ServiceDetail />} />
+          <Route path="/industries/:slug/" element={<IndustryDetail />} />
           <Route path="/case-studies/:slug/" element={<CaseStudyDetail />} />
           <Route path="/tech-audit/" element={<TechAudit />} />
           <Route path="/nationwide/" element={<Nationwide />} />
+          <Route path="/areas/:slug/" element={<AreaDetail />} />
         </Route>
       </Routes>
     </StaticRouter>,

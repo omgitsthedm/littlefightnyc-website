@@ -9,6 +9,7 @@ import type { CaseStudy } from "@/data/site";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { ProofStatus } from "./ProofPassport";
+import { hasCurrentPublicSource } from "./caseProof";
 import CinematicMedia from "./CinematicMedia";
 import LivePreview from "./LivePreview";
 import "./ProjectReviewGrid.css";
@@ -23,9 +24,7 @@ export default function ProjectReviewGrid({
   return (
     <div className="lf-project-review-grid" data-variant={variant}>
       {studies.map((study) => {
-        const liveClientSite = study.showcase.linkPolicy === "custom-domain"
-          && Boolean(study.featureProof)
-          && Boolean(study.url);
+        const liveClientSite = hasCurrentPublicSource(study);
         // VenueCircuit is intentionally frozen while its separate recovery is underway.
         const preservedVenueLink = study.slug === "venuecircuit" && Boolean(study.url);
         const liveUrl = liveClientSite || preservedVenueLink ? study.url : "";
@@ -41,7 +40,7 @@ export default function ProjectReviewGrid({
             ) : study.image && !study.inventoryOnly ? (
               /* Captured cases play their live site on hover (LivePreview);
                  the rest keep the still. */
-              <LivePreview slug={study.showcase?.proof?.captureDate ? study.slug : undefined}>
+              <LivePreview slug={liveClientSite && study.showcase?.proof?.captureDate ? study.slug : undefined}>
               <img
                 {...skelImg}
                 src={study.image}

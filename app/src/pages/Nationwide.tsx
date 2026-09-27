@@ -1,16 +1,14 @@
 import { Globe2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { caseStudies } from "@/data/site-cases";
 import seoPages from "@/data/seo-pages.json";
 import PageHero from "@/components/editorial/PageHero";
 import EditorialBody from "@/components/editorial/EditorialBody";
 import PullQuote from "@/components/editorial/PullQuote";
 import FaqList from "@/components/editorial/FaqList";
 import QuietContact from "@/components/editorial/QuietContact";
+import FirstLookScope from "@/components/editorial/FirstLookScope";
+import WebsiteProofSet from "@/components/editorial/WebsiteProofSet";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import { createConnectedPath } from "@/components/dataviz/connectedPath";
-import { responsiveImageProps } from "@/lib/responsiveImages";
-import { skelImg } from "@/lib/imgSkeleton";
 import "@/styles/editorial/base.css";
 import "@/styles/editorial/nationwide.css";
 
@@ -41,15 +39,6 @@ const REMOTE_WEBSITE_PATH = createConnectedPath({
 });
 
 export default function Nationwide() {
-  const rachel = caseStudies.find((study) => study.slug === "hair-by-rachel-charles");
-  const hasLiveRachelSite = Boolean(
-    rachel
-      && rachel.url
-      && rachel.showcase.availability === "public"
-      && rachel.showcase.linkPolicy === "custom-domain"
-      && rachel.showcase.proof.status === "public-live",
-  );
-
   return (
     <>
       <PageHero
@@ -118,43 +107,13 @@ export default function Nationwide() {
             </EditorialBody>
           </article>
 
-          {rachel && (
-            <section className="lf-content-tile lf-content-tile--full lf-nationwide-proof" aria-labelledby="lf-nationwide-proof-title">
-              <Link className="lf-nationwide-proof__image" to={`/case-studies/${rachel.slug}/`}>
-                <img
-                  {...skelImg}
-                  src={rachel.image}
-                  {...responsiveImageProps(rachel.image, "(min-width: 760px) 42vw, 100vw", [480, 640, 900])}
-                  alt={`The ${rachel.client} website as it shipped`}
-                  width={1600}
-                  height={1200}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </Link>
-              <div className="lf-nationwide-proof__copy">
-                <p className="lf-nationwide-proof__label">Public website proof · Phoenix, AZ</p>
-                <h2 id="lf-nationwide-proof-title">A clear path to a booking tool, from anywhere.</h2>
-                <p>
-                  Hair By Rachel Charles is a public Phoenix project. It shows the same clear service-to-booking path a remote website can support. On-site help remains a New York service.
-                </p>
-                <div className="lf-nationwide-proof__actions">
-                  <Link to={`/case-studies/${rachel.slug}/`}>Read the project proof</Link>
-                  {hasLiveRachelSite && (
-                    <a
-                      href={rachel.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-lf-event="portfolio_live_source"
-                      data-lf-label={rachel.slug}
-                    >
-                      Visit the live site ↗
-                    </a>
-                  )}
-                </div>
-              </div>
-            </section>
-          )}
+          <section className="lf-content-tile lf-content-tile--full lf-content-tile--quiet">
+            <WebsiteProofSet />
+          </section>
+
+          <section className="lf-content-tile lf-content-tile--full">
+            <FirstLookScope />
+          </section>
 
           <aside className="lf-content-tile lf-content-tile--full lf-content-tile--signal">
             <PullQuote cite="Why a New York shop, anywhere">

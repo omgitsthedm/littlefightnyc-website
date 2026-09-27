@@ -1,7 +1,7 @@
 import { useId, useState } from "react";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import type { CaseStudy } from "@/data/site-cases";
-import { formatCaseProofDate } from "./caseProof";
+import { formatCaseProofDate, hasCurrentPublicSource } from "./caseProof";
 import "./FeatureProof.css";
 
 export default function FeatureProof({ study }: { study: CaseStudy }) {
@@ -16,6 +16,7 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
 
   const steps = proof.steps;
   const active = steps[activeStep];
+  const hasLiveSource = hasCurrentPublicSource(study);
 
   function activateStep(index: number) {
     if (index !== activeStep) setSwitched(true);
@@ -60,16 +61,20 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
           <p>Try what makes it work</p>
           <h3 id={`${id}-title`}>{proof.label}</h3>
         </div>
-        <a
-          href={proof.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-lf-event="portfolio_live_source"
-          data-lf-label={study.slug}
-        >
-          Visit {proof.sourceLabel}
-          <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
-        </a>
+        {hasLiveSource ? (
+          <a
+            href={proof.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-lf-event="portfolio_live_source"
+            data-lf-label={study.slug}
+          >
+            Visit {proof.sourceLabel}
+            <ArrowUpRight size={16} strokeWidth={2} aria-hidden="true" />
+          </a>
+        ) : (
+          <span className="lf-feature-proof__capture-label">Dated project capture</span>
+        )}
       </header>
 
       <div className="lf-feature-proof__context">
@@ -132,12 +137,20 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
       </div>
 
       <footer className="lf-feature-proof__source">
-        <span>
-          Source: <a href={proof.sourceUrl} target="_blank" rel="noopener noreferrer">{proof.sourceLabel}</a>
-        </span>
-        <span>
-          Verified live: <time dateTime={proof.verifiedAt}>{formatCaseProofDate(proof.verifiedAt)}</time>
-        </span>
+        {hasLiveSource ? (
+          <>
+            <span>
+              Source: <a href={proof.sourceUrl} target="_blank" rel="noopener noreferrer">{proof.sourceLabel}</a>
+            </span>
+            <span>
+              Verified live: <time dateTime={proof.verifiedAt}>{formatCaseProofDate(proof.verifiedAt)}</time>
+            </span>
+          </>
+        ) : (
+          <span>
+            Project record · Captured <time dateTime={study.showcase.proof.captureDate}>{formatCaseProofDate(study.showcase.proof.captureDate)}</time>
+          </span>
+        )}
         <details data-lf-disclosure={`feature-proof:${study.slug}`}>
           <summary>Plain-English readout</summary>
           <p>{proof.textAlternative}</p>

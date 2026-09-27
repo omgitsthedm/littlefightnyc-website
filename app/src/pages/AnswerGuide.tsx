@@ -12,6 +12,7 @@ import {
   SubscriptionStack,
 } from "@/components/dataviz/OwnerCalculators";
 import { answerGuides, answerServiceBridge } from "@/data/site";
+import { answerCompanionGuides } from "@/data/site-answers";
 import {
   ANSWER_CLUSTERS,
   answerArt,
@@ -97,6 +98,7 @@ export default function AnswerGuide() {
   if (!guide) return <Navigate to="/examples/#answers" replace />;
 
   const related = relatedGuides(guide.slug);
+  const companionGuide = answerCompanionGuides[guide.slug];
   const visualKind = answerVisualKind(guide.slug);
   const sources = guide.sections.flatMap((section) => section.sources ?? []);
 
@@ -206,6 +208,16 @@ export default function AnswerGuide() {
                 ))}
               </div>
             </section>
+          )}
+
+          {companionGuide && (
+            <aside className="lf-answer-page__bridge">
+              <p className="lf-answer-page__bridge-eyebrow">Need the full decision guide?</p>
+              <Link to={`/journal/${companionGuide.slug}/`} className="lf-answer-page__bridge-link">
+                <span className="lf-answer-page__bridge-name">{companionGuide.title}</span>
+                <span className="lf-answer-page__bridge-line">{companionGuide.detail}</span>
+              </Link>
+            </aside>
           )}
 
           {related.length > 0 && (

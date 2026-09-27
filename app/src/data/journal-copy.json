@@ -42,7 +42,12 @@
       "watch": ["The same fact copied into several tools.", "A setup that only one person understands.", "Guests, automations, storage, or permissions pushing the bill upward.", "A dashboard that looks busy but changes no decision."],
       "next": ["Write the one job the tool must own.", "Test that job with ten real records and two real users.", "Price the plan you will need after the trial, not the free-plan fantasy.", "Keep an export and name who owns the account."],
       "fit": "We help map the workflow, connect what should stay, and build only when the rented tools make the work worse. If a shared checklist solves it, use the checklist.",
-      "sources": ["airtablePricing", "notionPricing", "mondayPricing"]
+      "sources": ["airtablePricing", "notionPricing", "mondayPricing"],
+      "relatedQuickAnswer": {
+        "intro": "Need a short way to frame the choice before comparing all three tools?",
+        "href": "/answers/airtable-vs-notion-reddit-small-business/",
+        "label": "Read the quick owner answer"
+      }
     },
     {
       "slug": "custom-business-system-vs-saas-subscriptions",
@@ -64,7 +69,12 @@
       "watch": ["Inventory updated separately online and in the shop.", "A needed app or add-on for every ordinary task.", "Shipping, returns, pickup, or taxes discovered after launch.", "A redesign that breaks the path regular customers already use."],
       "next": ["Map one product from stock to sale to return.", "List in-person, pickup, shipping, and marketplace needs.", "Price the real plan, payment fees, apps, and hardware.", "Test the full purchase on a phone before choosing."],
       "fit": "We help a shop choose, connect, migrate, or build around the platform. We do not move a working store just to win a website project.",
-      "sources": ["shopifyPos", "squarespaceCommerce"]
+      "sources": ["shopifyPos", "squarespaceCommerce"],
+      "relatedQuickAnswer": {
+        "intro": "Need a short way to frame the choice before you map the whole store?",
+        "href": "/answers/shopify-vs-squarespace-reddit/",
+        "label": "Read the quick owner answer"
+      }
     },
     {
       "slug": "square-appointments-vs-glossgenius-nyc-salons",
@@ -75,7 +85,12 @@
       "watch": ["Two calendars accepting the same time.", "Staff, rooms, or chairs treated as unlimited.", "Deposits and cancellation rules added outside the booking path.", "Client details trapped in a system nobody can export."],
       "next": ["Write the most complicated real booking.", "Build it in each trial, including deposit and reminder.", "Run a cancellation, reschedule, checkout, and staff change.", "Compare the plan and payment terms you actually need."],
       "fit": "We help connect the website, booking, payments, and follow-up so the client sees one calm path. If the current link works and staff trust it, keep it.",
-      "sources": ["squareAppointments", "glossGeniusPricing"]
+      "sources": ["squareAppointments", "glossGeniusPricing"],
+      "relatedQuickAnswer": {
+        "intro": "Need a short way to frame the choice before you test a booking flow?",
+        "href": "/answers/glossgenius-vs-square-appointments-reddit/",
+        "label": "Read the quick owner answer"
+      }
     },
     {
       "slug": "square-vs-toast-manhattan-restaurants",
@@ -86,7 +101,12 @@
       "watch": ["A demo that skips Friday-night volume.", "Online orders retyped into the kitchen.", "Hardware, payment, support, or contract terms left out of the quote.", "No documented offline or outage procedure."],
       "next": ["Map dine-in, bar, takeout, delivery, and closeout.", "Run the ten ugliest orders in each demo.", "Compare the complete quote and contract, not a headline price.", "Test offline steps and train staff before cutover."],
       "fit": "We help restaurants document the flow, compare the real terms, set up the network, and connect the customer path. We do not sell either POS.",
-      "sources": ["squareRestaurants", "toastOverview", "squareOffline"]
+      "sources": ["squareRestaurants", "toastOverview", "squareOffline"],
+      "relatedQuickAnswer": {
+        "intro": "Need a short way to frame the choice before you run a service test?",
+        "href": "/answers/square-vs-toast-reddit/",
+        "label": "Read the quick owner answer"
+      }
     },
     {
       "slug": "webflow-vs-squarespace-manhattan-small-business",

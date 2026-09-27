@@ -157,7 +157,12 @@ for (const page of routeMeta.pages) {
     page.noindex ? "noindex, follow" : "index, follow, max-image-preview:large",
   );
   expectSocialMeta(page.path, html, page);
-  const componentRouteCta = componentRouteCtas[page.path];
+  const detailRouteCta = /^\/(?:areas|industries)\/[^/]+\/$/.test(page.path)
+    ? page.path === "/industries/salons-wellness/"
+      ? [["/tech-audit/?intent=website&source=page_hero", "Free first look Get a free first look", true]]
+      : [["/tech-audit/?source=page_hero", "Free consult Free first look", true]]
+    : undefined;
+  const componentRouteCta = componentRouteCtas[page.path] ?? detailRouteCta;
   if (componentRouteCta) {
     const links = [...html.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/gi)].map((match) => ({
       ...tagAttributes(`<a ${match[1]}>`),

@@ -95,6 +95,27 @@ const componentRenderedRoutes = {
   "/services/custom-local-websites/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/ServiceDetail.tsx"],
   },
+  "/industries/galleries-creative-studios/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/law-firms/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/medical-wellness-practices/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/professional-services/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/restaurants-bars/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/retail-ecommerce/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
+  "/industries/salons-wellness/": {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/IndustryDetail.tsx"],
+  },
   "/case-studies/hair-by-rachel-charles/": {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/CaseStudyDetail.tsx"],
   },
@@ -105,6 +126,22 @@ const componentRenderedRoutes = {
     styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/Nationwide.tsx"],
   },
 };
+
+// AreaDetail's PageHero is the route's above-fold visual. These are the
+// current public catalog routes, reviewed for deterministic static rendering
+// in the same way as the acquisition pages above. Without this closure, an
+// area hero image is discovered only after the client leaf loads.
+for (const routePath of [
+  "/areas/lower-east-side/", "/areas/east-village/", "/areas/soho/", "/areas/chelsea/",
+  "/areas/midtown/", "/areas/upper-east-side/", "/areas/upper-west-side/", "/areas/west-village/",
+  "/areas/williamsburg/", "/areas/bushwick/", "/areas/park-slope/", "/areas/dumbo/",
+  "/areas/astoria/", "/areas/long-island-city/", "/areas/greenwich-village/", "/areas/financial-district/",
+  "/areas/the-bronx/", "/areas/staten-island/",
+]) {
+  componentRenderedRoutes[routePath] = {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/AreaDetail.tsx"],
+  };
+}
 
 const componentRouteStyles = Object.fromEntries(
   Object.entries(componentRenderedRoutes).map(([routePath, { styles }]) => [
@@ -1599,6 +1636,12 @@ function authoredContentHtml(page) {
         .join("\n"),
       faqHtml(resolvedFaqFor(page), "Quick answers"),
       (() => {
+        const companion = siteContent.answerCompanionGuides?.[g.slug];
+        return companion
+          ? `<p><strong>Need the full decision guide?</strong> <a href="/journal/${escapeAttr(companion.slug)}/">${escapeHtml(companion.title)}</a> — ${escapeHtml(companion.detail)}</p>`
+          : "";
+      })(),
+      (() => {
         const bridge = siteContent.answerServiceBridge?.[g.slug];
         return bridge
           ? `<p><strong>Want it handled?</strong> <a href="${bridge.to}">${escapeHtml(bridge.name)}</a> — ${escapeHtml(bridge.line)}</p>`
@@ -1609,6 +1652,10 @@ function authoredContentHtml(page) {
 
   if (page.caseStudy) {
     const c = page.caseStudy;
+    const hasLiveSource = c.url
+      && c.showcase?.availability === "public"
+      && c.showcase?.linkPolicy === "custom-domain"
+      && ["public-live", "owned-live"].includes(c.showcase?.proof?.status);
     const arc = [
       ["The problem", c.problem],
       ["What we kept", c.kept],
@@ -1622,7 +1669,7 @@ function authoredContentHtml(page) {
       paragraphsHtml(c.body),
       arc.map(([label, body]) => `<h2>${escapeHtml(label)}</h2>\n<p>${escapeHtml(body)}</p>`).join("\n"),
       metrics ? `<h2>Project at a glance</h2>\n<ul>${metrics}</ul>` : "",
-      c.url ? `<p>Live site: <a href="${escapeAttr(c.url)}" rel="noopener">${escapeHtml(c.url.replace(/^https?:\/\/(www\.)?/, ""))}</a></p>` : "",
+      hasLiveSource ? `<p>Live site: <a href="${escapeAttr(c.url)}" rel="noopener">${escapeHtml(c.url.replace(/^https?:\/\/(www\.)?/, ""))}</a></p>` : "",
     ].join("\n");
   }
 
@@ -2129,13 +2176,14 @@ function snapshot(page) {
     .lf-seo .lf-seo__skip:focus { transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) { .lf-seo .lf-seo__skip { transition-duration: 0.01ms; } }
     .lf-seo .lf-seo__nav { display: flex; align-items: center; gap: 22px; padding-bottom: 16px; border-bottom: 1px solid #27272A; margin-bottom: 32px; }
-    .lf-seo .lf-seo__brand { font-family: ${display}; font-weight: 700; font-size: 20px; letter-spacing: 0; color: #FFFFFF; }
+    .lf-seo .lf-seo__brand { flex-shrink: 0; white-space: nowrap; font-family: ${display}; font-weight: 700; font-size: 20px; letter-spacing: 0; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-links { display: flex; gap: 20px; align-items: center; }
     .lf-seo .lf-seo__nav-links a { min-height: 44px; display: inline-flex; align-items: center; color: #A1A1AA; font-size: 16px; font-weight: 500; }
     .lf-seo .lf-seo__nav-right { display: flex; align-items: center; gap: 16px; margin-left: auto; }
     .lf-seo .lf-seo__replies { font-family: ${mono}; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A8A94; }
-    .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; font-size: 16px; font-weight: 600; color: #FFFFFF; }
+    .lf-seo .lf-seo__phone { min-height: 44px; display: inline-flex; align-items: center; white-space: nowrap; font-size: 16px; font-weight: 600; color: #FFFFFF; }
     .lf-seo .lf-seo__nav-cta { min-height: 44px; display: inline-flex; align-items: center; background: #F97316; color: #050507; font-weight: 700; font-size: 16px; padding: 10px 18px; border-radius: 9999px; white-space: nowrap; }
+    @media (min-width: 900px) and (max-width: 1279px) { .lf-seo .lf-seo__nav { flex-wrap: wrap; } .lf-seo .lf-seo__nav-links { flex-basis: 100%; order: 3; } }
     @media (max-width: 899px) { .lf-seo .lf-seo__nav-links, .lf-seo .lf-seo__replies, .lf-seo .lf-seo__nav-cta { display: none; } .lf-seo .lf-seo__nav-right { margin-left: auto; } }
     .lf-seo .lf-seo__home-hero { position: relative; min-height: min(100svh, 760px); margin: -32px -20px 32px; overflow: hidden; border-bottom: 1px solid #27272A; background: #050507; }
     .lf-seo .lf-seo__home-backdrop { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -2213,11 +2261,10 @@ function snapshot(page) {
           <p class="lf-seo__home-reach"><a href="sms:${site.phone}">Text</a><a href="mailto:${site.email}">Email</a><a href="/tech-audit/">Form</a><span>9am–9pm Eastern: a human answers. After hours: leave a message.</span></p>
         </div>
         <figure class="lf-seo__home-scene">
-          <p class="lf-seo__home-scene-title"><span>Shops like yours, already working</span>Six trades, six live sites — a painting contractor, a lender, a film company, a help service, a clothing label, a salon.</p>
+          <p class="lf-seo__home-scene-title"><span>Shops like yours, already working</span>Five trades, five live sites — a painting contractor, a film company, a help service, a clothing label, a salon.</p>
           <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="/assets/case-chromatic-painting-design-900.webp" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site"></div></div>
           <ul class="lf-seo__home-path" aria-label="Client work and our own clothing label">
             <li><a href="/case-studies/chromatic-painting-design/"><strong>Painting contractor</strong> — Chromatic Painting &amp; Design</a></li>
-            <li><a href="/case-studies/grand-funding-llc/"><strong>Lender</strong> — Grand Funding LLC</a></li>
             <li><a href="/case-studies/cc-films/"><strong>Film company</strong> — CC Films</a></li>
             <li><a href="/case-studies/clearhelp/"><strong>Help service</strong> — ClearHelp</a></li>
             <li><a href="/case-studies/after-hours-agenda/"><strong>Our clothing label</strong> — After Hours Agenda, owned by Little Fight</a></li>

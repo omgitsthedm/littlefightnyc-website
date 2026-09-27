@@ -9,8 +9,8 @@ import "./HomeWall.css";
 
 /**
  * The first screen states the offer, opens an inclusive free first look and
- * keeps urgent phone help directly available. The real client path and six
- * trades show the work. HOME_WALL stays small so the full portfolio catalog
+ * keeps urgent phone help directly available. The real client paths show the
+ * work. HOME_WALL stays small so the full portfolio catalog
  * does not enter the eager homepage bundle.
  */
 

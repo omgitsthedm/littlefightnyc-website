@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flam
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import FaqList from "@/components/editorial/FaqList";
+import FirstLookScope from "@/components/editorial/FirstLookScope";
 import techAuditContent from "@/data/tech-audit-content.json";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
@@ -605,7 +606,7 @@ export default function TechAudit() {
             </p>
             <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
             <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
-            <p className="lf-audit-intro__meta">Free. No obligation. <Link to="/journal/what-a-free-tech-audit-actually-looks-like/" aria-label="See what the free first look covers">What’s included?</Link></p>
+            <FirstLookScope compact />
 
             <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
               <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">

@@ -1,9 +1,9 @@
 /**
- * The six trades in the first screen.
+ * The client mix in the first screen.
  *
  * The homepage hero is a row of live client sites, and its whole job is range:
- * a painting contractor, a lender, a film company, a help service, a clothing
- * label, a salon. A visitor should recognise someone like themselves before
+ * a painting contractor, a film company, a help service, a clothing label,
+ * and a salon. A visitor should recognise someone like themselves before
  * reading a word.
  *
  * This is deliberately a tiny module rather than an import of the full case
@@ -21,7 +21,6 @@ export const HOME_WALL = [
     /** Plain-English trade. A case `type` is written for the case page. */
     trade: "Painting contractor",
   },
-  { slug: "grand-funding-llc", client: "Grand Funding LLC", trade: "Lender" },
   { slug: "cc-films", client: "CC Films", trade: "Film company" },
   { slug: "clearhelp", client: "ClearHelp", trade: "Help service" },
   { slug: "after-hours-agenda", client: "After Hours Agenda", trade: "Clothing label" },
