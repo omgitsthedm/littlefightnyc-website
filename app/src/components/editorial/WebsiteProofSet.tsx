@@ -36,7 +36,7 @@ export default function WebsiteProofSet() {
       <header className="lf-website-proof-set__head">
         <p>Public work, live</p>
         <h2 id="lf-website-proof-set-title">Three live sites. Three customer paths.</h2>
-        <span>A booking handoff, a local service path, and one official place for a visitor to watch, read, or act. Each is public and open to inspect.</span>
+        <span>See how a salon, painting contractor, and film company help visitors take the next step.</span>
       </header>
 
       <ul className="lf-website-proof-set__list">

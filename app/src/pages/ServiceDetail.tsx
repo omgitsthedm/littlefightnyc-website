@@ -85,7 +85,19 @@ function WebsiteAcquisitionBlock() {
   return (
     <section className="lf-sd-web" aria-label="Website work and project process">
       <div className="lf-sd-web__inner">
-        <WebsiteProofSet />
+        <div>
+          <WebsiteProofSet />
+          <div className="lf-sd-web__actions">
+            <Link
+              className="lf-sd-web__primary"
+              to="/tech-audit/?intent=website&source=website_service_proof"
+              data-lf-event="website_plan_intent"
+              data-lf-label="website_service_proof"
+            >
+              Get a free first look
+            </Link>
+          </div>
+        </div>
 
         <div className="lf-sd-web__terms">
           <header className="lf-sd-web__terms-head">
