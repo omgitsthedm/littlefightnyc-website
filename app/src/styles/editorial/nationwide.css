@@ -1,3 +1,22 @@
+.lf-nationwide-process {
+  container-type: inline-size;
+}
+
+.lf-nationwide-promise {
+  align-self: start;
+}
+
+/* The diagram lives in a split column on desktop. Its own width, rather
+   than the viewport width, determines when four nodes need a vertical path. */
+@container (max-width: 48rem) {
+  .lf-nationwide-process .lf-flow__grid {
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--lf-space-6);
+  }
+}
+
 .lf-nationwide-steps {
   display: grid;
   grid-template-columns: minmax(0, 1fr);

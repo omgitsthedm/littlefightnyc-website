@@ -86,7 +86,7 @@ export default function Nationwide() {
             </EditorialBody>
           </article>
 
-          <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet">
+          <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet lf-nationwide-process">
             <p className="lf-content-tile__label">One clear remote process</p>
             <ol className="lf-nationwide-steps">
               <li><span>01</span><strong>Show us the business</strong><p>A call, the current site, photos, hours, services, and the way customers reach you.</p></li>
@@ -96,7 +96,7 @@ export default function Nationwide() {
             <ConnectedPathDiagram path={REMOTE_WEBSITE_PATH} proof="nationwide" />
           </div>
 
-          <article className="lf-content-tile lf-content-tile--narrow lf-content-tile--tablet-full">
+          <article className="lf-content-tile lf-content-tile--narrow lf-content-tile--tablet-full lf-nationwide-promise">
             <EditorialBody>
               <h2>Every promise travels</h2>
               <p>

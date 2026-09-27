@@ -191,6 +191,10 @@ test("nationwide questions render from the canonical route metadata @all-project
   await expect(proof).toContainText("Hair By Rachel Charles");
   await expect(proof).toContainText("Chromatic Painting & Design");
   await expect(proof).toContainText("CC Films");
+  const clippedProcessText = await page.locator(".lf-nationwide-process .lf-flow__node").evaluateAll(nodes =>
+    nodes.filter(node => node.scrollWidth > node.clientWidth + 1).length,
+  );
+  expect(clippedProcessText, "the remote process must fit its column without clipped text").toBe(0);
   for (const item of nationwide!.faq!) {
     const question = page.locator(".lf-faq__item").filter({ hasText: item.question });
     await expect(question).toContainText(item.answer);

@@ -137,7 +137,6 @@
   }
 
   .lf-website-proof-set__copy {
-    min-height: 100%;
     padding: var(--lf-space-4);
   }
 }
