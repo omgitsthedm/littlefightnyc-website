@@ -296,13 +296,37 @@ if (!tagContent(missingHtml, "name", "robots").includes("noindex")) {
   failures.push("404 response is missing noindex");
 }
 
+// Alias routing is a production-host contract, independent of preview URLs.
+if (baseUrl === "https://littlefightnyc.com") {
+  for (const host of ["dakota.littlefightnyc.com", "www.dakota.littlefightnyc.com"]) {
+    const response = await fetch(`https://${host}/`, {
+      redirect: "manual",
+      headers: { "user-agent": "LFNYC-Quality-Spine/1.0" },
+    });
+    const body = await response.text();
+    if (response.status !== 410) failures.push(`${host}: expected 410, got ${response.status}`);
+    if (response.headers.get("cache-control") !== "no-store, max-age=0") {
+      failures.push(`${host}: missing retirement no-store policy`);
+    }
+    if (response.headers.get("x-robots-tag") !== "noindex, nofollow, noarchive, nosnippet") {
+      failures.push(`${host}: missing retirement robots policy`);
+    }
+    if (!(response.headers.get("content-security-policy") || "").includes("default-src 'none'")) {
+      failures.push(`${host}: missing restrictive retirement CSP`);
+    }
+    if (!body.includes("permanently retired") || /<script\b/i.test(body)) {
+      failures.push(`${host}: expected the script-free retirement response`);
+    }
+  }
+}
+
 if (failures.length) {
   console.error(`Live verification failed (${failures.length}) against ${baseUrl}:`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
 } else {
   console.log(
-    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, VERA feed directives, public assets, Pool Room media and accessibility tracks, Lab, and 404.`,
+    `Live verification passed for ${baseUrl} at ${expectedRevision.slice(0, 12)}: revision, core routes, metadata, headers, VERA feed directives, public assets, Pool Room media and accessibility tracks, Lab, 404, and applicable retired-host policies.`,
   );
   console.log("This command does not submit the Tech Audit or assert provider/inbox delivery.");
 }

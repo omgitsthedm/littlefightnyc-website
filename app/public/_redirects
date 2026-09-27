@@ -10,8 +10,8 @@
 # --- Retired private product: the old application and its hosts are gone.
 # Return a permanent noindex response without forwarding authentication tokens
 # or sending visitors into the public marketing shell.
-https://dakota.littlefightnyc.com/*      /product-retired.html  410!
-https://www.dakota.littlefightnyc.com/*  /product-retired.html  410!
+https://dakota.littlefightnyc.com/*      /.netlify/functions/retired-host  200!
+https://www.dakota.littlefightnyc.com/*  /.netlify/functions/retired-host  200!
 /app                                    /product-retired.html  410!
 /app/*                                  /product-retired.html  410!
 /dakota.html                            /product-retired.html  410!

@@ -57,7 +57,7 @@ for (const source of ["/app", "/app/*", "/dakota.html", "/studio/dakota", "/stud
 
 for (const host of ["https://dakota.littlefightnyc.com/*", "https://www.dakota.littlefightnyc.com/*"]) {
   const rule = rules.find(([from]) => from === host);
-  assert.deepEqual(rule, [host, "/product-retired.html", "410!"]);
+  assert.deepEqual(rule, [host, "/.netlify/functions/retired-host", "200!"]);
 }
 
-console.log("Brooklyn area URLs and the legacy blog hub redirect to their surviving hubs; retired product routes return a forced 410.");
+console.log("Brooklyn area URLs and the legacy blog hub redirect to their surviving hubs; retired product paths return a forced 410 and retired hosts rewrite to their 410 function.");

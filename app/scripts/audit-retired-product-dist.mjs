@@ -7,7 +7,7 @@ const marketingEntry = new URL("index.html", distRoot);
 const retirementEntry = new URL("product-retired.html", distRoot);
 const redirectsSource = new URL("../public/_redirects", import.meta.url);
 const headersSource = new URL("../../netlify.toml", import.meta.url);
-const retiredHostEdge = new URL("../../netlify/edge-functions/retired-host-response.ts", import.meta.url);
+const retiredHostFunction = new URL("../../netlify/functions/retired-host.mts", import.meta.url);
 const functionsRoot = new URL("../../netlify/functions/", import.meta.url);
 const workflowsRoot = new URL("../../.github/workflows/", import.meta.url);
 const distPath = fileURLToPath(distRoot);
@@ -94,8 +94,8 @@ try {
   }
   for (const host of ["https://dakota.littlefightnyc.com/*", "https://www.dakota.littlefightnyc.com/*"]) {
     const escaped = host.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    if (!new RegExp(`^${escaped}\\s+/product-retired\\.html\\s+410!$`, "m").test(redirects)) {
-      findings.push(`retirement response is missing forced 410 for ${host}`);
+    if (!new RegExp(`^${escaped}\\s+/\\.netlify/functions/retired-host\\s+200!$`, "m").test(redirects)) {
+      findings.push(`retirement response is missing function rewrite for ${host}`);
     }
   }
 
@@ -111,30 +111,18 @@ try {
     }
   }
 
-  const retiredHostSource = await readFile(retiredHostEdge, "utf8");
-  if (!retiredHostSource.includes('path: "/*"')) {
-    findings.push("retired-host edge response must cover every legacy host path");
-  }
-  if (!retiredHostSource.includes('host: "^(?:www\\\\.)?dakota\\\\.littlefightnyc\\\\.com$"')) {
-    findings.push("retired-host edge response must match only the two retired hostnames");
-  }
+  const retiredHostSource = await readFile(retiredHostFunction, "utf8");
   if (!retiredHostSource.includes("status: 410")) {
-    findings.push("retired-host edge response must end the request chain with a 410");
-  }
-  if (!retiredHostSource.includes("RETIRED_HOSTNAMES.has(new URL(request.url).hostname)")) {
-    findings.push("retired-host edge response must guard the 410 with exact runtime hostnames");
-  }
-  if (!retiredHostSource.includes("return context.next()")) {
-    findings.push("retired-host edge response must pass non-retired hosts through");
+    findings.push("retired-host function must return a 410");
   }
   if (!retiredHostSource.includes('"Cache-Control": RETIREMENT_CACHE_CONTROL')) {
-    findings.push("retired-host edge response is missing no-store policy");
+    findings.push("retired-host function is missing no-store policy");
   }
   if (!retiredHostSource.includes('"X-Robots-Tag": RETIREMENT_ROBOTS')) {
-    findings.push("retired-host edge response is missing noindex policy");
+    findings.push("retired-host function is missing noindex policy");
   }
   if (!retiredHostSource.includes('"Content-Security-Policy": RETIREMENT_CSP')) {
-    findings.push("retired-host edge response is missing retirement CSP");
+    findings.push("retired-host function is missing retirement CSP");
   }
 
   for (const root of [functionsRoot, workflowsRoot]) {
