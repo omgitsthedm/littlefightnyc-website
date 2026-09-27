@@ -135,6 +135,28 @@ describe("Dakota consented inbound mapping", () => {
     expect(candidate?.record.proof).toContain("Requested follow-up: email");
   });
 
+  it("preserves an allowlisted self-reported discovery separately from UTM evidence", () => {
+    const candidate = createTechAuditInboundCandidate(techAuditData({
+      discovery_source: "chatgpt",
+      utm_source: "google",
+      utm_medium: "organic",
+    }), NOW);
+
+    expect(candidate?.record.proof).toContain("Self-reported discovery: chatgpt.");
+    expect(candidate?.record.proof).toContain("UTM source: google.");
+    expect(candidate?.record.proof).toContain("UTM medium: organic.");
+  });
+
+  it.each(["", "unknown-source", "prefer_not_to_say"])(
+    "omits unsupported or withheld self-reported discovery %j",
+    (discovery_source) => {
+      const candidate = createTechAuditInboundCandidate(techAuditData({ discovery_source }), NOW);
+
+      expect(candidate?.record.proof).not.toContain("Self-reported discovery:");
+      expect(candidate?.record.proof).not.toContain("unknown-source");
+    },
+  );
+
   it("persists the requested Tech Audit follow-up route structurally", () => {
     const text = createTechAuditInboundCandidate(techAuditData({
       contact: "+1 (212) 555-0199",

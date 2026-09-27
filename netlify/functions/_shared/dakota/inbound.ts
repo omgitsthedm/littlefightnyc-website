@@ -4,6 +4,7 @@ import type { Store } from "@netlify/blobs";
 
 import {
   isInternalTechAuditTest,
+  normalizeTechAuditDiscoverySource,
   normalizeTechAuditFollowUpPreference,
   techAuditContactRoute,
   techAuditPreferredRoute,
@@ -292,6 +293,12 @@ export function createTechAuditInboundCandidate(
   ] as const) {
     const value = boundedPlainText(rawField(data, field, 512), 160);
     if (value) attribution.push(`${label}: ${value}.`);
+  }
+  const declaredDiscovery = normalizeTechAuditDiscoverySource(
+    rawField(data, "discovery_source", 64),
+  );
+  if (declaredDiscovery && declaredDiscovery !== "prefer_not_to_say") {
+    attribution.push(`Self-reported discovery: ${declaredDiscovery}.`);
   }
   if (["gclid", "gbraid", "wbraid"].some((field) => rawField(data, field, 512))) {
     attribution.push("Paid-click marker supplied; raw provider token was not retained.");
