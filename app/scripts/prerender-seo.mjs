@@ -1092,25 +1092,28 @@ function routeImagePreload(page) {
   return "";
 }
 
-function routeChunkPrefix(page) {
-  if (page.path === "/") return "Home-";
-  if (page.path === "/services/") return "Services-";
-  if (page.path === "/examples/") return "FieldGuide-";
-  if (page.path === "/tech-audit/") return "TechAudit-";
-  if (page.path === "/nationwide/") return "Nationwide-";
-  if (page.path.startsWith("/case-studies/")) return "CaseStudyDetail-";
-  if (page.path.startsWith("/journal/") && page.path !== "/journal/") return "JournalPost-";
-  return "";
+function routeChunkPrefixes(page) {
+  if (page.path === "/") return ["Home-"];
+  if (page.path === "/services/") return ["Services-"];
+  if (page.path === "/examples/") return ["FieldGuide-"];
+  if (page.path === "/tech-audit/") return ["TechAudit-"];
+  if (page.path === "/nationwide/") return ["Nationwide-"];
+  if (page.path.startsWith("/case-studies/")) return ["CaseStudyDetail-"];
+  if (page.path.startsWith("/journal/") && page.path !== "/journal/") return ["JournalPost-"];
+  // Area pages already send their visual CSS and LCP image in the first
+  // response. Preload the two lazy entries that replace that static tree, so
+  // the browser need not wait for the entry module before it can keep the
+  // same hero painted as an interactive route.
+  if (/^\/areas\/[^/]+\/$/.test(page.path)) return ["AreaDetail-", "EditorialShell-"];
+  return [];
 }
 
 function routeModulePreload(page) {
-  const prefix = routeChunkPrefix(page);
-  if (!prefix) return "";
-
-  const chunk = assetFiles.find((file) => file.startsWith(prefix) && file.endsWith(".js"));
-  if (!chunk) return "";
-
-  return `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`;
+  return routeChunkPrefixes(page)
+    .map((prefix) => assetFiles.find((file) => file.startsWith(prefix) && file.endsWith(".js")))
+    .filter(Boolean)
+    .map((chunk) => `<link rel="modulepreload" crossorigin href="/assets/${escapeAttr(chunk)}" data-route-preload>`)
+    .join("\n    ");
 }
 
 // The two fonts that paint first — Oswald (all headlines) and Barlow 400 (all

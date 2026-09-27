@@ -435,6 +435,13 @@ if (
 ) {
   failures.push("SoHo route preload must match the rendered crosswalk hero, not its Manhattan social image");
 }
+const sohoRouteModulePreloads = sohoDocument.match(/<link[^>]+rel="modulepreload"[^>]+data-route-preload[^>]*>/gi) ?? [];
+if (
+  !sohoRouteModulePreloads.some((tag) => /href="\/assets\/AreaDetail-[^"]+\.js"/i.test(tag))
+  || !sohoRouteModulePreloads.some((tag) => /href="\/assets\/EditorialShell-[^"]+\.js"/i.test(tag))
+) {
+  failures.push("SoHo first response must modulepreload its AreaDetail and EditorialShell entries");
+}
 
 if (failures.length > 0) {
   console.error(`Site integrity audit failed (${failures.length}):`);
