@@ -182,8 +182,14 @@ if (!index.includes('/examples/audit/analytics.js')) {
 if (/href=["']\/examples\/audit\/(?:ivy-infusions|marcus-medical|premier-plastic-surgery|skinsmart-dermatology|the-cosmetic-clinic)\//i.test(index)) {
   failures.push("Audit form still links to a retired named-business audit mockup");
 }
-if (!index.includes("No score substituted")) {
-  failures.push("Audit form is missing the unavailable-measurement truth state");
+if (!index.includes('class="audit-result-preview" href="#siteUrl"')) {
+  failures.push("Audit form preview must focus the Website URL field");
+}
+if (!index.includes("Start with your website")) {
+  failures.push("Audit form is missing its direct Website URL starting path");
+}
+if (/Provider unavailable|No score substituted|audit-result-preview__ring|stroke-dasharray:0 428/i.test(index)) {
+  failures.push("Audit form preview still presents unavailable data as a score card");
 }
 for (const eventName of [
   "audit_scan_started",

@@ -448,6 +448,10 @@
 }
 
 @media (max-width: 47.99rem) {
+  .lf-sd-web {
+    padding-block: var(--lf-space-7);
+  }
+
   .lf-sd-web__inner {
     gap: var(--lf-space-6);
   }

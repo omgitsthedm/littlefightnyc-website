@@ -154,7 +154,7 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
           </button>
         </form>
 
-        <p class="trust-line">No account. No passwords. Public pages only. Not a legal, security, medical, or accessibility certification.</p>
+        <p class="trust-line">No account or passwords. We look at public pages only, and make clear what the scan can and cannot see.</p>
         <!-- The scan takes about 45 seconds. Before this row existed, a visitor
              who wanted a person instead had no way out of this page: it is a
              separate static app with no site chrome. -->
@@ -306,25 +306,22 @@ m-515 -678 c32 -14 72 -46 107 -85 51 -57 58 -69 69 -132 26 -144 -23 -264
           </li>
         </ol>
 
-        <a class="audit-result-preview" href="/website-check/">
+        <a class="audit-result-preview" href="#siteUrl" aria-label="Start with your website">
           <div class="audit-result-preview__bar">
-            <span>Report truth rule</span>
-            <strong>See the website check</strong>
+            <span>Website first look</span>
+            <strong>Start with your website <span aria-hidden="true">→</span></strong>
           </div>
-          <div class="audit-result-preview__score">
-            <div><span>Provider unavailable</span><strong>N/A</strong><small>No score substituted</small></div>
-            <svg viewBox="0 0 180 180" aria-hidden="true">
-              <circle cx="90" cy="90" r="68"></circle>
-              <circle class="audit-result-preview__ring" cx="90" cy="90" r="68" style="stroke-dasharray:0 428"></circle>
-            </svg>
+          <div class="audit-result-preview__intro">
+            <p>Public-page first look</p>
+            <h3>See what a new customer can see, use, and do.</h3>
+            <span>One clear read before you spend more time or money.</span>
           </div>
-          <dl class="audit-result-preview__signals">
-            <div><dt>Performance</dt><dd>—</dd></div>
-            <div><dt>SEO</dt><dd>—</dd></div>
-            <div><dt>Accessibility</dt><dd>—</dd></div>
-            <div><dt>Best practices</dt><dd>—</dd></div>
-          </dl>
-          <p>A failed measurement stays unavailable. The report never turns missing provider data into a score, grade, revenue estimate, or business claim.</p>
+          <ul class="audit-result-preview__signals">
+            <li><strong>Clarity</strong><span>What the page explains at a glance</span></li>
+            <li><strong>Use</strong><span>What works for a visitor on a phone</span></li>
+            <li><strong>Next move</strong><span>What deserves a closer human look</span></li>
+          </ul>
+          <p>Enter your public website to start. The report separates available measurements from the things worth checking together.</p>
         </a>
       </div>
     </div>
