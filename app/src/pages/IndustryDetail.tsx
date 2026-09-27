@@ -323,7 +323,7 @@ const INDUSTRY_SOURCES: Record<string, { label: string; href: string; note: stri
   },
   "restaurants-bars": {
     label: "NYC Department of Health restaurant resources",
-    href: "https://www.nyc.gov/site/doh/business/healthcode/health-code-and-rules.page",
+    href: "https://www.nyc.gov/site/doh/about/about-doh/health-code-and-rules.page",
     note: "Check official operating requirements directly; the customer-path advice here is practical, not regulatory.",
   },
   "law-firms": {
