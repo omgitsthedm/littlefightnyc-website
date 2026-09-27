@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@netlify/blobs", () => ({ getStore: vi.fn() }));
-vi.mock("./_shared/dakota/operator-alert.ts", () => ({
+vi.mock("./operator-alert.ts", () => ({
   DAKOTA_OPERATOR_ALERT_STORE: "dakota-operator-alerts",
   sendDakotaWebsiteAuditOperatorAlert: vi.fn(),
 }));
@@ -10,8 +10,8 @@ import { getStore } from "@netlify/blobs";
 import {
   notifyWebsiteAuditFailure,
   shouldReconcileWebsiteAuditRevenueBridge,
-} from "./run-audit-background.mts";
-import { sendDakotaWebsiteAuditOperatorAlert } from "./_shared/dakota/operator-alert.ts";
+} from "../../run-audit-background.mts";
+import { sendDakotaWebsiteAuditOperatorAlert } from "./operator-alert.ts";
 
 beforeEach(() => {
   vi.mocked(getStore).mockReset();

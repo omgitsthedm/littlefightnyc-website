@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { access, readFile } from "node:fs/promises";
+import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,6 +28,17 @@ async function exists(file) {
     return true;
   } catch {
     return false;
+  }
+}
+
+// Netlify discovers top-level source files as deployable functions. A colocated
+// *.test.ts file becomes an invalid function name even when app tests pass.
+for (const entry of await readdir(path.join(repoRoot, "netlify", "functions"), { withFileTypes: true })) {
+  if (entry.name.startsWith("_") || entry.name.startsWith(".")) continue;
+  if (!entry.isDirectory() && !/\.(?:[cm]?[jt]s)$/u.test(entry.name)) continue;
+  const name = entry.isDirectory() ? entry.name : entry.name.replace(/\.[^.]+$/u, "");
+  if (!/^[A-Za-z0-9_-]+$/u.test(name)) {
+    failures.push(`invalid deployable function name: ${entry.name}; keep tests in _shared`);
   }
 }
 
