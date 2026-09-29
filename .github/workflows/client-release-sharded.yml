@@ -1,0 +1,111 @@
+name: Sharded complete client release
+on:
+  push:
+    branches: [case-studies/custom-domain-clients-2026-09-29]
+    paths: [.github/workflows/client-release-sharded.yml]
+permissions:
+  contents: read
+jobs:
+  prepare:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    outputs:
+      revision: ${{ steps.commit.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: case-studies/custom-domain-clients-2026-09-29
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Apply the already reviewed regression corrections
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess,textwrap
+          s=subprocess.check_output(['git','show','cdb3d4852a9165b2e4f4bfe323c503e7468ffd10:.github/workflows/client-release-regression.yml'],text=True)
+          start=s.index('          from pathlib import Path');end=s.index('          PY\n',start)
+          code=textwrap.dedent(s[start:end]);exec(compile(code,'client-release-corrections','exec'))
+          Path('.github/workflows/client-release-sharded.yml').unlink()
+          PY
+      - run: npm ci && npm ci --prefix app && npm run build
+      - id: commit
+        name: Commit only the corrected candidate
+        run: |
+          git config user.name 'Little Fight NYC'
+          git config user.email '55168770+omgitsthedm@users.noreply.github.com'
+          git add app .github/workflows
+          git diff --cached --check
+          git commit -m 'Defer protected media and align case release contracts'
+          git push origin HEAD:refs/heads/case-studies/custom-domain-clients-2026-09-29
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  source-gates:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - name: Every non-browser production check
+        run: |
+          set -o pipefail
+          (npm run typecheck:functions && npm run test:acquisition && npm --prefix app run quality && npm --prefix app run audit:quality-manifest && npm --prefix app run audit:release) 2>&1 | tee /tmp/client-source-gates.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-source-gates
+          path: /tmp/client-source-gates.log
+  browser-gates:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix:
+        shard: [1,2,3,4,5,6,7,8,9,10,11,12]
+    env:
+      LIBGL_ALWAYS_SOFTWARE: '1'
+      MOZ_WEBRENDER: '1'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - working-directory: app
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Complete browser contracts, partitioned without filtering
+        working-directory: app
+        run: |
+          set -o pipefail
+          xvfb-run -a npx playwright test --headed --shard=${{ matrix.shard }}/12 --reporter=list,blob 2>&1 | tee /tmp/client-browser-shard.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-browser-shard-${{ matrix.shard }}
+          path: |
+            /tmp/client-browser-shard.log
+            app/blob-report
+            app/test-results
+          include-hidden-files: true
+          retention-days: 3
+  ready:
+    needs: [prepare,source-gates,browser-gates]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All source gates and the complete browser suite passed at ${{ needs.prepare.outputs.revision }}.'
