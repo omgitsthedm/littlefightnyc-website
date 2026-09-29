@@ -1,0 +1,150 @@
+name: Finalize client image delivery
+on:
+  push:
+    branches: [case-studies/custom-domain-clients-2026-09-29]
+    paths: [.github/workflows/finalize-client-images.yml]
+permissions:
+  contents: write
+concurrency:
+  group: client-image-release-finalization
+  cancel-in-progress: false
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    outputs:
+      revision: ${{ steps.commit.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: case-studies/custom-domain-clients-2026-09-29
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Give refreshed captures immutable versioned URLs
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,re,shutil
+          root=Path.cwd();app=root/'app'
+          records=json.loads((app/'src/data/client-case-studies.json').read_text());slugs=[c['slug'] for c in records]
+          version='/assets/cases/2026-09-29'
+          helper='/** Immutable image URLs change only when the underlying captures change. */\nconst CURRENT_CLIENTS = new Set('+json.dumps(slugs)+');\nexport function clientCaptureRoot(slug: string): string {\n  return CURRENT_CLIENTS.has(slug) ? "'+version+'" : "/assets";\n}\n'
+          (app/'src/lib/clientCaptureRoot.ts').write_text(helper)
+          pattern=re.compile(r'/assets/(social/)?(og-)?case-('+ '|'.join(re.escape(s) for s in sorted(slugs,key=len,reverse=True))+r')(?=[-.`"\'])')
+          for folder in [app/'src',app/'tests',app/'scripts']:
+            for p in folder.rglob('*'):
+              if p.suffix not in {'.ts','.tsx','.mjs','.json'} or p.name in {'route-meta.json','nav-index.json','clientCaptureRoot.ts'}:continue
+              s=p.read_text();t=pattern.sub(lambda m:version+'/'+('social/' if m[1] else '')+('og-' if m[2] else '')+'case-'+m[3],s)
+              if s!=t:p.write_text(t)
+          for name,var in [('ClientCaseEditorial.tsx','study.slug'),('HomeWall.tsx','study.slug'),('LivePreview.tsx','slug'),('LiveSiteExplorer.tsx','slug'),('WorkWall.tsx','study.slug')]:
+            p=app/'src/components/editorial'/name;s=p.read_text();needle=f'/assets/case-${{{var}}}'
+            assert needle in s,name
+            s=s.replace(needle,f'${{clientCaptureRoot({var})}}/case-${{{var}}}')
+            p.write_text('import { clientCaptureRoot } from "@/lib/clientCaptureRoot";\n'+s)
+          p=app/'scripts/audit-case-study-explorer.mjs';s=p.read_text();needle='filename: `case-${study.slug}-explore${contract.suffix}.webp`,';assert needle in s
+          p.write_text(s.replace(needle,'filename: `${study.editorial ? "cases/2026-09-29/" : ""}case-${study.slug}-explore${contract.suffix}.webp`,'))
+          p=app/'scripts/prerender-seo.mjs';s=p.read_text();needle='  if (page.caseStudy?.image?.endsWith(".webp")) {';assert needle in s
+          new='''  if (page.caseStudy?.editorial) {
+              const base = `/assets/cases/2026-09-29/case-${page.caseStudy.slug}`;
+              return [
+                `<link rel="preload" media="(max-width: 47.99rem)" href="${base}-mobile-390.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+                `<link rel="preload" media="(min-width: 48rem) and (max-width: 63.99rem)" href="${base}-tablet-1024.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+                `<link rel="preload" media="(min-width: 64rem)" href="${base}-desktop-1440.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+              ].join("\\n    ");
+            }
+          
+          '''
+          p.write_text(s.replace(needle,new+needle,1))
+          e=root/'.lifi/evidence/cases/custom-domains-2026-09-29/rendered-image-manifest.json';manifest=json.loads(e.read_text())
+          for row in manifest:
+            old=app/row['path']
+            if '/cases/2026-09-29/' in row['path']:continue
+            tail=row['path'].split('public/assets/',1)[1];dest=app/'public/assets/cases/2026-09-29'/tail
+            dest.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(old,dest);row['path']=str(dest.relative_to(app))
+          e.write_text(json.dumps(manifest,indent=2)+'\n')
+          p=app/'scripts/prepare-client-case-images.py';s=p.read_text().replace("assets = app / 'public/assets'\noutput = assets / 'cases/2026-09-29'", "assets = app / 'public/assets/cases/2026-09-29'\noutput = assets");p.write_text(s)
+          p=app/'tests/client-case-studies.spec.ts';s=p.read_text();needle='    await expect(page.locator(".lf-client-capture--hero img")).toBeVisible();';assert needle in s
+          p.write_text(s.replace(needle,needle+'\n    await expect(page.locator(".lf-client-capture--hero img")).toHaveAttribute("src", /\\/assets\\/cases\\/2026-09-29\\//);',1))
+          Path('.github/workflows/finalize-client-images.yml').unlink()
+          PY
+      - run: npm ci && npm ci --prefix app && npm run build
+      - name: Commit the exact cache-safe candidate
+        id: commit
+        run: |
+          git config user.name 'Little Fight NYC'
+          git config user.email '55168770+omgitsthedm@users.noreply.github.com'
+          git add app .lifi/evidence/cases/custom-domains-2026-09-29/rendered-image-manifest.json .github/workflows/finalize-client-images.yml
+          git diff --cached --check
+          git commit -m 'Serve refreshed client images from versioned asset URLs'
+          git push origin HEAD:refs/heads/case-studies/custom-domain-clients-2026-09-29
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  release-gate:
+    needs: finalize
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.finalize.outputs.revision }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - working-directory: app
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Full release checks with retained diagnostics
+        run: |
+          set -o pipefail
+          npm run quality:release 2>&1 | tee /tmp/client-release-gate.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cache-safe-client-release-results
+          path: |
+            /tmp/client-release-gate.log
+            app/test-results
+            app/dist/release.json
+          include-hidden-files: true
+          retention-days: 7
+  visual-review:
+    needs: finalize
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.finalize.outputs.revision }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app && npm run build
+      - working-directory: app
+        run: npx playwright install --with-deps chromium
+      - name: Verify final image URLs and all client layouts
+        working-directory: app
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess,textwrap
+          s=subprocess.check_output(['git','show','bb6f00f38785cc825aa5bcdf7af880ed493f5331:.github/workflows/prepare-client-release.yml'],text=True)
+          start=s.index("          import {chromium} from '@playwright/test';");end=s.index('          JS\n',start)
+          Path('scripts/.client-visual-check.mjs').write_text(textwrap.dedent(s[start:end]))
+          PY
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort >/tmp/client-preview.log 2>&1 &
+          CANDIDATE_REVISION='${{ needs.finalize.outputs.revision }}' node scripts/.client-visual-check.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cache-safe-client-visual-review
+          path: client-visual-review
+          retention-days: 7
