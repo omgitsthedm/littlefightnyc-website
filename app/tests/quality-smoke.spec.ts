@@ -921,7 +921,9 @@ test(
           `${path} must defer the protected PHC film until its proof tile enters view`,
         ).toHaveCount(1);
 
-        await placeholder.scrollIntoViewIfNeeded();
+        // Intersection replaces this placeholder by design. Scroll it once,
+        // then assert the real media rather than waiting on the removed node.
+        await placeholder.evaluate(node => node.scrollIntoView({ block: "center", behavior: "instant" }));
         await expect(
           page.locator(PHC_FILM_SELECTOR),
           `${path} did not mount the real process film after its placeholder entered view`,
@@ -1398,6 +1400,7 @@ test(
     const runtime = watchRuntime(page);
     await page.setViewportSize({ width: 320, height: 568 });
     await openRoute(page, ROUTES[0]);
+    await expect(page.locator("[data-lf-route-snapshot]")).toHaveCount(0);
 
     const essentialOnly = page.getByRole("button", { name: "Essential only" });
     if (await essentialOnly.isVisible()) await essentialOnly.click();

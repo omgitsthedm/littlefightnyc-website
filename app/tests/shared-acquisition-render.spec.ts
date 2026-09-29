@@ -575,7 +575,10 @@ test("the website decision follows evidence and terms before optional depth @all
   const proof = page.locator(".lf-sd-web");
   const contact = page.locator(".lf-contact-block");
   await expect(page.locator(".lf-sd-rachel-proof figcaption a")).toHaveAttribute("href", "/case-studies/hair-by-rachel-charles/");
-  await expect(proof).toContainText("30 Jul 2026");
+  // The approved editorial removes stale scores; public work remains inspectable.
+  await expect(proof).not.toContainText("30 Jul 2026");
+  await expect(proof.locator(".lf-website-proof-set__check")).toHaveCount(0);
+  await expect(proof.locator(".lf-website-proof-set__links a")).toHaveCount(6);
   await expect(proof).toContainText("Hair By Rachel Charles");
   await expect(proof).toContainText("Chromatic Painting & Design");
   await expect(proof).toContainText("CC Films");
@@ -599,6 +602,7 @@ test("the website decision follows evidence and terms before optional depth @all
 test("responsive case proof starts natively and preserves explicit device choices @all-projects", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/case-studies/hair-by-rachel-charles/", { waitUntil: "networkidle" });
+  await expect(page.locator("[data-lf-route-snapshot]")).toHaveCount(0);
   const explorer = page.locator(".lf-live-explorer");
   const image = explorer.locator(".lf-live-explorer__viewport img");
   await image.scrollIntoViewIfNeeded();
