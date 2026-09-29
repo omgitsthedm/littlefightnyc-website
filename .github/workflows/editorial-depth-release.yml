@@ -1,0 +1,215 @@
+name: Editorial depth release checks
+on:
+  push:
+    branches: [case-studies/editorial-depth-2026-09-29]
+    paths: [.github/workflows/editorial-depth-release.yml]
+permissions:
+  contents: read
+concurrency:
+  group: editorial-depth-release-20260929
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/case-studies/editorial-depth-2026-09-29'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.commit.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: case-studies/editorial-depth-2026-09-29
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app
+      - name: Apply hash-verified source edits to this branch only
+        run: |
+          test "$GITHUB_REF" = 'refs/heads/case-studies/editorial-depth-2026-09-29'
+          test "$(git rev-parse HEAD^)" = '7d352652f3397c159f11207e62997daaf0917224'
+          python3 - <<'PY'
+          import base64,hashlib,json,lzma
+          from pathlib import Path
+          encoded=''.join(Path('.lifi/editorial-transfer-'+str(i)+'.txt').read_text().strip() for i in [1,2])
+          body=lzma.decompress(base64.b64decode(encoded,validate=True))
+          assert hashlib.sha256(body).hexdigest()=='35775d4b58230fec81983a820cabc27c7fa7d94695e2b07a16746c2f2d06846c'
+          bundle=json.loads(body)
+          allowed={'.lifi/evidence/cases/editorial-depth-2026-09-29/CONTENT-REVIEW.md','.lifi/evidence/cases/editorial-depth-2026-09-29/readability.json','app/src/components/editorial/ClientCaseEditorial.css','app/src/components/editorial/ClientCaseEditorial.tsx','app/src/data/client-case-studies.json','app/src/data/site-cases.ts','app/src/pages/CaseStudyDetail.tsx','app/tests/client-case-studies.spec.ts'}
+          assert set(bundle)==allowed
+          for filename,change in bundle.items():
+              path=Path(filename)
+              if change['base'] is None:
+                  assert not path.exists()
+                  new=change['content']
+              else:
+                  old=path.read_text()
+                  assert hashlib.sha256(old.encode()).hexdigest()==change['base'],filename
+                  new=old
+                  for start,end,text in reversed(change['edits']):
+                      assert 0<=start<=end<=len(old)
+                      new=new[:start]+text+new[end:]
+                  assert hashlib.sha256(new.encode()).hexdigest()==change['result'],filename
+              path.parent.mkdir(parents=True,exist_ok=True)
+              path.write_text(new)
+          # The decorative arrow is aria-hidden, so the accessible name is the title alone.
+          test=Path('app/tests/client-case-studies.spec.ts')
+          text=test.read_text()
+          before='name: item.title + " ↗"'
+          assert before in text
+          test.write_text(text.replace(before,'name: item.title, exact: true'))
+          for name in ['.lifi/editorial-transfer-1.txt','.lifi/editorial-transfer-2.txt','.github/workflows/editorial-depth-review.yml','.github/workflows/editorial-depth-release.yml']:
+              Path(name).unlink()
+          PY
+          cd app && node scripts/build-route-meta.mjs
+      - name: Commit the exact clean candidate without publishing
+        id: commit
+        run: |
+          git config user.name 'Little Fight editorial review'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .lifi/editorial-transfer-1.txt .lifi/editorial-transfer-2.txt .github/workflows/editorial-depth-review.yml .github/workflows/editorial-depth-release.yml .lifi/evidence/cases/editorial-depth-2026-09-29 app/src/components/editorial/ClientCaseEditorial.css app/src/components/editorial/ClientCaseEditorial.tsx app/src/data/client-case-studies.json app/src/data/site-cases.ts app/src/data/route-meta.json app/src/pages/CaseStudyDetail.tsx app/tests/client-case-studies.spec.ts
+          git diff --cached --check
+          git diff --cached --stat
+          git commit -m 'Deepen nine case studies with specific scope and visible evidence [skip netlify]'
+          test -z "$(git status --porcelain)"
+          git push origin HEAD:refs/heads/case-studies/editorial-depth-2026-09-29
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  source:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - name: Run all non-browser release gates
+        run: |
+          set -o pipefail
+          { npm run typecheck:functions && npm run test:acquisition && npm --prefix app run quality && npm --prefix app run audit:quality-manifest && npm --prefix app run audit:release; } 2>&1 | tee /tmp/editorial-source-gates.log
+          test -z "$(git status --porcelain)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-source-gates
+          path: /tmp/editorial-source-gates.log
+          retention-days: 14
+  browsers:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1,2,3,4,5,6,7,8]
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - run: cd app && npx playwright install --with-deps chromium firefox webkit
+      - name: Run complete browser suite, partitioned without exclusions
+        working-directory: app
+        run: |
+          set -o pipefail
+          npx playwright test --shard=${{ matrix.shard }}/8 2>&1 | tee /tmp/editorial-browser.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-browser-${{ matrix.shard }}
+          path: |
+            /tmp/editorial-browser.log
+            app/test-results
+          retention-days: 7
+  visual:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - run: npm --prefix app run build
+      - name: Capture the new scope, frames and evidence and inspect public destinations
+        working-directory: app
+        run: |
+          mkdir -p /tmp/editorial-visual
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort >/tmp/editorial-preview.log 2>&1 &
+          cat > scripts/.editorial-visual-once.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {setTimeout as pause} from 'node:timers/promises';
+          const cases=JSON.parse(await readFile('src/data/client-case-studies.json','utf8'));
+          const out='/tmp/editorial-visual';const origin='http://127.0.0.1:4173';const failures=[];const results=[];const links=[];
+          for(let i=0;i<30;i++){try{if((await fetch(origin)).ok)break;}catch{}await pause(500);}
+          const browser=await chromium.launch();
+          try{
+            for(const [label,width,height] of [['desktop',1440,1000],['tablet',1024,1000],['phone',390,844]]){
+              const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce',serviceWorkers:'block'});
+              await context.route('**/*',route=>{const r=route.request();return r.url().startsWith(origin)&&['GET','HEAD'].includes(r.method())?route.continue():route.abort();});
+              const page=await context.newPage();
+              for(const c of cases){
+                try{
+                  const response=await page.goto(origin+'/case-studies/'+c.slug+'/',{waitUntil:'networkidle',timeout:45000});
+                  if(response.status()!==200)throw new Error('HTTP '+response.status());
+                  await page.locator('[data-lf-route-snapshot]').waitFor({state:'detached'});
+                  await page.evaluate(()=>document.fonts.ready);
+                  const decline=page.getByRole('button',{name:'Essential only',exact:true});if(await decline.isVisible().catch(()=>false))await decline.click();
+                  await page.locator('.lf-client-capture--detail img').scrollIntoViewIfNeeded();
+                  await page.waitForFunction(()=>[...document.querySelectorAll('.lf-client-capture img')].every(i=>i.complete&&i.naturalWidth>0));
+                  const data=await page.evaluate(()=>({overflow:document.documentElement.scrollWidth>innerWidth+1,h1:document.querySelector('h1')?.innerText,scope:document.querySelectorAll('.lf-client-scope dt').length,notes:document.querySelectorAll('.lf-client-detail-notes li').length,evidence:document.querySelectorAll('.lf-client-evidence li').length,images:[...document.querySelectorAll('.lf-client-capture img')].map(i=>({src:i.currentSrc,alt:i.alt,width:i.naturalWidth,height:i.naturalHeight,displayWidth:i.clientWidth,displayHeight:i.clientHeight}))}));
+                  if(data.overflow||data.h1!==c.client||data.scope!==3||data.notes!==3||data.evidence!==3)throw new Error('Layout or content mismatch '+JSON.stringify(data));
+                  for(const i of data.images)if(Math.abs(i.width/i.height-i.displayWidth/i.displayHeight)>.03)throw new Error('Stretched capture');
+                  for(const [name,selector] of [['scope','.lf-client-scope'],['detail','.lf-client-capture--detail'],['evidence','.lf-client-evidence']])await page.locator(selector).screenshot({path:out+'/'+c.slug+'-'+label+'-'+name+'.png',animations:'disabled'});
+                  await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:out+'/'+c.slug+'-'+label+'-hero.jpg',quality:86,animations:'disabled'});
+                  results.push({slug:c.slug,viewport:label,...data});
+                }catch(e){failures.push(c.slug+'/'+label+': '+String(e));}
+              }
+              await context.close();
+            }
+            // Public page navigation only; no forms, accounts, purchases or analytics consent.
+            const clientContext=await browser.newContext({reducedMotion:'reduce',serviceWorkers:'block'});
+            await clientContext.route('**/*',route=>{const r=route.request();return !['GET','HEAD'].includes(r.method())||/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick|tiktok/.test(r.url())?route.abort():route.continue();});
+            const clientPage=await clientContext.newPage();
+            for(const c of cases){
+              for(const url of [...new Set([c.editorial.detailUrl,...c.editorial.evidence.map(e=>e.url)])]){
+                try{
+                  if(new URL(url).hostname!==new URL(c.url).hostname)throw new Error('Cross-client destination');
+                  const r=await clientPage.goto(url,{waitUntil:'domcontentloaded',timeout:40000});await clientPage.waitForTimeout(700);
+                  const fragment=decodeURIComponent(new URL(url).hash.slice(1));
+                  const found=!fragment||await clientPage.evaluate(id=>Boolean(document.getElementById(id)||document.querySelector('a[name="'+CSS.escape(id)+'"]')),fragment);
+                  const record={slug:c.slug,url,finalUrl:clientPage.url(),status:r?.status(),fragmentFound:found};links.push(record);
+                  if(r?.status()!==200||!found)failures.push('Destination: '+JSON.stringify(record));
+                }catch(e){failures.push(c.slug+' '+url+': '+String(e));}
+              }
+            }
+            await clientContext.close();
+          }finally{await browser.close();}
+          await writeFile(out+'/report.json',JSON.stringify({revision:process.env.CANDIDATE_REVISION,checkedAt:new Date().toISOString(),results,links,failures},null,2));
+          console.log(JSON.stringify({views:results.length,links:links.length,failures},null,2));
+          if(failures.length)process.exitCode=1;
+          JS
+          node scripts/.editorial-visual-once.mjs
+        env:
+          CANDIDATE_REVISION: ${{ needs.prepare.outputs.revision }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-visual-review
+          path: /tmp/editorial-visual
+          retention-days: 7
