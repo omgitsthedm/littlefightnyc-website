@@ -1,0 +1,313 @@
+{
+  "slug": "easy-tiger",
+  "url": "https://easytigerglendale.com/",
+  "capturedAt": "2026-09-29T08:47:23.948Z",
+  "views": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "tablet",
+      "width": 1024,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "explore",
+      "width": 1200,
+      "height": 1000,
+      "dpr": 1,
+      "overflow": false,
+      "brokenImages": []
+    }
+  ],
+  "errors": [],
+  "title": "Easy Tiger Bar | Glendale, Arizona",
+  "description": "Easy Tiger Bar’s current menu, upcoming events, hours, and directions.",
+  "canonical": "https://easytigerglendale.com/",
+  "robots": "index, follow, max-image-preview:large",
+  "headings": [
+    {
+      "text": "Yourneighborhoodbar.",
+      "y": 390
+    },
+    {
+      "text": "Menu",
+      "y": 1178
+    },
+    {
+      "text": "Cocktails",
+      "y": 1292
+    },
+    {
+      "text": "Beer Of The Week",
+      "y": 2313
+    },
+    {
+      "text": "Aroundthe bar",
+      "y": 3211
+    },
+    {
+      "text": "Upcoming events",
+      "y": 4043
+    },
+    {
+      "text": "Karaoke",
+      "y": 4738
+    },
+    {
+      "text": "Friday Night Fright",
+      "y": 4738
+    },
+    {
+      "text": "Visit",
+      "y": 5134
+    },
+    {
+      "text": "Optional analytics",
+      "y": 894
+    }
+  ],
+  "links": [
+    {
+      "text": "Skip to content",
+      "href": "https://easytigerglendale.com/#main",
+      "rel": ""
+    },
+    {
+      "text": "Easy Tiger Bar",
+      "href": "https://easytigerglendale.com/",
+      "rel": ""
+    },
+    {
+      "text": "Menu",
+      "href": "https://easytigerglendale.com/menu/",
+      "rel": ""
+    },
+    {
+      "text": "Menu",
+      "href": "https://easytigerglendale.com/menu/",
+      "rel": ""
+    },
+    {
+      "text": "Events",
+      "href": "https://easytigerglendale.com/events/",
+      "rel": ""
+    },
+    {
+      "text": "Visit",
+      "href": "https://easytigerglendale.com/#find-us",
+      "rel": ""
+    },
+    {
+      "text": "Gallery",
+      "href": "https://easytigerglendale.com/gallery/",
+      "rel": ""
+    },
+    {
+      "text": "Menu QR",
+      "href": "https://easytigerglendale.com/menu/qr/",
+      "rel": ""
+    },
+    {
+      "text": "Cocktail menu",
+      "href": "https://easytigerglendale.com/#menu",
+      "rel": ""
+    },
+    {
+      "text": "Come by",
+      "href": "https://easytigerglendale.com/#find-us",
+      "rel": ""
+    },
+    {
+      "text": "At the bar",
+      "href": "https://easytigerglendale.com/gallery/#photo-bar-company",
+      "rel": ""
+    },
+    {
+      "text": "Behind the bar",
+      "href": "https://easytigerglendale.com/gallery/#photo-laughing-bartender",
+      "rel": ""
+    },
+    {
+      "text": "The lineup",
+      "href": "https://easytigerglendale.com/gallery/#photo-cocktail-lineup",
+      "rel": ""
+    },
+    {
+      "text": "All photos",
+      "href": "https://easytigerglendale.com/gallery/",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-back-bar",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-whisky-pour",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-orange-bottles",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-spiced-cocktail",
+      "rel": ""
+    },
+    {
+      "text": "All 39 photos",
+      "href": "https://easytigerglendale.com/gallery/",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-pool",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-lounge",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-tiger-alcove",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-sidecar",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-bottle-pour",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-red-cap",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-liqueurs",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/gallery/#photo-mint-garnish",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/api/public/posters/cd47d2db-a1ff-4449-801f-6b93dee547e0",
+      "rel": "noopener"
+    },
+    {
+      "text": "",
+      "href": "https://easytigerglendale.com/api/public/posters/a1b4b5bb-a334-43d4-a64e-727a0f3b1ab0",
+      "rel": "noopener"
+    },
+    {
+      "text": "View Eventbrite",
+      "href": "https://www.eventbrite.com/o/easy-tiger-bar-55191292473",
+      "rel": ""
+    },
+    {
+      "text": "Google Maps",
+      "href": "https://www.google.com/maps?cid=2474812719639631233",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Apple Maps",
+      "href": "https://maps.apple.com/?q=Easy%20Tiger%20Bar%2C%204725%20W%20Olive%20Ave%2C%20Glendale%2C%20AZ%2085302",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Google reviews",
+      "href": "https://www.google.com/maps?cid=2474812719639631233",
+      "rel": ""
+    },
+    {
+      "text": "Yelp reviews",
+      "href": "https://www.yelp.com/biz/easy-tiger-bar-glendale",
+      "rel": ""
+    },
+    {
+      "text": "Instagram",
+      "href": "https://www.instagram.com/easytigerbar/",
+      "rel": ""
+    },
+    {
+      "text": "Facebook",
+      "href": "https://www.facebook.com/people/Easy-Tiger-Bar/100087178530833/",
+      "rel": ""
+    },
+    {
+      "text": "Eventbrite",
+      "href": "https://www.eventbrite.com/o/easy-tiger-bar-55191292473",
+      "rel": ""
+    },
+    {
+      "text": "Directions",
+      "href": "https://www.google.com/maps?cid=2474812719639631233",
+      "rel": ""
+    },
+    {
+      "text": "Menu QR",
+      "href": "https://easytigerglendale.com/menu/qr/",
+      "rel": ""
+    },
+    {
+      "text": "Gallery",
+      "href": "https://easytigerglendale.com/gallery/",
+      "rel": ""
+    },
+    {
+      "text": "Privacy",
+      "href": "https://easytigerglendale.com/privacy/",
+      "rel": ""
+    },
+    {
+      "text": "Built by Little Fight NYC",
+      "href": "https://littlefightnyc.com/",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Privacy",
+      "href": "https://easytigerglendale.com/privacy/",
+      "rel": ""
+    }
+  ],
+  "text": "SKIP TO CONTENT\nEASY TIGER BAR\nMENU\nEVENTS\nVISIT\nGALLERY\nMENU QR\n\nEASY TIGER · GLENDALE, ARIZONA\n\nYOUR\nNEIGHBORHOOD\nBAR.\n\nGreat cocktails. Easy prices.\n\nCOCKTAIL MENU\nCOME BY\n\nCocktails · Cold beer · Pool · Live music\n\nAT THE BAR\nBEHIND THE BAR\nTHE LINEUP\nMENU\n\nCURRENT MENU\n\nCOCKTAILS\nSent 5 Minutes Ago\n$13.00\n\nTito’s Vodka, Passion Fruit, Crème De Cassis, Lime\n\nApe Airlines\n$15.00\n\nOld Grandad Bourbon, Lemon, Aperol, Banana-Infused Montenegro, Allspice Dram\n\nO.O.O.F.\n$12.00\n\nBasil Hayden Malted Rye, Demerara Sugar, Orange/Chocolate Bitters. October Orange Old Fashioned\n\nBarkeep’s Medicine\n$15.00\n\nPlanteray Coconut Rum, Toki Suntory Whiskey, Lime, Demerara, Mint. Served with Amaro sidecar.\n\nBobby Boy\n$12.00\n\nDewar’s Portuguese Smooth Scotch, Sweet Vermouth, Bitters, served on a large cube with flamed orange\n\nDevil Marg\n$10.00\n\nTequila, Alma Tepec Chile, mango, lime. Served with a Tajin rim.\n\nNylon Curtain\n$10.00\n\nVodka, Passion Fruit Liqueur, Orange Curaçao, Lemon. Served up with a splash of sprite.\n\nThe Rando\n$8.00\n\nBartender’s Choice! A random well liquor in a random sour with a random house-made seasonal syrup. Different every time!\n\nBEER OF THE WEEK\nOdell 90 Shilling\n$6.50\n\nAmber Ale, Smooth And Balanced With A Brilliant Copper Color. 5.3%\n\nBEHIND THE BAR\nALL PHOTOS\nTHE BACK BAR\nMEASURED POUR\nBOURBON, BITTER, BRIGHT\nSPICE ON THE BAR\nAROUND\nTHE BAR\nALL 39 PHOTOS\nRACK THEM UP\nTHE LOUNGE\nROOM DETAILS\nAT THE RAIL\nMAKING YOUR DRINK\nWORKING THE SHAKER\nA CLOSER LOOK\nFINISHING TOUCHES\nUPCOMING EVENTS\n\nEVERY MONDAY, 9PM-1AM!\n\nKARAOKE\n\nFRIDAY, 10/2 DJ\n\nFRIDAY NIGHT FRIGHT\nVIEW EVENTBRITE\nVISIT\nADDRESS\n4725 W Olive Ave\nGlendale, AZ 85302\nHOURS\nMon–Fri\n4 PM–2 AM\nSat–Sun\n2 PM–2 AM\nGOOGLE MAPS\nAPPLE MAPS\nEASY TIGER BAR\nGlendale, Arizona\nMon–Fri · 4 PM–2 AM · Sat–Sun · 2 PM–2 AM\nGOOGLE REVIEWS\nYELP REVIEWS\nINSTAGRAM\nFACEBOOK\nEVENTBRITE\nDIRECTIONS\nMENU QR\nGALLERY\n\n4725 W OLIVE AVE, GLENDALE, AZ 85302\n\nPRIVACY\nCOOKIE SETTINGS\nBuilt by Little Fight NYC\n\nYOUR CHOICE\n\nOPTIONAL ANALYTICS\n\nAllow Google Analytics cookies to help us understand visits? You can change your choice anytime in Privacy.\n\nDECLINE\nACCEPT ANALYTICS",
+  "overflow": false,
+  "brokenImages": [],
+  "finalUrl": "https://easytigerglendale.com/",
+  "status": 200,
+  "detail": {
+    "url": "https://easytigerglendale.com/menu/",
+    "text": "SKIP TO CONTENT\nEASY TIGER BAR\nMENU\nEVENTS\nVISIT\nGALLERY\nMENU QR\nMENU\n\nCURRENT MENU\n\nCOCKTAILS\nSent 5 Minutes Ago\n$13.00\n\nTito’s Vodka, Passion Fruit, Crème De Cassis, Lime\n\nApe Airlines\n$15.00\n\nOld Grandad Bourbon, Lemon, Aperol, Banana-Infused Montenegro, Allspice Dram\n\nO.O.O.F.\n$12.00\n\nBasil Hayden Malted Rye, Demerara Sugar, Orange/Chocolate Bitters. October Orange Old Fashioned\n\nBarkeep’s Medicine\n$15.00\n\nPlanteray Coconut Rum, Toki Suntory Whiskey, Lime, Demerara, Mint. Served with Amaro sidecar.\n\nBobby Boy\n$12.00\n\nDewar’s Portuguese Smooth Scotch, Sweet Vermouth, Bitters, served on a large cube with flamed orange\n\nDevil Marg\n$10.00\n\nTequila, Alma Tepec Chile, mango, lime. Served with a Tajin rim.\n\nNylon Curtain\n$10.00\n\nVodka, Passion Fruit Liqueur, Orange Curaçao, Lemon. Served up with a splash of sprite.\n\nThe Rando\n$8.00\n\nBartender’s Choice! A random well liquor in a random sour with a random house-made seasonal syrup. Different every time!\n\nBEER OF THE WEEK\nOdell 90 Shilling\n$6.50\n\nAmber Ale, Smooth And Balanced With A Brilliant Copper Color. 5.3%\n\nBEHIND THE BAR\nALL PHOTOS\nA LITTLE FERNET\nINTO THE SHAKER\nSTIRRED OVER ICE\nON THE BACK BAR\nUPCOMING EVENTS\n\nEVERY MONDAY, 9PM-1AM!\n\nKARAOKE\n\nFRIDAY, 10/2 DJ\n\nFRIDAY NIGHT FRIGHT\nVIEW EVENTBRITE\nVISIT\nADDRESS\n4725 W Olive Ave\nGlendale, AZ 85302\nHOURS\nMon–Fri\n4 PM–2 AM\nSat–Sun\n2 PM–2 AM\nGOOGLE MAPS\nAPPLE MAPS\nEASY TIGER BAR\nGlendale, Arizona\nMon–Fri · 4 PM–2 AM · Sat–Sun · 2 PM–2 AM\nGOOGLE REVIEWS\nYELP REVIEWS\nINSTAGRAM\nFACEBOOK\nEVENTBRITE\nDIRECTIONS\nMENU QR\nGALLERY\n\n4725 W OLIVE AVE, GLENDALE, AZ 85302\n\nPRIVACY\nCOOKIE SETTINGS\nBuilt by Little Fight NYC\n\nYOUR CHOICE\n\nOPTIONAL ANALYTICS\n\nAllow Google Analytics cookies to help us understand visits? You can change your choice anytime in Privacy.\n\nDECLINE\nACCEPT ANALYTICS",
+    "scrollY": 0
+  }
+}

@@ -1,0 +1,396 @@
+{
+  "slug": "logan-loans",
+  "url": "https://logan.loans/",
+  "capturedAt": "2026-09-29T08:46:16.221Z",
+  "views": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "tablet",
+      "width": 1024,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "explore",
+      "width": 1200,
+      "height": 1000,
+      "dpr": 1,
+      "overflow": false,
+      "brokenImages": []
+    }
+  ],
+  "errors": [],
+  "title": "Arizona Mortgage Advisor for Buyers & Realtors | Logan Loans",
+  "description": "Premium Arizona mortgage guidance for buyers, investors, and real estate agents. Same-day pre-approval available, direct lender communication, and no hand-offs.",
+  "canonical": "https://logan.loans/",
+  "robots": "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
+  "headings": [
+    {
+      "text": "Arizona mortgages, explained like a human.",
+      "y": 275
+    },
+    {
+      "text": "Pick your situation.",
+      "y": 1215
+    },
+    {
+      "text": "Three steps. No mystery.",
+      "y": 2192
+    },
+    {
+      "text": "Two business paths. One direct line.",
+      "y": 3402
+    },
+    {
+      "text": "Keep the transaction legible.",
+      "y": 3913
+    },
+    {
+      "text": "Start with how the property works.",
+      "y": 3913
+    },
+    {
+      "text": "Run the numbers before anyone calls you.",
+      "y": 4396
+    },
+    {
+      "text": "Logan Sullivan",
+      "y": 5675
+    },
+    {
+      "text": "47 five-star reviews and counting.",
+      "y": 6277
+    },
+    {
+      "text": "The property changes the plan.",
+      "y": 7017
+    },
+    {
+      "text": "Learn enough to make the next decision.",
+      "y": 8111
+    },
+    {
+      "text": "Ready when you are.",
+      "y": 9024
+    }
+  ],
+  "links": [
+    {
+      "text": "Skip to main content",
+      "href": "https://logan.loans/#main-content",
+      "rel": ""
+    },
+    {
+      "text": "",
+      "href": "https://logan.loans/",
+      "rel": ""
+    },
+    {
+      "text": "Home",
+      "href": "https://logan.loans/",
+      "rel": ""
+    },
+    {
+      "text": "Programs",
+      "href": "https://logan.loans/programs",
+      "rel": ""
+    },
+    {
+      "text": "Tools",
+      "href": "https://logan.loans/tools",
+      "rel": ""
+    },
+    {
+      "text": "FAQ",
+      "href": "https://logan.loans/faq",
+      "rel": ""
+    },
+    {
+      "text": "Meet Logan",
+      "href": "https://logan.loans/meet-logan",
+      "rel": ""
+    },
+    {
+      "text": "For Realtors",
+      "href": "https://logan.loans/partners",
+      "rel": ""
+    },
+    {
+      "text": "Contact",
+      "href": "https://logan.loans/contact",
+      "rel": ""
+    },
+    {
+      "text": "Get Pre-Approved",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    },
+    {
+      "text": "Call (480) 803-7763",
+      "href": "tel:+14808037763",
+      "rel": ""
+    },
+    {
+      "text": "Home",
+      "href": "https://logan.loans/",
+      "rel": ""
+    },
+    {
+      "text": "Programs",
+      "href": "https://logan.loans/programs",
+      "rel": ""
+    },
+    {
+      "text": "Tools",
+      "href": "https://logan.loans/tools",
+      "rel": ""
+    },
+    {
+      "text": "FAQ",
+      "href": "https://logan.loans/faq",
+      "rel": ""
+    },
+    {
+      "text": "Meet Logan",
+      "href": "https://logan.loans/meet-logan",
+      "rel": ""
+    },
+    {
+      "text": "For Realtors",
+      "href": "https://logan.loans/partners",
+      "rel": ""
+    },
+    {
+      "text": "Contact",
+      "href": "https://logan.loans/contact",
+      "rel": ""
+    },
+    {
+      "text": "Get Pre-Approved",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    },
+    {
+      "text": "Call (480) 803-7763",
+      "href": "tel:+14808037763",
+      "rel": ""
+    },
+    {
+      "text": "Get Pre-Approved",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    },
+    {
+      "text": "Call (480) 803-7763",
+      "href": "tel:+14808037763",
+      "rel": ""
+    },
+    {
+      "text": "First-Time Buyer\n              Understand the payment, cash-to-close, documents, and offer plan before you shop.\n              See this path",
+      "href": "https://logan.loans/first-time-buyer",
+      "rel": ""
+    },
+    {
+      "text": "Buying Again\n              Coordinate the next purchase, current home, and closing dates as one move.\n              See your options",
+      "href": "https://logan.loans/contact?topic=move-up",
+      "rel": ""
+    },
+    {
+      "text": "Refinance\n              See the break-even and long-term cost before changing a home you already love.\n              Check the math",
+      "href": "https://logan.loans/refinance",
+      "rel": ""
+    },
+    {
+      "text": "Investor Loans\n              Start with the property, rent, expenses, reserves, and exit plan.\n              Explore investor paths",
+      "href": "https://logan.loans/investor-loans",
+      "rel": ""
+    },
+    {
+      "text": "Ask Logan one question first.",
+      "href": "https://logan.loans/contact",
+      "rel": ""
+    },
+    {
+      "text": "See the Realtor path",
+      "href": "https://logan.loans/partners",
+      "rel": ""
+    },
+    {
+      "text": "Explore investor programs",
+      "href": "https://logan.loans/investor-loans",
+      "rel": ""
+    },
+    {
+      "text": "Start here\n              What feels affordable?\n            \n            \n              Start with income, debt, and down payment to find a practical purchase r",
+      "href": "https://logan.loans/affordability-calculator",
+      "rel": ""
+    },
+    {
+      "text": "Monthly payment\n              See the full payment.\n            \n            \n              Estimate principal, interest, taxes, insurance, PMI, and HOA togethe",
+      "href": "https://logan.loans/calculator",
+      "rel": ""
+    },
+    {
+      "text": "Refinance\n              Find the break-even.\n            \n            \n              Compare closing costs and monthly savings before deciding whether a refinan",
+      "href": "https://logan.loans/refinance-calculator",
+      "rel": ""
+    },
+    {
+      "text": "Full Bio + Credentials",
+      "href": "https://logan.loans/meet-logan",
+      "rel": ""
+    },
+    {
+      "text": "Work With Logan",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    },
+    {
+      "text": "Read All 47 Reviews",
+      "href": "https://www.google.com/search?sca_esv=1efd172859308584&hl=en&authuser=0&sxsrf=AHTn8zorVcacdovutYSBPDc4pPrKokj-eg:1739556319709&kgmid=/g/11w48840g3&q=Logan+Sullivan+Mortgage+Advisor&shndl=30&shem=lcuae,uaasie&source=sh/x/loc/uni/m1/1&kgs=fcab6bb4f8b42ae5",
+      "rel": "noopener"
+    },
+    {
+      "text": "Official NMLS Profile",
+      "href": "https://forward.loans/loan-officer/logan-sullivan/",
+      "rel": "noopener"
+    },
+    {
+      "text": "Phoenix and the ValleySee Arizona service areas",
+      "href": "https://logan.loans/service-areas",
+      "rel": ""
+    },
+    {
+      "text": "High desertExplore Sedona planning",
+      "href": "https://logan.loans/sedona",
+      "rel": ""
+    },
+    {
+      "text": "Southern CaliforniaSee the regional guide",
+      "href": "https://logan.loans/southern-california",
+      "rel": ""
+    },
+    {
+      "text": "Offer readiness\n              Pre-approval vs. pre-qualification\n              What sellers and agents actually see, and how to know whether your letter is read",
+      "href": "https://logan.loans/blog-preapproval-guide",
+      "rel": ""
+    },
+    {
+      "text": "Compare paths\n              FHA or conventional?\n              Compare down payment, mortgage insurance, flexibility, and long-term cost in plain English.\n     ",
+      "href": "https://logan.loans/fha-vs-conventional",
+      "rel": ""
+    },
+    {
+      "text": "Investor files\n              DSCR without W-2 income\n              Understand how rental income, property expenses, credit, and reserves shape the file.\n       ",
+      "href": "https://logan.loans/blog-dscr-loans-arizona",
+      "rel": ""
+    },
+    {
+      "text": "Search all mortgage questions",
+      "href": "https://logan.loans/faq",
+      "rel": ""
+    },
+    {
+      "text": "Browse the learning library",
+      "href": "https://logan.loans/blog",
+      "rel": ""
+    },
+    {
+      "text": "Get Pre-Approved",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    },
+    {
+      "text": "Ask a Question",
+      "href": "https://logan.loans/contact",
+      "rel": ""
+    },
+    {
+      "text": "(480) 803-7763",
+      "href": "tel:+14808037763",
+      "rel": ""
+    },
+    {
+      "text": "logan@forward.loans",
+      "href": "mailto:logan@forward.loans",
+      "rel": ""
+    },
+    {
+      "text": "Instagram",
+      "href": "https://www.instagram.com/logan.loans",
+      "rel": "noopener"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/in/logansulliv",
+      "rel": "noopener"
+    },
+    {
+      "text": "Google reviews",
+      "href": "https://www.google.com/search?q=Logan+Sullivan+Mortgage+Advisor",
+      "rel": "noopener"
+    },
+    {
+      "text": "Privacy",
+      "href": "https://logan.loans/privacy",
+      "rel": ""
+    },
+    {
+      "text": "Disclosures",
+      "href": "https://logan.loans/disclosures",
+      "rel": ""
+    },
+    {
+      "text": "Terms",
+      "href": "https://logan.loans/terms",
+      "rel": ""
+    },
+    {
+      "text": "NMLS profile",
+      "href": "https://forward.loans/loan-officer/logan-sullivan/",
+      "rel": "noopener"
+    },
+    {
+      "text": "Made by Little Fight NYC",
+      "href": "https://littlefightnyc.com/",
+      "rel": "noopener noreferrer"
+    },
+    {
+      "text": "Call",
+      "href": "tel:+14808037763",
+      "rel": ""
+    },
+    {
+      "text": "Get Pre-Approved",
+      "href": "https://logan.loans/apply",
+      "rel": ""
+    }
+  ],
+  "text": "Skip to main content\nHome\nPrograms\nTools\nFAQ\nMeet Logan\nFor Realtors\nContact\nGet Pre-Approved\nCall (480) 803-7763\n\nMenu\n\nClose\nHome\nPrograms\nTools\nFAQ\nMeet Logan\nFor Realtors\nContact\nGet Pre-Approved\nCall (480) 803-7763\n\nArizona • Southern California\n\nARIZONA + SOUTHERN CALIFORNIA\n\nArizona mortgages, explained like a human.\n\nClear guidance, same-day pre-approval available, and a lender who reads every application himself. No bots. No hand-offs. Just answers.\n\nGet Pre-Approved\nCall (480) 803-7763\n47+\nGOOGLE REVIEWS\n5.0\nSTAR RATING\nSame‑Day\nPRE-APPROVAL AVAILABLE\nAZ + CA\nLICENSED & ACTIVE\n\nSTART HERE\n\nPick your situation.\n\nFour common routes. Same promise: clear steps, honest numbers, and a plan you can actually follow.\n\nFirst-Time Buyer\nUnderstand the payment, cash-to-close, documents, and offer plan before you shop.\nSee this path\nBuying Again\nCoordinate the next purchase, current home, and closing dates as one move.\nSee your options\nRefinance\nSee the break-even and long-term cost before changing a home you already love.\nCheck the math\nInvestor Loans\nStart with the property, rent, expenses, reserves, and exit plan.\nExplore investor paths\n\nNot sure which route fits?\nAsk Logan one question first.\n\nHOW IT WORKS\n\nThree steps. No mystery.\n\nYou always know what's next, what we're waiting on, and what you can do today.\n\nQuestion to keys.\nEvery handoff stays visible, and every next step has an owner.\n1\n\nQuick intro call\n\nYou tell me your goals, timeline, and comfort zone. 15 minutes. No pressure, no commitment, no credit pull.\n\nYOUR GOALS\n2\n\nPre-approval + plan\n\nWe build a clean budget range, pull together the documents list, and map out a game plan for offers.\n\nYOUR PLAN\n3\n\nOffer to keys\n\nSteady updates through underwriting, appraisal, and closing. You always know where things stand.\n\nYOUR NEXT MOVE\n\nFOR THE PEOPLE AROUND THE PROPERTY\n\nTwo business paths. One direct line.\n\nGo straight to the information that changes your file. No phone tree and no generic intake maze.\n\nFOR REALTORS\nKeep the transaction legible.\n\nGet a direct read on pre-approval strength, conditions, appraisal timing, and closing risk.\n\nPre-approval\nConditions\nClear to close\nSee the Realtor path\nFOR INVESTORS + BUSINESS OWNERS\nStart with how the property works.\n\nBring the rent, expenses, reserves, project scope, and timeline. Then compare the paths that may fit.\n\nBank statement\nDSCR\nConstruction\nExplore investor programs\n\nNO-GATE TOOLS\n\nRun the numbers before anyone calls you.\n\nUse the calculators freely. No account, no email wall, and no sales screen between you and an answer.\n\nSTART HERE\nWhat feels affordable?\nStart with income, debt, and down payment to find a practical purchase range.\nOpen affordability calculator\nMONTHLY PAYMENT\nSee the full payment.\nEstimate principal, interest, taxes, insurance, PMI, and HOA together.\nOpen mortgage calculator\nREFINANCE\nFind the break-even.\nCompare closing costs and monthly savings before deciding whether a refinance makes sense.\nOpen refinance calculator\n\nPlanning estimates are for illustration only and do not represent a loan offer or commitment to lend.\n\nYOUR LENDER\n\nLogan Sullivan\n\nI read every application myself—no bots, no hand-offs. Buying your first home, refinancing, or building a portfolio, I'll explain the numbers, timeline, and next step in plain English. If you reach out, I'm the one who calls back.\n\nNMLS #2466872 • Licensed AZ & CA • Forward Loans, LLC (NMLS #2006640)\n\nFull Bio + Credentials\nWork With Logan\n\nCLIENT REVIEWS\n\n47 five-star reviews and counting.\n\nReal clients. Real closings. Read what it feels like to have a lender who actually picks up the phone.\n\n★★★★★\n\n\"We finally understood what was happening at every step. The whole process felt calm and totally under control.\"\n\nSarah & Mike T. First-time buyers, Phoenix\n\n★★★★★\n\n\"Fast responses, clear steps, zero pressure. Logan explained every number before we signed anything. Exactly what we needed.\"\n\nDavid R. Investor, Scottsdale\n\n★★★★★\n\n\"The math was laid out plainly. We felt genuinely confident making our offer, and closed on time with no surprises.\"\n\nJennifer L. Move-up buyer, Tempe\n\nRead All 47 Reviews\nOfficial NMLS Profile\n\nWHERE ARE YOU BUYING?\n\nThe property changes the plan.\n\nA Phoenix starter home, high-desert retreat, and Southern California move do not need the same financing conversation.\n\nPhoenix and the Valley\nSee Arizona service areas\nHigh desert\nExplore Sedona planning\nSouthern California\nSee the regional guide\n\nSTRAIGHT ANSWERS\n\nLearn enough to make the next decision.\n\nNo glossary marathon required. Start with the question in front of you, then go deeper only when it helps.\n\nOFFER READINESS\nPre-approval vs. pre-qualification\nWhat sellers and agents actually see, and how to know whether your letter is ready to support an offer.\nRead the guide\nCOMPARE PATHS\nFHA or conventional?\nCompare down payment, mortgage insurance, flexibility, and long-term cost in plain English.\nSee the comparison\nINVESTOR FILES\nDSCR without W-2 income\nUnderstand how rental income, property expenses, credit, and reserves shape the file.\nRead the DSCR guide\nSearch all mortgage questions\nBrowse the learning library\nReady when you are.\n\nStart with one question or a pre-approval request. Either way, Logan answers directly.\n\nGet Pre-Approved\nAsk a Question\n\nArizona mortgages, explained like a human.\n\nTALK TO LOGAN\n\n(480) 803-7763\nlogan@forward.loans\n\nMon–Fri 9am–6pm · Sat 10am–4pm\n\nCONNECT\n\nInstagram\nLinkedIn\nGoogle reviews\n\nLEGAL\n\nPrivacy\nDisclosures\nTerms\nNMLS profile\n\nNMLS 2466872 (Logan Sullivan) · Forward Loans NMLS 2006640. All loans subject to credit approval. Same-day pre-approval depends on timing and completeness of information.\n\nMade by Little Fight NYC",
+  "overflow": false,
+  "brokenImages": [],
+  "finalUrl": "https://logan.loans/",
+  "status": 200,
+  "detail": {
+    "url": "https://logan.loans/investor-loans",
+    "text": "Skip to main content\nHome\nPrograms\nTools\nFAQ\nMeet Logan\nFor Realtors\nContact\nGet Pre-Approved\nCall (480) 803-7763\n\nMenu\n\nClose\nHome\nPrograms\nTools\nFAQ\nMeet Logan\nFor Realtors\nContact\nGet Pre-Approved\nCall (480) 803-7763\n\nArizona • Southern California\n\nINVESTOR LOANS\n\nInvestor loans where timing matters.\n\nFix & flip, bridge, and other options built for speed. Clear requirements, fast communication, and a clean process.\n\nRead the property first.\nIncome, expenses, reserves, and the exit plan shape the financing path.\n1\n\nDeal snapshot\n\nProperty, timeline, exit plan. We keep it quick and practical.\n\n2\n\nTerm clarity\n\nRates, points, fees, and expectations explained plainly.\n\n3\n\nMove fast\n\nWe communicate quickly and keep the paperwork clean.\n\nBuilt for Arizona investor files that do not fit a normal box\n\nLogan helps screen DSCR loans, bank statement loans, bridge scenarios, short-term rental purchases, entity-held properties, and self-employed borrower files. The focus is simple: clarify whether the deal works, what documentation the lender will actually need, and which terms change the return before you spend days chasing the wrong option.\n\nRental income logic\n\nFor DSCR files, the rent schedule, lease, market rent, taxes, insurance, and HOA can all change qualification. Logan pressure-tests that early.\n\nSpeed with guardrails\n\nFast matters, but surprises kill deals. You get clear expectations on appraisal, title, entity docs, reserves, and closing timeline.\n\nExit-aware structure\n\nFix-and-flip, long-term rental, and short-term rental plans need different loan logic. The financing should match the hold strategy.\n\nWhat to send for a faster answer\n\nThe best first pass includes the property address, purchase price, estimated rent, rehab budget if applicable, desired close date, entity details, and whether the exit is sale, long-term rental, or short-term rental. If you already have a rent estimate, insurance quote, HOA amount, or seller timeline, include it. Logan can usually identify the likely constraint faster when the file starts with those facts.\n\nHave a deal?\n\nSend the basics and we’ll tell you next steps fast.\n\nInvestor Intake\nCall\n\nArizona mortgages, explained like a human.\n\nTALK TO LOGAN\n\n(480) 803-7763\nlogan@forward.loans\n\nMon–Fri 9am–6pm · Sat 10am–4pm\n\nCONNECT\n\nInstagram\nLinkedIn\nGoogle reviews\n\nLEGAL\n\nPrivacy\nDisclosures\nTerms\nNMLS profile\n\nNMLS 2466872 (Logan Sullivan) · Forward Loans NMLS 2006640. All loans subject to credit approval. Same-day pre-approval depends on timing and completeness of information.\n\nMade by Little Fight NYC",
+    "scrollY": 0
+  }
+}

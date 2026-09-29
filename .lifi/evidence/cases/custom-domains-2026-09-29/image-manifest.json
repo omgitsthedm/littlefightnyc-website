@@ -1,0 +1,317 @@
+[
+  {
+    "file": "app/public/assets/cases/2026-09-29/cc-films/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 161854,
+    "sha256": "b713a9cd5b91b0ec28e1a35464d35fe8f73dd15445f92d1843932c5bac4b504e"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/cc-films/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 178944,
+    "sha256": "383cf602d44a926b29cddf87211b4aaee7099265aa33d84e10863604fe37dbf8"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/cc-films/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 85238,
+    "sha256": "e5e76ded2d563caeef87a221b5c14d7b3ddb0fa2298d645943a6438dbca4d3ba"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/cc-films/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 248742,
+    "sha256": "56e94ce200e4654bcb4090ea4e4456f220509951464f9765c0f457702d258c14"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/cc-films/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 174024,
+    "sha256": "326b63cf9392fd5d7a5df4c4b0c11616b644136d5d03e8370cd5245bb7975d4a"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/chromatic-painting-design/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 232522,
+    "sha256": "315d52725699cc78dbbe3c8ef93b538eb5aaf46fb7c7d5e6ae41b867a54bb2cc"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/chromatic-painting-design/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 299258,
+    "sha256": "17852e44c7f8c1efe923266f2aaf74899c92199a3bff7735a062a0447d59d59f"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/chromatic-painting-design/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 98878,
+    "sha256": "4553e372f146b5eb280da558fe20f21d696c267626eb77fd8374a70b83a4e5fc"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/chromatic-painting-design/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 279406,
+    "sha256": "0e1bfa1c45b209c35ab85f79b680a056a72a060920dee4f14c81d8176ac9ca8e"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/chromatic-painting-design/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 304970,
+    "sha256": "ec8bc1e554da95d5b3237c4322027b0aa69c688c6b1907ab72527c3717ce0000"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/clearhelp/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 152460,
+    "sha256": "80751df592da3c42a0d77b5bee11341ccc2ee9d797e92fd3f181ef68aaf65cda"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/clearhelp/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 165002,
+    "sha256": "4a5378a3a58841c1222675424934e6ab121f977c519e03aff26ad94db6ab46dd"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/clearhelp/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 87234,
+    "sha256": "3a78b30bf4129335b18bd14a90f99e70e9db143448eaff5d52a9dab34581b012"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/clearhelp/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 152662,
+    "sha256": "f009293e0a7a3f0eb121f2a0d6975cec0ad04b1d6aadabb49b82ec563de1c884"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/clearhelp/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 158522,
+    "sha256": "8d8c518c688303db80789d09cfaeecee7c516d0b0c06121b3d1c2e968c743a33"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/easy-tiger/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 280126,
+    "sha256": "a550ad6e062694ab6031b10c8c4a3ad0e15c58a43bedc32e34603b06aebae4b5"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/easy-tiger/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 332742,
+    "sha256": "4e21d8577b128f3c57c5249c2ccc1362555fa876684050a2e424bb5b11fbc900"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/easy-tiger/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 115426,
+    "sha256": "428a1c8e7d8401e766c902c22d1727b6ae46996c081aecfa8d544e00b8f274b4"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/easy-tiger/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 316320,
+    "sha256": "24c179ab9ef98ff14e116c0551f4287ebc1f0a5d56cf927cbe57f12c4dda42a1"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/easy-tiger/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 348532,
+    "sha256": "d783e4c7bc8800647cce6106bb7b09ed9f0d1ca5b75d13b107b46f04e52bd8f8"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/grand-funding-llc/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 283126,
+    "sha256": "a17cc7277c4e304d617c8f283cdc105cd57e60dc0ce722cbd997cb17d7583a12"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/grand-funding-llc/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 379348,
+    "sha256": "f3dd25e45752acb1010ce009e56018499f162d59f402168475591ab1b3d7e34e"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/grand-funding-llc/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 124098,
+    "sha256": "f7cbd088f3aa4b8cb48649326bb17c964ca2d24ad748e171a88513414131bc71"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/grand-funding-llc/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 175182,
+    "sha256": "e3715b96f2cc84d482dc2298dbabe71c35526f5deb5dbe06df7adb65f4f02805"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/grand-funding-llc/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 273366,
+    "sha256": "6c0106c3dc52eaa72960664047eec37cf0f78f66655ea3474ad032404810024f"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/hair-by-rachel-charles/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 249022,
+    "sha256": "22519e60b3ca370a1968c9bfc4f5a20ce8a0455c530247427b4292212d8ca804"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/hair-by-rachel-charles/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 278096,
+    "sha256": "4aec343ae687ccb7619cd02d7c7bce32e8b225b5c16ae82364698d30875d3c18"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/hair-by-rachel-charles/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 85512,
+    "sha256": "e0d0996351155b82d3d6964fa34446118cb58cd45f5dcf734f402655c08d95bb"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/hair-by-rachel-charles/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 137060,
+    "sha256": "a322ec755e3a79b2be3e14f13a88c3944fb7cbf3f9cc0f6631c418a501f69351"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/hair-by-rachel-charles/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 268336,
+    "sha256": "d6bee92c77e8355aa845edb54f17662bdc2a0a90455939ba48dd97d189f62ab3"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/logan-loans/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 289574,
+    "sha256": "d644571e41460b5d92854e3eed932e386196074e3947758bf531c8c5d8b361ac"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/logan-loans/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 334068,
+    "sha256": "cd1c2bd8c72f9c61fd6915aa5570a0ebeaa06d8e707e8dc6304d8d226eabac2b"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/logan-loans/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 88010,
+    "sha256": "8d237fbb01de457e5557743d8104ea06fdd3db2ec96e1e50f876904bc12e73a0"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/logan-loans/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 384126,
+    "sha256": "78e44c3ea4ce8b15df4af8db059f3a4782d8dc2f47e01b3d3343fd79897a38ce"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/logan-loans/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 283404,
+    "sha256": "c410313d27b7e4ff212e99ba86b922d122c47f32b533b93971dacb28d6b47d86"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-break-room/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 109086,
+    "sha256": "e7de95b2bdc1f5c24c496201bbbdad039c595f4f36549dc2a3c946a37640d583"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-break-room/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 141012,
+    "sha256": "2ec6da397afdff82e3bac038273ff5026d66fca5ebdb43fbaab6f6ffbf62a3ec"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-break-room/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 69852,
+    "sha256": "128e664a51d66dcdaeec79956770c0fa4b0fa176ad51afc2295b84b0524b6a6c"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-break-room/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 213630,
+    "sha256": "bd31520ef8ec7dbf8a4ee20d5932850199c6927f4ac14423e12cce8b6c04ed94"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-break-room/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 169820,
+    "sha256": "ac9ede127bb3d2516083ca0ca34ca72bc7078c87d24a779f9cf2e1b682103979"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-tarot-hotline/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 146140,
+    "sha256": "3e32c3354f580374048f0b08cbe4b24f82f10dfb53d0934cadad9ed9fc91b010"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-tarot-hotline/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 216298,
+    "sha256": "1d00675dfba0c267616803570eeab76107643a2e809d84f70c180722ff68d490"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-tarot-hotline/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 80724,
+    "sha256": "27d48b0c0d3fea6c3aa4a708435b5e15041cb1654f2d401b978b2088aa24a89f"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-tarot-hotline/detail-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 205900,
+    "sha256": "e6979a63dc52e2b50d70a5d9d66f2315f36f66874efbea9fc3703438738a3613"
+  },
+  {
+    "file": "app/public/assets/cases/2026-09-29/the-tarot-hotline/home-explore.webp",
+    "width": 1200,
+    "height": 2400,
+    "bytes": 183354,
+    "sha256": "2c207ec1c0e77be5f43e23bf8dd3416a93dd85fd61621c66c83d8cb5b55b1630"
+  }
+]
