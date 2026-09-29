@@ -1,0 +1,86 @@
+name: Case capture corrections
+on:
+  push:
+    branches: [case-studies/custom-domain-clients-2026-09-29]
+    paths: [.github/workflows/case-capture-corrections.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && npx --prefix app playwright install --with-deps chromium
+      - uses: actions/download-artifact@v4
+        with:
+          name: custom-domain-final-captures
+          run-id: 36545529374
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: ${{ runner.temp }}/case-input
+      - name: Capture normal public views with optional analytics declined
+        working-directory: app
+        env:
+          CASE_INPUT: ${{ runner.temp }}/case-input
+        run: |
+          cat > scripts/.case-corrections.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {writeFile} from 'node:fs/promises';
+          import {join} from 'node:path';
+          const root=process.env.CASE_INPUT;
+          const browser=await chromium.launch(); const records=[];
+          async function settle(page){
+            await page.evaluate(()=>document.fonts.ready);
+            const no=page.getByRole('button',{name:/decline|keep analytics off|reject optional/i}).first();
+            if(await no.waitFor({state:'visible',timeout:5000}).then(()=>true).catch(()=>false)){
+              const r=await no.boundingBox();
+              if(r && r.width>0 && r.height>0){await no.focus();await no.press('Enter');await page.waitForTimeout(500);}
+            }
+            await page.waitForTimeout(700);
+          }
+          async function view(slug,url,name,width,height,dpr,position){
+            const context=await browser.newContext({viewport:{width,height},deviceScaleFactor:dpr,reducedMotion:'reduce',serviceWorkers:'block'});
+            await context.route('**/*',route=>['GET','HEAD'].includes(route.request().method())&&!/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick/.test(route.request().url())?route.continue():route.abort());
+            try {
+              const page=await context.newPage();const response=await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
+              if(response.status()!==200)throw Error(`${slug} HTTP ${response.status()}`);
+              await settle(page);
+              await page.evaluate(async()=>{for(let y=0;y<Math.min(document.documentElement.scrollHeight,7000);y+=600){scrollTo(0,y);await new Promise(r=>setTimeout(r,80));}scrollTo(0,0);});
+              if(position==='project'){
+                const target=page.getByText('Run the property numbers before you call.',{exact:true});await target.scrollIntoViewIfNeeded();const y=await target.evaluate(e=>e.getBoundingClientRect().top+scrollY);await page.evaluate(y=>scrollTo(0,Math.max(0,y-160)),y);
+              }else if(position==='gallery'){
+                const y=await page.evaluate(()=>{const im=[...document.images].find(i=>i.naturalWidth>250&&i.getBoundingClientRect().width>100);return im?im.getBoundingClientRect().top+scrollY-180:700;});await page.evaluate(y=>scrollTo(0,Math.max(0,y)),y);
+              }else if(position==='pool'){
+                await page.locator('#play').scrollIntoViewIfNeeded();await page.evaluate(()=>scrollBy(0,200));
+              }else if(position==='readings'){
+                const t=page.getByText('HOW WOULD YOU LIKE YOUR READING?',{exact:false}).first();if(await t.count()){await t.scrollIntoViewIfNeeded();const y=await t.evaluate(e=>e.getBoundingClientRect().top+scrollY);await page.evaluate(y=>scrollTo(0,Math.max(0,y-100)),y);}
+              }
+              await page.waitForTimeout(800);
+              const info=await page.evaluate(()=>({title:document.title,scrollY,overflow:document.documentElement.scrollWidth>innerWidth+1,broken:[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.top<innerHeight&&r.bottom>0&&(!i.complete||!i.naturalWidth)}).map(i=>i.src)}));
+              if(info.broken.length||info.overflow)throw Error(`${slug}: visible asset or layout failure ${JSON.stringify(info)}`);
+              await page.screenshot({path:join(root,'app/public/assets/cases/2026-09-29',slug,name+'.png'),fullPage:name.includes('explore'),animations:'disabled',caret:'hide'});
+              records.push({slug,name,url:page.url(),capturedAt:new Date().toISOString(),width,height,dpr,...info});
+            }finally{await context.close();}
+          }
+          try{
+            for(const [name,w,h,dpr] of [['home-desktop',1440,1000,2],['home-tablet',1024,1000,2],['home-mobile',390,844,2],['home-explore',1200,1000,1],['home-explore-tablet',1024,1000,1],['home-explore-mobile',390,844,1]])await view('chromatic-painting-design','https://chromaticaz.com/',name,w,h,dpr);
+            await view('chromatic-painting-design','https://chromaticaz.com/painting/','detail-desktop',1440,1000,2);
+            await view('grand-funding-llc','https://www.grandfundingllc.com/','detail-desktop',1440,1000,2,'project');
+            await view('cc-films','https://ccfilms.net/gallery.html','detail-desktop',1440,1000,2,'gallery');
+            await view('the-break-room','https://thebreakroompoolhall.com/#play','detail-desktop',1440,1000,2,'pool');
+            await view('the-tarot-hotline','https://thetarothotline.com/readings/','detail-desktop',1440,1000,2,'readings');
+          }finally{await browser.close();await writeFile(join(root,'.lifi/evidence/cases/custom-domains-2026-09-29/corrections.json'),JSON.stringify({method:'Normal navigation, native privacy choices and scrolling only. No text or imagery altered. No transactions or forms submitted.',records},null,2));}
+          JS
+          node scripts/.case-corrections.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-release-source-captures
+          path: ${{ runner.temp }}/case-input
+          retention-days: 3
