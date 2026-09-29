@@ -1,0 +1,52 @@
+name: Editorial visual verification
+on:
+  push:
+    branches: [ops/verify-editorial-2026-09-29]
+    paths: [.github/workflows/editorial-visual-check.yml]
+permissions:
+  contents: read
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 9dc08b1e0c0bb1b6078832072af53f8ab7471b41
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - run: cd app && npx playwright install --with-deps chromium
+      - run: npm --prefix app run build
+      - name: Read the pinned original inspection script without changing its checks
+        run: |
+          python3 - <<'PY'
+          import urllib.request,textwrap
+          from pathlib import Path
+          url='https://raw.githubusercontent.com/omgitsthedm/littlefightnyc-website/95636a4b5f93d027a16a4b7e33ba2aaa61c0a756/.github/workflows/editorial-depth-release.yml'
+          raw=urllib.request.urlopen(url,timeout=30).read().decode()
+          start=raw.index("          import {chromium} from '@playwright/test';")
+          end=raw.index('          JS\n',start)
+          js=textwrap.dedent(raw[start:end])
+          assert "const out='/tmp/editorial-visual'" in js
+          Path('app/scripts/.editorial-visual-once.mjs').write_text(js)
+          PY
+          node --check app/scripts/.editorial-visual-once.mjs
+      - name: Capture 27 rendered pages and check public evidence destinations
+        working-directory: app
+        env:
+          CANDIDATE_REVISION: 9dc08b1e0c0bb1b6078832072af53f8ab7471b41
+        run: |
+          mkdir -p /tmp/editorial-visual
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort >/tmp/editorial-preview.log 2>&1 &
+          node scripts/.editorial-visual-once.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-visual-review
+          path: |
+            /tmp/editorial-visual
+            /tmp/editorial-preview.log
+          retention-days: 7
