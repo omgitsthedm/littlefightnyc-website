@@ -1,0 +1,191 @@
+name: Editorial final release contract
+on:
+  push:
+    branches: [ops/verify-editorial-2026-09-29]
+    paths: [.github/workflows/editorial-final-contract.yml]
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.commit.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: case-studies/editorial-depth-2026-09-29
+      - name: Align assertions with the requested score removal and complete native mounting
+        run: |
+          test "$(git rev-parse HEAD)" = 9dc08b1e0c0bb1b6078832072af53f8ab7471b41
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app/tests/shared-acquisition-render.spec.ts');s=p.read_text()
+          old='  await expect(proof).toContainText("30 Jul 2026");'
+          new='''  // The approved editorial removes stale scores; public work remains inspectable.
+            await expect(proof).not.toContainText("30 Jul 2026");
+            await expect(proof.locator(".lf-website-proof-set__check")).toHaveCount(0);
+            await expect(proof.locator(".lf-website-proof-set__links a")).toHaveCount(6);'''
+          assert s.count(old)==1;s=s.replace(old,new)
+          marker='test("responsive case proof starts natively and preserves explicit device choices @all-projects", async ({ page }) => {'
+          start=s.index(marker);end=s.index('\n});',start);chunk=s[start:end]
+          old='  const explorer = page.locator(".lf-live-explorer");'
+          new='  await expect(page.locator("[data-lf-route-snapshot]")).toHaveCount(0);\n'+old
+          assert chunk.count(old)==1;s=s[:start]+chunk.replace(old,new)+s[end:];p.write_text(s)
+          p=Path('app/tests/quality-smoke.spec.ts');s=p.read_text()
+          old='        await placeholder.scrollIntoViewIfNeeded();'
+          new='''        // Intersection replaces this placeholder by design. Scroll it once,
+                  // then assert the real media rather than waiting on the removed node.
+                  await placeholder.evaluate(node => node.scrollIntoView({ block: "center", behavior: "instant" }));'''
+          assert s.count(old)==1;s=s.replace(old,new)
+          marker='  "narrow mobile keeps every help path reachable without a desktop payload @chromium-mobile @webkit-mobile",'
+          start=s.index(marker);end=s.index('    const essentialOnly',start)
+          chunk=s[start:end];old='    await openRoute(page, ROUTES[0]);'
+          assert chunk.count(old)==1
+          chunk=chunk.replace(old,old+'\n    await expect(page.locator("[data-lf-route-snapshot]")).toHaveCount(0);')
+          s=s[:start]+chunk+s[end:];p.write_text(s)
+          PY
+          git diff --check
+          git diff --stat
+      - id: commit
+        run: |
+          git config user.name 'Little Fight editorial review'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add app/tests/shared-acquisition-render.spec.ts app/tests/quality-smoke.spec.ts
+          git commit -m 'Verify current case proof and wait for intended UI handoffs [skip netlify]'
+          git push origin HEAD:refs/heads/case-studies/editorial-depth-2026-09-29
+          echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+  source:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - run: |
+          set -o pipefail
+          { npm run typecheck:functions && npm run test:acquisition && npm --prefix app run quality && npm --prefix app run audit:quality-manifest && npm --prefix app run audit:release; } 2>&1 | tee /tmp/source-final.log
+          test -z "$(git status --porcelain)"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-final-source
+          path: /tmp/source-final.log
+          retention-days: 14
+  browsers:
+    needs: prepare
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1,2,3,4,5,6]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - run: cd app && npx playwright install --with-deps chromium webkit
+      - name: Run every Chromium and WebKit project without exclusions
+        working-directory: app
+        run: |
+          set -o pipefail
+          npx playwright test --project=chromium-desktop --project=chromium-mobile --project=webkit-mobile --project=webkit-desktop --project=webkit-ipad --shard=${{ matrix.shard }}/6 2>&1 | tee /tmp/browser-final.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-final-browser-${{ matrix.shard }}
+          path: |
+            /tmp/browser-final.log
+            app/test-results
+          retention-days: 7
+  firefox:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - run: cd app && npx playwright install --with-deps firefox
+      - name: Run all Firefox assertions with a virtual display for WebGL
+        working-directory: app
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          set -o pipefail
+          xvfb-run -a npx playwright test --project=firefox-desktop --headed 2>&1 | tee /tmp/firefox-final.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-final-firefox
+          path: |
+            /tmp/firefox-final.log
+            app/test-results
+          retention-days: 7
+  destinations:
+    needs: prepare
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.prepare.outputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - name: Validate all 27 evidence destinations with real document responses and fragment checks
+        working-directory: app
+        run: |
+          mkdir -p /tmp/editorial-links
+          cat > scripts/.check-evidence-links.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const cases=JSON.parse(await readFile('src/data/client-case-studies.json','utf8'));
+          const browser=await chromium.launch();const results=[];const failures=[];
+          try{
+            for(const c of cases)for(const url of [...new Set([c.editorial.detailUrl,...c.editorial.evidence.map(e=>e.url)])]){
+              const context=await browser.newContext({serviceWorkers:'block',reducedMotion:'reduce'});
+              await context.route('**/*',route=>{const q=route.request();return !['GET','HEAD'].includes(q.method())||/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick|tiktok/.test(q.url())?route.abort():route.continue();});
+              const page=await context.newPage();
+              try{
+                if(new URL(url).hostname!==new URL(c.url).hostname)throw new Error('Wrong client domain');
+                const r=await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForTimeout(700);
+                const fragment=decodeURIComponent(new URL(url).hash.slice(1));
+                const found=!fragment||await page.evaluate(id=>Boolean(document.getElementById(id)||document.querySelector('a[name="'+CSS.escape(id)+'"]')),fragment);
+                const record={slug:c.slug,url,finalUrl:page.url(),status:r?.status(),fragmentFound:found};results.push(record);
+                if(record.status!==200||!found)failures.push(record);
+              }catch(e){failures.push({slug:c.slug,url,error:String(e)});}finally{await context.close();}
+            }
+          }finally{await browser.close();}
+          await writeFile('/tmp/editorial-links/report.json',JSON.stringify({revision:process.env.REVISION,checkedAt:new Date().toISOString(),results,failures},null,2));
+          console.log(JSON.stringify({count:results.length,failures},null,2));if(failures.length)process.exitCode=1;
+          JS
+          node scripts/.check-evidence-links.mjs
+        env:
+          REVISION: ${{ needs.prepare.outputs.revision }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-final-destinations
+          path: /tmp/editorial-links
+          retention-days: 14
