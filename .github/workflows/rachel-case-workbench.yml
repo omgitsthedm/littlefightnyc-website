@@ -1,0 +1,34 @@
+name: Rachel offline review workbench
+on:
+  push:
+    branches: [case-study/rachel-charles-2026-09-29]
+    paths: [.github/workflows/rachel-case-workbench.yml]
+permissions:
+  contents: read
+jobs:
+  workbench:
+    if: github.ref == 'refs/heads/case-study/rachel-charles-2026-09-29'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - name: Package tracked source and installed build tools without credentials
+        run: |
+          mkdir -p "$RUNNER_TEMP/rachel-workbench/source" "$RUNNER_TEMP/rachel-workbench/runtime"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/rachel-workbench/source"
+          cp -a node_modules "$RUNNER_TEMP/rachel-workbench/source/node_modules"
+          cp -a app/node_modules "$RUNNER_TEMP/rachel-workbench/source/app/node_modules"
+          cp "$(command -v node)" "$RUNNER_TEMP/rachel-workbench/runtime/node"
+          printf '%s\n' "$GITHUB_SHA" > "$RUNNER_TEMP/rachel-workbench/revision.txt"
+          tar -czf "$RUNNER_TEMP/rachel-workbench.tar.gz" -C "$RUNNER_TEMP/rachel-workbench" .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rachel-offline-workbench
+          path: ${{ runner.temp }}/rachel-workbench.tar.gz
+          retention-days: 2
