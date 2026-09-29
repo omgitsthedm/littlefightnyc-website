@@ -1,0 +1,96 @@
+name: Audit published case SEO and backlinks
+on:
+  push:
+    branches: [audit/case-seo-backlinks-2026-09-29]
+    paths: [.github/workflows/audit-case-seo-backlinks-20260929.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/audit/case-seo-backlinks-2026-09-29'
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 56df5e9befc6650571383a83de1a45df59cee787
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - name: Read public pages without submitting or changing anything
+        working-directory: app
+        run: |
+          mkdir -p /tmp/lifi-seo-audit
+          cat > scripts/.read-only-seo-audit.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const origin='https://littlefightnyc.com';
+          const expected='56df5e9befc6650571383a83de1a45df59cee787';
+          const studies=JSON.parse(await readFile('src/data/client-case-studies.json','utf8'));
+          const out='/tmp/lifi-seo-audit';
+          async function get(url){
+            try{const r=await fetch(url,{signal:AbortSignal.timeout(25000),headers:{'user-agent':'LittleFight-ReadOnly-SEO-Audit/1.0'}});return {url:r.url,status:r.status,headers:Object.fromEntries(['content-type','x-robots-tag','referrer-policy','cache-control'].map(h=>[h,r.headers.get(h)])),body:await r.text()};}
+            catch(e){return {url,error:String(e),body:''};}
+          }
+          function inspect({html,base}){
+            const d=html===null?document:new DOMParser().parseFromString(html,'text/html');
+            const absolute=s=>{try{return new URL(s,base).href;}catch{return s;}};
+            return {title:d.title,meta:[...d.querySelectorAll('meta[name],meta[property]')].map(m=>({name:m.getAttribute('name')||m.getAttribute('property'),content:m.getAttribute('content')})),canonical:[...d.querySelectorAll('link[rel="canonical"]')].map(l=>absolute(l.getAttribute('href'))),h1:[...d.querySelectorAll('h1')].map(h=>h.textContent.trim()),editorial:!!d.querySelector('[data-client-case]'),headings:[...d.querySelectorAll('h2,h3')].map(h=>h.textContent.trim()),schema:[...d.querySelectorAll('script[type="application/ld+json"]')].map(s=>{try{return JSON.parse(s.textContent);}catch(e){return {parseError:String(e)};}}),links:[...d.querySelectorAll('a[href]')].map(a=>({text:a.textContent.trim().replace(/\s+/g,' ').slice(0,180),url:absolute(a.getAttribute('href')),rel:a.getAttribute('rel')||'',footer:!!a.closest('footer,[role="contentinfo"],[class*="footer"]')})),images:[...d.querySelectorAll('img')].map(i=>({src:absolute(i.getAttribute('src')||''),alt:i.getAttribute('alt'),width:i.getAttribute('width'),height:i.getAttribute('height'),loading:i.getAttribute('loading'),fetchpriority:i.getAttribute('fetchpriority'),srcset:i.getAttribute('srcset'),inPicture:!!i.closest('picture')})),text:(d.querySelector('main')||d.body).textContent.replace(/\s+/g,' ').trim(),scriptSources:[...d.querySelectorAll('script[src]')].map(s=>absolute(s.getAttribute('src')))};
+          }
+          const report={checkedAt:new Date().toISOString(),expected,method:'Public GET/HEAD only. Nine case pages and each linked client homepage; not a full crawl of client sites. No account changes, forms, bookings or purchases.',release:null,siteFiles:{},cases:[],errors:[],notVerified:['Search Console property/indexing/sitemap submissions','Bing Webmaster Tools submissions and reports','Third-party AI citations','Real-user Core Web Vitals','Analytics event receipt and conversions','Link qualification contractual/payment terms']};
+          const release=await get(origin+'/release.json');
+          try{report.release=JSON.parse(release.body);if(report.release.revision!==expected)report.errors.push('Live revision differs from expected');}catch{report.errors.push('Release response unavailable');}
+          for(const path of ['/robots.txt','/sitemap.xml','/image-sitemap.xml','/sitemap-index.xml','/examples/']){
+            report.siteFiles[path]=await get(origin+path);
+          }
+          const browser=await chromium.launch();
+          try{
+            for(const study of studies){
+              const row={client:study.client,slug:study.slug,clientUrl:study.url,checks:{}};
+              const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce',serviceWorkers:'block'});
+              await context.route('**/*',route=>{const q=route.request();return !['GET','HEAD'].includes(q.method())||/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick/.test(q.url())?route.abort():route.continue();});
+              const page=await context.newPage();
+              try{
+                const url=origin+'/case-studies/'+study.slug+'/';
+                const raw=await get(url);row.http={status:raw.status,url:raw.url,headers:raw.headers,error:raw.error};
+                row.initial=await page.evaluate(inspect,{html:raw.body,base:url});
+                await page.goto(url,{waitUntil:'domcontentloaded',timeout:45000});
+                await page.waitForTimeout(900);
+                row.rendered=await page.evaluate(inspect,{html:null,base:page.url()});
+                const meta=(doc,n)=>doc.meta.find(m=>m.name===n)?.content||'';
+                const host=u=>new URL(u).hostname.replace(/^www\./,'');
+                row.outboundClientLinks=row.initial.links.filter(l=>host(l.url)===host(study.url));
+                row.serviceLinks=row.initial.links.filter(l=>l.url.startsWith(origin+'/services/'));
+                row.checks={http200:raw.status===200,initialEditorial:row.initial.editorial,oneH1:row.initial.h1.length===1,canonical:row.initial.canonical.length===1&&row.initial.canonical[0]===url,indexable:!/noindex|none/i.test(meta(row.initial,'robots')+' '+(raw.headers?.['x-robots-tag']||'')),description:!!meta(row.initial,'description'),uniqueShareImage:meta(row.initial,'og:image').includes(study.slug),socialAlt:!!meta(row.initial,'og:image:alt'),twitterAlt:!!meta(row.initial,'twitter:image:alt'),schemaParses:row.initial.schema.length>0&&!row.initial.schema.some(s=>s.parseError),clientLinks:row.outboundClientLinks.length>0,serviceLinks:row.serviceLinks.length>0,inSitemap:report.siteFiles['/sitemap.xml'].body.includes(url),inImageSitemap:report.siteFiles['/image-sitemap.xml'].body.includes(study.slug),linkedFromExamples:report.siteFiles['/examples/'].body.includes('/case-studies/'+study.slug+'/'),hydratedMetadataParity:row.initial.title===row.rendered.title&&row.initial.canonical[0]===row.rendered.canonical[0]&&meta(row.initial,'description')===meta(row.rendered,'description'),imageAltAttributes:row.initial.images.every(i=>i.alt!==null),imageDimensions:row.initial.images.every(i=>Number(i.width)>0&&Number(i.height)>0)};
+                const clientRaw=await get(study.url);row.clientHttp={status:clientRaw.status,url:clientRaw.url,headers:clientRaw.headers,error:clientRaw.error};
+                const clientInitial=await page.evaluate(inspect,{html:clientRaw.body,base:clientRaw.url||study.url});
+                row.clientInitialMeta=clientInitial.meta;
+                row.clientInitialBacklinks=clientInitial.links.filter(l=>{try{return host(l.url)==='littlefightnyc.com';}catch{return false;}});
+                await page.goto(study.url,{waitUntil:'domcontentloaded',timeout:45000});
+                await page.waitForTimeout(1400);
+                const clientRendered=await page.evaluate(inspect,{html:null,base:page.url()});
+                row.clientRenderedMeta=clientRendered.meta;
+                row.clientRenderedBacklinks=clientRendered.links.filter(l=>{try{return host(l.url)==='littlefightnyc.com';}catch{return false;}});
+                row.clientHomepageBacklinkVerified=row.clientRenderedBacklinks.some(l=>l.footer);
+                row.clientRobots=await get(new URL('/robots.txt',clientRaw.url||study.url).href);
+                row.checks.clientHomepageResponds=clientRaw.status===200;
+                console.log(JSON.stringify({client:row.client,checks:row.checks,backlinks:row.clientRenderedBacklinks}));
+              }catch(e){row.error=String(e);report.errors.push(study.slug+': '+String(e));}
+              finally{report.cases.push(row);await context.close();await writeFile(out+'/report.json',JSON.stringify(report,null,2));}
+            }
+          }finally{await browser.close();}
+          report.summary={cases:report.cases.length,caseChecksFailed:report.cases.flatMap(r=>Object.entries(r.checks).filter(([k,v])=>!v).map(([k])=>r.slug+': '+k)),clientHomepagesWithFooterCredit:report.cases.filter(r=>r.clientHomepageBacklinkVerified).length,clientInitialBacklinkCount:report.cases.filter(r=>r.clientInitialBacklinks?.length).length,errors:report.errors};
+          await writeFile(out+'/report.json',JSON.stringify(report,null,2));
+          await writeFile(out+'/summary.json',JSON.stringify(report.summary,null,2));
+          console.log('FINAL_SUMMARY '+JSON.stringify(report.summary));
+          if(report.errors.length)process.exitCode=1;
+          JS
+          node scripts/.read-only-seo-audit.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: case-seo-backlink-audit
+          path: /tmp/lifi-seo-audit
+          retention-days: 7
