@@ -1,3 +1,4 @@
+// Load the primary web font; missing optional local fallback fonts are not network failures.
 import { expect, test } from "@playwright/test";
 
 // These tests deliberately hold route requests and replace the Audit Lab
@@ -23,7 +24,7 @@ for (const [path, chunk, composition] of [["/", "Home", ".lf-home-main"], ["/nat
       await snapshot.getByRole("heading", { level: 1 }).evaluate(async (element) => {
         const faces = new Set([element, ...element.querySelectorAll("*")].map((node) => {
           const style = getComputedStyle(node);
-          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily.split(",")[0].trim()}`;
         }));
         await Promise.all([...faces].map((font) => document.fonts.load(font)));
       });
@@ -139,7 +140,7 @@ test(
           .some(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim()))
         .map(element => {
           const style = getComputedStyle(element);
-          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+          return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily.split(",")[0].trim()}`;
         }));
       await Promise.all([...faces].map(font => document.fonts.load(font)));
       await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));

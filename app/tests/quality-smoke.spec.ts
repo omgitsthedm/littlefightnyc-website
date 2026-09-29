@@ -950,7 +950,12 @@ test(
     expect(
       indexedRoutes,
       "The indexed route baseline changed; review the route policy and update the expected count intentionally.",
-    ).toHaveLength(137);
+    ).toHaveLength(140);
+
+    // Two new client pages and The Break Room graduating from noindex.
+    for (const path of ["/case-studies/easy-tiger/", "/case-studies/the-tarot-hotline/", "/case-studies/the-break-room/"]) {
+      expect(indexedRoutes.some(route => route.path === path)).toBe(true);
+    }
 
     type H1Mismatch = {
       path: string;

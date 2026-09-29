@@ -10,7 +10,7 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { ProofStatus } from "./ProofPassport";
 import { hasCurrentPublicSource } from "./caseProof";
-import CinematicMedia from "./CinematicMedia";
+import { DeferredCinematicMedia } from "./CinematicMedia";
 import LivePreview from "./LivePreview";
 import "./ProjectReviewGrid.css";
 
@@ -34,7 +34,7 @@ export default function ProjectReviewGrid({
         <article className="lf-project-review" key={study.slug}>
           <div className={`lf-project-review__media${study.editorial ? " lf-project-review__media--framed" : isRachel ? " lf-project-review__media--rachel" : ""}`}>
             {study.video ? (
-              <CinematicMedia
+              <DeferredCinematicMedia
                 media={study.video}
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />

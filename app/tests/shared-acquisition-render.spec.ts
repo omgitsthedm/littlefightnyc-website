@@ -1,3 +1,4 @@
+// Load the primary web font; missing optional local fallback fonts are not network failures.
 import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 
@@ -15,7 +16,7 @@ async function settleVisibleType(page: Page) {
         .some(node => node.nodeType === Node.TEXT_NODE && node.textContent?.trim()))
       .map(element => {
         const style = getComputedStyle(element);
-        return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
+        return `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily.split(",")[0].trim()}`;
       }));
     await Promise.all([...faces].map(font => document.fonts.load(font)));
     await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));

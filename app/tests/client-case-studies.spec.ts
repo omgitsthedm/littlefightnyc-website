@@ -28,6 +28,9 @@ for (const study of clientCases) {
     expect(client?.url).toBe(study.url);
 
     await page.goto(path);
+    // Interactions start only after the complete SSR snapshot hands off.
+    await expect(page.locator("[data-lf-route-snapshot]")).toHaveCount(0);
+    await expect(page.locator("[data-lf-route-mount]:not([hidden])")).toBeAttached();
     await expect(page.locator("h1")).toHaveText(study.client);
     await expect(page.locator(`[data-client-case="${study.slug}"]`)).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://littlefightnyc.com${path}`);

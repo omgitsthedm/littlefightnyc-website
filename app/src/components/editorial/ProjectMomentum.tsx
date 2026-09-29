@@ -7,7 +7,7 @@ import {
 } from "@/data/project-momentum";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
-import CinematicMedia from "./CinematicMedia";
+import CinematicMedia, { DeferredCinematicMedia } from "./CinematicMedia";
 import { useScrollReveal } from "./useScrollReveal";
 import { CountUp } from "@/components/dataviz/CountUp";
 import { usePlayOnView } from "@/components/dataviz/usePlayOnView";
@@ -20,6 +20,7 @@ export default function ProjectMomentum({
   slug?: string;
   variant?: "section" | "detail" | "embedded";
 }) {
+  const ProcessMedia = variant === "embedded" ? DeferredCinematicMedia : CinematicMedia;
   const ref = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
   const playRef = usePlayOnView<HTMLDivElement>(0.25);
   const setInnerRefs = (el: HTMLDivElement | null) => {
@@ -60,7 +61,7 @@ export default function ProjectMomentum({
             <article className="lf-momentum__project" key={project.slug}>
               <div className="lf-momentum__scene">
                 {project.video ? (
-                  <CinematicMedia
+                  <ProcessMedia
                     media={project.video}
                     alt={project.imageAlt}
                   />
