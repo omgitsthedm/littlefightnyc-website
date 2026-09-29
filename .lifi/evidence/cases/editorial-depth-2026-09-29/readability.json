@@ -1,0 +1,68 @@
+{
+  "method": "Flesch\u2013Kincaid grade level: CMU dictionary pronunciation counts, vowel-group fallback for unknown words; punctuation sentence boundaries. Main story, summary beats, scope details, callouts, evidence and FAQ answers; names retained. Approximation, not a comprehension test.",
+  "results": [
+    {
+      "slug": "hair-by-rachel-charles",
+      "words": 544,
+      "sentences": 57,
+      "syllables": 769,
+      "grade": 4.81
+    },
+    {
+      "slug": "cc-films",
+      "words": 526,
+      "sentences": 57,
+      "syllables": 786,
+      "grade": 5.64
+    },
+    {
+      "slug": "chromatic-painting-design",
+      "words": 542,
+      "sentences": 53,
+      "syllables": 742,
+      "grade": 4.55
+    },
+    {
+      "slug": "clearhelp",
+      "words": 527,
+      "sentences": 55,
+      "syllables": 772,
+      "grade": 5.43
+    },
+    {
+      "slug": "logan-loans",
+      "words": 535,
+      "sentences": 55,
+      "syllables": 758,
+      "grade": 4.92
+    },
+    {
+      "slug": "grand-funding-llc",
+      "words": 521,
+      "sentences": 53,
+      "syllables": 687,
+      "grade": 3.8
+    },
+    {
+      "slug": "the-break-room",
+      "words": 516,
+      "sentences": 50,
+      "syllables": 756,
+      "grade": 5.72
+    },
+    {
+      "slug": "easy-tiger",
+      "words": 563,
+      "sentences": 52,
+      "syllables": 828,
+      "grade": 5.99
+    },
+    {
+      "slug": "the-tarot-hotline",
+      "words": 560,
+      "sentences": 57,
+      "syllables": 778,
+      "grade": 4.64
+    }
+  ]
+}

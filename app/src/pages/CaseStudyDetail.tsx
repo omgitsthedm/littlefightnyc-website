@@ -6,7 +6,7 @@ import {
   LockKeyhole,
   MonitorCheck,
 } from "lucide-react";
-import ClientCaseEditorial, { ClientCaseHero } from "@/components/editorial/ClientCaseEditorial";
+import ClientCaseEditorial, { ClientCaseHero, ClientCaseScope } from "@/components/editorial/ClientCaseEditorial";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
@@ -135,10 +135,10 @@ export default function CaseStudyDetail() {
   const isRachel = study.slug === "hair-by-rachel-charles";
 
   const beats = [
-    { label: "Before", body: study.problem },
+    { label: study.editorial ? "The need" : "Before", body: study.problem },
     { label: "Kept", body: study.kept },
-    { label: "Changed", body: study.changed },
-    { label: "After", body: study.result },
+    { label: study.editorial ? "Built" : "Changed", body: study.changed },
+    { label: study.editorial ? "Now" : "After", body: study.result },
   ];
 
   return (
@@ -215,7 +215,7 @@ export default function CaseStudyDetail() {
             </header>
 
             <div className="lf-case-next__passport">
-              <ProofPassport study={study} />
+              {study.editorial ? <ClientCaseScope study={study} /> : <ProofPassport study={study} />}
             </div>
 
             <aside className="lf-case-next__details" aria-label="Project details">

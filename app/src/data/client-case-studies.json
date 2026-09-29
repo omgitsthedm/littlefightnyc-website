@@ -17,32 +17,16 @@
     "changed": "We brought her work, service details, pricing, and booking into one clear site. The Hair Brief gives unsure visitors a place to start.",
     "result": "A new visitor can meet the stylist, see her work, and compare the options before choosing a booking or a conversation.",
     "body": [
-      "Hair By Rachel Charles is an independent hair studio in Phoenix. Color, cuts, and extensions all start with a conversation. We built a website that brings that care online. Visitors can see the work, compare services, and find a clear next step.",
-      "The yellow, bold type, and close views of the work give the site a clear point of view. It does not look like a stock salon page. The portrait puts a person beside the name, while the work shows what the studio is about.",
-      "That first impression has a job. A visitor should know whose chair they are considering. Services and prices sit close to the work, so style does not come at the cost of useful facts.",
-      "Someone who knows the service can head to booking. Someone who is unsure can use the Hair Brief. It starts with a goal and leaves room for hair history, upkeep, time, and budget.",
-      "The brief offers a starting point for a talk. It does not promise a hair result. That leaves the final choice with the client and stylist, where it belongs.",
-      "The site keeps Square in the booking path. The current booking page separates service, time, and contact details. Nothing is booked by looking at the page.",
-      "Service pages, pricing, and a first-visit guide each have a clear home. Links connect those pages without making someone search through a social feed. The same tasks stay available on a phone, tablet, or desktop.",
-      "The result is a useful front door for a one-person business. It shows the work and explains the next step, while keeping the booking tool already in place."
+      "Hair By Rachel Charles is an independent studio in Phoenix. The work covers color, cuts, and extensions. Rachel puts hair health and a clear plan first. We built a site around that approach. It shows her work, explains the choices, and connects to Square.",
+      "A salon visit is personal. The opening pairs Rachel’s name with her portrait. Yellow and bold type give the studio a distinct look. Hair photos then show the work, rather than asking a stock image to sell it.",
+      "The useful choice is not always “book now.” Some visitors know the service; others only know their goal. Two clear actions serve both. Booking stays direct, while the Hair Brief leaves room for questions.",
+      "The booking page groups services by type. A visitor can compare the name, price, and description together. Color and extension work can start with a consultation. That keeps a complex service from looking like a quick purchase.",
+      "The Hair Brief asks about goals, history, upkeep, time, and budget. It suggests a place to start the conversation. Rachel still makes the hair plan with the client. The site supports that judgment instead of trying to replace it.",
+      "Square remains the booking tool, rather than a second calendar. The page moves from service to time to contact details. The service information helps people prepare before that final step.",
+      "Pricing, a first-visit guide, and the gallery each have a stable page. That gives Rachel specific links to share in a text. A client can find the same answers without searching old social posts.",
+      "The delivered site gives each visitor a sensible next step. Ready clients can book. Unsure clients can start a conversation. Both paths stay tied to Rachel’s work and way of working."
     ],
-    "metrics": [
-      {
-        "value": "96",
-        "label": "Dated phone-page check · 30 Jul 2026",
-        "evidence": "release"
-      },
-      {
-        "value": "3 scores of 100",
-        "label": "Three dated quality checks",
-        "evidence": "release"
-      },
-      {
-        "value": "Square",
-        "label": "The booking habit clients already knew",
-        "evidence": "build"
-      }
-    ],
+    "metrics": [],
     "featureProof": {
       "label": "Not every visitor is ready to book.",
       "ownerOutcome": "A new visitor can meet the stylist, see her work, and compare the options before choosing a booking or a conversation.",
@@ -101,39 +85,43 @@
       "location": "Phoenix, Arizona",
       "sector": "Hair & beauty",
       "summary": "Little Fight NYC built a salon website for Hair By Rachel Charles, with clear services, the Hair Brief, and Square-connected booking.",
-      "intro": "Hair By Rachel Charles is an independent hair studio in Phoenix. Color, cuts, and extensions all start with a conversation. We built a website that brings that care online. Visitors can see the work, compare services, and find a clear next step.",
+      "intro": "Hair By Rachel Charles is an independent studio in Phoenix. The work covers color, cuts, and extensions. Rachel puts hair health and a clear plan first. We built a site around that approach. It shows her work, explains the choices, and connects to Square.",
       "tags": [
         "Website design",
         "Salon website",
         "Square booking"
       ],
-      "imageAlt": "Yellow Hair By Rachel Charles homepage.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "Hair By Rachel Charles homepage with a yellow background, portrait, and separate booking and Hair Brief actions.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "The yellow, bold type, and close views of the work give the site a clear point of view. It does not look like a stock salon page. The portrait puts a person beside the name, while the work shows what the studio is about.",
-        "That first impression has a job. A visitor should know whose chair they are considering. Services and prices sit close to the work, so style does not come at the cost of useful facts."
+        "A salon visit is personal. The opening pairs Rachel’s name with her portrait. Yellow and bold type give the studio a distinct look. Hair photos then show the work, rather than asking a stock image to sell it.",
+        "The useful choice is not always “book now.” Some visitors know the service; others only know their goal. Two clear actions serve both. Booking stays direct, while the Hair Brief leaves room for questions."
       ],
-      "detailTitle": "Not every visitor is ready to book.",
+      "detailTitle": "A choice before the calendar.",
       "detail": [
-        "Someone who knows the service can head to booking. Someone who is unsure can use the Hair Brief. It starts with a goal and leaves room for hair history, upkeep, time, and budget.",
-        "The brief offers a starting point for a talk. It does not promise a hair result. That leaves the final choice with the client and stylist, where it belongs."
+        "The booking page groups services by type. A visitor can compare the name, price, and description together. Color and extension work can start with a consultation. That keeps a complex service from looking like a quick purchase.",
+        "The Hair Brief asks about goals, history, upkeep, time, and budget. It suggests a place to start the conversation. Rachel still makes the hair plan with the client. The site supports that judgment instead of trying to replace it."
       ],
       "technical": [
-        "The site keeps Square in the booking path. The current booking page separates service, time, and contact details. Nothing is booked by looking at the page.",
-        "Service pages, pricing, and a first-visit guide each have a clear home. Links connect those pages without making someone search through a social feed. The same tasks stay available on a phone, tablet, or desktop."
+        "Square remains the booking tool, rather than a second calendar. The page moves from service to time to contact details. The service information helps people prepare before that final step.",
+        "Pricing, a first-visit guide, and the gallery each have a stable page. That gives Rachel specific links to share in a text. A client can find the same answers without searching old social posts."
       ],
-      "closing": "The result is a useful front door for a one-person business. It shows the work and explains the next step, while keeping the booking tool already in place.",
+      "closing": "The delivered site gives each visitor a sensible next step. Ready clients can book. Unsure clients can start a conversation. Both paths stay tied to Rachel’s work and way of working.",
       "detailUrl": "https://hairbyrachelcharles.com/booking/",
       "detailLabel": "See Rachel’s booking page",
-      "detailAlt": "Hair By Rachel Charles booking page showing service choices beside the Hair Brief link.",
+      "detailAlt": "Rachel’s booking page with service, time, and contact steps, service filters, and a yellow Hair Brief panel.",
       "questions": [
         {
-          "question": "Who built this salon website?",
-          "answer": "Little Fight NYC designed and built the website for Hair By Rachel Charles."
+          "question": "What did Little Fight build for Rachel?",
+          "answer": "We built the website, service paths, and Hair Brief experience. We connected the public booking path while keeping Square."
+        },
+        {
+          "question": "Can a visitor ask before choosing a service?",
+          "answer": "Yes. The Hair Brief helps them describe their goal and limits. The first-visit guide also helps them prepare."
         },
         {
           "question": "Did the project replace Square?",
-          "answer": "No. Square stays in the booking path. The website explains the services and helps visitors choose their next step."
+          "answer": "No. Square stays in the booking path. The website gives the services and Rachel’s work a clear home."
         }
       ],
       "share": {
@@ -142,7 +130,54 @@
         "width": 1200,
         "height": 630,
         "alt": "Yellow Hair By Rachel Charles homepage, shown in desktop and phone frames."
-      }
+      },
+      "detailCaption": "Service choices and the Hair Brief stay together before the calendar.",
+      "scope": [
+        {
+          "title": "Website design",
+          "detail": "We built the page layouts, service paths, and phone views. Rachel’s portrait and hair work lead the site."
+        },
+        {
+          "title": "Service guidance",
+          "detail": "We connected prices, service pages, and first-visit guidance. The Hair Brief gives unsure visitors a separate starting point."
+        },
+        {
+          "title": "Booking connection",
+          "detail": "We kept Square in the booking path. The website explains the service before the visitor picks a time."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "A visible sequence",
+          "detail": "Service, time, and contact details show the steps ahead."
+        },
+        {
+          "title": "Useful service groups",
+          "detail": "Filters keep color, cuts, extensions, and bridal work distinct."
+        },
+        {
+          "title": "Room for uncertainty",
+          "detail": "The yellow Hair Brief panel offers a different starting point."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Compare services",
+          "detail": "Service pages connect the work with prices and appointment choices.",
+          "url": "https://hairbyrachelcharles.com/services/"
+        },
+        {
+          "title": "Plan a first visit",
+          "detail": "New visitors have a guide alongside the service menu.",
+          "url": "https://hairbyrachelcharles.com/first-visit/"
+        },
+        {
+          "title": "Follow the booking path",
+          "detail": "The public booking page shows the Square-connected service choices.",
+          "url": "https://hairbyrachelcharles.com/booking/"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -162,14 +197,14 @@
     "changed": "We gave the trailer, press, credits, and photo archive clear places. Contact choices help each type of visitor start the right conversation.",
     "result": "Visitors have one official source for the film and a clear path to its trailer, press material, and premiere archive.",
     "body": [
-      "CC Films is a film company in Dallas. Its website presents Marrow, a psychological horror film. We built a home for the trailer, film details, press links, and premiere photos. The site keeps the film’s tone without making people hunt for the facts.",
-      "The film’s poster leads the page. Deep color, tall type, and fine rules keep the mood close to the work. The website does not need to compete with the film or add a second visual story.",
-      "Useful labels sit around that mood. A visitor can watch, read, or contact the company without guessing what a symbol means. On a phone, the poster and next steps keep their own space.",
-      "A premiere is a night. Its photos can stay useful long after it ends. The gallery gives that material its own page, with event context and photo credit.",
-      "A clear archive helps a guest find the event again. It also gives press and collaborators a direct source to share. The photographer’s credit stays with the material.",
-      "The trailer has a clear watch link. Press references lead to their sources, while company and film credits remain readable text. The contact form separates the reason for an inquiry.",
-      "The gallery is linked from the main site rather than left on a separate, hard-to-find page. The desktop and phone layouts present the same official material at different sizes.",
-      "This is not a claim that the website earned press coverage. It is a record of the home we built for the film’s existing work, and the paths that help visitors use it."
+      "CC Films is a film company in Dallas. Its film Marrow needed one official home online. Fans need the trailer. Press needs facts and credits. Premiere guests want their photos. We built a site that serves each group without losing the film’s mood.",
+      "The poster already carries the film’s identity. We used it as the main visual, not a background to cover with effects. Dark tones, tall type, and fine rules support it. The trailer and premiere links sit beside the film summary.",
+      "A film site needs atmosphere and clear facts. We kept both by giving each section a plain name. Viewers can watch first. Press can find credits and source links. Neither group has to work through the other’s task.",
+      "The gallery has its own address. Its opening records the event, venue, and photo credit. A guest can return to that page after the premiere. The images are not buried inside a long news post.",
+      "The photo grid keeps the full set away from the homepage. That keeps the film’s opening focused. It also gives guests and collaborators one gallery link to share. The photographer’s credit remains part of the archive.",
+      "The trailer links to its official video source. Press references link to the original coverage. Film and company credits remain readable text. Those choices make specific facts easier to find and share.",
+      "The contact form asks why someone is writing. Press, film sales, joint work, and viewing questions have their own choices. The sender can name the task before writing the message.",
+      "The delivered site brings the film’s public material together. It gives viewers a trailer, press an official source, and premiere guests a photo archive. The work has a home beyond one event."
     ],
     "metrics": [],
     "featureProof": {
@@ -230,39 +265,43 @@
       "location": "Dallas, Texas",
       "sector": "Film & entertainment",
       "summary": "Explore the CC Films website by Little Fight NYC: an official home for Marrow, with its trailer, credits, press links, and premiere photos.",
-      "intro": "CC Films is a film company in Dallas. Its website presents Marrow, a psychological horror film. We built a home for the trailer, film details, press links, and premiere photos. The site keeps the film’s tone without making people hunt for the facts.",
+      "intro": "CC Films is a film company in Dallas. Its film Marrow needed one official home online. Fans need the trailer. Press needs facts and credits. Premiere guests want their photos. We built a site that serves each group without losing the film’s mood.",
       "tags": [
         "Website design",
         "Film website",
         "Photo archive"
       ],
-      "imageAlt": "The dark CC Films website and Marrow film poster, framed on desktop and phone.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "CC Films homepage showing the Marrow poster beside the film summary, trailer link, and premiere link.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "The film’s poster leads the page. Deep color, tall type, and fine rules keep the mood close to the work. The website does not need to compete with the film or add a second visual story.",
-        "Useful labels sit around that mood. A visitor can watch, read, or contact the company without guessing what a symbol means. On a phone, the poster and next steps keep their own space."
+        "The poster already carries the film’s identity. We used it as the main visual, not a background to cover with effects. Dark tones, tall type, and fine rules support it. The trailer and premiere links sit beside the film summary.",
+        "A film site needs atmosphere and clear facts. We kept both by giving each section a plain name. Viewers can watch first. Press can find credits and source links. Neither group has to work through the other’s task."
       ],
-      "detailTitle": "Give the premiere a lasting home.",
+      "detailTitle": "A premiere archive people can use.",
       "detail": [
-        "A premiere is a night. Its photos can stay useful long after it ends. The gallery gives that material its own page, with event context and photo credit.",
-        "A clear archive helps a guest find the event again. It also gives press and collaborators a direct source to share. The photographer’s credit stays with the material."
+        "The gallery has its own address. Its opening records the event, venue, and photo credit. A guest can return to that page after the premiere. The images are not buried inside a long news post.",
+        "The photo grid keeps the full set away from the homepage. That keeps the film’s opening focused. It also gives guests and collaborators one gallery link to share. The photographer’s credit remains part of the archive."
       ],
       "technical": [
-        "The trailer has a clear watch link. Press references lead to their sources, while company and film credits remain readable text. The contact form separates the reason for an inquiry.",
-        "The gallery is linked from the main site rather than left on a separate, hard-to-find page. The desktop and phone layouts present the same official material at different sizes."
+        "The trailer links to its official video source. Press references link to the original coverage. Film and company credits remain readable text. Those choices make specific facts easier to find and share.",
+        "The contact form asks why someone is writing. Press, film sales, joint work, and viewing questions have their own choices. The sender can name the task before writing the message."
       ],
-      "closing": "This is not a claim that the website earned press coverage. It is a record of the home we built for the film’s existing work, and the paths that help visitors use it.",
-      "detailUrl": "https://ccfilms.net/gallery.html",
+      "closing": "The delivered site brings the film’s public material together. It gives viewers a trailer, press an official source, and premiere guests a photo archive. The work has a home beyond one event.",
+      "detailUrl": "https://ccfilms.net/gallery",
       "detailLabel": "Open the premiere archive",
-      "detailAlt": "CC Films premiere photo grid, with the event, location, and photographer credit above the images.",
+      "detailAlt": "CC Films premiere gallery with event and venue details, a photographer credit, and a grid of red-carpet photographs.",
       "questions": [
         {
           "question": "What did Little Fight build for CC Films?",
-          "answer": "We built the website that brings the film, trailer, credits, press links, and premiere archive together."
+          "answer": "We built the film website, premiere gallery, and connected press and contact paths. The client supplied the film material."
         },
         {
-          "question": "Where should press or viewers go next?",
-          "answer": "Visit CC Films for current film information and the appropriate contact form. The case study is about our website work."
+          "question": "Did Little Fight make the film or premiere photos?",
+          "answer": "This case covers the website work. Film credits and the premiere photographer’s credit remain with their original work."
+        },
+        {
+          "question": "Why give the photos a separate page?",
+          "answer": "The archive gives guests a direct link to the collection. It keeps the homepage focused on the film and trailer."
         }
       ],
       "share": {
@@ -271,7 +310,54 @@
         "width": 1200,
         "height": 630,
         "alt": "The dark CC Films website and Marrow film poster, framed on desktop and phone."
-      }
+      },
+      "detailCaption": "The premiere gets its own archive, with context above the photographs.",
+      "scope": [
+        {
+          "title": "Film website",
+          "detail": "We built the page design and responsive layouts around Marrow. The client’s poster, film material, and credits stay central."
+        },
+        {
+          "title": "Premiere archive",
+          "detail": "We organized the premiere photos in a separate gallery. Event context and the photographer’s credit stay with the images."
+        },
+        {
+          "title": "Press and contact paths",
+          "detail": "We connected the trailer, press sources, credits, and inquiry choices. Each has a direct route from the main page."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Event context",
+          "detail": "The opening identifies the premiere and its venue."
+        },
+        {
+          "title": "Photo credit",
+          "detail": "The photographer is credited beside the collection."
+        },
+        {
+          "title": "A full gallery",
+          "detail": "The grid lets guests browse beyond the homepage selection."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Watch from the official site",
+          "detail": "The film page links viewers to its trailer.",
+          "url": "https://ccfilms.net/#trailer"
+        },
+        {
+          "title": "Browse the premiere",
+          "detail": "The separate archive brings the event photos together.",
+          "url": "https://ccfilms.net/gallery"
+        },
+        {
+          "title": "Choose an inquiry",
+          "detail": "The contact section names different reasons to write.",
+          "url": "https://ccfilms.net/#contact"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -292,14 +378,14 @@
     "changed": "We separated painting and mural paths, brought project images forward, and placed the next inquiry beside the relevant work.",
     "result": "A visitor can see the type of work that fits their space, learn about the process, and choose the right project conversation.",
     "body": [
-      "Chromatic Painting & Design paints homes and business spaces. It also makes murals. The studio works in Greater Phoenix, with murals across Arizona. We built a site that shows both sides of the work. Good paint work and original art share one home.",
-      "Place and color lead the site. Large photos show the work at its real scale. Warm tones and clear type give the studio room to feel like itself. The page does not look like a stock paint-company site.",
-      "Each image has a job. A room, a house, and a large wall need different kinds of care. We use the photos to make those needs easy to see. The work leads. The next step stays close.",
-      "The paint pages explain the work around a home or shop. They cover the space, access, prep, and steps of a job. A visitor can learn what to ask before a site visit.",
-      "Murals have their own path. It starts with an idea and a wall, not a box meant for a paint quote. The site keeps both kinds of work under one name.",
-      "Work examples link to the right service page. That page leads to a call or a project request. The phone layout keeps those choices clear. It does not squeeze a large menu into a small screen.",
-      "The site shows job stages and a before-and-after example. Those photos show the studio’s craft. They do not prove that the website caused more sales.",
-      "The site gives the studio one clear home. Each kind of work has its own path. A visitor can see what fits their space and ask about a project."
+      "Chromatic Painting & Design paints homes, shops, and murals. Its paint work serves Greater Phoenix. Mural jobs span Arizona. We built one site for both kinds of work. A paint job and a mural each get their own path.",
+      "The opening shows a painted building at full scale. That puts the studio’s work ahead of a list of services. Warm colors and clear type give the photos room. The images show the setting as well as the finish.",
+      "Painting and murals do not start with the same questions. We kept them under one brand, but gave them separate paths. A home repaint can focus on prep and access. A mural can begin with an idea, wall, and scale.",
+      "The paint page puts a finished home next to the service details. The quote link is easy to find. A second link leads to more work. Visitors can ask now or see more first.",
+      "The page explains prep, access, care for the space, and job stages. Those facts matter before a site visit. The mural path gives art its own space. It starts with the idea and the wall, not just the cost of paint.",
+      "Work examples link to the right service. Those pages lead to a call or a project request. The photos help a person choose the next step. They are more than a gallery to scroll past.",
+      "Paint work and mural work each have their own page. The studio can share the page that fits a lead. On a phone, the work and contact choices stay in the same order.",
+      "The site shows both sides of the studio: paint work and art. Visitors can see the work, learn the steps, and ask about the job they have in mind."
     ],
     "metrics": [],
     "featureProof": {
@@ -360,39 +446,43 @@
       "location": "Greater Phoenix, Arizona",
       "sector": "Home services & design",
       "summary": "See the Chromatic Painting & Design website by Little Fight NYC, built around painting, murals, real project images, and clear inquiry paths.",
-      "intro": "Chromatic Painting & Design paints homes and business spaces. It also makes murals. The studio works in Greater Phoenix, with murals across Arizona. We built a site that shows both sides of the work. Good paint work and original art share one home.",
+      "intro": "Chromatic Painting & Design paints homes, shops, and murals. Its paint work serves Greater Phoenix. Mural jobs span Arizona. We built one site for both kinds of work. A paint job and a mural each get their own path.",
       "tags": [
         "Website design",
         "Painting contractor",
         "Project portfolio"
       ],
-      "imageAlt": "Chromatic Painting & Design homepage with architectural photography in desktop and phone frames.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "Chromatic homepage with a large painted-building photograph and separate painting and work links.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "Place and color lead the site. Large photos show the work at its real scale. Warm tones and clear type give the studio room to feel like itself. The page does not look like a stock paint-company site.",
-        "Each image has a job. A room, a house, and a large wall need different kinds of care. We use the photos to make those needs easy to see. The work leads. The next step stays close."
+        "The opening shows a painted building at full scale. That puts the studio’s work ahead of a list of services. Warm colors and clear type give the photos room. The images show the setting as well as the finish.",
+        "Painting and murals do not start with the same questions. We kept them under one brand, but gave them separate paths. A home repaint can focus on prep and access. A mural can begin with an idea, wall, and scale."
       ],
-      "detailTitle": "Two services. Two clear starting points.",
+      "detailTitle": "One studio. Two kinds of brief.",
       "detail": [
-        "The paint pages explain the work around a home or shop. They cover the space, access, prep, and steps of a job. A visitor can learn what to ask before a site visit.",
-        "Murals have their own path. It starts with an idea and a wall, not a box meant for a paint quote. The site keeps both kinds of work under one name."
+        "The paint page puts a finished home next to the service details. The quote link is easy to find. A second link leads to more work. Visitors can ask now or see more first.",
+        "The page explains prep, access, care for the space, and job stages. Those facts matter before a site visit. The mural path gives art its own space. It starts with the idea and the wall, not just the cost of paint."
       ],
       "technical": [
-        "Work examples link to the right service page. That page leads to a call or a project request. The phone layout keeps those choices clear. It does not squeeze a large menu into a small screen.",
-        "The site shows job stages and a before-and-after example. Those photos show the studio’s craft. They do not prove that the website caused more sales."
+        "Work examples link to the right service. Those pages lead to a call or a project request. The photos help a person choose the next step. They are more than a gallery to scroll past.",
+        "Paint work and mural work each have their own page. The studio can share the page that fits a lead. On a phone, the work and contact choices stay in the same order."
       ],
-      "closing": "The site gives the studio one clear home. Each kind of work has its own path. A visitor can see what fits their space and ask about a project.",
+      "closing": "The site shows both sides of the studio: paint work and art. Visitors can see the work, learn the steps, and ask about the job they have in mind.",
       "detailUrl": "https://chromaticaz.com/painting/",
       "detailLabel": "Explore the painting pages",
-      "detailAlt": "Chromatic painting page with a finished bungalow and separate paths for homes, businesses, and property teams.",
+      "detailAlt": "Chromatic painting page with a bungalow exterior, a service introduction, and estimate and portfolio links.",
       "questions": [
         {
-          "question": "Who built the Chromatic website?",
-          "answer": "Little Fight NYC built the website for Chromatic Painting & Design."
+          "question": "What did Little Fight build for Chromatic?",
+          "answer": "We built the site and work pages. Paint jobs and murals each have their own path to a quote."
         },
         {
-          "question": "Why separate painting and murals?",
-          "answer": "The two services need different project details. Clear paths help a visitor ask about the right kind of work."
+          "question": "Why not put every service on one page?",
+          "answer": "A repaint and a mural need different project details. Separate pages help visitors prepare the right questions."
+        },
+        {
+          "question": "Who supplies the project information?",
+          "answer": "The studio supplies the work and business facts. We give those facts a clear home on the site."
         }
       ],
       "share": {
@@ -401,7 +491,54 @@
         "width": 1200,
         "height": 630,
         "alt": "Chromatic Painting & Design homepage with architectural photography in desktop and phone frames."
-      }
+      },
+      "detailCaption": "A finished space sits beside the service and its next steps.",
+      "scope": [
+        {
+          "title": "Website and portfolio",
+          "detail": "We built the layouts and work pages around project images. Homes, business spaces, and murals share one studio identity."
+        },
+        {
+          "title": "Separate service paths",
+          "detail": "We organized painting and mural work into distinct sections. Visitors can find the right kind of project before asking for a quote."
+        },
+        {
+          "title": "Project inquiry links",
+          "detail": "We connected work examples, process details, and contact choices. The next step follows the service, not one broad sales pitch."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Work at real scale",
+          "detail": "The bungalow shows a full exterior, not a paint swatch."
+        },
+        {
+          "title": "A defined service",
+          "detail": "The opening names paint work inside and outside homes and shops."
+        },
+        {
+          "title": "Two next steps",
+          "detail": "Visitors can request an estimate or explore more work."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Explore painting",
+          "detail": "The service page explains the job and links to an estimate.",
+          "url": "https://chromaticaz.com/painting/"
+        },
+        {
+          "title": "Explore murals",
+          "detail": "Mural work has its own page and commission path.",
+          "url": "https://chromaticaz.com/murals/"
+        },
+        {
+          "title": "Start a paint inquiry",
+          "detail": "A painting estimate has a separate starting page.",
+          "url": "https://chromaticaz.com/estimate/"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -422,14 +559,14 @@
     "changed": "We organized the public site around needs and location. Clear labels, large choices, and nearby safety information guide the first steps.",
     "result": "People can start with a need or place, then look for a relevant resource. Those offering help have a separate path.",
     "body": [
-      "ClearHelp helps people look for food, housing, and other local help. It also gives people a way to offer help. We built the public site around what a person needs. They should not have to learn how an agency sorts its work first.",
-      "Bright colors separate the main choices. Short questions help a person start. There is room around each button, so the page does not feel crowded. The style is warm, but the task stays clear.",
-      "On a phone, search and the main menu each have their own space. We kept the first page focused on the next step. It does not start with a wall of rules or office names.",
-      "The needs page uses plain words for real situations. A person can start with food, housing, safety, or another need. They do not have to guess which group might handle it.",
-      "A place search offers another way in. The site helps a person find a source to check. It cannot promise that a group has space or can help right away.",
-      "Need pages, place search, and ways to give help link together. The key facts stay in readable text. A person does not need a chart to learn where to go.",
-      "The quick-exit button has a clear limit beside it. Leaving the page does not erase browser history. That note matters as much as the button. Private staff tools are not shown in this public story.",
-      "The site gives a person a calmer place to start. It does not claim to solve every need. It helps them find the next source and question to check."
+      "ClearHelp connects people with food, housing, and other resources. Someone seeking help may have little time, energy, or privacy. We built the public website around their situation and location. Finding help and offering help have separate starting points.",
+      "The opening offers a ZIP search and two large choices. Yellow, red, and blue separate their roles. Color helps with scanning, but every choice also has words. A person can begin without learning a set of symbols.",
+      "Many needs overlap. Food, housing, health, and safety cannot sit in isolated lists. The site uses plain situation labels and related categories. That lets a person follow the need, rather than guess an agency’s name.",
+      "The needs page offers both situation links and broad categories. Someone facing a crisis can start with familiar words. Someone planning ahead can browse the wider list. Both paths lead toward relevant resource information.",
+      "The listings show where help is offered and when it was last checked. A group may exist without having room today. Those details help people know what to ask before a trip or call.",
+      "The public search starts with a ZIP code and type of help. The site does not require an account to begin. The guides explain what help may include and what to bring.",
+      "A quick-exit control remains close to the page. Its warning says that leaving does not clear browser history. That limit stays visible. A safety control must explain what it can and cannot do.",
+      "The delivered public site makes the first step easier to understand. People can start with their situation, find a source, and check the next step. Volunteers and donors have a separate route."
     ],
     "metrics": [],
     "featureProof": {
@@ -490,39 +627,43 @@
       "location": "United States",
       "sector": "Community resources",
       "summary": "Little Fight NYC built ClearHelp’s public resource-finding experience, with plain-language needs, location search, and distinct ways to give help.",
-      "intro": "ClearHelp helps people look for food, housing, and other local help. It also gives people a way to offer help. We built the public site around what a person needs. They should not have to learn how an agency sorts its work first.",
+      "intro": "ClearHelp connects people with food, housing, and other resources. Someone seeking help may have little time, energy, or privacy. We built the public website around their situation and location. Finding help and offering help have separate starting points.",
       "tags": [
         "Website design",
         "Resource search",
         "Plain-language navigation"
       ],
-      "imageAlt": "ClearHelp’s yellow search panel and red and blue help choices, shown on desktop and phone.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "ClearHelp homepage with a yellow ZIP-code search panel and red and blue choices for finding or giving help.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "Bright colors separate the main choices. Short questions help a person start. There is room around each button, so the page does not feel crowded. The style is warm, but the task stays clear.",
-        "On a phone, search and the main menu each have their own space. We kept the first page focused on the next step. It does not start with a wall of rules or office names."
+        "The opening offers a ZIP search and two large choices. Yellow, red, and blue separate their roles. Color helps with scanning, but every choice also has words. A person can begin without learning a set of symbols.",
+        "Many needs overlap. Food, housing, health, and safety cannot sit in isolated lists. The site uses plain situation labels and related categories. That lets a person follow the need, rather than guess an agency’s name."
       ],
-      "detailTitle": "Start with what someone needs.",
+      "detailTitle": "Start with a situation, not an office.",
       "detail": [
-        "The needs page uses plain words for real situations. A person can start with food, housing, safety, or another need. They do not have to guess which group might handle it.",
-        "A place search offers another way in. The site helps a person find a source to check. It cannot promise that a group has space or can help right away."
+        "The needs page offers both situation links and broad categories. Someone facing a crisis can start with familiar words. Someone planning ahead can browse the wider list. Both paths lead toward relevant resource information.",
+        "The listings show where help is offered and when it was last checked. A group may exist without having room today. Those details help people know what to ask before a trip or call."
       ],
       "technical": [
-        "Need pages, place search, and ways to give help link together. The key facts stay in readable text. A person does not need a chart to learn where to go.",
-        "The quick-exit button has a clear limit beside it. Leaving the page does not erase browser history. That note matters as much as the button. Private staff tools are not shown in this public story."
+        "The public search starts with a ZIP code and type of help. The site does not require an account to begin. The guides explain what help may include and what to bring.",
+        "A quick-exit control remains close to the page. Its warning says that leaving does not clear browser history. That limit stays visible. A safety control must explain what it can and cannot do."
       ],
-      "closing": "The site gives a person a calmer place to start. It does not claim to solve every need. It helps them find the next source and question to check.",
+      "closing": "The delivered public site makes the first step easier to understand. People can start with their situation, find a source, and check the next step. Volunteers and donors have a separate route.",
       "detailUrl": "https://clearhelp.org/need-help/",
       "detailLabel": "See the needs page",
-      "detailAlt": "ClearHelp needs page with plain-language situations and distinct resource categories.",
+      "detailAlt": "ClearHelp needs page with situation links and labeled food, housing, safety, and health category cards.",
       "questions": [
         {
-          "question": "What part of ClearHelp does this case show?",
-          "answer": "This case shows the public website and its resource-finding paths. It does not expose private staff tools or personal requests."
+          "question": "What part of ClearHelp does this case cover?",
+          "answer": "We built the public pages and paths into the search. This case focuses on finding help, not staff tools."
         },
         {
-          "question": "Does a listing guarantee that help is available?",
-          "answer": "No. A visitor should check the provider’s current details. The website helps find a starting point, not a guaranteed place or service."
+          "question": "Why use both situations and categories?",
+          "answer": "People describe needs in different ways. Both routes help them start without knowing the name of an agency."
+        },
+        {
+          "question": "Does Quick Exit erase a visit?",
+          "answer": "No. The visible warning explains that it does not clear browser history. That limit is part of the design."
         }
       ],
       "share": {
@@ -531,7 +672,54 @@
         "width": 1200,
         "height": 630,
         "alt": "ClearHelp’s yellow search panel and red and blue help choices, shown on desktop and phone."
-      }
+      },
+      "detailCaption": "Situation links and category cards provide two ways into the same directory.",
+      "scope": [
+        {
+          "title": "Public website",
+          "detail": "We built the public pages and paths for each need. The words start with a person’s life, not an office chart."
+        },
+        {
+          "title": "Resource-finding paths",
+          "detail": "We connected the ZIP search, need pages, and resource information. Guidance sits beside the paths into the directory."
+        },
+        {
+          "title": "Safety information",
+          "detail": "We kept quick-exit guidance close to the control. The public experience is separate from private staff work."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Familiar language",
+          "detail": "Situation links begin with needs such as food or housing."
+        },
+        {
+          "title": "Distinct categories",
+          "detail": "Cards pair labels with icons rather than relying on color alone."
+        },
+        {
+          "title": "Visible safety control",
+          "detail": "The quick-exit limit stays in the header."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Start with a need",
+          "detail": "The needs page groups situations and resource categories.",
+          "url": "https://clearhelp.org/need-help/"
+        },
+        {
+          "title": "Find a starting place",
+          "detail": "The homepage offers a ZIP-code search without a sign-up step.",
+          "url": "https://clearhelp.org/"
+        },
+        {
+          "title": "Offer help separately",
+          "detail": "Volunteers and donors have their own entry point.",
+          "url": "https://clearhelp.org/give-help/"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -552,14 +740,14 @@
     "changed": "We organized the site by situation. Buyers, homeowners, investors, and realtors have distinct routes into relevant pages and tools.",
     "result": "Visitors can find the topic that fits, use public planning tools, and ask a more specific question without starting with one generic form.",
     "body": [
-      "Logan Loans gives people information about home loans. Some are buying a home. Some want a new loan on a home they own. Others are buying property to rent or sell. We built a site with a clear place for each of those needs.",
-      "Warm color, clear type, and local scenes give the site a human feel. The first page helps a person choose a path. It does not ask them to learn a wall of bank terms first.",
-      "The next page keeps the detail. A simple opening should not lead to a vague answer. Each path gives the reader more context, with a clear way to ask Logan a question.",
-      "The tools page brings loan calculators and guides together. Visitors can explore a monthly payment or the cost of a home. They can look at the numbers before choosing to call.",
-      "These tools help with planning. They are not loan offers or approvals. A person still needs a review of their own case. We describe the website here, not the terms of a loan.",
-      "Buyer paths link to loan pages, tools, and guides. A contact option stays close as the reader narrows the topic. A visitor need not start with a form before learning the basics.",
-      "Business facts and terms have their own pages. The same paths work on a phone. The client controls the loan claims and terms. The case study does not replace that source.",
-      "The site helps a visitor learn first and ask next. Its value is a clear path through a hard topic, not a promise that a loan will be approved."
+      "Logan Loans explains home loans. Buyers, homeowners, investors, and realtors each have their own questions. We built a site with a path for each group. Guides and tools help people learn before they contact Logan.",
+      "The homepage pairs a house image with a direct introduction. Green and warm neutrals give the topic a calmer tone. The person and the home lead, not stock bank photos. Clear links keep the next step in view.",
+      "A simple opening cannot carry every mortgage detail. We used it to sort the starting question instead. The next page can then go deeper. This avoids asking a first-time buyer to read an investor’s path.",
+      "The tools page groups calculators and guides by task. A payment question and a refinance question get distinct choices. The page explains what each tool is for before opening it. A reader does not need to provide an email to browse.",
+      "Planning figures need context. The inputs and notes belong near the result. A tool can help someone ask a better question. It is not a loan offer. The lender still checks the facts and terms for each loan.",
+      "Each path connects to loan pages, tools, and guides. Contact remains a separate choice, not the price of reading. Visitors can take a specific question to Logan when ready.",
+      "The site gives the tools a shared home and stable links. That is useful when a realtor sends a buyer one page. Program facts and terms stay with the lender’s own pages instead of being copied into this case study.",
+      "The site breaks a broad loan topic into smaller tasks. Visitors can choose a path, explore the numbers, and ask a clear question. The site helps them prepare for the talk. Loan decisions stay with the lender."
     ],
     "metrics": [],
     "featureProof": {
@@ -620,39 +808,43 @@
       "location": "Arizona & Southern California",
       "sector": "Professional services",
       "summary": "Explore the Logan Loans website by Little Fight NYC, with clear buyer paths, public planning tools, helpful guides, and direct contact options.",
-      "intro": "Logan Loans gives people information about home loans. Some are buying a home. Some want a new loan on a home they own. Others are buying property to rent or sell. We built a site with a clear place for each of those needs.",
+      "intro": "Logan Loans explains home loans. Buyers, homeowners, investors, and realtors each have their own questions. We built a site with a path for each group. Guides and tools help people learn before they contact Logan.",
       "tags": [
         "Website design",
         "Mortgage website",
         "Planning tools"
       ],
-      "imageAlt": "Logan Loans mortgage website in warm tones.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "Logan Loans homepage with a green introduction panel, house photograph, and direct contact actions.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "Warm color, clear type, and local scenes give the site a human feel. The first page helps a person choose a path. It does not ask them to learn a wall of bank terms first.",
-        "The next page keeps the detail. A simple opening should not lead to a vague answer. Each path gives the reader more context, with a clear way to ask Logan a question."
+        "The homepage pairs a house image with a direct introduction. Green and warm neutrals give the topic a calmer tone. The person and the home lead, not stock bank photos. Clear links keep the next step in view.",
+        "A simple opening cannot carry every mortgage detail. We used it to sort the starting question instead. The next page can then go deeper. This avoids asking a first-time buyer to read an investor’s path."
       ],
-      "detailTitle": "Let people learn before they inquire.",
+      "detailTitle": "Useful tools before a sales form.",
       "detail": [
-        "The tools page brings loan calculators and guides together. Visitors can explore a monthly payment or the cost of a home. They can look at the numbers before choosing to call.",
-        "These tools help with planning. They are not loan offers or approvals. A person still needs a review of their own case. We describe the website here, not the terms of a loan."
+        "The tools page groups calculators and guides by task. A payment question and a refinance question get distinct choices. The page explains what each tool is for before opening it. A reader does not need to provide an email to browse.",
+        "Planning figures need context. The inputs and notes belong near the result. A tool can help someone ask a better question. It is not a loan offer. The lender still checks the facts and terms for each loan."
       ],
       "technical": [
-        "Buyer paths link to loan pages, tools, and guides. A contact option stays close as the reader narrows the topic. A visitor need not start with a form before learning the basics.",
-        "Business facts and terms have their own pages. The same paths work on a phone. The client controls the loan claims and terms. The case study does not replace that source."
+        "Each path connects to loan pages, tools, and guides. Contact remains a separate choice, not the price of reading. Visitors can take a specific question to Logan when ready.",
+        "The site gives the tools a shared home and stable links. That is useful when a realtor sends a buyer one page. Program facts and terms stay with the lender’s own pages instead of being copied into this case study."
       ],
-      "closing": "The site helps a visitor learn first and ask next. Its value is a clear path through a hard topic, not a promise that a loan will be approved.",
+      "closing": "The site breaks a broad loan topic into smaller tasks. Visitors can choose a path, explore the numbers, and ask a clear question. The site helps them prepare for the talk. Loan decisions stay with the lender.",
       "detailUrl": "https://logan.loans/tools",
       "detailLabel": "Explore the public tools",
-      "detailAlt": "Logan Loans tools page with separate mortgage, refinance, and affordability planning options.",
+      "detailAlt": "Logan Loans tools page showing separate mortgage and refinance calculator cards with short descriptions.",
       "questions": [
         {
           "question": "What did Little Fight build for Logan Loans?",
-          "answer": "We built the website’s design, information paths, and connected public experience."
+          "answer": "We built the website design and connected its audience paths, guides, planning tools, and contact options."
         },
         {
-          "question": "Are the tools a loan offer?",
-          "answer": "No. They are planning tools. Loan terms and approval require a separate review by the lender."
+          "question": "Must someone fill out a form to use the guides?",
+          "answer": "The public tools and guides give visitors a place to learn first. Contact is a separate next step."
+        },
+        {
+          "question": "Are the calculator results loan offers?",
+          "answer": "No. They are planning figures. The lender reviews the person, property, and loan before confirming terms."
         }
       ],
       "share": {
@@ -661,7 +853,54 @@
         "width": 1200,
         "height": 630,
         "alt": "Logan Loans mortgage website in warm tones, shown in desktop and phone frames."
-      }
+      },
+      "detailCaption": "The tool list explains the task before asking the visitor to choose.",
+      "scope": [
+        {
+          "title": "Website design",
+          "detail": "We built the layouts and phone views. Clear type and warm colors give a hard topic a calmer feel."
+        },
+        {
+          "title": "Audience and service paths",
+          "detail": "We gave buyers, homeowners, investors, and realtors their own routes. Each can learn before filling out a form."
+        },
+        {
+          "title": "Public planning tools",
+          "detail": "We connected tools, loan guides, and contact paths. Readers can try the numbers before they ask a question."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "A clear starting point",
+          "detail": "The heading tells readers they can explore before calling."
+        },
+        {
+          "title": "Different tools",
+          "detail": "Mortgage and refinance questions have separate cards."
+        },
+        {
+          "title": "Context before the click",
+          "detail": "Each description explains what the tool can help explore."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Choose a situation",
+          "detail": "The first-time buyer page gives that audience its own starting point.",
+          "url": "https://logan.loans/first-time-buyer"
+        },
+        {
+          "title": "Browse the tools",
+          "detail": "The tools page groups calculators and practical guides.",
+          "url": "https://logan.loans/tools"
+        },
+        {
+          "title": "Support a realtor conversation",
+          "detail": "The partner page gives realtors a separate route to Logan.",
+          "url": "https://logan.loans/partners"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -676,25 +915,25 @@
     ],
     "updated": "2026-09-29",
     "title": "A clear path from a property to a conversation.",
-    "problem": "Different property plans raise different funding questions. The site needed clear paths without making every scenario sound like the same offer.",
-    "kept": "The client’s business identity, contact routes, and control over transaction-specific terms.",
-    "changed": "We connected project types, loan information, a public planning tool, and quote inquiries in one clear website.",
-    "result": "A visitor can explore the relevant project information and prepare the basics for a direct discussion with Grand Funding.",
+    "problem": "Each project raises its own loan questions. The site needed clear paths, not one pitch for every deal.",
+    "kept": "The client’s name, contact routes, and control over the terms for each deal.",
+    "changed": "We brought project types, loan pages, a planning tool, and quote requests into one site.",
+    "result": "Visitors can find the right project page and prepare the basic facts for a call with Grand Funding.",
     "body": [
-      "Grand Funding LLC works with people seeking funds for real estate projects. We built a site that starts with the project. A visitor can name the work, find the right topic, and call the business. The property and the next question stay in focus.",
-      "A night-time city view sets the mood. Clear type and simple sections carry the facts. The page avoids stock handshakes and the same bank look seen on so many sites.",
-      "The look has a job. A visitor should see the project paths and know how to contact the business. They should not have to work through a sales speech to find the next step.",
-      "The project tool starts with numbers the visitor enters. It shows a first view of a property plan. The inputs stay beside the result, so a person can see where the number came from.",
-      "That result is not a loan quote. The site says terms come after a review of the deal. We keep that limit clear. A planning tool does not make a funding decision.",
-      "Project types and loan topics have separate pages. Those pages lead back to a call or request. A person can start broad, then find a more useful question.",
-      "Business facts, questions, and policies are easy to reach. The same paths work on a phone, tablet, or computer. No private loan files or customer records are shown in this story.",
-      "The site gives a complex business a clear public home. It helps a visitor get ready for a call. The funding decision stays with the business, not the website."
+      "Grand Funding LLC works with real estate projects. A home purchase, repair job, and new build each need a plan. We built the site around those needs. Visitors can choose a project type, try the numbers, and ask about a deal.",
+      "A nighttime city image sits behind the opening. Teal actions and clear type stand apart from the dark ground. The project choices remain readable over the image. They give the visual mood a practical job.",
+      "The site needs to explain options, not guess loan terms. Each project type has its own route. Terms depend on a review of the deal. Visitors can find the right topic before they ask for a quote.",
+      "The planning panel shows the price, repair costs, and expected value together. The example sits next to those inputs. A visitor can see which figures shape the result. The number is not a black box.",
+      "The next action is a deal review. It starts a talk about the plan, not an automatic loan. The example is a planning figure, not an offer. Grand Funding checks the deal and sets the terms.",
+      "Project and loan pages link back to contact choices. The planning panel gives the visitor a place to work through the numbers. They can bring those facts to the first call.",
+      "The business keeps its current facts and terms on its own site. Our case links there rather than keeping a second set of rates. The same core tasks work on a phone or a larger screen.",
+      "The site gives each project a clear starting point. It connects the loan pages, planning inputs, and ways to get in touch. A visitor can learn first, check a plan, then ask about the deal."
     ],
     "metrics": [],
     "featureProof": {
       "label": "Keep planning separate from a promise.",
-      "ownerOutcome": "A visitor can explore the relevant project information and prepare the basics for a direct discussion with Grand Funding.",
-      "whyItMatters": "Different property plans raise different funding questions. The site needed clear paths without making every scenario sound like the same offer.",
+      "ownerOutcome": "Visitors can find the right project page and prepare the basic facts for a call with Grand Funding.",
+      "whyItMatters": "Each project raises its own loan questions. The site needed clear paths, not one pitch for every deal.",
       "sourceUrl": "https://www.grandfundingllc.com",
       "sourceLabel": "www.grandfundingllc.com",
       "verifiedAt": "2026-09-29",
@@ -749,39 +988,43 @@
       "location": "Arizona & California",
       "sector": "Professional services",
       "summary": "See Grand Funding LLC’s website by Little Fight NYC, with property-funding information, a project planning tool, and direct inquiry paths.",
-      "intro": "Grand Funding LLC works with people seeking funds for real estate projects. We built a site that starts with the project. A visitor can name the work, find the right topic, and call the business. The property and the next question stay in focus.",
+      "intro": "Grand Funding LLC works with real estate projects. A home purchase, repair job, and new build each need a plan. We built the site around those needs. Visitors can choose a project type, try the numbers, and ask about a deal.",
       "tags": [
         "Website design",
         "Funding website",
         "Information design"
       ],
-      "imageAlt": "Grand Funding’s real estate website with desert imagery, presented on desktop and phone.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "Grand Funding homepage with a nighttime city background, teal contact actions, and property-project cards.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "A night-time city view sets the mood. Clear type and simple sections carry the facts. The page avoids stock handshakes and the same bank look seen on so many sites.",
-        "The look has a job. A visitor should see the project paths and know how to contact the business. They should not have to work through a sales speech to find the next step."
+        "A nighttime city image sits behind the opening. Teal actions and clear type stand apart from the dark ground. The project choices remain readable over the image. They give the visual mood a practical job.",
+        "The site needs to explain options, not guess loan terms. Each project type has its own route. Terms depend on a review of the deal. Visitors can find the right topic before they ask for a quote."
       ],
-      "detailTitle": "Keep planning separate from a promise.",
+      "detailTitle": "Keep the inputs beside the result.",
       "detail": [
-        "The project tool starts with numbers the visitor enters. It shows a first view of a property plan. The inputs stay beside the result, so a person can see where the number came from.",
-        "That result is not a loan quote. The site says terms come after a review of the deal. We keep that limit clear. A planning tool does not make a funding decision."
+        "The planning panel shows the price, repair costs, and expected value together. The example sits next to those inputs. A visitor can see which figures shape the result. The number is not a black box.",
+        "The next action is a deal review. It starts a talk about the plan, not an automatic loan. The example is a planning figure, not an offer. Grand Funding checks the deal and sets the terms."
       ],
       "technical": [
-        "Project types and loan topics have separate pages. Those pages lead back to a call or request. A person can start broad, then find a more useful question.",
-        "Business facts, questions, and policies are easy to reach. The same paths work on a phone, tablet, or computer. No private loan files or customer records are shown in this story."
+        "Project and loan pages link back to contact choices. The planning panel gives the visitor a place to work through the numbers. They can bring those facts to the first call.",
+        "The business keeps its current facts and terms on its own site. Our case links there rather than keeping a second set of rates. The same core tasks work on a phone or a larger screen."
       ],
-      "closing": "The site gives a complex business a clear public home. It helps a visitor get ready for a call. The funding decision stays with the business, not the website.",
+      "closing": "The site gives each project a clear starting point. It connects the loan pages, planning inputs, and ways to get in touch. A visitor can learn first, check a plan, then ask about the deal.",
       "detailUrl": "https://www.grandfundingllc.com/",
       "detailLabel": "Explore Grand Funding’s website",
-      "detailAlt": "Grand Funding project tool with editable property inputs, a calculated example, and a planning-only notice.",
+      "detailAlt": "Grand Funding planning panel showing purchase price, renovation budget, expected value, and the calculated project example.",
       "questions": [
         {
-          "question": "Who built the Grand Funding website?",
-          "answer": "Little Fight NYC built the public website for Grand Funding LLC."
+          "question": "What did Little Fight build for Grand Funding?",
+          "answer": "We built the site and its project pages. We connected the planning panel and ways to get in touch."
         },
         {
-          "question": "Does this case study endorse or quote a loan?",
-          "answer": "No. It describes our website work. Contact Grand Funding for its current services and transaction-specific terms."
+          "question": "Why show inputs beside the result?",
+          "answer": "Visitors can see what shapes the example and change the plan. They can use it to prepare for a call."
+        },
+        {
+          "question": "Does the planning panel approve funding?",
+          "answer": "No. It shows a planning example. Grand Funding reviews each deal and sets any loan terms."
         }
       ],
       "share": {
@@ -789,8 +1032,55 @@
         "type": "image/jpeg",
         "width": 1200,
         "height": 630,
-        "alt": "Grand Funding’s real estate website with desert imagery, presented on desktop and phone."
-      }
+        "alt": "Grand Funding website with a nighttime city background and teal actions, shown in desktop and phone frames."
+      },
+      "detailCaption": "The planning example shows its inputs beside the result and review action.",
+      "scope": [
+        {
+          "title": "Website design",
+          "detail": "We built the layouts and phone views. Project types and ways to get in touch lead each page."
+        },
+        {
+          "title": "Funding information",
+          "detail": "We gave project types and loan topics their own pages. Visitors can find the right facts without a broad sales pitch."
+        },
+        {
+          "title": "Project planning path",
+          "detail": "We connected the inputs, example, and deal-review link. The planning step stays separate from the loan decision."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Visible inputs",
+          "detail": "The price, repair costs, and expected value sit together."
+        },
+        {
+          "title": "An explained example",
+          "detail": "The result stays beside the figures that shape it."
+        },
+        {
+          "title": "A separate review",
+          "detail": "The next step is a talk about the deal."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Explore funding topics",
+          "detail": "The products page gives loan types their own space.",
+          "url": "https://www.grandfundingllc.com/products"
+        },
+        {
+          "title": "Review a property example",
+          "detail": "The planning panel puts the inputs next to the result.",
+          "url": "https://www.grandfundingllc.com/"
+        },
+        {
+          "title": "Start a direct conversation",
+          "detail": "The contact page gives the visitor a way to ask about a deal.",
+          "url": "https://www.grandfundingllc.com/contact"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -810,14 +1100,14 @@
     "changed": "We organized the site around playing, eating, and visiting. Bold type gives it character, while the menu and venue details stay easy to reach.",
     "result": "Visitors can explore the room, read the menu, and find directions or a phone number from one public website.",
     "body": [
-      "The Break Room is a pool hall in Glendale, Arizona. Pool, darts, food, and sports give people reasons to visit. We built a site that brings those choices together. It shows the room’s character and helps a guest plan a night out.",
-      "Large type gives the site the feel of a venue poster. The menu breaks the night into clear choices. Each section has its own job, so they do not all compete for the same space.",
-      "The page uses real venue photos and labeled concept art. The labels stay with the work. We do not pass off a planned look as a photo of a finished room.",
-      "Pool, darts, food, and drinks have their own sections. The full menu is text, not a small photo. A guest can read an item on a phone without having to pinch and zoom.",
-      "Directions and a phone number stay close to the visit details. Where hours or plans need a check, the page says to call. A proposed lineup is not the same as a confirmed event.",
-      "The main story links to the menu, group details, and a map. Those paths work on a phone as well as a larger screen. A guest can choose what matters to their visit.",
-      "The case shows the site as it stands, with its limits clear. It does not claim more guests or more sales. Those claims would need their own records.",
-      "The site lets the venue show its character and answer the basics. A guest can turn an idea for a night out into a plan, then call to check the details."
+      "The Break Room is a pool hall in Glendale, Arizona. Pool, darts, food, and sports shape a visit. We built a site that puts the room and those choices together. It pairs bold artwork with room photos and useful visit details.",
+      "Large type gives the opening the feel of a venue poster. Blue links tie into the pool imagery. The menu action sits in the opening rather than being hidden behind the visual treatment.",
+      "The opening artwork is a campaign concept. Room photos appear in their own section and show the real space. The labels make the difference clear. A bold ad image is not a photo of a finished room.",
+      "The games section pairs a pool-table image with activity tabs. Pool, darts, foosball, and patios remain named choices. The image sets the scene while the labels help people explore what matters to their visit.",
+      "Food and drinks have readable menu sections. Directions and contact details sit in the visit section. A guest can check the basics without piecing together screenshots and social posts.",
+      "The same site connects game information, the menu, group details, and a map. Those links give visitors paths into a night out. The phone view keeps the practical choices close.",
+      "Current events need a maintained source. The site distinguishes a proposed lineup from a confirmed plan. Where a detail needs checking, a direct contact route is more useful than a made-up answer.",
+      "The site gives the venue one public home. It shows the room, explains the choices, and helps guests plan a visit. Labels keep the campaign art and real room photos distinct."
     ],
     "metrics": [],
     "featureProof": {
@@ -878,39 +1168,43 @@
       "location": "Glendale, Arizona",
       "sector": "Bars & hospitality",
       "summary": "Little Fight NYC built The Break Room’s Glendale website, bringing pool, darts, the menu, and visit information into a bold mobile-ready experience.",
-      "intro": "The Break Room is a pool hall in Glendale, Arizona. Pool, darts, food, and sports give people reasons to visit. We built a site that brings those choices together. It shows the room’s character and helps a guest plan a night out.",
+      "intro": "The Break Room is a pool hall in Glendale, Arizona. Pool, darts, food, and sports shape a visit. We built a site that puts the room and those choices together. It pairs bold artwork with room photos and useful visit details.",
       "tags": [
         "Website design",
         "Pool hall",
         "Venue information"
       ],
-      "imageAlt": "The Break Room website in desktop and phone frames; the opening artwork is a labeled campaign concept.",
-      "imageNote": "Website captures. The opening artwork is labeled a campaign concept; venue photographs appear farther down the site.",
+      "imageAlt": "The Break Room homepage with large white lettering, blue menu links, and a pool-ball campaign image.",
+      "imageNote": "Website captured September 29, 2026. Opening art is a campaign concept; the room section shows venue photos.",
       "design": [
-        "Large type gives the site the feel of a venue poster. The menu breaks the night into clear choices. Each section has its own job, so they do not all compete for the same space.",
-        "The page uses real venue photos and labeled concept art. The labels stay with the work. We do not pass off a planned look as a photo of a finished room."
+        "Large type gives the opening the feel of a venue poster. Blue links tie into the pool imagery. The menu action sits in the opening rather than being hidden behind the visual treatment.",
+        "The opening artwork is a campaign concept. Room photos appear in their own section and show the real space. The labels make the difference clear. A bold ad image is not a photo of a finished room."
       ],
-      "detailTitle": "Make a plan without hunting for details.",
+      "detailTitle": "Show the room, then explain the choice.",
       "detail": [
-        "Pool, darts, food, and drinks have their own sections. The full menu is text, not a small photo. A guest can read an item on a phone without having to pinch and zoom.",
-        "Directions and a phone number stay close to the visit details. Where hours or plans need a check, the page says to call. A proposed lineup is not the same as a confirmed event."
+        "The games section pairs a pool-table image with activity tabs. Pool, darts, foosball, and patios remain named choices. The image sets the scene while the labels help people explore what matters to their visit.",
+        "Food and drinks have readable menu sections. Directions and contact details sit in the visit section. A guest can check the basics without piecing together screenshots and social posts."
       ],
       "technical": [
-        "The main story links to the menu, group details, and a map. Those paths work on a phone as well as a larger screen. A guest can choose what matters to their visit.",
-        "The case shows the site as it stands, with its limits clear. It does not claim more guests or more sales. Those claims would need their own records."
+        "The same site connects game information, the menu, group details, and a map. Those links give visitors paths into a night out. The phone view keeps the practical choices close.",
+        "Current events need a maintained source. The site distinguishes a proposed lineup from a confirmed plan. Where a detail needs checking, a direct contact route is more useful than a made-up answer."
       ],
-      "closing": "The site lets the venue show its character and answer the basics. A guest can turn an idea for a night out into a plan, then call to check the details.",
+      "closing": "The site gives the venue one public home. It shows the room, explains the choices, and helps guests plan a visit. Labels keep the campaign art and real room photos distinct.",
       "detailUrl": "https://thebreakroompoolhall.com/#play",
       "detailLabel": "Explore the venue website",
-      "detailAlt": "A blue-felt pool table on The Break Room website, with links for pool, darts, food, and patios.",
+      "detailAlt": "The Break Room games section with a photograph of a blue pool table and tabs for pool, darts, foosball, and patios.",
       "questions": [
         {
-          "question": "Is the opening artwork a photograph of the venue?",
-          "answer": "No. The website labels it as a campaign concept. Other sections identify real venue photographs."
+          "question": "What did Little Fight build for The Break Room?",
+          "answer": "We built the venue website, game and menu sections, and the paths to visit information."
         },
         {
-          "question": "Is the published lineup a confirmed schedule?",
-          "answer": "The captured site labels parts of the lineup as a preview. Call the venue for current programming and hours."
+          "question": "Is every image a photograph of the venue?",
+          "answer": "No. The opening artwork is a campaign concept. The room section uses venue photographs; the distinction stays labeled."
+        },
+        {
+          "question": "What can a visitor do on the site?",
+          "answer": "Explore the games, read the menu, and find visit details. Current plans can be checked with the venue."
         }
       ],
       "share": {
@@ -919,7 +1213,54 @@
         "width": 1200,
         "height": 630,
         "alt": "The Break Room website in desktop and phone frames; the opening artwork is a labeled campaign concept."
-      }
+      },
+      "detailCaption": "A real room photograph supports the named game choices.",
+      "scope": [
+        {
+          "title": "Venue website",
+          "detail": "We built the page design and phone views. The opening names the place and links to menu and event choices."
+        },
+        {
+          "title": "Games and menu",
+          "detail": "We organized pool, darts, food, and drinks into clear sections. The menu is readable text rather than a small photograph."
+        },
+        {
+          "title": "Visit information",
+          "detail": "We connected venue details with map and contact paths. Real room images remain distinct from campaign artwork."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Real venue detail",
+          "detail": "The table and room photograph show the physical setting."
+        },
+        {
+          "title": "Named activities",
+          "detail": "Tabs separate pool, darts, foosball, and patios."
+        },
+        {
+          "title": "A route to more detail",
+          "detail": "The room link continues the visit-planning path."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Read the menu",
+          "detail": "Food and drink choices are readable page content.",
+          "url": "https://thebreakroompoolhall.com/#full-menu"
+        },
+        {
+          "title": "See the games section",
+          "detail": "Activity choices sit with a photograph of the room.",
+          "url": "https://thebreakroompoolhall.com/#play"
+        },
+        {
+          "title": "Find visit details",
+          "detail": "The visit section connects the venue with directions and contact.",
+          "url": "https://thebreakroompoolhall.com/#visit"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -939,14 +1280,14 @@
     "changed": "We brought the menu, event information, gallery, and directions together. The menu also has its own route for people arriving through a QR code.",
     "result": "Guests can see the real bar, read the menu, explore events, and choose a map link before setting out.",
     "body": [
-      "Easy Tiger Bar is a neighborhood bar in Glendale, Arizona. We built a site around what a guest wants to know. What does the place feel like? What is on the menu? What is happening? And how do I get there?",
-      "Real photos show the place. The people, the room, and the drinks set the mood. They do the work that a stock nightlife photo cannot.",
-      "A dark page, strong type, and a small pink accent frame the photos. The bar’s character stays clear. A guest can find the menu without waiting through an opening film or effect.",
-      "Drinks, prices, and notes are set as text. A guest can read them on a phone without pinching a photo. The menu has its own page and a place in the main site.",
-      "The menu QR route gives people at the bar a direct start. They reach the menu first. They do not have to learn the whole site to find a drink.",
-      "The site links the menu, events, photos, and visit details. Event links go to the bar’s listed source. Map links give guests a quick way to plan the trip.",
-      "Photos appear in the main story and in the gallery. The current prices and event details belong on the bar’s own site. This page tells the story of our work. It does not keep a second copy of a changing menu.",
-      "The site works like a useful first visit. It shows the real place, answers the basics, and gives a guest a clear next step."
+      "Easy Tiger Bar is a neighborhood bar in Glendale, Arizona. Guests need the menu, events, and directions. The person running the bar also needs a practical way to update things. We built a guest site and a separate menu-and-poster editing flow.",
+      "The brief called for a neighborhood bar, not a nightclub ad. We used supplied photos of the room, drinks, and people. The menu pairs a readable list with bar photographs. A guest sees the place while choosing a drink.",
+      "One person needs to keep the content moving. The menu flow stays focused on cocktails and event posters. Stock counts and recipes do not sit in the routine editing path. That keeps a menu change from turning into an inventory task.",
+      "Menu names, notes, and prices are text. Categories organize the list, with photographs alongside it. A guest can read the choices on a phone without pinching an image. The same page has a direct link from the main navigation.",
+      "The QR code points to that maintained menu page. Its separate print-and-share page does not create a second menu. Updating the menu need not mean replacing the QR destination. The address stays useful after the first print run.",
+      "The editing flow separates a draft from publication. The owner can prepare menu changes before making them public. Event posters have a separate place, since not every in-house event needs a ticket listing.",
+      "The guest site still links to Eventbrite for listed events. Visit details offer both Google Maps and Apple Maps. These are distinct handoffs: a menu for guests, a calendar source for events, and a map for the trip.",
+      "The delivered work connects the public site with the bar’s upkeep needs. Guests get a readable menu and real photos. Menu drafts and poster tools give updates a defined path before publication."
     ],
     "metrics": [],
     "featureProof": {
@@ -1007,39 +1348,43 @@
       "location": "Glendale, Arizona",
       "sector": "Bars & hospitality",
       "summary": "See Easy Tiger Bar’s website by Little Fight NYC: real bar photography, a readable cocktail menu, events, a menu QR route, and visit details.",
-      "intro": "Easy Tiger Bar is a neighborhood bar in Glendale, Arizona. We built a site around what a guest wants to know. What does the place feel like? What is on the menu? What is happening? And how do I get there?",
+      "intro": "Easy Tiger Bar is a neighborhood bar in Glendale, Arizona. Guests need the menu, events, and directions. The person running the bar also needs a practical way to update things. We built a guest site and a separate menu-and-poster editing flow.",
       "tags": [
         "Website design",
         "Bar website",
         "Menu & events"
       ],
-      "imageAlt": "Easy Tiger Bar’s dark website with pink accents and bar photographs, framed on desktop and phone.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "Easy Tiger Bar homepage with a dark background, pink accent text, and photographs of guests, bartenders, and bottles.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "Real photos show the place. The people, the room, and the drinks set the mood. They do the work that a stock nightlife photo cannot.",
-        "A dark page, strong type, and a small pink accent frame the photos. The bar’s character stays clear. A guest can find the menu without waiting through an opening film or effect."
+        "The brief called for a neighborhood bar, not a nightclub ad. We used supplied photos of the room, drinks, and people. The menu pairs a readable list with bar photographs. A guest sees the place while choosing a drink.",
+        "One person needs to keep the content moving. The menu flow stays focused on cocktails and event posters. Stock counts and recipes do not sit in the routine editing path. That keeps a menu change from turning into an inventory task."
       ],
-      "detailTitle": "A menu that people can actually read.",
+      "detailTitle": "One menu for the bar and the phone.",
       "detail": [
-        "Drinks, prices, and notes are set as text. A guest can read them on a phone without pinching a photo. The menu has its own page and a place in the main site.",
-        "The menu QR route gives people at the bar a direct start. They reach the menu first. They do not have to learn the whole site to find a drink."
+        "Menu names, notes, and prices are text. Categories organize the list, with photographs alongside it. A guest can read the choices on a phone without pinching an image. The same page has a direct link from the main navigation.",
+        "The QR code points to that maintained menu page. Its separate print-and-share page does not create a second menu. Updating the menu need not mean replacing the QR destination. The address stays useful after the first print run."
       ],
       "technical": [
-        "The site links the menu, events, photos, and visit details. Event links go to the bar’s listed source. Map links give guests a quick way to plan the trip.",
-        "Photos appear in the main story and in the gallery. The current prices and event details belong on the bar’s own site. This page tells the story of our work. It does not keep a second copy of a changing menu."
+        "The editing flow separates a draft from publication. The owner can prepare menu changes before making them public. Event posters have a separate place, since not every in-house event needs a ticket listing.",
+        "The guest site still links to Eventbrite for listed events. Visit details offer both Google Maps and Apple Maps. These are distinct handoffs: a menu for guests, a calendar source for events, and a map for the trip."
       ],
-      "closing": "The site works like a useful first visit. It shows the real place, answers the basics, and gives a guest a clear next step.",
+      "closing": "The delivered work connects the public site with the bar’s upkeep needs. Guests get a readable menu and real photos. Menu drafts and poster tools give updates a defined path before publication.",
       "detailUrl": "https://easytigerglendale.com/menu/",
       "detailLabel": "Read Easy Tiger’s menu",
-      "detailAlt": "Easy Tiger Bar’s text-based cocktail menu with prices and photographs alongside the drink list.",
+      "detailAlt": "Easy Tiger cocktail menu with drink names, ingredients, and prices on the left and bar photographs on the right.",
       "questions": [
         {
           "question": "What did Little Fight build for Easy Tiger?",
-          "answer": "We built the website that connects the bar’s menu, gallery, events, QR menu path, and visit details."
+          "answer": "We built the guest website, readable menu, QR menu page, gallery, and menu-and-poster editing flow."
         },
         {
-          "question": "Where are the current menu and events?",
-          "answer": "Use Easy Tiger’s website. This case study records our work without duplicating details that the bar may change."
+          "question": "How are menu changes handled?",
+          "answer": "The editing flow separates saved drafts from publication. The owner reviews changes before making them public."
+        },
+        {
+          "question": "Does the bar need a new QR code for each menu?",
+          "answer": "The QR destination is the maintained menu page. Its content can change while that address stays the same."
         }
       ],
       "share": {
@@ -1048,7 +1393,54 @@
         "width": 1200,
         "height": 630,
         "alt": "Easy Tiger Bar’s dark website with pink accents and bar photographs, framed on desktop and phone."
-      }
+      },
+      "detailCaption": "The menu stays readable while the photographs show the bar’s character.",
+      "scope": [
+        {
+          "title": "Guest website",
+          "detail": "We built the menu, events, gallery, and visit pages. The bar’s supplied photographs give each page its own view of the place."
+        },
+        {
+          "title": "Menu and poster tools",
+          "detail": "We built a focused menu-and-event-poster editing flow. Draft changes stay separate from what guests see."
+        },
+        {
+          "title": "A stable menu link",
+          "detail": "We built the menu QR page around the maintained menu address. Print materials can point guests to the same menu page."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Text, not a menu photo",
+          "detail": "Names, ingredients, and prices remain readable page content."
+        },
+        {
+          "title": "A clear price column",
+          "detail": "Prices line up beside the drinks they belong to."
+        },
+        {
+          "title": "The place stays visible",
+          "detail": "Bar photographs sit alongside, not behind, the menu."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Read the maintained menu",
+          "detail": "The public menu has its own address and text-based drink list.",
+          "url": "https://easytigerglendale.com/menu/"
+        },
+        {
+          "title": "Use the menu QR page",
+          "detail": "The print-and-share page points to the same maintained menu.",
+          "url": "https://easytigerglendale.com/menu/qr/"
+        },
+        {
+          "title": "Explore current events",
+          "detail": "The events page connects guests to the bar’s listed event source.",
+          "url": "https://easytigerglendale.com/events/"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   },
   {
@@ -1063,25 +1455,25 @@
     "published": "2026-09-29",
     "updated": "2026-09-29",
     "title": "A personal service with a clear first step.",
-    "problem": "Someone new to tarot may not know what to ask or which format to choose. The website needed to explain the service without making the choice feel complex.",
+    "problem": "Someone new to tarot may not know what to ask. The site needed to explain each format and help them choose a first step.",
     "kept": "Rachel’s personal approach, the focus on a conversation, and the clear boundary that the visitor makes their own choices.",
     "changed": "We gave the reading formats clear descriptions and next steps. A first-reading guide and a question path help people who are not ready to choose.",
-    "result": "A visitor can understand the service, compare a voice note with a live conversation, and choose a next step without knowing tarot terms.",
+    "result": "Visitors can compare a voice note with a live talk. They can choose a next step without knowing tarot terms.",
     "body": [
-      "The Tarot Hotline offers tarot readings with Rachel Hope. We built a site that explains the service before asking someone to choose. A visitor can meet Rachel, compare the options, and find a way to start. No knowledge of tarot is needed.",
-      "A red rotary phone gives the site a clear point of view. Deep green, cream, and pink carry that mood through the pages. The look fits the hotline name. It does not make a visitor guess what to do.",
-      "The words have the same job. The site says what happens next, rather than making grand claims. Rachel stays part of the story. The visitor stays in charge of their own choices.",
-      "The readings page separates a voice note from a live talk. Each choice says how it works and what comes next. A visitor can compare the options without having to work out a hidden set of plans.",
-      "Unsure visitors can ask Rachel a question before paying. A guide for a first reading covers the basics. There is a clear path for people who are not ready to choose.",
-      "Each reading leads to the right form, time choice, or Square payment step. The site explains those steps before the handoff. Looking at this case study does not buy a reading.",
-      "Questions, terms, and privacy notes have their own pages. The work shown here is the website. It makes no claim to predict events or take the place of expert advice.",
-      "The site makes a personal service easier to grasp. It leaves room for curiosity, with the format, cost, and next step clear on the client’s pages."
+      "The Tarot Hotline is Rachel Hope’s reading service. Visitors may know their question but not which format fits. We built a site that explains the choices first. Voice notes, live talks, and a question-first path each have their own place.",
+      "The red rotary phone puts a clear image to the hotline name. It gives the homepage one strong visual idea. Cream type and a dark green ground keep the reading choices clear. The look creates a mood without hiding the service.",
+      "The key design choice is what to show first. A visitor sees the format, scope, and price before the next step. A voice note and a live talk are not the same service. The Ask Rachel option gives unsure visitors a way in.",
+      "The readings page puts each choice in its own card. The card explains how it works before the button. Visitors can choose a voice note or a live talk. Ask Rachel sits beside them, not in a hidden help page.",
+      "That free path matters for someone new to the service. A first-reading guide answers the basics. The site leaves room to learn how a reading works before choosing a paid format. A visitor can ask first.",
+      "Each card leads to the next step for that service. Forms, time choices, and Square payments each have a role. The service details come before that handoff. The visitor knows what they chose.",
+      "Terms, privacy notes, and first-reading guidance have their own pages. The details stay easy to find beyond the homepage. Rachel brings her own approach to a reading. The site gives it a clear structure.",
+      "The site gives a personal service a clear home. Visitors can meet Rachel, compare formats, and choose a next step. A reading leaves room to reflect. The visitor stays in charge of their own choices."
     ],
     "metrics": [],
     "featureProof": {
       "label": "Show the choice before the checkout.",
-      "ownerOutcome": "A visitor can understand the service, compare a voice note with a live conversation, and choose a next step without knowing tarot terms.",
-      "whyItMatters": "Someone new to tarot may not know what to ask or which format to choose. The website needed to explain the service without making the choice feel complex.",
+      "ownerOutcome": "Visitors can compare a voice note with a live talk. They can choose a next step without knowing tarot terms.",
+      "whyItMatters": "Someone new to tarot may not know what to ask. The site needed to explain each format and help them choose a first step.",
       "sourceUrl": "https://thetarothotline.com",
       "sourceLabel": "thetarothotline.com",
       "verifiedAt": "2026-09-29",
@@ -1136,39 +1528,43 @@
       "location": "Online & by appointment",
       "sector": "Independent services",
       "summary": "Little Fight NYC built The Tarot Hotline’s website for Rachel Hope, with clear reading options, first-visit guidance, and a Square payment path.",
-      "intro": "The Tarot Hotline offers tarot readings with Rachel Hope. We built a site that explains the service before asking someone to choose. A visitor can meet Rachel, compare the options, and find a way to start. No knowledge of tarot is needed.",
+      "intro": "The Tarot Hotline is Rachel Hope’s reading service. Visitors may know their question but not which format fits. We built a site that explains the choices first. Voice notes, live talks, and a question-first path each have their own place.",
       "tags": [
         "Website design",
         "Personal services",
         "Square payments"
       ],
-      "imageAlt": "The Tarot Hotline website with a red rotary phone.",
-      "imageNote": "Dated captures of the client’s live website. Frames are presentation only.",
+      "imageAlt": "The Tarot Hotline homepage with a red rotary phone, deep green fabric, cream lettering, and a reading link.",
+      "imageNote": "Website captured September 29, 2026.",
       "design": [
-        "A red rotary phone gives the site a clear point of view. Deep green, cream, and pink carry that mood through the pages. The look fits the hotline name. It does not make a visitor guess what to do.",
-        "The words have the same job. The site says what happens next, rather than making grand claims. Rachel stays part of the story. The visitor stays in charge of their own choices."
+        "The red rotary phone puts a clear image to the hotline name. It gives the homepage one strong visual idea. Cream type and a dark green ground keep the reading choices clear. The look creates a mood without hiding the service.",
+        "The key design choice is what to show first. A visitor sees the format, scope, and price before the next step. A voice note and a live talk are not the same service. The Ask Rachel option gives unsure visitors a way in."
       ],
-      "detailTitle": "Show the choice before the checkout.",
+      "detailTitle": "A format, a price, and a next step.",
       "detail": [
-        "The readings page separates a voice note from a live talk. Each choice says how it works and what comes next. A visitor can compare the options without having to work out a hidden set of plans.",
-        "Unsure visitors can ask Rachel a question before paying. A guide for a first reading covers the basics. There is a clear path for people who are not ready to choose."
+        "The readings page puts each choice in its own card. The card explains how it works before the button. Visitors can choose a voice note or a live talk. Ask Rachel sits beside them, not in a hidden help page.",
+        "That free path matters for someone new to the service. A first-reading guide answers the basics. The site leaves room to learn how a reading works before choosing a paid format. A visitor can ask first."
       ],
       "technical": [
-        "Each reading leads to the right form, time choice, or Square payment step. The site explains those steps before the handoff. Looking at this case study does not buy a reading.",
-        "Questions, terms, and privacy notes have their own pages. The work shown here is the website. It makes no claim to predict events or take the place of expert advice."
+        "Each card leads to the next step for that service. Forms, time choices, and Square payments each have a role. The service details come before that handoff. The visitor knows what they chose.",
+        "Terms, privacy notes, and first-reading guidance have their own pages. The details stay easy to find beyond the homepage. Rachel brings her own approach to a reading. The site gives it a clear structure."
       ],
-      "closing": "The site makes a personal service easier to grasp. It leaves room for curiosity, with the format, cost, and next step clear on the client’s pages.",
+      "closing": "The site gives a personal service a clear home. Visitors can meet Rachel, compare formats, and choose a next step. A reading leaves room to reflect. The visitor stays in charge of their own choices.",
       "detailUrl": "https://thetarothotline.com/readings/",
       "detailLabel": "Compare the reading formats",
-      "detailAlt": "The Tarot Hotline readings page presenting voice-note and conversation formats with clear next steps.",
+      "detailAlt": "The Tarot Hotline readings page with separate cards for a voice note, live conversations, and a free question-first option.",
       "questions": [
         {
-          "question": "Who built The Tarot Hotline website?",
-          "answer": "Little Fight NYC built the website for The Tarot Hotline, Rachel Hope’s personal reading service."
+          "question": "What did Little Fight build for The Tarot Hotline?",
+          "answer": "We built the website, reading-format pages, first-reading guidance, and connected inquiry and payment paths."
         },
         {
-          "question": "Is this the Hair By Rachel Charles project?",
-          "answer": "No. These are separate businesses and separate projects. This case is about The Tarot Hotline and Rachel Hope."
+          "question": "Can someone ask a question before paying?",
+          "answer": "Yes. The readings page includes a separate Ask Rachel option. It gives unsure visitors a starting conversation."
+        },
+        {
+          "question": "Why separate voice notes and live readings?",
+          "answer": "They offer different experiences. Each card explains its format before sending the visitor to the matching next step."
         }
       ],
       "share": {
@@ -1177,7 +1573,54 @@
         "width": 1200,
         "height": 630,
         "alt": "The Tarot Hotline website with a red rotary phone, shown in desktop and phone frames."
-      }
+      },
+      "detailCaption": "Service cards explain the format before the visitor continues.",
+      "scope": [
+        {
+          "title": "Website and visual direction",
+          "detail": "We built the page layouts around the hotline identity. The red phone, deep green, and clear service cards connect the experience."
+        },
+        {
+          "title": "Service-choice pages",
+          "detail": "We organized the reading formats and first-reading guidance. Visitors can compare the service before starting its next step."
+        },
+        {
+          "title": "Payment and inquiry paths",
+          "detail": "We connected each format to its form, time choice, or Square step. A question-first option remains separate from paid readings."
+        }
+      ],
+      "detailNotes": [
+        {
+          "title": "Comparable formats",
+          "detail": "Voice notes and live conversations have separate cards."
+        },
+        {
+          "title": "Information before action",
+          "detail": "Each card keeps the service detail above its button."
+        },
+        {
+          "title": "A question-first option",
+          "detail": "The free Ask Rachel card gives unsure visitors a way in."
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Compare the formats",
+          "detail": "The readings page describes the options before their next steps.",
+          "url": "https://thetarothotline.com/readings/"
+        },
+        {
+          "title": "Prepare for a first reading",
+          "detail": "The approach page explains the reading experience.",
+          "url": "https://thetarothotline.com/approach/"
+        },
+        {
+          "title": "Ask before choosing",
+          "detail": "The contact page gives questions a separate starting point.",
+          "url": "https://thetarothotline.com/contact/"
+        }
+      ],
+      "reviewedAt": "2026-09-29"
     }
   }
 ]

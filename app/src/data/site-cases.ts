@@ -53,7 +53,11 @@ export type ClientCaseEditorialContent = {
   location: string; sector: string; summary: string; intro: string; tags: string[];
   imageAlt: string; imageNote: string; design: string[]; detailTitle: string;
   detail: string[]; technical: string[]; closing: string; detailUrl: string;
-  detailLabel: string; detailAlt: string;
+  detailLabel: string; detailAlt: string; detailCaption: string;
+  reviewedAt: string;
+  scope: Array<{ title: string; detail: string }>;
+  detailNotes: Array<{ title: string; detail: string }>;
+  evidence: Array<{ title: string; detail: string; url: string }>;
   questions: Array<{ question: string; answer: string }>;
   share: { image: string; type: string; width: number; height: number; alt: string };
 };
