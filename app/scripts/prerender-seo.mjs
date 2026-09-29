@@ -205,6 +205,14 @@ await esbuildBundle({
   logLevel: "silent",
 });
 const siteContent = await import(pathToFileURL(siteDataOut).href);
+for (const study of siteContent.caseStudies.filter(study => study.editorial)) {
+  componentRenderedRoutes[`/case-studies/${study.slug}/`] = {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/CaseStudyDetail.tsx"],
+  };
+}
+componentRenderedRoutes["/examples/"] = {
+  styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/FieldGuide.tsx"],
+};
 
 // Same treatment for the answers art map, so the /answers/ og:image stays in
 // lockstep with the archetype each guide renders in the app.
@@ -894,6 +902,30 @@ function foundationSchemas(page) {
   }
 
   const graph = [organization, localBusiness, website, breadcrumbFor(page), primaryImage, webPage];
+  if (page.caseStudy?.editorial) {
+    const study = page.caseStudy;
+    const client = { "@type": "Organization", "@id": `${canonical}#client`, name: study.client, url: study.url };
+    primaryImage.caption = study.editorial.imageAlt;
+    primaryImage.contentUrl = primaryImage.url;
+    primaryImage.width = 1600;
+    primaryImage.height = 1000;
+    webPage["@type"] = "WebPage";
+    webPage.about = { "@id": client["@id"] };
+    webPage.mainEntity = { "@id": `${canonical}#article` };
+    delete webPage.speakable;
+    const article = {
+      "@type": "Article", "@id": `${canonical}#article`, url: canonical,
+      headline: page.h1, description: page.description,
+      mainEntityOfPage: { "@id": `${canonical}#webpage` },
+      author: publisher, publisher, about: { "@id": client["@id"] },
+      image: { "@id": `${canonical}#primaryimage` },
+      inLanguage: "en-US", articleSection: study.editorial.sector,
+      keywords: study.editorial.tags.join(", "),
+      ...(publishedDate ? { datePublished: publishedDate } : {}),
+      ...(modifiedDate ? { dateModified: modifiedDate } : {}),
+    };
+    graph.push(client, article);
+  }
 
   if (page.type === "Service") {
     // Little Fight remains a New York service-area business. The nationwide

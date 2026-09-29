@@ -11,7 +11,8 @@ import TechAudit from "@/pages/TechAudit";
 import Nationwide from "@/pages/Nationwide";
 import WebsiteCheck from "@/pages/WebsiteCheck";
 import AreaDetail from "@/pages/AreaDetail";
-import { areaPages } from "@/data/site";
+import { areaPages, caseStudies } from "@/data/site";
+import FieldGuide from "@/pages/FieldGuide";
 
 /**
  * Build-time public markup for the acquisition routes that need the actual
@@ -21,10 +22,14 @@ import { areaPages } from "@/data/site";
  * main.tsx still uses createRoot and retains each snapshot until its real lazy
  * leaf has committed.
  */
+const CASE_DETAIL_PATHS = caseStudies.filter(study => study.editorial).map(({ slug }) => `/case-studies/${slug}/`);
+
 const AREA_DETAIL_PATHS = areaPages.map(({ slug }) => `/areas/${slug}/`);
 
 export const COMPONENT_RENDERED_PUBLIC_PATHS = [
   "/",
+  "/examples/",
+  ...CASE_DETAIL_PATHS,
   "/website-check/",
   "/services/",
   "/services/custom-local-websites/",
@@ -58,6 +63,7 @@ function renderWithinEditorialShell(
     <StaticRouter location={pathname}>
       <Routes>
         <Route element={<EditorialShell />}>
+          <Route path="/examples/" element={<FieldGuide />} />
           <Route path="/website-check/" element={<WebsiteCheck />} />
           <Route path="/services/" element={<Services />} />
           <Route path="/services/:slug/" element={<ServiceDetail />} />

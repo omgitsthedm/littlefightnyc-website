@@ -162,6 +162,17 @@ const componentRouteCtas = {
   "/tech-audit/": [["#fit-step-title", "Form", false, { "data-lf-label": "audit_intro_form" }]],
 };
 
+// These case studies and the portfolio index now share the real React shell.
+// Verify their rendered acquisition links rather than the legacy SEO header.
+const refreshedClientCases = JSON.parse(await readFile(path.join(dataRoot, "client-case-studies.json"), "utf8"));
+componentRouteCtas["/examples/"] = [["/tech-audit/?source=page_hero", "Free consult Free first look", true]];
+for (const study of refreshedClientCases) {
+  componentRouteCtas[`/case-studies/${study.slug}/`] = [[
+    `/tech-audit/?intent=website&source=case_${study.slug}_hero`,
+    "Free first look Get a free first look", true,
+  ]];
+}
+
 for (const page of routeMeta.pages) {
   let html;
   try {

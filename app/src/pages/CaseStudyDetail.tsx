@@ -6,6 +6,7 @@ import {
   LockKeyhole,
   MonitorCheck,
 } from "lucide-react";
+import ClientCaseEditorial, { ClientCaseHero } from "@/components/editorial/ClientCaseEditorial";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
 import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
@@ -130,7 +131,7 @@ export default function CaseStudyDetail() {
   // source-verified See / Choose / Book proof. Its generic walkthrough repeats
   // that same path without adding a separate evidence type; other cases keep
   // their walkthroughs because their proof structures differ.
-  const usesFocusedBookingProof = study.slug === "hair-by-rachel-charles";
+  const usesFocusedBookingProof = Boolean(study.editorial) || study.slug === "hair-by-rachel-charles";
   const isRachel = study.slug === "hair-by-rachel-charles";
 
   const beats = [
@@ -143,12 +144,12 @@ export default function CaseStudyDetail() {
   return (
     <>
       <PageHero
-        layout={study.slug === "hair-by-rachel-charles" ? "acquisition" : undefined}
+        layout={study.editorial || isRachel ? "acquisition" : undefined}
         eyebrow={`Case study: ${study.showcase.kind}`}
         icon={Award}
         title={<span className="lf-accent">{study.showcase.label}</span>}
         dek={study.title}
-        visual={isRachel ? (
+        visual={study.editorial ? <ClientCaseHero study={study} /> : isRachel ? (
           <figure className="lf-case-rachel-hero-proof">
             <picture>
               <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
@@ -158,7 +159,7 @@ export default function CaseStudyDetail() {
             <figcaption>A website we built for <a href={study.url} target="_blank" rel="noopener noreferrer">Hair By Rachel Charles</a>.</figcaption>
           </figure>
         ) : undefined}
-        backdrop={!isRachel && study.image && !study.inventoryOnly ? {
+        backdrop={!study.editorial && !isRachel && study.image && !study.inventoryOnly ? {
           src: study.image,
           video: study.video,
           fit: study.video ? "contain" : "cover",
@@ -208,8 +209,9 @@ export default function CaseStudyDetail() {
         <section className="lf-case-next__overview" aria-labelledby="lf-case-overview-title">
           <div className="lf-case-next__overview-inner">
             <header>
-              <h2 id="lf-case-overview-title">The result, first.</h2>
-              <p>{study.result}</p>
+              <h2 id="lf-case-overview-title">{study.editorial ? "The client and the brief." : "The result, first."}</h2>
+              <p>{study.editorial?.intro ?? study.result}</p>
+              {study.editorial && <ul className="lf-client-tags" aria-label="Project tags">{study.editorial.tags.map(tag => <li key={tag}>{tag}</li>)}</ul>}
             </header>
 
             <div className="lf-case-next__passport">
@@ -237,8 +239,8 @@ export default function CaseStudyDetail() {
                 </strong>
               </div>
               <div>
-                <span>Availability</span>
-                <strong>{caseProofLabel(study)}</strong>
+                <span>{study.editorial ? "Location" : "Availability"}</span>
+                <strong>{study.editorial?.location ?? caseProofLabel(study)}</strong>
               </div>
             </aside>
           </div>
@@ -323,9 +325,10 @@ export default function CaseStudyDetail() {
             </ol>
           </div>
         </section>
+        {study.editorial && <ClientCaseEditorial study={study} />}
       </article>
 
-      <ProjectMomentum slug={study.slug} variant="detail" />
+      {!study.editorial && <ProjectMomentum slug={study.slug} variant="detail" />}
 
       {related.length > 0 && (
         <section className="lf-case-next__related" aria-labelledby="lf-case-related-title">
@@ -340,8 +343,8 @@ export default function CaseStudyDetail() {
                         <img
                           src={entry.image}
                           alt=""
-                          width="900"
-                          height="675"
+                          width={entry.editorial ? 1600 : 900}
+                          height={entry.editorial ? 1000 : 675}
                           loading="lazy"
                           decoding="async"
                           style={{

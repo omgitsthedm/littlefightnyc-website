@@ -9,17 +9,20 @@ export const FEATURED_LIVE_CASE_SLUGS = [
   "logan-loans",
   "chromatic-painting-design",
   "clearhelp",
-  "after-hours-agenda",
+  "grand-funding-llc",
+  "the-break-room",
+  "easy-tiger",
+  "the-tarot-hotline",
 ] as const;
 
+const OWNED_LIVE_CASE_SLUGS = ["after-hours-agenda"] as const;
+
 const INTERNAL_CASE_SLUGS = [
-  "grand-funding-llc",
   "legacy-music-group",
   "army-navy-bags",
   "brothers-pizzeria",
   // Frozen in place as a separate recovery item, not current client proof.
   "venuecircuit",
-  "the-break-room",
   "surviving-game",
   "pole-position-it",
   "all-pets-animal-hospital",
@@ -32,12 +35,15 @@ const PROTECTED_EXISTING_CASE_SLUGS = ["public-house-creative"] as const;
 
 export const FLEET_PROJECT_CASE_SLUGS = [
   ...FEATURED_LIVE_CASE_SLUGS,
+  ...OWNED_LIVE_CASE_SLUGS,
   ...INTERNAL_CASE_SLUGS,
 ] as const;
 
 const featuredStudies = FEATURED_LIVE_CASE_SLUGS
   .map((slug) => caseStudies.find((study) => study.slug === slug))
   .filter((study): study is NonNullable<typeof study> => Boolean(study));
+
+const ownedStudies = OWNED_LIVE_CASE_SLUGS.map(slug => caseStudies.find(study => study.slug === slug)).filter((study): study is NonNullable<typeof study> => Boolean(study));
 
 const internalStudies = INTERNAL_CASE_SLUGS
   .map((slug) => caseStudies.find((study) => study.slug === slug))
@@ -75,6 +81,7 @@ export default function WorkShowcase({
           </p>
         </header>
         <ProjectReviewGrid studies={studies} />
+        {mode === "featured" && <div className="lf-work-showcase__owned"><header className="lf-work-showcase__head"><h2>Built for our own business.</h2><p>An owned project, separate from outside client work.</p></header><ProjectReviewGrid studies={ownedStudies} /></div>}
         {mode === "archive" && <ProjectMomentum variant="embedded" />}
       </div>
     </section>

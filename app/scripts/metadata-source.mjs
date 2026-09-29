@@ -191,7 +191,7 @@ function sourceShare(page, siteName) {
     ...(page.share ?? {}),
     // Route copy is the source for a dynamic page's visible headline. Its
     // social alt must name that same page, not a former SEO-only headline.
-    alt: `${siteName}: ${page.h1}`,
+    alt: page.share?.alt || `${siteName}: ${page.h1}`,
   };
 }
 
@@ -245,7 +245,9 @@ export function enrichAuthoredRoutePages(seoPages, siteContent, siteName = "Litt
       const study = cases.get(caseMatch[1]);
       return sourcePage(page, {
         h1: study.showcase.label,
-        description: clampDescription(study.title),
+        image: study.image,
+        ...(study.editorial ? { share: study.editorial.share, noindex: false } : {}),
+        description: clampDescription(study.editorial?.summary ?? study.title),
         shortAnswer: study.title,
         published: study.published ?? page.published,
         updated: study.updated ?? page.updated,
@@ -285,18 +287,19 @@ export function enrichAuthoredRoutePages(seoPages, siteContent, siteName = "Litt
   // them out of the index until public-safe evidence exists.
   const knownPaths = new Set(pages.map((page) => page.path));
   for (const study of cases.values()) {
-    if (!study.inventoryOnly) continue;
+    if (!study.inventoryOnly && !study.editorial) continue;
     const routePath = `/case-studies/${study.slug}/`;
     if (knownPaths.has(routePath)) continue;
     const record = {
       path: routePath,
-      title: `${study.client} Project Record | ${siteName}`,
-      description: clampDescription(study.title),
+      title: study.editorial ? `${study.client} Website Case Study | ${siteName}` : `${study.client} Project Record | ${siteName}`,
+      description: clampDescription(study.editorial?.summary ?? study.title),
       shortAnswer: study.title,
       h1: study.showcase.label,
       type: "Article",
       image: study.image || "/assets/social/og-home.jpg",
-      noindex: true,
+      noindex: !study.editorial,
+      ...(study.editorial ? { share: study.editorial.share } : {}),
       published: study.published,
       updated: study.updated,
     };

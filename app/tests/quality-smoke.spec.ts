@@ -250,7 +250,7 @@ const ROUTES: readonly RouteContract[] = [
     label: "Hair By Rachel Charles case study",
     path: "/case-studies/hair-by-rachel-charles/",
     title: "Hair By Rachel Charles Website Case Study | Little Fight NYC",
-    h1: /A clearer booking path for an independent stylist/i,
+    h1: /Hair By Rachel Charles/i,
     criticalLink: 'a[href="/services/custom-local-websites/"]',
     tags: ["@chromium-desktop", "@chromium-mobile", "@webkit-mobile"],
   },

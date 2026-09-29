@@ -32,12 +32,16 @@ export default function ProjectReviewGrid({
 
         return (
         <article className="lf-project-review" key={study.slug}>
-          <div className={`lf-project-review__media${isRachel ? " lf-project-review__media--rachel" : ""}`}>
+          <div className={`lf-project-review__media${study.editorial ? " lf-project-review__media--framed" : isRachel ? " lf-project-review__media--rachel" : ""}`}>
             {study.video ? (
               <CinematicMedia
                 media={study.video}
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />
+            ) : study.editorial ? (
+              <Link to={`/case-studies/${study.slug}/`} aria-label={`Read the ${study.client} case study`}>
+                <img src={study.image} {...responsiveImageProps(study.image, "(min-width: 900px) 46vw, 100vw", [480, 640, 900])} alt={study.editorial.imageAlt} width={1600} height={1000} loading="lazy" decoding="async" />
+              </Link>
             ) : isRachel ? (
               <picture>
                 <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />

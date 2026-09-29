@@ -49,7 +49,17 @@ type CaseMetric =
       approvedAt: string;
     };
 
+export type ClientCaseEditorialContent = {
+  location: string; sector: string; summary: string; intro: string; tags: string[];
+  imageAlt: string; imageNote: string; design: string[]; detailTitle: string;
+  detail: string[]; technical: string[]; closing: string; detailUrl: string;
+  detailLabel: string; detailAlt: string;
+  questions: Array<{ question: string; answer: string }>;
+  share: { image: string; type: string; width: number; height: number; alt: string };
+};
+
 export type CaseStudy = {
+  editorial?: ClientCaseEditorialContent;
   type: string;
   title: string;
   problem: string;
@@ -86,7 +96,7 @@ export type CaseStudy = {
   };
 };
 
-export const caseStudies: CaseStudy[] = [
+const retainedCaseStudies: CaseStudy[] = [
   {
     type: "Proof-pending project record",
     client: "The Break Room",
@@ -1126,4 +1136,14 @@ export const caseStudies: CaseStudy[] = [
       "Different forms keep different conversations from collapsing into one generic request. The work is practical: name the question, show the relevant context, and give the visitor a clear next step. The live site does that on its own domain while approved financial language remains client-controlled.",
     ],
   },
+];
+
+// Current custom-domain client work has one authored record per project.
+// Owned products and private/archived records retain their existing scope.
+import refreshedClientCases from "./client-case-studies.json";
+const refreshed = refreshedClientCases as CaseStudy[];
+const refreshedSlugs = new Set(refreshed.map(study => study.slug));
+export const caseStudies: CaseStudy[] = [
+  ...refreshed,
+  ...retainedCaseStudies.filter(study => !refreshedSlugs.has(study.slug)),
 ];
