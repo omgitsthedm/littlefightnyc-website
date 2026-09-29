@@ -1,3 +1,4 @@
+import { clientCaptureRoot } from "@/lib/clientCaptureRoot";
 import { ArrowRight, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { HOME_WALL } from "@/data/home-wall";
@@ -21,7 +22,7 @@ import "./HomeWall.css";
  * viewport, while the tiles keep normal lazy image behavior.
  */
 function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
-  const base = `/assets/case-${study.slug}`;
+  const base = `${clientCaptureRoot(study.slug)}/case-${study.slug}`;
   const isOwnedProduct = study.slug === "after-hours-agenda";
   const isRachel = study.slug === "hair-by-rachel-charles";
   return (
@@ -29,7 +30,7 @@ function WallTile({ study }: { study: (typeof HOME_WALL)[number] }) {
       <Link to={`/case-studies/${study.slug}/`}>
         <LivePreview slug={study.slug} className={`lf-wall__shot${isRachel ? " lf-wall__shot--rachel" : ""}`}>
           <img
-            src={isRachel ? "/assets/case-hair-by-rachel-charles-desktop-1440.webp" : `${base}-900.webp`}
+            src={isRachel ? "/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" : `${base}-900.webp`}
             srcSet={isRachel ? undefined : `${base}-480.webp 480w, ${base}-640.webp 640w, ${base}-900.webp 900w`}
             sizes="(min-width: 64rem) 16vw, (min-width: 48rem) 30vw, 45vw"
             width={isRachel ? 1440 : 900}
@@ -157,10 +158,10 @@ export default function HomeWall() {
           <span className="lf-wall__hero-proof-summary">Clear services. Direct handoff to Square booking.</span>
           <span className="lf-wall__hero-proof-frame">
             <picture>
-              <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-              <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+              <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+              <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
               <img
-                src="/assets/case-hair-by-rachel-charles-mobile-390.webp"
+                src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp"
                 width={780}
                 height={1688}
                 alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible"

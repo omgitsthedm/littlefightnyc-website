@@ -44,3 +44,6 @@
     padding-inline: var(--lf-margin-desktop);
   }
 }
+
+/* Real client captures keep their complete framing. */
+.lf-work-showcase__owned { margin-top: var(--lf-space-8); padding-top: var(--lf-space-7); border-top: 1px solid var(--lf-hairline); }

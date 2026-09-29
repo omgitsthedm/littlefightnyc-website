@@ -44,7 +44,7 @@ const LAB_PROOF: Record<string, { slug: LabBuildSlug; because: string }> = {
 const FEATURE_IMAGE: Record<string, string> = {
   "tech-consulting": "/assets/local-business.webp",
   "it-support": "/assets/typing.webp",
-  "custom-local-websites": "/assets/case-hair-by-rachel-charles-desktop-1440.webp",
+  "custom-local-websites": "/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp",
   "business-systems": "/assets/pos.webp",
 };
 
@@ -52,9 +52,9 @@ function RachelWebsiteProof() {
   return (
     <figure className="lf-sd-rachel-proof">
       <picture>
-        <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
+        <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
         <img
-          src="/assets/case-hair-by-rachel-charles-tablet-1024.webp"
+          src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp"
           alt="The Hair By Rachel Charles website with Rachel’s name and portrait visible"
           width={1024}
           height={1024}

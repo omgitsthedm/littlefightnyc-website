@@ -48,11 +48,11 @@ export default function WebsiteProofSet() {
               <Link className={`lf-website-proof-set__image${isRachel ? " lf-website-proof-set__image--rachel" : ""}`} to={`/case-studies/${study.slug}/`}>
                 {isRachel ? (
                   <picture>
-                    <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                    <img {...skelImg} src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
+                    <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                    <img {...skelImg} src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
                   </picture>
                 ) : (
-                  <img {...skelImg} src={study.image} {...responsiveImageProps(study.image, "(min-width: 768px) 30vw, 100vw", [480, 640, 900])} alt={`The ${study.client} website as it shipped`} width={1600} height={1200} loading="lazy" decoding="async" />
+                  <img {...skelImg} src={study.image} {...responsiveImageProps(study.image, "(min-width: 768px) 30vw, 100vw", [480, 640, 900])} alt={study.editorial?.imageAlt ?? `The ${study.client} website as it shipped`} width={1600} height={study.editorial ? 1000 : 1200} loading="lazy" decoding="async" />
                 )}
               </Link>
               <div className="lf-website-proof-set__copy">

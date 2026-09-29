@@ -49,7 +49,17 @@ type CaseMetric =
       approvedAt: string;
     };
 
+export type ClientCaseEditorialContent = {
+  location: string; sector: string; summary: string; intro: string; tags: string[];
+  imageAlt: string; imageNote: string; design: string[]; detailTitle: string;
+  detail: string[]; technical: string[]; closing: string; detailUrl: string;
+  detailLabel: string; detailAlt: string;
+  questions: Array<{ question: string; answer: string }>;
+  share: { image: string; type: string; width: number; height: number; alt: string };
+};
+
 export type CaseStudy = {
+  editorial?: ClientCaseEditorialContent;
   type: string;
   title: string;
   problem: string;
@@ -86,7 +96,7 @@ export type CaseStudy = {
   };
 };
 
-export const caseStudies: CaseStudy[] = [
+const retainedCaseStudies: CaseStudy[] = [
   {
     type: "Proof-pending project record",
     client: "The Break Room",
@@ -370,7 +380,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "Publish", detail: "The official facts stay together, so a new update does not send people hunting through old posts." },
       ],
     },
-    image: "/assets/case-cc-films.webp",
+    image: "/assets/cases/2026-09-29/case-cc-films.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-08-18",
@@ -502,7 +512,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "Book", detail: "The Square setup clients already knew stays in place inside a clear path that works on every screen." },
       ],
     },
-    image: "/assets/case-hair-by-rachel-charles.webp",
+    image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-05-13",
     updated: "2026-09-27",
@@ -632,7 +642,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "Manage", detail: "The team has a protected place to work through requests, while each public part can be updated without disturbing the others." },
       ],
     },
-    image: "/assets/case-clearhelp.webp",
+    image: "/assets/cases/2026-09-29/case-clearhelp.webp",
     services: ["custom-local-websites", "business-systems"],
     published: "2026-05-13",
     updated: "2026-08-18",
@@ -758,7 +768,7 @@ export const caseStudies: CaseStudy[] = [
         { label: "Connect", detail: "Each route gives a visitor a clear way to continue while regulated language stays under client control." },
       ],
     },
-    image: "/assets/case-grand-funding-llc.webp",
+    image: "/assets/cases/2026-09-29/case-grand-funding-llc.webp",
     services: ["custom-local-websites"],
     published: "2026-05-13",
     updated: "2026-08-18",
@@ -1014,7 +1024,7 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
-    image: "/assets/case-chromatic-painting-design.webp",
+    image: "/assets/cases/2026-09-29/case-chromatic-painting-design.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-27",
     updated: "2026-08-18",
@@ -1107,7 +1117,7 @@ export const caseStudies: CaseStudy[] = [
         },
       ],
     },
-    image: "/assets/case-logan-loans.webp",
+    image: "/assets/cases/2026-09-29/case-logan-loans.webp",
     services: ["custom-local-websites", "tech-consulting"],
     published: "2026-07-27",
     updated: "2026-08-18",
@@ -1126,4 +1136,14 @@ export const caseStudies: CaseStudy[] = [
       "Different forms keep different conversations from collapsing into one generic request. The work is practical: name the question, show the relevant context, and give the visitor a clear next step. The live site does that on its own domain while approved financial language remains client-controlled.",
     ],
   },
+];
+
+// Current custom-domain client work has one authored record per project.
+// Owned products and private/archived records retain their existing scope.
+import refreshedClientCases from "./client-case-studies.json";
+const refreshed = refreshedClientCases as CaseStudy[];
+const refreshedSlugs = new Set(refreshed.map(study => study.slug));
+export const caseStudies: CaseStudy[] = [
+  ...refreshed,
+  ...retainedCaseStudies.filter(study => !refreshedSlugs.has(study.slug)),
 ];

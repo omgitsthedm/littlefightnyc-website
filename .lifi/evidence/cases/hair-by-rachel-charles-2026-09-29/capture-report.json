@@ -1,0 +1,189 @@
+{
+  "method": "Chromium viewport capture; reduced motion; GET/HEAD only; no booking, form, or account submissions; no page content altered.",
+  "records": [
+    {
+      "name": "home-desktop",
+      "url": "https://hairbyrachelcharles.com/",
+      "capturedAt": "2026-09-29T08:29:31.727Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+      "heading": "RachelCharles",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "home-tablet",
+      "url": "https://hairbyrachelcharles.com/",
+      "capturedAt": "2026-09-29T08:29:34.731Z",
+      "viewport": {
+        "width": 1024,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+      "heading": "RachelCharles",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "home-mobile",
+      "url": "https://hairbyrachelcharles.com/",
+      "capturedAt": "2026-09-29T08:29:37.381Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+      "heading": "RachelCharles",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "hair-brief",
+      "url": "https://hairbyrachelcharles.com/",
+      "capturedAt": "2026-09-29T08:29:40.989Z",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "deviceScaleFactor": 2,
+      "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+      "heading": "RachelCharles",
+      "scrollY": 790,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "booking-desktop",
+      "url": "https://hairbyrachelcharles.com/booking/",
+      "capturedAt": "2026-09-29T08:29:44.875Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "title": "Book a Hair Appointment | Phoenix, AZ | Hair By Rachel Charles",
+      "heading": "Book now",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "booking-mobile",
+      "url": "https://hairbyrachelcharles.com/booking/",
+      "capturedAt": "2026-09-29T08:29:47.756Z",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "title": "Book a Hair Appointment | Phoenix, AZ | Hair By Rachel Charles",
+      "heading": "Book now",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "pricing-desktop",
+      "url": "https://hairbyrachelcharles.com/pricing/",
+      "capturedAt": "2026-09-29T08:29:50.988Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "title": "Hair Salon Pricing Phoenix | Color, Cuts, Extensions | Hair By Rachel Charles",
+      "heading": "Pricing Menu",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    },
+    {
+      "name": "gallery-desktop",
+      "url": "https://hairbyrachelcharles.com/gallery/",
+      "capturedAt": "2026-09-29T08:29:54.320Z",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "title": "Phoenix Hair Portfolio — Real Client Results | Hair By Rachel Charles",
+      "heading": "Portfolio",
+      "scrollY": 0,
+      "footerLinks": [
+        {
+          "text": "Made by Little Fight NYC",
+          "href": "https://littlefightnyc.com/",
+          "rel": "noopener noreferrer"
+        }
+      ],
+      "visibleBrokenImages": [],
+      "overflow": false,
+      "fonts": "loaded"
+    }
+  ]
+}

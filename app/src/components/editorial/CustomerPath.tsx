@@ -18,7 +18,7 @@ import "./CustomerPath.css";
  * the booking-bridge and mobile-lifecycle audits read it.
  */
 const CAPTURE = {
-  src: "/assets/case-hair-by-rachel-charles-explore-mobile.webp",
+  src: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-explore-mobile.webp",
   width: 390,
   height: 2400,
   domain: "hairbyrachelcharles.com",

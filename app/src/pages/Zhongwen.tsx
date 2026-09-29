@@ -84,7 +84,7 @@ const PROOF = [
     status: "公开网站",
     line: "从只靠私信预约，到一个新顾客能找到、看懂并直接预约的网站。",
     fact: "公开案例里有可点击的验证信息和上线网站。",
-    image: "/assets/case-hair-by-rachel-charles-900.webp",
+    image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-900.webp",
     alt: "Hair By Rachel Charles 的在线预约网站",
   },
   {
@@ -101,7 +101,7 @@ const PROOF = [
     status: "公开网站",
     line: "为独立电影打造更清楚、更可信的官方网站。",
     fact: "公开案例里有可点击的验证信息和上线网站。",
-    image: "/assets/case-cc-films-900.webp",
+    image: "/assets/cases/2026-09-29/case-cc-films-900.webp",
     alt: "电影 If That Mockingbird Don't Sing 的官方网站",
   },
 ];
@@ -279,9 +279,9 @@ export default function Zhongwen() {
                   <DeferredCinematicMedia media={item.video} alt={item.alt} />
                 ) : item.client === "Hair By Rachel Charles" ? (
                   <picture>
-                    <source media="(min-width: 53.75rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                    <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
-                    <img src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt={item.alt} width="780" height="1688" loading="lazy" decoding="async" />
+                    <source media="(min-width: 53.75rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                    <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
+                    <img src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt={item.alt} width="780" height="1688" loading="lazy" decoding="async" />
                   </picture>
                 ) : (
                   <img

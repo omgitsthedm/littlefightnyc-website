@@ -10,7 +10,7 @@ import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
 import { ProofStatus } from "./ProofPassport";
 import { hasCurrentPublicSource } from "./caseProof";
-import CinematicMedia from "./CinematicMedia";
+import { DeferredCinematicMedia } from "./CinematicMedia";
 import LivePreview from "./LivePreview";
 import "./ProjectReviewGrid.css";
 
@@ -32,19 +32,23 @@ export default function ProjectReviewGrid({
 
         return (
         <article className="lf-project-review" key={study.slug}>
-          <div className={`lf-project-review__media${isRachel ? " lf-project-review__media--rachel" : ""}`}>
+          <div className={`lf-project-review__media${study.editorial ? " lf-project-review__media--framed" : isRachel ? " lf-project-review__media--rachel" : ""}`}>
             {study.video ? (
-              <CinematicMedia
+              <DeferredCinematicMedia
                 media={study.video}
                 alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
               />
+            ) : study.editorial ? (
+              <Link to={`/case-studies/${study.slug}/`} aria-label={`Read the ${study.client} case study`}>
+                <img src={study.image} {...responsiveImageProps(study.image, "(min-width: 900px) 46vw, 100vw", [480, 640, 900])} alt={study.editorial.imageAlt} width={1600} height={1000} loading="lazy" decoding="async" />
+              </Link>
             ) : isRachel ? (
               <picture>
-                <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                <source media="(min-width: 37.5rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+                <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                <source media="(min-width: 37.5rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
                 <img
                   {...skelImg}
-                  src="/assets/case-hair-by-rachel-charles-mobile-390.webp"
+                  src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp"
                   alt="Hair By Rachel Charles website with Rachel’s name and portrait visible"
                   width={780}
                   height={1688}

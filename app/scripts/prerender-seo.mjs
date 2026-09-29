@@ -152,13 +152,6 @@ for (const routePath of [
   };
 }
 
-const componentRouteStyles = Object.fromEntries(
-  await Promise.all(Object.entries(componentRenderedRoutes).map(async ([routePath, { styles }]) => [
-    routePath,
-    await stylesheetClosure(styles, routePath),
-  ])),
-);
-
 // This renderer lives under node_modules so it is a build artifact, never a
 // public entry. Vite transforms import.meta.glob and
 // CSS imports that a bare server bundler cannot understand.
@@ -205,6 +198,21 @@ await esbuildBundle({
   logLevel: "silent",
 });
 const siteContent = await import(pathToFileURL(siteDataOut).href);
+for (const study of siteContent.caseStudies.filter(study => study.editorial)) {
+  componentRenderedRoutes[`/case-studies/${study.slug}/`] = {
+    styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/CaseStudyDetail.tsx"],
+  };
+}
+componentRenderedRoutes["/examples/"] = {
+  styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/FieldGuide.tsx"],
+};
+
+const componentRouteStyles = Object.fromEntries(
+  await Promise.all(Object.entries(componentRenderedRoutes).map(async ([routePath, { styles }]) => [
+    routePath,
+    await stylesheetClosure(styles, routePath),
+  ])),
+);
 
 // Same treatment for the answers art map, so the /answers/ og:image stays in
 // lockstep with the archetype each guide renders in the app.
@@ -894,6 +902,30 @@ function foundationSchemas(page) {
   }
 
   const graph = [organization, localBusiness, website, breadcrumbFor(page), primaryImage, webPage];
+  if (page.caseStudy?.editorial) {
+    const study = page.caseStudy;
+    const client = { "@type": "Organization", "@id": `${canonical}#client`, name: study.client, url: study.url };
+    primaryImage.caption = study.editorial.imageAlt;
+    primaryImage.contentUrl = primaryImage.url;
+    primaryImage.width = 1600;
+    primaryImage.height = 1000;
+    webPage["@type"] = "WebPage";
+    webPage.about = { "@id": client["@id"] };
+    webPage.mainEntity = { "@id": `${canonical}#article` };
+    delete webPage.speakable;
+    const article = {
+      "@type": "Article", "@id": `${canonical}#article`, url: canonical,
+      headline: page.h1, description: page.description,
+      mainEntityOfPage: { "@id": `${canonical}#webpage` },
+      author: publisher, publisher, about: { "@id": client["@id"] },
+      image: { "@id": `${canonical}#primaryimage` },
+      inLanguage: "en-US", articleSection: study.editorial.sector,
+      keywords: study.editorial.tags.join(", "),
+      ...(publishedDate ? { datePublished: publishedDate } : {}),
+      ...(modifiedDate ? { dateModified: modifiedDate } : {}),
+    };
+    graph.push(client, article);
+  }
 
   if (page.type === "Service") {
     // Little Fight remains a New York service-area business. The nationwide
@@ -1057,7 +1089,7 @@ function routeImagePreload(page) {
   // generic laptop image used by its social card. Keep the preload aligned
   // with the hydrated PageHero or the browser downloads both candidates.
   if (page.path === "/services/custom-local-websites/") {
-    const base = "/assets/case-hair-by-rachel-charles";
+    const base = "/assets/cases/2026-09-29/case-hair-by-rachel-charles";
     const srcset = [480, 640, 900].map((w) => `${base}-${w}.webp ${w}w`).join(", ");
     return `<link rel="preload" href="${base}-900.webp" imagesrcset="${srcset}" imagesizes="(min-width: 1440px) 36vw, (min-width: 1024px) 42vw, 100vw" as="image" type="image/webp" fetchpriority="high" data-route-preload>`;
   }
@@ -1076,6 +1108,15 @@ function routeImagePreload(page) {
   // title. The route HTML already knows the exact study, so surface the same
   // 640/900/original set before React loads instead of discovering the LCP
   // image from the hydrated component.
+  if (page.caseStudy?.editorial) {
+    const base = `/assets/cases/2026-09-29/case-${page.caseStudy.slug}`;
+    return [
+      `<link rel="preload" media="(max-width: 47.99rem)" href="${base}-mobile-390.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      `<link rel="preload" media="(min-width: 48rem) and (max-width: 63.99rem)" href="${base}-tablet-1024.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+      `<link rel="preload" media="(min-width: 64rem)" href="${base}-desktop-1440.webp" as="image" type="image/webp" fetchpriority="high" data-route-preload>`,
+    ].join("\n    ");
+  }
+
   if (page.caseStudy?.image?.endsWith(".webp")) {
     const base = page.caseStudy.image.slice(0, -".webp".length);
     const srcset = `${base}-640.webp 640w, ${base}-900.webp 900w, ${page.caseStudy.image} 1800w`;
@@ -2288,7 +2329,7 @@ function snapshot(page) {
         </div>
         <figure class="lf-seo__home-scene">
           <p class="lf-seo__home-scene-title"><span>Shops like yours, already working</span>Five trades, five live sites — a painting contractor, a film company, a help service, a clothing label, a salon.</p>
-          <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="/assets/case-chromatic-painting-design-900.webp" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site"></div></div>
+          <div class="lf-seo__home-phone"><div class="lf-seo__home-phone-screen"><img src="/assets/cases/2026-09-29/case-chromatic-painting-design-900.webp" width="900" height="640" alt="Chromatic Painting &amp; Design — a live client site"></div></div>
           <ul class="lf-seo__home-path" aria-label="Client work and our own clothing label">
             <li><a href="/case-studies/chromatic-painting-design/"><strong>Painting contractor</strong> — Chromatic Painting &amp; Design</a></li>
             <li><a href="/case-studies/cc-films/"><strong>Film company</strong> — CC Films</a></li>
@@ -2409,6 +2450,9 @@ function snapshot(page) {
 
 function renderPage(page) {
   const componentRoute = componentRenderedRoutes[page.path];
+  if (componentRoute && typeof componentRouteStyles[page.path] !== "string") {
+    throw new Error(`Missing first-paint stylesheet closure for ${page.path}`);
+  }
   let html = asyncStyles(stripManagedHead(template))
     .replace(
       "</head>",

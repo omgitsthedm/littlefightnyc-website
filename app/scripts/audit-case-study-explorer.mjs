@@ -72,14 +72,16 @@ const requiredLiveCaseSlugs = [
   "clearhelp",
   "logan-loans",
   "chromatic-painting-design",
+  "grand-funding-llc",
+  "the-break-room",
+  "easy-tiger",
+  "the-tarot-hotline",
 ];
 const requiredInternalFleetCaseSlugs = [
-  "grand-funding-llc",
   "legacy-music-group",
   "army-navy-bags",
   "brothers-pizzeria",
   "venuecircuit",
-  "the-break-room",
   "surviving-game",
   "pole-position-it",
   "all-pets-animal-hospital",
@@ -574,8 +576,8 @@ for (const slug of requiredLiveCaseSlugs) {
 const deckspace = allCases.find((study) => study.slug === "deckspace");
 if (!deckspace) fail("portfolio boundary: DeckSpace case record is unexpectedly missing");
 
-if (new Set(requiredFleetCaseSlugs).size !== 15) {
-  fail("portfolio fleet contract must enumerate exactly fifteen unique projects");
+if (new Set(requiredFleetCaseSlugs).size !== 17) {
+  fail("portfolio fleet contract must enumerate exactly seventeen unique projects");
 }
 for (const slug of requiredInternalFleetCaseSlugs) {
   const study = allCases.find((entry) => entry.slug === slug);
@@ -646,7 +648,7 @@ for (const study of capturedCases) {
     const contract = captureContracts[device];
     captures.push({
       device,
-      filename: `case-${study.slug}-explore${contract.suffix}.webp`,
+      filename: `${study.editorial ? "cases/2026-09-29/" : ""}case-${study.slug}-explore${contract.suffix}.webp`,
       ...contract,
     });
   }

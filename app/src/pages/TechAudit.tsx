@@ -658,9 +658,9 @@ export default function TechAudit() {
               aria-label="Read the Hair By Rachel Charles case study"
             >
               <picture>
-                <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
-                <img {...skelImg} src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
+                <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
+                <img {...skelImg} src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
               </picture>
             </Link>
             <span className="lf-audit-intro__caption">Hair By Rachel Charles — a real client website, with clear services, work to explore, and a direct path to book.</span>

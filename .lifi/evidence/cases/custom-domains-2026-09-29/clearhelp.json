@@ -1,0 +1,481 @@
+{
+  "slug": "clearhelp",
+  "url": "https://clearhelp.org/",
+  "capturedAt": "2026-09-29T08:45:59.065Z",
+  "views": [
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "tablet",
+      "width": 1024,
+      "height": 1000,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "dpr": 2,
+      "overflow": false,
+      "brokenImages": []
+    },
+    {
+      "name": "explore",
+      "width": 1200,
+      "height": 1000,
+      "dpr": 1,
+      "overflow": false,
+      "brokenImages": []
+    }
+  ],
+  "errors": [],
+  "title": "Find Free Help Near You — Food, Shelter & Health | ClearHelp",
+  "description": "Find food pantries, shelters, free clinics, and legal help that serve your area. Results label their source, reach, and last-check status. Free, no sign-up,…",
+  "canonical": "https://clearhelp.org/",
+  "headings": [
+    {
+      "text": "Find real help near you.",
+      "y": 191
+    },
+    {
+      "text": "Start with your situation",
+      "y": 890
+    },
+    {
+      "text": "What do you need help with?",
+      "y": 2091
+    },
+    {
+      "text": "Why ClearHelp is different",
+      "y": 3155
+    },
+    {
+      "text": "Every resource is vetted",
+      "y": 3283
+    },
+    {
+      "text": "No fake coverage",
+      "y": 3283
+    },
+    {
+      "text": "Real guidance, not just listings",
+      "y": 3461
+    },
+    {
+      "text": "Connected pathways",
+      "y": 3461
+    },
+    {
+      "text": "Common questions",
+      "y": 3752
+    },
+    {
+      "text": "How ClearHelp works",
+      "y": 4467
+    },
+    {
+      "text": "Help improve ClearHelp?",
+      "y": 0
+    }
+  ],
+  "links": [
+    {
+      "text": "Skip to main content",
+      "href": "https://clearhelp.org/#main-content",
+      "rel": ""
+    },
+    {
+      "text": "Emergency: Quick Exit",
+      "href": "https://weather.com/",
+      "rel": "nofollow noreferrer"
+    },
+    {
+      "text": "Emergency:Quick Exitdoesn't clear your history",
+      "href": "https://weather.com/",
+      "rel": "nofollow noreferrer"
+    },
+    {
+      "text": "How to browse more safely",
+      "href": "https://clearhelp.org/online-safety/",
+      "rel": ""
+    },
+    {
+      "text": "911",
+      "href": "tel:911",
+      "rel": ""
+    },
+    {
+      "text": "311",
+      "href": "tel:311",
+      "rel": ""
+    },
+    {
+      "text": "988",
+      "href": "tel:988",
+      "rel": ""
+    },
+    {
+      "text": "ClearHelp",
+      "href": "https://clearhelp.org/",
+      "rel": ""
+    },
+    {
+      "text": "I Need Help",
+      "href": "https://clearhelp.org/need-help/",
+      "rel": ""
+    },
+    {
+      "text": "I Want to Help",
+      "href": "https://clearhelp.org/give-help/",
+      "rel": ""
+    },
+    {
+      "text": "About",
+      "href": "https://clearhelp.org/about/",
+      "rel": ""
+    },
+    {
+      "text": "English",
+      "href": "https://clearhelp.org/",
+      "rel": ""
+    },
+    {
+      "text": "Español (beta)",
+      "href": "https://clearhelp.org/es/",
+      "rel": ""
+    },
+    {
+      "text": "I Need HelpFind food, housing, health care, and more near you",
+      "href": "https://clearhelp.org/need-help/",
+      "rel": ""
+    },
+    {
+      "text": "I Want to HelpDonate, volunteer, and support your community",
+      "href": "https://clearhelp.org/give-help/",
+      "rel": ""
+    },
+    {
+      "text": "I am fleeing domestic violence→",
+      "href": "https://clearhelp.org/need-help/safety/",
+      "rel": ""
+    },
+    {
+      "text": "I am unsheltered and need immediate refuge→",
+      "href": "https://clearhelp.org/need-help/housing/",
+      "rel": ""
+    },
+    {
+      "text": "I am facing immediate eviction→",
+      "href": "https://clearhelp.org/need-help/housing/",
+      "rel": ""
+    },
+    {
+      "text": "I need food right now→",
+      "href": "https://clearhelp.org/need-help/food/",
+      "rel": ""
+    },
+    {
+      "text": "I am an unaccompanied youth or teen→",
+      "href": "https://clearhelp.org/need-help/youth-teen/",
+      "rel": ""
+    },
+    {
+      "text": "I am expecting or a new parent in crisis→",
+      "href": "https://clearhelp.org/need-help/baby-needs/",
+      "rel": ""
+    },
+    {
+      "text": "I was recently incarcerated and need support→",
+      "href": "https://clearhelp.org/need-help/legal/",
+      "rel": ""
+    },
+    {
+      "text": "I am in a mental health crisis→",
+      "href": "https://clearhelp.org/need-help/mental-health/",
+      "rel": ""
+    },
+    {
+      "text": "I need medication I can't afford→",
+      "href": "https://clearhelp.org/need-help/health/",
+      "rel": ""
+    },
+    {
+      "text": "I need diapers or formula right now→",
+      "href": "https://clearhelp.org/need-help/baby-needs/",
+      "rel": ""
+    },
+    {
+      "text": "I am elderly and I'm cold, overheated, or isolated→",
+      "href": "https://clearhelp.org/need-help/senior-support/",
+      "rel": ""
+    },
+    {
+      "text": "I have no working phone or internet→",
+      "href": "https://clearhelp.org/need-help/phone-internet/",
+      "rel": ""
+    },
+    {
+      "text": "I'm a veteran and I'm struggling→",
+      "href": "https://clearhelp.org/need-help/veterans/",
+      "rel": ""
+    },
+    {
+      "text": "I am an immigrant and I need help→",
+      "href": "https://clearhelp.org/need-help/immigration/",
+      "rel": ""
+    },
+    {
+      "text": "Food",
+      "href": "https://clearhelp.org/need-help/food/",
+      "rel": ""
+    },
+    {
+      "text": "Safe Place Tonight",
+      "href": "https://clearhelp.org/need-help/housing/",
+      "rel": ""
+    },
+    {
+      "text": "Abuse / Crisis",
+      "href": "https://clearhelp.org/need-help/safety/",
+      "rel": ""
+    },
+    {
+      "text": "Medical Now",
+      "href": "https://clearhelp.org/need-help/health/",
+      "rel": ""
+    },
+    {
+      "text": "Mental Health",
+      "href": "https://clearhelp.org/need-help/mental-health/",
+      "rel": ""
+    },
+    {
+      "text": "Addiction / Overdose",
+      "href": "https://clearhelp.org/need-help/substance-use/",
+      "rel": ""
+    },
+    {
+      "text": "Youth & Teen Help",
+      "href": "https://clearhelp.org/need-help/youth-teen/",
+      "rel": ""
+    },
+    {
+      "text": "Senior Support",
+      "href": "https://clearhelp.org/need-help/senior-support/",
+      "rel": ""
+    },
+    {
+      "text": "Women's & Reproductive Health",
+      "href": "https://clearhelp.org/need-help/women-health/",
+      "rel": ""
+    },
+    {
+      "text": "LGBTQ+ Support",
+      "href": "https://clearhelp.org/need-help/lgbtq-support/",
+      "rel": ""
+    },
+    {
+      "text": "Legal Help",
+      "href": "https://clearhelp.org/need-help/legal/",
+      "rel": ""
+    },
+    {
+      "text": "Immigration",
+      "href": "https://clearhelp.org/need-help/immigration/",
+      "rel": ""
+    },
+    {
+      "text": "Disability Access",
+      "href": "https://clearhelp.org/need-help/disability/",
+      "rel": ""
+    },
+    {
+      "text": "Veterans",
+      "href": "https://clearhelp.org/need-help/veterans/",
+      "rel": ""
+    },
+    {
+      "text": "Baby Needs",
+      "href": "https://clearhelp.org/need-help/baby-needs/",
+      "rel": ""
+    },
+    {
+      "text": "Cash & Benefits",
+      "href": "https://clearhelp.org/need-help/money/",
+      "rel": ""
+    },
+    {
+      "text": "Utilities",
+      "href": "https://clearhelp.org/need-help/utilities/",
+      "rel": ""
+    },
+    {
+      "text": "Transportation",
+      "href": "https://clearhelp.org/need-help/transportation/",
+      "rel": ""
+    },
+    {
+      "text": "ID & Documents",
+      "href": "https://clearhelp.org/need-help/legal/",
+      "rel": ""
+    },
+    {
+      "text": "Employment",
+      "href": "https://clearhelp.org/need-help/employment/",
+      "rel": ""
+    },
+    {
+      "text": "Childcare",
+      "href": "https://clearhelp.org/need-help/family/",
+      "rel": ""
+    },
+    {
+      "text": "Education",
+      "href": "https://clearhelp.org/need-help/community/",
+      "rel": ""
+    },
+    {
+      "text": "Phone & Internet",
+      "href": "https://clearhelp.org/need-help/phone-internet/",
+      "rel": ""
+    },
+    {
+      "text": "Mutual Aid",
+      "href": "https://clearhelp.org/need-help/community/",
+      "rel": ""
+    },
+    {
+      "text": "Family",
+      "href": "https://clearhelp.org/need-help/family/",
+      "rel": ""
+    },
+    {
+      "text": "Clothing",
+      "href": "https://clearhelp.org/need-help/food/",
+      "rel": ""
+    },
+    {
+      "text": "Pets",
+      "href": "https://clearhelp.org/need-help/pets/",
+      "rel": ""
+    },
+    {
+      "text": "list a community program",
+      "href": "https://clearhelp.org/list-your-program/",
+      "rel": ""
+    },
+    {
+      "text": "Give Help →",
+      "href": "https://clearhelp.org/give-help/",
+      "rel": ""
+    },
+    {
+      "text": "911",
+      "href": "tel:911",
+      "rel": ""
+    },
+    {
+      "text": "211",
+      "href": "tel:211",
+      "rel": ""
+    },
+    {
+      "text": "211",
+      "href": "tel:211",
+      "rel": ""
+    },
+    {
+      "text": "Need Help",
+      "href": "https://clearhelp.org/need-help/",
+      "rel": ""
+    },
+    {
+      "text": "Search",
+      "href": "https://clearhelp.org/search/",
+      "rel": ""
+    },
+    {
+      "text": "Give Help",
+      "href": "https://clearhelp.org/give-help/",
+      "rel": ""
+    },
+    {
+      "text": "Call 211",
+      "href": "tel:211",
+      "rel": ""
+    },
+    {
+      "text": "I Need Help",
+      "href": "https://clearhelp.org/need-help/",
+      "rel": ""
+    },
+    {
+      "text": "I Want to Help",
+      "href": "https://clearhelp.org/give-help/",
+      "rel": ""
+    },
+    {
+      "text": "About",
+      "href": "https://clearhelp.org/about/",
+      "rel": ""
+    },
+    {
+      "text": "Accessibility",
+      "href": "https://clearhelp.org/about/#accessibility",
+      "rel": ""
+    },
+    {
+      "text": "Data Sources",
+      "href": "https://clearhelp.org/about/#data-sources",
+      "rel": ""
+    },
+    {
+      "text": "Privacy",
+      "href": "https://clearhelp.org/about/#privacy",
+      "rel": ""
+    },
+    {
+      "text": "Our Manifesto",
+      "href": "https://clearhelp.org/manifesto/",
+      "rel": ""
+    },
+    {
+      "text": "CivicScore NYC",
+      "href": "https://clearhelp.org/civics-score/",
+      "rel": ""
+    },
+    {
+      "text": "911",
+      "href": "tel:911",
+      "rel": ""
+    },
+    {
+      "text": "211",
+      "href": "tel:211",
+      "rel": ""
+    },
+    {
+      "text": "Made by Little Fight NYC",
+      "href": "https://littlefightnyc.com/",
+      "rel": "noopener noreferrer"
+    }
+  ],
+  "text": "Skip to main content\nEmergency:\nQuick Exit\nEmergency:\nQuick Exit\ndoesn't clear your history\n\nOr press Shift 3 times · How to browse more safely\n\nEmergency: 911 • City services: 311(where available) • Crisis support: 988\nClearHelp\nI Need Help\nI Want to Help\nAbout\nEN\nFind real help near you.\n\nFREE · NO SIGN-UP · NO ADS\n\nZIP code\nType of help\nChoose help type\nFood & Daily Basics\nHousing & Shelter\nHealth & Medical Care\nMental Health\nSubstance Use & Recovery\nSafety & Crisis Support\nWomen's Health & Reproductive Care\nLGBTQ+ Support & Gender-Affirming Care\nLegal Help\nUtilities & Home Stability\nFamily & Child Support\nMoney & Jobs\nTransportation\nCommunity & Specialized Support\nYouth & Teen Help\nSenior Support\nPhone & Internet Access\nBaby & Infant Essentials\nImmigration\nDisability Services\nVeteran Services\nEmployment & Job Training\nPet Support\nClothing & Essentials\nFind Help →\nAlways free to use\nHours listed where known\nMany are walk-in\nMany need no ID\nI Need Help\nFind food, housing, health care, and more near you\nI Want to Help\nDonate, volunteer, and support your community\nStart with your situation\nI am fleeing domestic violence\n→\nI am unsheltered and need immediate refuge\n→\nI am facing immediate eviction\n→\nI need food right now\n→\nI am an unaccompanied youth or teen\n→\nI am expecting or a new parent in crisis\n→\nI was recently incarcerated and need support\n→\nI am in a mental health crisis\n→\nI need medication I can't afford\n→\nI need diapers or formula right now\n→\nI am elderly and I'm cold, overheated, or isolated\n→\nI have no working phone or internet\n→\nI'm a veteran and I'm struggling\n→\nI am an immigrant and I need help\n→\nWhat do you need help with?\nRIGHT NOW\nFood\nSafe Place Tonight\nAbuse / Crisis\nMedical Now\nMental Health\nAddiction / Overdose\nYouth & Teen Help\nSenior Support\nSPECIALIZED SUPPORT\nWomen's & Reproductive Health\nLGBTQ+ Support\nLegal Help\nImmigration\nDisability Access\nVeterans\nBaby Needs\nACCESS & STABILITY\nCash & Benefits\nUtilities\nTransportation\nID & Documents\nEmployment\nChildcare\nEducation\nPhone & Internet\nCOMMUNITY & DAILY NEEDS\nMutual Aid\nFamily\nClothing\nPets\nWant to help? Donate, volunteer, or list a community program.\nGive Help →\nWhy ClearHelp is different\nEvery resource is vetted\n\nResults show their source, service area, and last-check status. A broad or unconfirmed listing is labeled honestly instead of being presented as verified local help.\n\nNo fake coverage\n\nIf a city or category doesn't have enough verified data, we say so honestly rather than padding results with unconfirmed listings.\n\nReal guidance, not just listings\n\nEach category explains what help covers, what to bring, and what to expect — so you know what you're walking into.\n\nConnected pathways\n\nNeed food AND help with rent? We connect related categories so you can find everything in one search, not a dozen separate websites.\n\nLive in 13 metros: New York · Los Angeles · Chicago · Phoenix · Dallas · Houston · Philadelphia · Miami · Atlanta · Detroit · Boston · Portland · New Orleans\n\nCommon questions\nIs this free?\nDo I have to sign up or make an account?\nWill anyone know I looked this up?\nWhat if I don't have a ZIP code or don't know mine?\nWhat if I'm in danger right now?\nWhat if I'm undocumented?\nWhat if my city isn't listed?\nWhat if I can't find what I need?\nHow ClearHelp works\n\nWe connect useful resources. Government databases, nonprofit registries, 211 networks, and reviewed community listings.\n\nFree to use. No ads. No sign-up required. No data selling. Ever.\n\nNot for emergencies. Call 911 if you're in danger. For resource help, call 211.\n\nWHERE LISTINGS COME FROM\n\nFederal and state program databases, nonprofit registries, 211 networks, community health directories, and reviewed community submissions.\n\nWHEN THEY WERE LAST CHECKED\n\nVerified resources show a check date. Records marked unverified have not been independently confirmed — call ahead before visiting.\n\nWHAT \"VERIFIED\" MEANS\n\nA verified resource has had its contact information, hours, and services confirmed through a direct source — a government registry, official website, or direct outreach.\n\nCOVERAGE STATUS\n\nClearHelp accepts assigned ZIP codes across all states, D.C., and U.S. territories. Local depth is strongest in 13 metro markets; elsewhere, results may be state, territory, remote, or national when the source explicitly confirms that reach.Call 211 where available if local results are limited or you need more options right away.\n\nHOW TO REPORT A CHANGE\n\nIf a phone number, address, or service has changed, use the\nREPORT AN ISSUE\nlink on any resource card. We review all reports.\n\nClearHelp\n\nEveryone deserves help when they need it.\n\nI Need Help\nI Want to Help\nAbout\nAccessibility\nData Sources\nPrivacy\nPrivacy choices\nOur Manifesto\nCivicScore NYC\n\nEmergency? Call 911\n\nFor help finding resources, call 211 (where available)\n\n© 2026 ClearHelp.org. Free to use. No ads. No sign-up. We connect people with local and broader resources, labeled by reach and last-check status.\n\nMade by Little Fight NYC",
+  "overflow": false,
+  "brokenImages": [],
+  "finalUrl": "https://clearhelp.org/",
+  "status": 200,
+  "detail": {
+    "url": "https://clearhelp.org/",
+    "text": "Skip to main content\nEmergency:\nQuick Exit\nEmergency:\nQuick Exit\ndoesn't clear your history\n\nOr press Shift 3 times · How to browse more safely\n\nEmergency: 911 • City services: 311(where available) • Crisis support: 988\nClearHelp\nI Need Help\nI Want to Help\nAbout\nEN\nFind real help near you.\n\nFREE · NO SIGN-UP · NO ADS\n\nZIP code\nType of help\nChoose help type\nFood & Daily Basics\nHousing & Shelter\nHealth & Medical Care\nMental Health\nSubstance Use & Recovery\nSafety & Crisis Support\nWomen's Health & Reproductive Care\nLGBTQ+ Support & Gender-Affirming Care\nLegal Help\nUtilities & Home Stability\nFamily & Child Support\nMoney & Jobs\nTransportation\nCommunity & Specialized Support\nYouth & Teen Help\nSenior Support\nPhone & Internet Access\nBaby & Infant Essentials\nImmigration\nDisability Services\nVeteran Services\nEmployment & Job Training\nPet Support\nClothing & Essentials\nFind Help →\nAlways free to use\nHours listed where known\nMany are walk-in\nMany need no ID\nI Need Help\nFind food, housing, health care, and more near you\nI Want to Help\nDonate, volunteer, and support your community\nStart with your situation\nI am fleeing domestic violence\n→\nI am unsheltered and need immediate refuge\n→\nI am facing immediate eviction\n→\nI need food right now\n→\nI am an unaccompanied youth or teen\n→\nI am expecting or a new parent in crisis\n→\nI was recently incarcerated and need support\n→\nI am in a mental health crisis\n→\nI need medication I can't afford\n→\nI need diapers or formula right now\n→\nI am elderly and I'm cold, overheated, or isolated\n→\nI have no working phone or internet\n→\nI'm a veteran and I'm struggling\n→\nI am an immigrant and I need help\n→\nWhat do you need help with?\nRIGHT NOW\nFood\nSafe Place Tonight\nAbuse / Crisis\nMedical Now\nMental Health\nAddiction / Overdose\nYouth & Teen Help\nSenior Support\nSPECIALIZED SUPPORT\nWomen's & Reproductive Health\nLGBTQ+ Support\nLegal Help\nImmigration\nDisability Access\nVeterans\nBaby Needs\nACCESS & STABILITY\nCash & Benefits\nUtilities\nTransportation\nID & Documents\nEmployment\nChildcare\nEducation\nPhone & Internet\nCOMMUNITY & DAILY NEEDS\nMutual Aid\nFamily\nClothing\nPets\nWant to help? Donate, volunteer, or list a community program.\nGive Help →\nWhy ClearHelp is different\nEvery resource is vetted\n\nResults show their source, service area, and last-check status. A broad or unconfirmed listing is labeled honestly instead of being presented as verified local help.\n\nNo fake coverage\n\nIf a city or category doesn't have enough verified data, we say so honestly rather than padding results with unconfirmed listings.\n\nReal guidance, not just listings\n\nEach category explains what help covers, what to bring, and what to expect — so you know what you're walking into.\n\nConnected pathways\n\nNeed food AND help with rent? We connect related categories so you can find everything in one search, not a dozen separate websites.\n\nLive in 13 metros: New York · Los Angeles · Chicago · Phoenix · Dallas · Houston · Philadelphia · Miami · Atlanta · Detroit · Boston · Portland · New Orleans\n\nCommon questions\nIs this free?\nDo I have to sign up or make an account?\nWill anyone know I looked this up?\nWhat if I don't have a ZIP code or don't know mine?\nWhat if I'm in danger right now?\nWhat if I'm undocumented?\nWhat if my city isn't listed?\nWhat if I can't find what I need?\nHow ClearHelp works\n\nWe connect useful resources. Government databases, nonprofit registries, 211 networks, and reviewed community listings.\n\nFree to use. No ads. No sign-up required. No data selling. Ever.\n\nNot for emergencies. Call 911 if you're in danger. For resource help, call 211.\n\nWHERE LISTINGS COME FROM\n\nFederal and state program databases, nonprofit registries, 211 networks, community health directories, and reviewed community submissions.\n\nWHEN THEY WERE LAST CHECKED\n\nVerified resources show a check date. Records marked unverified have not been independently confirmed — call ahead before visiting.\n\nWHAT \"VERIFIED\" MEANS\n\nA verified resource has had its contact information, hours, and services confirmed through a direct source — a government registry, official website, or direct outreach.\n\nCOVERAGE STATUS\n\nClearHelp accepts assigned ZIP codes across all states, D.C., and U.S. territories. Local depth is strongest in 13 metro markets; elsewhere, results may be state, territory, remote, or national when the source explicitly confirms that reach.Call 211 where available if local results are limited or you need more options right away.\n\nHOW TO REPORT A CHANGE\n\nIf a phone number, address, or service has changed, use the\nREPORT AN ISSUE\nlink on any resource card. We review all reports.\n\nClearHelp\n\nEveryone deserves help when they need it.\n\nI Need Help\nI Want to Help\nAbout\nAccessibility\nData Sources\nPrivacy\nPrivacy choices\nOur Manifesto\nCivicScore NYC\n\nEmergency? Call 911\n\nFor help finding resources, call 211 (where available)\n\n© 2026 ClearHelp.org. Free to use. No ads. No sign-up. We connect people with local and broader resources, labeled by reach and last-check status.\n\nMade by Little Fight NYC",
+    "scrollY": 760
+  }
+}
