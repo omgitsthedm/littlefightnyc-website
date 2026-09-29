@@ -1,0 +1,184 @@
+name: Search and measurement closeout
+on:
+  push:
+    branches: [ops/search-measurement-closeout-2026-09-29]
+    paths: [.github/workflows/search-measurement-closeout-20260929.yml]
+permissions:
+  contents: read
+concurrency:
+  group: search-measurement-closeout-20260929
+  cancel-in-progress: false
+env:
+  EXPECTED_REVISION: 56df5e9befc6650571383a83de1a45df59cee787
+jobs:
+  discovery:
+    if: github.run_attempt == 1
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 56df5e9befc6650571383a83de1a45df59cee787
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate owned public URLs and send one bounded IndexNow notification
+        run: |
+          mkdir -p /tmp/lifi-closeout
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {canonicalPublicUrl,sitemapUrls,ownershipKeyMatches,submitIndexNow,PRODUCTION_ORIGIN as origin} from './app/scripts/indexnow-lib.mjs';
+          const output='/tmp/lifi-closeout/discovery.json';
+          const report={startedAt:new Date().toISOString(),expectedRevision:process.env.EXPECTED_REVISION,checks:[],submission:null};
+          const read=async path=>{const r=await fetch(new URL(path,origin),{signal:AbortSignal.timeout(25000)});if(!r.ok)throw new Error(path+': HTTP '+r.status);return r;};
+          try{
+            const release=await(await read('/release.json?closeout='+Date.now())).json();
+            if(release.revision!==process.env.EXPECTED_REVISION||release.branch!=='main'||release.source_dirty!==false)throw new Error('Production changed; do not submit stale work');
+            report.release=release;
+            const cases=JSON.parse(await readFile('app/src/data/client-case-studies.json','utf8'));
+            if(cases.length!==9||new Set(cases.map(c=>c.slug)).size!==9)throw new Error('Unexpected case inventory');
+            const urls=['/','/examples/',...cases.map(c=>'/case-studies/'+c.slug+'/')].map(p=>canonicalPublicUrl(p));
+            const sitemap=await(await read('/sitemap.xml')).text();
+            const indexed=new Set(sitemapUrls(sitemap));
+            report.sitemapIndex=await(await read('/sitemap-index.xml')).text();
+            report.robots=await(await read('/robots.txt')).text();
+            for(const url of urls){
+              if(!indexed.has(url))throw new Error('URL absent from public sitemap: '+url);
+              const r=await read(url);const html=await r.text();
+              const canon=html.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)/i)?.[1];
+              if(canon!==url||/<meta\b[^>]*name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(html))throw new Error('URL not safely indexable: '+url);
+              report.checks.push({url,httpStatus:r.status,canonical:canon,inSitemap:true});
+            }
+            const helper=await readFile('app/scripts/indexnow-release.mjs','utf8');
+            const key=helper.match(/const INDEXNOW_KEY = "([A-Za-z0-9-]+)"/)?.[1];
+            if(!key)throw new Error('No existing public ownership key');
+            const keyLocation=origin+'/'+key+'.txt';
+            if(!ownershipKeyMatches(await(await read(keyLocation)).text(),key))throw new Error('Public ownership verification failed');
+            report.ownershipVerified=true;
+            const last=await(await read('/release.json?closeout='+Date.now())).json();
+            if(last.revision!==process.env.EXPECTED_REVISION||last.source_dirty!==false)throw new Error('Revision changed before submission');
+            report.submissionStartedAt=new Date().toISOString();
+            await writeFile(output,JSON.stringify(report,null,2));
+            report.submission=await submitIndexNow({urls,key,keyLocation,fetchImpl:async(url,options)=>{
+              const r=await fetch(url,{...options,signal:AbortSignal.timeout(30000)});
+              report.response={httpStatus:r.status,date:r.headers.get('date'),body:(await r.clone().text()).slice(0,1000)};
+              return r;
+            }});
+            report.completedAt=new Date().toISOString();
+            report.scope='One notification for nine revised cases, the updated homepage and Results page; no client domains or private URLs submitted. Acceptance is not indexing or ranking.';
+          }catch(error){report.error=String(error);process.exitCode=1;}
+          await writeFile(output,JSON.stringify(report,null,2));
+          console.log(JSON.stringify({checks:report.checks.length,submission:report.submission,response:report.response,error:report.error},null,2));
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lifi-discovery-closeout
+          path: /tmp/lifi-closeout
+          retention-days: 14
+  measurement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 56df5e9befc6650571383a83de1a45df59cee787
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - name: Verify consent and real Google collection transport without submitting leads
+        working-directory: app
+        run: |
+          mkdir -p /tmp/lifi-measurement
+          cat > scripts/.measurement-closeout.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {setTimeout as delay} from 'node:timers/promises';
+          const origin='https://littlefightnyc.com';
+          const id='G-0Q1TGWH0HL';
+          const cases=JSON.parse(await readFile('src/data/client-case-studies.json','utf8'));
+          const report={startedAt:new Date().toISOString(),checks:[],requests:[],responses:[],errors:[],caseEvents:[],scope:'Debug/internal-tagged QA page views and outbound clicks only. No forms, purchases, bookings or generate_lead tests. No account or production-source changes.'};
+          const release=await(await fetch(origin+'/release.json?closeout='+Date.now())).json();
+          if(release.revision!==process.env.EXPECTED_REVISION||release.source_dirty)throw new Error('Wrong live revision');
+          report.release=release;
+          const browser=await chromium.launch();
+          const vendor=u=>/google-analytics\.com|googletagmanager\.com|analytics\.google\.com|clarity\.ms|facebook\.net|doubleclick\.net|tiktok\.com/.test(u.hostname);
+          const collect=u=>/google-analytics\.com|analytics\.google\.com/.test(u.hostname)&&/\/g\/collect$/.test(u.pathname);
+          function safeEvent(req){
+            const u=new URL(req.url());const p=new URLSearchParams(u.search);const body=req.postData()||'';
+            const part=new URLSearchParams(body.split('\n')[0]);for(const[k,v]of part)p.set(k,v);
+            let path='';try{path=new URL(p.get('dl')).pathname;}catch{}
+            return {host:u.hostname,path:u.pathname,event:p.get('en'),measurementId:p.get('tid'),pagePath:p.get('ep.page_path')||path,linkDomain:p.get('ep.link_domain'),linkPath:p.get('ep.link_path'),debug:p.get('_dbg')||p.get('ep.debug_mode'),trafficType:p.get('ep.traffic_type'),method:req.method()};
+          }
+          async function context(){
+            const c=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce',serviceWorkers:'block'});
+            await c.addInitScript(()=>{window.dataLayer=window.dataLayer||[];window.gtag=function(){if((arguments[0]==='config'||arguments[0]==='event')&&arguments[2]&&typeof arguments[2]==='object')arguments[2]={...arguments[2],debug_mode:true,traffic_type:'internal'};window.dataLayer.push(arguments);};});
+            await c.route('**/*',route=>{
+              const q=route.request();const u=new URL(q.url());
+              if(q.isNavigationRequest()&&u.origin!==origin)return route.abort();
+              if(/facebook|doubleclick|clarity|tiktok/.test(u.hostname))return route.abort();
+              if(collect(u))return route.continue();
+              if(!['GET','HEAD'].includes(q.method()))return route.abort();
+              return route.continue();
+            });
+            c.on('request',q=>{const u=new URL(q.url());if(vendor(u))report.requests.push(collect(u)?safeEvent(q):{host:u.hostname,path:u.pathname,method:q.method()});});
+            c.on('response',r=>{const u=new URL(r.url());if(collect(u))report.responses.push({...safeEvent(r.request()),status:r.status()});});
+            return c;
+          }
+          async function until(fn,ms=18000){const start=Date.now();while(Date.now()-start<ms){if(fn())return true;await delay(250);}return false;}
+          function check(name,pass,detail){report.checks.push({name,pass,detail});if(!pass)report.errors.push(name);}
+          try{
+            const denied=await context();const p=await denied.newPage();
+            await p.goto(origin+'/case-studies/'+cases[0].slug+'/',{waitUntil:'networkidle'});await p.waitForTimeout(3000);
+            check('No analytics vendor request before consent',report.requests.length===0,report.requests.length);
+            await p.getByRole('button',{name:'Essential only',exact:true}).click();
+            await p.goto(origin+'/case-studies/'+cases[1].slug+'/',{waitUntil:'networkidle'});await p.waitForTimeout(3000);
+            check('Essential-only remains vendor-free after navigation',report.requests.length===0,report.requests.length);
+            await denied.close();
+            const allowed=await context();const page=await allowed.newPage();
+            for(let i=0;i<cases.length;i++){
+              const c=cases[i];const path='/case-studies/'+c.slug+'/';
+              await page.goto(origin+path,{waitUntil:'networkidle',timeout:60000});
+              if(i===0)await page.getByRole('button',{name:'Allow visit counting',exact:true}).click();
+              await page.waitForTimeout(2500);
+              const candidate=page.locator('.lf-client-capture--hero figcaption a').first();
+              const destination=await candidate.getAttribute('href');
+              if(new URL(destination).hostname!==new URL(c.url).hostname)throw new Error('Wrong client destination');
+              await candidate.click({noWaitAfter:true});
+              const delivered=await until(()=>report.responses.some(r=>r.event==='external_link_click'&&r.pagePath===path&&r.measurementId===id&&r.status>=200&&r.status<300));
+              const events=await page.evaluate(()=>window.dataLayer.filter(x=>x&&x[0]==='event').map(x=>({event:x[1],pagePath:x[2]?.page_path,linkDomain:x[2]?.link_domain,linkPath:x[2]?.link_path,debug:x[2]?.debug_mode,trafficType:x[2]?.traffic_type})));
+              report.caseEvents.push({slug:c.slug,destinationHost:new URL(c.url).hostname,delivered,events});
+              check(c.slug+': outbound click received by Google collection endpoint',delivered);
+              for(const popup of allowed.pages())if(popup!==page)await popup.close();
+            }
+            const configs=await page.evaluate(()=>window.dataLayer.filter(x=>x&&x[0]==='config').map(x=>({id:x[1],sendPageView:x[2]?.send_page_view,signals:x[2]?.allow_google_signals,adPersonalization:x[2]?.allow_ad_personalization_signals})));
+            report.configs=configs;
+            check('Only the owned GA4 stream is configured',configs.length>0&&configs.every(x=>x.id===id));
+            check('Google signals and advertising personalization remain disabled',configs.every(x=>x.signals===false&&x.adPersonalization===false));
+            check('No fake lead event was sent',!report.requests.some(r=>r.event==='generate_lead'));
+            const toggle=page.locator('.lf-quiet-foot__privacy-button');
+            await toggle.click();await page.getByRole('button',{name:'Essential only',exact:true}).click();
+            await page.waitForTimeout(1500);const count=report.requests.length;
+            const disabled=await page.evaluate(key=>window[key],'ga-disable-'+id);
+            await page.goto(origin+'/examples/',{waitUntil:'networkidle'});await page.waitForTimeout(3000);
+            check('Consent withdrawal sets the Google disable switch',disabled===true);
+            check('No new vendor requests after withdrawal and navigation',report.requests.length===count,{before:count,after:report.requests.length});
+            await allowed.close();
+          }catch(e){report.errors.push(String(e));}
+          finally{await browser.close();}
+          report.completedAt=new Date().toISOString();
+          report.limitations=['HTTP collection receipts do not prove GA4 report processing or key-event account configuration.','Debug and internal markers do not prove the account filters exclude these QA interactions.','Inbound source attribution remains unknown when the referring site intentionally suppresses its referrer.','No live user records, cookies, client IDs or private query strings are included in this artifact.'];
+          await writeFile('/tmp/lifi-measurement/measurement.json',JSON.stringify(report,null,2));
+          console.log(JSON.stringify({checks:report.checks,collectionResponses:report.responses.length,errors:report.errors},null,2));
+          if(report.errors.length)process.exitCode=1;
+          JS
+          node scripts/.measurement-closeout.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lifi-measurement-closeout
+          path: /tmp/lifi-measurement
+          retention-days: 14
