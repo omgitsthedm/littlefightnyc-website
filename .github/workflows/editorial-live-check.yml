@@ -1,0 +1,105 @@
+name: Verify published editorial release
+on:
+  push:
+    branches: [ops/verify-editorial-2026-09-29]
+    paths: [.github/workflows/editorial-live-check.yml]
+permissions:
+  contents: read
+env:
+  EXPECTED_REVISION: 29b410c55facfbd25ab8ffb9713c26c4125005ec
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 29b410c55facfbd25ab8ffb9713c26c4125005ec
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Wait for the exact clean production release
+        run: |
+          mkdir -p /tmp/editorial-live
+          node --input-type=module <<'JS'
+          import {setTimeout as pause} from 'node:timers/promises';
+          import {writeFile} from 'node:fs/promises';
+          for(let i=0;i<35;i++){
+            try{const r=await fetch('https://littlefightnyc.com/release.json?editorial='+Date.now(),{signal:AbortSignal.timeout(15000)});const data=await r.json();if(data.revision===process.env.EXPECTED_REVISION&&data.branch==='main'&&data.source_dirty===false){await writeFile('/tmp/editorial-live/release.json',JSON.stringify(data,null,2));console.log('Exact production revision is live',data.revision);process.exit(0);}}catch(e){console.log(String(e));}
+            await pause(10000);
+          }
+          throw new Error('Expected production revision was not published in time');
+          JS
+      - name: Run the existing read-only live contract
+        run: |
+          set -o pipefail
+          node app/scripts/verify-live.mjs 2>&1 | tee /tmp/editorial-live/live-contract.log
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - name: Check all nine live pages, 27 layouts and source-consistent metadata
+        working-directory: app
+        run: |
+          cat > scripts/.editorial-live-check.mjs <<'JS'
+          import {chromium} from '@playwright/test';
+          import {readFile,writeFile} from 'node:fs/promises';
+          const cases=JSON.parse(await readFile('src/data/client-case-studies.json','utf8'));
+          const origin='https://littlefightnyc.com';const out='/tmp/editorial-live';const results=[];const failures=[];const assets=new Map();const pages=[];
+          const sitemap=await(await fetch(origin+'/sitemap.xml')).text();const imagesitemap=await(await fetch(origin+'/image-sitemap.xml')).text();const index=await(await fetch(origin+'/examples/')).text();
+          const browser=await chromium.launch();
+          async function asset(url){if(assets.has(url))return;const r=await fetch(url,{method:'HEAD',signal:AbortSignal.timeout(20000)});assets.set(url,{url,status:r.status,type:r.headers.get('content-type')});if(!r.ok||!r.headers.get('content-type')?.startsWith('image/'))failures.push('Image unavailable '+url);}
+          try{
+            for(const c of cases){
+              const path='/case-studies/'+c.slug+'/';const url=origin+path;
+              const r=await fetch(url,{signal:AbortSignal.timeout(20000)});const html=await r.text();
+              const record={slug:c.slug,url,status:r.status,inSitemap:sitemap.includes(url),inImageSitemap:imagesitemap.includes(url),linkedFromResults:index.includes(path),hasScope:html.includes('lf-client-scope'),hasCallouts:html.includes('lf-client-detail-notes'),hasEvidence:html.includes('lf-client-evidence'),cleanCopy:!html.includes('Is this the Hair By Rachel Charles project?')&&!html.includes('Looking at this case study does not buy a reading.')&&!html.includes('no forms, purchases, or appointments were submitted')};
+              pages.push(record);if(record.status!==200||Object.values(record).some(v=>v===false))failures.push('First response '+c.slug);
+              const nodes=[...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].flatMap(m=>{const j=JSON.parse(m[1]);return j['@graph']||[j];});
+              const article=nodes.find(n=>n['@type']==='Article');if(article?.about?.['@id']!==url+'#client')failures.push('Article/client link '+c.slug);
+              for(const [label,width,height]of[['desktop',1440,1000],['tablet',1024,1000],['phone',390,844]]){
+                const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce',serviceWorkers:'block'});
+                await context.route('**/*',route=>{const q=route.request();return !['GET','HEAD'].includes(q.method())||/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick|tiktok/.test(q.url())?route.abort():route.continue();});
+                const page=await context.newPage();
+                try{
+                  await page.goto(url,{waitUntil:'networkidle',timeout:45000});await page.locator('[data-lf-route-snapshot]').waitFor({state:'detached'});await page.evaluate(()=>document.fonts.ready);
+                  const decline=page.getByRole('button',{name:'Essential only',exact:true});if(await decline.isVisible().catch(()=>false))await decline.click();
+                  await page.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=700){scrollTo(0,y);await new Promise(r=>setTimeout(r,70));}scrollTo(0,0);});
+                  await page.waitForFunction(()=>[...document.querySelectorAll('.lf-client-capture img')].every(i=>i.complete&&i.naturalWidth>0));
+                  const data=await page.evaluate(()=>({title:document.title,h1:[...document.querySelectorAll('h1')].map(e=>e.innerText),canonical:document.querySelector('link[rel="canonical"]')?.href,description:document.querySelector('meta[name="description"]')?.content,robots:document.querySelector('meta[name="robots"]')?.content,share:document.querySelector('meta[property="og:image"]')?.content,shareAlt:document.querySelector('meta[property="og:image:alt"]')?.content,scope:[...document.querySelectorAll('.lf-client-scope dd')].map(n=>n.textContent),notes:[...document.querySelectorAll('.lf-client-detail-notes li p')].map(n=>n.textContent),evidence:[...document.querySelectorAll('.lf-client-evidence a')].map(a=>({href:a.href,rel:a.rel})),questions:document.querySelectorAll('.lf-client-editorial__questions details').length,overflow:document.documentElement.scrollWidth>innerWidth+1,images:[...document.querySelectorAll('.lf-client-capture img')].map(i=>({src:i.currentSrc,alt:i.alt,width:i.naturalWidth,height:i.naturalHeight,displayWidth:i.clientWidth,displayHeight:i.clientHeight,loaded:i.complete&&i.naturalWidth>0})),serviceLinks:[...document.querySelectorAll('a[href^="/services/"]')].map(a=>a.href)}));
+                  if(data.h1.length!==1||data.h1[0]!==c.client||data.canonical!==url||!data.description||data.robots?.includes('noindex')||data.share!==origin+c.editorial.share.image||data.shareAlt!==c.editorial.share.alt||data.overflow||data.questions!==3||!data.serviceLinks.length)throw new Error('Metadata, heading or layout mismatch');
+                  if(JSON.stringify(data.scope)!==JSON.stringify(c.editorial.scope.map(x=>x.detail))||JSON.stringify(data.notes)!==JSON.stringify(c.editorial.detailNotes.map(x=>x.detail)))throw new Error('Scope or note differs from approved source');
+                  if(data.evidence.length!==3||data.evidence.some((a,i)=>a.href!==c.editorial.evidence[i].url||a.rel!=='noopener noreferrer'))throw new Error('Client evidence links differ');
+                  if(data.images.some(i=>!i.loaded||!i.alt||Math.abs(i.width/i.height-i.displayWidth/i.displayHeight)>.03))throw new Error('Image missing, stretched or without description');
+                  for(const image of data.images)await asset(image.src);await asset(data.share);
+                  results.push({slug:c.slug,viewport:label,...data});
+                  if(label==='desktop'||label==='phone')await page.screenshot({path:out+'/'+c.slug+'-'+label+'.jpg',quality:86,animations:'disabled'});
+                }catch(error){failures.push(c.slug+'/'+label+': '+String(error));}finally{await context.close();}
+              }
+            }
+          }finally{await browser.close();}
+          const release=await(await fetch(origin+'/release.json?editorial='+Date.now())).json();if(release.revision!==process.env.EXPECTED_REVISION||release.source_dirty!==false)failures.push('Production changed during verification');
+          const report={checkedAt:new Date().toISOString(),release,pages,views:results,assets:[...assets.values()],failures};
+          await writeFile(out+'/report.json',JSON.stringify(report,null,2));console.log(JSON.stringify({revision:release.revision,pages:pages.length,views:results.length,assets:assets.size,failures},null,2));if(failures.length)process.exitCode=1;
+          JS
+          node scripts/.editorial-live-check.mjs
+      - name: Notify search once for this verified new editorial release
+        if: success() && github.run_attempt == 1
+        run: |
+          node --input-type=module <<'JS'
+          import {readFile,writeFile} from 'node:fs/promises';
+          import {submitIndexNow,ownershipKeyMatches,sitemapUrls} from './app/scripts/indexnow-lib.mjs';
+          const origin='https://littlefightnyc.com';const r=await(await fetch(origin+'/release.json?notice='+Date.now())).json();
+          if(r.revision!==process.env.EXPECTED_REVISION||r.source_dirty!==false)throw new Error('Do not notify a stale revision');
+          const c=JSON.parse(await readFile('app/src/data/client-case-studies.json','utf8'));
+          const urls=c.map(x=>origin+'/case-studies/'+x.slug+'/');const sitemap=new Set(sitemapUrls(await(await fetch(origin+'/sitemap.xml')).text()));
+          if(urls.some(u=>!sitemap.has(u)))throw new Error('URL missing from sitemap');
+          const helper=await readFile('app/scripts/indexnow-release.mjs','utf8');const key=helper.match(/const INDEXNOW_KEY = "([A-Za-z0-9-]+)"/)?.[1];const keyLocation=origin+'/'+key+'.txt';
+          if(!ownershipKeyMatches(await(await fetch(keyLocation)).text(),key))throw new Error('Ownership mismatch');
+          const result=await submitIndexNow({urls,key,keyLocation,fetchImpl:(url,options)=>fetch(url,{...options,signal:AbortSignal.timeout(30000)})});
+          const receipt={submittedAt:new Date().toISOString(),revision:r.revision,...result,note:'Notification of nine newly revised public pages, not proof of indexing or ranking.'};await writeFile('/tmp/editorial-live/indexnow.json',JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt,null,2));
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-live-verification
+          path: /tmp/editorial-live
+          retention-days: 14
