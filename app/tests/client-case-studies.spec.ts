@@ -12,6 +12,8 @@ for (const study of clientCases) {
     const response = await request.get(path);
     expect(response.status()).toBe(200);
     const html = await response.text();
+    expect(html).not.toMatch(/>\s*(?:undefined|null)\s*</);
+    expect(html).toContain(`data-route-style="${path}"`);
     expect(html).toContain(`data-client-case="${study.slug}"`);
     expect(html).toContain(study.editorial.intro.replace(/&/g, "&amp;"));
     const blocks = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)];
@@ -51,7 +53,8 @@ for (const study of clientCases) {
 }
 
 test("client index connects all nine current businesses @all-projects", async ({ page }) => {
-  await page.goto("/examples/");
+  const response = await page.goto("/examples/");
+  expect(await response!.text()).not.toMatch(/>\s*(?:undefined|null)\s*</);
   await expect(page.getByRole("heading", { name: "9 live sites. 9 real customer paths." })).toBeVisible();
   for (const study of clientCases) {
     expect(await page.locator(`a[href="/case-studies/${study.slug}/"]`).count()).toBeGreaterThan(0);

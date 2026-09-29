@@ -152,13 +152,6 @@ for (const routePath of [
   };
 }
 
-const componentRouteStyles = Object.fromEntries(
-  await Promise.all(Object.entries(componentRenderedRoutes).map(async ([routePath, { styles }]) => [
-    routePath,
-    await stylesheetClosure(styles, routePath),
-  ])),
-);
-
 // This renderer lives under node_modules so it is a build artifact, never a
 // public entry. Vite transforms import.meta.glob and
 // CSS imports that a bare server bundler cannot understand.
@@ -213,6 +206,13 @@ for (const study of siteContent.caseStudies.filter(study => study.editorial)) {
 componentRenderedRoutes["/examples/"] = {
   styles: ["index.html", "src/components/editorial/EditorialShell.tsx", "src/pages/FieldGuide.tsx"],
 };
+
+const componentRouteStyles = Object.fromEntries(
+  await Promise.all(Object.entries(componentRenderedRoutes).map(async ([routePath, { styles }]) => [
+    routePath,
+    await stylesheetClosure(styles, routePath),
+  ])),
+);
 
 // Same treatment for the answers art map, so the /answers/ og:image stays in
 // lockstep with the archetype each guide renders in the app.
@@ -2441,6 +2441,9 @@ function snapshot(page) {
 
 function renderPage(page) {
   const componentRoute = componentRenderedRoutes[page.path];
+  if (componentRoute && typeof componentRouteStyles[page.path] !== "string") {
+    throw new Error(`Missing first-paint stylesheet closure for ${page.path}`);
+  }
   let html = asyncStyles(stripManagedHead(template))
     .replace(
       "</head>",
