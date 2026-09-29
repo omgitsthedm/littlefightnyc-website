@@ -39,9 +39,10 @@ jobs:
               s=p.read_text();t=pattern.sub(lambda m:version+'/'+('social/' if m[1] else '')+('og-' if m[2] else '')+'case-'+m[3],s)
               if s!=t:p.write_text(t)
           for name,var in [('ClientCaseEditorial.tsx','study.slug'),('HomeWall.tsx','study.slug'),('LivePreview.tsx','slug'),('LiveSiteExplorer.tsx','slug'),('WorkWall.tsx','study.slug')]:
-            p=app/'src/components/editorial'/name;s=p.read_text();needle=f'/assets/case-${{{var}}}'
+            p=app/'src/components/editorial'/name;s=p.read_text();needle='/assets/case-$'+'{'+var+'}'
             assert needle in s,name
-            s=s.replace(needle,f'${{clientCaptureRoot({var})}}/case-${{{var}}}')
+            replacement='$'+'{clientCaptureRoot('+var+')}/case-$'+'{'+var+'}'
+            s=s.replace(needle,replacement)
             p.write_text('import { clientCaptureRoot } from "@/lib/clientCaptureRoot";\n'+s)
           p=app/'scripts/audit-case-study-explorer.mjs';s=p.read_text();needle='filename: `case-${study.slug}-explore${contract.suffix}.webp`,';assert needle in s
           p.write_text(s.replace(needle,'filename: `${study.editorial ? "cases/2026-09-29/" : ""}case-${study.slug}-explore${contract.suffix}.webp`,'))
