@@ -1,0 +1,42 @@
+name: Verify remaining mobile browser release shards
+on:
+  push:
+    branches: [case-studies/custom-domain-clients-2026-09-29]
+    paths: [.github/workflows/verify-mobile-browser-release.yml]
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [10,11,12]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: e96f41e10b542bbf0578e8c5073cbc9a4ff5f9a0
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci && npm ci --prefix app
+      - working-directory: app
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Run the identical shard and assertions with normal mobile emulation
+        working-directory: app
+        run: |
+          set -o pipefail
+          npx playwright test --shard=${{ matrix.shard }}/12 --reporter=list,blob 2>&1 | tee /tmp/client-mobile-browser-shard.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: client-headless-shard-${{ matrix.shard }}
+          path: |
+            /tmp/client-mobile-browser-shard.log
+            app/blob-report
+            app/test-results
+          include-hidden-files: true
+          retention-days: 3
