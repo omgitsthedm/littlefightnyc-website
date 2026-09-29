@@ -1,0 +1,58 @@
+[
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/booking-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 137060,
+    "sha256": "a322ec755e3a79b2be3e14f13a88c3944fb7cbf3f9cc0f6631c418a501f69351"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/booking-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 58042,
+    "sha256": "42d036fd1100a9f6f3b4b442b79ecfa42815204f38f4a7ea1447ca3cfa6ebb7b"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/gallery-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 350310,
+    "sha256": "135eca5c2fd31c6bff0521b0e826c1e2b372344670b8ffdd4e7a5cbe982c394a"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/hair-brief.webp",
+    "width": 2560,
+    "height": 1800,
+    "bytes": 313590,
+    "sha256": "f994615845948b71a5f26ea4527c343309a3d1d9d54c80c46dc74ebec58b2800"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/home-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 278096,
+    "sha256": "4aec343ae687ccb7619cd02d7c7bce32e8b225b5c16ae82364698d30875d3c18"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/home-mobile.webp",
+    "width": 780,
+    "height": 1688,
+    "bytes": 85512,
+    "sha256": "e0d0996351155b82d3d6964fa34446118cb58cd45f5dcf734f402655c08d95bb"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/home-tablet.webp",
+    "width": 2048,
+    "height": 2000,
+    "bytes": 249022,
+    "sha256": "22519e60b3ca370a1968c9bfc4f5a20ce8a0455c530247427b4292212d8ca804"
+  },
+  {
+    "file": "app/public/assets/cases/hair-by-rachel-charles/pricing-desktop.webp",
+    "width": 2880,
+    "height": 2000,
+    "bytes": 159926,
+    "sha256": "552629ecc96d696b7135437b0c1bd7f2a1b62748f7c10b0069844cc9c219c174"
+  }
+]
