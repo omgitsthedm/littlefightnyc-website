@@ -1,0 +1,77 @@
+name: Verify complete GA4 collection batches
+on:
+  push:
+    branches: [ops/search-measurement-closeout-2026-09-29]
+    paths: [.github/workflows/verify-measurement-batches-20260929.yml]
+permissions:
+  contents: read
+env:
+  EXPECTED_REVISION: 56df5e9befc6650571383a83de1a45df59cee787
+jobs:
+  measurement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 41a3554781931b4a0493d29df4255a5f3a82900f
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
+      - name: Correct batch parsing without changing application code or assertions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import textwrap
+          raw=Path('.github/workflows/search-measurement-closeout-20260929.yml').read_text()
+          start=raw.index('          import {chromium}')
+          end=raw.index('          JS\n',start)
+          js=textwrap.dedent(raw[start:end])
+          start=js.index('function safeEvent(req){')
+          end=js.index('async function context(){',start)
+          replacement='''function safeEvents(req){
+            const u=new URL(req.url());
+            const common=new URLSearchParams(u.search);
+            const lines=(req.postData()||'').split('\\n').filter(line=>line.trim());
+            const parts=lines.length?lines:[''];
+            return parts.map(line=>{
+              const p=new URLSearchParams(common);
+              for(const [key,value] of new URLSearchParams(line))p.set(key,value);
+              let path='';try{path=new URL(p.get('dl')).pathname;}catch{}
+              return {host:u.hostname,path:u.pathname,event:p.get('en'),measurementId:p.get('tid'),pagePath:p.get('ep.page_path')||path,linkDomain:p.get('ep.link_domain'),linkPath:p.get('ep.link_path'),debug:p.get('_dbg')||p.get('ep.debug_mode'),trafficType:p.get('tt')||p.get('ep.traffic_type'),method:req.method(),batchSize:parts.length};
+            });
+          }
+          '''
+          js=js[:start]+replacement+js[end:]
+          before="report.requests.push(collect(u)?safeEvent(q):{host:u.hostname,path:u.pathname,method:q.method()})"
+          after="report.requests.push(...(collect(u)?safeEvents(q):[{host:u.hostname,path:u.pathname,method:q.method()}]))"
+          assert before in js
+          js=js.replace(before,after)
+          before="report.responses.push({...safeEvent(r.request()),status:r.status()})"
+          after="report.responses.push(...safeEvents(r.request()).map(event=>({...event,status:r.status()})))"
+          assert before in js
+          js=js.replace(before,after)
+          assert 'safeEvent(' not in js
+          insertion="""for(const c of cases){
+            const path='/case-studies/'+c.slug+'/';
+            const views=report.responses.filter(r=>r.event==='page_view'&&r.pagePath===path&&r.measurementId===id&&r.status>=200&&r.status<300);
+            check(c.slug+': exactly one consented page view received',views.length===1,views.length);
+          }
+          check('Collection events are marked as debug activity',report.responses.length>0&&report.responses.every(r=>['1','true'].includes(r.debug)));
+          report.parser='Each newline-delimited GA4 event merged with common URL parameters; only redacted allowlisted fields retained.';
+          """
+          js=js.replace('report.completedAt=new Date().toISOString();',insertion+'\nreport.completedAt=new Date().toISOString();')
+          Path('app/scripts/.measurement-batch-verification.mjs').write_text(js)
+          PY
+          node --check app/scripts/.measurement-batch-verification.mjs
+      - name: Verify real consented collection receipts for all nine cases
+        working-directory: app
+        run: mkdir -p /tmp/lifi-measurement && node scripts/.measurement-batch-verification.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lifi-measurement-batch-verification
+          path: /tmp/lifi-measurement
+          retention-days: 14
