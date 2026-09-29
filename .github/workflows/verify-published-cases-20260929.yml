@@ -8,7 +8,7 @@ permissions:
 jobs:
   live:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
         with:
@@ -17,74 +17,64 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Wait for the exact production revision
-        env:
-          EXPECTED_REVISION: 56df5e9befc6650571383a83de1a45df59cee787
-        run: |
-          node --input-type=module <<'JS'
-          import {setTimeout} from 'node:timers/promises';
-          for(let i=0;i<40;i++){
-            try{
-              const r=await fetch('https://littlefightnyc.com/release.json?verify='+Date.now(),{signal:AbortSignal.timeout(15000)});
-              const data=await r.json();
-              console.log('Observed production revision:',data.revision,'branch:',data.branch);
-              if(data.revision===process.env.EXPECTED_REVISION&&data.branch==='main'&&!data.source_dirty)process.exit(0);
-            }catch(e){console.log('Publication not ready:',String(e));}
-            await setTimeout(12000);
-          }
-          throw new Error('Expected release not published within verification window');
-          JS
-      - name: Run existing read-only live contract
+      - name: Verify exact live revision and existing read-only contract
         env:
           EXPECTED_REVISION: 56df5e9befc6650571383a83de1a45df59cee787
         run: |
           set -o pipefail
           node app/scripts/verify-live.mjs 2>&1 | tee /tmp/lifi-live-contract.log
-      - name: Install browser verification tools
-        if: success() || failure()
+      - name: Install browser tools
         run: npm ci --prefix app && cd app && npx playwright install --with-deps chromium
-      - name: Verify all nine live cases and responsive images
-        if: success() || failure()
+      - name: Inspect nine published pages at three widths
         working-directory: app
         run: |
           mkdir -p /tmp/lifi-published-cases
           cat > scripts/.verify-published-cases.mjs <<'JS'
           import {chromium} from '@playwright/test';
-          import {readFile,writeFile} from 'node:fs/promises';
+          import {writeFile} from 'node:fs/promises';
           const origin='https://littlefightnyc.com';
-          const expected='56df5e9befc6650571383a83de1a45df59cee787';
-          const release=await (await fetch(origin+'/release.json?verify='+Date.now())).json();
-          if(release.revision!==expected)throw new Error('Wrong live revision');
-          const source=JSON.parse(await readFile('src/data/case-editorials.json','utf8'));
-          const cases=Array.isArray(source)?source:Object.values(source);
+          const release=await(await fetch(origin+'/release.json?verify='+Date.now())).json();
+          if(release.revision!=='56df5e9befc6650571383a83de1a45df59cee787')throw new Error('Wrong live revision');
+          const clients={
+            'hair-by-rachel-charles':'hairbyrachelcharles.com',
+            'cc-films':'ccfilms.net',
+            'chromatic-painting-design':'chromaticaz.com',
+            'clearhelp':'clearhelp.org',
+            'logan-loans':'logan.loans',
+            'grand-funding-llc':'grandfundingllc.com',
+            'the-break-room':'thebreakroompoolhall.com',
+            'easy-tiger':'easytigerglendale.com',
+            'the-tarot-hotline':'thetarothotline.com'
+          };
           const browser=await chromium.launch();
-          const results=[];const failures=[];const checked=new Map();
-          async function asset(url){if(checked.has(url))return checked.get(url);const r=await fetch(url,{method:'HEAD',signal:AbortSignal.timeout(20000)});const v={url,status:r.status,type:r.headers.get('content-type')};checked.set(url,v);if(!r.ok||!v.type?.startsWith('image/'))failures.push('Image inaccessible: '+url);return v;}
-          const slugs=['hair-by-rachel-charles','cc-films','chromatic-painting-design','clearhelp','logan-loans','grand-funding-llc','the-break-room','easy-tiger','the-tarot-hotline'];
+          const results=[],failures=[],checked=new Map();
+          async function asset(url){if(checked.has(url))return;const r=await fetch(url,{method:'HEAD',signal:AbortSignal.timeout(20000)});const v={url,status:r.status,type:r.headers.get('content-type')};checked.set(url,v);if(!r.ok||!v.type?.startsWith('image/'))failures.push('Image inaccessible: '+url);}
           const sitemap=await(await fetch(origin+'/sitemap.xml')).text();
           const examples=await(await fetch(origin+'/examples/')).text();
-          for(const slug of slugs){
+          for(const [slug,domain] of Object.entries(clients)){
             const url=origin+'/case-studies/'+slug+'/';
-            const r=await fetch(url,{signal:AbortSignal.timeout(20000)});const html=await r.text();
+            const r=await fetch(url,{signal:AbortSignal.timeout(20000)}),html=await r.text();
             if(r.status!==200)failures.push(slug+': HTTP '+r.status);
-            if(!sitemap.includes(url))failures.push(slug+': missing from sitemap');
-            if(!examples.includes('/case-studies/'+slug+'/'))failures.push(slug+': not linked from examples');
-            if(!html.includes('lf-case-editorial'))failures.push(slug+': missing first-response editorial');
+            if(!sitemap.includes(url))failures.push(slug+': absent from sitemap');
+            if(!examples.includes('/case-studies/'+slug+'/'))failures.push(slug+': absent from examples links');
+            if(!html.includes('lf-client-editorial')||!html.includes('data-client-case="'+slug+'"'))failures.push(slug+': first-response story absent');
             for(const [label,width,height] of [['desktop',1440,1000],['tablet',1024,1000],['phone',390,844]]){
               const context=await browser.newContext({viewport:{width,height},reducedMotion:'reduce',serviceWorkers:'block'});
               await context.route('**/*',route=>{const q=route.request();return !['GET','HEAD'].includes(q.method())||/google-analytics|googletagmanager|clarity\.ms|facebook\.net|doubleclick/.test(q.url())?route.abort():route.continue();});
               const page=await context.newPage();
               try{
                 await page.goto(url,{waitUntil:'networkidle',timeout:60000});await page.evaluate(()=>document.fonts.ready);
-                await page.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=700){scrollTo(0,y);await new Promise(r=>setTimeout(r,60));}scrollTo(0,0);});
-                await page.waitForTimeout(400);
+                await page.evaluate(async()=>{for(let y=0;y<document.documentElement.scrollHeight;y+=650){scrollTo(0,y);await new Promise(r=>setTimeout(r,100));}scrollTo(0,0);});
+                await page.waitForTimeout(700);
                 const data=await page.evaluate(()=>({title:document.title,canonical:document.querySelector('link[rel="canonical"]')?.href,robots:document.querySelector('meta[name="robots"]')?.content,h1:[...document.querySelectorAll('h1')].map(h=>h.innerText),overflow:document.documentElement.scrollWidth>innerWidth+1,share:document.querySelector('meta[property="og:image"]')?.content,shareAlt:document.querySelector('meta[property="og:image:alt"]')?.content,description:document.querySelector('meta[name="description"]')?.content,images:[...document.images].filter(i=>i.getBoundingClientRect().width>0).map(i=>({src:i.currentSrc||i.src,alt:i.getAttribute('alt'),broken:!i.complete||i.naturalWidth===0})),links:[...document.querySelectorAll('a[href]')].map(a=>a.href),schema:[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>JSON.parse(s.textContent))}));
-                const record={slug,viewport:label,...data};results.push(record);
+                results.push({slug,viewport:label,...data});
                 if(data.canonical!==url||data.robots?.includes('noindex')||data.h1.length!==1||!data.description||!data.shareAlt||data.overflow)failures.push(slug+'/'+label+': metadata, heading or overflow');
-                if(data.images.some(i=>i.broken||i.alt===null))failures.push(slug+'/'+label+': broken image or missing alt attribute');
-                if(!data.links.some(l=>l.startsWith(origin+'/services/')))failures.push(slug+'/'+label+': missing service link');
+                if(data.images.some(i=>i.broken||i.alt===null))failures.push(slug+'/'+label+': image loading or alt attribute');
+                if(!data.links.some(l=>l.startsWith(origin+'/services/')))failures.push(slug+'/'+label+': service link absent');
+                if(!data.links.some(l=>new URL(l).hostname.replace(/^www\./,'')===domain))failures.push(slug+'/'+label+': client link absent');
+                if(!data.schema.length)failures.push(slug+'/'+label+': structured data absent');
                 if(label==='desktop'){
-                  if(data.share)await asset(data.share);else failures.push(slug+': missing share image');
+                  if(data.share)await asset(data.share);else failures.push(slug+': share image absent');
                   for(const image of data.images)await asset(image.src);
                 }
                 await page.screenshot({path:'/tmp/lifi-published-cases/'+slug+'-'+label+'.jpg',quality:82,animations:'disabled'});
@@ -93,9 +83,8 @@ jobs:
             }
           }
           await browser.close();
-          const report={verifiedAt:new Date().toISOString(),release,caseCount:slugs.length,renderedViews:results.length,checkedImages:[...checked.values()],failures,results};
-          await writeFile('/tmp/lifi-published-cases/report.json',JSON.stringify(report,null,2));
-          console.log(JSON.stringify({release:release.revision,cases:slugs.length,views:results.length,images:checked.size,failures},null,2));
+          await writeFile('/tmp/lifi-published-cases/report.json',JSON.stringify({verifiedAt:new Date().toISOString(),release,caseCount:9,renderedViews:results.length,checkedImages:[...checked.values()],failures,results},null,2));
+          console.log(JSON.stringify({release:release.revision,cases:9,views:results.length,images:checked.size,failures},null,2));
           if(failures.length)process.exitCode=1;
           JS
           set -o pipefail
