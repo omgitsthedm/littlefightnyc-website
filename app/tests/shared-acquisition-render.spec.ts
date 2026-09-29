@@ -70,7 +70,7 @@ test("industry and neighborhood first paints keep the real hero through mount at
     {
       path: "/industries/salons-wellness/",
       h1: "Salon websites that make booking clear.",
-      image: "/assets/case-hair-by-rachel-charles.webp",
+      image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles.webp",
     },
     {
       path: "/industries/retail-ecommerce/",

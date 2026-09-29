@@ -85,7 +85,7 @@ const PROOF = [
     status: "Sitio público",
     line: "De citas por mensaje directo a una página que nuevos clientes pueden encontrar y reservar.",
     fact: "Vea el caso público para la prueba y el sitio en vivo.",
-    image: "/assets/case-hair-by-rachel-charles-900.webp",
+    image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-900.webp",
     alt: "La página de reservas de Hair By Rachel Charles",
   },
   {
@@ -102,7 +102,7 @@ const PROOF = [
     status: "Sitio público",
     line: "Una sede oficial más clara para una película independiente.",
     fact: "Vea el caso público para la prueba y el sitio en vivo.",
-    image: "/assets/case-cc-films-900.webp",
+    image: "/assets/cases/2026-09-29/case-cc-films-900.webp",
     alt: "El sitio oficial de la película If That Mockingbird Don't Sing",
   },
 ];
@@ -285,9 +285,9 @@ export default function Espanol() {
                   <DeferredCinematicMedia media={item.video} alt={item.alt} />
                 ) : item.client === "Hair By Rachel Charles" ? (
                   <picture>
-                    <source media="(min-width: 53.75rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                    <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
-                    <img src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt={item.alt} width="780" height="1688" loading="lazy" decoding="async" />
+                    <source media="(min-width: 53.75rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                    <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
+                    <img src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt={item.alt} width="780" height="1688" loading="lazy" decoding="async" />
                   </picture>
                 ) : (
                   <img

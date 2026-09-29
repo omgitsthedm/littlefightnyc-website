@@ -22,7 +22,7 @@ import "./QuietHero.css";
  * frame can be any size and the beats still land.
  */
 const CAPTURE = {
-  src: "/assets/case-hair-by-rachel-charles-explore-mobile.webp",
+  src: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-explore-mobile.webp",
   width: 390,
   height: 2400,
   domain: "hairbyrachelcharles.com",

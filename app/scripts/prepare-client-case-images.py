@@ -14,8 +14,8 @@ parser.add_argument('--app', type=Path, default=Path(__file__).resolve().parents
 args = parser.parse_args()
 app = args.app.resolve()
 source = args.captures / 'app/public/assets/cases/2026-09-29'
-assets = app / 'public/assets'
-output = assets / 'cases/2026-09-29'
+assets = app / 'public/assets/cases/2026-09-29'
+output = assets
 records = json.loads((app / 'src/data/client-case-studies.json').read_text())
 manifest = []
 

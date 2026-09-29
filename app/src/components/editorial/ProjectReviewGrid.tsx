@@ -44,11 +44,11 @@ export default function ProjectReviewGrid({
               </Link>
             ) : isRachel ? (
               <picture>
-                <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-                <source media="(min-width: 37.5rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
+                <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+                <source media="(min-width: 37.5rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
                 <img
                   {...skelImg}
-                  src="/assets/case-hair-by-rachel-charles-mobile-390.webp"
+                  src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp"
                   alt="Hair By Rachel Charles website with Rachel’s name and portrait visible"
                   width={780}
                   height={1688}

@@ -648,7 +648,7 @@ for (const study of capturedCases) {
     const contract = captureContracts[device];
     captures.push({
       device,
-      filename: `case-${study.slug}-explore${contract.suffix}.webp`,
+      filename: `${study.editorial ? "cases/2026-09-29/" : ""}case-${study.slug}-explore${contract.suffix}.webp`,
       ...contract,
     });
   }

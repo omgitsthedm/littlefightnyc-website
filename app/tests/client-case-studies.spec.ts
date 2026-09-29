@@ -35,6 +35,7 @@ for (const study of clientCases) {
     await expect(page.locator('meta[property="og:image:alt"]')).toHaveAttribute("content", study.editorial.share.alt);
     expect(await page.locator('meta[name="robots"]').getAttribute("content")).not.toContain("noindex");
     await expect(page.locator(".lf-client-capture--hero img")).toBeVisible();
+    await expect(page.locator(".lf-client-capture--hero img")).toHaveAttribute("src", /\/assets\/cases\/2026-09-29\//);
     await expect.poll(() => page.locator(".lf-client-capture--hero img").evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
     const detail = page.locator(".lf-client-capture--detail img");
     await detail.scrollIntoViewIfNeeded();

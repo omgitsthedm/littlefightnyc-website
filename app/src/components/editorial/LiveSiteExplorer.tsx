@@ -1,3 +1,4 @@
+import { clientCaptureRoot } from "@/lib/clientCaptureRoot";
 import { useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -65,7 +66,7 @@ function domain(url: string) {
 }
 
 function capturePath(slug: string, device: CaseCaptureDevice) {
-  return `/assets/case-${slug}-explore${DEVICE_SUFFIXES[device]}.webp`;
+  return `${clientCaptureRoot(slug)}/case-${slug}-explore${DEVICE_SUFFIXES[device]}.webp`;
 }
 
 export default function LiveSiteExplorer({

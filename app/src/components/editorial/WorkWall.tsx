@@ -1,3 +1,4 @@
+import { clientCaptureRoot } from "@/lib/clientCaptureRoot";
 import { Link } from "react-router-dom";
 import { caseStudies } from "@/data/site-cases";
 import { hasCurrentPublicSource } from "./caseProof";
@@ -51,7 +52,7 @@ export default function WorkWall({ slugs, label = "Recent shipped work" }: Props
           >
             <span className="lf-workwall__screen">
               <img
-                src={`/assets/case-${study.slug}-explore.webp`}
+                src={`${clientCaptureRoot(study.slug)}/case-${study.slug}-explore.webp`}
                 alt={`The ${study.client} website as it shipped`}
                 width={1200}
                 height={2000}

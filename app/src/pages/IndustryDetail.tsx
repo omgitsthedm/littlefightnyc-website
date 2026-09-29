@@ -171,7 +171,7 @@ const INDUSTRY_RECOGNITION: Record<string, IndustryRecognition> = {
     easier:
       "Services are clear. Booking and reminders line up. Google shows the right facts. Rebooking does not depend on one person's memory.",
     image: {
-      src: "/assets/case-hair-by-rachel-charles.webp",
+      src: "/assets/cases/2026-09-29/case-hair-by-rachel-charles.webp",
       alt: "The Hair By Rachel Charles website with Rachel’s name and portrait visible",
       width: 1600,
       height: 1000,

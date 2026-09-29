@@ -152,9 +152,9 @@ export default function CaseStudyDetail() {
         visual={study.editorial ? <ClientCaseHero study={study} /> : isRachel ? (
           <figure className="lf-case-rachel-hero-proof">
             <picture>
-              <source media="(min-width: 64rem)" srcSet="/assets/case-hair-by-rachel-charles-desktop-1440.webp" />
-              <source media="(min-width: 48rem)" srcSet="/assets/case-hair-by-rachel-charles-tablet-1024.webp" />
-              <img src="/assets/case-hair-by-rachel-charles-mobile-390.webp" alt="Hair By Rachel Charles website with Rachel’s name and portrait visible" width={780} height={1688} decoding="async" />
+              <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
+              <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
+              <img src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt="Hair By Rachel Charles website with Rachel’s name and portrait visible" width={780} height={1688} decoding="async" />
             </picture>
             <figcaption>A website we built for <a href={study.url} target="_blank" rel="noopener noreferrer">Hair By Rachel Charles</a>.</figcaption>
           </figure>

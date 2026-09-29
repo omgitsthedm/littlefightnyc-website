@@ -1,3 +1,4 @@
+import { clientCaptureRoot } from "@/lib/clientCaptureRoot";
 import { useState, type ReactNode } from "react";
 import "./LivePreview.css";
 
@@ -40,7 +41,7 @@ export default function LivePreview({
       {live && (
         <img
           className="lf-live-preview__scroll"
-          src={`/assets/case-${slug}-explore.webp`}
+          src={`${clientCaptureRoot(slug)}/case-${slug}-explore.webp`}
           width={1200}
           height={2000}
           alt=""

@@ -1,3 +1,4 @@
+import { clientCaptureRoot } from "@/lib/clientCaptureRoot";
 import { Link } from "react-router-dom";
 import type { CaseStudy } from "@/data/site-cases";
 import "./ClientCaseEditorial.css";
@@ -13,9 +14,9 @@ export function ClientCaseHero({ study }: { study: CaseStudy }) {
         <span className="lf-client-capture__kind">Website</span>
       </div>
       <picture>
-        <source media="(min-width: 64rem)" srcSet={`/assets/case-${study.slug}-desktop-1440.webp`} width={2880} height={2000} />
-        <source media="(min-width: 48rem)" srcSet={`/assets/case-${study.slug}-tablet-1024.webp`} width={2048} height={2000} />
-        <img src={`/assets/case-${study.slug}-mobile-390.webp`} alt={study.editorial.imageAlt} width={780} height={1688} fetchPriority="high" decoding="async" />
+        <source media="(min-width: 64rem)" srcSet={`${clientCaptureRoot(study.slug)}/case-${study.slug}-desktop-1440.webp`} width={2880} height={2000} />
+        <source media="(min-width: 48rem)" srcSet={`${clientCaptureRoot(study.slug)}/case-${study.slug}-tablet-1024.webp`} width={2048} height={2000} />
+        <img src={`${clientCaptureRoot(study.slug)}/case-${study.slug}-mobile-390.webp`} alt={study.editorial.imageAlt} width={780} height={1688} fetchPriority="high" decoding="async" />
       </picture>
       <figcaption>
         Website by Little Fight NYC for <a href={study.url} target="_blank" rel="noopener noreferrer">{study.client}</a>.
