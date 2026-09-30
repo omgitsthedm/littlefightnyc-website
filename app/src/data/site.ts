@@ -175,7 +175,7 @@ export const services: Service[] = [
     verb: "Fix",
     title: "Computer broken, card reader frozen, Wi-Fi down",
     headline: "Fast help when the basics break.",
-    plain: "We fix what is stopping the day first. Then we write down what changed. Email, Wi-Fi, card readers, booking, payments, logins, and devices.",
+    plain: "We fix what is stopping the day first. Then we write down what changed. Apple devices, Windows computers, Microsoft 365, email, Wi-Fi, card readers, booking, payments, logins, and devices.",
     outcome: "Call or text first. We assess the issue and location, then confirm any on-site timing with you. The written scope names the work.",
     pillars: [
       "Call or text first — a human answers 9am–9pm Eastern",
@@ -185,6 +185,7 @@ export const services: Service[] = [
     includes: [
       "On-site timing confirmed after we know the issue and location",
       "Email and website-address fixes",
+      "Apple device, Windows computer, and Microsoft 365 support",
       "Card reader, booking, and payment fixes",
       "Device, login, and Wi-Fi setup",
     ],
