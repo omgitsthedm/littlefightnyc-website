@@ -38,6 +38,15 @@ async function state(page: Page) {
   });
 }
 
+async function phoneClickEvent(page: Page) {
+  let event: unknown[] | undefined;
+  await expect.poll(async () => {
+    event = (await state(page)).commands.findLast((row) => row[0] === "event" && row[1] === "phone_click");
+    return event?.[1];
+  }).toBe("phone_click");
+  return event!;
+}
+
 test("Google measurement needs fresh consent and never enables Meta or remarketing @chromium-desktop @chromium-mobile", async ({ page, baseURL }) => {
   const vendors = await localProduction(page, baseURL!);
   await page.goto(landing, { waitUntil: "networkidle" });
@@ -66,9 +75,8 @@ test("Google measurement needs fresh consent and never enables Meta or remarketi
   expect((await state(page)).consent).toMatchObject({ ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "granted" });
   expect(await page.evaluate(() => document.cookie)).not.toMatch(/_gcl|_gac/);
   await page.locator('a[href^="tel:"]:visible').first().click();
-  const lastEvent = (await state(page)).commands.filter((row) => row[0] === "event").at(-1);
-  expect(lastEvent?.[1]).toBe("phone_click");
-  expect(JSON.stringify(lastEvent)).not.toContain(clickId);
+  const phoneEvent = await phoneClickEvent(page);
+  expect(JSON.stringify(phoneEvent)).not.toContain(clickId);
 });
 
 test("legacy consent and GPC cannot authorize Google advertising @chromium-desktop", async ({ browser, baseURL }) => {
@@ -95,9 +103,9 @@ test("Google click IDs require valid bounded values and the approved campaign @c
   await page.goto(`https://littlefightnyc.com/tech-audit/?${campaign}&gclid=private%40example.com&gbraid=ValidBraidFixture_123&wbraid=${"x".repeat(257)}`);
   await page.getByRole("button", { name: "Allow visits + Google Ads", exact: true }).click();
   await page.locator('a[href^="tel:"]:visible').first().click();
-  const lastEvent = (await state(page)).commands.filter((row) => row[0] === "event").at(-1);
-  expect(JSON.stringify(lastEvent)).toContain("gbraid=ValidBraidFixture_123");
-  expect(JSON.stringify(lastEvent)).not.toMatch(/private|gclid=|wbraid=/);
+  const phoneEvent = await phoneClickEvent(page);
+  expect(JSON.stringify(phoneEvent)).toContain("gbraid=ValidBraidFixture_123");
+  expect(JSON.stringify(phoneEvent)).not.toMatch(/private|gclid=|wbraid=/);
   await page.goto(`https://littlefightnyc.com/tech-audit/?utm_source=google&utm_medium=cpc&utm_campaign=unknown&gclid=${clickId}`, { waitUntil: "networkidle" });
   await expect.poll(async () => (await state(page)).commands.some((row) => row[0] === "config")).toBe(true);
   expect(JSON.stringify((await state(page)).commands)).not.toContain(clickId);
