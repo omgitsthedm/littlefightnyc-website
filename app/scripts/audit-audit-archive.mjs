@@ -250,8 +250,11 @@ const footer = fs.readFileSync(
 if (!fieldGuide.includes('href="/examples/audit/" data-no-vt')) {
   failures.push("main Examples page is not linked to the in-site Audit");
 }
-if (!/\{\s*label:\s*"[^"]+",\s*to:\s*"\/examples\/audit\/"\s*\}/.test(footer)) {
-  failures.push("main footer is not linked to the in-site Audit");
+if (!/\{\s*label:\s*"[^"]+",\s*to:\s*"\/examples\/audit\/",\s*standalone:\s*true\s*\}/.test(footer)) {
+  failures.push("main footer does not mark the in-site Audit as a standalone route");
+}
+if (!/link\.standalone\s*\?\s*\(\s*<a href=\{link\.to\} data-no-vt>/.test(footer)) {
+  failures.push("main footer does not hard-navigate standalone routes");
 }
 if (footer.includes('to: "/examples/audit/", external: true')) {
   failures.push("main footer incorrectly marks the in-site Audit as external");
