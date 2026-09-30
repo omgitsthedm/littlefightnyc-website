@@ -68,6 +68,44 @@ test(
     expect(qaVendorRequests).toEqual([]);
     await qaContext.close();
 
+    const normalContext = await browser.newContext();
+    const normalPage = await normalContext.newPage();
+    await normalPage.addInitScript(() => {
+      localStorage.setItem("lf_analytics_consent_v1", "granted");
+      const calls: unknown[][] = [];
+      (window as unknown as { __gaCalls: unknown[][] }).__gaCalls = calls;
+      window.gtag = (...args: unknown[]) => calls.push(args);
+    });
+    await normalPage.route("**/*", async (route) => {
+      const url = new URL(route.request().url());
+      if (url.hostname === "littlefightnyc.com") {
+        if (route.request().method() !== "GET") return route.abort();
+        const response = await route.fetch({
+          url: new URL(url.pathname + url.search, localPreviewOrigin).href,
+        });
+        return route.fulfill({ response });
+      }
+      if (url.hostname === "www.googletagmanager.com") {
+        return route.fulfill({ contentType: "text/javascript", body: "" });
+      }
+      return route.continue();
+    });
+    await normalPage.goto("https://littlefightnyc.com/", { waitUntil: "networkidle" });
+    await expect.poll(() => normalPage.evaluate(() =>
+      (window as unknown as { __gaCalls: unknown[][] }).__gaCalls.some((call) =>
+        call[0] === "config" && call[1] === "G-0Q1TGWH0HL",
+      ),
+    )).toBe(true);
+    expect(await normalPage.evaluate(() =>
+      (window as unknown as { __gaCalls: unknown[][] }).__gaCalls
+        .filter((call) => call[0] === "config" && call[1] === "G-0Q1TGWH0HL")
+        .every((call) => {
+          const parameters = call[2] as { debug_mode?: unknown; traffic_type?: unknown };
+          return parameters?.debug_mode === undefined && parameters?.traffic_type === undefined;
+        }),
+    )).toBe(true);
+    await normalContext.close();
+
     const diagnosticContext = await browser.newContext();
     const diagnosticPage = await diagnosticContext.newPage();
     await diagnosticPage.addInitScript(() => {
@@ -94,6 +132,13 @@ test(
     await expect.poll(() => diagnosticPage.evaluate(() =>
       (window as unknown as { __gaCalls: unknown[][] }).__gaCalls.some((call) =>
         call[0] === "event" && call[1] === "page_view" &&
+        (call[2] as { debug_mode?: boolean; traffic_type?: string })?.debug_mode === true &&
+        (call[2] as { traffic_type?: string })?.traffic_type === "internal",
+      ),
+    )).toBe(true);
+    await expect.poll(() => diagnosticPage.evaluate(() =>
+      (window as unknown as { __gaCalls: unknown[][] }).__gaCalls.some((call) =>
+        call[0] === "config" && call[1] === "G-0Q1TGWH0HL" &&
         (call[2] as { debug_mode?: boolean; traffic_type?: string })?.debug_mode === true &&
         (call[2] as { traffic_type?: string })?.traffic_type === "internal",
       ),
@@ -136,6 +181,15 @@ test(
         scenario.path,
       ).toEqual([]);
       expect(vendorRequests, scenario.path).toEqual([]);
+      expect(
+        await page.evaluate(() =>
+          (window.dataLayer ?? []).every((entry) => {
+            const command = Array.from(entry as ArrayLike<unknown>);
+            return command[0] !== "config";
+          }),
+        ),
+        `${scenario.path} configured GA4 before consent`,
+      ).toBe(true);
       expect(
         await page.locator(
           'script[src*="googletagmanager.com"], script[src*="connect.facebook.net"], script[src*="clarity.ms"], script[src*="tiktok.com"]',
@@ -185,6 +239,13 @@ test(
     await expect.poll(() => diagnosticPage.evaluate(() =>
       (window as unknown as { __gaCalls: unknown[][] }).__gaCalls.some((call) =>
         call[0] === "event" && call[1] === "page_view" &&
+        (call[2] as { debug_mode?: boolean; traffic_type?: string })?.debug_mode === true &&
+        (call[2] as { traffic_type?: string })?.traffic_type === "internal",
+      ),
+    )).toBe(true);
+    await expect.poll(() => diagnosticPage.evaluate(() =>
+      (window as unknown as { __gaCalls: unknown[][] }).__gaCalls.some((call) =>
+        call[0] === "config" && call[1] === "G-0Q1TGWH0HL" &&
         (call[2] as { debug_mode?: boolean; traffic_type?: string })?.debug_mode === true &&
         (call[2] as { traffic_type?: string })?.traffic_type === "internal",
       ),

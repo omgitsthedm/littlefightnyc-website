@@ -1137,6 +1137,15 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
 }
 
 @media (max-width: 900px) {
+  /* Keep the utility header within the tablet shell before the route links
+     would force a horizontal scroll. The full navigation returns at desktop
+     widths; phone keeps the same compact controls below. */
+  .audit-nav-shell { min-height: 58px; padding-block: 7px; }
+  .lf-audit-shell-page .audit-nav a:not(.audit-nav__cta):not(.audit-nav__phone) { display: none; }
+  .lf-audit-shell-page .audit-nav__phone-full { display: none; }
+  .lf-audit-shell-page .audit-nav__phone-short { display: inline; }
+  .lf-audit-shell-page .audit-nav .audit-nav__cta { margin-left: 0; padding-inline: 14px; }
+
   .lf-audit-shell-page .site-main > .container {
     grid-template-columns: 1fr;
   }
@@ -1146,11 +1155,6 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
 }
 
 @media (max-width: 720px) {
-  .audit-nav-shell { min-height: 58px; padding-block: 7px; }
-  .lf-audit-shell-page .audit-nav a:not(.audit-nav__cta):not(.audit-nav__phone) { display: none; }
-  .lf-audit-shell-page .audit-nav__phone-full { display: none; }
-  .lf-audit-shell-page .audit-nav__phone-short { display: inline; }
-  .lf-audit-shell-page .audit-nav .audit-nav__cta { margin-left: 0; padding-inline: 14px; }
   .lf-audit-shell-page .site-main { padding-top: 56px; }
   .lf-audit-shell-page .info-grid { grid-template-columns: 1fr; }
   .lf-audit-shell-page .info-item { min-height: 0; }

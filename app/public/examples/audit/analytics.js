@@ -141,7 +141,7 @@
     pageViewTracked = false;
   }
 
-  function boot() {
+  function boot(diagnostic) {
     if (booted || !hasConsent() || !isCanonicalHost() || measurementTestMode() === "qa") return;
     global[GA_DISABLE_KEY] = false;
     updateGoogleConsent("granted");
@@ -149,7 +149,10 @@
     global.gtag("config", GA_MEASUREMENT_ID, {
       send_page_view: false,
       allow_google_signals: false,
-      allow_ad_personalization_signals: false
+      allow_ad_personalization_signals: false,
+      // Config parameters also cover gtag's automatic events. The marker is
+      // limited to the exact, explicit diagnostic mode.
+      ...(diagnostic ? { debug_mode: true, traffic_type: "internal" } : {})
     });
     if (!document.querySelector('script[src="' + GA_SRC + '"]')) {
       var script = document.createElement("script");
@@ -188,7 +191,7 @@
     }));
 
     if (!isCanonicalHost() || testMode === "qa") return;
-    boot();
+    boot(testMode === "diagnostic");
     global.gtag("event", eventName,
       testMode === "diagnostic"
         ? Object.assign({}, safe, { debug_mode: true, traffic_type: "internal" })
@@ -211,7 +214,7 @@
     }
     if (!isCanonicalHost()) return;
 
-    boot();
+    boot(testMode === "diagnostic");
     if (!pageViewTracked) {
       pageViewTracked = true;
       track("page_view", { funnel_stage: "awareness" });

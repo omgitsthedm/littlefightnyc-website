@@ -133,6 +133,7 @@ assume a fixed daily allowance or repeat a queued request.
 ### Verified search state — 2026-09-29
 
 - Google sitemap index and `sitemap.xml`: Success; no manual actions or security issues. Search generative AI: Include.
+- Google's authenticated Generative AI features report is available (Beta). It showed 42 total impressions for June 28–September 27, with the homepage, About and owner guides among the listed pages. These are Search generative-feature impressions, not clicks, cross-engine citations, qualified leads or sales.
 - The nine refreshed case pages are live, self-canonical, indexable, and present in the sitemap. Google's current indexed results include Hair By Rachel Charles and Chromatic Painting & Design; CC Films, ClearHelp, Logan Loans and Grand Funding LLC were discovered but not indexed; The Break Room, Easy Tiger and The Tarot Hotline were unknown before recrawl requests.
 - Bing's five sitemap records had no reported errors or warnings; its main sitemap/index last-crawl date was August 19. URL counts overlap. Rachel's live test was indexable but its indexed record had not been crawled.
 - Bing AI Performance showed no citation data for June 29–September 28. This is the selected report's observation, not proof of zero citations on every engine.

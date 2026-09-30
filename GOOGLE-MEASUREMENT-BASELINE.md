@@ -104,6 +104,9 @@ campaign attribution keys intact.
   AI is set to **Include**. This controls Google's Search generative features,
   not model training or guaranteed citations. See Google's
   [Search generative AI control](https://support.google.com/webmasters/answer/16908024).
+- The authenticated Generative AI features report (Beta) showed 42 total
+  impressions for June 28–September 27, 2026. This establishes reported
+  visibility in Google's feature, not clicks, leads or revenue.
 - The homepage was inspected on 2026-08-14 and Search Console reported it as
   indexed, HTTPS, with one valid breadcrumb item.
 - The Business Profile website link is live as

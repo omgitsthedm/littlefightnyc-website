@@ -1589,15 +1589,17 @@ test(
       link.addEventListener("click", (event) => event.preventDefault(), { once: true });
     });
     await booking.click();
-    const bookingEvent = await page.evaluate(() =>
+    // Analytics is loaded at idle. The click can beat that import on a busy
+    // desktop worker, so wait for the one exact bounded event rather than
+    // reading dataLayer in the same task as the user action.
+    await expect.poll(() => page.evaluate(() =>
       (window.dataLayer ?? []).findLast(
         (entry) =>
           typeof entry === "object"
           && entry !== null
           && (entry as { event?: string }).event === "booking_started",
       ) as Record<string, unknown> | undefined,
-    );
-    expect(bookingEvent).toMatchObject({
+    )).toMatchObject({
       event: "booking_started",
       funnel_stage: "consideration",
       placement: "website_check_page",

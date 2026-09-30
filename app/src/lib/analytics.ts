@@ -377,6 +377,7 @@ let clarityBooted = false;
 let tikTokBooted = false;
 let tikTokPageTracked = false;
 let vendorBootTimer: number | undefined;
+let gaDiagnosticConfigured = false;
 let pendingGaEvents: Array<{
   eventName: string;
   parameters: Record<string, unknown>;
@@ -486,8 +487,12 @@ function googlePageContext() {
   };
 }
 
-function bootGoogleAnalytics() {
-  if (getAnalyticsConsent() !== "granted" || !hasRealGaMeasurementId() || gaBooted) return;
+function bootGoogleAnalytics(diagnostic = false) {
+  if (
+    getAnalyticsConsent() !== "granted" ||
+    !hasRealGaMeasurementId() ||
+    (gaBooted && (!diagnostic || gaDiagnosticConfigured))
+  ) return;
 
   setGoogleAnalyticsDisabled(false);
   ensureGtag();
@@ -503,6 +508,9 @@ function bootGoogleAnalytics() {
     // Measurement does not enable remarketing or Google signals.
     allow_google_signals: false,
     allow_ad_personalization_signals: false,
+    // gtag config parameters apply to automatic events too. Only an explicit
+    // diagnostic mode may identify this tab's automatic engagement traffic.
+    ...(diagnostic ? { debug_mode: true, traffic_type: "internal" } : {}),
   });
 
   if (!document.querySelector<HTMLScriptElement>(`script[src="${GA_SRC}"]`)) {
@@ -513,6 +521,7 @@ function bootGoogleAnalytics() {
   }
 
   gaBooted = true;
+  gaDiagnosticConfigured ||= diagnostic;
 }
 
 function bootClarity() {
@@ -801,12 +810,12 @@ function track(eventName: string, parameters: Record<string, unknown> = {}, defe
 
     if (deferVendorBoot && !gaBooted && hasRealGaMeasurementId()) {
       pendingGaEvents.push({ eventName, parameters: normalized, diagnostic: true });
-      bootGoogleAnalytics();
+      bootGoogleAnalytics(true);
       flushPendingGaEvents();
       return;
     }
 
-    bootGoogleAnalytics();
+    bootGoogleAnalytics(true);
     sendGaEvent(eventName, normalized, true);
     return;
   }
