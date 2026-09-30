@@ -1,6 +1,6 @@
 # Little Fight NYC Google measurement baseline
 
-Last verified: 2026-08-14
+Account/search reverified: 2026-09-29. Business Profile observations below retain their original 2026-08-14 date; they were not re-published in this release.
 
 This is the non-secret account and release contract for Little Fight’s public
 marketing measurement. It records what is connected, what counts, and what
@@ -16,7 +16,7 @@ must stay off until there is a real advertising program.
 | Measurement ID | `G-0Q1TGWH0HL` |
 | Search Console | Domain property `sc-domain:littlefightnyc.com` |
 | Business Profile | `Little Fight NYC`, owned by the Little Fight Workspace account |
-| Google Ads | Not linked; no Ads tag, campaign, billing, or spend |
+| Google Ads | Existing link to account `2908718882`, created 2026-09-14; API confirms ads personalization disabled. Campaign, billing and spend are not established by this link. |
 
 GA4 reports that the web stream is receiving traffic. Search Console and the
 Business Profile were linked to the GA4 property on 2026-08-02. The Business
@@ -28,8 +28,7 @@ Profile hides the street address and uses NYC service areas.
   tag does not load until the visitor chooses `Allow visit counting`.
 - Choosing `Essential only` sets Google’s property-level disable switch before
   cleanup, so a tag loaded earlier cannot send later cookieless pings.
-- Advertising storage, advertising user data, advertising personalization,
-  Google Signals, and ad-personalization signals stay denied/off.
+- Advertising storage and user data are denied by default and require a separate fresh Google Ads choice plus analytics consent. Advertising personalization, Google Signals, and ad-personalization signals stay denied/off. Meta has its own separate opt-in. This release changes none of these permissions.
 - The site loads the owned GA4 stream directly after consent. The previous GTM
   container delivered page views but did not forward the site’s allowlisted
   custom events.
@@ -74,8 +73,17 @@ The event-scoped `metric_value` custom metric makes the integer Web Vital value
 reportable; CLS is multiplied by 1,000 before transport so no mixed decimal
 convention is hidden in a dashboard.
 
+The 2026-09-29 API readback also confirmed `discovery_source`, `metric_version`
+and `metric_unit`. `generate_lead` was checked as a key event in the authenticated
+UI. This is event configuration, not proof of a qualified lead or sale.
+
 GA4 event and user-data retention are both 14 months. The internal-traffic
 filter remains in **Testing**, not Active, until a stable rule is proven.
+The authenticated UI on 2026-09-29 confirmed an Exclude filter named
+`Internal Traffic` matching `traffic_type=internal`, still in Testing.
+Ordinary `?qa=1` checks now stay vendor-free at source. Explicit
+`?qa=diagnostic` checks are consent-gated and add `debug_mode=true` and
+`traffic_type=internal`; see `CONVERSION-MEASUREMENT.md`.
 Automatic GA4 form interactions and browser-history page views are off because
 the site owns safer success-aware form and route-view contracts. Scrolls,
 video engagement, and file downloads remain available. Automatic outbound
@@ -89,6 +97,13 @@ campaign attribution keys intact.
 
 - `https://littlefightnyc.com/sitemap-index.xml` is the canonical submitted
   sitemap index. It was resubmitted successfully on 2026-08-14.
+- On 2026-09-29 Search Console reported both the index and `sitemap.xml` as
+  Success, last read September 28 and 29 respectively. Counts of 293 and 144
+  are report observations and may overlap; they are not unique indexed pages.
+- Domain ownership and the GA4 association were confirmed. Search generative
+  AI is set to **Include**. This controls Google's Search generative features,
+  not model training or guaranteed citations. See Google's
+  [Search generative AI control](https://support.google.com/webmasters/answer/16908024).
 - The homepage was inspected on 2026-08-14 and Search Console reported it as
   indexed, HTTPS, with one valid breadcrumb item.
 - The Business Profile website link is live as
@@ -105,7 +120,7 @@ campaign attribution keys intact.
 - A storefront photo is intentionally not supplied for a service-area
   business with no customer-facing storefront. Never add a private address or
   stock photo merely to increase Profile Strength.
-- Search Console reports no manual actions and no security issues. Its three
+- Search Console reported no manual actions and no security issues on 2026-09-29. Its three
   historical 404 examples include two URLs that already redirect and the
   retired `/services-7` path, which is now covered by a permanent redirect.
 

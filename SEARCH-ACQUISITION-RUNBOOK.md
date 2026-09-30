@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-08-25
+Last updated: 2026-09-29
 
 ## Current code readiness
 
@@ -37,18 +37,15 @@ After the production deploy:
 3. Open the Sitemaps report and confirm
    `https://littlefightnyc.com/sitemap-index.xml` succeeds. It was resubmitted
    on 2026-08-14; do not resubmit repeatedly while processing is healthy.
-4. Use URL Inspection and test the live URL for these priority pages. Request
-   indexing only for the first four acquisition routes when their live test is
-   correct:
+4. Use URL Inspection and test the live URL for materially changed canonical
+   pages. Request indexing once when the live test is correct:
    - `https://littlefightnyc.com/`
    - `https://littlefightnyc.com/services/custom-local-websites/`
    - `https://littlefightnyc.com/tech-audit/` (the website-intent query is a conversion state, not a separate canonical page)
    - `https://littlefightnyc.com/case-studies/hair-by-rachel-charles/`
-   - `https://littlefightnyc.com/case-studies/public-house-creative/`
-   - `https://littlefightnyc.com/case-studies/venuecircuit/`
-5. Treat Public House Creative and VenueCircuit as protected verification-only
-   routes: inspect their current indexed/live state, but do not request a new
-   crawl or change their presentation without separate approval.
+5. Public House Creative is protected and outside this work. Do not inspect,
+   change or reactivate its source. Do not change owned-product case presentation
+   without scoped authorization.
 6. Check the rendered HTML in URL Inspection for the current title, description, canonical, proof copy, and website form.
 7. Record the request date and the indexed canonical. Do not request the same URLs repeatedly.
 8. Check the branded result weekly until the stale homepage title and snippet are replaced. Search results remain an external, asynchronous system.
@@ -92,14 +89,14 @@ Report four groups separately:
 
 Never combine impressions, clicks, form starts, and qualified leads into one percentage. Keep the whole path visible.
 
-## Weekly content cadence (routine-driven)
+## Manual content queue
 
-A scheduled cloud routine ("LFNYC weekly search cadence", Tuesdays 09:17 ET)
-clones this repo, does ONE unit of work, and opens a pull request. It never
-pushes to `main`. A human (or a Claude Code session) merges after the release
-gate passes.
+The former routine description is historical, not an active scheduling
+contract. Do not create or enable recurring automations. Use the queue below
+only during an explicitly requested content session; pending rows are ideas,
+not missing pages promised by this maintenance release.
 
-Each run:
+Each requested content session:
 
 1. Takes the first `pending` row below, writes the page it names in the house
    voice (VOICE.md, COPY-CONTRACT.md, EVIDENCE-CLAIM-LEDGER.md; no prices;
@@ -130,9 +127,16 @@ check it in one click. If the sandbox cannot reach the source to confirm the
 page says what the copy claims, say so in the PR body rather than citing it.
 
 Recrawl requests (Search Console → URL Inspection → Request indexing) are a
-local, signed-in-Chrome job and are NOT part of the routine: about 10 URLs a
-day per property; work through the "Discovered – currently not indexed" list,
-service pages first.
+signed-in browser task. Follow the quota actually shown by Google; do not
+assume a fixed daily allowance or repeat a queued request.
+
+### Verified search state — 2026-09-29
+
+- Google sitemap index and `sitemap.xml`: Success; no manual actions or security issues. Search generative AI: Include.
+- The nine refreshed case pages are live, self-canonical, indexable, and present in the sitemap. Google's current indexed results include Hair By Rachel Charles and Chromatic Painting & Design; CC Films, ClearHelp, Logan Loans and Grand Funding LLC were discovered but not indexed; The Break Room, Easy Tiger and The Tarot Hotline were unknown before recrawl requests.
+- Bing's five sitemap records had no reported errors or warnings; its main sitemap/index last-crawl date was August 19. URL counts overlap. Rachel's live test was indexable but its indexed record had not been crawled.
+- Bing AI Performance showed no citation data for June 29–September 28. This is the selected report's observation, not proof of zero citations on every engine.
+- Record accepted indexing requests separately from actual indexing. IndexNow acceptance also establishes a notification, not a crawl or citation. Do not repeat unchanged notifications as a maintenance loop.
 
 ### Query queue
 

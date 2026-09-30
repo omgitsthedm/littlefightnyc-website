@@ -1,6 +1,6 @@
 # Little Fight NYC Client Proof Collection
 
-Last updated: 2026-07-20
+Last updated: 2026-09-29
 
 ## Rule
 
@@ -49,12 +49,18 @@ If there is no reliable baseline, publish an implementation fact instead: launch
 
 ## Current collection order
 
-1. Hair By Rachel Charles: confirm booking-path impact and approve a short quote. Keep the existing two-week launch, Square integration, and Lighthouse facts.
-2. Public House Creative: confirm the before and after estimating workflow, time saved per estimate, and approval for production-use language.
-3. Grand Funding LLC: ask what the public site changed for partner conversations and link sharing.
-4. CC Films: ask about press, festival, and official-source usage after launch.
-5. ClearHelp: confirm the operational value of three sites sharing one backend.
-6. VenueCircuit and After Hours Agenda: label clearly as owned products, not outside-client testimonials.
+1. Hair By Rachel Charles: obtain an approved quote and a sourced booking-path result before adding commercial claims. Published implementation and dated audit facts remain separate from bookings or revenue.
+2. CC Films, Chromatic Painting & Design, ClearHelp, Logan Loans and Grand Funding LLC: use the published case's client-specific owner questions; collect a baseline, dated result, source and written approval before adding outcome claims.
+3. The Break Room, Easy Tiger and The Tarot Hotline: follow the same source and approval requirements. A public site capture establishes presentation and implementation, not client satisfaction or business growth.
+
+The nine refreshed public cases have implementation scope, dated observations,
+and explicit evidence limits. This maintenance release supplies no new approved
+testimonial or commercial result. No response is approval. No outreach is sent
+without a separate instruction naming its recipient and purpose.
+
+Public House Creative is protected and excluded from this collection pass.
+VenueCircuit and After Hours Agenda are owned products, not outside-client
+testimonials.
 
 ## Approval request draft
 

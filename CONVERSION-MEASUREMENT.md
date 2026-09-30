@@ -1,13 +1,13 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-09-27. Resolve production revision from `/release.json`;
+Last updated: 2026-09-29. Resolve production revision from `/release.json`;
 account configuration is dated evidence, separate from code publication.
 
 ## Privacy boundary
 
 - Analytics is denied by default.
 - Google Analytics and real-user monitoring start only after `Allow visit counting`.
-- Microsoft Clarity and TikTok are not configured or active. Advertising consent and advertising vendors stay off.
+- Microsoft Clarity and TikTok remain inactive. Google Ads and Meta have separate, fresh opt-in choices; visit counting alone grants neither. Ad personalization stays denied. This release does not change those choices or start campaigns.
 - `Essential only` loads none of those vendors. The Tech Audit, phone, text, email, navigation, and service worker still work.
 - The footer and Privacy page reopen the same choice at any time.
 - RUM sends coarse route/browser/device/network buckets, Core Web Vitals, and sanitized error summaries. It does not send form values, URLs with query strings, stack traces, email addresses, phone numbers, or names.
@@ -54,9 +54,10 @@ Every tracked event carries `funnel_stage`. Break the funnel down by:
 - device category
 - default channel group / source / medium
 
-Use `generate_lead` as the **only configured GA4 key event**, retaining the
-browser-evidence limitation above. This is the intended configuration; local
-source does not prove the current GA4 account settings. The Tech Audit form
+Use `generate_lead` as the **lead key event**, retaining the browser-evidence
+limitation above. The authenticated GA4 UI confirmed it is a key event on
+2026-09-29. The standard `purchase` definition also exists; it is not evidence
+of a purchase or a website sales funnel. The Tech Audit form
 does not also emit generic `form_submit`. Its submit event carries
 `form_name` and `page_path`, but not `intent` or `placement`; do not assume
 every event has every breakdown dimension. `tech_audit_started` and the
@@ -136,7 +137,7 @@ The self-hosted `web-vitals` library calculates CLS, INP, LCP and supplemental F
 
 Run this once per month and after any form or deploy change:
 
-1. Open production in a clean browser context.
+1. Obtain explicit authorization for the synthetic production form submission, then open production in a clean browser context with `?qa=1`.
 2. Submit `tech-audit-scratch` with a unique marker formatted `LFNYC E2E YYYY-MM-DD HHMM` and clearly label the business/message as a delivery test.
 3. Confirm the browser reaches `/thanks/` and the confirmation handoff renders.
 4. Confirm the matching submission exists in Netlify Forms with the intended fields.
@@ -144,6 +145,21 @@ Run this once per month and after any form or deploy change:
 6. Do not send passwords, client data, or a real prospect's contact information in the test.
 
 The browser success page proves only the POST path. The loop is not green until both Netlify capture and inbox delivery are observed.
+
+## QA and diagnostic traffic
+
+- Start ordinary checks with `?qa=1`. This stores `lfnyc_measurement_test=qa` in session storage and persists for that tab across routes. Legacy storage value `1` also means ordinary QA. Neither mode loads measurement vendors or sends GA events, even after visit-counting consent.
+- After analytics consent, main-site QA events are observable through `lf:measurement-qa`; the standalone Audit Lab uses `lf:audit-analytics`. Both contain sanitized parameters and the local `measurement_test` mode, never submitted form values.
+- Use `?qa=diagnostic` only for a deliberate GA4 transport check. On a canonical production hostname and after analytics consent, every GA event receives transport-owned `debug_mode=true` and `traffic_type=internal`. Callers cannot inject these fields. Meta, advertising and replay transports remain off for the diagnostic tab.
+- Closing the tab ends the mode. Use a separate clean context for ordinary visitor checks. No analytics consent means no local measurement event or vendor collection in either test mode.
+- GA4's existing Internal Traffic exclusion filter was verified in **Testing** on 2026-09-29. Do not activate it until a processed report shows the intended `testDataFilterName` match without excluding visitors. Testing does not remove events from ordinary reports, and later activation does not erase historical events. Ordinary QA is kept out at the source regardless of this filter.
+
+The 2026-09-29 property report for September 1–29 contained one
+`generate_lead` on September 13 (`form_name=tech-audit-scratch`). That is also
+the real production form name, so the name alone cannot classify the event as
+QA or a qualified lead. No verified booking, qualified lead, or revenue is
+established by this report. Previously processed traffic is not repaired by
+the new tab mode.
 
 ## Release check
 

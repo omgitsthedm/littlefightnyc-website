@@ -2,6 +2,8 @@
   "use strict";
 
   var CONSENT_KEY = "lf_analytics_consent_v1";
+  var MEASUREMENT_TEST_KEY = "lfnyc_measurement_test";
+  var MEASUREMENT_TEST_QUERY_KEY = "qa";
   var GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
   var GA_DISABLE_KEY = "ga-disable-" + GA_MEASUREMENT_ID;
   var GA_SRC = "https://www.googletagmanager.com/gtag/js?id=" +
@@ -37,6 +39,38 @@
       return global.localStorage.getItem(CONSENT_KEY) === "granted";
     } catch (_) {
       return false;
+    }
+  }
+
+  function measurementTestMode() {
+    var requested;
+    try {
+      requested = new URLSearchParams(global.location.search).get(MEASUREMENT_TEST_QUERY_KEY);
+      // The Audit Lab scrubs incoming form fields from history before deferred
+      // scripts run. Navigation Timing retains the original URL long enough
+      // to establish this tab-only QA mode without retaining visitor input.
+      if (!requested && global.performance && global.performance.getEntriesByType) {
+        var navigation = global.performance.getEntriesByType("navigation")[0];
+        if (navigation && navigation.name) {
+          requested = new URL(navigation.name, global.location.origin)
+            .searchParams.get(MEASUREMENT_TEST_QUERY_KEY);
+        }
+      }
+    } catch (_) {
+      requested = null;
+    }
+    var requestedMode = requested === "diagnostic" ? "diagnostic" : requested === "1" ? "qa" : null;
+    try {
+      if (requestedMode) {
+        global.sessionStorage.setItem(MEASUREMENT_TEST_KEY, requestedMode);
+        return requestedMode;
+      }
+      var stored = global.sessionStorage.getItem(MEASUREMENT_TEST_KEY);
+      // Preserve legacy `1` as ordinary QA; only the exact URL can enable
+      // diagnostic collection.
+      return stored === "diagnostic" ? "diagnostic" : stored === "qa" || stored === "1" ? "qa" : null;
+    } catch (_) {
+      return requestedMode;
     }
   }
 
@@ -108,7 +142,7 @@
   }
 
   function boot() {
-    if (booted || !hasConsent() || !isCanonicalHost()) return;
+    if (booted || !hasConsent() || !isCanonicalHost() || measurementTestMode() === "qa") return;
     global[GA_DISABLE_KEY] = false;
     updateGoogleConsent("granted");
     global.gtag("js", new Date());
@@ -141,22 +175,38 @@
   function track(eventName, parameters) {
     if (!ALLOWED_EVENTS[eventName] || !hasConsent()) return;
     var safe = safeParameters(parameters);
+    var testMode = measurementTestMode();
 
     // A local event makes the privacy boundary testable without contacting a
     // vendor from localhost or a deploy preview. It contains no submitted URL,
     // email address, audit ID, report URL, or provider error text.
     global.dispatchEvent(new CustomEvent("lf:audit-analytics", {
-      detail: { eventName: eventName, parameters: safe }
+      detail: {
+        eventName: eventName,
+        parameters: testMode ? Object.assign({}, safe, { measurement_test: testMode }) : safe
+      }
     }));
 
-    if (!isCanonicalHost()) return;
+    if (!isCanonicalHost() || testMode === "qa") return;
     boot();
-    global.gtag("event", eventName, safe);
+    global.gtag("event", eventName,
+      testMode === "diagnostic"
+        ? Object.assign({}, safe, { debug_mode: true, traffic_type: "internal" })
+        : safe);
   }
 
   function syncConsent() {
     if (!hasConsent()) {
       revoke();
+      return;
+    }
+    var testMode = measurementTestMode();
+    if (testMode === "qa") {
+      revoke();
+      if (!pageViewTracked) {
+        pageViewTracked = true;
+        track("page_view", { funnel_stage: "awareness" });
+      }
       return;
     }
     if (!isCanonicalHost()) return;

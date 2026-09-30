@@ -66,7 +66,7 @@ assert.match(
 );
 assert.match(
   auditAnalytics,
-  /GA_DISABLE_KEY[\s\S]{0,3200}?global\[GA_DISABLE_KEY\] = true[\s\S]{0,2400}?global\[GA_DISABLE_KEY\] = false/u,
+  /GA_DISABLE_KEY[\s\S]{0,4200}?global\[GA_DISABLE_KEY\] = true[\s\S]{0,3000}?global\[GA_DISABLE_KEY\] = false/u,
   "Website Check analytics must disable GA4 on withdrawal and re-enable it only after consent",
 );
 
@@ -146,7 +146,7 @@ assert.doesNotMatch(
 );
 assert.match(
   analytics,
-  /function sendGaEvent\(eventName: string, parameters: Record<string, unknown>\) \{[\s\S]{0,260}?hasRealGaMeasurementId\(\)[\s\S]{0,160}?window\.gtag\("event", eventName, parameters\)/u,
+  /function sendGaEvent\([\s\S]{0,220}?eventName: string[\s\S]{0,220}?parameters: Record<string, unknown>[\s\S]{0,360}?hasRealGaMeasurementId\(\)[\s\S]{0,600}?window\.gtag\("event", eventName, parameters\)/u,
   "a consented first-party event must be handed to GA4's direct gtag transport",
 );
 assert.match(
@@ -193,6 +193,61 @@ assert.match(
   analytics,
   /if \(signature === lastTrackedPageViewSignature\) return;/u,
   "the consent listener and route metadata must not duplicate the same page view",
+);
+
+// `?qa=1` is a private, session-scoped observation lane. It must remain
+// vendor-free after consent while still making bounded events visible to local
+// verification. The distinct diagnostic URL is the only path that marks GA4
+// traffic for the Testing filter and DebugView.
+for (const [label, source] of [
+  ["main site analytics", analytics],
+  ["Website Check analytics", auditAnalytics],
+]) {
+  assert.match(
+    source,
+    /lfnyc_measurement_test/u,
+    `${label} must persist QA mode only for the current tab`,
+  );
+  assert.match(
+    source,
+    /requested === "diagnostic"[\s\S]{0,120}?requested === "1"/u,
+    `${label} must distinguish explicit diagnostic collection from ordinary QA`,
+  );
+  assert.match(
+    source,
+    /stored === "diagnostic"[\s\S]{0,180}?stored === "qa" \|\| stored === "1"/u,
+    `${label} must keep legacy QA sessions vendor-free`,
+  );
+  assert.match(
+    source,
+    /debug_mode:\s*true,\s*traffic_type:\s*"internal"/u,
+    `${label} must tag intentional diagnostic events for GA4 testing`,
+  );
+}
+assert.match(
+  analytics,
+  /emitMeasurementTestEvent[\s\S]{0,320}?measurement_test: mode/u,
+  "main site QA must expose sanitized local events after consent",
+);
+assert.match(
+  analytics,
+  /if \(testMode !== "diagnostic"\) return;/u,
+  "ordinary main-site QA must end before any vendor transport",
+);
+assert.match(
+  analytics,
+  /if \(!measurementTestMode\(\)\) trackMetaPageView\(\);/u,
+  "main-site QA must not activate Meta page measurement",
+);
+assert.match(
+  auditAnalytics,
+  /if \(!isCanonicalHost\(\) \|\| testMode === "qa"\) return;/u,
+  "ordinary Audit Lab QA must end before GA4 transport",
+);
+assert.match(
+  auditAnalytics,
+  /parameters: testMode \? Object\.assign\(\{\}, safe, \{ measurement_test: testMode \}\) : safe/u,
+  "Audit Lab QA must expose its local event mode without forwarding it to GA4",
 );
 
 assert.match(

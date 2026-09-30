@@ -359,6 +359,9 @@ declare global {
 const GA_MEASUREMENT_ID = "G-0Q1TGWH0HL";
 const GA_SRC = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(GA_MEASUREMENT_ID)}`;
 const GA_DISABLE_KEY = `ga-disable-${GA_MEASUREMENT_ID}`;
+const MEASUREMENT_TEST_STORAGE_KEY = "lfnyc_measurement_test";
+const MEASUREMENT_TEST_QUERY_KEY = "qa";
+type MeasurementTestMode = "qa" | "diagnostic";
 // No controlled Clarity project was handed off. Keep the dormant integration
 // incapable of activating from a stale or inherited build variable until the
 // destination account and data boundary are verified.
@@ -374,9 +377,56 @@ let clarityBooted = false;
 let tikTokBooted = false;
 let tikTokPageTracked = false;
 let vendorBootTimer: number | undefined;
-let pendingGaEvents: Array<{ eventName: string; parameters: Record<string, unknown> }> = [];
+let pendingGaEvents: Array<{
+  eventName: string;
+  parameters: Record<string, unknown>;
+  diagnostic?: boolean;
+}> = [];
 let pendingTikTokEvents: Array<{ eventName: string; parameters?: Record<string, unknown> }> = [];
 let lastTrackedPageViewSignature = "";
+
+/**
+ * QA is deliberately an explicit, tab-scoped mode. `?qa=1` is safe local
+ * observation; `?qa=diagnostic` is the separately intentional GA4 DebugView
+ * path. Query values are never forwarded and callers cannot add the GA4
+ * internal marker through an event payload.
+ */
+function measurementTestMode(): MeasurementTestMode | null {
+  if (typeof window === "undefined") return null;
+
+  const requested = new URLSearchParams(window.location.search).get(MEASUREMENT_TEST_QUERY_KEY);
+  const requestedMode = requested === "diagnostic"
+    ? "diagnostic"
+    : requested === "1"
+      ? "qa"
+      : null;
+
+  try {
+    if (requestedMode) {
+      window.sessionStorage.setItem(MEASUREMENT_TEST_STORAGE_KEY, requestedMode);
+      return requestedMode;
+    }
+    const stored = window.sessionStorage.getItem(MEASUREMENT_TEST_STORAGE_KEY);
+    // `1` was used by an early local check. Treat it as ordinary QA forever;
+    // no existing session can become diagnostic by accident.
+    return stored === "diagnostic" ? "diagnostic" : stored === "qa" || stored === "1" ? "qa" : null;
+  } catch {
+    return requestedMode;
+  }
+}
+
+function emitMeasurementTestEvent(
+  eventName: string,
+  parameters: Record<string, unknown>,
+  mode: MeasurementTestMode,
+) {
+  window.dispatchEvent(new CustomEvent("lf:measurement-qa", {
+    detail: {
+      eventName,
+      parameters: { ...parameters, measurement_test: mode },
+    },
+  }));
+}
 
 function hasRealGaMeasurementId() {
   // Keep the production stream from loading on localhost, deploy previews,
@@ -573,10 +623,19 @@ function bootTikTokPixel() {
 
 // Re-sanitize queued events at delivery: withdrawal during delayed tag boot
 // must not expose a click identifier that was allowed when the event queued.
-function sendGaEvent(eventName: string, parameters: Record<string, unknown>) {
+function sendGaEvent(
+  eventName: string,
+  parameters: Record<string, unknown>,
+  diagnostic = false,
+) {
   if (getAnalyticsConsent() !== "granted") return;
   if (hasRealGaMeasurementId() && typeof window.gtag === "function") {
     parameters = { ...googlePageContext(), ...safeAnalyticsParameters(parameters) };
+    if (diagnostic) {
+      // These flags are owned here, after sanitization, so page components
+      // cannot mark ordinary visitor events as internal or debug traffic.
+      parameters = { ...parameters, debug_mode: true, traffic_type: "internal" };
+    }
     window.gtag("event", eventName, parameters);
     return;
   }
@@ -590,7 +649,9 @@ function flushPendingGaEvents() {
 
   const events = pendingGaEvents;
   pendingGaEvents = [];
-  events.forEach(({ eventName, parameters }) => sendGaEvent(eventName, parameters));
+  events.forEach(({ eventName, parameters, diagnostic }) =>
+    sendGaEvent(eventName, parameters, diagnostic),
+  );
 }
 
 function sendTikTokEvent(eventName: string, parameters?: Record<string, unknown>) {
@@ -613,6 +674,9 @@ function flushPendingTikTokEvents() {
 }
 
 function bootVendors() {
+  // Test sessions must never wake an advertising or session-replay vendor.
+  // Diagnostic collection has its own direct GA4 path in track().
+  if (measurementTestMode()) return;
   if (getAnalyticsConsent() === "granted") {
     bootGoogleAnalytics();
     bootClarity();
@@ -625,6 +689,7 @@ function bootVendors() {
 }
 
 function scheduleVendorBoot() {
+  if (measurementTestMode()) return;
   const hasMeasurementVendor =
     getAnalyticsConsent() === "granted" &&
     (hasRealGaMeasurementId() || hasRealClarityId());
@@ -717,7 +782,8 @@ function funnelStage(eventName: string) {
 
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
   if (!ANALYTICS_EVENT_NAMES.has(eventName)) return;
-  trackMetaEvent(eventName);
+  const testMode = measurementTestMode();
+  if (!testMode) trackMetaEvent(eventName);
   const analyticsAllowed = getAnalyticsConsent() === "granted";
   const advertisingAllowed = getAdvertisingConsent() === "granted";
   if (!analyticsAllowed && !advertisingAllowed) return;
@@ -726,6 +792,24 @@ function track(eventName: string, parameters: Record<string, unknown> = {}, defe
     ...parameters,
   });
 
+  if (testMode) {
+    // Consent still controls local QA observability. The URL only selects a
+    // test transport; it cannot create a shadow analytics channel.
+    if (!analyticsAllowed) return;
+    emitMeasurementTestEvent(eventName, normalized, testMode);
+    if (testMode !== "diagnostic") return;
+
+    if (deferVendorBoot && !gaBooted && hasRealGaMeasurementId()) {
+      pendingGaEvents.push({ eventName, parameters: normalized, diagnostic: true });
+      bootGoogleAnalytics();
+      flushPendingGaEvents();
+      return;
+    }
+
+    bootGoogleAnalytics();
+    sendGaEvent(eventName, normalized, true);
+    return;
+  }
   if (deferVendorBoot && analyticsAllowed && !gaBooted && hasRealGaMeasurementId()) {
     pendingGaEvents.push({ eventName, parameters: normalized });
     scheduleVendorBoot();
@@ -773,7 +857,7 @@ export function trackFirstPartyEvent<K extends FirstPartyEventName>(
 }
 
 export function trackPageView(path: string, title: string) {
-  trackMetaPageView();
+  if (!measurementTestMode()) trackMetaPageView();
   const pagePath = new URL(path, window.location.origin).pathname;
   if (
     getAnalyticsConsent() !== "granted" &&
@@ -883,10 +967,14 @@ function trackFirstPartyElementEvent(target: HTMLElement) {
 }
 
 export function installAnalyticsHooks() {
-  const removeMetaMeasurement = installMetaMeasurement();
+  const removeMetaMeasurement = measurementTestMode()
+    ? () => {}
+    : installMetaMeasurement();
   // Google's property-level switch stops a previously loaded tag immediately
   // after withdrawal, including automatic cookieless pings.
-  setGoogleAnalyticsDisabled(getAnalyticsConsent() !== "granted");
+  setGoogleAnalyticsDisabled(
+    getAnalyticsConsent() !== "granted" || measurementTestMode() === "qa",
+  );
   if (!hasGoogleAdsMeasurementConsent()) clearVendorCookies(GOOGLE_ADS_COOKIE_PREFIXES);
   // A legacy analytics opt-in used to imply advertising consent. The new
   // contract does not: absent advertising consent is denied, and any durable
@@ -1012,12 +1100,15 @@ export function installAnalyticsHooks() {
   window.addEventListener("scroll", onScroll, { passive: true });
   const removeConsentListener = onAnalyticsConsentChange((consent) => {
     if (consent === "granted") {
-      setGoogleAnalyticsDisabled(false);
-      window.clarity?.("consentv2", {
-        ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
-        analytics_Storage: "granted",
-      });
-      scheduleVendorBoot();
+      const testMode = measurementTestMode();
+      setGoogleAnalyticsDisabled(testMode === "qa");
+      if (!testMode) {
+        window.clarity?.("consentv2", {
+          ad_Storage: getAdvertisingConsent() === "granted" ? "granted" : "denied",
+          analytics_Storage: "granted",
+        });
+        scheduleVendorBoot();
+      }
       trackPageView(
         `${window.location.pathname}${window.location.search}`,
         document.title,
@@ -1051,6 +1142,7 @@ export function installAnalyticsHooks() {
   });
 
   const removeAdvertisingConsentListener = onAdvertisingConsentChange((consent) => {
+    if (measurementTestMode()) return;
     if (consent === "granted") {
       window.clarity?.("consentv2", {
         ad_Storage: "granted",
