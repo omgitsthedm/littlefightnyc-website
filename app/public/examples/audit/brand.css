@@ -1136,7 +1136,7 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
   font-size: 1.1rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1080px) {
   /* Keep the utility header within the tablet shell before the route links
      would force a horizontal scroll. The full navigation returns at desktop
      widths; phone keeps the same compact controls below. */
@@ -1145,7 +1145,9 @@ body.lf-audit-report .expiry-notice { color: var(--lf-bone-dim); }
   .lf-audit-shell-page .audit-nav__phone-full { display: none; }
   .lf-audit-shell-page .audit-nav__phone-short { display: inline; }
   .lf-audit-shell-page .audit-nav .audit-nav__cta { margin-left: 0; padding-inline: 14px; }
+}
 
+@media (max-width: 900px) {
   .lf-audit-shell-page .site-main > .container {
     grid-template-columns: 1fr;
   }

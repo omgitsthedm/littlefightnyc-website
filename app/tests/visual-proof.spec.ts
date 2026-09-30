@@ -32,7 +32,11 @@ test("owner calculator labels examples, then owner input", async ({ page }) => {
   // The compact phone homepage omits long-form instruments. Their service-page
   // placement remains visible on every viewport.
   await page.goto("/services/custom-local-websites/");
-  const calculator = page.locator('[data-lf-visual-proof="owner-calculator"]').first();
+  // The prerendered snapshot preserves a visitor's early native input during
+  // the handoff. Exercise the mounted controlled calculator, so fill cannot
+  // straddle that handoff and append to the snapshot's example value.
+  const calculator = page.locator('[data-lf-route-mount] [data-lf-visual-proof="owner-calculator"]');
+  await expect(calculator).toBeVisible();
   await expect(calculator).toContainText("Example");
   await calculator.getByLabel("Average sale or job value").fill("400");
   await expect(calculator).toContainText("Your numbers");

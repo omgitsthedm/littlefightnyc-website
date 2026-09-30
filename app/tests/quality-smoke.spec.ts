@@ -2669,6 +2669,58 @@ test(
 );
 
 test(
+  "Audit Lab keeps its header contained and direct actions usable across the compact-nav threshold @chromium-desktop",
+  async ({ browser, baseURL }) => {
+    for (const width of [901, 1024, 1080, 1081, 1100]) {
+      const context = await browser.newContext({ viewport: { width, height: 900 } });
+      const page = await context.newPage();
+
+      await page.goto(`${baseURL}/examples/audit/`, { waitUntil: "networkidle" });
+
+      const call = page.locator(".audit-nav__phone");
+      const freeAudit = page.locator(".audit-nav__cta");
+      await expect(call).toBeVisible();
+      await expect(freeAudit).toBeVisible();
+      await expect(call).toHaveAttribute("href", PHONE_HREF);
+      await expect(freeAudit).toHaveAttribute(
+        "href",
+        /\/tech-audit\/\?intent=website&source=audit-lab$/,
+      );
+
+      const layout = await page.evaluate(() => {
+        const nav = document.querySelector<HTMLElement>(".audit-nav");
+        const controls = [
+          document.querySelector<HTMLElement>(".audit-nav__phone"),
+          document.querySelector<HTMLElement>(".audit-nav__cta"),
+        ];
+        if (!nav || controls.some((control) => !control)) {
+          throw new Error("Audit Lab header controls are missing");
+        }
+
+        return {
+          clientWidth: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+          nav: nav.getBoundingClientRect().toJSON(),
+          controls: controls.map((control) => control!.getBoundingClientRect().toJSON()),
+        };
+      });
+
+      expect(layout.scrollWidth, `${width}px header should not create horizontal scroll`).toBeLessThanOrEqual(layout.clientWidth);
+      expect(layout.nav.left).toBeGreaterThanOrEqual(0);
+      expect(layout.nav.right).toBeLessThanOrEqual(layout.clientWidth);
+      for (const control of layout.controls) {
+        expect(control.left).toBeGreaterThanOrEqual(0);
+        expect(control.right).toBeLessThanOrEqual(layout.clientWidth);
+        expect(control.width).toBeGreaterThanOrEqual(44);
+        expect(control.height).toBeGreaterThanOrEqual(44);
+      }
+
+      await context.close();
+    }
+  },
+);
+
+test(
   "Audit Lab tracks a consented funnel without leaking submitted values @chromium-desktop",
   async ({ browser, baseURL }) => {
     const context = await browser.newContext();
