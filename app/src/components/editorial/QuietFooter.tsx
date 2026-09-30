@@ -13,7 +13,7 @@ import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
  * No per-case-study, per-term, or full-neighborhood enumerations here. */
 const footerGroups: Array<{
   title: string;
-  links: Array<{ label: string; to: string; external?: boolean }>;
+  links: Array<{ label: string; to: string; external?: boolean; standalone?: boolean }>;
 }> = [
   {
     title: "What we fix",
@@ -34,7 +34,9 @@ const footerGroups: Array<{
       { label: "Try the Lab", to: "/examples/lab/" },
       // /examples/audit/ IS the live check, not a sample of one. The old
       // label ("See a site audit") read like a specimen.
-      { label: "Run the free check", to: "/examples/audit/" },
+      // It is a separate static application, so it must not enter the React
+      // router, which has no matching route for this URL.
+      { label: "Run the free check", to: "/examples/audit/", standalone: true },
     ],
   },
   {
@@ -88,6 +90,10 @@ export default function QuietFooter() {
                   <li key={link.to}>
                     {link.external ? (
                       <a href={link.to} rel="external">
+                        {link.label}
+                      </a>
+                    ) : link.standalone ? (
+                      <a href={link.to} data-no-vt>
                         {link.label}
                       </a>
                     ) : (

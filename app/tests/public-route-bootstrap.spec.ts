@@ -6,6 +6,30 @@ import { expect, test } from "@playwright/test";
 // bypass those network controls or consume the test's private prefill record.
 test.use({ serviceWorkers: "block" });
 
+test(
+  "the footer opens the standalone Website Audit Lab as a document without starting a scan @chromium-desktop",
+  async ({ page }) => {
+    let auditDocuments = 0;
+    let auditApiRequests = 0;
+    page.on("request", (request) => {
+      const path = new URL(request.url()).pathname;
+      if (path === "/examples/audit/" && request.isNavigationRequest()) auditDocuments += 1;
+      if (path.startsWith("/examples/audit/api/")) auditApiRequests += 1;
+    });
+
+    await page.goto("/tech-audit/", { waitUntil: "networkidle" });
+    const footerLink = page.getByRole("link", { name: "Run the free check", exact: true });
+    await expect(footerLink).toHaveAttribute("data-no-vt", "true");
+    const navigation = page.waitForURL("**/examples/audit/", { waitUntil: "domcontentloaded" });
+    await footerLink.click();
+    await navigation;
+
+    await expect(page.locator("#auditForm")).toBeVisible();
+    expect(auditDocuments).toBe(1);
+    expect(auditApiRequests).toBe(0);
+  },
+);
+
 for (const [path, chunk, composition] of [["/", "Home", ".lf-home-main"], ["/nationwide/", "Nationwide", ".lf-pagehero"]]) {
   test(`${path} retains its complete first response while the page code loads @all-projects`, async ({ page }) => {
     let releaseChunk = () => {};
