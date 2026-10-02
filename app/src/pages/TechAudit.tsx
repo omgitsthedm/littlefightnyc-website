@@ -655,15 +655,15 @@ export default function TechAudit() {
             <Link
               className="lf-audit-intro__proof-image"
               to="/case-studies/hair-by-rachel-charles/"
-              aria-label="Read the Hair By Rachel Charles case study"
+              aria-label="Read the Hair By Rachel case study"
             >
               <picture>
                 <source media="(min-width: 64rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
                 <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />
-                <img {...skelImg} src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel Charles booking website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
+                <img {...skelImg} src="/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" alt="The Hair By Rachel booking website with Rachel’s name and portrait visible" width={780} height={1688} loading="lazy" decoding="async" />
               </picture>
             </Link>
-            <span className="lf-audit-intro__caption">Hair By Rachel Charles — a real client website, with clear services, work to explore, and a direct path to book.</span>
+            <span className="lf-audit-intro__caption">Hair By Rachel — a real client website, with clear services, work to explore, and a direct path to book.</span>
             <span className="lf-audit-intro__proof-links">
               <Link to="/case-studies/hair-by-rachel-charles/">See the website and what we improved</Link>
             </span>
@@ -1088,7 +1088,7 @@ export default function TechAudit() {
                 <p className="lf-audit__example-label">Public work example</p>
                 <h2 id="lf-audit-example-title">Keep the booking system. Make the path clearer.</h2>
                 <p className="lf-audit__example-lead">
-                  Hair By Rachel Charles kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
+                  Hair By Rachel kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
                 </p>
                 <dl className="lf-audit__example-steps">
                   <div>
