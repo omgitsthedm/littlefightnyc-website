@@ -186,6 +186,24 @@ async function verifyPublicCaseShareCards(page) {
   return '9 public client cases have dedicated, locally resolving og:image cards';
 }
 
+async function assertCaseBriefClearsStickyRail(page, viewport) {
+  const storyLink = page.locator('.case-opening a[href="#case-brief"]');
+  await storyLink.click();
+  await page.waitForFunction(() => {
+    const target = document.querySelector('#case-brief');
+    const rail = document.querySelector('.direct-contact-rail');
+    if (!target || !rail) return false;
+    return target.getBoundingClientRect().top >= rail.getBoundingClientRect().bottom + 8;
+  }, null, { timeout: 5_000 });
+  const positions = await page.evaluate(() => {
+    const target = document.querySelector('#case-brief .case-label')?.getBoundingClientRect();
+    const rail = document.querySelector('.direct-contact-rail')?.getBoundingClientRect();
+    return { labelTop: target?.top, railBottom: rail?.bottom };
+  });
+  assert.ok(positions.labelTop >= positions.railBottom + 8, `${viewport.width}px case story label (${positions.labelTop}px) is obscured by sticky contact rail (${positions.railBottom}px)`);
+  return positions;
+}
+
 async function verifyStaticFallback(browser) {
   const { context, page } = await makePage(browser, { width: 390, height: 844 }, { javaScriptEnabled: false });
   try {
@@ -316,8 +334,10 @@ async function run() {
           const workOverflow = await assertNoOverflow(page, `${viewport.width}px work index`);
           await go(page, '/case-studies/chromatic-painting-design/');
           assert.match(await page.locator('h1').first().innerText(), /Chromatic Painting/i, `${viewport.width}px case heading`);
+          let caseBrief;
+          if (viewport.width <= 390) caseBrief = await assertCaseBriefClearsStickyRail(page, viewport);
           const caseOverflow = await assertNoOverflow(page, `${viewport.width}px Chromatic case`);
-          report.viewports.push({ ...viewport, workOverflow, caseOverflow });
+          report.viewports.push({ ...viewport, workOverflow, caseOverflow, caseBrief });
         } finally { await context.close(); }
       }
       return '320, 390, 768, and 1440px all have visible headings and no overflow';
