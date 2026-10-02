@@ -2,23 +2,16 @@
   "source": "Approved revision 8 tile mosaic and shared reader review, October 2 2026",
   "sourceRevision": "297f0d4806d79becbb0122657a5d8c5bfd8afcb1",
   "preservedTiles": 110,
-  "cssOrder": [
-    "canvas.css",
-    "scenes.css",
-    "enamel.css",
-    "keynote-shell.css",
-    "keynote-tiles.css",
-    "tile-motion.css",
-    "lab-art.css",
-    "lab-content.css",
-    "anchor-grid.css",
-    "tile-compositions.css",
-    "header-menu.css",
-    "anchor-trace.css",
-    "answer-system.css",
-    "photo-albums.css",
-    "mineral-language.css"
-  ],
   "reviewVerifiedAt": "2026-10-02",
-  "routeRecords": 380
+  "routeRecords": 380,
+  "activeCssOrder": [
+    "base.css",
+    "reader.css",
+    "vendor/reader-website.css",
+    "site.css",
+    "cases.css",
+    "topics.css",
+    "tile-art.css",
+    "vendor/tile-motion.css"
+  ]
 }

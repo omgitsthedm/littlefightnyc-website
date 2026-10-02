@@ -4,8 +4,10 @@
  * This is deliberately an end-user contract, rather than an implementation
  * snapshot: it proves original destinations survive the re-layout, every
  * topic can be read and opened, review evidence remains attributable, and the
- * document stays useful when JavaScript is unavailable. It never follows a
- * Google review link or permits a non-GET request.
+ * document stays useful when JavaScript is unavailable. It also uses genuine
+ * wheel, keyboard, and CDP touch input so a fixed-height shell cannot mask a
+ * broken homepage. It never follows a Google review link or permits a non-GET
+ * request.
  *
  *   TOPIC_MOSAIC_URL=http://127.0.0.1:4396 node scripts/verify-topic-mosaic.cjs
  */
@@ -84,6 +86,138 @@ async function makePage(browser, viewport, javaScriptEnabled = true) {
 async function waitForHome(page) {
   await page.goto(`${base}/`, { waitUntil: 'networkidle', timeout: 60_000 });
   await page.locator('main#canvas.topic-canvas').waitFor({ state: 'visible' });
+}
+
+async function scrollMetrics(page) {
+  return page.evaluate(() => {
+    const root = document.scrollingElement || document.documentElement;
+    return {
+      top: root.scrollTop,
+      scrollHeight: root.scrollHeight,
+      clientHeight: root.clientHeight,
+      windowY: window.scrollY,
+    };
+  });
+}
+
+async function assertInputScrollingAndReaderResume(browser) {
+  const desktop = await makePage(browser, { width: 1440, height: 940 });
+  try {
+    await waitForHome(desktop.page);
+    const initial = await scrollMetrics(desktop.page);
+    assert.ok(initial.scrollHeight > initial.clientHeight + 300,
+      `desktop homepage must be a scrollable document, got ${initial.scrollHeight}px/${initial.clientHeight}px`);
+
+    // These are browser input events, never window.scrollTo/scrollIntoView.
+    await desktop.page.mouse.move(720, 720);
+    await desktop.page.mouse.wheel(0, 720);
+    await desktop.page.waitForTimeout(180);
+    const afterWheel = await scrollMetrics(desktop.page);
+    assert.ok(afterWheel.top > 80, `desktop wheel input did not scroll homepage: ${JSON.stringify(afterWheel)}`);
+
+    await desktop.page.keyboard.press('Home');
+    await desktop.page.waitForFunction(() => window.scrollY < 8, null, { timeout: 1_500 });
+    const afterHome = await scrollMetrics(desktop.page);
+    assert.ok(afterHome.top < 8, `Home key did not return desktop homepage to its beginning: ${JSON.stringify(afterHome)}`);
+    const source = desktop.page.locator('#topic-web a.tile[data-anchor="web"]').first();
+    await source.waitFor({ state: 'visible' });
+    const href = await source.getAttribute('href');
+    await source.click();
+    await desktop.page.locator('#detail[open]').waitFor({ state: 'visible' });
+    await desktop.page.keyboard.press('Escape');
+    await desktop.page.waitForFunction(() => !document.querySelector('#detail')?.open);
+    assert.equal(await desktop.page.evaluate(() => document.activeElement?.getAttribute('href')), href,
+      'closing a reader must restore focus to the source tile');
+    await desktop.page.mouse.wheel(0, 720);
+    await desktop.page.waitForTimeout(180);
+    const afterCloseWheel = await scrollMetrics(desktop.page);
+    assert.ok(afterCloseWheel.top > 80,
+      `desktop homepage did not resume wheel scrolling after reader close: ${JSON.stringify(afterCloseWheel)}`);
+    await desktop.page.keyboard.press('Home');
+    await desktop.page.waitForFunction(() => window.scrollY < 8, null, { timeout: 1_500 });
+    await desktop.page.keyboard.press('PageDown');
+    await desktop.page.waitForTimeout(180);
+    const afterPageDown = await scrollMetrics(desktop.page);
+    assert.ok(afterPageDown.top > 80, `PageDown did not scroll homepage: ${JSON.stringify(afterPageDown)}`);
+  } finally { await desktop.context.close(); }
+
+  const mobile = await makePage(browser, { width: 390, height: 844 });
+  try {
+    await waitForHome(mobile.page);
+    const initial = await scrollMetrics(mobile.page);
+    assert.ok(initial.scrollHeight > initial.clientHeight + 300,
+      `mobile homepage must be a scrollable document, got ${initial.scrollHeight}px/${initial.clientHeight}px`);
+    const cdp = await mobile.context.newCDPSession(mobile.page);
+    const point = (x, y) => ({ x, y, id: 1, radiusX: 1, radiusY: 1, force: 1 });
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point(195, 720)] });
+    for (const y of [650, 570, 490, 410, 330]) {
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [point(195, y)] });
+      await mobile.page.waitForTimeout(25);
+    }
+    await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+    await mobile.page.waitForTimeout(220);
+    const afterTouch = await scrollMetrics(mobile.page);
+    assert.ok(afterTouch.top > 80, `mobile touch input did not scroll homepage: ${JSON.stringify(afterTouch)}`);
+  } finally { await mobile.context.close(); }
+
+  return 'desktop wheel and PageDown scroll, reader close resumes wheel scrolling, and mobile CDP touch scrolls';
+}
+
+async function assertResponsiveAnchorPresentation(browser) {
+  const measurements = [];
+  for (const viewport of [{ width: 1440, height: 940 }, { width: 320, height: 720 }, { width: 390, height: 844 }]) {
+    const { context, page } = await makePage(browser, viewport);
+    try {
+      await waitForHome(page);
+      const presentation = await page.evaluate(() => {
+        const visible = node => {
+          const style = getComputedStyle(node);
+          const rect = node.getBoundingClientRect();
+          return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0 && rect.width > 2 && rect.height > 2;
+        };
+        const webPhoto = document.querySelector('#topic-web a.tile[data-anchor="web"] .topic-anchor-photo img');
+        const icons = [...document.querySelectorAll('.topic-section[data-topic]:not(#topic-reviews) .topic-anchor-icon')]
+          .map(node => {
+            const rect = node.getBoundingClientRect();
+            return { width: rect.width, height: rect.height, visible: visible(node) };
+          });
+        const grid = document.querySelector('#topic-web [data-topic-grid]');
+        const columns = getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length;
+        const photoRect = webPhoto?.getBoundingClientRect();
+        return {
+          photo: webPhoto ? {
+            visible: visible(webPhoto), complete: webPhoto.complete,
+            naturalWidth: webPhoto.naturalWidth, width: photoRect.width, height: photoRect.height,
+          } : null,
+          icons,
+          columns,
+        };
+      });
+      assert.ok(presentation.photo, `${viewport.width}px Website anchor needs its contextual photo`);
+      assert.ok(presentation.photo.visible && presentation.photo.complete && presentation.photo.naturalWidth > 0
+        && presentation.photo.width > 32 && presentation.photo.height > 20,
+      `${viewport.width}px Website anchor photo is not visibly rendered: ${JSON.stringify(presentation.photo)}`);
+      assert.equal(presentation.icons.length, topics.length, `${viewport.width}px needs one icon frame for every service anchor`);
+      assert.ok(presentation.icons.every(icon => icon.visible), `${viewport.width}px service anchor icon is hidden: ${JSON.stringify(presentation.icons)}`);
+      const reference = presentation.icons[0];
+      assert.ok(presentation.icons.every(icon => Math.abs(icon.width - reference.width) <= 1 && Math.abs(icon.height - reference.height) <= 1),
+        `${viewport.width}px service anchor icon frames are inconsistent: ${JSON.stringify(presentation.icons)}`);
+      if (viewport.width <= 1000) assert.equal(presentation.columns, 6, `${viewport.width}px topic mosaic must use six columns`);
+      else assert.equal(presentation.columns, 12, `${viewport.width}px topic mosaic must use twelve columns`);
+      measurements.push({ viewport: viewport.width, ...presentation });
+    } finally { await context.close(); }
+  }
+
+  for (const viewport of [{ width: 768, height: 1024 }, { width: 1000, height: 900 }, { width: 1001, height: 900 }]) {
+    const { context, page } = await makePage(browser, viewport);
+    try {
+      await waitForHome(page);
+      const columns = await page.locator('#topic-web [data-topic-grid]').evaluate(node => getComputedStyle(node).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length);
+      assert.equal(columns, viewport.width <= 1000 ? 6 : 12,
+        `${viewport.width}px topic mosaic must use ${viewport.width <= 1000 ? 6 : 12} columns`);
+    } finally { await context.close(); }
+  }
+  return `Website anchor photo is visible at phone/desktop; equal icon frames; six-column layout through 1000px (${measurements.map(item => `${item.viewport}px`).join(', ')})`;
 }
 
 async function assessGeometry(page, width) {
@@ -393,6 +527,8 @@ async function run() {
         await entry.page.screenshot({ path: path.join(screenshots, `topic-mosaic-${viewport.width}.png`), fullPage: true });
       } finally { await entry.context.close(); }
     }
+    await check('homepage accepts real desktop wheel and keyboard input, mobile touch input, and resumes after a reader closes', () => assertInputScrollingAndReaderResume(browser));
+    await check('Website anchor photos and equal icon frames remain visible at phone sizes with six columns through 1000px', () => assertResponsiveAnchorPresentation(browser));
     await check('no-JavaScript homepage remains a complete readable document', () => assertNoJavaScript(browser));
     await check('ordinary readers and the VERA companion keep useful contextual figures', () => assertReaderContextFigures(browser));
     assert.deepEqual(report.blockedMutations, [], `unexpected mutating requests: ${JSON.stringify(report.blockedMutations)}`);

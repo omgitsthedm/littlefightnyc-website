@@ -5,7 +5,7 @@
   const canvas = document.querySelector('#canvas');
   if (!canvas) return;
 
-  const phone = matchMedia('(max-width:760px)');
+  const phone = matchMedia('(max-width:1000px)');
   const grids = () => [...canvas.querySelectorAll('[data-topic-grid]')];
   const integer = (value, fallback) => {
     const number = Number.parseInt(value || '', 10);
