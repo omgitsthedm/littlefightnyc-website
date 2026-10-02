@@ -193,3 +193,10 @@
 .reader-longform .rw-ownership h2 em{color:#a23b08}
 @media(prefers-reduced-motion:reduce){.reader-longform .rw-project-media>img{transform:none!important}}
 body.no-motion .rw-project-media>img{transform:none!important}
+
+/* The website proof is a path into the actual case, not a static decoration. */
+.reader-longform .rw-project-link{display:block;color:inherit;text-decoration:none}.reader-longform .rw-project-caption-link{color:inherit;text-decoration:none}
+.reader-longform .rw-project-action{display:inline-flex;align-items:center;gap:.34rem;width:max-content;margin-top:.55rem;color:var(--rw-blue);font:600 .82rem/1.2 ManropeReader,Manrope,Arial,sans-serif;letter-spacing:-.015em}
+@media(hover:hover){.reader-longform .rw-project-link:hover .rw-project-media{box-shadow:0 28px 62px rgba(0,0,0,.34)}.reader-longform .rw-project-caption-link:hover .rw-project-action{text-decoration:underline;text-underline-offset:.24em}}
+.reader-longform .rw-project-link:focus-visible{outline:2px solid var(--rw-orange);outline-offset:7px;border-radius:.7rem}.reader-longform .rw-project-caption-link:focus-visible{outline:2px solid var(--rw-orange);outline-offset:4px;border-radius:.2rem}.reader-longform .rw-project-caption-link:focus-visible .rw-project-action{color:var(--rw-orange);text-decoration:underline;text-underline-offset:.24em}
+@media(prefers-reduced-motion:reduce){.reader-longform .rw-project-link:hover .rw-project-media{box-shadow:0 24px 55px rgba(0,0,0,.27)}}

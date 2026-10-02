@@ -56,4 +56,5 @@ __pycache__/
 # Local browser evidence and the single hosted-review staging artifact.
 .lifi/evidence/tile-preview/
 .lifi/evidence/tile-production/
+.lifi/evidence/case-editorial/
 .review-dist/

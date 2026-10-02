@@ -1,0 +1,68 @@
+{
+  "chromatic-painting-design": {
+    "question": "One studio.\nTwo starting points.",
+    "approach": "Put the craft\nin the foreground.",
+    "mobile": "The studio,\nwithin reach.",
+    "handoff": "From seeing the work\nto starting a project."
+  },
+  "hair-by-rachel-charles": {
+    "question": "A new client needs\na little guidance.",
+    "approach": "The right service.\nThen the calendar.",
+    "mobile": "Make room for\nthe first visit.",
+    "handoff": "Meet Rachel.\nFind your next step."
+  },
+  "cc-films": {
+    "question": "The film has a mood.\nThe site should, too.",
+    "approach": "One film.\nDifferent audiences.",
+    "mobile": "The story travels\nwith you.",
+    "handoff": "Fans, press, guests.\nA path for each."
+  },
+  "after-hours-agenda": {
+    "question": "A drop should feel\nlike the brand.",
+    "approach": "Keep the attitude.\nConnect the details.",
+    "mobile": "Same attitude.\nSmaller screen.",
+    "handoff": "From a new drop\nto the doorstep."
+  },
+  "clearhelp": {
+    "question": "Start with the person\nlooking for help.",
+    "approach": "A situation. A place.\nA useful starting point.",
+    "mobile": "Room for the person\non the other side.",
+    "handoff": "Find help.\nOr offer it."
+  },
+  "easy-tiger": {
+    "question": "Before the first drink,\na few practical details.",
+    "approach": "The room. The menu.\nThe way there.",
+    "mobile": "The neighborhood bar,\nin your pocket.",
+    "handoff": "One menu address.\nA way to keep it current."
+  },
+  "grand-funding-llc": {
+    "question": "Different projects.\nDifferent questions.",
+    "approach": "Make room\nto understand the deal.",
+    "mobile": "The next conversation\nstarts with context.",
+    "handoff": "Useful preparation.\nA specific review."
+  },
+  "logan-loans": {
+    "question": "A first home is not\nan investor’s question.",
+    "approach": "Start with\nthe visitor’s situation.",
+    "mobile": "A little more context,\nwherever you are.",
+    "handoff": "Learn. Plan.\nAsk the lender."
+  },
+  "the-break-room": {
+    "question": "Feel the room.\nThen plan the visit.",
+    "approach": "Give the atmosphere\nsome practical company.",
+    "mobile": "Your next night out,\nwithin reach.",
+    "handoff": "Games, food, directions.\nOne place to begin."
+  },
+  "the-tarot-hotline": {
+    "question": "The question comes\nbefore the format.",
+    "approach": "A voice note? A talk?\nMake the choice clear.",
+    "mobile": "A personal service.\nA personal first step.",
+    "handoff": "Understand the reading\nbefore choosing one."
+  },
+  "venuecircuit": {
+    "question": "One night.\nToo many spreadsheets.",
+    "approach": "Bring the night together.\nKeep the money distinct.",
+    "mobile": "The numbers,\nclose at hand.",
+    "handoff": "A working closeout.\nAn open beta."
+  }
+}

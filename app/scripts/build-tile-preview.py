@@ -12,7 +12,8 @@ import json
 import re
 import shutil
 import sys
-from tile_content import render_legacy_sections, render_case_source
+from tile_content import render_legacy_sections
+from case_studies import render_case, render_work
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -61,6 +62,8 @@ def write(path, value):
     target.write_text(value)
 
 cases = {c['slug']:c for c in load('cases.json')}
+case_visuals = load('case-visuals.json')['cases']
+case_headlines = load('case-headlines.json')
 albums = load('albums.json')
 labs = load('labs.json')
 lab_by_path = {'/examples/lab/concepts/'+x['slug']+'/':x for x in labs}
@@ -167,6 +170,17 @@ def normalize(p):
 
 def article(p):
     q=normalize(p);path=q['path']
+    case_slug=path.strip('/').split('/')[-1]
+    if (path.startswith('/case-studies/') and case_slug in cases) or path=='/examples/':
+        if path=='/examples/':
+            q.update(heading='Made for their world.', title='Website Work, Products & Labs | Little Fight NYC', description='Explore real websites for independent businesses, Little Fight products and working Labs. See the project story and try the live work.')
+            body=render_work(p,cases,case_visuals,labs,LAB_IMAGES,link)
+        else:
+            q.update(heading=display(cases[case_slug]['name']))
+            body=render_case(cases[case_slug],p,cases,case_visuals,link,case_headlines.get(case_slug,{}))
+        body+=contact(path,'Your business has its own story. Let’s build a website that feels like it.')
+        body+='<nav class="story-bottom" aria-label="Keep exploring">'+link('Explore all the tiles','/')+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+link('Google reviews','/reviews/')+link('Privacy','/legal/')+'</nav>'
+        return q,body
     slugs=[s for s in q.get('heroSlugs',proof_slugs if path.startswith('/industries/') or path in ['/services/custom-local-websites/','/nationwide/'] else []) if s in cases and cases[s].get('image')]
     art=''.join(f'<figure>{picture(s,i==0)}<figcaption>{E(display(cases[s]["name"]))}</figcaption></figure>' for i,s in enumerate(slugs) if s in cases)
     if path.startswith('/photos/'):
@@ -188,8 +202,6 @@ def article(p):
     body=f'<header class="story-hero"><div><p class="story-kicker">{E(q["eyebrow"])}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p><nav class="contact-actions" aria-label="Your next step">{primary_action}</nav></div><div class="story-art">{art}</div></header>'
     if path=='/services/custom-local-websites/':
         body+=(CONTENT/'website-body.html').read_text()
-    elif path.startswith('/case-studies/') and path.strip('/').split('/')[-1] in cases:
-        body+=render_case_source(p,cases[path.strip('/').split('/')[-1]],display,link)
     elif p.get('contentBlocks') and path not in authored and path not in lab_by_path:
         body+=render_legacy_sections(p,display,link)
     else:
@@ -236,11 +248,15 @@ pages['/services/it-support/']={'path':'/services/it-support/','title':'New York
 
 def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
+    visual=case_visuals.get(path.strip('/').split('/')[-1],{}) if path.startswith('/case-studies/') else {}
+    share=visual.get('social') or visual.get('desktop') or {}
+    share_image=E(ORIGIN+share.get('src','/assets/social/og-tiles.jpg'))
+    share_alt=E(share.get('alt','Little Fight NYC — custom websites for independent businesses'))
     graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png'}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':q.get('heading'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{ORIGIN}/assets/social/og-tiles.jpg"><meta property="og:image:alt" content="Little Fight NYC — custom websites for independent businesses"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{ORIGIN}/assets/social/og-tiles.jpg"><meta name="twitter:image:alt" content="Little Fight NYC — custom websites for independent businesses"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight<span class="nyc">NYC</span></span></a><span class="header-purpose pill">Custom websites. Built nationwide.</span><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false">Explore <span aria-hidden="true">☰</span></button><button class="motion pill" id="motion-toggle" aria-pressed="false">Motion <span aria-hidden="true">◌</span></button></header>'
@@ -319,7 +335,7 @@ write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC
 
 css='\n'.join((UI/'vendor'/name).read_text() for name in load('import-provenance.json')['cssOrder'])
 css=re.sub(r'url\(([\"\']?)(assets/)',r'url(\1/\2',css)
-css+='\n'+(UI/'reader.css').read_text()+'\n'+(UI/'vendor/reader-website.css').read_text()+'\n'+(UI/'site.css').read_text()
+css+='\n'+(UI/'reader.css').read_text()+'\n'+(UI/'vendor/reader-website.css').read_text()+'\n'+(UI/'site.css').read_text()+'\n'+(UI/'cases.css').read_text()
 write('site.css',css)
 for name in ['tile-motion.js','mosaic-layout.js']:shutil.copy2(UI/'vendor'/name,OUT/name)
 shutil.copy2(UI/'site.js',OUT/'site.js')

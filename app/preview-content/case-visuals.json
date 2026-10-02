@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "purpose": "Verified responsive public-case captures for image-led Little Fight NYC proof. Each derivative is a resized, metadata-stripped copy of the stated public source asset; it does not represent an unverified live result.",
+  "cases": {
+    "after-hours-agenda": {
+      "desktop": { "src": "/assets/proof/editorial/case-after-hours-agenda-desktop-960.webp", "width": 960, "height": 720, "alt": "After Hours Agenda storefront homepage on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-after-hours-agenda-mobile-390.webp", "width": 390, "height": 2400, "alt": "After Hours Agenda storefront on a phone." },
+      "caption": "Public storefront, shown on desktop and phone.",
+      "source": { "kind": "Little Fight public product capture", "sourceAsset": "app/public/assets/case-after-hours-agenda.webp", "mobileSourceAsset": "app/public/assets/case-after-hours-agenda-explore-mobile.webp" }
+    },
+    "cc-films": {
+      "desktop": { "src": "/assets/proof/editorial/case-cc-films-desktop-960.webp", "width": 960, "height": 667, "alt": "CC Films official film website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-cc-films-mobile-480.webp", "width": 480, "height": 1039, "alt": "CC Films official film website on a phone." },
+      "social": { "src": "/assets/social/og-case-cc-films.jpg", "width": 1200, "height": 630, "alt": "CC Films website shown on desktop and phone." },
+      "caption": "Public client website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-cc-films-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-cc-films-mobile-390.webp" }
+    },
+    "chromatic-painting-design": {
+      "desktop": { "src": "/assets/proof/editorial/case-chromatic-painting-design-desktop-960.webp", "width": 960, "height": 667, "alt": "Chromatic Painting and Design project website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-chromatic-painting-design-mobile-480.webp", "width": 480, "height": 1039, "alt": "Chromatic Painting and Design project website on a phone." },
+      "social": { "src": "/assets/social/og-case-chromatic-painting-design.jpg", "width": 1200, "height": 630, "alt": "Chromatic Painting and Design website shown on desktop and phone." },
+      "caption": "Public client website for painting and mural projects, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-chromatic-painting-design-mobile-390.webp" }
+    },
+    "clearhelp": {
+      "desktop": { "src": "/assets/proof/editorial/case-clearhelp-desktop-960.webp", "width": 960, "height": 667, "alt": "ClearHelp resource-search website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-clearhelp-mobile-480.webp", "width": 480, "height": 1039, "alt": "ClearHelp resource-search website on a phone." },
+      "social": { "src": "/assets/social/og-case-clearhelp.jpg", "width": 1200, "height": 630, "alt": "ClearHelp resource-finding website shown on desktop and phone." },
+      "caption": "Public resource-finding website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-clearhelp-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-clearhelp-mobile-390.webp" }
+    },
+    "easy-tiger": {
+      "desktop": { "src": "/assets/proof/editorial/case-easy-tiger-desktop-960.webp", "width": 960, "height": 667, "alt": "Easy Tiger Bar website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-easy-tiger-mobile-480.webp", "width": 480, "height": 1039, "alt": "Easy Tiger Bar website on a phone." },
+      "social": { "src": "/assets/social/og-case-easy-tiger.jpg", "width": 1200, "height": 630, "alt": "Easy Tiger Bar website shown on desktop and phone." },
+      "caption": "Public client venue website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-easy-tiger-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-easy-tiger-mobile-390.webp" }
+    },
+    "grand-funding-llc": {
+      "desktop": { "src": "/assets/proof/editorial/case-grand-funding-llc-desktop-960.webp", "width": 960, "height": 667, "alt": "Grand Funding information website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-grand-funding-llc-mobile-480.webp", "width": 480, "height": 1039, "alt": "Grand Funding information website on a phone." },
+      "social": { "src": "/assets/social/og-case-grand-funding-llc.jpg", "width": 1200, "height": 630, "alt": "Grand Funding information website shown on desktop and phone." },
+      "caption": "Public client information website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-grand-funding-llc-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-grand-funding-llc-mobile-390.webp" }
+    },
+    "hair-by-rachel-charles": {
+      "desktop": { "src": "/assets/proof/editorial/case-hair-by-rachel-charles-desktop-960.webp", "width": 960, "height": 667, "alt": "Hair By Rachel salon website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-hair-by-rachel-charles-mobile-480.webp", "width": 480, "height": 1039, "alt": "Hair By Rachel salon website on a phone." },
+      "caption": "Public salon website with service guidance and booking, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-hair-by-rachel-charles-mobile-390.webp" }
+    },
+    "logan-loans": {
+      "desktop": { "src": "/assets/proof/editorial/case-logan-loans-desktop-960.webp", "width": 960, "height": 667, "alt": "Logan Loans information website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-logan-loans-mobile-480.webp", "width": 480, "height": 1039, "alt": "Logan Loans information website on a phone." },
+      "social": { "src": "/assets/social/og-case-logan-loans.jpg", "width": 1200, "height": 630, "alt": "Logan Loans information website shown on desktop and phone." },
+      "caption": "Public client information website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-logan-loans-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-logan-loans-mobile-390.webp" }
+    },
+    "the-break-room": {
+      "desktop": { "src": "/assets/proof/editorial/case-the-break-room-desktop-960.webp", "width": 960, "height": 667, "alt": "The Break Room pool-hall website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-the-break-room-mobile-480.webp", "width": 480, "height": 1039, "alt": "The Break Room pool-hall website on a phone." },
+      "social": { "src": "/assets/social/og-case-the-break-room.jpg", "width": 1200, "height": 630, "alt": "The Break Room pool-hall website shown on desktop and phone." },
+      "caption": "Public client venue website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-the-break-room-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-the-break-room-mobile-390.webp" }
+    },
+    "the-tarot-hotline": {
+      "desktop": { "src": "/assets/proof/editorial/case-the-tarot-hotline-desktop-960.webp", "width": 960, "height": 667, "alt": "The Tarot Hotline website on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-the-tarot-hotline-mobile-480.webp", "width": 480, "height": 1039, "alt": "The Tarot Hotline website on a phone." },
+      "social": { "src": "/assets/social/og-case-the-tarot-hotline.jpg", "width": 1200, "height": 630, "alt": "The Tarot Hotline website shown on desktop and phone." },
+      "caption": "Public client service website, shown on desktop and phone.",
+      "source": { "kind": "Approved public client capture", "sourceAsset": "app/public/assets/cases/2026-09-29/case-the-tarot-hotline-desktop-1440.webp", "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-the-tarot-hotline-mobile-390.webp" }
+    },
+    "venuecircuit": {
+      "desktop": { "src": "/assets/proof/editorial/case-venuecircuit-desktop-960.webp", "width": 960, "height": 720, "alt": "VenueCircuit venue closeout product on desktop." },
+      "mobile": { "src": "/assets/proof/editorial/case-venuecircuit-mobile-390.webp", "width": 390, "height": 2400, "alt": "VenueCircuit venue closeout product on a phone." },
+      "caption": "Little Fight public product, shown on desktop and phone.",
+      "source": { "kind": "Little Fight public product capture", "sourceAsset": "app/public/assets/case-venuecircuit.webp", "mobileSourceAsset": "app/public/assets/case-venuecircuit-explore-mobile.webp" }
+    }
+  }
+}
