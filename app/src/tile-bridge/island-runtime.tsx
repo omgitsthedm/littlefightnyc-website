@@ -1,4 +1,5 @@
 import { createRoot, type Root } from "react-dom/client";
+import { flushSync } from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import type { ComponentType, MouseEvent } from "react";
 import SiteNotices from "@/components/SiteNotices";
@@ -18,6 +19,33 @@ const roots = new WeakMap<HTMLElement, Root>();
 let noticesRoot: Root | undefined;
 let noticesDialog: HTMLDialogElement | undefined;
 let consentVisibilityListenerInstalled = false;
+
+/**
+ * A static inquiry is the reliable first implementation of the contact path.
+ * Its island must never replace a form while a visitor is using it, including
+ * browser autofill that has not dispatched an input event yet.
+ */
+function nativeInquiryIsEngaged(host: HTMLElement) {
+  const form = host.querySelector<HTMLFormElement>("form.static-inquiry");
+  if (!form) return false;
+
+  const active = document.activeElement;
+  if (active instanceof HTMLElement && form.contains(active)) return true;
+
+  return Array.from(form.elements).some((control) => {
+    if (!(control instanceof HTMLInputElement || control instanceof HTMLTextAreaElement || control instanceof HTMLSelectElement)) return false;
+    if (control instanceof HTMLInputElement && control.type === "hidden") return false;
+    const style = window.getComputedStyle(control);
+    if (style.display === "none" || style.visibility === "hidden") return false;
+    if (control instanceof HTMLInputElement) {
+      return control.type === "checkbox" || control.type === "radio"
+        ? control.checked !== control.defaultChecked
+        : control.value !== control.defaultValue;
+    }
+    if (control instanceof HTMLTextAreaElement) return control.value !== control.defaultValue;
+    return Array.from(control.options).some((option) => option.selected !== option.defaultSelected);
+  });
+}
 
 /**
  * Existing pages use react-router Link for their own application shell. Tile
@@ -47,15 +75,27 @@ function preserveDocumentNavigation(event: MouseEvent<HTMLElement>) {
 export async function mountProductionIsland(host: HTMLElement, kind: IslandKind) {
   if (roots.has(host)) return;
   const { default: Page } = await pageImporters[kind]();
+  // This second guard is intentionally after the dynamic import. A visitor can
+  // focus, type, or accept browser autofill while the route chunk is loading.
+  if (kind === "tech-audit" && nativeInquiryIsEngaged(host)) {
+    host.dataset.productionIslandMode = "native-inquiry";
+    return;
+  }
   const root = createRoot(host);
   roots.set(host, root);
-  root.render(
+  host.dataset.productionIslandMode = "enhanced";
+  const application = (
     <BrowserRouter>
       <div className={`production-island production-island--${kind}`} onClickCapture={preserveDocumentNavigation}>
         <Page />
       </div>
-    </BrowserRouter>,
+    </BrowserRouter>
   );
+  // The inquiry handoff must be one uninterrupted task: after the native
+  // guard has found an untouched form, commit replacement before the next
+  // input event can arrive. Other islands retain React's normal scheduling.
+  if (kind === "tech-audit") flushSync(() => root.render(application));
+  else root.render(application);
 }
 
 export async function openConsentNotices() {
