@@ -1,0 +1,239 @@
+/* Topic rooms turn one large mosaic into four readable, independently packed collections. */
+.mosaic-home .app-shell{max-width:1560px;padding:14px clamp(14px,2.5vw,34px) 32px}
+.mosaic-home #canvas{display:grid;gap:clamp(42px,7vw,96px);margin:0;padding:0;background:transparent}
+.mosaic-home .topic-section{scroll-margin-top:16px;display:grid;gap:16px;min-width:0;container-type:inline-size}
+.mosaic-home .topic-heading{display:flex;align-items:center;gap:12px;min-height:48px;padding-inline:4px;color:#f6f4ef}
+.mosaic-home .topic-heading h2{margin:0;font:650 clamp(28px,4vw,56px)/.96 'Atkinson Hyperlegible Next',sans-serif;letter-spacing:-.055em}
+.mosaic-home .topic-heading :is(svg,.mineral-icon){display:grid;flex:none;width:34px;height:34px;color:var(--topic-pop)}
+.mosaic-home [data-topic-grid]{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row dense;grid-auto-rows:calc((100cqw - 134px)/12);gap:12px;min-width:0;padding:1px}
+
+.mosaic-home .topic-section[data-topic=web]{--topic-pop:#92bfff}
+.mosaic-home .topic-section[data-topic=it]{--topic-pop:#f5d95b}
+.mosaic-home .topic-section[data-topic=consulting]{--topic-pop:#a0df85}
+.mosaic-home .topic-section[data-topic=software]{--topic-pop:#f09bdd}
+.mosaic-home .topic-section[data-topic=reviews]{--topic-pop:#ff7839}
+/* Service cards use their exact existing family colors on the physical back.
+   Proof, album, Lab, brand, and review cards keep Little Fight orange even
+   when they live inside a service section. */
+.mosaic-home .tile[data-family=web]{--motion-pop:#92bfff}
+.mosaic-home .tile[data-family=it]{--motion-pop:#f5d95b}
+.mosaic-home .tile[data-family=consulting]{--motion-pop:#a0df85}
+.mosaic-home .tile[data-family=software]{--motion-pop:#f09bdd}
+.mosaic-home :is(.brand-tile,.review-tile,.tile[data-kind=case-study],.tile[data-kind=lab],.tile[data-kind=photo-album],.tile[data-family=brand]){--motion-pop:#ff7839}
+
+/* A card can be small only when it contains no text. Every human-readable
+   label gets enough space, a calm leading, and a proper touch target. */
+.mosaic-home [data-topic-grid]>.tile{grid-column:span var(--preferred-columns,1)!important;grid-row:span var(--preferred-rows,1)!important;min-width:0;min-height:44px}
+.mosaic-home [data-topic-grid] :is(.cell-title,.tile-title,.anchor-title,.topic-anchor-copy strong,.photo-album-tile__copy strong){font-size:max(18px,clamp(18px,3.1cqw,31px));line-height:1.04;overflow-wrap:anywhere}
+.mosaic-home [data-topic-grid] :is(.cell-kicker,.anchor-index,.proof-tile-label,.topic-anchor-copy small){font-size:max(16px,clamp(16px,1.8cqw,19px));line-height:1.16;letter-spacing:.015em}
+.mosaic-home [data-topic-grid] .answer-preview{font-size:clamp(18px,2.1cqw,24px);line-height:1.35}
+.mosaic-home .proof-tile-face>strong{font-size:clamp(16px,7cqw,26px);overflow-wrap:normal;padding-right:22px}
+.mosaic-home .proof-tile-face>img{object-fit:contain;background:#151519}
+.mosaic-home [data-topic-grid] :is(.cell-go,.anchor-go,.buyer-plus,.proof-tile-plus){display:grid;place-items:center;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1;color:var(--tile-paper,#fff);background:color-mix(in srgb,var(--motion-pop) 25%,transparent)}
+.mosaic-home [data-topic-grid] .proof-tile-plus{top:8px;right:8px;bottom:auto;width:24px!important;height:24px!important;font-size:22px}
+.mosaic-home [data-topic-grid] .tile:focus-visible{outline:3px solid var(--topic-pop);outline-offset:4px}
+
+/* The richer anchor front is shared by all four service rooms. It uses the
+   existing icon / photo assets instead of adding decorative duplicate art. */
+.mosaic-home .topic-anchor-face{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(106px,.9fr);gap:clamp(12px,2.2cqw,28px);align-items:center;padding:clamp(18px,3.5cqw,34px)}
+.mosaic-home .topic-anchor-copy{display:grid;align-content:center;gap:clamp(8px,1.5cqw,15px);min-width:0}
+.mosaic-home .topic-anchor-copy :is(span,strong,small){position:relative;z-index:2}
+.mosaic-home .topic-anchor-copy span{color:var(--motion-pop);font-size:18px;font-weight:750;letter-spacing:.02em}
+.mosaic-home .topic-anchor-copy strong{max-width:13ch;color:var(--tile-paper,#f7f4ed);font-size:clamp(24px,4cqw,54px)!important;letter-spacing:-.05em}
+.mosaic-home .topic-anchor-copy small{max-width:30ch;color:var(--mineral-muted,#ced1d5);font-size:18px!important}
+.mosaic-home .topic-anchor-art{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-width:0}
+.mosaic-home .topic-anchor-icon{display:block;flex:none;width:72px;height:72px;color:var(--motion-pop)}
+.mosaic-home .topic-anchor-photo{display:grid;gap:5px;width:min(100%,150px);min-width:0}
+.mosaic-home .topic-anchor-photo>img{display:block;width:100%;height:auto;max-height:96px;object-fit:contain;object-position:center;border:1px solid color-mix(in srgb,var(--motion-pop) 46%,#fff);border-radius:9px;box-shadow:0 12px 24px #0004;transform:rotate(2deg)}
+.mosaic-home .topic-anchor-photo>span{display:block;color:#e8e7e4;font-size:16px;line-height:1.15;text-align:right}
+.mosaic-home .topic-anchor-face .anchor-go{background:var(--motion-pop);color:#101014}
+
+/* Direct Google links remain normal anchors. Quotes are actual excerpts,
+   separate from the 3D material that appears only during reader transitions. */
+.mosaic-home .review-tile{display:grid;grid-template-rows:auto minmax(0,1fr) auto auto;align-content:space-between;gap:clamp(8px,1.2cqw,16px);padding:clamp(16px,2.3cqw,27px);background:linear-gradient(145deg,#27242c,#17171b 65%)!important}
+.mosaic-home .review-tile :is(blockquote,.review-quote){margin:0;max-width:17ch;color:#f7f3ec;font:600 clamp(18px,3.3cqw,30px)/1.08 'Atkinson Hyperlegible Next',sans-serif;letter-spacing:-.04em;text-wrap:balance}
+.mosaic-home .review-tile :is(.review-attribution,.review-name){display:block;font-size:16px;font-style:normal;color:#ffc8b0}
+.mosaic-home .review-tile :is(.review-stars,.google-stars){display:block;margin-top:2px;font-size:19px;line-height:1;color:#ffd267;letter-spacing:.12em}
+.mosaic-home .review-tile .review-source{display:block;font-size:16px;line-height:1.15;color:#dad9dc}
+.mosaic-home .review-tile .review-source span{color:#ffb18c;font-size:20px}
+.mosaic-home .review-tile .review-rating-only{margin:0;align-self:center;color:#f7f3ec;font-size:18px;line-height:1.25}
+
+/* The previous gallery rules assumed a hover-only presentation. These are
+   permanent, readable fronts: the label uses the existing short card title,
+   the artwork stays a supporting layer, and the affordance cannot cover copy. */
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich] .cell-face{isolation:isolate;min-width:0;min-height:0}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich] .cell-title{max-width:100%;min-width:0;overflow-wrap:normal;word-break:normal;hyphens:none}
+/* Homepage cards are entry points, never the expanded reader. Some legacy
+   cards carried an inline answer preview for the old single-grid treatment;
+   leaving it active centers a multi-paragraph stack outside a small tile. */
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich] .answer-preview{display:none!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-show-answer=true] .cell-face{gap:0!important;justify-content:center!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-face{padding:6px 9px;display:grid!important;grid-template-columns:minmax(0,1fr) 26px;align-items:center;gap:6px}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-face[data-short-label] .cell-title{display:none!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-face[data-short-label]::before{content:attr(data-short-label);display:block;min-width:0;color:var(--tile-paper,#f7f4ed);font:700 16px/1.08 'Atkinson Hyperlegible Next',sans-serif;letter-spacing:-.025em;overflow-wrap:normal;word-break:normal;hyphens:none}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-art{position:relative!important;inset:auto!important;display:block!important;width:26px!important;height:26px!important;opacity:.76!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-art :is(svg,.mineral-icon){width:100%!important;height:100%!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-rows="1"] .cell-go{display:none!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-columns="1"][data-rows="1"] .cell-face{display:flex!important;padding:8px!important;justify-content:center!important}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-columns="1"][data-rows="1"] .cell-face::before{display:none}
+.mosaic-home [data-topic-grid]>.tile[data-topic-rich][data-columns="1"][data-rows="1"] .cell-art{width:72%!important;height:72%!important}
+.mosaic-home [data-topic-grid] .buyer-plus{display:none!important}
+
+/* Fresh album markup has one real lead photograph, rather than the former
+   slideshow script's is-active class. Keep it visible before JavaScript loads. */
+.mosaic-home [data-topic-grid] .photo-album-tile__images>img:first-child{opacity:.76}
+.mosaic-home [data-topic-grid] .photo-album-tile__images>img{width:100%;height:100%;object-fit:cover}
+
+/* The home header is navigation, not a promotional strip. */
+.mosaic-home .topbar{display:flex;align-items:center;gap:8px;width:100%;height:auto;min-height:56px;margin:0 0 24px}
+.mosaic-home .topbar .header-purpose{display:none!important}
+.mosaic-home .primary-nav{display:flex;align-items:center;gap:4px;margin-right:auto}
+.mosaic-home .primary-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border-radius:999px;color:#e8e6e2;font-size:16px;text-decoration:none;white-space:nowrap}
+.mosaic-home .primary-nav a:hover,.mosaic-home .primary-nav a:focus-visible{background:#25252a}
+.mosaic-home .topbar :is(#explore-toggle,#motion-toggle){min-width:44px;min-height:44px;font-size:16px}
+.mosaic-home .dock{display:none!important}
+.mosaic-home .site-footer{display:block;width:100%;margin-top:clamp(44px,8vw,104px);padding:24px 0 0;border-top:1px solid #3a3a40}
+.mosaic-home .site-footer>.utility-nav{display:flex;justify-content:flex-start;width:100%;margin:0;padding:0;background:transparent;border-radius:0;font-size:16px}
+.mosaic-home .site-footer>.utility-nav :is(a,.privacy-control){display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;color:#d3d3d9;text-decoration:none}
+
+/* Readers and direct pages use the same complete header/footer, rather than
+   falling back to an older compact shell outside the home mosaic. */
+.topbar{display:flex;align-items:center;gap:8px;width:100%;min-height:56px;margin:0 0 24px}
+.page-shell>.topbar{height:auto}
+.topbar .header-purpose{display:none!important}
+.primary-nav{display:flex;align-items:center;gap:4px;margin-right:auto}
+.primary-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border-radius:999px;color:#e8e6e2;font-size:16px;text-decoration:none;white-space:nowrap}
+.primary-nav a:hover,.primary-nav a:focus-visible{background:#25252a}
+.primary-nav .start-button{background:#ff7839;color:#160c07;font-weight:700}.primary-nav .start-button:hover,.primary-nav .start-button:focus-visible{background:#ff9a70;color:#160c07}
+.mosaic-home .primary-nav a.start-button{background:#ff7839;color:#160c07}.mosaic-home .primary-nav a.start-button:hover,.mosaic-home .primary-nav a.start-button:focus-visible{background:#ff9a70;color:#160c07}
+.topbar :is(#explore-toggle,#motion-toggle){min-width:44px;min-height:44px;font-size:16px}
+.site-footer{display:block;width:100%;margin-top:44px;padding:24px 0 0;border-top:1px solid #3a3a40}
+.site-footer>.utility-nav{display:flex;justify-content:flex-start;width:100%;margin:0;padding:0;background:transparent;border-radius:0;font-size:16px}
+.site-footer>.utility-nav :is(a,.privacy-control){display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;color:#d3d3d9;text-decoration:none}
+
+/* Direct readers have a full two-row phone header. The contact rail belongs
+   beneath it so sticky positioning cannot sit on top of the primary nav. */
+.page-shell>.topbar+.direct-contact-rail{position:sticky;top:12px;z-index:10;margin:12px auto 20px!important}
+
+/* Every generated reader gets a visible, truthful visual companion. Images
+   remain contained; small illustration fallbacks use the original Phosphor
+   assets with reliable contrast on the mineral reader surface. */
+.lf-reader h1{color:#ff7839!important}
+.lf-reader .reader-context-visual{--reader-pop:#ff7839;display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:center;max-width:760px;margin:28px auto;padding:18px;border:1px solid rgb(255 255 255 / .14);border-radius:18px;background:linear-gradient(135deg,#24252b,#18191d);box-shadow:inset 0 1px rgb(255 255 255 / .06)}
+.lf-reader .reader-context-visual[data-reader-family=web]{--reader-pop:#92bfff}.lf-reader .reader-context-visual[data-reader-family=it]{--reader-pop:#f5d95b}.lf-reader .reader-context-visual[data-reader-family=consulting]{--reader-pop:#a0df85}.lf-reader .reader-context-visual[data-reader-family=software]{--reader-pop:#f09bdd}
+.lf-reader .reader-context-icon{display:block;width:64px;height:64px;object-fit:contain;filter:brightness(0) invert(1);opacity:.94}
+.lf-reader .reader-context-figure{display:grid;gap:10px;min-width:0;margin:0}.lf-reader .reader-context-image{display:block;width:100%;max-height:250px;object-fit:contain;object-position:center;border-radius:10px;background:#111216;outline:1px solid color-mix(in srgb,var(--reader-pop) 42%,transparent)}
+.lf-reader .reader-context-figure figcaption{font-size:16px;line-height:1.4;color:#d7d7db}.lf-reader .reader-context-figure figcaption a{color:var(--reader-pop);text-decoration-thickness:1px;text-underline-offset:3px}
+.lf-reader .reader-context-illustration{display:grid;place-items:center;min-height:92px;border-radius:12px;background:color-mix(in srgb,var(--reader-pop) 13%,#141519);outline:1px solid color-mix(in srgb,var(--reader-pop) 28%,transparent)}
+.lf-reader .reader-context-illustration-icon{display:block;width:56px;height:56px;object-fit:contain;filter:brightness(0) invert(1);opacity:.92}
+/* These targeted sizes win over the broad story-art image rule used by
+   older reader artwork. Context companions remain compact visual cues. */
+.lf-reader .story-art .reader-context-icon{grid-column:1!important;grid-row:1!important;justify-self:start!important;width:64px!important;height:64px!important;min-width:0!important;max-width:64px!important;aspect-ratio:1!important;object-fit:contain!important}
+.lf-reader .story-art .reader-context-illustration-icon{width:56px!important;height:56px!important;min-width:0!important;max-width:56px!important;aspect-ratio:1!important;object-fit:contain!important}
+/* reader.css treats every div and figure inside .story-art as gallery art.
+   Context helpers are a compact, semantic composition of their own. */
+.lf-reader .story-art>.reader-context-visual{grid-column:1/-1!important;width:100%!important;justify-self:stretch!important;display:grid!important;overflow:visible!important;border-radius:18px!important;background:linear-gradient(135deg,#24252b,#18191d)!important;outline:1px solid rgb(255 255 255 / .14)!important;box-shadow:inset 0 1px rgb(255 255 255 / .06)!important}
+.lf-reader .story-art .reader-context-visual .reader-context-figure{grid-column:2!important;grid-row:1!important;width:auto!important;justify-self:stretch!important;display:grid!important;overflow:visible!important;border-radius:0!important;background:transparent!important;outline:0!important;box-shadow:none!important}
+.lf-reader .story-art .reader-context-visual .reader-context-image{width:100%!important;height:auto!important;max-width:100%!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center!important}
+.lf-reader .story-art .reader-context-visual .reader-context-figure figcaption{padding:0!important;font-size:16px!important;line-height:1.4!important}
+
+/* Move the primary links onto their own row before tablet controls squeeze
+   their labels out of the pill surfaces. */
+@media(min-width:761px) and (max-width:1000px){
+  .topbar,.mosaic-home .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;height:auto}
+  .topbar .wordmark{justify-self:start}
+  .primary-nav,.mosaic-home .primary-nav{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0}
+  .topbar :is(#explore-toggle,#motion-toggle){width:auto;padding-inline:16px}
+}
+
+@media(max-width:760px){
+  .mosaic-home .proof-tile-label{display:none}
+  .mosaic-home [data-topic-grid]>.tile[data-kind=case-study]{grid-column:span 3!important;grid-row:span 3!important}
+  .mosaic-home .app-shell{padding:10px 12px 26px}
+  .mosaic-home .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;margin-bottom:20px}
+  .mosaic-home .topbar .wordmark{min-width:0;height:44px}
+  .mosaic-home .primary-nav{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0;gap:4px}
+  .mosaic-home .primary-nav a{min-width:0;padding:9px 6px;font-size:16px}
+  .mosaic-home #canvas{gap:52px}
+  .mosaic-home .topic-section{gap:12px;scroll-margin-top:8px}
+  .mosaic-home .topic-heading{min-height:44px;padding:0}
+  .mosaic-home .topic-heading h2{font-size:clamp(29px,10vw,44px)}
+  .mosaic-home [data-topic-grid]{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;grid-auto-rows:calc((100cqw - 42px)/6)}
+  .mosaic-home [data-topic-grid]>.tile{grid-column:span var(--mobile-columns,var(--preferred-columns,1))!important;grid-row:span var(--mobile-rows,var(--preferred-rows,1))!important}
+  .mosaic-home [data-topic-grid] :is(.cell-title,.tile-title,.anchor-title,.topic-anchor-copy strong,.photo-album-tile__copy strong){font-size:max(18px,clamp(18px,5.7cqw,26px))}
+  .mosaic-home [data-topic-grid] :is(.cell-kicker,.anchor-index,.proof-tile-label,.topic-anchor-copy small){font-size:16px}
+  .mosaic-home [data-topic-grid] .answer-preview{font-size:18px}
+  .mosaic-home .topic-anchor-face{grid-template-columns:minmax(0,1fr) minmax(100px,.83fr);padding:14px;gap:12px}
+  .mosaic-home .topic-anchor-copy strong{font-size:clamp(25px,9.3cqw,40px)!important}
+  .mosaic-home .topic-anchor-copy small{font-size:16px!important}
+  .mosaic-home .topic-anchor-icon{width:56px;height:56px}
+  .mosaic-home .topic-anchor-photo{border-radius:9px}
+  .mosaic-home .review-tile :is(blockquote,.review-quote){font-size:clamp(18px,7.3cqw,25px)}
+  .mosaic-home .site-footer{margin-top:60px}
+  .mosaic-home .site-footer>.utility-nav{gap:0;font-size:16px}
+  .mosaic-home .site-footer>.utility-nav :is(a,.privacy-control){padding-inline:9px}
+}
+
+@media(max-width:390px){
+  .mosaic-home .primary-nav a{font-size:16px;padding-inline:4px}
+  .mosaic-home .topbar .wordmark>span{font-size:18px}
+  .mosaic-home .topic-anchor-face{grid-template-columns:1.1fr .9fr;padding:11px;gap:9px}
+  .mosaic-home .topic-anchor-copy strong{font-size:24px!important}
+  .mosaic-home .topic-anchor-copy small{font-size:16px!important}
+  .mosaic-home [data-topic-grid] :is(.cell-go,.anchor-go,.buyer-plus,.proof-tile-plus){right:8px;bottom:8px;width:40px;height:40px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .mosaic-home .topic-anchor-photo{transform:none}
+}
+
+@media(max-width:760px){
+  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;margin-bottom:20px}
+  .topbar .wordmark{min-width:0;height:44px}
+  .primary-nav{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0;gap:4px}
+  .primary-nav a{min-width:0;padding:9px 6px;font-size:16px}
+  .site-footer{margin-top:60px}
+  .site-footer>.utility-nav{gap:0;font-size:16px}
+  .site-footer>.utility-nav :is(a,.privacy-control){padding-inline:9px}
+  .lf-reader .reader-context-visual{grid-template-columns:56px minmax(0,1fr);gap:13px;margin:22px 0;padding:14px}
+  .lf-reader .reader-context-icon{width:56px;height:56px}
+  .lf-reader .reader-context-image{max-height:200px}
+  .lf-reader .reader-context-figure figcaption{font-size:16px}
+  .lf-reader .reader-context-illustration{min-height:76px}
+  .lf-reader .reader-context-illustration-icon{width:48px;height:48px}
+  .lf-reader .story-art .reader-context-icon{width:56px!important;height:56px!important;max-width:56px!important}
+  .lf-reader .story-art .reader-context-illustration-icon{width:48px!important;height:48px!important;max-width:48px!important}
+  .page-shell>.topbar+.direct-contact-rail{width:100%;justify-content:stretch;padding:4px;margin:12px 0 18px!important}
+  .page-shell>.topbar+.direct-contact-rail a{flex:1;min-width:0}
+}
+
+@media(max-width:480px){
+  .mosaic-home [data-topic-grid]>.tile[data-columns="2"][data-rows="1"] .cell-face{grid-template-columns:minmax(0,1fr);padding:4px 8px;gap:0}
+  .mosaic-home [data-topic-grid]>.tile[data-columns="2"][data-rows="1"] .cell-art{display:none!important}
+  .lf-reader .story-art>.reader-context-visual{grid-template-columns:1fr!important;gap:12px!important}
+  .lf-reader .story-art .reader-context-visual .reader-context-icon{justify-self:start}
+  .lf-reader .story-art .reader-context-visual .reader-context-figure{grid-column:1!important;grid-row:2!important;width:100%!important}
+}
+
+@media(max-width:480px){
+  /* A 4 by 2 anchor has room for its promise and one icon on a phone. The
+     photo remains immediately below in the authored 4 by 4 album cards. */
+  .mosaic-home .topic-anchor-face{display:block;padding:12px}
+  .mosaic-home .topic-anchor-copy{display:block;padding-right:64px}
+  .mosaic-home .topic-anchor-copy .topic-anchor-label{display:none}
+  .mosaic-home .topic-anchor-copy strong{display:block;font-size:20px!important;line-height:1.02}
+  .mosaic-home .topic-anchor-art{position:absolute;right:13px;bottom:12px}
+  .mosaic-home .topic-anchor-photo{display:none}
+  .mosaic-home .topic-anchor-icon{width:56px;height:56px}
+}
+
+@media(max-width:360px){
+  .mosaic-home .primary-nav,.page-home .primary-nav{grid-template-columns:.9fr .9fr 1.2fr}
+  .topbar :is(.explore-label,.motion-label){display:none}
+  .topbar :is(#explore-toggle,#motion-toggle){width:44px;min-width:44px;justify-content:center;padding:0}
+  .mosaic-home [data-topic-grid]>.tile[data-kind=case-study]{grid-column:span 3!important;grid-row:span 3!important}
+  .mosaic-home .topic-anchor-copy strong{font-size:18px!important;letter-spacing:-.05em}
+  .mosaic-home [data-topic-grid]>.review-tile{grid-row:span 4!important}
+  .mosaic-home [data-topic-grid]>.topic-question{grid-row:span 3!important}
+  .mosaic-home .review-tile{gap:3px;padding:10px}
+}

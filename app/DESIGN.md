@@ -38,7 +38,9 @@ motion:
 
 # Current marketing direction — Soft Mineral + Edge Light
 
-Owner-directed replacement, October 2, 2026. The active website is the original 110-tile mosaic, extended with five buyer/review tiles. Preserve the 12-column desktop / 6-column mobile square-unit grid, charcoal mineral surfaces, five semantic service colors, Atkinson Hyperlegible Next body and home typography, Manrope reader headings, original tugboat and Phosphor icons, and physical press/lift/flip/expand/reverse motion. Honor reduced motion.
+Owner-directed replacement, October 2, 2026. The original 110-tile mosaic is preserved and extended to 133 tiles, grouped into Websites, On-Site IT Support, Consulting, Custom Software, and Reviews. Preserve the 12-column desktop / 6-column mobile square-unit grid, 4×2 anchors, 4×4 photo albums, charcoal mineral surfaces, five semantic service colors, Atkinson Hyperlegible Next body and home typography, Manrope reader headings, original tugboat and Phosphor icons, and physical press/lift/flip/expand/reverse motion. Honor reduced motion. Navigation uses plus signs; the primary navigation is in the header and utility navigation is in a full-width footer.
+
+Every opened editorial tile starts with Call, Text, and Email, then an orange headline, a short summary, contextual images or icons, the complete explanation, and a next step. Retain original paragraphs and destinations. Cases, Labs, albums, brand tiles, and review evidence stay orange within their service groups. Individual review tiles show verified excerpts, five stars, first names, and their Google source links.
 
 The implementation and provenance contract are `preview-ui/` and `preview-content/import-provenance.json`. Each tile has a real static URL; cases show actual product images and Labs open preserved working applications. VERA remains a protected independent browser product within this deployment.
 

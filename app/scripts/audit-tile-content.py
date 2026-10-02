@@ -22,6 +22,11 @@ REPO = APP.parent
 CONTENT = APP / "preview-content"
 PUBLIC = APP / "public"
 ORIGIN = "https://littlefightnyc.com"
+EXPECTED_TILE_COUNT = 133
+EXPECTED_ORIGINAL_TILE_COUNT = 110
+EXPECTED_REVIEW_TILE_COUNT = 7
+EXPECTED_ROUTE_COUNT = 405
+NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # This must mirror the compiler's preserved-app boundary.  A reader companion
 # may be generated under /_readers/, while the public application itself keeps
 # its own document, robots policy, and byte-for-byte source copy.
@@ -39,6 +44,7 @@ class References(HTMLParser):
         super().__init__()
         self.urls: list[tuple[str, str]] = []
         self.tiles: list[str] = []
+        self.tile_records: list[dict[str, str]] = []
         self.anchors: list[tuple[str, str]] = []
         self.text: list[str] = []
         self._anchor_href: str | None = None
@@ -59,6 +65,7 @@ class References(HTMLParser):
             classes = (values.get("class") or "").split()
             if "tile" in classes and values.get("href"):
                 self.tiles.append(values["href"])
+                self.tile_records.append({key: value or "" for key, value in values.items()})
             self._anchor_href = values.get("href")
             self._anchor_text = []
 
@@ -79,9 +86,13 @@ def compact(value: object) -> str:
 
 
 def display(value: object) -> str:
-    return str(value or "").replace("Hair By Rachel Charles", "Hair By Rachel").replace(
+    displayed = str(value or "").replace("Hair By Rachel Charles", "Hair By Rachel").replace(
         "Hair by Rachel Charles", "Hair By Rachel"
     )
+    # The compiler changes navigation affordances to a plus mark. Compare the
+    # authored source with that approved presentation transform while keeping
+    # every surrounding paragraph and link label under audit.
+    return NAVIGATION_AFFORDANCE.sub("+", displayed)
 
 
 def output_file(root: Path, route: str) -> Path:
@@ -109,6 +120,9 @@ def source_pages() -> dict[str, dict]:
     for album in json.loads((CONTENT / "albums.json").read_text()):
         route = f"/photos/{album['id'].removeprefix('album-')}/"
         pages[route] = {"path": route, "id": album["id"]}
+    for tile in json.loads((CONTENT / "topic-tiles.json").read_text()):
+        route = f"/answers/help/{tile['id']}/"
+        pages[route] = {"path": route, "id": tile["id"], "category": tile["family"]}
     for route in ("/reviews/", "/websites-for-your-business/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
     return pages
@@ -222,6 +236,141 @@ def native_form_ok(dist: Path, failures: list[str]) -> None:
             failures.append(f"native form detector is missing {marker}")
 
 
+class ReaderAnatomy(HTMLParser):
+    """Collect the structural signals a tile reader needs without executing it."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.classes: set[str] = set()
+        self.tag_counts: dict[str, int] = {}
+        self._stack: list[set[str]] = []
+        self._section_text: list[list[str]] = []
+        self.section_words = 0
+        self.hero_visuals = 0
+        self.direct_contact = False
+        self.working_actions: set[str] = set()
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.tag_counts[tag] = self.tag_counts.get(tag, 0) + 1
+        values = dict(attrs)
+        classes = set((values.get("class") or "").split())
+        self.classes.update(classes)
+        if "direct-contact-rail" in classes:
+            self.direct_contact = True
+        if tag == "a" and values.get("href"):
+            self.working_actions.add(values["href"])
+        if any("story-art" in ancestors for ancestors in self._stack) and (
+            tag == "img" or "reader-context-visual" in classes or "reader-context-icon" in classes
+        ):
+            self.hero_visuals += 1
+        if "story-section" in classes:
+            self._section_text.append([])
+        if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
+            self._stack.append(classes)
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
+
+    def handle_data(self, data: str) -> None:
+        if self._section_text:
+            self._section_text[-1].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "section" and self._section_text and self._stack and "story-section" in self._stack[-1]:
+            self.section_words += len(compact(" ".join(self._section_text.pop())).split())
+        if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"} and self._stack:
+            self._stack.pop()
+
+
+def protected_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]) -> bool:
+    """Check a generated companion without opening or changing its protected app."""
+    identity = tile.get("data-answer") or tile.get("href") or "protected tile"
+    companion_route = local_url(tile.get("data-reader-src", ""), "/")
+    if companion_route is None:
+        failures.append(f"protected tile {identity} has an invalid companion reader target")
+        return False
+    target = output_file(dist, companion_route)
+    if not target.is_file():
+        failures.append(f"protected tile {identity} companion reader is missing: {companion_route}")
+        return False
+    anatomy = ReaderAnatomy()
+    anatomy.feed(target.read_text(errors="replace"))
+    required_classes = {"story-hero", "story-summary", "story-art", "story-contact"}
+    missing = sorted(required_classes - anatomy.classes)
+    if not anatomy.direct_contact:
+        missing.append("direct contact rail")
+    if anatomy.hero_visuals < 1:
+        missing.append("contextual hero visual/icon")
+    if anatomy.section_words < 40:
+        missing.append("substantive explanation")
+    public_href = tile.get("href", "")
+    if public_href not in anatomy.working_actions:
+        missing.append("working experience next step")
+    if missing:
+        failures.append(f"protected tile {identity} companion reader is missing {', '.join(missing)}")
+        return False
+    return True
+
+
+def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> None:
+    """Prove each marketing tile has a full static reader, not a bare route.
+
+    External Google-review cards are attribution links. Protected Labs and VERA
+    retain their working applications, while their generated companions must
+    still carry context, a visual, an explanation, and a route back into that
+    working experience.
+    """
+    checked = 0
+    exempt_external = 0
+    exempt_apps = 0
+    for tile in home.tile_records:
+        href = tile.get("href", "")
+        if href.startswith(("https://", "http://")):
+            exempt_external += 1
+            continue
+        if tile.get("data-reader-src"):
+            exempt_apps += 1
+            protected_reader_contract(dist, tile, failures)
+            continue
+        route = local_url(href, "/")
+        if route is None:
+            failures.append(f"tile {tile.get('data-answer') or href} has no local reader destination")
+            continue
+        target = output_file(dist, route)
+        if not target.is_file():
+            failures.append(f"tile {tile.get('data-answer') or href} reader document is missing: {route}")
+            continue
+        anatomy = ReaderAnatomy()
+        anatomy.feed(target.read_text(errors="replace"))
+        checked += 1
+        identity = tile.get("data-answer") or route
+        if "case-opening" in anatomy.classes:
+            required_classes = {"case-opening", "case-chapter", "story-contact"}
+            missing = sorted(required_classes - anatomy.classes)
+            if not anatomy.direct_contact:
+                missing.append("direct contact rail")
+            if missing or anatomy.tag_counts.get("h1", 0) < 1 or anatomy.tag_counts.get("img", 0) < 1:
+                failures.append(f"tile {identity} case reader is missing context, explanation, image, or contact: {', '.join(missing) or 'h1/image'}")
+            continue
+        required_classes = {"story-hero", "story-kicker", "story-title", "story-summary", "story-art", "story-contact"}
+        missing = sorted(required_classes - anatomy.classes)
+        if not anatomy.direct_contact:
+            missing.append("direct contact rail")
+        if anatomy.hero_visuals < 1:
+            missing.append("contextual hero visual/icon")
+        # A sourced review collection is a complete explanatory body in its
+        # own right: it holds the rating context, excerpts, attribution, and
+        # direct source links instead of a generic prose section.
+        if "story-section" not in anatomy.classes and "story-reviews" not in anatomy.classes:
+            missing.append("story-section or sourced story-reviews")
+        if missing or anatomy.tag_counts.get("h1", 0) < 1:
+            failures.append(f"tile {identity} reader is missing full context, explanation, image/icon, or next step: {', '.join(missing) or 'h1/image'}")
+    if exempt_external != EXPECTED_REVIEW_TILE_COUNT:
+        failures.append(f"homepage has {exempt_external} external attribution tiles, expected {EXPECTED_REVIEW_TILE_COUNT} Google reviews")
+    if checked + exempt_external + exempt_apps != EXPECTED_TILE_COUNT:
+        failures.append("tile reader audit did not account for every homepage tile")
+
+
 def retired_routes_ok(dist: Path, failures: list[str]) -> None:
     redirects = (PUBLIC / "_redirects").read_text()
     routes = ("/app", "/app/*", "/dakota.html", "/studio/dakota", "/studio/dakota/", "/studio/dakota/*")
@@ -261,8 +410,14 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     release_data = json.loads(artifact.read_text())
     if release_data.get("kind") != "static-production-candidate":
         failures.append("tile artifact is not marked as a static production candidate")
-    if release_data.get("originalTilesPreserved") != 110 or release_data.get("tiles") != 115:
-        failures.append("tile artifact does not report 110 preserved originals and 115 total tiles")
+    if (release_data.get("originalTilesPreserved") != EXPECTED_ORIGINAL_TILE_COUNT
+            or release_data.get("tiles") != EXPECTED_TILE_COUNT):
+        failures.append(
+            f"tile artifact does not report {EXPECTED_ORIGINAL_TILE_COUNT} preserved originals "
+            f"and {EXPECTED_TILE_COUNT} total tiles"
+        )
+    if release_data.get("routes") != EXPECTED_ROUTE_COUNT:
+        failures.append(f"tile artifact reports {release_data.get('routes')} routes; expected {EXPECTED_ROUTE_COUNT}")
 
     pages = source_pages()
     if release_data.get("routes") != len(pages):
@@ -302,18 +457,37 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     parser.feed(home.read_text())
     source_parser = References()
     source_parser.feed((CONTENT / "mosaic.html").read_text())
-    if len(source_parser.tiles) != 110:
-        failures.append(f"source mosaic has {len(source_parser.tiles)} original tiles, expected 110")
+    if len(source_parser.tiles) != EXPECTED_ORIGINAL_TILE_COUNT:
+        failures.append(
+            f"source mosaic has {len(source_parser.tiles)} original tiles, "
+            f"expected {EXPECTED_ORIGINAL_TILE_COUNT}"
+        )
     normalized_original = [
         f"/photos/{href.removeprefix('/#album-')}/" if href.startswith("/#album-") else href
         for href in source_parser.tiles
     ]
-    if len(parser.tiles) != 115:
-        failures.append(f"generated home has {len(parser.tiles)} tiles, expected 115")
+    if len(parser.tiles) != EXPECTED_TILE_COUNT:
+        failures.append(f"generated home has {len(parser.tiles)} tiles, expected {EXPECTED_TILE_COUNT}")
     for href in normalized_original:
         if href not in parser.tiles:
             failures.append(f"original tile destination was not preserved: {href}")
     stats["tiles"] = len(parser.tiles)
+
+    home_source = home.read_text(errors="replace")
+    topic_ids = ("topic-web", "topic-it", "topic-consulting", "topic-software")
+    for topic_id in topic_ids:
+        if not re.search(rf'<section\b[^>]*\bid=["\']{re.escape(topic_id)}["\'][^>]*\bdata-topic=', home_source, re.I):
+            failures.append(f"homepage is missing semantic topic section {topic_id}")
+    if not re.search(r'<section\b[^>]*\bid=["\']topic-reviews["\']', home_source, re.I):
+        failures.append("homepage is missing the dedicated review section")
+    review_tiles = re.findall(r'<a\b[^>]*\bdata-review-tile(?:=[^ >]+)?[^>]*>', home_source, re.I)
+    if len(review_tiles) != EXPECTED_REVIEW_TILE_COUNT:
+        failures.append(f"homepage has {len(review_tiles)} individual review tiles, expected {EXPECTED_REVIEW_TILE_COUNT}")
+    if "Custom websites. Built nationwide." in home_source:
+        failures.append("homepage still contains the removed generic nationwide website callout")
+    if "Let’s build ↗" in home_source or "Let's build ↗" in home_source:
+        failures.append("homepage still contains a diagonal-arrow navigation label")
+    tile_reader_contract(dist, parser, failures)
 
     redirects = redirect_patterns()
     # Include preserved standalone applications too.  Their source is compared

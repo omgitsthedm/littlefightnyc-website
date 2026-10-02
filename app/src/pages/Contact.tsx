@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import {
-  ArrowRight,
+  Plus,
   ClipboardCheck,
   Mail,
   MapPin,
@@ -88,7 +88,7 @@ export default function Contact() {
                 Get a free first look at what is clear, what is confusing, and
                 what should change first.
               </small>
-              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+              <Plus size={20} strokeWidth={2} aria-hidden="true" />
             </Link>
 
             <a className="lf-contact-choice__route" href={PHONE_HREF} data-lf-label="contact_urgent_phone">
@@ -101,7 +101,7 @@ export default function Contact() {
                 Best when email, booking, payments, Wi-Fi, access, or customers
                 are blocked now.
               </small>
-              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+              <Plus size={20} strokeWidth={2} aria-hidden="true" />
             </a>
 
             <a className="lf-contact-choice__route" href={SMS_HREF}>
@@ -114,7 +114,7 @@ export default function Contact() {
                 Best when you are at the counter and need to send a short note
                 or screenshot.
               </small>
-              <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+              <Plus size={20} strokeWidth={2} aria-hidden="true" />
             </a>
           </nav>
 

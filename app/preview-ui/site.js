@@ -255,14 +255,22 @@
   document.querySelectorAll('[data-filter]').forEach(control => control.addEventListener('click', () => {
     const filter = safeText(control.dataset.filter || 'all');
     const canvas = document.querySelector('#canvas') || mosaic;
-    if (!canvas) return;
+    const topic = filter === 'all' ? canvas : document.querySelector(`#topic-${CSS.escape(filter)}`);
+    if (!canvas || !topic) return;
     document.querySelectorAll('[data-filter]').forEach(button => button.setAttribute('aria-pressed', String(button === control)));
     canvas.dataset.filter = filter;
-    // The approved layout keeps every card in the document and moves the selected family forward.
-    canvas.dataset.world = filter;
-    window.LF_MOSAIC?.layout?.(filter);
+    // Topics stay in source order. Explore is a way to arrive at a section,
+    // never a command that rearranges the page or keyboard order.
+    window.LF_MOSAIC?.layout?.();
     setMenu(false, { returnFocus: false });
-    canvas.scrollIntoView({ block: 'start', behavior: prefersReducedMotion.matches || document.body.classList.contains('no-motion') ? 'instant' : 'smooth' });
+    topic.scrollIntoView({ block: 'start', behavior: prefersReducedMotion.matches || document.body.classList.contains('no-motion') ? 'instant' : 'smooth' });
+    const heading = topic.querySelector('.topic-heading h2, h2');
+    if (heading) {
+      heading.setAttribute('tabindex', '-1');
+      const moveFocus = () => heading.focus({ preventScroll: true });
+      if (prefersReducedMotion.matches || document.body.classList.contains('no-motion')) moveFocus();
+      else setTimeout(moveFocus, 360);
+    }
     document.dispatchEvent(new CustomEvent('lf:filter', { detail: { filter } }));
     interaction('filter_select', filter, 'explore');
   }));

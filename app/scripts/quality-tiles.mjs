@@ -82,8 +82,9 @@ async function requireArtifact(relative) {
 async function browserLanes() {
   await requireArtifact("dist/index.html");
   await withProductionServer(async (url) => {
-    const env = { ...process.env, TILE_DIST: "production", PREVIEW_URL: url, TILE_PRODUCTION_URL: url, VERA_PREVIEW_URL: url, CASE_EDITORIAL_URL: url, INQUIRY_ENHANCEMENT_URL: url };
+    const env = { ...process.env, TILE_DIST: "production", PREVIEW_URL: url, TILE_PRODUCTION_URL: url, VERA_PREVIEW_URL: url, CASE_EDITORIAL_URL: url, INQUIRY_ENHANCEMENT_URL: url, TOPIC_MOSAIC_URL: url };
     run("node", ["scripts/verify-tile-preview.cjs"], env);
+    run("node", ["scripts/verify-topic-mosaic.cjs"], env);
     run("node", ["scripts/verify-tile-production.cjs"], env);
     run("node", ["scripts/verify-vera-freshness.cjs"], env);
     run("node", ["scripts/verify-case-editorial.cjs"], env);

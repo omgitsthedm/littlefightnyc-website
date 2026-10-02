@@ -50,7 +50,9 @@
       const style=getComputedStyle(source);
       const card=document.createElement('div');card.className='lf-motion-card';
       Object.assign(card.style,{left:`${to.left}px`,top:`${to.top}px`,width:`${to.width}px`,height:`${to.height}px`});
-      card.style.setProperty('--motion-pop',style.getPropertyValue('--tile-pop').trim()||'#3b8bff');
+      // Topic color is carried into the physical reverse side. The source card
+      // remains the single content surface; the reverse only supplies material.
+      card.style.setProperty('--motion-pop',style.getPropertyValue('--motion-pop').trim()||style.getPropertyValue('--tile-pop').trim()||'#3b8bff');
       const {face,shade}=sourceFace(source,native);
       const back=document.createElement('div');back.className='lf-motion-back';
       const surface=document.createElement('div');surface.className='lf-motion-enamel';

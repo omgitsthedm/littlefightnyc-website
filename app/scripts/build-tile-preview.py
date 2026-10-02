@@ -11,9 +11,12 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
 import sys
 from tile_content import render_legacy_sections
 from case_studies import render_case, render_work
+from topic_mosaic import build_topic_mosaic, plus_navigation
+from reader_visuals import reader_visual, reader_family
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -59,7 +62,7 @@ def link(label, href, cls=''):
 def write(path, value):
     target = OUT / path.lstrip('/')
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(value)
+    target.write_text(plus_navigation(value) if path.endswith('.html') else value)
 
 cases = {c['slug']:c for c in load('cases.json')}
 case_visuals = load('case-visuals.json')['cases']
@@ -82,6 +85,11 @@ pages = {}
 for filename in ['live-pages.json','answer-pages.json','market-pages.json']:
     for p in load(filename): pages[p['path']] = p
 for p in load('pages.json'): pages[p['path']] = p
+topic_tiles = load('topic-tiles.json')
+for tile in topic_tiles:
+    path = '/answers/help/'+tile['id']+'/'
+    description = tile['summary'] if len(tile['summary']) <= 157 else tile['summary'][:157].rsplit(' ', 1)[0]+'…'
+    pages[path] = {'path': path, 'id': tile['id'], 'category': tile['family'], 'family': tile['family'], 'icon': tile['icon'], 'title': tile['title']+' | Little Fight NYC', 'heading': tile['title'], 'summary': tile['summary'], 'description': description, 'eyebrow': {'consulting': 'Consulting', 'software': 'Custom software'}[tile['family']], 'sections': tile['sections'] + [{'heading': 'What to bring', 'bullets': tile['steps']}]}
 
 proof_slugs = ['chromatic-painting-design','hair-by-rachel-charles','cc-films']
 def picture(slug, eager=False):
@@ -103,10 +111,11 @@ def review_cards():
         rows.append(f'<article class="review-card"><span class="review-stars" aria-label="5 out of 5 stars">★★★★★</span>{quote}<div><cite>{E(r["displayName"])}</cite><br>{link("Read on Google ↗",r["sourceUrl"])}</div></article>')
     return '<div class="review-grid">'+''.join(rows)+'</div>'
 
-def contact(path, prompt='Tell us about your business and what you want your website to do.'):
-    if PRODUCTION:
-        return f'''<section class="story-contact" id="contact"><div><p class="story-kicker">A real person. A clear next step.</p><h2>Let’s make your next move.</h2><p>{E(prompt)}</p><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}</nav><p class="contact-hours">9am–9pm Eastern: a human answers.<br>After hours: leave a message.</p></div><div class="story-contact-start"><h3>Tell us where you want to go.</h3><p>A short introduction is enough. Share your business, your website if you have one, and what you want to change.</p><a class="contact-plan" href="/tech-audit/?intent=website" data-document-link>Start the conversation ↗</a><p>No website yet? No problem.</p></div></section>'''
-    return f'''<section class="story-contact" id="contact"><div><p class="story-kicker">A real person. A clear next step.</p><h2>Let’s make your next move.</h2><p>{E(prompt)}</p><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}</nav><p class="contact-hours">9am–9pm Eastern: a human answers.<br>After hours: leave a message.</p><p class="contact-note">Prefer an online form? <a href="{ORIGIN}/tech-audit/">Use our secure contact form ↗</a></p></div><form data-email-draft action="mailto:hello@littlefightnyc.com" method="get"><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Your email<input name="email" type="email" autocomplete="email" required maxlength="250"></label><label>What needs to change?<textarea name="message" required maxlength="4000" placeholder="A new website, more useful inquiries, a clearer way to book…"></textarea></label><button type="submit">Open email draft ↗</button><small>This opens an editable draft in your email app. Nothing is sent until you send it.</small></form></section>'''
+def contact(path, prompt='Tell us what you need help with.'):
+    family=reader_family(pages.get(path,{'path':path}))
+    intent={'web':'website','it':'support','consulting':'consulting','software':'systems'}.get(family,'general')
+    if path.startswith(('/industries/','/markets/')) or path in ('/nationwide/','/websites-for-your-business/'):intent='website'
+    return f'''<section class="story-contact" id="contact"><div><h2>Talk to Little Fight.</h2><p>Tell us what you need help with.</p><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}</nav><p class="contact-hours">9am–9pm Eastern.<br>After hours, leave a message.</p></div><div class="story-contact-start"><h3>Prefer to write it down?</h3><p>Share a little about your business and what you want to change.</p><a class="contact-plan" href="/tech-audit/?intent={intent}" data-document-link>Send us a message +</a></div></section>'''
 
 def channels():
     return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'
@@ -192,7 +201,11 @@ def article(p):
         lab=lab_by_path[path]
         candidate='/images/lab-showcase/'+LAB_IMAGES[lab['slug']]+'-800.webp'
         if candidate:art=f'<figure><img src="{E(candidate)}" width="1440" height="900" alt="{E(lab["name"])} — original Lab artwork" loading="eager"><figcaption>{E(lab["disclaimer"])}</figcaption></figure>'
-    if not art: art='<div class="story-symbol" aria-hidden="true"><img src="/assets/boat-orange.svg" width="240" height="240" alt=""><span>Problems?<br><b>Solved.</b></span></div>'
+    if path=='/vera/':
+        # This visual belongs only to VERA's agency reader. The working app,
+        # its records and its existing brand assets remain untouched.
+        art='<div class="reader-context-visual" data-reader-family="brand"><img class="reader-context-icon" src="/assets/mineral/book-open-text-duotone.svg" width="64" height="64" alt=""><figure class="reader-context-figure"><img class="reader-context-image" src="/vera/assets/icons/vera-icon-512.png" width="512" height="512" alt="VERA’s original cream and green geometric mark" loading="eager"><figcaption><a href="/vera/" data-document-link>VERA: explore NYC rentals and inspect the linked public records.</a></figcaption></figure></div>'
+    if not art: art=reader_visual(p,q,cases,albums)
     primary_action='<a href="#contact">Tell us what you need ↓</a>'
     if preserved(path):
         primary_action='<a href="'+E(path)+'" data-document-link>Open the working experience ↗</a>'
@@ -208,7 +221,9 @@ def article(p):
         body+=sections_html(q['sections'])
     if q.get('sourceDepth'):
         body+=render_legacy_sections(q['sourceDepth'],display,link)
-    if path in ['/services/custom-local-websites/','/nationwide/','/examples/','/websites-for-your-business/']:
+    if path=='/industries/':
+        body+=sections_html([{'heading': 'Start with your customer’s next question.', 'paragraphs': ['Someone choosing a roofer needs to see the work, the area served, and how to ask about a repair. Someone choosing a salon needs to understand the services, see the stylist’s work, and find the booking step. A law firm needs to explain its practice clearly and make an inquiry straightforward.', 'We plan the pages around those decisions. That includes your own photography and work, the questions people ask before contacting you, and a clear way to reach your business.']}, {'heading': 'Build around the work you want.', 'paragraphs': ['Tell us which services you want more inquiries for, where you work, and what a good customer fit looks like. We use that to choose the content and contact path, then check that visitors can use them on a phone.', 'You do not need a complete brief to start. Bring your current website or a few examples of your work, and we can talk through the right scope.']}])
+    if path in ['/services/custom-local-websites/','/nationwide/','/examples/','/industries/','/websites-for-your-business/']:
         body+='<section class="story-section"><h2>Built for your kind of business.</h2><div><p>Start with the work you do. Find the questions your customers need answered.</p><nav class="industry-links">'+''.join(link(label,url) for label,url in INDUSTRIES)+'</nav></div></section>'
     if path.startswith('/industries/') or path=='/examples/':
         body+='<section class="story-proof"><p class="story-kicker">See the work</p><h2>Real businesses.<br>Distinct websites.</h2>'+proof_grid()+'</section>'
@@ -227,8 +242,10 @@ def article(p):
         # The full existing journey replaces only this island. The fallback
         # remains useful if scripts are unavailable and never claims delivery.
         fallback=f'<section class="story-hero"><div><h1 id="detail-title" class="story-title">{E(q["heading"])}</h1><p>{E(q["summary"])}</p><nav class="contact-actions">{channels()}</nav></div></section>'
+        if path=='/contact/':
+            fallback=body
         if path=='/tech-audit/':
-            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="intent" value="website"><input type="hidden" name="source" value="littlefightnyc.com/tech-audit"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Your email<input name="contact" type="email" autocomplete="email" required maxlength="250"></label><input type="hidden" name="follow_up" value="email"><label>What would you like to change?<textarea name="message" required maxlength="4000"></textarea></label><button type="submit">Send your inquiry ↗</button><p>Handled by Netlify so Little Fight can reply. <a href="/legal/">Privacy and terms</a>.</p></form>'''
+            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="intent" value="website"><input type="hidden" name="source" value="littlefightnyc.com/tech-audit"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Your email<input name="contact" type="email" autocomplete="email" required maxlength="250"></label><input type="hidden" name="follow_up" value="email"><label>What would you like to change?<textarea name="message" required maxlength="4000"></textarea></label><button type="submit">Send your inquiry ↗</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}">{fallback}</div>'
     return q,body
 
@@ -259,11 +276,14 @@ def head(q, home=False):
     return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
-    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight<span class="nyc">NYC</span></span></a><span class="header-purpose pill">Custom websites. Built nationwide.</span><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false">Explore <span aria-hidden="true">☰</span></button><button class="motion pill" id="motion-toggle" aria-pressed="false">Motion <span aria-hidden="true">◌</span></button></header>'
+    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+link('Let’s build +','/tech-audit/','start-button')+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore the site"><span class="explore-label">Explore</span> <span aria-hidden="true">☰</span></button><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Turn motion off"><span class="motion-label">Motion</span> <span aria-hidden="true">◌</span></button></header>'
+
+def site_footer():
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
 
 def shell_end(home=False):
-    privacy = '<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else ''
-    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="A website, Google, booking, a plumber…"><div id="search-results" aria-live="polite"></div><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('Find your industry','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><section class="detail-window lf-reader reader-longform"><header class="detail-top"><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight <small>NYC</small></span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav><button type="button" id="close-detail" aria-label="Back to the mosaic">×</button></header><div id="detail-body" class="detail-body"></div></section></dialog></body></html>'''
+    privacy = site_footer()
+    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="A website, Google, booking, a plumber…"><div id="search-results" aria-live="polite"></div><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><section class="detail-window lf-reader reader-longform"><header class="detail-top"><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight <small>NYC</small></span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav><button type="button" id="close-detail" aria-label="Back to the mosaic">×</button></header><div id="detail-body" class="detail-body"></div></section></dialog></body></html>'''
 
 for path,p in pages.items():
     if path=='/':continue
@@ -281,14 +301,7 @@ class Links(HTMLParser):
 
 mosaic=(CONTENT/'mosaic.html').read_text()
 mosaic=re.sub(r'((?:src|href|poster)=")((?:assets|source-media)/[^"#]+)',r'\1/\2',mosaic)
-mosaic=mosaic.replace('Find your next customer.','Custom websites. Built nationwide.').replace('Get back to your day.','NYC · future visit availability.')
 mosaic=display(mosaic)
-web_match=re.search(r'<a href="/services/custom-local-websites/".*?</a>',mosaic,re.S)
-if web_match:
-    old=web_match.group(0)
-    front='''<span class="anchor-face web-work-face"><span class="web-work-copy"><span class="web-work-label">Websites</span><strong>Help customers<br>choose you.</strong><span class="web-work-caption">Built nationwide.</span></span><span class="web-work-proof"><img src="/assets/proof/optimized/case-chromatic-painting-design-640.webp" width="640" height="444" alt="Chromatic Painting &amp; Design website"><span>Chromatic Painting &amp; Design</span></span><span class="anchor-go" aria-hidden="true">+</span></span>'''
-    changed=re.sub(r'<span class="anchor-face">.*?(?=<svg class="anchor-trace")',front,old,flags=re.S)
-    mosaic=mosaic.replace(old,changed,1)
 for album in albums:
     mosaic=mosaic.replace('/#'+album['id'],'/photos/'+album['id'].removeprefix('album-')+'/')
 original=Links();original.feed(mosaic);assert len(original.tiles)==110
@@ -315,9 +328,9 @@ if PRODUCTION:
 additions=[]
 for identity,title,path,family,kicker in [('buyer-plumbers','Make plumbing easier to book.','/industries/plumbers/','web','WEBSITES FOR PLUMBERS'),('buyer-roofing','Show your roofing expertise.','/industries/roofing/','web','WEBSITES FOR ROOFERS'),('buyer-homes','Work worth showing.','/industries/luxury-home-services/','web','BUILDERS + HOME SERVICES'),('buyer-law','A clearer first impression.','/industries/law-firms/','web','WEBSITES FOR LAW FIRMS'),('google-reviews','Good people. Kind words.','/reviews/','brand','5.0 ON GOOGLE · 7 REVIEWS')]:
     additions.append(f'<a class="tile buyer-tile" href="{path}" data-answer="{identity}" data-family="{family}" data-material="soft-mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(title)}"><span class="cell-face"><span class="cell-kicker">{kicker}</span><span class="cell-title">{E(title)}</span><span class="buyer-plus" aria-hidden="true">+</span></span></a>')
-mosaic=''.join(additions)+mosaic
+mosaic=build_topic_mosaic(''.join(additions)+mosaic,reviews,topic_tiles,albums)
 q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
-home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+'<main class="mosaic" id="canvas" aria-label="Find your problem, explore our work, or start a website project">'+mosaic+'</main><footer class="dock pill">'+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+link('Let’s build ↗','/tech-audit/','start-button')+'</footer><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy','/legal/'))+'</nav></div>'+shell_end(True)
+home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'family':x.get('category','Websites' if p.startswith('/industries/') else 'Little Fight NYC')} for p,x in pages.items() if p!='/']
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
@@ -335,8 +348,13 @@ write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC
 
 css='\n'.join((UI/'vendor'/name).read_text() for name in load('import-provenance.json')['cssOrder'])
 css=re.sub(r'url\(([\"\']?)(assets/)',r'url(\1/\2',css)
-css+='\n'+(UI/'reader.css').read_text()+'\n'+(UI/'vendor/reader-website.css').read_text()+'\n'+(UI/'site.css').read_text()+'\n'+(UI/'cases.css').read_text()
-write('site.css',css)
+css+='\n'+(UI/'reader.css').read_text()+'\n'+(UI/'vendor/reader-website.css').read_text()+'\n'+(UI/'site.css').read_text()+'\n'+(UI/'cases.css').read_text()+'\n'+(UI/'topics.css').read_text()
+# Retired exploratory fonts must not load through a stray inherited selector.
+# Keep the imported artwork/rules, but use the approved accessible typeface.
+css=re.sub(r'@font-face\s*\{[^}]*font-family\s*:\s*[\"\']?(?:Display|Barlow|Mono)[\"\']?\s*;[^}]*\}', '', css)
+css=re.sub(r"(?<![\w-])([\"']?)(?:Display|Barlow|Mono)\1(?![\w-])", "'Atkinson Hyperlegible Next'", css)
+minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
+write('site.css',minified_css)
 for name in ['tile-motion.js','mosaic-layout.js']:shutil.copy2(UI/'vendor'/name,OUT/name)
 shutil.copy2(UI/'site.js',OUT/'site.js')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)

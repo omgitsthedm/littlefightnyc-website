@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
+import { Plus, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
 import type { FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import FaqList from "@/components/editorial/FaqList";
@@ -724,7 +724,7 @@ export default function TechAudit() {
                       className="lf-audit__continue"
                       onClick={() => pickSymptom(symptom)}
                     >
-                      Continue <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                      Continue <Plus size={15} strokeWidth={2} aria-hidden="true" />
                     </button>
                   )}
                   <button
@@ -732,7 +732,7 @@ export default function TechAudit() {
                     className="lf-audit__skip"
                     onClick={() => skipToForm(1)}
                   >
-                    Write a brief instead <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                    Write a brief instead <Plus size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -785,14 +785,14 @@ export default function TechAudit() {
                     className="lf-audit__back"
                     onClick={() => setStep(1)}
                   >
-                    <ArrowLeft size={15} strokeWidth={2} aria-hidden="true" /> Back
+                    <Plus size={15} strokeWidth={2} aria-hidden="true" /> Back
                   </button>
                   <button
                     type="button"
                     className="lf-audit__skip"
                     onClick={() => skipToForm(2)}
                   >
-                    Skip to the form <ArrowRight size={15} strokeWidth={2} aria-hidden="true" />
+                    Skip to the form <Plus size={15} strokeWidth={2} aria-hidden="true" />
                   </button>
                 </div>
               </div>
@@ -1033,7 +1033,7 @@ export default function TechAudit() {
                     ) : (
                       <>
                         Send my first-look request{" "}
-                        <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+                        <Plus size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
                   </button>

@@ -31,3 +31,6 @@ html{scrollbar-gutter:stable}body{margin:0;font-family:'Atkinson Hyperlegible Ne
 .utility-nav .privacy-control{margin:0;border:0;padding:8px 10px;font-size:inherit;min-height:44px;background:transparent;color:inherit}
 
 @media(max-width:360px){.buyer-tile .buyer-plus{display:none}.buyer-tile .cell-title{padding-right:0}}
+
+/* Navigation uses the site’s plus mark, never a directional arrow. */
+.story-related a::after,.industry-links a::after{content:' +'}

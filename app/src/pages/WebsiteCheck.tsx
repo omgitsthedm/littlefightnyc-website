@@ -1,4 +1,4 @@
-import { ArrowRight, CalendarDays, ExternalLink, Loader2, Mail, MessageSquare, Phone, Search } from "lucide-react";
+import { Plus, CalendarDays, Loader2, Mail, MessageSquare, Phone, Search } from "lucide-react";
 import { useState } from "react";
 import { BOOKING_HREF, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
 import { handoffToAuditLab } from "@/lib/auditPrefill";
@@ -29,7 +29,7 @@ export default function WebsiteCheck() {
               data-lf-label="no_website_check"
               data-lf-source="website_check"
             >
-              Start a free first look <ArrowRight size={20} aria-hidden="true" />
+              Start a free first look <Plus size={20} aria-hidden="true" />
             </a>
             <div className="lf-website-check__contact" data-lf-contact-rail="true">
               <a href={PHONE_HREF}>Call {PHONE_DISPLAY}</a>
@@ -55,7 +55,7 @@ export default function WebsiteCheck() {
                 data-lf-source="website_check"
               >
                 Tell us what you need
-                <ArrowRight size={20} aria-hidden="true" />
+                <Plus size={20} aria-hidden="true" />
               </a>
               <p className="lf-website-check__reassurance">No technical brief. No passwords. No commitment.</p>
               <ol className="lf-website-check__steps">
@@ -164,7 +164,7 @@ export default function WebsiteCheck() {
           >
             <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
             Pick a time
-            <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />
+            <Plus size={15} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </section>
         <p className="lf-website-check__direct">

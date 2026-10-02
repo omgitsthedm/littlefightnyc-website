@@ -202,11 +202,22 @@ async function openTile(page, href) {
   await page.waitForFunction(() => !document.querySelector('.lf-tile-flight'), null, { timeout: 1500 }).catch(() => {});
 }
 
+async function observeTileFlight(page) {
+  await page.evaluate(() => {
+    window.__lfTileFlightObserved = Boolean(document.querySelector('.lf-tile-flight'));
+    const observer = new MutationObserver(() => {
+      if (document.querySelector('.lf-tile-flight')) window.__lfTileFlightObserved = true;
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.__lfTileFlightObserver = observer;
+  });
+}
+
 async function run() {
   const release = JSON.parse(fs.readFileSync(path.join(app, artifactDir, releaseFilename), 'utf8'));
-  assert.equal(release.tiles, 115, 'Preview release must retain 115 total tiles.');
+  assert.equal(release.tiles, 133, 'Preview release must retain 133 total tiles.');
   assert.equal(release.originalTilesPreserved, 110, 'Preview release must retain all original 110 tiles.');
-  pass('release manifest preserves 115 tiles and 110 original tiles', `artifact ${release.artifactSha256}`);
+  pass('release manifest preserves 133 tiles and 110 original tiles', `artifact ${release.artifactSha256}`);
 
   const sourceMosaic = fs.readFileSync(path.join(app, 'preview-content', 'mosaic.html'), 'utf8');
   const originalTiles = (sourceMosaic.match(/<a\b[^>]*>/gi) || []).filter(tag =>
@@ -221,9 +232,17 @@ async function run() {
   try {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     await page.goto(`${base}/`, { waitUntil: 'networkidle' });
-    await check('home exposes 115 real tile links', async () => {
-      assert.equal(await page.locator('a.tile[href]').count(), 115);
-      assert.equal(await page.locator('a.tile[href^="/"]').count(), 115);
+    await check('home exposes 133 real tile links', async () => {
+      assert.equal(await page.locator('a.tile[href]').count(), 133);
+      assert.equal(await page.locator('a.tile[href^="/"]').count(), 126);
+      const external = await page.locator('a.tile[href^="https://"]').evaluateAll(tiles => tiles.map(tile => ({ href: tile.getAttribute('href'), target: tile.getAttribute('target'), rel: tile.getAttribute('rel') || '' })));
+      assert.equal(external.length, 7, 'seven review cards must keep their direct Google sources');
+      for (const link of external) {
+        assert.match(link.href || '', /^https:\/\//, 'review tile needs an external source');
+        assert.equal(link.target, '_blank', 'review source must intentionally open externally');
+        assert.match(link.rel, /\bnoopener\b/i, 'review source needs noopener');
+        assert.match(link.rel, /\bnoreferrer\b/i, 'review source needs noreferrer');
+      }
     });
     await check('homepage passes full Axe including color contrast', () => auditAxe(page, '/ homepage'));
     await page.screenshot({ path: path.join(screenshots, 'verify-home-1440.png'), fullPage: true });
@@ -384,6 +403,21 @@ async function run() {
       await directPage.screenshot({ path: path.join(screenshots, 'verify-website-direct-' + viewport.width + '.png'), fullPage: true });
       await directContext.close();
     }
+
+    await check('390px website tile physically flips into a modal reader and restores focus on close', async () => {
+      const { context: mobileContext, page: mobile } = await makePage(browser, { width: 390, height: 844 });
+      try {
+        await mobile.goto(`${base}/`, { waitUntil: 'networkidle' });
+        await observeTileFlight(mobile);
+        await openTile(mobile, '/services/custom-local-websites/');
+        assert.equal(await mobile.evaluate(() => window.__lfTileFlightObserved), true, 'mobile tile must create its physical flip layer before the reader settles');
+        assert.equal(await mobile.locator('#detail').evaluate(node => node.open), true, 'mobile reader must be an open native modal dialog');
+        assert.equal(await mobile.evaluate(() => document.activeElement?.id), 'close-detail', 'modal reader must take focus at its close control');
+        await mobile.keyboard.press('Escape');
+        await mobile.waitForFunction(() => !document.querySelector('#detail')?.open);
+        assert.equal(await mobile.evaluate(() => document.activeElement?.getAttribute('href')), '/services/custom-local-websites/', 'mobile close must restore focus to the website tile');
+      } finally { await mobileContext.close(); }
+    });
 
     for (const viewport of [{ width: 320, height: 720 }, { width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1440, height: 940 }]) {
       const { context: viewportContext, page: viewportPage } = await makePage(browser, viewport);

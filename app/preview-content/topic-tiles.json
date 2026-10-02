@@ -1,0 +1,372 @@
+[
+  {
+    "id": "consulting-first-priority",
+    "family": "consulting",
+    "title": "What should we fix first?",
+    "question": "What should I fix first when my website, Google listing, tools, and bills all need attention?",
+    "summary": "Start with what customers see, what the business pays for, and where the day gets stuck. Rank the next steps by what affects customers first.",
+    "steps": [
+      "List the problems customers notice.",
+      "List the tools and bills involved.",
+      "Trace where a customer question gets stuck.",
+      "Put the customer-facing issue first."
+    ],
+    "sourcePaths": [
+      "/services/tech-consulting/"
+    ],
+    "icon": "sliders-horizontal-duotone.svg",
+    "sections": [
+      {
+        "heading": "Follow one customer request",
+        "paragraphs": [
+          "Pick a recent call, email, booking, or order. Walk through what the customer saw and what your team had to do next. A broken contact button deserves attention before a nicer dashboard.",
+          "Separate a problem that stops work from something that is merely frustrating. Then note how often it happens, who it affects, and what a workable fix would look like."
+        ]
+      },
+      {
+        "heading": "Make a short, useful plan",
+        "paragraphs": [
+          "We can review that path with you and put the changes in order. The result should explain what to fix first, what can wait, and which existing tools can stay.",
+          "Before paid work starts, we explain the scope and quote. The first conversation can begin with one problem; you do not need to organize the whole business first."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "consulting-tool-choice",
+    "family": "consulting",
+    "title": "Which tools should stay?",
+    "question": "How do I decide which business tools to keep, replace, or stop paying for?",
+    "summary": "Give each tool a job, an owner, and a cost before changing anything. A useful next move can be to keep, connect, replace, or leave a tool alone.",
+    "steps": [
+      "Write down every recurring tool.",
+      "Name the job each tool supports.",
+      "Mark the owner and cost.",
+      "Test one change at a time."
+    ],
+    "sourcePaths": [
+      "/services/tech-consulting/",
+      "/answers/reduce-monthly-software-costs-small-business/"
+    ],
+    "icon": "sliders-horizontal-bold.svg",
+    "sections": [
+      {
+        "heading": "Give each tool a clear job",
+        "paragraphs": [
+          "For each subscription, write down who uses it, what they use it for, and what would stop working if it disappeared. Include the quiet jobs, such as sending appointment reminders or keeping old customer records.",
+          "Two tools with similar names may do different work. Two different-looking tools may duplicate the same job. Compare what people actually do with them before choosing what stays."
+        ]
+      },
+      {
+        "heading": "Try the change before committing",
+        "paragraphs": [
+          "Start with one ordinary task and one awkward case. Check that the proposed tool handles both, that your team can use it, and that you can keep the records you need.",
+          "Little Fight can help compare the current setup with a simpler one. A working tool may need better setup or a connection to another tool, rather than replacement."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "consulting-unused-subscriptions",
+    "family": "consulting",
+    "title": "Are we paying twice?",
+    "question": "How do I find unused subscriptions, duplicate tools, and seats we no longer need?",
+    "summary": "Pull recent charges and connect every subscription to the job it supports. Do not cancel a tool that handles payments, booking, records, or required safety rules until its replacement and export path are known.",
+    "steps": [
+      "Pull three months of card and bank charges.",
+      "Match each charge to a tool and job.",
+      "Mark duplicate tools and unused seats.",
+      "Check the replacement and export path before canceling."
+    ],
+    "sourcePaths": [
+      "/answers/reduce-monthly-software-costs-small-business/",
+      "/answers/help/it-license-renewal/"
+    ],
+    "icon": "book-open-text-duotone.svg",
+    "sections": [
+      {
+        "heading": "Match the bill to the person using it",
+        "paragraphs": [
+          "Use recent statements and renewal emails to make a list. Record the service, account owner, cost, renewal date, and number of paid seats. Ask the people doing the work whether they still use each one.",
+          "An unused login does not always mean an unused service. It may run booking reminders, connect a form to an inbox, or store records in the background. Check those connections before canceling."
+        ]
+      },
+      {
+        "heading": "Remove waste without losing work",
+        "paragraphs": [
+          "Start with a clearly unused seat or a duplicated feature. Confirm what changes at renewal, who can export the data, and where the replacement records will live.",
+          "We can help organize the list and explain the tradeoffs. Any savings depend on the tools, agreements, and actual usage; the review should make those details visible."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "consulting-second-opinion",
+    "family": "consulting",
+    "title": "Do we need a second opinion?",
+    "question": "How do I know whether our current technology setup still fits our business?",
+    "summary": "A second look can check whether the setup still fits the business, the bill, and the way customers reach you. Sometimes the right answer is to leave a working thing alone.",
+    "steps": [
+      "Describe how customers reach you now.",
+      "List the accounts and tools in use.",
+      "Note what the business pays each month.",
+      "Bring one problem that keeps returning."
+    ],
+    "sourcePaths": [
+      "/services/tech-consulting/"
+    ],
+    "icon": "chats-circle-duotone.svg",
+    "sections": [
+      {
+        "heading": "Bring the part that worries you",
+        "paragraphs": [
+          "A recurring problem, a confusing bill, or a proposed replacement is enough to begin. Tell us what happens now and what you expected to happen instead.",
+          "We look at the customer path and the tools involved. The useful question is whether the setup fits your business today, including the people who have to use it."
+        ]
+      },
+      {
+        "heading": "Know what a recommendation means",
+        "paragraphs": [
+          "A recommendation should explain the problem, the proposed change, the cost to consider, and what happens if you leave things as they are. Ask which parts are urgent and which are optional.",
+          "Little Fight can give you an outside view before you commit to a change. If the current setup works, keeping it can be the right answer."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "consulting-vendor-quote",
+    "family": "consulting",
+    "title": "Does this vendor quote fit?",
+    "question": "How can I compare a vendor quote with what our business actually needs?",
+    "summary": "A vendor pitch is easier to judge after you see the customer path, current tools, account owners, and bills. Build that baseline before making a rushed decision.",
+    "steps": [
+      "Write down the problem the quote says it solves.",
+      "Trace the customer or staff path involved.",
+      "List the current tools and account owners.",
+      "Compare the proposed change with the actual gap."
+    ],
+    "sourcePaths": [
+      "/services/tech-consulting/"
+    ],
+    "icon": "browser-duotone.svg",
+    "sections": [
+      {
+        "heading": "Compare the same work",
+        "paragraphs": [
+          "Check that each quote covers the same pages, features, content, connections, and handoff. A lower starting total may leave out work that another quote includes.",
+          "Ask who owns the accounts and files, which outside subscriptions are required, and what ongoing help includes. Have any exclusions and recurring costs written down."
+        ]
+      },
+      {
+        "heading": "Tie the quote to your actual problem",
+        "paragraphs": [
+          "Describe the task that is failing today. Then ask the provider to show how the proposed work changes that task and how you will check that it works.",
+          "We can read a proposal with you and turn unfamiliar terms into plain questions. You should understand what you are buying before accepting it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "consulting-provider-review",
+    "family": "consulting",
+    "title": "How do we prepare a review?",
+    "question": "What should we gather before asking a new provider to review our business setup?",
+    "summary": "Bring a list of services, account owners, renewal dates, current symptoms, and business times when a change would be risky. Never send passwords by email or text.",
+    "steps": [
+      "List the services and account owners.",
+      "Note renewal dates and current symptoms.",
+      "Mark times when changes would disrupt work.",
+      "Share only the access needed for the review."
+    ],
+    "sourcePaths": [
+      "/answers/help/it-vendor-handoff/",
+      "/services/tech-consulting/"
+    ],
+    "icon": "desktop-tower-duotone.svg",
+    "sections": [
+      {
+        "heading": "Gather the useful records",
+        "paragraphs": [
+          "Start with a list of tools, account owners, renewal dates, and the problems people report. Include screenshots of errors and note when they happen, without exposing private customer information.",
+          "Tell us when the business cannot tolerate an interruption. A review should account for your opening hours, bookings, busy periods, and the people who will be affected."
+        ]
+      },
+      {
+        "heading": "Keep access under your control",
+        "paragraphs": [
+          "Do not send passwords in a message. If access is needed, agree on the specific account and permission first. Keep an owner account controlled by the business.",
+          "The review should leave you with findings you can understand and use: what is working, what needs attention, and what the next step would involve."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "software-duplicate-entry",
+    "family": "software",
+    "title": "Why are we entering it twice?",
+    "question": "What can we do when multiple people enter the same customer information in different places?",
+    "summary": "Each repeated entry creates another chance for an error. Map the handoff before deciding whether a current tool can handle the job or a focused build is useful.",
+    "steps": [
+      "Choose one repeated customer task.",
+      "Write down every place information is entered.",
+      "Mark where people copy, wait, or correct details.",
+      "Check whether a current tool can handle the handoff."
+    ],
+    "sourcePaths": [
+      "/services/business-systems/",
+      "/answers/when-custom-business-system-beats-saas/"
+    ],
+    "icon": "app-window-duotone.svg",
+    "sections": [
+      {
+        "heading": "Trace one record through the day",
+        "paragraphs": [
+          "Choose an ordinary customer request and list every place the same information gets entered. Note who copies it, who waits for it, and where a correction has to be made more than once.",
+          "Decide which record should be the main record. Without that decision, a new connection can spread conflicting details faster instead of fixing the problem."
+        ]
+      },
+      {
+        "heading": "Connect only the handoff that needs help",
+        "paragraphs": [
+          "Check whether the tools already have a suitable connection or export. Test what happens when a field is missing, a request repeats, or a connection is unavailable.",
+          "If a focused custom tool is useful, we define that small job first. The goal is a handoff your team can understand, check, and recover when something goes wrong."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "software-connect-existing-tools",
+    "family": "software",
+    "title": "Can our tools work together?",
+    "question": "Should we connect the tools we already use before building a new business system?",
+    "summary": "A custom system is useful only when a specific repeated handoff has no good existing fit. Check whether the current tools can be configured or connected before building.",
+    "steps": [
+      "Trace one repeated job from start to finish.",
+      "Mark every copy, wait, and workaround.",
+      "Check the current tools first.",
+      "Build only for the gap they cannot handle."
+    ],
+    "sourcePaths": [
+      "/services/business-systems/",
+      "/answers/when-custom-business-system-beats-saas/"
+    ],
+    "icon": "sliders-horizontal-duotone.svg",
+    "sections": [
+      {
+        "heading": "Check what the current tools allow",
+        "paragraphs": [
+          "Describe what information needs to move, where it starts, and who needs it next. Check whether the existing services support that connection and whether it requires another paid plan.",
+          "Also decide what should never be copied. Sending every field everywhere creates extra records to manage and makes mistakes harder to follow."
+        ]
+      },
+      {
+        "heading": "Test an ordinary day and a bad day",
+        "paragraphs": [
+          "A connection should handle a normal request, a duplicate, a correction, and a service being unavailable. Someone needs to know how to notice a failed handoff and finish it safely.",
+          "We compare configuration, an existing connection, and a small custom build. The choice should fit the actual gap and the people who will maintain it."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "software-business-ownership",
+    "family": "software",
+    "title": "Who owns the system?",
+    "question": "What should our business own when a custom tool is built for us?",
+    "summary": "The business should own the files, data, accounts, website address, and instructions. Those records make it possible for another qualified person to take over later.",
+    "steps": [
+      "List the files and data the tool uses.",
+      "Name the account owners.",
+      "Keep the website address under business control.",
+      "Store the written instructions with the business."
+    ],
+    "sourcePaths": [
+      "/services/business-systems/"
+    ],
+    "icon": "book-open-text-duotone.svg",
+    "sections": [
+      {
+        "heading": "Separate ownership from access",
+        "paragraphs": [
+          "Being able to sign in is not the same as controlling the account. Keep the business as owner of its domain, hosting account, and other services where the provider allows it, with a recovery method the business controls.",
+          "The written scope should say which custom files, code, data, and instructions are handed over. Third-party services keep their own terms and subscription rules."
+        ]
+      },
+      {
+        "heading": "Make the handoff usable",
+        "paragraphs": [
+          "Ask where the source files live, how records can be exported, and what is needed to run the tool. Include the names of outside services and renewal responsibilities.",
+          "Little Fight builds with handoff in mind. You should be able to find the work and explain it to another qualified person if your support needs change."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "software-smallest-useful-change",
+    "family": "software",
+    "title": "How small can the first change be?",
+    "question": "How do we define the smallest useful change before building a business tool?",
+    "summary": "Start with one repeated handoff and price the smallest useful change. A private app should not replace a tool people already use successfully.",
+    "steps": [
+      "Pick one job that regularly breaks.",
+      "Trace every copy, wait, and workaround.",
+      "Check whether a current tool already fits.",
+      "Define the smallest useful change."
+    ],
+    "sourcePaths": [
+      "/answers/when-custom-business-system-beats-saas/",
+      "/services/business-systems/"
+    ],
+    "icon": "tugboat.svg",
+    "sections": [
+      {
+        "heading": "Choose one complete job",
+        "paragraphs": [
+          "A good first version handles one real task from beginning to end. For example, an inquiry might need to reach the right person with the information they need to reply.",
+          "Write down who uses it, what goes in, what should come out, and how you will recognize success. Leave unrelated features for a later decision."
+        ]
+      },
+      {
+        "heading": "Keep the existing work usable",
+        "paragraphs": [
+          "Try the change with a small set of ordinary examples before depending on it for the whole business. Include a missing detail, a repeated request, and a correction.",
+          "We can scope the first useful piece and explain what it includes. Once that works, you can decide whether another change is worth making."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "software-handoff-notes",
+    "family": "software",
+    "title": "Can someone else take it over?",
+    "question": "How can another qualified person understand and take over a business tool later?",
+    "summary": "Written notes should cover the files, data, accounts, and how the tool runs. That gives the business a usable record if support needs to change.",
+    "steps": [
+      "List the files, data, and accounts.",
+      "Name who owns each account.",
+      "Write down how the tool runs.",
+      "Keep the notes where the business can find them."
+    ],
+    "sourcePaths": [
+      "/services/business-systems/",
+      "/answers/help/it-support-notes/"
+    ],
+    "icon": "desktop-tower-duotone.svg",
+    "sections": [
+      {
+        "heading": "Write down how the tool works",
+        "paragraphs": [
+          "Keep a short description of its job, the people who use it, the accounts it depends on, and the main record of its data. Document the normal process and how to recognize a failed one.",
+          "Put setup and update instructions with the source files. A qualified person should be able to understand the system without reconstructing old conversations."
+        ]
+      },
+      {
+        "heading": "Test the handoff before it is needed",
+        "paragraphs": [
+          "Check that the business can find the files, reach its accounts, and export a usable copy of its records. Keep passwords and recovery details in an appropriate private account tool, separate from public documentation.",
+          "The handoff should also explain the limits of ongoing support and who handles outside subscriptions. We can help make those responsibilities clear before a change of provider."
+        ]
+      }
+    ]
+  }
+]
