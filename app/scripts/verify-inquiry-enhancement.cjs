@@ -17,6 +17,7 @@ const { chromium } = require('@playwright/test');
 const app = path.resolve(__dirname, '..');
 const base = (process.env.INQUIRY_ENHANCEMENT_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'inquiry-enhancement');
+const screenshots = path.join(evidence, 'screenshots');
 const report = {
   kind: 'inquiry-enhancement-browser-verification',
   base,
@@ -113,7 +114,7 @@ async function assertNativeValuesAndFocus(page, expected) {
 
 async function run() {
   assertLocalCandidate();
-  fs.mkdirSync(evidence, { recursive: true });
+  fs.mkdirSync(screenshots, { recursive: true });
   const probe = await fetch(base + '/tech-audit/');
   assert.equal(probe.status, 200, `Candidate unavailable at ${base}`);
   pass('local Tech Audit candidate is available');
@@ -133,6 +134,7 @@ async function run() {
         await fixture.release();
         await fixture.page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'native-inquiry');
         await assertNativeValuesAndFocus(fixture.page, expected);
+        await fixture.page.screenshot({ path: path.join(screenshots, 'native-inquiry-390.png'), fullPage: true });
 
         const post = fixture.page.waitForResponse(response => new URL(response.url()).pathname === '/thanks/' && response.request().method() === 'POST');
         await fixture.form.locator('button[type="submit"]').click();
@@ -180,6 +182,7 @@ async function run() {
         await fixture.page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'enhanced');
         assert.equal(await fixture.host.locator('form.static-inquiry').count(), 0, 'untouched fallback should hand off to the existing React form');
         assert.ok(await fixture.host.locator('form').count() > 0, 'existing enhanced inquiry form mounted');
+        await fixture.page.screenshot({ path: path.join(screenshots, 'enhanced-inquiry-390.png'), fullPage: true });
         return 'untouched fallback hands off to existing React journey';
       } finally { await fixture.context.close(); }
     });
