@@ -1,0 +1,442 @@
+{
+  "page-services-custom-local-websites": {
+    "title": "Websites built around your business",
+    "summary": "A custom website helps people find you, understand your work, and take the next step. No templates, no monthly hosting fee, and free monthly checks, upgrades, and changes."
+  },
+  "website": {
+    "title": "Your first useful website",
+    "summary": "Start with what you do, who it helps, why people can trust you, and one clear way to contact you. Add more only when it helps a customer act."
+  },
+  "maps": {
+    "title": "Get found on Google Maps",
+    "summary": "A missing listing can come from incomplete details, verification, or conflicting information. Check the facts people see before you make changes."
+  },
+  "page-services-it-support": {
+    "title": "Help when business tech breaks",
+    "summary": "If email, Wi-Fi, a card reader, booking, or a device stops working, start with the issue. We assess it and confirm the next step and any on-site timing."
+  },
+  "wifi": {
+    "title": "Fix Wi-Fi where work happens",
+    "summary": "Walls, interference, and equipment placement can leave weak spots. Test the rooms people use, then check the network layout and device load."
+  },
+  "email": {
+    "title": "Keep business email out of spam",
+    "summary": "Spam filters look at domain setup, sending history, message content, and recipient settings. Find the cause before changing how you send."
+  },
+  "software": {
+    "title": "When a spreadsheet is not enough",
+    "summary": "Consider custom software when repeated work wastes real time or creates errors, and simpler fixes or current tools cannot solve the job."
+  },
+  "brief": {
+    "title": "Start without technical words",
+    "summary": "Tell us what you are trying to do and where it gets stuck. The first look is free, and any paid work is scoped separately."
+  },
+  "platform": {
+    "title": "Choose the right website path",
+    "summary": "A builder may fit a simple job. Custom help can fit when the customer path, ownership, or upkeep needs more care."
+  },
+  "speed": {
+    "title": "Make phone pages load faster",
+    "summary": "Large images, heavy scripts, fonts, hosting delays, and complex effects can slow a phone page. Check what customers actually wait for."
+  },
+  "software-repeat-work": {
+    "title": "Find the real process problem",
+    "summary": "If people disagree about who does what or how exceptions work, new software may only automate confusion. Set the process first."
+  },
+  "computer": {
+    "title": "Set up new computers calmly",
+    "summary": "Prepare approved apps and accounts, decide what must move, and schedule handover around the workday. A staged setup helps reduce disruption."
+  },
+  "ownership": {
+    "title": "Keep your website under your name",
+    "summary": "Know who controls the domain, hosting, site platform, and connected tools before work begins. A business should be able to reach every important account."
+  },
+  "page-services-business-systems": {
+    "title": "Software built for your day",
+    "summary": "A focused tool can support the way your business already works. You own the software and can see what it is meant to handle."
+  },
+  "onsite": {
+    "title": "What happens during a visit",
+    "summary": "Start with the symptom, who is affected, and what must keep running. That gives the visit a clear purpose before anything changes."
+  },
+  "booking": {
+    "title": "Make booking easy to find",
+    "summary": "Show the service, important conditions, and what happens after someone reaches out. Put booking where people can see it without hunting."
+  },
+  "page-services-tech-consulting": {
+    "title": "Know what to keep or change",
+    "summary": "A free first look at your website, Google profile, tools, and bills can help you decide what to keep, fix, replace, build, or skip."
+  },
+  "printer": {
+    "title": "Why one computer cannot print",
+    "summary": "If some computers print, the printer may be fine. Check the other computer’s network, driver, queue, or permission before replacing equipment."
+  },
+  "backup": {
+    "title": "Know your files can return",
+    "summary": "A backup dashboard is useful, but a successful restore is better proof. Check that important files can actually be recovered."
+  },
+  "software-approval-path": {
+    "title": "Keep approvals from disappearing",
+    "summary": "When requests get lost across messages, spreadsheets, and memory, a small shared workflow can show the next owner and decision."
+  },
+  "album-nyc": {
+    "title": "New York businesses in motion",
+    "summary": "A visual collection of the shops and daily work that keep New York moving. Explore the details customers need first."
+  },
+  "cost": {
+    "title": "What shapes website cost",
+    "summary": "Website cost follows the work: pages, words, photos, booking or sales tools, connections, and the condition of what already exists. Start with a custom quote."
+  },
+  "web-domain-renewal": {
+    "title": "Do not lose your domain",
+    "summary": "Keep the registrar login, renewal email, payment method, and recovery contact in the business’s control. Review them before a deadline arrives."
+  },
+  "human": {
+    "title": "Ask for IT help clearly",
+    "summary": "Say what changed, who is affected, which device or service is involved, and what work is blocked. Never include passwords or private client details."
+  },
+  "move": {
+    "title": "Move office tech without surprises",
+    "summary": "Arrange internet before the move. Then plan where network equipment, workstations, and printers will go so the first day can work."
+  },
+  "mobile": {
+    "title": "Make your site work on phones",
+    "summary": "Text, spacing, navigation, and fixed-width elements can break on a small screen. Review the pages and actions customers use on their phones."
+  },
+  "case-venuecircuit": {
+    "title": "VenueCircuit",
+    "summary": "A project for independent venues that keeps bar, door, staff, and promoter splits in one traceable closeout flow."
+  },
+  "it-security-basics": {
+    "title": "Start with practical security basics",
+    "summary": "Review unique account access, multi-step sign-in, current devices, a tested backup, and one clear way to report suspicious messages."
+  },
+  "web-homepage-priority": {
+    "title": "Make a busy homepage clear",
+    "summary": "Lead with the problems you solve. Group related services into a few clear paths so a visitor can find their next step."
+  },
+  "care": {
+    "title": "Plan useful office check-ins",
+    "summary": "The right schedule depends on how much the office relies on its systems, how often things change, and who already handles updates and backups."
+  },
+  "it-guest-network": {
+    "title": "Separate guest and work Wi-Fi",
+    "summary": "Guest access and business equipment have different needs. Keeping them separate can make the work network easier to manage."
+  },
+  "case-deckspace": {
+    "title": "DeckSpace",
+    "summary": "A project for a cruise that brings an onboard guide, guest network, and memory layer into one small world."
+  },
+  "forms": {
+    "title": "Find why forms are abandoned",
+    "summary": "A form can lose people through confusing questions, a technical problem, too many required fields, or uncertainty about what happens next."
+  },
+  "web-redesign-decision": {
+    "title": "Rebuild or make focused fixes",
+    "summary": "A few changes may be enough when a site is maintainable and its basic structure still helps customers. Start by finding the broken path."
+  },
+  "it-permission-review": {
+    "title": "Remove former access safely",
+    "summary": "Closing an email account may not remove access to cloud folders, shared links, or business apps. Review each place separately."
+  },
+  "it-internet-outage": {
+    "title": "Find where the internet problem starts",
+    "summary": "A wired test near the internet equipment can help separate a provider outage from a local Wi-Fi or network issue."
+  },
+  "it-account-handoff": {
+    "title": "Handle a departing employee’s laptop",
+    "summary": "Use your business offboarding process before reusing or erasing a laptop. Protect the account, work files, and records first."
+  },
+  "page-vera": {
+    "title": "VERA",
+    "summary": "A free NYC rental lens that links listings to public records, flags risk, shows uncertainty, and keeps source records open to inspect."
+  },
+  "it-shared-inbox-owner": {
+    "title": "Fix shared inbox sender mix-ups",
+    "summary": "Shared inboxes can reply from the wrong person when permissions, default sender settings, or personal accounts overlap. Check the setup before sending."
+  },
+  "album-marthas-vineyard": {
+    "title": "Martha’s Vineyard, in season",
+    "summary": "A visual collection for island businesses that need clear, current information when the season changes."
+  },
+  "web-accessibility-basics": {
+    "title": "Make the first customer path accessible",
+    "summary": "Begin with readable text, visible focus, meaningful buttons, usable forms, and information that is available as text, not only inside an image."
+  },
+  "web-local-facts": {
+    "title": "Phoenix facts customers can use",
+    "summary": "Publish the location details people need to visit or arrange service: accurate contact information and the real service area."
+  },
+  "web-proof-before-pitch": {
+    "title": "Give a new customer confidence",
+    "summary": "Show what you do, who is behind the work, and how to get in touch. Clear proof helps people decide what to do next."
+  },
+  "web-content-collection": {
+    "title": "Gather what a website needs",
+    "summary": "Bring approved service details, current contact information, domain and site access, usable photos, and the questions customers ask most."
+  },
+  "it-license-renewal": {
+    "title": "Review software renewals calmly",
+    "summary": "List each tool, its cost, renewal date, account owner, and the job it supports. That makes a renewal easier to evaluate."
+  },
+  "web-service-page": {
+    "title": "Answer the service question first",
+    "summary": "Name the problem, explain the next practical move, show who it fits, and make the first contact step easy to find."
+  },
+  "it-password-ownership": {
+    "title": "Keep business accounts straight",
+    "summary": "Personal and business Microsoft or Google accounts can look alike while giving different access. Check which identity owns the work."
+  },
+  "web-photos-with-purpose": {
+    "title": "Choose photos that help decide",
+    "summary": "Use photos that show the place, the work, the people, or the result a customer needs to understand."
+  },
+  "it-video-call-room": {
+    "title": "Test the room before the call",
+    "summary": "Test the camera, microphone, display, account access, and network in the room where people will actually meet."
+  },
+  "it-storage-full": {
+    "title": "Check storage before deleting",
+    "summary": "Find what is using space before deleting anything important. A full drive can have several simple causes."
+  },
+  "web-menu-and-hours": {
+    "title": "Keep seasonal hours easy to find",
+    "summary": "For a Martha’s Vineyard business, show current hours and opening dates where people look for them, including the contact or booking path."
+  },
+  "web-events-calendar": {
+    "title": "Give an event the needed facts",
+    "summary": "Say what is happening, when and where it happens, who it is for, what it costs when relevant, and the next step to attend."
+  },
+  "it-shared-files": {
+    "title": "Make shared files easier to find",
+    "summary": "Organize files around how the team works. Use clear names, clear owners, and the right access for each person."
+  },
+  "it-phone-setup": {
+    "title": "Test a new business phone setup",
+    "summary": "Call the public number from another device. Check voicemail, after-hours handling, and who receives messages and returns calls."
+  },
+  "web-ecommerce-inventory": {
+    "title": "Prepare a shop to sell online",
+    "summary": "Define products, stock, payment, and fulfillment before selling. Then give customers accurate descriptions and clear policies."
+  },
+  "web-multilingual-start": {
+    "title": "Choose languages your customers use",
+    "summary": "More languages can help when they match the people you serve and someone can approve the wording before it goes live."
+  },
+  "it-software-updates": {
+    "title": "Check every computer gets updates",
+    "summary": "Make an inventory of office computers and review update status. Do not assume every device follows the same policy."
+  },
+  "it-payment-device-check": {
+    "title": "Find card reader disconnects",
+    "summary": "Busy times can expose network congestion, weak signal, power trouble, or a payment-service issue. Check the cause before changing equipment."
+  },
+  "album-arizona": {
+    "title": "Arizona work, clearly explained",
+    "summary": "A visual collection for businesses that need a helpful website before the next customer reaches out."
+  },
+  "web-site-health-check": {
+    "title": "Check a website update properly",
+    "summary": "After an update, test the pages and customer actions it touched: phone layouts, forms, booking links, and important navigation."
+  },
+  "it-domain-email-renewal": {
+    "title": "Track what keeps email running",
+    "summary": "Keep a record of the domain registrar, email provider, billing and recovery contacts, and who is allowed to make changes."
+  },
+  "web-hosting-ownership": {
+    "title": "Know hosting before you move",
+    "summary": "Before changing providers, know who owns the hosting account and domain, how email depends on it, and what backup choices exist."
+  },
+  "it-new-hire-access": {
+    "title": "Set up a new hire well",
+    "summary": "Prepare only the accounts, devices, files, and instructions the role needs. Test the first real task with the person who manages the work."
+  },
+  "it-home-work-boundary": {
+    "title": "Set up a simple home office",
+    "summary": "Start with the work that needs to happen, then choose the laptop, monitor, printer, and video-call setup that supports it."
+  },
+  "web-reviews-response": {
+    "title": "Reply to reviews like a person",
+    "summary": "Thank someone for a real detail when it fits. Answer useful questions plainly and take private account or order issues off the public page."
+  },
+  "web-search-answer": {
+    "title": "Make answers easier to understand",
+    "summary": "Name the customer question, answer it with specific current facts, and link to the next useful detail. That helps people and search tools."
+  },
+  "it-support-notes": {
+    "title": "Keep a note after a fix",
+    "summary": "Write down what happened, what changed, who owns the account or device, and what to check if the problem returns."
+  },
+  "web-newsletter-choice": {
+    "title": "Only ask for email with a purpose",
+    "summary": "Use a signup when you have useful updates to send and a person responsible for the list. Do not collect addresses without a clear reason."
+  },
+  "web-launch-checklist": {
+    "title": "Check the basics before launch",
+    "summary": "Confirm contact details, the main customer action, phone behavior, domain and hosting ownership, and how messages reach the business."
+  },
+  "it-vendor-handoff": {
+    "title": "Prepare for a provider review",
+    "summary": "Bring a list of services, account owners, renewal dates, current symptoms, and business times when changes would be risky."
+  },
+  "case-chromatic-painting-design": {
+    "title": "Chromatic Painting & Design",
+    "summary": "One studio identity with separate paths for painting projects and mural commissions."
+  },
+  "case-hair-by-rachel-charles": {
+    "title": "Hair By Rachel Charles",
+    "summary": "A salon website that explains services before booking while keeping Square in the booking path."
+  },
+  "page-areas": {
+    "title": "Help that knows your block",
+    "summary": "Find website, tech, and software help shaped around small businesses across New York City and the needs of your neighborhood."
+  },
+  "case-cc-films": {
+    "title": "CC Films",
+    "summary": "An official film home with direct paths for fans, press, and premiere guests."
+  },
+  "album-hospitality": {
+    "title": "Hospitality, ready for the next guest",
+    "summary": "A visual collection for cafés and restaurants that need menus, visits, and useful contact details to be easy to find."
+  },
+  "case-easy-tiger": {
+    "title": "Easy Tiger Bar",
+    "summary": "A neighborhood-bar site with a readable menu, event paths, visit details, and a separate editing flow for upkeep."
+  },
+  "case-the-break-room": {
+    "title": "The Break Room",
+    "summary": "A pool-hall site that pairs venue character with readable games, menu, directions, and contact details."
+  },
+  "case-clearhelp": {
+    "title": "ClearHelp",
+    "summary": "A resource-finding site that starts with people’s situations and locations, with a separate route for offering help."
+  },
+  "case-after-hours-agenda": {
+    "title": "After Hours Agenda",
+    "summary": "A brand-led streetwear storefront that keeps product, payment, and made-to-order fulfillment connected."
+  },
+  "case-all-pets-animal-hospital": {
+    "title": "All Pets Animal Hospital",
+    "summary": "A public project record that keeps private client details withheld until public proof is approved."
+  },
+  "case-army-navy-bags": {
+    "title": "Army & Navy Bags",
+    "summary": "A phone-first neighborhood field guide for a distinctive local shop."
+  },
+  "album-roofing": {
+    "title": "Roofing work, ready for inquiry",
+    "summary": "A visual collection for roofing businesses that need a visit to lead into a clear, useful inquiry."
+  },
+  "case-brothers-pizzeria": {
+    "title": "Brothers Pizzeria",
+    "summary": "A neighborhood-pizzeria concept with heritage, a full readable menu, and phone ordering together."
+  },
+  "case-grand-funding-llc": {
+    "title": "Grand Funding LLC",
+    "summary": "A real-estate funding site that separates project education and planning examples from a transaction-specific review."
+  },
+  "case-logan-loans": {
+    "title": "Logan Loans",
+    "summary": "A mortgage-information site with separate routes for buyers, homeowners, investors, and realtors to learn before contacting the lender."
+  },
+  "case-legacy-music-group": {
+    "title": "Legacy Music Group",
+    "summary": "A music-company release candidate with paths for artists, services, booking, company context, and reference material."
+  },
+  "case-pole-position-it": {
+    "title": "Pole Position IT",
+    "summary": "An active client project whose public proof stays private until its owner approves it."
+  },
+  "case-public-house-creative": {
+    "title": "Public House Creative",
+    "summary": "A private estimating system that brings documents, room classification, price drivers, and reporting into one checkable workspace."
+  },
+  "case-surviving-game": {
+    "title": "Surviving Game",
+    "summary": "A public project record that preserves privacy until client-approved proof is available."
+  },
+  "album-shops": {
+    "title": "Shops and salons, ready to visit",
+    "summary": "A visual collection for businesses that want the next visit to feel easy to plan."
+  },
+  "case-the-tarot-hotline": {
+    "title": "The Tarot Hotline",
+    "summary": "A personal-service site that explains voice notes, live talks, and a question-first path before someone chooses a paid next step."
+  },
+  "lab-pool-room": {
+    "title": "The Pool Room",
+    "summary": "An original 3D New York dive-bar scene that ends with a physics-solved pool break."
+  },
+  "lab-terminal-3d": {
+    "title": "Neon District",
+    "summary": "An interactive night district with people, cabs, beacons, and changing moments."
+  },
+  "lab-walkup-3d": {
+    "title": "Six-Story Walk-Up",
+    "summary": "An illustrative New York corner made as one living 3D asset for real estate, games, and cinema."
+  },
+  "lab-pill-scroll": {
+    "title": "Scroll Into Motion",
+    "summary": "A scroll-controlled visual study that places sixteen New York moments inside one frame."
+  },
+  "lab-micro-animations": {
+    "title": "Micro-Animations",
+    "summary": "Seven interaction studies in an illustrative ordering interface, showing how small feedback can clarify an action."
+  },
+  "lab-aha-laser": {
+    "title": "AHA Laser Poster",
+    "summary": "A responsive poster experiment with a laser-drawn wordmark and a pull-chain interaction."
+  },
+  "album-trades": {
+    "title": "Trades businesses, ready for calls",
+    "summary": "A visual collection for the crews and local work that need clear ways to handle incoming requests."
+  },
+  "lab-studio-engine": {
+    "title": "Studio Engine",
+    "summary": "An illustrative business-direction generator that turns a rough idea into a sample creative direction."
+  },
+  "page-library": {
+    "title": "Find the next useful move",
+    "summary": "Plain answers for small-business owners: what happened, what it means, and the next small move worth making."
+  },
+  "lab-growth-street": {
+    "title": "Growth Street",
+    "summary": "An invented flower-shop story that uses interactive visual props to explain one possible path from attention to orders."
+  },
+  "lab-goliath": {
+    "title": "Goliath",
+    "summary": "A Little Fight brand experiment that uses ten scroll-controlled street posters to carry one message."
+  },
+  "page-industries": {
+    "title": "Help for your kind of business",
+    "summary": "Explore websites and practical technology help shaped around the way your business works."
+  },
+  "market-nyc": {
+    "title": "New York businesses, clear next steps",
+    "summary": "Websites that make the next choice clear, plus support that starts with the interruption and uses plain language."
+  },
+  "market-marthas-vineyard": {
+    "title": "Keep the Vineyard season clear",
+    "summary": "Clear customer paths and calm technology planning for Martha’s Vineyard businesses that need information to stay current."
+  },
+  "market-arizona": {
+    "title": "Arizona tools for real work",
+    "summary": "A clear customer path for the work in front of you, plus support planning built around the real interruption."
+  },
+  "album-makers": {
+    "title": "Makers, with value explained",
+    "summary": "A visual collection for makers who need a website to help people understand the work and its value."
+  },
+  "market-louisiana-starbase-area": {
+    "title": "Louisiana, clear before the next move",
+    "summary": "Practical website decisions and safe technology preparation for the work that is real today."
+  },
+  "market-texas-starbase-area": {
+    "title": "South Texas work, easy to find",
+    "summary": "Useful public information and careful support planning for South Texas businesses with work to get done."
+  },
+  "market-florida-space-coast": {
+    "title": "Space Coast, useful on first tap",
+    "summary": "A strong mobile front door and a calmer plan when the systems behind the work need attention."
+  }
+}

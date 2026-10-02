@@ -1,0 +1,17 @@
+/* Color lives on the rounded edge, leaving the black face quiet and legible. */
+.service-anchor>.anchor-trace{position:absolute;inset:0;z-index:7;display:block;width:100%;height:100%;overflow:hidden;border-radius:inherit;pointer-events:none;color:var(--tile-pop);fill:none;contain:paint}
+.anchor-trace rect{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.anchor-trace .trace-rail{stroke-width:1;opacity:.3;transition:opacity 180ms ease}
+.anchor-trace :is(.trace-halo,.trace-tail,.trace-head){animation:anchor-perimeter 7.6s linear infinite;animation-delay:var(--trace-phase);animation-play-state:paused;transition:opacity 180ms ease}
+.anchor-trace .trace-halo{stroke-width:7;stroke-dasharray:16 84;opacity:.2;filter:blur(1.5px)}
+.anchor-trace .trace-tail{stroke-width:1.7;stroke-dasharray:16 84;opacity:.86}
+.anchor-trace .trace-head{stroke:var(--tile-soft);stroke-width:2.4;stroke-dasharray:1 99;opacity:1;animation-name:anchor-perimeter-head}
+.service-anchor[data-trace-visible]>.anchor-trace :is(.trace-halo,.trace-tail,.trace-head){animation-play-state:running}
+.service-anchor:is(:hover,:focus-visible)>.anchor-trace .trace-rail{opacity:.55}
+.service-anchor:is(:hover,:focus-visible)>.anchor-trace .trace-halo{opacity:.38}
+.service-anchor:is(:hover,:focus-visible)>.anchor-trace .trace-tail{opacity:1}
+body:is(.panel-open,.menu-open,.no-motion) .service-anchor .anchor-trace :is(.trace-halo,.trace-tail,.trace-head),.trace-document-hidden .service-anchor .anchor-trace :is(.trace-halo,.trace-tail,.trace-head),.lf-tile-flight .service-anchor .anchor-trace :is(.trace-halo,.trace-tail,.trace-head){animation-play-state:paused}
+@keyframes anchor-perimeter{from{stroke-dashoffset:0}to{stroke-dashoffset:-100}}
+@keyframes anchor-perimeter-head{from{stroke-dashoffset:-15}to{stroke-dashoffset:-115}}
+body.no-motion .anchor-trace :is(.trace-halo,.trace-tail,.trace-head){display:none}
+@media(prefers-reduced-motion:reduce){.anchor-trace :is(.trace-halo,.trace-tail,.trace-head){display:none;animation:none!important}.anchor-trace .trace-rail{transition:none}}

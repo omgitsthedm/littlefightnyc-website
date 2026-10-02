@@ -1,0 +1,57 @@
+/* The authored square unit stays legible from a phone to a large display. */
+.mosaic>.tile:not(.brand-tile){padding:0!important;display:block!important;container-type:inline-size;border-radius:clamp(12px,1.65vw,24px);min-height:0;gap:0}
+.cell-original{display:none!important}
+.cell-face,.anchor-face{position:relative;display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;padding:clamp(10px,8cqw,23px);overflow:hidden;text-decoration:none}
+.cell-title{font:650 clamp(15px,14cqw,32px)/1.03 Display,Arial,sans-serif;letter-spacing:-.045em;text-wrap:balance;position:relative;z-index:2;max-width:100%;overflow-wrap:break-word}
+.cell-kicker{font:500 clamp(8px,4.5cqw,10px)/1.25 Barlow,sans-serif;letter-spacing:.07em;color:var(--tile-soft);margin-bottom:auto;padding-bottom:6px;position:relative;z-index:2}
+.cell-kicker:empty{display:none}
+.cell-art{display:block;position:absolute;right:6%;bottom:-15%;width:75%;height:76%;opacity:.13;pointer-events:none;color:var(--tile-soft)}
+.cell-art svg,.anchor-art svg{position:static!important;display:block!important;width:100%!important;height:100%!important;max-width:100%;max-height:100%;margin:0!important;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;overflow:visible;transform:none!important}
+.cell-go{position:absolute;right:9px;top:6px;color:var(--tile-soft);font-size:13px;opacity:0;transition:opacity .16s}
+.tile:is(:hover,:focus-visible) .cell-go{opacity:1}
+.tile[data-cell-face=type] .cell-title{color:var(--tile-soft)}
+.tile[data-cell-face=type] .cell-art{display:none}
+.tile[data-cell-face=mixed] .cell-face{justify-content:flex-end}
+.tile[data-cell-face=mixed] .cell-art{top:10%;bottom:auto;right:10%;height:34%;width:32%;opacity:.9}
+.tile[data-cell-face=diagram] .cell-face{justify-content:flex-end}
+.tile[data-cell-face=diagram] .cell-art{top:10%;bottom:auto;left:12%;width:76%;height:40%;opacity:.85}
+.tile[data-cell-face=diagram] .cell-title{font-size:clamp(14px,11.5cqw,26px)}
+.tile[data-cell-face=project] .cell-title,.tile[data-cell-face=lab] .cell-title{font-size:clamp(14px,12cqw,27px);margin:auto 0 0}
+.tile[data-cell-face=project] .cell-art,.tile[data-cell-face=lab] .cell-art{inset:20% 10% auto auto;width:64%;height:35%;opacity:.22}
+.tile[data-rows="1"] .cell-face{padding:8px 12px;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px}
+.tile[data-rows="1"] .cell-title{font-size:clamp(12px,6.8cqw,24px);line-height:1.08;text-wrap:pretty;max-width:100%;margin:0}
+.tile[data-rows="1"] :is(.cell-kicker,.cell-art){display:none}
+.tile[data-cell-face=icon] .cell-face{padding:12%;align-items:center;justify-content:center}
+.tile[data-cell-face=icon] :is(.cell-title,.cell-kicker,.cell-go){display:none}
+.tile[data-cell-face=icon] .cell-art{position:relative;inset:auto;width:78%;height:78%;opacity:1;display:block}
+.tile[data-cells="1"] .cell-art{width:85%;height:85%}
+.tile[data-cell-face=icon] .cell-face::after{content:'';position:absolute;inset:12%;border-radius:50%;border:1px solid var(--tile-soft);opacity:.13}
+.tile:is(.is-performing,.replay)[data-cell-face=icon] .cell-art{animation:cell-settle 1.8s cubic-bezier(.2,.8,.2,1) both}
+.tile:is(.is-performing,.replay)[data-cell-face=diagram] .cell-art{animation:cell-connect 1.8s ease both}
+.anchor-face{padding:clamp(12px,5cqw,24px);justify-content:center}
+.anchor-index{color:var(--tile-soft);font:500 clamp(9px,3cqw,12px)/1 Barlow,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.08em;margin-bottom:clamp(7px,2cqw,14px)}
+.anchor-title{position:relative;z-index:2;font:650 clamp(24px,10.5cqw,55px)/.97 Display,Arial,sans-serif;letter-spacing:-.05em;text-wrap:balance;max-width:80%;color:var(--tile-soft)}
+.anchor-caption{position:relative;z-index:2;font:400 clamp(11px,3.1cqw,15px)/1.3 Barlow,sans-serif;color:#c5c5d0;margin-top:clamp(8px,3cqw,15px)}
+.anchor-art{position:absolute;width:35%;height:72%;right:3%;bottom:-13%;color:var(--tile-pop);opacity:.22;transform:rotate(-10deg)}
+.anchor-go{position:absolute;top:clamp(12px,5cqw,24px);right:clamp(12px,5cqw,24px);font-size:clamp(18px,6cqw,28px);line-height:1;color:var(--tile-soft)}
+.service-anchor::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--tile-pop) 24%,transparent)}
+.service-anchor:is(:hover,:focus-visible) .anchor-art{transform:rotate(0deg) translateY(-4px);opacity:.4;transition:transform .4s var(--ease),opacity .4s}
+.brand-tile{container-type:inline-size;border-radius:clamp(20px,4vw,60px);padding:12px!important}
+.brand-tile :is(h1,.mosaic-brand-heading),.mosaic[data-world]:not([data-world=all]) .brand-tile :is(h1,.mosaic-brand-heading){font-size:clamp(29px,14cqw,67px)!important;line-height:.9}
+.brand-tile .brand-note{display:none}.brand-tile .hero-route{opacity:.3}
+.filters{max-width:calc(100vw - 410px);overflow-x:auto;scrollbar-width:none;flex-shrink:1}.filters button{white-space:nowrap;padding-inline:14px;flex:none}.filters::-webkit-scrollbar{display:none}
+@keyframes cell-settle{0%{scale:.82;rotate:-10deg;opacity:.35}60%{opacity:1}100%{scale:1;rotate:0deg;opacity:1}}
+@keyframes cell-connect{0%{opacity:.2;translate:-5px 0}100%{opacity:.85;translate:0 0}}
+@media(max-width:760px){
+ .filters{max-width:100%;width:100%;padding:3px;justify-content:flex-start}.filters button{font-size:12px;padding-inline:12px;min-height:44px}.filters .tile-count{display:none}
+ .mosaic>.tile:not(.brand-tile){border-radius:15px}
+ .anchor-face{padding:12px 13px}.anchor-index{font-size:9px;margin-bottom:6px}.anchor-title{font-size:clamp(24px,12.4cqw,32px);max-width:90%}.anchor-caption{display:none}.anchor-art{right:0;width:32%;height:70%;bottom:-17%}.anchor-go{font-size:18px;top:11px;right:12px}
+ .cell-face{padding:10px}.cell-kicker{font-size:8px;letter-spacing:.035em}.cell-title{font-size:clamp(15px,15cqw,22px)}
+ .tile[data-rows="1"] .cell-face{padding:7px 10px}.tile[data-rows="1"] .cell-title{font-size:clamp(12px,7.2cqw,17px)}
+ .tile[data-cell-face=project] .cell-title,.tile[data-cell-face=lab] .cell-title{font-size:clamp(13px,13cqw,19px);line-height:1.04}
+ .brand-tile{border-radius:22px}.brand-tile :is(h1,.mosaic-brand-heading){letter-spacing:-.07em}
+}
+@media(prefers-reduced-motion:reduce){.cell-art,.anchor-art{animation:none!important;transition:none!important}}
+body.no-motion .cell-art,body.no-motion .anchor-art{animation:none!important;transition:none!important}
+.service-anchor:is(.is-performing,.replay) .anchor-art{animation:anchor-arrive 2s var(--ease) both}
+@keyframes anchor-arrive{0%{opacity:.1;translate:5px 4px;rotate:-6deg}100%{opacity:.3;translate:0 0;rotate:0deg}}

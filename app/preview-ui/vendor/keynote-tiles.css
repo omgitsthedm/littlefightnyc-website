@@ -1,0 +1,129 @@
+/* Keynote accents belong to individual tiles, not service categories. */
+.tile {
+  --tile-ink: #111114;
+  --tile-paper: #f6f3ec;
+  --tile-line: #f6f3ec33;
+  --tile-pop: #3b8bff;
+  --tile-soft: #92bfff;
+  background: var(--tile-ink) !important;
+  color: var(--tile-paper) !important;
+  border-color: #ffffff14 !important;
+  box-shadow: inset 0 1px #ffffff10, inset 0 -1px #00000066 !important;
+}
+
+.tile .tile-title,
+.tile .tile-caption,
+.tile .eyebrow,
+.tile .fragment-kicker,
+.tile .fragment-caption,
+.tile .human-note,
+.tile .care-note,
+.tile .speed-heading { color: var(--tile-paper) !important; }
+
+.tile .eyebrow,
+.tile .fragment-kicker { font-size: max(11px, .72rem) !important; letter-spacing: .11em; }
+.tile .tile-caption,
+.tile .fragment-caption,
+.tile .human-note,
+.tile .care-note { font-size: max(12px, .78rem) !important; }
+.tile .open-mark { border: 1px solid #ffffff2b !important; background: #ffffff08 !important; color: var(--tile-paper) !important; }
+.tile .open-mark svg { stroke-width: 1.5; }
+.tile:is(:hover, :focus-visible, [aria-expanded="true"]) { border-color: #ffffff73 !important; box-shadow: inset 0 1px #ffffff2e, 0 11px 28px #0000002e !important; }
+
+/* Authored web miniatures inherit the tile accent on a black face. */
+.tile[data-family="web"] .tile-title em,
+.tile[data-family="web"] .fragment-kicker,
+.tile[data-family="web"] .eyebrow { color: var(--tile-soft) !important; }
+.t-website .tile-title em,
+.t-speed .tile-title em,
+.t-mobile .tile-title em { background: linear-gradient(105deg, var(--tile-soft), var(--tile-pop) 48%, var(--tile-soft)); -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+.t-website::before,
+.t-speed::before,
+.t-mobile::before { content: ""; position: absolute; inset: auto -19% -36% 26%; height: 72%; pointer-events: none; background: radial-gradient(ellipse, color-mix(in srgb, var(--tile-pop) 20%, transparent), transparent 67%); }
+.t-maps .tile-title em,.t-cost .tile-title em,.t-booking .tile-title em { color: var(--tile-soft) !important; }
+.t-platform .tile-caption,.t-forms .tile-caption,.t-ownership .key-label { color: var(--tile-soft) !important; }
+
+.t-website .web-window { background: #f6f3ec !important; border-color: var(--tile-pop) !important; color: #111114 !important; box-shadow: 0 12px 0 var(--tile-pop) !important; }
+.t-website .front-window { background: linear-gradient(150deg, #f6f3ec 0 65%, var(--tile-pop) 65%) !important; }
+.t-website .web-phone,.t-mobile .phone-frame { background: #111114 !important; border-color: #f6f3ec !important; color: #f6f3ec !important; box-shadow: 6px 7px 0 var(--tile-pop) !important; }
+.t-website .mini-book,.t-website .design-token,.t-mobile .responsive-type { background: var(--tile-pop) !important; color: #111114 !important; }
+.t-website .editor-cursor { color: var(--tile-pop) !important; }
+.t-maps .map-grid { background-color: #111114 !important; background-image: linear-gradient(color-mix(in srgb, var(--tile-pop) 18%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--tile-pop) 18%, transparent) 1px, transparent 1px) !important; }
+.t-maps .map-path { border-color: var(--tile-pop) !important; }
+.t-maps .map-pin,.t-maps .map-tag { background: var(--tile-pop) !important; color: #111114 !important; }
+.t-maps .map-point { background: var(--tile-pop) !important; }
+.t-booking .calendar-scene { background: #f6f3ec !important; color: #111114 !important; border-color: var(--tile-pop) !important; }
+.t-booking .calendar-top,.t-booking .booked-day { background: var(--tile-pop) !important; color: #111114 !important; }
+.t-ownership .keys-scene .icon,.t-ownership .key-ring { color: var(--tile-soft) !important; border-color: var(--tile-pop) !important; }
+.t-cost .cost-question { color: var(--tile-pop) !important; }
+.t-speed .speed-lines i { background: var(--tile-pop) !important; }
+.t-forms .message-bubble { background: var(--tile-pop) !important; color: #111114 !important; }
+.t-forms .message-check { color: var(--tile-pop) !important; }
+
+/* IT diagnostics use the same distributed accents, with white information. */
+.tile[data-family="it"] .tile-title em,
+.tile[data-family="it"] .fragment-kicker,
+.tile[data-family="it"] .eyebrow { color: var(--tile-soft) !important; }
+.t-onsite .tile-title em,.t-computer .tile-title em,.t-care .tile-title em { color: var(--tile-soft) !important; }
+.t-onsite::after,.t-wifi::after,.t-computer::after { content: ""; position: absolute; inset: auto -12% -42% 18%; height: 70%; background: radial-gradient(ellipse, color-mix(in srgb, var(--tile-pop) 15%, transparent), transparent 68%); pointer-events: none; }
+.t-wifi .wifi-field i { border-color: var(--tile-pop) !important; }
+.t-wifi .wifi-core { background: #f6f3ec !important; color: #111114 !important; box-shadow: 0 0 0 6px var(--tile-pop) !important; }
+.t-email .email-route i { border-color: var(--tile-pop) !important; }
+.t-email .email-packet { background: #f6f3ec !important; color: #111114 !important; border-color: var(--tile-pop) !important; }
+.t-email .inbox-slot { background: var(--tile-pop) !important; color: #111114 !important; }
+.t-onsite .tech-route .route-base { stroke: #f6f3ec55 !important; }
+.t-onsite .tech-route .route-signal { stroke: var(--tile-pop) !important; }
+.t-onsite .tech-node { background: #111114 !important; border-color: #f6f3ec !important; color: #f6f3ec !important; box-shadow: 4px 4px 0 var(--tile-pop) !important; }
+.t-printer .print-face { background: #f6f3ec !important; color: #111114 !important; border-color: var(--tile-pop) !important; }
+.t-printer .queue-sheet,.t-printer .printed-sheet { background: var(--tile-pop) !important; color: #111114 !important; border-color: #f6f3ec !important; }
+.t-printer .printed-sheet { box-shadow: 4px 5px 0 var(--tile-pop) !important; }
+.t-computer .setup-key { background: #f6f3ec !important; color: #111114 !important; border-color: var(--tile-pop) !important; box-shadow: 4px 4px 0 var(--tile-pop) !important; }
+.t-backup .backup-scene span { background: var(--tile-pop) !important; }
+.t-backup .backup-scene .icon,.t-move .move-scene .icon,.t-care .care-mark { color: var(--tile-soft) !important; }
+.t-move .move-scene { border-color: var(--tile-pop) !important; color: #f6f3ec !important; }
+.t-human .human-note { border-left: 2px solid var(--tile-pop); padding-left: 8px; }
+
+/* The original function diagrams stay legible as designed, with restrained signal colors. */
+.tile .fragment-art,.tile .fragment-diagram { border-color: #ffffff29 !important; }
+.tile[data-family="web"] .fragment-art,.tile[data-family="web"] .fragment-diagram { color: var(--tile-soft) !important; }
+.tile[data-family="it"] .fragment-art,.tile[data-family="it"] .fragment-diagram { color: var(--tile-soft) !important; }
+.tile .fragment-diagram svg path { stroke: currentColor !important; }
+.tile .fragment-icon { color: #f6f3ec !important; border-color: currentColor !important; }
+.t-web-homepage-priority .fragment-art,.t-web-redesign-decision .fragment-art,.t-web-content-collection .fragment-art { background: linear-gradient(135deg, var(--tile-pop) 0 12%, #111114 12% 76%, var(--tile-pop) 76%) !important; }
+.t-web-accessibility-basics .fragment-art,.t-web-local-facts .fragment-art,.t-web-service-page .fragment-art { background: #f6f3ec !important; color: #111114 !important; box-shadow: 5px 5px 0 var(--tile-pop) !important; }
+.t-it-guest-network .fragment-art,.t-it-video-call-room .fragment-art,.t-it-payment-device-check .fragment-art { background: #f6f3ec !important; color: #111114 !important; box-shadow: 5px 5px 0 var(--tile-pop) !important; }
+.t-it-storage-full .fragment-art,.t-it-internet-outage .fragment-art,.t-it-shared-files .fragment-art { background: linear-gradient(135deg, #111114 0 62%, var(--tile-pop) 62%) !important; border-color: var(--tile-pop) !important; }
+
+/* Software diagrams inherit their assigned accent. */
+.tile[data-family="software"] .tile-title em,.tile[data-family="software"] .fragment-kicker { color: var(--tile-soft) !important; }
+.t-software .software-scene svg path { stroke: var(--tile-soft) !important; }
+.t-software .flow-piece { background: #111114 !important; border-color: var(--tile-soft) !important; color: #f6f3ec !important; }
+.t-software .flow-piece b { color: var(--tile-pop) !important; }
+.t-software-approval-path .fragment-art,.t-software-repeat-work .fragment-art { border-color: var(--tile-soft) !important; color: var(--tile-soft) !important; }
+
+/* The only orange in the tile set is the brand's solved mark. */
+.brand-tile { background: #111114 !important; color: #f6f3ec !important; border-color: #ff783955 !important; }
+.brand-tile :is(h1,.mosaic-brand-heading) strong,.brand-tile .brand-note .tiny-replay,.brand-tile .scene-boat { color: #ff7839 !important; fill: #ff7839 !important; }
+.brand-tile .wake-route path,.brand-tile .hero-orbit { stroke: #ff7839 !important; border-color: #ff7839 !important; }
+.brand-tile::before { content: ""; position: absolute; inset: auto -26% -44% 20%; height: 92%; background: radial-gradient(ellipse, #ff783927, transparent 68%); pointer-events: none; }
+
+@media (max-width: 560px) {
+  .tile .tile-caption,.tile .fragment-caption,.tile .human-note,.tile .care-note { font-size: 12px !important; }
+  .t-website .web-window { box-shadow: 4px 5px 0 var(--tile-pop) !important; }
+  .t-onsite .tech-node { box-shadow: 3px 3px 0 var(--tile-pop) !important; }
+  .t-printer .printed-sheet { box-shadow: 3px 3px 0 var(--tile-pop) !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tile::before,.tile::after { display: none; }
+}
+
+/* 59 service tiles share four accents; orange remains on the central brand tile.
+   Explicit identities keep their color when filters recompose the mosaic. */
+.tile[data-accent="blue"]{--tile-pop:#3b8bff;--tile-soft:#92bfff}
+.tile[data-accent="green"]{--tile-pop:#57b94c;--tile-soft:#a0df85}
+.tile[data-accent="yellow"]{--tile-pop:#f5d95b;--tile-soft:#f8e68c}
+.tile[data-accent="magenta"]{--tile-pop:#d83cbd;--tile-soft:#f09bdd}
+.tile[data-accent] .fragment-icon,.tile[data-accent] .fragment-kicker{color:var(--tile-soft)!important}
+.new-tile[data-accent].mode-type .tile-title{color:var(--tile-soft)!important}
+.tile[data-accent] .fragment-reveal{background:#202026;color:#f0f0ec}

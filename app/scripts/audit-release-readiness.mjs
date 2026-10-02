@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { access, readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -8,7 +9,9 @@ const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
 const failures = [];
-const expectedRouteCount = 218;
+const expectedTileCount = 115;
+const expectedOriginalTileCount = 110;
+const expectedRouteCount = 394;
 
 function git(args, fallback = "") {
   try {
@@ -31,6 +34,42 @@ async function exists(file) {
   }
 }
 
+async function artifactFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const full = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...await artifactFiles(full));
+    else if (entry.isFile()) files.push(full);
+  }
+  return files;
+}
+
+async function artifactHash() {
+  const markerNames = new Set(["tile-release.json", "preview-release.json", "release.json"]);
+  const byPathParts = (left, right) => {
+    const a = path.relative(distRoot, left).split(path.sep);
+    const b = path.relative(distRoot, right).split(path.sep);
+    for (let index = 0; index < Math.min(a.length, b.length); index += 1) {
+      if (a[index] < b[index]) return -1;
+      if (a[index] > b[index]) return 1;
+    }
+    return a.length - b.length;
+  };
+  const files = (await artifactFiles(distRoot))
+    .filter((file) => !markerNames.has(path.basename(file)))
+    // Match pathlib.Path ordering in finalize-tile-artifact.py: compare path
+    // segments, not a locale-sorted whole filename.
+    .sort(byPathParts);
+  const digest = createHash("sha256");
+  for (const file of files) {
+    digest.update(path.relative(distRoot, file).split(path.sep).join("/"));
+    digest.update("\0");
+    digest.update(await readFile(file));
+  }
+  return { value: digest.digest("hex"), files: files.length };
+}
+
 // Netlify discovers top-level source files as deployable functions. A colocated
 // *.test.ts file becomes an invalid function name even when app tests pass.
 for (const entry of await readdir(path.join(repoRoot, "netlify", "functions"), { withFileTypes: true })) {
@@ -49,6 +88,7 @@ if (dirty && process.env.ALLOW_DIRTY_RELEASE !== "1") {
 
 const revision = git(["rev-parse", "HEAD"], "unknown");
 const releasePath = path.join(distRoot, "release.json");
+const tileReleasePath = path.join(distRoot, "tile-release.json");
 if (!(await exists(releasePath))) {
   failures.push("dist/release.json is missing; run npm run build");
 } else {
@@ -60,6 +100,31 @@ if (!(await exists(releasePath))) {
   }
   if (release.source_dirty && process.env.ALLOW_DIRTY_RELEASE !== "1") {
     failures.push("release metadata records a dirty source build");
+  }
+}
+
+if (!(await exists(tileReleasePath))) {
+  failures.push("dist/tile-release.json is missing; run npm run build");
+} else {
+  const tileRelease = JSON.parse(await readFile(tileReleasePath, "utf8"));
+  if (tileRelease.kind !== "static-production-candidate") {
+    failures.push("tile release marker is not a static production candidate");
+  }
+  if (tileRelease.routes !== expectedRouteCount) {
+    failures.push(`expected ${expectedRouteCount} static routes, found ${tileRelease.routes}`);
+  }
+  if (tileRelease.tiles !== expectedTileCount || tileRelease.originalTilesPreserved !== expectedOriginalTileCount) {
+    failures.push(`expected ${expectedTileCount} tiles with ${expectedOriginalTileCount} originals preserved`);
+  }
+  if (tileRelease.hashScope !== "All final artifact files except release markers") {
+    failures.push("tile release hash scope is not the final artifact marker exclusion contract");
+  }
+  const actual = await artifactHash();
+  if (tileRelease.artifactSha256 !== actual.value) {
+    failures.push("tile release artifact SHA256 does not match the final deploy artifact");
+  }
+  if (tileRelease.artifactFiles !== actual.files) {
+    failures.push(`tile release file count ${tileRelease.artifactFiles} does not match ${actual.files}`);
   }
 }
 
@@ -75,19 +140,9 @@ for (const relative of [
   "favicon.svg",
   "favicon.ico",
   "apple-touch-icon.png",
-  "assets/social/og-home.jpg",
-  "assets/og-tugboat.jpg",
+  "assets/social/og-tiles.jpg",
 ]) {
   if (!(await exists(path.join(distRoot, relative)))) failures.push(`dist/${relative} is missing`);
-}
-
-const routeMeta = JSON.parse(
-  await readFile(path.join(appRoot, "src", "data", "route-meta.json"), "utf8"),
-);
-if (routeMeta.pages.length !== expectedRouteCount) {
-  failures.push(
-    `expected ${expectedRouteCount} generated routes, found ${routeMeta.pages.length}`,
-  );
 }
 
 const home = await readFile(path.join(distRoot, "index.html"), "utf8");
@@ -99,18 +154,13 @@ for (const needle of [
   if (!home.includes(needle)) failures.push(`home metadata is missing ${needle}`);
 }
 
-const prerenderSource = await readFile(path.join(here, "prerender-seo.mjs"), "utf8");
-if (/AEO money node/i.test(prerenderSource)) {
-  failures.push("prerender source still describes schema as an AEO money node");
-}
-
 if (failures.length) {
   console.error(`Release-readiness audit failed (${failures.length}):`);
   for (const failure of failures) console.error(`- ${failure}`);
   process.exitCode = 1;
 } else {
   console.log(
-    `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} routes, sitemaps, and public recovery files are present.`,
+    `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} static routes, ${expectedTileCount} tiles, final artifact hash, sitemaps, and public recovery files are present.`,
   );
   console.log(
     "External form delivery, authenticated analytics/search, social debugger, and owner-evidence checks remain manual evidence gates outside this audit.",

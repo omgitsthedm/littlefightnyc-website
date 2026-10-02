@@ -1967,3 +1967,6 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
   :root { --app-line: rgba(255, 255, 255, 0.28); --app-line-strong: rgba(255, 255, 255, 0.5); }
   .panel, .tablewrap, .shortlist, .casebook, .evidence-card { border-color: var(--app-line-strong); }
 }
+
+/* Publication age stays visible while browsing, including on phones. */
+.feed-freshness{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;margin:12px 0;border:1px solid #9d7840;border-radius:10px;background:#241f17;color:#f4d49b;font-size:14px;line-height:1.5}.feed-freshness[hidden]{display:none}.feed-freshness p{margin:0;max-width:85ch}.feed-freshness a{color:inherit;flex:none;min-height:44px;display:flex;align-items:center;text-underline-offset:4px}@media(max-width:640px){.feed-freshness{display:block;padding:12px 14px}.feed-freshness a{margin-top:6px}}

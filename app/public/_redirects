@@ -137,6 +137,8 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /solutions/*     /services/   301
 /privacy.html    /legal/      301
 /terms.html      /legal/      301
+/privacy/        /legal/      301
+/privacy         /legal/      301
 
 # --- Fit Check renamed to Tech Audit (2026-07-12) — preserve the indexed URL
 /fit-check/      /tech-audit/       301

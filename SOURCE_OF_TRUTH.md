@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-09-27 (owner-approved audit recovery release)
+Last source verification: 2026-10-02 (owner-directed tile website release candidate)
 
 This file routes agents to the current website source. The marketing site and
 public VERA browser product use one public website repository, one build, and
@@ -52,14 +52,16 @@ Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, bui
 
 ## Current source
 
-- React/Vite application: `app/src/**`, `app/public/**`, `app/index.html`
+- Static tile website: `app/preview-content/**`, `app/preview-ui/**`, `app/scripts/build-tile-preview.py`
+- Progressive intake, contact and consent islands: `app/src/tile-bridge/**`
+- Preserved applications and supporting source: `app/public/**`, `app/src/**`
 - Build and verification scripts: `app/scripts/**`, `app/tests/**`, `app/playwright.config.ts`
 - Live serverless surfaces: `netlify/functions/**`
 - Deployment configuration: `netlify.toml`
 - Quality contract: `.lifi/quality.yml`
 - Generated output: `app/dist/**`, ignored and reproducible
 
-The current visual system is Axiom Momentum. Read `app/DESIGN.md` for its contract and `app/src/styles/editorial/tokens.css` for implemented values. Do not use the removed historical design files as current direction.
+The current marketing direction is the owner-approved Soft Mineral + Edge Light tile mosaic. Its source contract is `app/preview-content/import-provenance.json`; implemented styles and physical tile motion live in `app/preview-ui/**`. Preserve all 110 original tile destinations and the original desktop/mobile square-unit geometry. Older React styles support the retained intake islands only; they are not the marketing design authority.
 
 The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 

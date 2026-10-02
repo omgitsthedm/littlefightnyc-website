@@ -1,0 +1,412 @@
+[
+  {
+    "path": "/services/custom-local-websites/",
+    "title": "Custom Small Business Websites Nationwide | Little Fight NYC",
+    "description": "Custom websites for small businesses across the United States. Clear services, real proof, and a direct route to call, text, email, or ask for a first look.",
+    "eyebrow": "Websites for independent businesses",
+    "heading": "A website should make the next customer action easy.",
+    "summary": "We build custom small-business websites across the United States. The work starts with the customer question, then makes the answer, proof, and next step clear.",
+    "sections": [
+      {
+        "id": "job",
+        "heading": "Start with the job your site has to do.",
+        "paragraphs": [
+          "A website can help people call, request an estimate, book, visit, apply, or understand a bigger purchase. Those are different jobs. We plan the page around the one that matters most.",
+          "Bring an old site, a rough idea, or a new business. We check what people need to know before they can choose you. Then we build the shortest honest path to that conversation."
+        ],
+        "bullets": [
+          "Services written in the words customers use.",
+          "Real work, reviews, credentials, and answers you can stand behind.",
+          "Phone, text, email, and form options people can use on a phone.",
+          "A clear handoff to the tools you already use when that is useful."
+        ],
+        "links": []
+      },
+      {
+        "id": "ownership",
+        "heading": "Your name. Your domain. Your website.",
+        "paragraphs": [
+          "You own the code, domain, and content. We do not lock your business inside a template account. The written scope says what we are building, what each side supplies, the review points, and what happens next.",
+          "The website offer is 50% to start and 50% on hosting. There is no monthly hosting fee. Free monthly checks, upgrades, and changes are included within the written scope. Faster ongoing help can be covered separately."
+        ],
+        "bullets": [],
+        "links": []
+      },
+      {
+        "id": "proof",
+        "heading": "Build around a real customer decision.",
+        "paragraphs": [
+          "A painting customer needs to see the right work and ask for an estimate. A salon customer needs guidance before booking. A film audience needs one official place for the work and press. We have built each of those paths.",
+          "We will not call those projects proof that we have solved your industry. They show how we turn a specific business question into a usable site."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "See website work",
+            "href": "/examples/"
+          },
+          {
+            "label": "Read review excerpts",
+            "href": "/reviews/"
+          }
+        ]
+      },
+      {
+        "id": "first-look",
+        "heading": "Get a first look before you decide.",
+        "paragraphs": [
+          "We review your current site or idea, the customer action you need, and the tools that already matter. If a cleanup makes more sense than a replacement, we will say so. If we are not the right fit, we will say that too."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "Get a free first look",
+            "href": "/tech-audit/?intent=website&source=website_service"
+          }
+        ]
+      }
+    ],
+    "proofPaths": [
+      "/case-studies/chromatic-painting-design/",
+      "/case-studies/hair-by-rachel-charles/",
+      "/case-studies/cc-films/",
+      "/reviews/"
+    ],
+    "faqs": [
+      {
+        "question": "Can you build my website if my business is outside New York?",
+        "answer": "Yes. Website projects can run remotely across the United States. On-site IT work is a separate New York service with timing and scope confirmed first."
+      },
+      {
+        "question": "Can I keep my domain and current software?",
+        "answer": "Usually. We check what you own and use before building. The written scope identifies what stays, what connects, and what needs testing."
+      },
+      {
+        "question": "Will a new website bring me more customers?",
+        "answer": "A website can make it easier for the right people to understand and contact you. It cannot promise traffic, rankings, calls, or sales. We can set up a clear way to track inquiries and follow-up."
+      },
+      {
+        "question": "How long does a website take?",
+        "answer": "The written scope sets the schedule and needed materials. The 14-day promise applies only to qualifying written scopes and includes its terms and remedy."
+      }
+    ],
+    "contactPrompt": "Tell us what the site needs to do. Call, text, email, or ask for a free first look."
+  },
+  {
+    "path": "/industries/plumbers/",
+    "title": "Website Design for Plumbing Businesses Nationwide | Little Fight NYC",
+    "description": "Custom websites for plumbing businesses across the United States. Clear services, service areas, proof, and a direct route to call or request an estimate.",
+    "eyebrow": "For plumbing businesses nationwide",
+    "heading": "When the pipe is leaking, the next step has to be obvious.",
+    "summary": "We build custom plumbing websites that help customers see what you handle, confirm the service area, and call or request an estimate from their phone.",
+    "sections": [
+      {
+        "id": "customer-path",
+        "heading": "A plumbing problem is not one kind of call.",
+        "paragraphs": [
+          "A customer with a blocked drain needs a quick answer. Someone planning a water-heater replacement needs details before they call. Your site should make both paths clear without making anyone hunt.",
+          "We build around the work you actually do, the areas you actually serve, and the way your office wants to handle the next conversation."
+        ],
+        "bullets": [
+          "Service pages for the work you want to be known for.",
+          "Service-area information based on where your team works.",
+          "Phone and estimate-request paths that work on a phone.",
+          "Project photos, credentials, and reviews you can verify.",
+          "A tested connection to your existing scheduling or job system when needed."
+        ],
+        "links": []
+      },
+      {
+        "id": "scope",
+        "heading": "Keep what works. Fix what gets in the way.",
+        "paragraphs": [
+          "Bring your old site, social pages, or basic business details. We check the domain, the current customer path, and the tools you use before quoting the work. A new website should not force a new job-management system just because it is new.",
+          "You own the code, domain, and content. The written plan covers the scope, review points, support, and any separate work."
+        ],
+        "bullets": [],
+        "links": []
+      },
+      {
+        "id": "relevant-work",
+        "heading": "We show the method without making up plumbing clients.",
+        "paragraphs": [
+          "Our painting project shows services and work leading toward an estimate. Our salon project shows clear service information before booking. Those are website examples, not plumbing case studies.",
+          "The first look is where we decide whether this method fits your business and what your site needs to say."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "See our painting website work",
+            "href": "/case-studies/chromatic-painting-design/"
+          },
+          {
+            "label": "Read review excerpts",
+            "href": "/reviews/"
+          }
+        ]
+      }
+    ],
+    "proofPaths": [
+      "/case-studies/chromatic-painting-design/",
+      "/case-studies/hair-by-rachel-charles/",
+      "/reviews/"
+    ],
+    "faqs": [
+      {
+        "question": "Can you build a plumbing website outside New York?",
+        "answer": "Yes. Website projects run remotely across the United States. On-site IT is a separate New York service."
+      },
+      {
+        "question": "Can I keep my domain and scheduling software?",
+        "answer": "We start by checking what you already own and use. The written plan says which tools stay, how the site connects to them, and what needs testing."
+      },
+      {
+        "question": "Will you write that we handle emergency work?",
+        "answer": "Only if that is accurate for your business. We use your real availability, services, credentials, and service areas."
+      },
+      {
+        "question": "How do we know if the site is helping?",
+        "answer": "Track the source of calls and estimate requests through your actual sales follow-up. Visits and clicks are not the same as booked jobs or paying customers."
+      }
+    ],
+    "contactPrompt": "Tell us the plumbing work you want more people to understand. We will start with a free first look."
+  },
+  {
+    "path": "/industries/roofing/",
+    "title": "Website Design for Roofing Companies Nationwide | Little Fight NYC",
+    "description": "Custom websites for roofing companies across the United States. Show the work, service areas, proof, and a clear way to request an inspection or estimate.",
+    "eyebrow": "For roofing companies nationwide",
+    "heading": "Roof work is a big decision. The website should lower the noise.",
+    "summary": "We build custom roofing websites that give homeowners and property owners a clear path from first question to inspection or estimate request.",
+    "sections": [
+      {
+        "id": "decision",
+        "heading": "Show the work before asking for the call.",
+        "paragraphs": [
+          "A roof repair, replacement, and commercial project are not the same decision. People want to know what you do, whether you serve them, what the work looks like, and how to start. Your site should answer those questions plainly.",
+          "We make the work, service area, proof, and next step easy to find. That lets a serious prospect decide whether to call without a long sales page."
+        ],
+        "bullets": [
+          "Pages for the roofing work your company actually performs.",
+          "Project photos with useful context, not a blank gallery.",
+          "Service areas that match your real coverage.",
+          "Inspection and estimate-request paths that work on phones.",
+          "Clear use of verified licenses, warranties, reviews, or certifications when you provide them."
+        ],
+        "links": []
+      },
+      {
+        "id": "trust",
+        "heading": "Proof has to be specific.",
+        "paragraphs": [
+          "We do not invent storm damage, claims expertise, certifications, or project results. We organize the proof you have and name what still needs to be collected. That includes real project photography, accurate service details, and review links you approve.",
+          "If your existing site has useful pages or tools, we preserve what is worth keeping and replace what confuses customers."
+        ],
+        "bullets": [],
+        "links": []
+      },
+      {
+        "id": "website-work",
+        "heading": "The site should support the office, too.",
+        "paragraphs": [
+          "An inquiry should reach the right person with enough context to respond. We plan the fields and handoff around your real process. We can also keep the domain and business tools you already rely on when they still fit.",
+          "Our painting website work is a useful example of leading from visible work to an estimate conversation. It is not presented as roofing experience."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "See our painting website work",
+            "href": "/case-studies/chromatic-painting-design/"
+          },
+          {
+            "label": "Get a free first look",
+            "href": "/tech-audit/?intent=website&source=industry_roofing"
+          }
+        ]
+      }
+    ],
+    "proofPaths": [
+      "/case-studies/chromatic-painting-design/",
+      "/case-studies/cc-films/",
+      "/reviews/"
+    ],
+    "faqs": [
+      {
+        "question": "Can you work with a roofing company anywhere in the United States?",
+        "answer": "Yes. Website projects can run remotely nationwide. We confirm the project scope and the people involved before work begins."
+      },
+      {
+        "question": "Can the site handle roofing estimates or inspections?",
+        "answer": "We can build a clear request path and connect it to existing tools where appropriate. The written scope names the fields, handoff, and testing."
+      },
+      {
+        "question": "Can you help us rank first on Google?",
+        "answer": "No one can promise a ranking. We build useful, crawlable pages around your real services and proof, then make sure the site can be measured and improved."
+      },
+      {
+        "question": "Do we own the website?",
+        "answer": "Yes. You own the code, domain, and content. The website offer is 50% to start and 50% on hosting, with no monthly hosting fee."
+      }
+    ],
+    "contactPrompt": "Tell us which roofing work the site needs to explain. We will give you a free first look."
+  },
+  {
+    "path": "/industries/luxury-home-services/",
+    "title": "Website Design for Luxury Home Services | Little Fight NYC",
+    "description": "Custom websites for builders, remodelers, architects, designers, and property-care businesses. Show your work and help customers start a project.",
+    "eyebrow": "For high-consideration home work",
+    "heading": "When the work is personal, the website has to feel considered.",
+    "summary": "We build custom websites for builders, remodelers, architects, designers, landscape teams, and property-care businesses that need their work and process understood before the first call.",
+    "sections": [
+      {
+        "id": "fit",
+        "heading": "Show people whether you are right for their project.",
+        "paragraphs": [
+          "A homeowner choosing a builder or designer is not looking for a menu of services. They are trying to understand taste, process, scope, geography, and whether a first conversation is worth having. The site should help them answer that.",
+          "We give your best work room to breathe, then place the useful facts close by. The result should be clear enough for a serious customer and direct enough for your office."
+        ],
+        "bullets": [
+          "Project stories with real photos, scope, and context.",
+          "A clear view of services, locations, and project fit.",
+          "A process page that says what happens before and after the first call.",
+          "Inquiry forms that collect the few facts your team needs first.",
+          "A home for press, awards, credentials, or reviews you can verify."
+        ],
+        "links": []
+      },
+      {
+        "id": "truth",
+        "heading": "A beautiful site still has to tell the truth.",
+        "paragraphs": [
+          "We do not borrow luxury language, project photography, awards, or client claims. We build from your actual portfolio and the way you work. If you are building the portfolio now, the site can say that plainly and still feel complete.",
+          "You own the code, domain, and content. The written scope sets what we build, what you provide, how reviews work, and what gets tested before launch."
+        ],
+        "bullets": [],
+        "links": []
+      },
+      {
+        "id": "proof",
+        "heading": "Good design should guide the decision.",
+        "paragraphs": [
+          "Our work for a painting and mural business uses visible projects to lead into an estimate conversation. Our film work creates one official place for work and press. Those are different businesses, but the same rule applies: show the right proof, then make the next step clear.",
+          "We start with a first look at your business, your current site, and the customer decision that matters most."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "See website work",
+            "href": "/examples/"
+          },
+          {
+            "label": "Get a free first look",
+            "href": "/tech-audit/?intent=website&source=industry_luxury_home_services"
+          }
+        ]
+      }
+    ],
+    "proofPaths": [
+      "/case-studies/chromatic-painting-design/",
+      "/case-studies/cc-films/",
+      "/reviews/"
+    ],
+    "faqs": [
+      {
+        "question": "Do you work with businesses outside New York?",
+        "answer": "Yes. Website projects can run remotely across the United States."
+      },
+      {
+        "question": "Can you use our project photography and press?",
+        "answer": "Yes, when you have the rights to use it. We organize approved assets around the decisions customers need to make."
+      },
+      {
+        "question": "Do you write the site copy?",
+        "answer": "We shape the content with you from your services, process, proof, and customer questions. You approve the facts before the site goes live."
+      },
+      {
+        "question": "Will the site be a template?",
+        "answer": "No. We build a custom site around your work and customer path. You own the code, domain, and content."
+      }
+    ],
+    "contactPrompt": "Show us the work and tell us what kind of project you want next. Start with a free first look."
+  },
+  {
+    "path": "/industries/law-firms/",
+    "title": "Website Design for Law Firms Nationwide | Little Fight NYC",
+    "description": "Custom law-firm websites for clearer practice areas, attorney information, office details, and inquiry paths. Built remotely across the United States.",
+    "eyebrow": "For law firms nationwide",
+    "heading": "Your firm should not be trapped inside an old website.",
+    "summary": "We build custom law-firm websites that help a prospective client understand the kind of matter you handle, where you practice, and how to contact the right office without confusing legal information with legal advice.",
+    "sections": [
+      {
+        "id": "clarity",
+        "heading": "A prospective client is trying to make sense of a hard moment.",
+        "paragraphs": [
+          "They may not know the legal term for their problem. They need to see what your firm handles, whether you serve their location, and what the first contact should look like. A clear site can make that first step less confusing.",
+          "We organize practice areas, attorney information, office details, and contact options around the questions people actually have. We do not write legal advice or make claims your firm cannot support."
+        ],
+        "bullets": [
+          "Practice-area pages with plain, approved explanations.",
+          "Attorney, office, and jurisdiction details you confirm.",
+          "A clear phone, text, email, and inquiry path.",
+          "Accurate disclaimers, intake language, and privacy details supplied or approved by your firm.",
+          "A straightforward way to update the site as the firm changes."
+        ],
+        "links": []
+      },
+      {
+        "id": "care",
+        "heading": "The website can be careful without sounding cold.",
+        "paragraphs": [
+          "We keep the language human and plain. The site should not pretend to create an attorney-client relationship, promise a result, or turn general information into advice. Your firm reviews the facts before anything goes live.",
+          "We also check the path after an inquiry: who receives it, what information is appropriate to collect, and what your team can respond to clearly."
+        ],
+        "bullets": [],
+        "links": []
+      },
+      {
+        "id": "method",
+        "heading": "Make the first contact useful.",
+        "paragraphs": [
+          "Your website is part of intake, not a substitute for it. We build the page around your real first step and keep the request form focused. The written scope states the content, review process, connections, and testing before launch.",
+          "We have not presented our existing website projects as law-firm case studies. They show how we make specialized services easier to understand before a person contacts the business."
+        ],
+        "bullets": [],
+        "links": [
+          {
+            "label": "See website work",
+            "href": "/examples/"
+          },
+          {
+            "label": "Get a free first look",
+            "href": "/tech-audit/?intent=website&source=industry_law_firms"
+          }
+        ]
+      }
+    ],
+    "proofPaths": [
+      "/case-studies/chromatic-painting-design/",
+      "/case-studies/hair-by-rachel-charles/",
+      "/case-studies/cc-films/",
+      "/reviews/"
+    ],
+    "faqs": [
+      {
+        "question": "Can you build a law-firm website outside New York?",
+        "answer": "Yes. Website projects can run remotely across the United States."
+      },
+      {
+        "question": "Do you provide legal advice or review legal claims?",
+        "answer": "No. Your firm supplies or approves the legal facts, disclaimers, jurisdiction details, and intake language before publication."
+      },
+      {
+        "question": "Can you promise that a new site will bring cases?",
+        "answer": "No. We can make the firm easier to understand and contact, but we do not promise rankings, inquiries, clients, or case results."
+      },
+      {
+        "question": "Who owns the finished site?",
+        "answer": "You own the code, domain, and content. The website offer is 50% to start and 50% on hosting, with no monthly hosting fee."
+      }
+    ],
+    "contactPrompt": "Tell us which prospective-client question the site needs to answer first. We will start with a free first look."
+  }
+]

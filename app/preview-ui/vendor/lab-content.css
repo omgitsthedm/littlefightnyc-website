@@ -1,0 +1,31 @@
+/* Project titles and graphics keep their hierarchy in the packed mosaic. */
+.tile.lab-tile{display:flex;flex-direction:column;align-items:stretch;text-align:left;padding:23px;gap:14px;isolation:isolate}
+.lab-tile::before{content:"";position:absolute;inset:25% -25% -60% 5%;background:radial-gradient(ellipse,color-mix(in srgb,var(--tile-pop) 15%,transparent),transparent 65%);z-index:-1;pointer-events:none}
+.lab-tile__label{display:flex;justify-content:space-between;gap:8px;color:var(--tile-soft);font:600 10px/1.25 Barlow,Arial,sans-serif;letter-spacing:.09em}
+.lab-tile__name{font:700 clamp(24px,2.8vw,41px)/1 Display,Arial,sans-serif;letter-spacing:-.045em;text-wrap:balance;color:var(--tile-paper)}
+.lab-tile__art{display:block;flex:1;min-height:65px;max-height:160px;margin:auto 0}
+.lab-tile__caption{font:13px/1.3 Barlow,Arial,sans-serif;color:#c5c5d0}
+.lab-tile[data-shape=landscape]{display:grid;grid-template-columns:1.05fr 1fr;grid-template-rows:auto 1fr auto;gap:10px 16px}
+.lab-tile[data-shape=landscape] .lab-tile__label{grid-column:1/-1}
+.lab-tile[data-shape=landscape] .lab-tile__art{grid-column:2;grid-row:2/4;align-self:center;width:100%;height:110px}
+.lab-tile[data-shape=landscape] .lab-tile__name{font-size:clamp(24px,2.4vw,35px)}
+.lab-tile[data-shape=landscape] .lab-tile__caption{grid-column:1}
+.native-lab__visual{--tile-pop:var(--detail-pop);--tile-soft:var(--detail-soft);--tile-paper:#f6f3ec;display:grid;place-items:center;min-height:240px;height:clamp(240px,30vw,360px);margin-top:34px;padding:24px;background:#0b0b10;border-radius:24px;box-shadow:inset 0 1px #ffffff17;overflow:hidden}
+.native-lab__visual>*{width:min(100%,600px);height:100%}
+.native-lab__controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:15px;padding-top:18px}
+.native-lab__controls>span{font:13px/1.4 Barlow,Arial,sans-serif;color:#bbbcca}
+.native-lab__controls .action{min-height:44px;font-size:13px}
+.native-lab__note{margin:0 30px 26px;padding:20px 26px;border-radius:18px;background:#24242a;box-shadow:inset 3px 0 var(--detail-pop)}
+.native-lab__note>span{font:600 10px/1.4 Barlow,Arial,sans-serif;color:var(--detail-soft);letter-spacing:.12em}
+.native-lab__note p{color:#cbccd5;font:15px/1.5 Barlow,Arial,sans-serif;margin:9px 0 0}
+.native-lab-index__art{display:block;width:100%;height:160px;margin-bottom:15px;--tile-pop:var(--detail-pop);--tile-soft:var(--detail-soft);--tile-paper:#f6f3ec}
+.native-lab-index [data-accent=green] .native-lab-index__art{--tile-pop:#57b94c;--tile-soft:#a0df85}
+.native-lab-index [data-accent=yellow] .native-lab-index__art{--tile-pop:#f5d95b;--tile-soft:#f8e68c}
+.native-lab-index [data-accent=magenta] .native-lab-index__art{--tile-pop:#d83cbd;--tile-soft:#f09bdd}
+.native-labs-link{display:flex;align-items:center;justify-content:space-between;gap:25px;margin:0 30px 30px;padding:28px;border-radius:24px;background:#24242e}
+.native-labs-link span{font:600 10px/1.3 Barlow,Arial,sans-serif;letter-spacing:.1em;color:var(--detail-soft)}
+.native-labs-link h3{font-size:30px;line-height:1.08;margin:14px 0}
+.native-labs-link p{font-size:16px;line-height:1.4;color:#c5c5d0;max-width:360px}
+.native-labs-link .action{flex-shrink:0}
+@media(max-width:760px){.tile.lab-tile{padding:18px;gap:10px}.lab-tile__label{font-size:8px;letter-spacing:.055em}.lab-tile__name{font-size:clamp(23px,6.5vw,31px)}.lab-tile__art{min-height:55px;max-height:115px}.lab-tile__caption{font-size:12px}.lab-tile[data-shape=landscape] .lab-tile__name{font-size:clamp(23px,6.5vw,31px)}.lab-tile[data-shape=landscape] .lab-tile__art{height:100px}.native-lab__visual{height:240px;min-height:0;padding:12px;border-radius:18px}.native-lab__note{margin:0 14px 18px;padding:20px}.native-lab-index__art{height:100px}.native-labs-link{margin:0 14px 24px;padding:24px;flex-direction:column;align-items:flex-start;gap:12px}}
+@media(max-width:360px){.tile.lab-tile{padding:15px;gap:8px}.lab-tile__name{font-size:23px}.lab-tile__art{min-height:45px;max-height:90px}.native-lab__controls{align-items:flex-start;flex-direction:column}.native-lab-index__art{height:170px}}

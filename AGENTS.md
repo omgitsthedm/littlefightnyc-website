@@ -75,10 +75,11 @@ Changes under `app/public/` are production content, including Markdown.
 
 ## Design and content
 
-`app/DESIGN.md` is the controlling design narrative; implemented values live in
-`app/src/styles/editorial/tokens.css`. Preserve Axiom Momentum, the established type and color
-system, restrained motion, accessibility, honest claims, and privacy boundaries unless the
-task explicitly changes them. Do not duplicate those rules here.
+The owner-approved tile design is controlled by `app/preview-content/import-provenance.json`
+and implemented in `app/preview-ui/**`. Preserve Soft Mineral + Edge Light, all 110 original
+tile identities, Atkinson Hyperlegible Next/Manrope typography, semantic service colors,
+physical card flips, accessibility, honest claims, and privacy boundaries. Older React
+styles serve retained intake islands; do not restore the former marketing layout.
 
 ## Git and production
 

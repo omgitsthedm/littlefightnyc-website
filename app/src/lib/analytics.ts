@@ -1,4 +1,5 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
+import measurementPaths from "@/data/measurement-paths.json";
 import { publicCampaignParameters } from "./socialCampaign";
 import {
   isInternalTechAuditTest,
@@ -152,6 +153,11 @@ const ANALYTICS_EVENT_NAMES = new Set([
   "tech_audit_intent",
   "tech_audit_started",
   "tech_audit_submit",
+  "tile_exposure",
+  "tile_open",
+  "answer_view",
+  "search_result_selected",
+  "search_no_match",
   "web_vital",
   "website_check_ready",
   "website_check_started",
@@ -190,6 +196,7 @@ const ANALYTICS_PARAMETER_KEYS = new Set([
   "selection",
   "service",
   "skipped",
+  "tile_id",
 ]);
 
 const PATH_PARAMETER_KEYS = new Set([
@@ -197,6 +204,37 @@ const PATH_PARAMETER_KEYS = new Set([
   "link_path",
   "page_path",
 ]);
+
+const TILE_EVENT_NAMES = new Set([
+  "tile_exposure",
+  "tile_open",
+  "answer_view",
+  "search_result_selected",
+  "search_no_match",
+] as const);
+
+type TileEventName = typeof TILE_EVENT_NAMES extends Set<infer Name> ? Name : never;
+
+function normalizedTileId(path: string) {
+  return path
+    .replace(/^\/+|\/+$/g, "")
+    .replace(/[^a-z0-9/_-]/giu, "")
+    .replaceAll("/", "_")
+    .slice(0, 96) || "mosaic";
+}
+
+// Static reader IDs are derived only from the published measurement-route
+// manifest. A free-form query, search phrase, or arbitrary reader fragment
+// can never become a vendor parameter.
+const TILE_IDS = new Set([
+  "mosaic",
+  ...measurementPaths.map(normalizedTileId),
+]);
+
+function safeTileId(value: unknown) {
+  if (typeof value !== "string" || value.length > 96) return undefined;
+  return TILE_IDS.has(value) ? value : undefined;
+}
 
 function safeAnalyticsPath(value: unknown) {
   if (typeof value !== "string" || !value.startsWith("/")) return undefined;
@@ -297,6 +335,12 @@ function safeAnalyticsParameters(parameters: Record<string, unknown>) {
     if (key === "discovery_source") {
       const discoverySource = safeDiscoverySource(value);
       if (discoverySource) safe[key] = discoverySource;
+      continue;
+    }
+
+    if (key === "tile_id") {
+      const tileId = safeTileId(value);
+      if (tileId) safe[key] = tileId;
       continue;
     }
 
@@ -785,6 +829,9 @@ function funnelStage(eventName: string) {
   if (eventName === "website_check_ready" || eventName === "report_opened") return "engaged";
   if (eventName === "phone_click" || eventName === "email_click" || eventName === "sms_click") return "contact";
   if (eventName === "scroll_50") return "engaged";
+  if (eventName === "tile_open") return "consideration";
+  if (eventName === "answer_view" || eventName === "search_result_selected" || eventName === "tile_exposure") return "engaged";
+  if (eventName === "search_no_match") return "diagnostic";
   if (eventName === "page_view") return "awareness";
   return "diagnostic";
 }
@@ -836,6 +883,14 @@ function track(eventName: string, parameters: Record<string, unknown> = {}, defe
 
 export function trackEvent(eventName: string, parameters: Record<string, unknown> = {}) {
   track(eventName, parameters);
+}
+
+/** A finite reader taxonomy. No query words or arbitrary content IDs cross this boundary. */
+export function trackTileEvent(eventName: unknown, tileId: unknown) {
+  if (!TILE_EVENT_NAMES.has(eventName as TileEventName)) return;
+  const safeId = safeTileId(tileId);
+  if (!safeId) return;
+  track(eventName as TileEventName, { tile_id: safeId });
 }
 
 /**

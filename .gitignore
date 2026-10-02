@@ -46,3 +46,14 @@ deploy-*.zip
 *.zip
 !app/public/brand-kit/assets/downloads/little-fight-nyc-brand-kit.zip
 _qa/
+
+# Reproducible local tile preview output and isolated deployment staging.
+app/preview-dist/
+__pycache__/
+.preview-no-functions/
+!app/preview-ui/assets/**/*.png
+
+# Local browser evidence and the single hosted-review staging artifact.
+.lifi/evidence/tile-preview/
+.lifi/evidence/tile-production/
+.review-dist/

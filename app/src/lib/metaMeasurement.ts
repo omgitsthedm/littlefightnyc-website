@@ -1,4 +1,4 @@
-import routeMeta from "@/data/route-meta.json";
+import measurementPaths from "@/data/measurement-paths.json";
 import { getMetaConsent, META_CONSENT_EVENT, META_CONSENT_KEY, refreshMetaConsent } from "./consent";
 import { publicCampaignParameters } from "./socialCampaign";
 
@@ -7,12 +7,12 @@ import { publicCampaignParameters } from "./socialCampaign";
 export const META_PIXEL_ID = "1093181229849562";
 const SDK = "https://connect.facebook.net/en_US/fbevents.js";
 const HOSTS = new Set(["littlefightnyc.com", "www.littlefightnyc.com"]);
-const PUBLIC_PATHS = new Set(routeMeta.pages.map((page) => page.path));
+const PUBLIC_PATHS = new Set(measurementPaths);
 const INTAKE_SOURCES = new Set([
   "home", "navigation", "mobile_menu_form", "contact_block", "sticky_help",
   "page_hero", "page_hero_form", "no_website_check", "website_check_page",
   "website_service_proof", "owner_stories", "contact", "es", "es_hero_form", "zh", "zh_hero_form",
-  ...routeMeta.pages.flatMap(({ path }) => {
+  ...measurementPaths.flatMap((path) => {
     const slug = path.match(/^\/case-studies\/([^/]+)\/$/)?.[1];
     return slug ? [`case_${slug}`, `case_${slug}_hero`].map((source) => source.slice(0, 40)) : [];
   }),

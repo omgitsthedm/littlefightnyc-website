@@ -1,0 +1,80 @@
+{
+  "verifiedAt": "2026-10-02",
+  "source": "Google Maps",
+  "profileUrl": "https://www.google.com/maps/place/Little+Fight+NYC/data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416",
+  "rating": 5,
+  "reviewCount": 7,
+  "displayPolicy": "First names only. DD uses the first public initials; no surnames. Quotes are short exact excerpts. No photos or invented review text. No Review or AggregateRating structured data for this self-serving business review display.",
+  "reviews": [
+    {
+      "id": "google-review-1",
+      "displayName": "Jenna",
+      "rating": 5,
+      "excerpt": "built us a beautiful site",
+      "sourceUrl": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+      "sourceLinkType": "individual-review",
+      "observedAge": "20 hours ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-2",
+      "displayName": "Susanna",
+      "rating": 5,
+      "excerpt": "easy to work with",
+      "sourceUrl": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+      "sourceLinkType": "individual-review",
+      "observedAge": "20 hours ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-3",
+      "displayName": "DD",
+      "rating": 5,
+      "excerpt": "Quick to respond",
+      "sourceUrl": "https://maps.app.goo.gl/iroSD2VgyrKTPWgX6",
+      "sourceLinkType": "individual-review",
+      "observedAge": "a day ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-4",
+      "displayName": "Jonathon",
+      "rating": 5,
+      "excerpt": "Clear communication, expectations and timelines!",
+      "sourceUrl": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+      "sourceLinkType": "individual-review",
+      "observedAge": "a day ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-5",
+      "displayName": "Amber",
+      "rating": 5,
+      "excerpt": "Absolutely love love love!",
+      "sourceUrl": "https://maps.app.goo.gl/PVRmfbCD1GCauwKH7",
+      "sourceLinkType": "individual-review",
+      "observedAge": "a day ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-6",
+      "displayName": "Logan",
+      "rating": 5,
+      "excerpt": "ensuring a painless experience.",
+      "sourceUrl": "https://maps.app.goo.gl/4s36rS4TCFThvc6J8",
+      "sourceLinkType": "individual-review",
+      "observedAge": "a day ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-7",
+      "displayName": "Emilee",
+      "rating": 5,
+      "excerpt": null,
+      "sourceUrl": "https://www.google.com/maps/place/Little+Fight+NYC/data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416",
+      "sourceLinkType": "business-profile",
+      "observedAge": "a day ago",
+      "showAsQuote": false
+    }
+  ]
+}

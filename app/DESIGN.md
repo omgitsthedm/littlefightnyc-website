@@ -36,7 +36,15 @@ motion:
   ease-out: "cubic-bezier(0.22, 1, 0.36, 1)"
 ---
 
-# Little Fight NYC — Axiom Momentum
+# Current marketing direction — Soft Mineral + Edge Light
+
+Owner-directed replacement, October 2, 2026. The active website is the original 110-tile mosaic, extended with five buyer/review tiles. Preserve the 12-column desktop / 6-column mobile square-unit grid, charcoal mineral surfaces, five semantic service colors, Atkinson Hyperlegible Next body and home typography, Manrope reader headings, original tugboat and Phosphor icons, and physical press/lift/flip/expand/reverse motion. Honor reduced motion.
+
+The implementation and provenance contract are `preview-ui/` and `preview-content/import-provenance.json`. Each tile has a real static URL; cases show actual product images and Labs open preserved working applications. VERA remains a protected independent browser product within this deployment.
+
+The following historical React design supports retained intake islands only. It is not authority for the new marketing site.
+
+# Historical intake design — Axiom Momentum
 
 Evolved 2026-07-06 from the editorial v5 ("Elevate") system to a **product-OS soul**,
 seeded from the Axiom "Momentum" design system and reconciled with the Little Fight brand.

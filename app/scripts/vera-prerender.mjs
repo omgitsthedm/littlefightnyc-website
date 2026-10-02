@@ -12,7 +12,9 @@ const here = dirname(fileURLToPath(import.meta.url));
 const APP = join(here, '..');
 const DIST_VERA = join(APP, 'dist', 'vera');
 const VERA_ENGINE_REPOSITORY = 'omgitsthedm/vera-apartment-search';
-const FEED_REVISION_OVERRIDE = process.env.VERA_FEED_REVISION || '';
+// Pin the public archive to this release; runtime freshness stays first-party/live.
+const publicFeedPin = JSON.parse(readFileSync(join(APP, 'preview-content', 'vera-feed.json'), 'utf8'));
+const FEED_REVISION_OVERRIDE = process.env.VERA_FEED_REVISION || publicFeedPin.revision;
 
 function validFeedRevision(value) {
   return /^[0-9a-f]{40}$/i.test(String(value || ''));

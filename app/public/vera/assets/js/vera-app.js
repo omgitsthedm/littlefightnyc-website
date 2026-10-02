@@ -468,13 +468,26 @@
 
   function renderChrome() {
     var sh = (D && D.source_health) || {};
+    var publishedAt = Date.parse((D && D.generated_at) || '');
+    var ageHours = (Date.now() - publishedAt) / 36e5;
+    var uncertainDate = !Number.isFinite(publishedAt) || ageHours < -1;
+    var stale = uncertainDate || ageHours >= 36;
+    var freshness = $('[data-feed-freshness]');
+    if (freshness) {
+      freshness.hidden = !stale;
+      if (stale) {
+        $('[data-feed-freshness-copy]', freshness).textContent = uncertainDate
+          ? 'Publication freshness could not be verified. Check the original listing before relying on availability.'
+          : 'This publication is ' + Math.floor(ageHours / 24) + ' day' + (Math.floor(ageHours / 24) === 1 ? '' : 's') + ' old. Listings and availability may have changed. Check the original source before taking the next step.';
+      }
+    }
     $('[data-snapshot-line]').textContent = 'Data ' + timeago(D && D.generated_at) + ' · ' + POOL.length + ' net' +
       (servedFromCache ? ' · offline copy ' + timeago(servedFromCache) : '');
     var pulse = $('[data-pulse]');
     if (pulse) {
       pulse.className = 'pulse';
       if ((sh.broken || 0) > (sh.healthy || 0)) pulse.classList.add('is-bad');
-      else if ((sh.broken || 0) > 0) pulse.classList.add('is-warn');
+      else if (stale || (sh.broken || 0) > 0) pulse.classList.add('is-warn');
     }
   }
 

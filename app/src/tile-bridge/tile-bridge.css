@@ -1,0 +1,329 @@
+.production-island {
+  --tile-ink: #151411;
+  --tile-paper: #f4f0e8;
+  --tile-orange: #ff7839;
+  --tile-rim: #474238;
+  /* Compatibility values for the bounded, existing inquiry islands. Keeping
+     them here avoids importing the previous app-wide token and font layers. */
+  --lf-ink: var(--tile-ink);
+  --lf-paper: #211f1a;
+  --lf-paper-2: #1b1915;
+  --lf-hairline: var(--tile-rim);
+  --lf-bone: var(--tile-paper);
+  --lf-bone-soft: #d4cec2;
+  --lf-bone-dim: #b4ada1;
+  --lf-fight: var(--tile-orange);
+  --lf-fight-hover: #ff925e;
+  --lf-fight-on-light: #ad4219;
+  --lf-fight-ring: rgb(255 120 57 / 52%);
+  --lf-fight-soft: rgb(255 120 57 / 16%);
+  --lf-blue: #8eb9ed;
+  --lf-blue-soft: #b9d8fa;
+  --lf-error: #ffb99a;
+  --lf-success: #9bd8a6;
+  --lf-audit-ok: var(--lf-success);
+  --lf-audit-warn: #ffd37a;
+  --lf-body: "Atkinson Hyperlegible Next", Atkinson Hyperlegible, system-ui, sans-serif;
+  --lf-heading: Manrope, "Atkinson Hyperlegible Next", system-ui, sans-serif;
+  --lf-serif: var(--lf-body);
+  --lf-display: var(--lf-heading);
+  --lf-sans: var(--lf-body);
+  --lf-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --lf-display-weight: 800;
+  --lf-display-tracking: -0.045em;
+  --lf-text-2xs: 1rem;
+  --lf-text-xs: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --lf-text-sm: clamp(1rem, 0.97rem + 0.2vw, 1.0625rem);
+  --lf-text-base: clamp(1.125rem, 1.06rem + 0.35vw, 1.25rem);
+  --lf-text-md: clamp(1.25rem, 1.16rem + 0.5vw, 1.4375rem);
+  --lf-text-xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.75rem);
+  --lf-text-2xl: clamp(2.75rem, 2rem + 3.5vw, 5rem);
+  --lf-space-1: 4px;
+  --lf-space-2: 8px;
+  --lf-space-3: 12px;
+  --lf-space-4: 16px;
+  --lf-space-5: 24px;
+  --lf-space-6: 32px;
+  --lf-space-7: 48px;
+  --lf-space-8: 64px;
+  --lf-space-9: 96px;
+  --lf-space-10: 128px;
+  --lf-margin-mobile: 20px;
+  --lf-margin-tablet: 48px;
+  --lf-margin-desktop: 64px;
+  --lf-max-w: 1120px;
+  --lf-page-gutter: clamp(var(--lf-margin-mobile), 6.25vw, var(--lf-margin-desktop));
+  --lf-measure-reading: 68ch;
+  --lf-section-space: clamp(var(--lf-space-8), 8vw, var(--lf-space-10));
+  --lf-control-min: 44px;
+  --lf-chip: var(--lf-control-min);
+  --lf-radius-sm: 0;
+  --lf-radius-control: 0;
+  --lf-radius-card: 0;
+  --lf-radius-pill: 0;
+  --lf-card-bg: var(--lf-paper);
+  --lf-ease-slam: cubic-bezier(.16, 1, .3, 1);
+  --lf-ease-out: cubic-bezier(.22, 1, .36, 1);
+  --lf-ease-out-quart: cubic-bezier(.25, 1, .5, 1);
+  --lf-ease-standard: cubic-bezier(.22, .61, .36, 1);
+  --lf-ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+  --lf-time-fast: 180ms;
+  --lf-time-base: 260ms;
+  --lf-time-snappy: 160ms;
+  --lf-time-cinematic: 480ms;
+  --lf-backdrop-position: center;
+  --lf-backdrop-position-mobile: center;
+  --lf-display-ch: 14;
+  --lf-i: 0;
+  --lf-pagehero-delay: 0ms;
+  color: var(--tile-paper);
+  font-family: "Atkinson Hyperlegible Next", Atkinson Hyperlegible, system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+.production-island :where(*, *::before, *::after) {
+  box-sizing: border-box;
+}
+
+.production-island :where(a) {
+  color: inherit;
+}
+
+.production-island :where(button, input, select, textarea) {
+  font: inherit;
+}
+
+.production-island :where(button, a, input, select, textarea, summary) {
+  min-height: 44px;
+}
+
+.production-island .lf-audit,
+.production-island .lf-contact-page,
+.production-island .lf-website-check,
+.production-island .lf-thanks {
+  background: var(--tile-ink);
+  color: var(--tile-paper);
+}
+
+.production-island .lf-audit__inner,
+.production-island .lf-website-check,
+.production-island .lf-thanks__handoff-inner,
+.production-island .lf-thanks__booking-inner,
+.production-island .lf-contact-choice__inner {
+  width: min(100% - 32px, 960px);
+  margin-inline: auto;
+}
+
+.production-island .lf-audit__form,
+.production-island .lf-website-check__form {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 4vw, 40px);
+  border: 1px solid var(--tile-rim);
+  background: #211f1a;
+  box-shadow: 7px 7px 0 rgba(255, 120, 57, 0.22);
+}
+
+.production-island .lf-audit__field,
+.production-island .lf-website-check__automated-controls {
+  display: grid;
+  gap: 7px;
+}
+
+.production-island .lf-audit__field--full {
+  grid-column: 1 / -1;
+}
+
+.production-island :where(input, select, textarea) {
+  width: 100%;
+  border: 1px solid #8c8578;
+  border-radius: 0;
+  padding: 11px 12px;
+  color: var(--tile-ink);
+  background: var(--tile-paper);
+}
+
+.production-island :where(input, select, textarea):focus-visible,
+.production-island :where(button, a):focus-visible {
+  outline: 3px solid var(--tile-orange);
+  outline-offset: 3px;
+}
+
+.production-island textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.production-island .lf-audit__submit,
+.production-island .lf-website-check__form button,
+.production-island .lf-contact-choice__route--primary,
+.production-island .lf-thanks__booking a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 16px;
+  color: #1d1712;
+  background: var(--tile-orange);
+  font-family: Manrope, "Atkinson Hyperlegible Next", sans-serif;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.production-island .lf-audit__submit:disabled,
+.production-island .lf-website-check__form button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.production-island .lf-audit__hint,
+.production-island .lf-audit__note,
+.production-island .lf-audit__assurance,
+.production-island .lf-website-check__reassurance,
+.production-island .lf-website-check__limits,
+.production-island .lf-website-check__status {
+  color: #d4cec2;
+  font-size: 0.94rem;
+}
+
+.production-island .lf-audit__error {
+  margin: 0;
+  color: #ffb99a;
+  font-weight: 700;
+}
+
+.production-island .lf-audit-intro,
+.production-island .lf-website-check__intro,
+.production-island .lf-contact-page > :first-child,
+.production-island .lf-thanks > :first-child {
+  background: #211f1a;
+  border-bottom: 1px solid var(--tile-rim);
+}
+
+.production-island .lf-audit-intro__inner,
+.production-island .lf-website-check__intro,
+.production-island .lf-pagehero__inner {
+  width: min(100% - 32px, 1120px);
+  margin-inline: auto;
+  padding-block: clamp(32px, 7vw, 72px);
+}
+
+.production-island :where(h1, h2, h3) {
+  color: var(--tile-paper);
+  font-family: Manrope, "Atkinson Hyperlegible Next", sans-serif;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.production-island h1 {
+  font-size: clamp(2.2rem, 7vw, 5.4rem);
+}
+
+.production-island h2 {
+  font-size: clamp(1.65rem, 4vw, 3rem);
+}
+
+.production-island .lf-website-check__choices-grid,
+.production-island .lf-contact-choice__routes,
+.production-island .lf-thanks__handoff ol {
+  display: grid;
+  gap: 14px;
+}
+
+.production-island .lf-website-check__choice,
+.production-island .lf-contact-choice__route,
+.production-island .lf-thanks__handoff li {
+  border: 1px solid var(--tile-rim);
+  background: #211f1a;
+  padding: 20px;
+}
+
+.production-island .lf-contact-choice__route,
+.production-island .lf-website-check__choice a,
+.production-island .lf-audit-intro__channels a,
+.production-island .lf-website-check__contact a {
+  text-decoration-color: var(--tile-orange);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+dialog.production-island--consent {
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(760px, calc(100vh - 32px));
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  background: transparent;
+}
+
+dialog.production-island--consent::backdrop {
+  background: rgb(0 0 0 / 58%);
+}
+
+.production-island--consent .lf-notice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  border: 1px solid var(--tile-rim);
+  padding: 18px;
+  color: var(--tile-paper);
+  background: #211f1a;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.35);
+}
+
+.production-island--consent .lf-notice__icon {
+  color: var(--tile-orange);
+}
+
+.production-island--consent .lf-notice__copy h2 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+}
+
+.production-island--consent .lf-notice__copy p {
+  margin: 0;
+}
+
+.production-island--consent .lf-notice__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.production-island--consent .lf-notice__secondary {
+  min-height: 40px;
+  border: 1px solid #8c8578;
+  border-radius: 0;
+  padding: 8px 10px;
+  color: var(--tile-paper);
+  background: transparent;
+  cursor: pointer;
+}
+
+@media (min-width: 760px) {
+  .production-island .lf-audit__form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .production-island .lf-website-check__choices-grid,
+  .production-island .lf-contact-choice__routes,
+  .production-island .lf-thanks__handoff ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .production-island *,
+  .production-island *::before,
+  .production-island *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
