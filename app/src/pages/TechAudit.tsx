@@ -11,6 +11,7 @@ import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
 import { readAttribution } from "@/lib/attribution";
+import { safeTechAuditLeadOrigin } from "@/lib/techAuditOrigin";
 import { registerFirstLookWebMcp, type FirstLookStageStatus } from "@/lib/firstLookWebMcp";
 import { skelImg } from "@/lib/imgSkeleton";
 import {
@@ -225,7 +226,7 @@ export default function TechAudit() {
   const websiteIntent = leadIntent === WEBSITE_INTENT;
   // Attribute a lead that arrived via the PWA share target (no explicit source,
   // but the share sheet passed text/title) so shares are measurable.
-  const explicitSource = queryValue(searchParams, "source", 80);
+  const explicitSource = safeTechAuditLeadOrigin(searchParams.get("source"));
   // A website intent expresses interest, not proof of an existing website.
   // Only an owner-supplied URL or report may add automatic website context.
   const noWebsiteLead = websiteIntent && !websiteUrl && !reportId;

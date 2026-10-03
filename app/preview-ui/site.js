@@ -25,7 +25,9 @@
   if (!detail || !panel || !detailBody) return;
   // The modal rail is a separate landmark from the page content it displays.
   // Keep its accessible name distinct after each progressive reader injection.
-  detail.querySelector('.reader-rail')?.setAttribute('aria-label', 'Quick contact');
+  const readerRail = detail.querySelector('.reader-rail');
+  readerRail?.setAttribute('aria-label', 'Quick contact');
+  if (readerRail) detail.dataset.readerRail = 'true';
 
   let activeController = null;
   let requestVersion = 0;
@@ -362,7 +364,16 @@
       if (target) {
         event.preventDefault();
         history.replaceState(lastOpenState, '', path);
-        target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        // This card owns the reading viewport. Native scrollIntoView() can
+        // scroll-chain into #detail (which is fixed and intentionally hidden)
+        // before it reaches .detail-body, taking the fixed header and close
+        // control out of view. Move only the reader body instead.
+        const bodyRect = detailBody.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        detailBody.scrollTo({
+          top: Math.max(0, detailBody.scrollTop + targetRect.top - bodyRect.top - detailBody.clientTop),
+          behavior: 'instant',
+        });
         if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
         return;

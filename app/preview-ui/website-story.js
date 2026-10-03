@@ -73,7 +73,10 @@
   }
 
   function schedule() {
-    if (!frame && roots.size) frame = requestAnimationFrame(update);
+    // requestAnimationFrame passes its timestamp to the callback. update's
+    // optional argument is a boolean visibility override, so passing update
+    // directly turned every ordinary frame into a forced full pass.
+    if (!frame && roots.size) frame = requestAnimationFrame(() => update());
   }
 
   const preferenceObserver = new MutationObserver(schedule);

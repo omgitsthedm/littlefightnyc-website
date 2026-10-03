@@ -171,7 +171,7 @@
   min-height: var(--lf-control-min);
   display: inline-flex;
   align-items: center;
-  color: var(--lf-fight-soft);
+  color: var(--lf-fight);
   font: 500 var(--lf-text-2xs) / 1.45 var(--lf-mono);
   text-decoration: underline;
   text-underline-offset: 0.2em;
@@ -296,7 +296,7 @@
 }
 
 .lf-audit-intro__proof-links a {
-  color: var(--lf-fight-soft);
+  color: var(--lf-fight);
   font-family: var(--lf-mono);
   font-size: var(--lf-text-2xs);
   line-height: 1.45;
