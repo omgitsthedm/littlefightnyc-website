@@ -126,7 +126,7 @@ proof_slugs = ['easy-tiger','hair-by-rachel-charles','grand-funding-llc']
 INDUSTRY_PROOF = {
     '/industries/galleries-creative-studios/': [('cc-films', 'A creative-industry website example: CC Films.')],
     '/industries/law-firms/': [('grand-funding-llc', 'A professional-services website example: Grand Funding LLC.')],
-    '/industries/medical-wellness-practices/': [('hair-by-rachel-charles', 'A wellness-service website example: Hair By Rachel.')],
+    '/industries/medical-wellness-practices/': [('hair-by-rachel-charles', 'An appointment-based salon website example: Hair By Rachel.')],
     '/industries/plumbers/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/professional-services/': [('logan-loans', 'A professional-services website example: Logan Loans.')],
     '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.')],

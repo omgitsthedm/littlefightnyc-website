@@ -142,7 +142,7 @@ async function run() {
         const payload = report.posts.at(-1);
         assert.deepEqual(payload, {
           fieldNames: ['bot-field', 'business', 'contact', 'follow_up', 'form-name', 'intent', 'message', 'name', 'source'],
-          formName: 'tech-audit-scratch', intent: 'website', source: 'littlefightnyc.com/tech-audit',
+          formName: 'tech-audit-scratch', intent: 'general', source: '/tech-audit/',
         }, 'native Netlify POST contract');
         return 'typed values + focus preserved; intercepted native Netlify payload remained valid';
       } finally { await fixture.context.close(); }
@@ -185,6 +185,55 @@ async function run() {
         await fixture.page.screenshot({ path: path.join(screenshots, 'enhanced-inquiry-390.png'), fullPage: true });
         return 'untouched fallback hands off to existing React journey';
       } finally { await fixture.context.close(); }
+    });
+
+    await check('choosing only a service before enhancement preserves the native selection', async () => {
+      const fixture = await heldTechAuditPage(browser);
+      try {
+        await fixture.form.locator('[name="intent"]').selectOption('support');
+        await fixture.page.locator('.topbar .wordmark').focus();
+        await fixture.release();
+        await fixture.page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'native-inquiry');
+        assert.equal(await fixture.form.locator('[name="intent"]').inputValue(), 'support');
+        return 'service-only choice preserved after focus leaves the form';
+      } finally { await fixture.context.close(); }
+    });
+
+    await check('no-JavaScript inquiries submit the selected service instead of assuming website work', async () => {
+      for (const intent of ['support', 'systems']) {
+        const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+        let posted;
+        await context.route('**/*', async route => {
+          const request = route.request();
+          const url = new URL(request.url());
+          if (url.origin !== new URL(base).origin) return route.abort('blockedbyclient');
+          if (request.method() === 'POST' && url.pathname === '/thanks/') {
+            posted = new URLSearchParams(request.postData() || '');
+            return route.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>Local receipt</title><main>Local test only</main>' });
+          }
+          if (!['GET', 'HEAD'].includes(request.method())) return route.abort('blockedbyclient');
+          return route.continue();
+        });
+        try {
+          const page = await context.newPage();
+          await page.goto(`${base}/tech-audit/?intent=${intent}`);
+          const form = page.locator('form.static-inquiry');
+          assert.equal(await form.locator('[name="intent"]').inputValue(), 'general');
+          await form.locator('[name="intent"]').selectOption(intent);
+          await form.locator('[name="name"]').fill('Local service test');
+          await form.locator('[name="business"]').fill('Example business');
+          await form.locator('[name="contact"]').fill('service@example.test');
+          await form.locator('[name="message"]').fill('Local validation of the selected service.');
+          await page.screenshot({ path: path.join(screenshots, `no-js-${intent}-390.png`), fullPage: true });
+          // Exercise native keyboard submission with page JavaScript disabled.
+          await form.locator('button[type="submit"]').press('Enter');
+          await page.waitForURL(/\/thanks\//);
+          assert.equal(posted?.get('intent'), intent);
+          assert.equal(posted?.get('form-name'), 'tech-audit-scratch');
+          assert.equal(new URL(page.url()).search, '', 'native form must not place personal details in the URL');
+        } finally { await context.close(); }
+      }
+      return 'support and custom software native POSTs intercepted locally';
     });
 
     assert.equal(report.localFailures.length, 0, `Local failures: ${JSON.stringify(report.localFailures)}`);

@@ -43,6 +43,7 @@
     "test:browser": "playwright test",
     "test:vera-data-edge": "node --experimental-strip-types scripts/test-vera-data-edge.mjs",
     "test:vera-service-worker": "node scripts/test-vera-service-worker.mjs",
+    "test:reader-audit": "node --experimental-strip-types scripts/test-reader-audit-regressions.mjs",
     "test:owner-math": "node scripts/test-owner-math.mjs",
     "test:release-contract": "node scripts/test-write-release-metadata.mjs && node scripts/test-redirects.mjs && node --experimental-strip-types scripts/test-retired-host-response.mjs && node scripts/test-indexnow-release.mjs",
     "test:browser:chromium": "playwright test --project=chromium-desktop --project=chromium-mobile",

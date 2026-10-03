@@ -24,7 +24,7 @@
     "quality:live": "npm --prefix app run quality:live",
     "quality:maintenance": "npm run typecheck:functions && npm --prefix app run quality:maintenance",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json",
-    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts app/src/lib/rum.test.ts netlify/functions/_shared/public-audit/intake.test.ts"
+    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts app/src/lib/rum.test.ts netlify/functions/_shared/public-audit/intake.test.ts netlify/functions/_shared/public-audit/cleanup-expired.test.ts"
   },
   "dependencies": {
     "@netlify/blobs": "10.7.13",

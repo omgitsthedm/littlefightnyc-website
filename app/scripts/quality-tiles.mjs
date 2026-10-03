@@ -97,6 +97,7 @@ if (functional) {
   // Preserve real contracts: native inquiry delivery, consent/privacy,
   // acquisition measurement, VERA, functions, and protected/retired product boundaries.
   for (const script of [
+    "test:reader-audit",
     "test:owner-math",
     "test:vera-service-worker",
     "test:vera-data-edge",
