@@ -44,7 +44,9 @@
 
   <p class="ticker" data-ticker aria-live="off"></p>
 
-  <nav class="rail" aria-label="District controls">
+  <nav class="rail" data-rail aria-label="District controls">
+    <button class="rail__chip rail__chip--menu" type="button" data-rail-menu aria-expanded="false" aria-controls="district-controls">Controls</button>
+    <span id="district-controls" class="visually-hidden">District scenarios and view controls</span>
     <button class="rail__chip rail__chip--tour" data-rail-tour>▶ Tour</button>
     <button class="rail__chip" data-rail-order>Place an order</button>
     <button class="rail__chip" data-rail-lunch>Lunch rush</button>

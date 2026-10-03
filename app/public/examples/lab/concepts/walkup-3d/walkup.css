@@ -90,6 +90,49 @@ html, body {
 .hint.is-in { opacity: 0.85; }
 .hint.is-out { opacity: 0; }
 
+.walkup-controls {
+  position: fixed;
+  left: 50%;
+  bottom: max(18px, env(safe-area-inset-bottom, 0px) + 14px);
+  z-index: 5;
+  display: flex;
+  gap: 7px;
+  transform: translateX(-50%);
+}
+
+.walkup-controls__button {
+  min-width: 64px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid rgba(243, 239, 232, 0.22);
+  border-radius: 999px;
+  background: rgba(5, 7, 15, 0.76);
+  color: var(--ink);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  font: 700 12px/1 ui-monospace, "SFMono-Regular", Menlo, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color 180ms ease, background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.walkup-controls__button:hover,
+.walkup-controls__button.is-active {
+  border-color: rgba(255, 122, 26, 0.85);
+  background: rgba(255, 122, 26, 0.18);
+  color: #fff;
+}
+
+.walkup-controls__button:active { transform: scale(0.96); }
+
+.walkup-controls__button:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
 .veil {
   position: fixed;
   inset: 0;
@@ -140,7 +183,42 @@ html, body {
   color: var(--ink-dim);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 700px), (max-height: 360px) {
   .plate__line { max-width: 26ch; }
   .hint { display: none; }
+
+  .plate {
+    top: max(18px, env(safe-area-inset-top, 0px) + 12px);
+    left: max(16px, env(safe-area-inset-left, 0px) + 12px);
+  }
+
+  .plate__eyebrow { margin-bottom: 5px; font-size: 10px; }
+  .plate__title { font-size: clamp(34px, 12vw, 52px); }
+  .plate__line { margin-top: 8px; font-size: 12px; }
+
+  .walkup-controls {
+    bottom: max(10px, env(safe-area-inset-bottom, 0px) + 8px);
+    gap: 5px;
+  }
+
+  .walkup-controls__button { min-width: 0; padding: 0 10px; font-size: 11px; }
+}
+
+/* The reader supplies its own persistent return control. Keep the scene's
+   identity visible without competing with that control or the small viewport. */
+@media (max-width: 700px) and (max-height: 520px), (max-height: 360px) {
+  html.lab-concept-embed .lab-build-disclosure { display: none; }
+
+  html.lab-concept-embed .plate {
+    top: max(64px, env(safe-area-inset-top, 0px) + 56px);
+  }
+
+  html.lab-concept-embed .plate__eyebrow,
+  html.lab-concept-embed .plate__line { display: none; }
+
+  html.lab-concept-embed .plate__title { font-size: clamp(28px, 10vw, 38px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .walkup-controls__button { transition-duration: 0.01ms; }
 }

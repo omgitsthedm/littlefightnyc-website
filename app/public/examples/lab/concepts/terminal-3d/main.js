@@ -21,6 +21,7 @@ const plate = $('[data-plate]'), hint = $('[data-hint]');
 const chipEl = $('[data-chip]'), chipBar = $('[data-chip-bar]'), chipKicker = $('[data-chip-kicker]');
 const chipTitle = $('[data-chip-title]'), chipBody = $('[data-chip-body]'), chipStats = $('[data-chip-stats]');
 const hudEl = $('[data-hud]'), tickerEl = $('[data-ticker]'), audioBtn = $('[data-audio]');
+const rail = $('[data-rail]'), railMenu = $('[data-rail-menu]');
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile = window.matchMedia('(pointer: coarse)').matches || Math.min(innerWidth, innerHeight) < 500;
@@ -386,13 +387,28 @@ function chipTrack() {
   const w = chipEl.offsetWidth || 300, h = chipEl.offsetHeight || 180;
   let x = px + 18;
   if (x + w > innerWidth - 12) x = px - w - 18;
-  let y = THREE.MathUtils.clamp(py - h * 0.4, 12, innerHeight - h - 120);
+  const inEmbed = document.documentElement.classList.contains('lab-concept-embed');
+  const topInset = inEmbed ? 66 : 12;
+  const bottomInset = isMobile ? 62 : 120;
+  let y = THREE.MathUtils.clamp(py - h * 0.4, topInset, Math.max(topInset, innerHeight - h - bottomInset));
   x = THREE.MathUtils.clamp(x, 8, innerWidth - w - 8);
   chipEl.style.transform = `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
 }
 $('[data-chip-close]').addEventListener('click', chipClose);
 $('[data-chip-prev]').addEventListener('click', () => chipOpenBiz(((chipIdx < 0 ? 0 : chipIdx) - 1 + CITY.beacons.length) % CITY.beacons.length));
 $('[data-chip-next]').addEventListener('click', () => chipOpenBiz(((chipIdx < 0 ? -1 : chipIdx) + 1) % CITY.beacons.length));
+
+function setRailOpen(open) {
+  if (!rail || !railMenu) return;
+  rail.classList.toggle('is-expanded', open);
+  railMenu.setAttribute('aria-expanded', open ? 'true' : 'false');
+  railMenu.textContent = open ? 'Close controls' : 'Controls';
+}
+
+railMenu?.addEventListener('click', () => setRailOpen(!rail.classList.contains('is-expanded')));
+rail?.querySelectorAll('.rail__chip:not(.rail__chip--menu)').forEach((button) => {
+  button.addEventListener('click', () => setRailOpen(false));
+});
 
 /* ---------- input ---------- */
 const raycaster = new THREE.Raycaster();
@@ -515,7 +531,11 @@ if (!isMobile) {
 }
 let hudOn = false;
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { if (chase.on) endChase(); else chipClose(); }
+  if (e.key === 'Escape') {
+    if (rail?.classList.contains('is-expanded')) setRailOpen(false);
+    else if (chase.on) endChase();
+    else chipClose();
+  }
   if (e.key === '`' || e.key === '~') { hudOn = !hudOn; hudEl.hidden = !hudOn; }
   if (e.key === 'p' || e.key === 'P') photoMode();
 });

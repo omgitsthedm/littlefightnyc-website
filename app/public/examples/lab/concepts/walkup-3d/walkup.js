@@ -829,7 +829,9 @@ function computeFraming() {
   const aspect = innerWidth / innerHeight;
   const vFov = THREE.MathUtils.degToRad(camera.fov) / 2;
   const hFov = Math.atan(Math.tan(vFov) * aspect);
-  const margin = aspect < 0.8 ? 0.95 : 0.98;
+  // Reader embeds are deliberately narrow. Give the full six-story silhouette
+  // room there instead of letting the nearest facade crop out of view.
+  const margin = aspect < 0.8 ? 1.18 : aspect < 1 ? 1.06 : 0.98;
   heroDist = (sphere * margin) / Math.tan(Math.min(vFov, hFov));
 }
 
@@ -876,6 +878,35 @@ let dragging = false;
 let lastX = 0, lastY = 0;
 const pointers = new Map();
 let pinchDist = 0;
+let targetYaw = null;
+
+const walkupViews = {
+  block: { yaw: 0, polar: 1.22, dolly: 1 },
+  front: { yaw: -0.62, polar: 1.16, dolly: 0.7 },
+  stairs: { yaw: 1.02, polar: 1.1, dolly: 0.76 },
+};
+
+function selectWalkupView(name) {
+  const view = walkupViews[name];
+  if (!view) return;
+  skipPan();
+  mode = 'live';
+  targetYaw = view.yaw;
+  targetPolar = view.polar;
+  targetDollyFrac = view.dolly;
+  spinVel = 0;
+  idleBlend = 0;
+  lastInteract = clockTime;
+  document.querySelectorAll('[data-walkup-view]').forEach((button) => {
+    const selected = button.dataset.walkupView === name;
+    button.classList.toggle('is-active', selected);
+    button.setAttribute('aria-pressed', selected ? 'true' : 'false');
+  });
+}
+
+document.querySelectorAll('[data-walkup-view]').forEach((button) => {
+  button.addEventListener('click', () => selectWalkupView(button.dataset.walkupView));
+});
 
 canvas.addEventListener('pointerdown', (e) => {
   try { canvas.setPointerCapture(e.pointerId); } catch { /* synthetic or stale pointer */ }
@@ -1017,9 +1048,14 @@ function frame() {
       idleBlend = 0;
     } else {
       spinVel *= Math.pow(0.06, dt); // inertia decay
+      if (targetYaw !== null) {
+        const delta = Math.atan2(Math.sin(targetYaw - rotGroup.rotation.y), Math.cos(targetYaw - rotGroup.rotation.y));
+        rotGroup.rotation.y += delta * Math.min(1, dt * 6);
+        if (Math.abs(delta) < 0.003) targetYaw = null;
+      }
       const sinceTouch = t - lastInteract;
       if (sinceTouch > 2.6) idleBlend = Math.min(1, idleBlend + dt / 1.4);
-      rotGroup.rotation.y += spinVel + IDLE_SPIN * easeInOut(idleBlend) * dt;
+      if (targetYaw === null) rotGroup.rotation.y += spinVel + IDLE_SPIN * easeInOut(idleBlend) * dt;
     }
     dollyFrac = THREE.MathUtils.damp(dollyFrac, targetDollyFrac, 4.5, dt);
     polar = THREE.MathUtils.damp(polar, targetPolar, 5.5, dt);
