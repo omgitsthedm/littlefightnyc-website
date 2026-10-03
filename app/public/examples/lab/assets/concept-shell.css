@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "LF Lab Atkinson";
+  src: url('/assets/mineral/atkinson-hyperlegible-next-latin.woff2') format('woff2');
+  font-display: swap;
+}
+
 :root {
   --lab-shell-bg: rgba(10, 11, 15, 0.92);
   --lab-shell-line: rgba(255, 255, 255, 0.14);
@@ -216,6 +222,33 @@ html.lab-concept-embed .lab-concept-status {
 html.lab-concept-embed body {
   padding-bottom: 0;
 }
+
+/* The embedded app owns this exit, so it stays reachable while its scene
+   scrolls or captures gestures. The reader's separate X remains available. */
+.lab-embed-exit {
+  position: fixed;
+  z-index: 2147483001;
+  top: max(6px, env(safe-area-inset-top));
+  left: max(6px, env(safe-area-inset-left));
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  max-width: calc(100% - 12px);
+  padding: 8px 14px;
+  border: 1px solid #ff7839;
+  border-radius: 999px;
+  background: #141417;
+  color: #f6f3ec;
+  font: 600 16px/1.2 "LF Lab Atkinson", system-ui, sans-serif;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.lab-embed-exit:hover { background: #2a2523; }
+.lab-embed-exit:focus-visible { outline: 3px solid #f6f3ec; outline-offset: 2px; }
+.lab-embed-exit:active { background: #3a2b23; }
 
 @media (max-width: 620px) {
   .lab-concept-shell {

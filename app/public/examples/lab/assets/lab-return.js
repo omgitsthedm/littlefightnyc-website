@@ -135,6 +135,16 @@
 
     if (window.self !== window.top || new URLSearchParams(location.search).has('embed')) {
       document.documentElement.classList.add('lab-concept-embed');
+      var exit = makeButton('lab-embed-exit', 'Back to cards ×');
+      exit.setAttribute('aria-label', 'Close this experience and return to all cards');
+      exit.addEventListener('click', function () {
+        if (window.self === window.top) {
+          location.assign('/');
+        } else {
+          window.parent.postMessage({ type: 'lf:lab-exit', version: 1 }, location.origin);
+        }
+      });
+      document.body.appendChild(exit);
       return;
     }
 

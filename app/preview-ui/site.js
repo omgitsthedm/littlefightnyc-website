@@ -101,6 +101,16 @@
     });
   }
 
+  window.addEventListener('message', event => {
+    if (event.origin !== location.origin || event.data?.type !== 'lf:lab-exit' || event.data.version !== 1) return;
+    const root = dialogIsOpen() ? detailBody : document.querySelector('main[data-page-content]');
+    const frame = [...(root?.querySelectorAll('.reader-demo:not([data-demo="vera"]) iframe[data-demo-src]') || [])]
+      .find(candidate => candidate.contentWindow === event.source);
+    if (!frame) return;
+    if (dialogIsOpen()) closeReader();
+    else location.assign('/');
+  });
+
   function mountDemos(root = detailBody) {
     root.querySelectorAll('iframe[data-demo-src]').forEach(frame => {
       if (frame.hasAttribute('src')) return;

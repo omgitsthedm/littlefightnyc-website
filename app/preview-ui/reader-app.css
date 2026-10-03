@@ -408,6 +408,11 @@ body:has(.reader-hub-return) .page-shell>.topbar{padding-right:66px}
     border-radius:12px;
   }
 
+  .lf-reader .reader-demo:not([data-demo='vera']) .reader-demo-stage{
+    min-height:0;
+    height:clamp(320px,56svh,440px);
+  }
+
   #detail[data-reader-layout='immersive']{padding:0}
   #detail[data-reader-layout='immersive'] .detail-window.lf-reader{border:0;border-radius:0}
   #detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera'] .reader-demo-stage{border-radius:0}
@@ -421,6 +426,13 @@ body:has(.reader-hub-return) .page-shell>.topbar{padding-right:66px}
   }
   body:has(.reader-hub-return) .page-shell:not(:has(>main[data-reader-template='website-service']))>.direct-contact-rail a{
     min-width:max-content;
+  }
+}
+
+@media (max-height:500px) and (max-width:1000px){
+  .lf-reader .reader-demo:not([data-demo='vera']) .reader-demo-stage{
+    min-height:0;
+    height:clamp(240px,72svh,340px);
   }
 }
 

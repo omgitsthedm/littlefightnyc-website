@@ -20,7 +20,7 @@ const labs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'card-app');
 const report = {
   kind: 'card-app-browser-verification', base, startedAt: new Date().toISOString(),
-  browser: 'Google Chrome via Playwright channel chrome', assertions: [], labs: [], vera: [],
+  browser: 'Google Chrome via Playwright channel chrome', assertions: [], labs: [], mobileLabs: [], vera: [],
   pageErrors: [], resourceFailures: [], blockedMutations: [],
 };
 
@@ -31,7 +31,8 @@ async function check(name, task) {
 }
 
 async function makePage(browser, viewport) {
-  const context = await browser.newContext({ viewport, deviceScaleFactor: 1 });
+  const phone = viewport.width <= 600 || viewport.height <= 500;
+  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, isMobile: phone, hasTouch: phone });
   const page = await context.newPage();
   await page.route('**/*', async route => {
     const request = route.request();
@@ -201,6 +202,19 @@ async function run() {
         return 'child-frame Escape closes outer reader and cleans up iframe';
       });
 
+      await check('Lab exit messages require the active frame and the same origin', async () => {
+        await openCard(page, '/examples/lab/concepts/micro-animations/', 'micro-animations');
+        await page.evaluate(() => {
+          const source = document.querySelector('#detail iframe').contentWindow;
+          const data = { type: 'lf:lab-exit', version: 1 };
+          window.dispatchEvent(new MessageEvent('message', { data, origin: 'https://example.invalid', source }));
+          window.dispatchEvent(new MessageEvent('message', { data, origin: location.origin, source: window }));
+        });
+        assert.equal(await page.locator('#detail').evaluate(node => node.open), true, 'unrelated messages must not dismiss a working card');
+        await closeCard(page);
+        return 'wrong origin and wrong sender both ignored';
+      });
+
       await check('iframe Escape works while a nonessential asset is still downloading', async () => {
         let releaseAsset;
         const pendingAsset = new Promise(resolve => { releaseAsset = resolve; });
@@ -268,6 +282,43 @@ async function run() {
         return 'VERA uses the full reader card, handles in-frame navigation, and retains a visible X';
       });
     } finally { await context.close(); }
+
+    for (const viewport of [{ width:320, height:740 }, { width:390, height:844 }, { width:844, height:390 }]) {
+      await check(`all nine Labs fit ${viewport.width}×${viewport.height} and exit back to their originating tile`, async () => {
+        const { context, page } = await makePage(browser, viewport);
+        try {
+          for (const lab of labs) {
+            const route = `/examples/lab/concepts/${lab.slug}/`;
+            const { frame, frameElement } = await openCard(page, route, lab.slug);
+            await frameElement.scrollIntoViewIfNeeded();
+            const box = await frameElement.boundingBox();
+            assert.ok(box.width <= viewport.width && box.height <= (viewport.height < 500 ? 340 : 440), `${lab.slug}: working surface fits the compact phone card`);
+            const layout = await frame.evaluate(() => ({ width:innerWidth, scroll:document.documentElement.scrollWidth }));
+            assert.ok(layout.scroll <= layout.width + 1, `${lab.slug}: no sideways page overflow: ${JSON.stringify(layout)}`);
+            const interaction = await runRepresentativeInteraction(frame, lab.slug);
+            const exit = frame.locator('.lab-embed-exit');
+            await exit.waitFor({ state:'visible' });
+            const target = await exit.evaluate(node => {
+              const b = node.getBoundingClientRect();
+              return { width:b.width, height:b.height, x:b.x, y:b.y, right:b.right, bottom:b.bottom,
+                viewport:[innerWidth, innerHeight], hit:node.contains(document.elementFromPoint(b.x + b.width / 2, b.y + b.height / 2)) };
+            });
+            assert.ok(target.width >= 44 && target.height >= 44 && target.x >= 0 && target.y >= 0 && target.right <= target.viewport[0] && target.bottom <= target.viewport[1] && target.hit,
+              `${lab.slug}: visible, unobstructed in-app exit: ${JSON.stringify(target)}`);
+            await assertCloseTarget(page, viewport);
+            if (viewport.width === 390 || ['walkup-3d','terminal-3d'].includes(lab.slug)) {
+              await page.screenshot({ path:path.join(evidence, `${lab.slug}-${viewport.width}x${viewport.height}.png`) });
+            }
+            await exit.tap();
+            await page.waitForFunction(() => !document.querySelector('#detail')?.open && !document.querySelector('#detail-body iframe.reader-demo-frame'));
+            assert.equal(new URL(page.url()).pathname, '/', `${lab.slug}: in-app exit returns to hub`);
+            assert.equal(await page.locator(`a.tile[href="${route}"]`).evaluate(node => node === document.activeElement), true, `${lab.slug}: exit restores tile focus`);
+            report.mobileLabs.push({ slug:lab.slug, viewport, box, target, interaction });
+          }
+        } finally { await context.close(); }
+        return '9 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus';
+      });
+    }
 
     await check('VERA full card remains usable on a 390px phone', async () => {
       const mobile = { width: 390, height: 844 };

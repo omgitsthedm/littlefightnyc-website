@@ -479,14 +479,15 @@ async function assertTileGeometryAndType(page) {
     const anchor = page.locator(`#${id} a.tile[data-anchor="${topic}"]`).first();
     assert.equal(await anchor.count(), 1, `${label} must retain its service anchor tile`);
     const size = await dimensions(anchor);
-    assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 4], `${label} must use the shared anchor frame`);
+    assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 3], `${label} must use the compact service anchor frame`);
     assert.equal(size.columns, 8, `${label} must occupy two thirds of the desktop grid`);
-    assert.ok(size.rows >= 4, `${label} must preserve room for meaningful art and its complete introduction`);
+    assert.ok(size.rows >= 3, `${label} must preserve room for meaningful art and its complete introduction`);
   }
   const brand = await dimensions(page.locator('a.tile.brand-tile'));
-  assert.deepEqual([brand.preferredColumns, brand.preferredRows], [8, 4], 'Problems? Solved. must use the same anchor frame');
+  assert.deepEqual([brand.preferredColumns, brand.preferredRows], [8, 2], 'Problems? Solved. must use half its original anchor area');
   assert.equal(brand.columns, 8);
-  assert.ok(brand.rows >= 4);
+  assert.ok(brand.rows >= 2);
+  assert.equal(await page.locator('a.tile.brand-tile .brand-anchor-art img').count(), 0, 'Problems? Solved. must not contain the NYC photograph');
   const artwork = page.locator('img.editorial-story-image');
   assert.ok(await artwork.count() >= 9, 'consolidated service stories need substantial original editorial artwork');
   await artwork.evaluateAll(async images => {

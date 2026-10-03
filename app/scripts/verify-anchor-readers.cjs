@@ -64,7 +64,10 @@ async function checkReaders(browser) {
       await page.goto(base + '/', { waitUntil:'networkidle' });
       const sizes = await page.locator('[data-editorial-front]:not([data-editorial-front=booking])').evaluateAll(nodes => nodes.map(n => ({ family:n.dataset.editorialFront, width:n.getBoundingClientRect().width, height:n.getBoundingClientRect().height })));
       assert.equal(sizes.length, 5);
-      assert.ok(sizes.every(x => Math.abs(x.width - sizes[0].width) < 1 && Math.abs(x.height - sizes[0].height) < 1), `equal five anchor dimensions at ${width}: ${JSON.stringify(sizes)}`);
+      const services = sizes.filter(x => x.family !== 'brand');
+      const brand = sizes.find(x => x.family === 'brand');
+      assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1 && Math.abs(x.height - services[0].height) < 1), `equal four service anchor dimensions at ${width}: ${JSON.stringify(sizes)}`);
+      assert.ok(brand.height < services[0].height, `brand stays more compact at ${width}: ${JSON.stringify(sizes)}`);
       for (const [family] of Object.entries(routes)) {
         const tile = page.locator(`a.tile[data-editorial-front="${family}"]`);
         await tile.click();
@@ -90,7 +93,7 @@ async function checkReaders(browser) {
         await page.locator('#detail').waitFor({ state:'hidden' });
         assert.equal(await tile.evaluate(n => n === document.activeElement), true, 'closing restores focus');
       }
-      pass(`${width}px: all five anchors match, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
+      pass(`${width}px: four service anchors match and brand is compact, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
       if (width === 390) {
         await page.addStyleTag({ content:'html{font-size:200%!important}' });
         for (const family of ['brand','it','consulting','software']) {
