@@ -11,10 +11,7 @@ const STANDARDS = [
   { label: "Consulting", value: "Free, always" },
   {
     label: "Website timing",
-    // COPY-CONTRACT: the 14-day promise may only appear with its eligibility,
-    // timing, dependency, and remedy terms. Standing alone it read as an
-    // unconditional guarantee.
-    value: "A written 14-day promise on qualifying scopes. The scope names the timing, what each side provides, and the remedy.",
+    value: "A website can be ready in six weeks or less when the scope and materials are agreed. The written plan names the launch timing and care included.",
   },
   { label: "Urgent NYC on-site help", value: "Timing confirmed after we know the issue and location" },
   { label: "When you call", value: "A real person answers 9am–9pm Eastern. After hours, leave a message." },

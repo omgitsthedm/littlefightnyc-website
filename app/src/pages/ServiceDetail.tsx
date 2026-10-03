@@ -93,7 +93,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",
-    lede: "Tell us about the business and the next customer action. If the written scope qualifies, it names the 14-day promise, what each side needs to provide, and the remedy.",
+    lede: "Tell us about the business and the next customer action. A website can be ready in six weeks or less when the scope and materials are agreed.",
   },
   "business-systems": {
     heading: "Own the tool instead of renting it.",
@@ -137,7 +137,7 @@ function WebsiteAcquisitionBlock() {
             </li>
             <li>
               <h3>A written plan and exact price</h3>
-              <p>You receive the scope, exact price, responsibilities, review rounds, launch timing, and support terms before work starts. The 14-day promise applies only to qualifying written scopes.</p>
+              <p>You receive the scope, exact price, responsibilities, review rounds, launch timing, and support terms before work starts. A website can be ready in six weeks or less when the scope and materials are agreed.</p>
             </li>
             <li>
               <h3>Build, review, then launch</h3>

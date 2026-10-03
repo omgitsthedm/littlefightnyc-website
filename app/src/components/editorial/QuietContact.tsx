@@ -157,7 +157,7 @@ export default function QuietContact({
 
         <p className="lf-contact-block__fine">
           {intent === "website"
-            ? "The first conversation is free. Not every website qualifies for the 14-day promise. When one does, the terms go in writing before work starts. Your domain, code, and business data stay yours."
+            ? "The first conversation is free. A website can be ready in six weeks or less when the scope and materials are agreed. Your custom work and business-controlled accounts stay with you under the agreement."
             : "The first conversation is free. You approve any paid work before it begins. Your accounts, code, and business data stay yours."}
         </p>
       </div>

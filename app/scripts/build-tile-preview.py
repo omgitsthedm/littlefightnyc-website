@@ -6,7 +6,7 @@ Every tile opens the same HTML that a direct visitor and crawler receive.
 from pathlib import Path
 from html import escape, unescape
 from html.parser import HTMLParser
-from urllib.parse import urlsplit
+from urllib.parse import quote, urlsplit
 import hashlib
 import json
 import re
@@ -121,6 +121,14 @@ prepare_groups(home_groups, rewrite)
 home_context = home_contexts(CONTENT, home_groups, hidden_home_ids)
 
 proof_slugs = ['easy-tiger','hair-by-rachel-charles','grand-funding-llc']
+# These examples are intentionally category-adjacent, never claimed as work in
+# a trade we have not served. Each card links to the actual public case story.
+INDUSTRY_PROOF = {
+    '/industries/plumbers/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
+    '/industries/roofing/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
+    '/industries/luxury-home-services/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
+    '/industries/law-firms/': [('grand-funding-llc', 'A professional-services website example: Grand Funding LLC.')],
+}
 def picture(slug, eager=False):
     c = cases[slug]
     visual = case_visuals.get(slug, {}).get('desktop', {})
@@ -131,8 +139,9 @@ def picture(slug, eager=False):
         width,height=960,453
     return f'<img src="{img}" width="{width}" height="{height}" alt="{E(display(c.get("imageAlt",c["name"])))}" loading="{"eager" if eager else "lazy"}" decoding="async"'+(' fetchpriority="high"' if eager else '')+'>'
 
-def proof_grid(slugs=proof_slugs):
-    return '<div class="proof-grid">'+''.join(f'<a class="proof-card" data-reader-link href="/case-studies/{s}/">{picture(s)}<span>{E(display(cases[s]["name"]))}</span></a>' for s in slugs if s in cases)+'</div>'
+def proof_grid(slugs=proof_slugs, captions=None):
+    captions = captions or {}
+    return '<div class="proof-grid">'+''.join(f'<a class="proof-card" data-reader-link href="/case-studies/{s}/">{picture(s)}<span>{E(captions.get(s, display(cases[s]["name"])))}</span></a>' for s in slugs if s in cases)+'</div>'
 
 def review_cards(limit=None):
     rows=[]
@@ -148,7 +157,8 @@ def contact(path, prompt='Tell us what you need help with.'):
     if path.startswith('/industries/') or path in ('/nationwide/','/websites-for-your-business/'):intent='website'
     heading='Let’s make it yours.' if path=='/services/custom-local-websites/' else 'Talk to Little Fight.'
     introduction=prompt
-    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}{link('Write to us +', f'/tech-audit/?intent={intent}', 'contact-plan')}</nav><p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p></div></section>'''
+    source = quote(path, safe='')
+    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}{link('Write to us +', f'/tech-audit/?intent={intent}&source={source}', 'contact-plan')}</nav><p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p></div></section>'''
 
 def channels():
     return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'
@@ -262,8 +272,14 @@ def article(p):
             body=render_case(cases[case_slug],p,cases,case_visuals,link,case_headlines.get(case_slug,{}))
         body+=contact(path,'Your business has its own story. Let’s build a website that feels like it.')
         return q,body
-    slugs=[s for s in q.get('heroSlugs',proof_slugs if path.startswith('/industries/') or path in ['/services/custom-local-websites/','/nationwide/'] else []) if s in cases and cases[s].get('image')]
-    art=''.join(f'<figure>{picture(s,i==0)}<figcaption>{E(display(cases[s]["name"]))}</figcaption></figure>' for i,s in enumerate(slugs) if s in cases)
+    industry_examples = INDUSTRY_PROOF.get(path, [])
+    if industry_examples:
+        slugs = [slug for slug, _ in industry_examples if slug in cases and cases[slug].get('image')]
+        captions = dict(industry_examples)
+    else:
+        slugs = [s for s in q.get('heroSlugs', proof_slugs if path.startswith('/industries/') or path in ['/services/custom-local-websites/','/nationwide/'] else []) if s in cases and cases[s].get('image')]
+        captions = {}
+    art=''.join(f'<figure><a data-reader-link href="/case-studies/{s}/">{picture(s,i==0)}</a><figcaption><a data-reader-link href="/case-studies/{s}/">{E(captions.get(s, display(cases[s]["name"])))}</a></figcaption></figure>' for i,s in enumerate(slugs) if s in cases)
     if path.startswith('/photos/'):
         album=next((a for a in albums if path=='/photos/'+a['id'].removeprefix('album-')+'/'),None)
         if album:
@@ -325,8 +341,9 @@ def article(p):
         body+=render_legacy_sections(q['sourceDepth'],display,link)
     if path in ['/nationwide/','/websites-for-your-business/']:
         body+='<section class="story-section story-section--plain"><nav class="industry-links" aria-label="Websites by business type">'+''.join(link(label,url) for label,url in INDUSTRIES)+'</nav></section>'
-    if path.startswith('/industries/') and path!='/industries/' and not slugs:
-        body+='<section class="story-proof" aria-label="Client websites">'+proof_grid()+'</section>'
+    if path.startswith('/industries/') and path != '/industries/' and not slugs:
+        examples = INDUSTRY_PROOF.get(path, [])
+        body += '<section class="story-proof" aria-label="Website examples">' + proof_grid([slug for slug, _ in examples], dict(examples)) + '</section>'
     if q['faqs']:
         body+='<section class="story-faq"><h2>Before we begin.</h2>'+''.join(f'<details><summary>{E(x["question"])}</summary><p>{E(display(x["answer"]))}</p>'+('<nav class="group-references" aria-label="Website service areas">'+''.join(link(item['label'],item['href']) for item in x['links'])+'</nav>' if x.get('links') else '')+'</details>' for x in q['faqs'])+'</section>'
     if q.get('_rewriteCategory'):
@@ -349,7 +366,7 @@ def article(p):
         if path=='/contact/':
             fallback=body
         if path=='/tech-audit/':
-            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="intent" value="website"><input type="hidden" name="source" value="littlefightnyc.com/tech-audit"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Your email<input name="contact" type="email" autocomplete="email" required maxlength="250"></label><input type="hidden" name="follow_up" value="email"><label>What would you like to change?<textarea name="message" required maxlength="4000"></textarea></label><button type="submit">Send your inquiry ↗</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
+            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="source" value="/tech-audit/"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Your email<input name="contact" type="email" autocomplete="email" required maxlength="250"></label><label>What do you need help with?<select name="intent"><option value="general" selected>General question</option><option value="website">Website</option><option value="support">Tech support</option><option value="consulting">Tech consulting</option><option value="systems">Custom software</option></select></label><input type="hidden" name="follow_up" value="email"><label>What would you like to change?<textarea name="message" required maxlength="4000"></textarea></label><button type="submit">Send your inquiry +</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}">{fallback}</div>'
     return q,body
 

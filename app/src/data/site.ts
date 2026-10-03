@@ -268,11 +268,11 @@ export const services: Service[] = [
     title: "A website built to help customers choose",
     headline: "Websites that make the next step obvious.",
     plain: "Custom websites for NYC businesses. Your services, phone, booking, orders, forms, map, payments, and follow-up can all point to one clear next step.",
-    outcome: "A qualifying website scope may include the written 14-day promise. The scope states eligibility, when the clock starts, what each side provides, and the remedy if our qualifying work is late.",
+    outcome: "A website can be ready in six weeks or less when the scope and materials are agreed. The written plan names the launch timing, what each side provides, and the care included.",
     pillars: [
       "Built for one business, not a theme",
       "Every page ends in a clear next step",
-      "A written 14-day promise on qualifying scopes",
+      "Six weeks or less with an agreed scope and materials",
     ],
     includes: [
       "A custom website built around what customers need to do",
@@ -359,9 +359,9 @@ export const services: Service[] = [
           "Yes. The site should connect to what makes you money: booking, calls, forms, payments, and follow-up. We use the simplest dependable connection that fits.",
       },
       {
-        question: "What if I miss the 14-day window?",
+        question: "How long can a website take?",
         answer:
-          "The written scope explains whether the 14-day promise applies, what we need from each side, and the remedy if our qualifying work is late. Review time is planned with you before the clock starts.",
+          "A website can be ready in six weeks or less when the scope and materials are agreed. The written plan sets the launch timing, review points, and what each side provides.",
       },
     ],
   },

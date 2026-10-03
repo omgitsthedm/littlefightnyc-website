@@ -29,7 +29,7 @@ const STAGES = [
     signal: "Move",
     title: "Fix, build, or leave it alone.",
     detail:
-      "The next move may be a repair, a qualifying 14-day website, or focused software you own. The scope and responsibility are written down before paid work starts.",
+      "The next move may be a repair, a scoped website build, or focused software you own. The scope and responsibility are written down before paid work starts.",
     action: "See the four ways we help",
     href: "/services/",
     external: false,

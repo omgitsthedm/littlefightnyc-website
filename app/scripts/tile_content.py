@@ -107,11 +107,11 @@ def _intro_values(page: Mapping[str, Any]) -> set[str]:
 
 _GENERIC_CONTACT_HEADING = "what you can count on"
 _GENERIC_CONTACT_TEXT = _canonical(
-    "The first look is free. Some website plans include our written 14-day promise. "
-    "The plan says which jobs qualify, when the days start, what each side needs to "
-    "provide, and what you receive if our work is late. Urgent on-site help is a New "
-    "York service; call so we can assess the issue and location, then confirm any "
-    "on-site timing. A real person answers 9am–9pm Eastern. After hours, leave a message."
+    "The first look is free. A website can be ready in six weeks or less when the scope "
+    "and materials are agreed. The written plan names the scope, launch timing, what "
+    "each side provides, and the care included. Urgent on-site help is a New York "
+    "service; call so we can assess the issue and location, then confirm any on-site "
+    "timing. A real person answers 9am–9pm Eastern. After hours, leave a message."
 )
 _GENERIC_REFERENCE_HEADING = "useful outside references"
 _GENERIC_REFERENCE_HREFS = frozenset(
@@ -167,7 +167,7 @@ def filtered_legacy_blocks(page: Mapping[str, Any]) -> list[Mapping[str, Any]]:
 
     The repeated ``What you can count on`` section is a single identical
     marketing/contact paragraph across unrelated readers.  It includes an
-    obsolete 14-day website promise and repeated hours.  The common reader
+    retired delivery-time promise and repeated hours.  The common reader
     contact controls already supply the current contact path, so this helper
     removes that exact section and the exact four-link generic reference block.
     All other headings, prose, and topic-specific citations remain intact.

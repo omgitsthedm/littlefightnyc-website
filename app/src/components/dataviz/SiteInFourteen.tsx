@@ -4,22 +4,21 @@ import { rr, glow, DISP, MONO, ORANGE, GREEN, useInstrumentCanvas } from "./inst
 /**
  * SiteInFourteen — the "custom local websites" argument, drawn.
  *
- * A qualifying website scope can carry a written 14-day launch promise. This
- * instrument illustrates that scoped plan; the public copy and accessible
- * name state the eligibility, dependency, clock, and remedy boundary.
+ * A website can be ready in six weeks or less when the scope and materials are
+ * agreed. This instrument illustrates that scoped build plan.
  *
  * Rendered on a <canvas> (2D). Responsive to its container shape. Pauses when
  * off-viewport (IntersectionObserver). Under prefers-reduced-motion it paints a
- * single settled frame — the finished site, LIVE on day 14 — with no motion.
+ * single settled frame — the finished site, ready in week six — with no motion.
  */
 
-// Content blocks in the frame, each with the build-day it snaps in on (1..14).
+// Content blocks in the frame, each with the build-week it snaps in on (1..6).
 const BLOCKS = [
-  { day: 2, h: 0.26, kind: "hero" },
-  { day: 5, h: 0.14, kind: "row" },
-  { day: 7, h: 0.14, kind: "row" },
-  { day: 9, h: 0.14, kind: "row" },
-  { day: 11, h: 0.1, kind: "foot" },
+  { day: 1, h: 0.26, kind: "hero" },
+  { day: 2, h: 0.14, kind: "row" },
+  { day: 3, h: 0.14, kind: "row" },
+  { day: 4, h: 0.14, kind: "row" },
+  { day: 5, h: 0.1, kind: "foot" },
 ] as const;
 
 const T = { build: 4200, ship: 1600, hold: 1500 };
@@ -38,15 +37,15 @@ function step(S: Sim, now: number) {
   const pt = now - S.t0;
   S.flash *= 0.88;
   if (S.phase === 0) {
-    S.day = 1 + 12 * eoc(clamp(pt / T.build, 0, 1));
+    S.day = 1 + 5 * eoc(clamp(pt / T.build, 0, 1));
     if (pt > T.build) {
       S.phase = 1;
       S.t0 = now;
-      S.day = 14;
+      S.day = 6;
       S.flash = 1;
     }
   } else if (S.phase === 1) {
-    S.day = 14;
+    S.day = 6;
     S.live = clamp(S.live + 0.05, 0, 1);
     if (pt > T.ship) {
       S.phase = 2;
@@ -92,7 +91,7 @@ function draw(
   }
 
   // --- day counter ---
-  const dayNum = Math.min(14, Math.round(S.day));
+  const dayNum = Math.min(6, Math.round(S.day));
   cx.textAlign = dayAlign;
   cx.textBaseline = "alphabetic";
   cx.fillStyle = "rgba(190,195,205,.7)";
@@ -100,10 +99,10 @@ function draw(
   cx.fillText(live ? "SHIPPED" : "BUILDING", dayX, dayY);
   cx.fillStyle = live ? "#eaf6ee" : "#fff";
   cx.font = "700 " + Math.max(28, (H * (wide ? 0.16 : 0.12)) | 0) + "px " + DISP;
-  cx.fillText("DAY " + String(dayNum).padStart(2, "0"), dayX, dayY + H * (wide ? 0.15 : 0.11));
+  cx.fillText("WEEK " + String(dayNum).padStart(2, "0"), dayX, dayY + H * (wide ? 0.15 : 0.11));
   cx.fillStyle = "rgba(160,164,174,.8)";
   cx.font = "500 " + Math.max(10, (H * 0.04) | 0) + "px " + DISP;
-  cx.fillText("of 14", dayX, dayY + H * (wide ? 0.22 : 0.16));
+  cx.fillText("of 6", dayX, dayY + H * (wide ? 0.22 : 0.16));
 
   // --- browser frame ---
   const barH = clamp(frH * 0.1, 16, 26);
@@ -200,7 +199,7 @@ function draw(
   }
   // build sweep line (a soft orange scanline riding the current build front)
   if (!live) {
-    const frontY = frY + barH + (frH - barH) * clamp((S.day - 1) / 12, 0.06, 0.98);
+    const frontY = frY + barH + (frH - barH) * clamp((S.day - 1) / 5, 0.06, 0.98);
     cx.globalCompositeOperation = "lighter";
     cx.globalAlpha = 0.5;
     cx.drawImage(GO, frX - 20, frontY - 12, frW + 40, 24);
@@ -222,15 +221,15 @@ function draw(
   if (live) {
     cx.fillStyle = "rgba(120,220,150,.95)";
     cx.font = "700 " + Math.max(12, (H * 0.055) | 0) + "px " + DISP;
-    cx.fillText("Day 14 target.", dayX, ry);
+    cx.fillText("Six-week target.", dayX, ry);
     cx.fillStyle = "rgba(200,205,215,.8)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
-    cx.fillText("Qualifying scope · terms written.", dayX, ry + H * 0.055);
+    cx.fillText("Agreed scope · materials ready.", dayX, ry + H * 0.055);
   } else {
     cx.fillStyle = "rgba(200,205,215,.85)";
     cx.font = "500 " + Math.max(10, (H * 0.036) | 0) + "px " + DISP;
     cx.fillText("Custom, built for your block —", dayX, ry);
-    cx.fillText("qualifying plan · day 14.", dayX, ry + H * 0.05);
+    cx.fillText("agreed scope · six weeks.", dayX, ry + H * 0.05);
   }
 
   if (S.flash > 0.02) {
@@ -239,11 +238,11 @@ function draw(
   }
 }
 
-// Settled "shipped" frame: the finished site, LIVE on day 14.
+// Settled "shipped" frame: the finished site, ready in week six.
 function settledSim(now: number): Sim {
   const S = freshSim(now);
   S.phase = 2;
-  S.day = 14;
+  S.day = 6;
   S.live = 1;
   return S;
 }
@@ -277,7 +276,7 @@ export default function SiteInFourteen() {
         } as React.CSSProperties
       }
       role="img"
-      aria-label="Illustration of a qualifying website plan moving from day 1 to a day 14 target. The written scope states eligibility, when the clock starts, what each side must provide, and the remedy if Little Fight’s qualifying work is late."
+      aria-label="Illustration of a website build moving from week 1 to week 6. A website can be ready in six weeks or less when the scope and materials are agreed."
     >
       <canvas ref={canvasRef} className="lf-instrument__canvas" aria-hidden="true" />
     </div>

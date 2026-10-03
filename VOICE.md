@@ -40,7 +40,7 @@ Every page should signal this without bragging:
 1. **Founder picks up the phone.** No account managers, no ticket queue, no "we'll route you to the right team."
 2. **Tools the chains use, sized for the corner shop.** We build the same kind of websites, dashboards, automations, and IT setups that big chains have — sized for what a NYC small business can afford.
 3. **Real numbers, honest scoping.** Explain what determines price. Publish a number only when it is current, approved, and traceable. Never invent precision to sound confident.
-4. **14 days or you don't pay** (websites), only under the current written eligibility, timing, dependency, and remedy terms.
+4. **Six weeks or less** (websites), when the scope and materials are agreed; the written plan names the launch timing and care included.
 5. **Always fair for small business.** Even if not a fit, we refer to someone who is. We'd rather lose the work than let a NYC shop pay the wrong vendor.
 6. **NYC time.** 9am–9pm Eastern, real human. Not "global support" code for a call center in another timezone.
 

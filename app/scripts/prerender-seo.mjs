@@ -1998,9 +1998,8 @@ function legalBlock(page) {
 }
 
 // Keep crawler-visible promises as carefully scoped as the hydrated pages.
-// Nationwide website work never inherits a New York on-site promise, and a
-// 14-day remedy is mentioned only when a qualifying written scope defines its
-// eligibility, clock, dependencies, and remedy.
+// Nationwide website work never inherits a New York on-site promise; website
+// timing depends on the agreed scope and supplied materials.
 function promisesBlock(page) {
   const onSite =
     page?.path === "/nationwide/"
@@ -2008,7 +2007,7 @@ function promisesBlock(page) {
       : " Urgent on-site help is a New York service; call so we can assess the issue and location, then confirm any on-site timing.";
   return `
     <h2>What you can count on</h2>
-    <p>The first look is free. Some website plans include our written 14-day promise. The plan says which jobs qualify, when the days start, what each side needs to provide, and what you receive if our work is late.${onSite} A real person answers 9am–9pm Eastern. After hours, leave a message.</p>
+    <p>The first look is free. A website can be ready in six weeks or less when the scope and materials are agreed. The written plan names the scope, launch timing, what each side provides, and the care included.${onSite} A real person answers 9am–9pm Eastern. After hours, leave a message.</p>
   `;
 }
 
