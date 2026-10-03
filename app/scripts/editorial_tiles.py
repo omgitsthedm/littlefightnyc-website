@@ -111,7 +111,9 @@ def website_project_rotator():
 
 def brand_anchor_front(markup):
     """Make Problems? Solved. a first-class anchor without changing its reader."""
-    markup = geometry(markup, 8, 4, 6, 5)
+    # This is the compact, literal hub for the whole system.  Its job is to
+    # lead into the Websites anchor below it, not consume the same real estate.
+    markup = geometry(markup, 8, 2, 6, 3)
     markup = set_attr(markup, 'data-editorial-front', 'brand')
     markup = set_attr(markup, 'data-kind', 'service-anchor')
     markup = set_attr(markup, 'data-anchor', 'brand')
@@ -122,10 +124,8 @@ def brand_anchor_front(markup):
         '<span class="topic-anchor-copy">'
         f'{boat}<span class="topic-anchor-label">Little Fight NYC</span>'
         '<h1>Problems? Solved.</h1>'
-        '<span class="anchor-supporting-line">Websites, support, plans, and tools.</span>'
         '</span>'
         '<span class="topic-anchor-art"><span class="brand-anchor-art" aria-hidden="true">'
-        '<img src="/assets/hero-home-avenue-640.webp" srcset="/assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-1280.webp 1280w" sizes="(max-width:600px) 36vw, (max-width:1000px) 46vw, 440px" width="640" height="427" alt="" decoding="async" fetchpriority="high">'
         '</span></span><span class="anchor-go" aria-hidden="true">+</span></span>'
     )
     trace = re.sub(r'<rect class="trace-rail"[^>]*></rect>', '', anchor_trace())
@@ -165,7 +165,7 @@ def enrich_editorial_tiles(mosaic):
             # These are all primary routes through the mosaic.  They earn the
             # same substantial frame, rather than making support, consulting,
             # or custom software look like a smaller afterthought.
-            markup = geometry(markup, 8, 4, 6, 5)
+            markup = geometry(markup, 8, 3, 6, 4)
             markup = set_attr(markup, 'data-editorial-front', family)
             if family == 'web':
                 art = website_project_rotator()

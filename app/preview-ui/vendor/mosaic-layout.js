@@ -101,15 +101,15 @@
       width = token(card, 'preferredColumns', defaultColumns);
       height = token(card, 'preferredRows', defaultRows);
     }
-    // Every primary anchor is the same six-column, five-row frame below the
-    // desktop breakpoint.  The grid retains its bento rhythm while no service
-    // is visually demoted on a tablet or phone.
+    // Service anchors hold a compact six-by-four phone/tablet frame. The hub
+    // above Websites is deliberately half their desktop area and stays even
+    // smaller below the breakpoint, so the grid remains information-dense.
     if (mobile && card.dataset.editorialFront && window.innerWidth > 600) {
       width = 6;
-      height = 5;
+      height = card.dataset.editorialFront === 'brand' ? 3 : 4;
     }
     if (mobile && window.innerWidth <= 360 && card.dataset.editorialFront) {
-      height = Math.max(height, 6);
+      height = Math.max(height, card.dataset.editorialFront === 'brand' ? 3 : 4);
     }
     if (card.dataset.editorialFront) {
       height = editorialRowsForContent(card, height, unit);
@@ -271,8 +271,8 @@
     for (const entry of entries) {
       const { card, position } = entry;
       // Reviews keep their deliberate 3-column reading measure. Primary
-      // anchors likewise keep their intentional 8 × 4 service frame: growing
-      // one to patch a remote packing gap turns an answer into blank space.
+      // anchors likewise keep their intentional service frame: growing one to
+      // patch a remote packing gap turns an answer into blank space.
       if (card.classList.contains('review-tile') || card.dataset.kind === 'service-anchor') continue;
       const candidates = [];
       // A tile can take a neighboring empty run from any of its four edges.
@@ -348,6 +348,7 @@
         const available = cols - used;
         let choice = -1;
         const hasBrand = row.some(entry => entry.card.dataset.answer === 'brand-brief');
+        const hasServiceAnchor = row.some(entry => entry.card.dataset.kind === 'service-anchor');
         const needsFlexiblePartner = !row.some(entry => !entry.card.classList.contains('review-tile') && entry.card.dataset.kind !== 'service-anchor');
         // Place a review while this row still has a flexible neighbor. Leaving
         // every review until the end can strand one alone in a full-width row.
@@ -364,6 +365,10 @@
           // has an intentional vertical relationship at every viewport.
           if (hasBrand && candidate.card.dataset.answer === 'page-services-custom-local-websites') continue;
           if (candidate.position.width > available) continue;
+          // An anchor is deliberately shallow. Pair it with a short tile and
+          // let that companion receive the final column, rather than letting a
+          // photo album stretch the anchor into a taller, emptier rectangle.
+          if (hasServiceAnchor && candidate.position.height > rowHeight) continue;
           if (needsFlexiblePartner && (candidate.card.classList.contains('review-tile') || candidate.card.dataset.kind === 'service-anchor')) continue;
           if (choice < 0) {
             choice = index;
