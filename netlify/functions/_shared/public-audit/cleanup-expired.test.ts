@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@netlify/blobs", () => ({ getStore: vi.fn() }));
-vi.mock("./lib/audit-leads.mts", () => ({
+vi.mock("../../lib/audit-leads.mts", () => ({
   purgeExpiredAuditLeads: vi.fn(async () => 0),
   safeDatabaseErrorLabel: vi.fn(() => "database_error"),
 }));
 
 import { getStore } from "@netlify/blobs";
-import cleanupExpired from "./cleanup-expired.mts";
+import cleanupExpired from "../../cleanup-expired.mts";
 
 class MemoryStore {
   entries = new Map<string, unknown>();
