@@ -140,7 +140,7 @@ async function assertFragmentJump(page, width) {
   return JSON.stringify(dimensions);
 }
 
-function assertRafTimestampDoesNotForce(storySource) {
+function assertRafTimestampDoesNotForce(storySource, template = 'website-service') {
   const listeners = new Map();
   let scheduled;
   const style = () => {
@@ -160,7 +160,7 @@ function assertRafTimestampDoesNotForce(storySource) {
     dataset: {},
     isConnected: true,
     parentElement: null,
-    matches: (selector) => selector === '[data-reader-template="website-service"]',
+    matches: (selector) => selector.split(',').some(part => part.trim() === `[data-reader-template="${template}"]`),
     querySelector: () => null,
     querySelectorAll: (selector) => selector === '[data-rw-scene]' ? [distantScene] : [],
     getBoundingClientRect: () => ({ top: 0, bottom: 100, height: 100 }),
@@ -328,7 +328,8 @@ async function run() {
     await check('ordinary reader animation frames do not treat rAF timestamps as force', () => {
       assert.doesNotMatch(storySource, /requestAnimationFrame\(update\)/u);
       assert.match(storySource, /requestAnimationFrame\(\(\) => update\(\)\)/u);
-      assertRafTimestampDoesNotForce(storySource);
+      assertRafTimestampDoesNotForce(storySource, 'website-service');
+      assertRafTimestampDoesNotForce(storySource, 'anchor-service');
       return 'source and VM prove an ordinary rAF timestamp does not force offscreen work';
     });
   } finally {
