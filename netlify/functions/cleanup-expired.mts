@@ -64,14 +64,23 @@ export default async () => {
         `[cleanup] Expiring: ${entry.key} (${meta.companyName || meta.domain || "unknown"}) — expired ${meta.expiresAt}`,
       );
 
-      await Promise.allSettled([
+      // Metadata is the durable discovery record for this report. Delete every
+      // sibling first and leave metadata in place if any storage operation
+      // fails, so a later scheduled run can find and retry the incomplete
+      // cleanup. Deleting metadata in the same settled batch would hide a
+      // rejected page/view/status deletion permanently.
+      const deletionResults = await Promise.allSettled([
         pageStore.delete(entry.key),
         viewStore.delete(entry.key),
         statusStore.delete(entry.key),
         engagementStore.delete(entry.key),
-        metaStore.delete(entry.key),
       ]);
+      if (deletionResults.some((result) => result.status === "rejected")) {
+        console.error(`[cleanup] Incomplete report cleanup; will retry: ${entry.key}`);
+        continue;
+      }
 
+      await metaStore.delete(entry.key);
       deleted++;
     } catch (err) {
       console.error(`[cleanup] Error processing ${entry.key}:`, err);

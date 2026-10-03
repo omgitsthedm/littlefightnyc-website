@@ -92,11 +92,11 @@ for = "/studio/dakota/*"
   Cache-Control = "no-store, max-age=0"
   X-Robots-Tag = "noindex, nofollow, noarchive, nosnippet"
 
-[[headers]]
-for = "/assets/*"
-
-  [headers.values]
-  Cache-Control = "public, max-age=31536000, immutable"
+# /assets/ includes content-addressed bundles alongside named, editorial
+# images. Let Netlify's static-asset default keep an efficient one-year CDN
+# cache while browsers revalidate named files before reuse. A blanket
+# browser-level `immutable` rule here made an in-place image update invisible
+# to returning visitors.
 
 # Cinematic media filenames carry an eight-character content fingerprint.
 # Cache the MP4 ladder and its poster/share stills permanently so the first
