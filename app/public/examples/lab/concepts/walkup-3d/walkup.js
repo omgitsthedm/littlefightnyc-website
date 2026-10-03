@@ -909,6 +909,7 @@ document.querySelectorAll('[data-walkup-view]').forEach((button) => {
 });
 
 canvas.addEventListener('pointerdown', (e) => {
+  targetYaw = null;
   try { canvas.setPointerCapture(e.pointerId); } catch { /* synthetic or stale pointer */ }
   pointers.set(e.pointerId, [e.clientX, e.clientY]);
   if (pointers.size === 1) {
@@ -960,6 +961,7 @@ canvas.addEventListener('pointercancel', endPointer);
 
 canvas.addEventListener('wheel', (e) => {
   e.preventDefault();
+  targetYaw = null;
   targetDollyFrac = THREE.MathUtils.clamp(targetDollyFrac + e.deltaY * 0.0011, 0.34, 1.12);
   skipPan();
   lastInteract = clockTime;
