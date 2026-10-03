@@ -59,14 +59,98 @@ def story_illustration(identity):
     )
 
 
+def anchor_trace():
+    """The brand anchor uses the same finite edge-light contract as services."""
+    return (
+        '<svg class="anchor-trace" aria-hidden="true" focusable="false" '
+        'viewBox="0 0 456 222"><rect class="trace-rail" pathLength="100" '
+        'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
+        'rx="20"></rect><rect class="trace-halo" pathLength="100" '
+        'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
+        'rx="20"></rect><rect class="trace-tail" pathLength="100" '
+        'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
+        'rx="20"></rect><rect class="trace-head" pathLength="100" '
+        'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
+        'rx="20"></rect></svg>'
+    )
+
+
+def website_project_rotator():
+    """Static first frame plus lazy, authentic client work for the Website anchor.
+
+    The anchor itself explains the service, so the images are decorative proof
+    rather than competing project labels.  This keeps the public-facing name
+    out of the front while retaining a useful, real-work first impression.
+    """
+    projects = [
+        ('/assets/proof/editorial/case-easy-tiger-desktop-960.webp', 960, 667),
+        # The public-facing copy uses Hair By Rachel. This source is the same
+        # selected work without putting a personal surname in the page URL.
+        ('/assets/proof/optimized/website-rachel-services-960.webp', 960, 453),
+        ('/assets/proof/editorial/case-clearhelp-desktop-960.webp', 960, 667),
+        ('/assets/proof/editorial/case-grand-funding-llc-desktop-960.webp', 960, 667),
+        ('/assets/proof/editorial/case-the-break-room-desktop-960.webp', 960, 667),
+    ]
+    images = []
+    for index, (src, width, height) in enumerate(projects):
+        source = f' src="{src}"' if index == 0 else f' data-src="{src}"'
+        eager = '' if index == 0 else ' loading="lazy"'
+        active = ' is-active' if index == 0 else ''
+        images.append(
+            f'<img class="website-project-shot{active}"{source} width="{width}" height="{height}" '
+            f'alt="" aria-hidden="true" decoding="async"{eager}>'
+        )
+    dots = ''.join(f'<i aria-hidden="true" style="--project-index:{index}"></i>' for index in range(len(projects)))
+    return (
+        '<span class="website-project-rotator" data-website-project-rotator '
+        'aria-label="Selected Little Fight client website previews">'
+        + ''.join(images)
+        + f'<span class="website-project-dots" aria-hidden="true">{dots}</span></span>'
+    )
+
+
+def brand_anchor_front(markup):
+    """Make Problems? Solved. a first-class anchor without changing its reader."""
+    markup = geometry(markup, 8, 4, 6, 5)
+    markup = set_attr(markup, 'data-editorial-front', 'brand')
+    markup = set_attr(markup, 'data-kind', 'service-anchor')
+    markup = set_attr(markup, 'data-anchor', 'brand')
+    markup = markup.replace('class="', 'class="service-anchor ', 1)
+    boat = icon('tugboat.svg', 'topic-anchor-icon')
+    front = (
+        '<span class="topic-anchor-face">'
+        '<span class="topic-anchor-copy">'
+        f'{boat}<span class="topic-anchor-label">Little Fight NYC</span>'
+        '<strong>Problems? Solved.</strong>'
+        '<span class="anchor-supporting-line">Websites, support, plans, and tools.</span>'
+        '</span>'
+        '<span class="topic-anchor-art"><span class="brand-anchor-art" aria-hidden="true">'
+        '<span class="brand-anchor-sun"></span><span class="brand-anchor-wake"></span>'
+        '</span></span><span class="anchor-go" aria-hidden="true">+</span></span>'
+    )
+    return markup[:markup.index('>')+1] + front + anchor_trace() + '</a>'
+
+
 def enrich_editorial_tiles(mosaic):
-    headings = {'web': 'Help customers choose you.', 'it': 'Computers, Wi-Fi & email.',
-                'consulting': 'Not sure where to start?', 'software': 'Less copying. Fewer steps.'}
+    headings = {
+        'web': 'Help customers choose you.',
+        'it': 'Get back to work.',
+        'consulting': 'Make the next move clear.',
+        'software': 'Turn repeat work into a tool.',
+    }
+    supporting_lines = {
+        'web': 'A first website, or a better one.',
+        'it': 'Wi-Fi, computers, email, and the everyday fix.',
+        'consulting': 'A useful plan before you spend on the wrong thing.',
+        'software': 'A focused system your business can own.',
+    }
 
     def enrich(match):
         markup = match.group(0)
         attrs = attributes(markup)
         identity = attrs.get('data-answer')
+        if identity == 'brand-brief':
+            return brand_anchor_front(markup)
         if attrs.get('data-kind') == 'service-anchor':
             # The generated mosaic has data-topic; accepting the authored
             # data-family as well keeps this transformation independently
@@ -77,14 +161,23 @@ def enrich_editorial_tiles(mosaic):
             label, _, symbol = TOPICS[family]
             # Websites is the business's primary entry point. Its service
             # explanation must lead the examples, not look like another case.
-            markup = geometry(markup, 8, 4, 6, 5) if family == 'web' else geometry(markup, 4, 2, 6, 3)
+            # These are all primary routes through the mosaic.  They earn the
+            # same substantial frame, rather than making support, consulting,
+            # or custom software look like a smaller afterthought.
+            markup = geometry(markup, 8, 4, 6, 5)
             markup = set_attr(markup, 'data-editorial-front', family)
             if family == 'web':
-                art = '<span class="topic-anchor-photo"><img src="/assets/proof/editorial/case-easy-tiger-desktop-960.webp" width="640" height="444" alt="Example of a neighborhood bar website built by Little Fight NYC" decoding="async"></span>'
+                art = website_project_rotator()
             else:
                 art = illustration(family)
-            action = '<span class="website-anchor-action">See what’s included <span aria-hidden="true">+</span></span>' if family == 'web' else ''
-            front = f'<span class="topic-anchor-face"><span class="topic-anchor-copy">{icon(symbol, "topic-anchor-icon")}<span class="topic-anchor-label">{label}</span><strong>{headings[family]}</strong>{action}</span><span class="topic-anchor-art">{art}</span><span class="anchor-go" aria-hidden="true">+</span></span>'
+            front = (
+                '<span class="topic-anchor-face"><span class="topic-anchor-copy">'
+                f'{icon(symbol, "topic-anchor-icon")}<span class="topic-anchor-label">{label}</span>'
+                f'<strong>{headings[family]}</strong>'
+                f'<span class="anchor-supporting-line">{supporting_lines[family]}</span>'
+                f'</span><span class="topic-anchor-art">{art}</span>'
+                '<span class="anchor-go" aria-hidden="true">+</span></span>'
+            )
             trace = re.search(r'<svg class="anchor-trace".*?</svg>', markup, re.S)
             # The same perimeter must follow wide and tall phone frames.
             # Default SVG "meet" would draw a second, inset card outline.

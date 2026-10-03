@@ -10,6 +10,7 @@
   const active = new Set();
   const maxActive = 3;
   const albums = new Map();
+  const websiteRotators = new Map();
 
   const motionEnabled = () => !document.hidden && !reduce.matches && !document.body.classList.contains('no-motion') && !document.body.classList.contains('reader-open') && !document.body.classList.contains('explore-open');
   const stateFor = tile => states.get(tile) || (() => {
@@ -139,6 +140,68 @@
     }
     return image.naturalWidth > 0;
   };
+
+  // The Website anchor begins with a real, static project preview. Later
+  // frames load only after they are needed; the existing explicit Motion
+  // control pauses this rotation along with every other tile animation.
+  const rotatorState = rotator => websiteRotators.get(rotator) || (() => {
+    const images = [...rotator.querySelectorAll('.website-project-shot')];
+    const state = {
+      images,
+      index: Math.max(0, images.findIndex(image => image.classList.contains('is-active'))),
+      visible: false,
+      timer: 0,
+      request: 0,
+    };
+    if (state.index < 0) state.index = 0;
+    rotator.dataset.projectIndex = String(state.index);
+    websiteRotators.set(rotator, state);
+    return state;
+  })();
+  const stopWebsiteRotator = rotator => {
+    const state = rotatorState(rotator);
+    clearTimeout(state.timer);
+    state.timer = 0;
+  };
+  const showWebsiteProject = async (rotator, index) => {
+    const state = rotatorState(rotator);
+    if (!state.images.length) return false;
+    const nextIndex = ((index % state.images.length) + state.images.length) % state.images.length;
+    const next = state.images[nextIndex];
+    if (nextIndex === state.index && next.classList.contains('is-active')) return true;
+    const request = ++state.request;
+    ensureImage(next);
+    // A failed replacement must never clear the visible, static project.
+    if (!await imageIsReady(next) || !motionEnabled() || !state.visible || request !== state.request) return false;
+    state.index = nextIndex;
+    rotator.dataset.projectIndex = String(nextIndex);
+    state.images.forEach((image, imageIndex) => image.classList.toggle('is-active', imageIndex === nextIndex));
+    return true;
+  };
+  const tickWebsiteRotator = rotator => {
+    const state = rotatorState(rotator);
+    stopWebsiteRotator(rotator);
+    if (!motionEnabled() || !state.visible || state.images.length < 2) return;
+    state.timer = setTimeout(async () => {
+      state.timer = 0;
+      if (!motionEnabled() || !state.visible) return;
+      await showWebsiteProject(rotator, state.index + 1);
+      if (motionEnabled() && state.visible) tickWebsiteRotator(rotator);
+    }, 7000);
+  };
+  const websiteRotatorObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const rotator = entry.target;
+      const state = rotatorState(rotator);
+      state.visible = entry.isIntersecting;
+      if (state.visible) {
+        showWebsiteProject(rotator, state.index);
+        tickWebsiteRotator(rotator);
+      } else stopWebsiteRotator(rotator);
+    });
+  }, { rootMargin: '0px', threshold: .28 });
+  document.querySelectorAll('.mosaic-home [data-website-project-rotator]').forEach(rotator => websiteRotatorObserver.observe(rotator));
+
   const albumState = album => albums.get(album) || (() => {
     const images = [...album.querySelectorAll('.photo-album-tile__images > img')];
     const state = { images, index: Math.max(0, images.findIndex(image => image.classList.contains('is-active'))), visible: false, timer: 0, request: 0 };
@@ -196,6 +259,10 @@
     albums.forEach((state, album) => {
       stopAlbum(album);
       if (state.visible && motionEnabled()) tickAlbum(album);
+    });
+    websiteRotators.forEach((state, rotator) => {
+      stopWebsiteRotator(rotator);
+      if (state.visible && motionEnabled()) tickWebsiteRotator(rotator);
     });
   };
   document.addEventListener('visibilitychange', pauseAll);

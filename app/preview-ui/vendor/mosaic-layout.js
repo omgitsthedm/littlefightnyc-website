@@ -16,26 +16,41 @@
   function editorialRowsForContent(card, height, unit) {
     const copy = card.querySelector('.topic-anchor-copy');
     if (!copy) return height;
-    if (card.dataset.editorialFront === 'web') {
+    if (card.dataset.editorialFront && card.dataset.editorialFront !== 'booking') {
       const label = copy.querySelector('.topic-anchor-label');
+      if (!label) return height;
       const range = document.createRange();
       range.selectNodeContents(label);
       const styles = getComputedStyle(copy);
       const handset = window.innerWidth <= 600;
-      const share = handset ? 1.2 / 2.2 : 1.05 / 2.05;
-      const iconSpace = handset ? 0 : card.querySelector('.topic-anchor-icon').getBoundingClientRect().width + parseFloat(styles.columnGap);
+      const share = handset ? 1.3 / 2 : 1 / 2;
+      const icon = card.querySelector('.topic-anchor-icon');
+      const iconSpace = handset || !icon ? 0 : icon.getBoundingClientRect().width + parseFloat(styles.columnGap);
       const available = card.clientWidth * share - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight) - iconSpace;
       // Enlarged text can outgrow a side-by-side composition. Give it the
       // full card width, keeping the actual work below rather than clipping
       // the service name or letting it run across the screenshot.
       card.toggleAttribute('data-editorial-stack', range.getBoundingClientRect().width > available + 1);
-      const children = [...copy.children].map(child => child.getBoundingClientRect());
+      const children = [...copy.children]
+        .map(child => child.getBoundingClientRect())
+        // At handset widths the large icon is intentionally hidden.  A
+        // display:none child reports a zero rect at the document origin;
+        // including it in the range makes each layout pass invent extra rows.
+        .filter(box => box.width > 0 && box.height > 0);
+      if (!children.length) return height;
       const copyHeight = Math.max(...children.map(box => box.bottom)) - Math.min(...children.map(box => box.top))
         + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
       const art = card.querySelector('.topic-anchor-art');
       const artStyle = getComputedStyle(art);
-      const artHeight = art.querySelector('img').offsetHeight
-        + parseFloat(artStyle.paddingTop) + parseFloat(artStyle.paddingBottom);
+      const visual = art && art.querySelector('.website-project-rotator,.brand-anchor-art,.editorial-illustration');
+      // A side-by-side visual fills the anchor's already-established height.
+      // Measuring that rendered height feeds the newly-added grid row back
+      // into the next pass and can grow the card forever. Only a true stacked
+      // composition contributes a fixed, width-derived visual height.
+      const ratio = visual?.matches('.editorial-illustration') ? 1 : 5 / 8;
+      const artHeight = card.hasAttribute('data-editorial-stack') && visual
+        ? visual.getBoundingClientRect().width * ratio + parseFloat(artStyle.paddingTop) + parseFloat(artStyle.paddingBottom)
+        : 0;
       const needed = card.hasAttribute('data-editorial-stack') ? copyHeight + artHeight : Math.max(copyHeight, artHeight);
       const gridGap = parseFloat(getComputedStyle(card.parentElement).rowGap) || 0;
       return Math.max(height, Math.ceil((needed + 2 + gridGap) / (unit + gridGap)));
@@ -86,15 +101,15 @@
       width = token(card, 'preferredColumns', defaultColumns);
       height = token(card, 'preferredRows', defaultRows);
     }
-    // Editorial anchors use their full six-column phone frame only on a
-    // handset. The same cards return to the established 4 × 2 frame through
-    // the tablet range, where each physical cell is already generous.
+    // Every primary anchor is the same six-column, five-row frame below the
+    // desktop breakpoint.  The grid retains its bento rhythm while no service
+    // is visually demoted on a tablet or phone.
     if (mobile && card.dataset.editorialFront && window.innerWidth > 600) {
-      width = card.dataset.editorialFront === 'web' ? 6 : 4;
-      height = card.dataset.editorialFront === 'web' ? 3 : 2;
+      width = 6;
+      height = 5;
     }
     if (mobile && window.innerWidth <= 360 && card.dataset.editorialFront) {
-      height = Math.max(height, card.dataset.editorialFront === 'web' ? 6 : 4);
+      height = Math.max(height, 6);
     }
     if (card.dataset.editorialFront) {
       height = editorialRowsForContent(card, height, unit);
@@ -255,10 +270,10 @@
 
     for (const entry of entries) {
       const { card, position } = entry;
-      // Reviews keep their deliberate 3-column reading measure. They may add
-      // rows for enlarged text, but must never become a wide spacer simply to
-      // erase a packing gap.
-      if (card.classList.contains('review-tile')) continue;
+      // Reviews keep their deliberate 3-column reading measure. Primary
+      // anchors likewise keep their intentional 8 × 4 service frame: growing
+      // one to patch a remote packing gap turns an answer into blank space.
+      if (card.classList.contains('review-tile') || card.dataset.kind === 'service-anchor') continue;
       const candidates = [];
       // A tile can take a neighboring empty run from any of its four edges.
       // We consider each complete integer span rather than changing text size
@@ -363,7 +378,7 @@
       // Put the tile receiving the final integer width at the row edge. This
       // leaves all review cards at their authored width, while preserving a
       // continuous rectangular row with no black pocket.
-      const growIndex = row.map(entry => !entry.card.classList.contains('review-tile')).lastIndexOf(true);
+      const growIndex = row.map(entry => !entry.card.classList.contains('review-tile') && entry.card.dataset.kind !== 'service-anchor').lastIndexOf(true);
       if (growIndex >= 0 && growIndex !== row.length - 1) {
         const [grower] = row.splice(growIndex, 1);
         row.push(grower);
