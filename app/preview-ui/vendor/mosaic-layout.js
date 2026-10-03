@@ -349,10 +349,15 @@
         let choice = -1;
         const hasBrand = row.some(entry => entry.card.dataset.answer === 'brand-brief');
         const needsFlexiblePartner = !row.some(entry => !entry.card.classList.contains('review-tile') && entry.card.dataset.kind !== 'service-anchor');
+        // Place a review while this row still has a flexible neighbor. Leaving
+        // every review until the end can strand one alone in a full-width row.
+        if (!needsFlexiblePartner && !row.some(entry => entry.card.classList.contains('review-tile'))) {
+          choice = remaining.findIndex(entry => entry.card.classList.contains('review-tile') && entry.position.width <= available);
+        }
         // Equal-height cards preserve their established aspect ratio. If none
         // fit, choose the nearest height; that is the smallest truthful visual
         // adjustment required to close the row.
-        for (let index = 0; index < remaining.length; index += 1) {
+        if (choice < 0) for (let index = 0; index < remaining.length; index += 1) {
           const candidate = remaining[index];
           // The fallback is allowed to reorder compatible cards to close a
           // row, but never puts Websites beside Problems? Solved. That pair
