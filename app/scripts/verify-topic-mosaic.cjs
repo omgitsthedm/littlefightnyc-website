@@ -298,7 +298,7 @@ async function assertTileGeometryAndType(page) {
   const brandSize = await dimensions(brand);
   assert.deepEqual([brandSize.columns, brandSize.rows], [4, 2], 'aggregate Google review tile must lay out at 4 by 2');
   const reviewSizes = await page.locator('#topic-reviews [data-review-tile]').evaluateAll(nodes => nodes.map(node => [Number(node.dataset.columns), Number(node.dataset.rows)]));
-  assert.ok(reviewSizes.every(([columns, rows]) => (columns === 3 && rows === 3) || (columns === 3 && rows === 1)), `review tiles must be 3x3 or 3x1: ${JSON.stringify(reviewSizes)}`);
+  assert.ok(reviewSizes.every(([columns, rows]) => columns === 2 && rows === 2), `wide-grid review tiles must stay compact 2x2 cards: ${JSON.stringify(reviewSizes)}`);
   const albums = page.locator('a.tile[data-kind="photo-album"]');
   assert.ok(await albums.count() > 0, 'original photo albums must remain');
   const albumSizes = await albums.evaluateAll(nodes => nodes.map(node => [Number(node.dataset.columns), Number(node.dataset.rows)]));
@@ -307,10 +307,13 @@ async function assertTileGeometryAndType(page) {
   const originalSizes = await page.locator('a.tile[href]').evaluateAll((tiles, hrefs) => tiles
     .filter(tile => hrefs.includes(tile.getAttribute('href')))
     .map(tile => `${tile.dataset.columns}x${tile.dataset.rows}`), [...originalHrefs]);
-  for (const needed of ['1x1', '2x1', '1x2', '2x2', '2x3', '3x2']) {
+  // Icon-only originals contract to a single square instead of preserving a
+  // tall empty staging shape. The remaining set still proves an intentional
+  // bento vocabulary rather than a uniform card feed.
+  for (const needed of ['1x1', '2x1', '2x2', '2x3', '3x2']) {
     assert.ok(originalSizes.includes(needed), `original varied geometry ${needed} disappeared`);
   }
-  return `4x2 anchors + brand; seven 3x3/3x1 reviews; ${albumSizes.length} 4x4 photos; varied originals ${[...new Set(originalSizes)].join(', ')}`;
+  return `4x2 anchors + brand; seven compact 2x2 reviews; ${albumSizes.length} 4x4 photos; varied originals ${[...new Set(originalSizes)].join(', ')}`;
 }
 
 async function assertReadableLabels(page) {
@@ -336,6 +339,61 @@ async function assertReadableLabels(page) {
   }));
   assert.deepEqual(failures, [], `visible human-readable tile labels must be at least 16px: ${JSON.stringify(failures)}`);
   return 'Atkinson Hyperlegible Next across homepage copy and navigation; four service icons; all visible tile labels are at least 16px; icon-only tiles retain their accessible names';
+}
+
+async function assertIconOnlyFronts(page, viewportWidth) {
+  const cards = await page.locator('.tile[data-cell-face="icon"]').evaluateAll(nodes => nodes.map(tile => {
+    const art = tile.querySelector('.cell-art');
+    const graphic = art?.querySelector('svg,.mineral-icon');
+    const tileRect = tile.getBoundingClientRect();
+    const artRect = art?.getBoundingClientRect();
+    const graphicRect = graphic?.getBoundingClientRect();
+    const artStyle = art ? getComputedStyle(art) : null;
+    const graphicStyle = graphic ? getComputedStyle(graphic) : null;
+    const visible = Boolean(art && graphic && artStyle.display !== 'none' && artStyle.visibility !== 'hidden' && Number(artStyle.opacity) > 0 && graphicStyle.display !== 'none' && graphicStyle.visibility !== 'hidden' && Number(graphicStyle.opacity) > 0 && graphicRect.width > 2 && graphicRect.height > 2 && graphicRect.left >= tileRect.left - 1 && graphicRect.right <= tileRect.right + 1 && graphicRect.top >= tileRect.top - 1 && graphicRect.bottom <= tileRect.bottom + 1);
+    return { id: tile.dataset.answer, visible, art: artRect && [artRect.width, artRect.height], graphic: graphicRect && [graphicRect.width, graphicRect.height] };
+  }));
+  assert.ok(cards.length > 0, `${viewportWidth}px needs icon-only cards to test`);
+  const blank = cards.filter(card => !card.visible);
+  assert.deepEqual(blank, [], `${viewportWidth}px icon-only cards must show their familiar icon, not an empty tile: ${JSON.stringify(blank)}`);
+  return cards;
+}
+
+async function assertVisibleTileTextFits(page, viewportWidth) {
+  const failures = await page.evaluate(() => {
+    const selector = '.cell-title,.cell-kicker,.topic-anchor-label,.topic-anchor-copy strong,.proof-tile-label,.proof-tile-face>strong,.review-stars,.review-quote,.review-attribution,.review-source,.photo-album-tile__copy strong,.photo-album-tile__copy>span,.brand-tile h1';
+    const visible = node => {
+      const style = getComputedStyle(node);
+      const rect = node.getBoundingClientRect();
+      return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0 && rect.width > 0 && rect.height > 0;
+    };
+    const problems = [];
+    for (const node of document.querySelectorAll(selector)) {
+      if (!visible(node)) continue;
+      const tile = node.closest('.tile');
+      if (!tile) continue;
+      const tileRect = tile.getBoundingClientRect();
+      const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+      let textNode;
+      while ((textNode = walker.nextNode())) {
+        for (const match of textNode.data.matchAll(/\S+/g)) {
+          const range = document.createRange();
+          range.setStart(textNode, match.index);
+          range.setEnd(textNode, match.index + match[0].length);
+          for (const rect of range.getClientRects()) {
+            if (rect.left < tileRect.left - 0.75 || rect.right > tileRect.right + 0.75 || rect.top < tileRect.top - 0.75 || rect.bottom > tileRect.bottom + 0.75) {
+              problems.push({ tile: tile.dataset.answer, word: match[0], rect: [rect.left, rect.top, rect.right, rect.bottom], bounds: [tileRect.left, tileRect.top, tileRect.right, tileRect.bottom] });
+            }
+          }
+        }
+      }
+      const face = node.closest('.cell-face');
+      if (face && (face.scrollWidth > face.clientWidth + 1 || face.scrollHeight > face.clientHeight + 1)) problems.push({ tile: tile.dataset.answer, word: 'front-overflow', scroll: [face.scrollWidth, face.clientWidth, face.scrollHeight, face.clientHeight] });
+    }
+    return problems;
+  });
+  assert.deepEqual(failures, [], `${viewportWidth}px every visible tile word must remain within its front: ${JSON.stringify(failures)}`);
+  return 'all visible words and front compositions fit their tile bounds';
 }
 
 async function assertReviewEvidence(page) {
@@ -469,6 +527,15 @@ async function assertReaderContextFigures(browser) {
     try {
       for (const [label, route] of readers) {
         await page.goto(`${base}${route}`, { waitUntil: 'networkidle', timeout: 60_000 });
+        if (label === 'VERA companion') {
+          const context = page.locator('details.reader-demo-context');
+          const summary = context.locator('> summary');
+          assert.equal(await context.count(), 1, 'VERA must retain its disclosed context panel');
+          await summary.waitFor({ state: 'visible' });
+          assert.equal(await context.evaluate(node => node.open), false, 'VERA context starts closed so the working app stays primary');
+          await summary.click();
+          await page.waitForFunction(() => document.querySelector('details.reader-demo-context')?.open === true);
+        }
         const figure = page.locator('.story-art .reader-context-figure');
         const caption = figure.locator('figcaption');
         await figure.waitFor({ state: 'visible' });
@@ -499,6 +566,8 @@ async function run() {
     await check('release marker and grouped homepage preserve all content', () => assertTopicStructure(page));
     await check('tile geometry preserves anchors, photographs, and original variety', () => assertTileGeometryAndType(page));
     await check('visible tile labels meet the 16px accessibility floor', () => assertReadableLabels(page));
+    await check('icon-only desktop cards visibly contain their familiar symbol', () => assertIconOnlyFronts(page, 1440));
+    await check('desktop tile words stay inside their fronts', () => assertVisibleTileTextFits(page, 1440));
     await check('review cards expose attributable five-star evidence', () => assertReviewEvidence(page));
     await check('header and footer use the requested document structure', () => assertHeaderFooter(page));
     await check('navigation uses plus marks instead of arrows', () => assertNavigationGlyphs(page));
@@ -523,7 +592,9 @@ async function run() {
         assert.ok(geometry.groups.some(group => group.id === 'topic-reviews' && group.topic === 'reviews'), `${viewport.width}px must retain the review group boundary`);
         assert.equal(geometry.reviewTiles.length, expected.reviews, `${viewport.width}px must retain seven reviews`);
         assert.ok(geometry.reviewTiles.every(tile => tile.visible && tile.width > 2 && tile.height > 2), `${viewport.width}px review cards are clipped or hidden`);
-        report.viewports.push({ ...viewport, ...geometry });
+        const iconOnly = await assertIconOnlyFronts(entry.page, viewport.width);
+        const textFit = await assertVisibleTileTextFits(entry.page, viewport.width);
+        report.viewports.push({ ...viewport, ...geometry, iconOnly, textFit });
         await entry.page.screenshot({ path: path.join(screenshots, `topic-mosaic-${viewport.width}.png`), fullPage: true });
       } finally { await entry.context.close(); }
     }

@@ -44,6 +44,16 @@ def indexable(path):
 def preserved(path):
     return PRODUCTION and path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file()
 
+def reader_companion(path):
+    """Return the generated reader route for a protected public experience.
+
+    The public document remains the no-script fallback and is copied unchanged
+    by Vite.  The companion only supplies the Little Fight reader shell.
+    """
+    if path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file():
+        return '/_readers' + path
+    return ''
+
 def display(value):
     return str(value or '').replace('Hair By Rachel Charles', 'Hair By Rachel').replace('Hair by Rachel Charles', 'Hair By Rachel')
 
@@ -115,7 +125,7 @@ def contact(path, prompt='Tell us what you need help with.'):
     family=reader_family(pages.get(path,{'path':path}))
     intent={'web':'website','it':'support','consulting':'consulting','software':'systems'}.get(family,'general')
     if path.startswith(('/industries/','/markets/')) or path in ('/nationwide/','/websites-for-your-business/'):intent='website'
-    return f'''<section class="story-contact" id="contact"><div><h2>Talk to Little Fight.</h2><p>Tell us what you need help with.</p><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}</nav><p class="contact-hours">9am–9pm Eastern.<br>After hours, leave a message.</p></div><div class="story-contact-start"><h3>Prefer to write it down?</h3><p>Share a little about your business and what you want to change.</p><a class="contact-plan" href="/tech-audit/?intent={intent}" data-document-link>Send us a message +</a></div></section>'''
+    return f'''<section class="story-contact" id="contact"><div><h2>Talk to Little Fight.</h2><p>Tell us what you need help with.</p><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}</nav><p class="contact-hours">9am–9pm Eastern.<br>After hours, leave a message.</p></div><div class="story-contact-start"><h3>Prefer to write it down?</h3><p>Share a little about your business and what you want to change.</p>{link('Send us a message +', f'/tech-audit/?intent={intent}', 'contact-plan')}</div></section>'''
 
 def channels():
     return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'
@@ -145,6 +155,40 @@ def legacy_sections(p):
             if a.get('href') and a.get('text') and a['href'] not in [x['href'] for x in current['links']]:current['links'].append({'label':a['text'],'href':a['href']})
     if current['paragraphs'] or current['bullets']:sections.append(current)
     return sections
+
+def embedded_demo(path, q):
+    """Render a protected working experience inside its reader companion.
+
+    ``src`` is deliberately left off the iframe.  The reader runtime mounts
+    the same-origin source only after the reader opens, and removes it again
+    when the visitor leaves.  This avoids booting nine demos plus VERA while
+    someone is simply browsing the mosaic.
+    """
+    if path == '/vera/':
+        source = '/vera/?embed=1'
+        label = 'Working VERA workspace'
+        modifier = ' reader-demo--immersive'
+        demo_id = 'vera'
+    elif path in lab_by_path:
+        source = path + '?embed=1'
+        label = q['heading'] + ' working demo'
+        modifier = ''
+        demo_id = lab_by_path[path]['slug']
+    else:
+        return ''
+    fallback = path
+    return f'''<section class="reader-demo{modifier}" id="working-demo" data-reader-demo data-demo="{E(demo_id)}" data-demo-state="unmounted"><h2 class="sr-only">{E(q['heading'])} working demo</h2><div class="reader-demo-stage"><iframe class="reader-demo-frame" title="{E(label)}" data-demo-src="{E(source)}" loading="lazy" referrerpolicy="same-origin"></iframe><p class="reader-demo-status" aria-live="polite">Loading working demo…</p></div><noscript><p class="reader-demo-fallback">JavaScript is needed to show this embedded experience. <a href="{E(fallback)}">Open {E(q['heading'])}</a>.</p></noscript></section>'''
+
+def first_sentence(value):
+    text = str(value or '').strip()
+    found = re.search(r'^.*?[.!?](?:\s|$)', text)
+    return found.group(0).strip() if found else text
+
+def lab_controls_section(lab):
+    notes = [note for note in lab.get('interactionNotes', []) if 'direct html' not in note.lower()]
+    instruction = first_sentence(notes[0]) if notes else 'Use the controls inside the working Lab above.'
+    features = ', '.join(lab.get('features', []))
+    return f'''<section class="story-section reader-demo-notes"><h2>Try the controls.</h2><div><p>{E(instruction)}</p><p>The working version is above, so you can test the interaction before reading the project notes. Its built-in controls are the intended way to move through the study.</p>{f'<p>Inside this Lab: {E(features)}.</p>' if features else ''}<p><a href="#working-demo">Back to the demo +</a></p></div></section>'''
 
 def normalize(p):
     q=dict(p);q['title']=display(p.get('title','Little Fight NYC'));q['heading']=display(p.get('heading') or q['title'].split(' | ')[0]);q['description']=display(p.get('description') or p.get('metaDescription') or 'Practical help for your business from Little Fight NYC.')
@@ -204,15 +248,32 @@ def article(p):
     if path=='/vera/':
         # This visual belongs only to VERA's agency reader. The working app,
         # its records and its existing brand assets remain untouched.
-        art='<div class="reader-context-visual" data-reader-family="brand"><img class="reader-context-icon" src="/assets/mineral/book-open-text-duotone.svg" width="64" height="64" alt=""><figure class="reader-context-figure"><img class="reader-context-image" src="/vera/assets/icons/vera-icon-512.png" width="512" height="512" alt="VERA’s original cream and green geometric mark" loading="eager"><figcaption><a href="/vera/" data-document-link>VERA: explore NYC rentals and inspect the linked public records.</a></figcaption></figure></div>'
+        art='<div class="reader-context-visual" data-reader-family="brand"><img class="reader-context-icon" src="/assets/mineral/book-open-text-duotone.svg" width="64" height="64" alt=""><figure class="reader-context-figure"><img class="reader-context-image" src="/vera/assets/icons/vera-icon-512.png" width="512" height="512" alt="VERA’s original cream and green geometric mark" loading="eager"><figcaption><a href="#working-demo">VERA: explore NYC rentals and inspect the linked public records.</a></figcaption></figure></div>'
     if not art: art=reader_visual(p,q,cases,albums)
-    primary_action='<a href="#contact">Tell us what you need ↓</a>'
-    if preserved(path):
-        primary_action='<a href="'+E(path)+'" data-document-link>Open the working experience ↗</a>'
+    demo = embedded_demo(path, q)
+    primary_action='<a href="#contact">Tell us what you need +</a>'
+    if demo:
+        primary_action='<a href="#working-demo">Try the working demo +</a>'
+    elif preserved(path):
+        # Generic protected records remain useful reader pages. They no longer
+        # link to themselves as though they were a separate destination.
+        primary_action='<a href="#contact">Talk to Little Fight +</a>'
     elif path.startswith('/case-studies/') and 'live' in q['eyebrow'].lower():
         external=[a['href'] for b in p.get('contentBlocks',[]) for a in b.get('links',[]) if a.get('href','').startswith('https://') and urlsplit(a['href']).hostname not in ('littlefightnyc.com','www.littlefightnyc.com')]
         if external:primary_action='<a href="'+E(external[0])+'" target="_blank" rel="noopener noreferrer">Visit the live website ↗</a>'
-    body=f'<header class="story-hero"><div><p class="story-kicker">{E(q["eyebrow"])}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p><nav class="contact-actions" aria-label="Your next step">{primary_action}</nav></div><div class="story-art">{art}</div></header>'
+    hero=f'<header class="story-hero"><div><p class="story-kicker">{E(q["eyebrow"])}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p><nav class="contact-actions" aria-label="Your next step">{primary_action}</nav></div><div class="story-art">{art}</div></header>'
+    immersive = path == '/vera/'
+    if immersive:
+        # VERA opens as the working workspace. The complete agency context is
+        # immediately below it in a calm disclosure, never discarded.
+        body = demo + '<details class="reader-demo-context"><summary>About VERA +</summary><div class="reader-demo-context-body">' + hero
+    else:
+        body = hero + demo
+    if demo and not immersive:
+        # The working experience follows the answer immediately. Its notes and
+        # source-backed explanation remain below, in the same reader.
+        if path in lab_by_path:
+            body += lab_controls_section(lab_by_path[path])
     if path=='/services/custom-local-websites/':
         body+=(CONTENT/'website-body.html').read_text()
     elif p.get('contentBlocks') and path not in authored and path not in lab_by_path:
@@ -232,12 +293,12 @@ def article(p):
     if path in ['/services/custom-local-websites/','/reviews/']:
         body+='<section class="story-reviews"><p class="story-kicker">From our clients</p><h2>Good people.<br>Kind words.</h2><p>5.0 on Google · 7 reviews · checked October 2, 2026</p>'+review_cards()+'</section>'
     body+=q.get('extraHtml','')
-    if preserved(path):
-        body+='<section class="story-section"><h2>Try it for yourself.</h2><div><p>This opens the complete working experience.</p><a class="contact-plan" href="'+E(path)+'" data-document-link>Open '+E(q['heading'])+' ↗</a></div></section>'
     if path=='/legal/' and PRODUCTION:
         body+='<p><button type="button" data-production-open-consent>Review analytics choices</button></p>'
     body+=contact(path,q.get('contactPrompt') or 'Tell us what is getting in the way. We’ll give you a clear next step.')
     body+='<nav class="story-bottom" aria-label="Keep exploring">'+link('Explore all the tiles','/')+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+link('Google reviews','/reviews/')+link('Privacy','/legal/')+'</nav>'
+    if immersive:
+        body += '</div></details>'
     if PRODUCTION and path in ISLANDS:
         # The full existing journey replaces only this island. The fallback
         # remains useful if scripts are unavailable and never claims delivery.
@@ -283,7 +344,7 @@ def site_footer():
 
 def shell_end(home=False):
     privacy = site_footer()
-    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="A website, Google, booking, a plumber…"><div id="search-results" aria-live="polite"></div><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><section class="detail-window lf-reader reader-longform"><header class="detail-top"><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight <small>NYC</small></span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav><button type="button" id="close-detail" aria-label="Back to the mosaic">×</button></header><div id="detail-body" class="detail-body"></div></section></dialog></body></html>'''
+    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="A website, Google, booking, a plumber…"><div id="search-results" aria-live="polite"></div><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><button type="button" id="close-detail" aria-label="Return to homepage hub">×</button><section class="detail-window lf-reader reader-longform"><header class="detail-top"><button type="button" id="reader-back" aria-label="Back to previous card" hidden>Back</button><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight <small>NYC</small></span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav></header><div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">All tiles +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'''
 
 for path,p in pages.items():
     if path=='/':continue
@@ -291,7 +352,8 @@ for path,p in pages.items():
     output_path='/_readers'+path if preserved(path) else path
     if preserved(path):q=dict(q,path=output_path,canonicalPath=path)
     rail='<nav class="direct-contact-rail contact-actions" aria-label="Quick contact">'+channels()+'</nav>'
-    write(output_path+'index.html',head(q)+'<body class="page-home"><a class="skip-to-finder" href="#detail-title">Skip to content</a><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-content-id="{E(p.get("id") or path.strip("/"))}">{body}</main></div>'+shell_end())
+    layout = ' data-reader-layout="immersive"' if path == '/vera/' else ''
+    write(output_path+'index.html',head(q)+'<body class="page-home"><a class="skip-to-finder" href="#detail-title">Skip to content</a><nav class="reader-hub-return-nav" aria-label="Return to homepage hub"><a class="reader-hub-return" href="/" aria-label="Return to homepage hub">×</a></nav><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}>{body}</main></div>'+shell_end())
 
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.tiles=[]
@@ -334,6 +396,11 @@ home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#ca
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'family':x.get('category','Websites' if p.startswith('/industries/') else 'Little Fight NYC')} for p,x in pages.items() if p!='/']
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
+# The browser shell reads this map before it fetches an internal reader. It
+# lets links from search, the work collection, and direct pages retain their
+# canonical href while the enhanced experience always opens the companion.
+reader_routes = {path: reader_companion(path) or path for path in sorted(pages) if path != '/'}
+write('reader-routes.json', json.dumps(reader_routes, ensure_ascii=False, separators=(',', ':')))
 if PRODUCTION:
     write('robots.txt','User-agent: *\nAllow: /\nDisallow: /.netlify/\nDisallow: /vera/data/\nSitemap: '+ORIGIN+'/sitemap-index.xml\n')
     urls=sorted(path for path in pages if indexable(path) and not path.startswith(STANDALONE))

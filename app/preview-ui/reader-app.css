@@ -1,0 +1,420 @@
+/*
+  Reader application shell
+  ------------------------
+  A tile reader is a contained place to explore. The X always returns to the
+  mosaic; the bottom controls keep the next useful place one tap away.
+*/
+
+#detail{
+  isolation:isolate;
+}
+
+/* The close control belongs to the modal, rather than a particular reader.
+   It therefore stays in the same useful place for a long article, a Lab, or
+   a full-card VERA session. */
+#detail>#close-detail{
+  position:absolute;
+  z-index:24;
+  top:max(18px,env(safe-area-inset-top));
+  right:max(18px,env(safe-area-inset-right));
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  padding:0;
+  border:1px solid rgb(255 255 255 / .28);
+  border-radius:999px;
+  background:rgb(20 20 23 / .94);
+  box-shadow:0 10px 30px rgb(0 0 0 / .3),inset 0 1px 0 rgb(255 255 255 / .15);
+  color:var(--lf-paper,#f6f3ec);
+  font:400 31px/.85 Arial,sans-serif;
+  cursor:pointer;
+  transition:transform 160ms ease,background-color 160ms ease,border-color 160ms ease;
+}
+
+#detail>#close-detail:hover,
+#detail>#close-detail:focus-visible{
+  border-color:var(--lf-orange,#ff7839);
+  background:#2a2523;
+}
+
+#detail>#close-detail:active{transform:scale(.96)}
+
+/* Leave physical room for the modal X even where the reader fills the screen. */
+#detail .detail-top{
+  grid-template-columns:auto minmax(0,1fr) auto;
+  padding-right:78px;
+}
+
+#detail .detail-top .reader-rail{justify-self:end}
+
+#detail #reader-back{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  padding:8px 11px;
+  border:1px solid rgb(255 255 255 / .18);
+  border-radius:12px;
+  background:#202126;
+  color:var(--lf-paper,#f6f3ec);
+  font:700 16px/1 'Atkinson Hyperlegible Next',LFAtkinson,Arial,sans-serif;
+}
+
+#detail #reader-back:hover,#detail #reader-back:focus-visible{background:#2b2d33}
+#detail #reader-back:active{transform:scale(.96)}
+#detail #reader-back[hidden]{display:none}
+
+/* App-style wayfinding. It can be emitted directly after the scrolling body
+   (preferred) or inside it by older reader markup. */
+#detail .detail-body+.reader-navigation,
+#detail .detail-window>.reader-navigation{
+  position:relative;
+  z-index:7;
+  flex:none;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  padding:12px clamp(14px,2.5vw,24px) max(12px,env(safe-area-inset-bottom));
+  border-top:1px solid rgb(255 255 255 / .13);
+  background:linear-gradient(180deg,rgb(16 17 19 / .9),#101113 55%);
+}
+
+#detail-body>.reader-navigation{
+  position:sticky;
+  z-index:7;
+  bottom:0;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:34px;
+  padding:14px clamp(14px,2.5vw,24px) max(14px,env(safe-area-inset-bottom));
+  border-top:1px solid rgb(255 255 255 / .13);
+  background:linear-gradient(180deg,rgb(16 17 19 / .76),#101113 42%);
+}
+
+.reader-navigation button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+  min-height:48px;
+  padding:9px 12px;
+  border:1px solid rgb(255 255 255 / .2);
+  border-radius:14px;
+  background:#202126;
+  color:var(--lf-paper,#f6f3ec);
+  font:700 16px/1.15 'Atkinson Hyperlegible Next',LFAtkinson,Arial,sans-serif;
+  text-align:center;
+  transition:transform 160ms ease,background-color 160ms ease,border-color 160ms ease;
+}
+
+.reader-navigation button:hover,
+.reader-navigation button:focus-visible{
+  border-color:rgb(255 255 255 / .42);
+  background:#2b2d33;
+}
+
+.reader-navigation button:active{transform:scale(.96)}
+
+.reader-navigation #reader-hub{
+  border-color:var(--lf-orange,#ff7839);
+  background:var(--lf-orange,#ff7839);
+  color:#1b100a;
+}
+
+.reader-navigation #reader-hub:hover,
+.reader-navigation #reader-hub:focus-visible{background:#ff9a70}
+
+.reader-navigation button[hidden]{display:none}
+
+.reader-navigation button:disabled{
+  opacity:.42;
+  cursor:not-allowed;
+}
+
+/* A live Lab is part of the reader, never a detour to another page. */
+.lf-reader .reader-demo{
+  display:grid;
+  gap:14px;
+  margin:clamp(28px,5vw,68px) clamp(18px,5vw,76px);
+  padding:clamp(12px,2vw,20px);
+  border:1px solid rgb(255 255 255 / .16);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgb(255 255 255 / .055),rgb(255 255 255 / .015));
+  box-shadow:inset 0 1px 0 rgb(255 255 255 / .1),0 20px 48px rgb(0 0 0 / .22);
+}
+
+.lf-reader .reader-demo-stage{
+  position:relative;
+  min-height:360px;
+  height:min(72svh,760px);
+  overflow:hidden;
+  border:1px solid rgb(255 255 255 / .17);
+  border-radius:16px;
+  background:#08090b;
+}
+
+.lf-reader .reader-demo-stage iframe{
+  display:block;
+  width:100%;
+  height:100%;
+  border:0;
+  background:#08090b;
+}
+
+.lf-reader .reader-demo-status{
+  position:absolute;
+  z-index:2;
+  inset:0;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgb(8 9 11 / .72);
+  backdrop-filter:blur(5px);
+  pointer-events:none;
+  align-items:center;
+  margin:0;
+  color:var(--reader-muted,#c6c9cf);
+  font-size:16px;
+  line-height:1.4;
+  text-align:center;
+}
+
+.lf-reader .reader-demo-status[hidden]{display:none}
+
+.reader-demo-disclosure{font-size:16px;line-height:1.45;color:var(--reader-muted,#c6c9cf)}
+.reader-demo-disclosure summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--lf-paper,#f6f3ec)}
+.reader-demo-disclosure p{margin:8px 0;font-size:16px;line-height:1.45}
+
+/* Labs launch as compact app cards: answer first, real thumbnail second,
+   then the usable demo in the first reader viewport. */
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-hero{
+  grid-template-columns:minmax(0,1fr) 144px;
+  gap:20px;
+  min-height:0;
+  padding:24px clamp(24px,5vw,54px);
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-kicker{
+  margin:0 0 8px;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-title{
+  max-width:22ch;
+  margin:0 0 10px;
+  font-size:clamp(32px,3.2vw,42px);
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-summary{
+  font-size:18px;
+  line-height:1.45;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-hero .contact-actions{
+  margin-top:16px;
+}
+
+/* The demo mounts automatically; its jump link would only repeat the action. */
+#detail-body:has(.reader-demo:not([data-demo='vera'])[data-demo-state='ready']) .story-hero .contact-actions a[href='#working-demo']{
+  display:none;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-art{
+  width:144px;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px;
+  align-self:center;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-art :first-child{
+  width:100%;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-art :is(figure,div){
+  border-radius:10px;
+}
+
+#detail-body:has(.reader-demo:not([data-demo='vera'])) .story-art figcaption{display:none}
+
+#detail-body>.reader-demo:not([data-demo='vera']){
+  gap:10px;
+  margin:10px clamp(18px,5vw,54px) 34px;
+  padding:12px;
+}
+
+/* A direct reader route keeps the same clear return target as a tile reader. */
+.reader-hub-return{
+  position:fixed;
+  z-index:24;
+  top:max(18px,env(safe-area-inset-top));
+  right:max(18px,env(safe-area-inset-right));
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  padding:0;
+  border:1px solid rgb(255 255 255 / .28);
+  border-radius:999px;
+  background:rgb(20 20 23 / .94);
+  box-shadow:0 10px 30px rgb(0 0 0 / .3),inset 0 1px 0 rgb(255 255 255 / .15);
+  color:var(--lf-paper,#f6f3ec);
+  font:400 31px/.85 Arial,sans-serif;
+  text-decoration:none;
+}
+
+.reader-hub-return:hover,.reader-hub-return:focus-visible{border-color:var(--lf-orange,#ff7839);background:#2a2523}
+.reader-hub-return:active{transform:scale(.96)}
+body:has(.reader-hub-return) .page-shell>.topbar{padding-right:66px}
+
+/* VERA is an app session first. Its frame consumes the reader below the
+   compact identity/contact header, without making the reader's supplied
+   context compete with the working application. */
+#detail[data-reader-layout='immersive']{
+  padding:clamp(8px,1.6vw,20px);
+}
+
+#detail[data-reader-layout='immersive'] .detail-window.lf-reader{
+  width:100%;
+  max-width:none;
+  max-height:none;
+}
+
+#detail[data-reader-layout='immersive'] .detail-body{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#detail[data-reader-layout='immersive'] .detail-body>main,
+#detail[data-reader-layout='immersive'] .detail-body>[data-page-content]{
+  display:flex;
+  flex:1 1 auto;
+  flex-direction:column;
+  min-height:0;
+}
+
+#detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera']{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+}
+
+#detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera'] .reader-demo-stage{
+  display:flex;
+  flex-direction:column;
+  flex:1 1 auto;
+  min-height:0;
+  height:auto;
+  border-radius:0;
+}
+
+#detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera'] .reader-demo-frame{
+  flex:1 1 auto;
+  min-height:0;
+}
+
+/* The app stays dominant, while all VERA context remains present, readable,
+   and contained below it instead of forcing a separate page. */
+#detail[data-reader-layout='immersive'] .reader-demo-context{
+  flex:none;
+  max-height:48px;
+  margin:0;
+  overflow:hidden;
+  border-top:1px solid rgb(255 255 255 / .14);
+  background:#141417;
+  color:var(--lf-paper,#f6f3ec);
+  transition:max-height 220ms ease;
+}
+
+#detail[data-reader-layout='immersive'] .reader-demo-context>summary{
+  display:flex;
+  align-items:center;
+  min-height:48px;
+  padding:12px clamp(16px,3vw,28px);
+  color:var(--lf-paper,#f6f3ec);
+  cursor:pointer;
+  font:700 16px/1.25 'Atkinson Hyperlegible Next',LFAtkinson,Arial,sans-serif;
+  list-style:none;
+}
+
+#detail[data-reader-layout='immersive'] .reader-demo-context>summary::-webkit-details-marker{display:none}
+#detail[data-reader-layout='immersive'] .reader-demo-context>summary::after{content:'+';margin-left:auto;color:var(--lf-orange,#ff7839);font-size:24px;font-weight:400}
+#detail[data-reader-layout='immersive'] .reader-demo-context[open]{max-height:min(40svh,460px);overflow:auto}
+#detail[data-reader-layout='immersive'] .reader-demo-context[open]>summary{position:sticky;z-index:2;top:0;border-bottom:1px solid rgb(255 255 255 / .12);background:#1a1a1e}
+#detail[data-reader-layout='immersive'] .reader-demo-context[open]>summary::after{content:'−'}
+#detail[data-reader-layout='immersive'] .reader-demo-context-body{padding:0 clamp(16px,4vw,52px) clamp(26px,4vw,52px)}
+
+@media (max-width:760px){
+  #detail>#close-detail{
+    top:max(8px,env(safe-area-inset-top));
+    right:max(10px,env(safe-area-inset-right));
+    width:44px;
+    height:44px;
+    font-size:28px;
+  }
+
+  #detail .detail-top{
+    grid-template-columns:auto minmax(0,1fr);
+    gap:8px;
+    min-height:116px;
+    padding:10px 64px 10px 15px;
+  }
+
+  #detail .detail-top .reader-rail{
+    grid-column:1/-1;
+    grid-row:2;
+    justify-self:stretch;
+  }
+
+  #detail .detail-body+.reader-navigation,
+  #detail .detail-window>.reader-navigation,
+  #detail-body>.reader-navigation{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+    padding:9px 12px max(10px,env(safe-area-inset-bottom));
+  }
+
+  #detail-body>.reader-navigation{margin-top:24px}
+
+  .reader-navigation button{min-height:44px;padding-inline:6px;font-size:16px}
+
+  #detail-body:has(.reader-demo:not([data-demo='vera'])) .story-hero{
+    grid-template-columns:minmax(0,1fr) 72px;
+    gap:12px;
+    padding:20px 18px;
+  }
+
+  #detail-body:has(.reader-demo:not([data-demo='vera'])) .story-title{font-size:32px}
+  #detail-body:has(.reader-demo:not([data-demo='vera'])) .story-art{width:72px;gap:4px}
+  #detail-body>.reader-demo:not([data-demo='vera']){margin:8px 12px 28px;padding:8px}
+
+  .lf-reader .reader-demo{
+    margin:26px 14px;
+    padding:8px;
+    border-radius:18px;
+  }
+
+  .lf-reader .reader-demo-stage{
+    min-height:360px;
+    height:66svh;
+    border-radius:12px;
+  }
+
+  #detail[data-reader-layout='immersive']{padding:0}
+  #detail[data-reader-layout='immersive'] .detail-window.lf-reader{border:0;border-radius:0}
+  #detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera'] .reader-demo-stage{border-radius:0}
+  .reader-hub-return{top:max(8px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));width:44px;height:44px;font-size:28px}
+  body:has(.reader-hub-return) .page-shell>.topbar{padding-right:58px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  #detail>#close-detail,.reader-navigation button{transition:none}
+}

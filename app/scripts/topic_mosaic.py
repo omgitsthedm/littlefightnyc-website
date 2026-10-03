@@ -42,18 +42,33 @@ def plus_navigation(markup):
     return re.sub(r'<(?:a|button|summary)\b[^>]*>.*?</(?:a|button|summary)>', replace, markup, flags=re.S)
 
 
+def inline_mosaic_symbols(markup):
+    """Keep source icons visible after the old hidden SVG sprite is retired."""
+    key = '<g class="key-turn"><circle cx="8" cy="8" r="4.5"></circle><path d="m11.5 11.5 9 9M16 16l2.5-2.5M18.5 18.5l2.5-2.5"></path><circle cx="7" cy="7" r=".5"></circle></g>'
+    return re.sub(r'<use\s+href="#i-key"\s*/?>\s*</use>', key, markup)
+
 def icon(filename, cls=''):
     return f'<span class="mineral-icon {cls}" data-icon="{E(filename.removesuffix(".svg"))}" aria-hidden="true" style="--mineral-asset:url(/assets/mineral/{E(filename)})"></span>'
 
 
 def question_tile(record):
     family = record['family']
-    return f'''<a class="tile topic-question" href="/answers/help/{E(record['id'])}/" data-answer="{E(record['id'])}" data-family="{family}" data-accent="{TOPICS[family][1]}" data-material="mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(record['title'])}" data-columns="2" data-rows="2" aria-label="{E(record['question'])}"><span class="cell-face"><span class="cell-title">{E(record['title'])}</span><span class="cell-art">{icon(record['icon'])}</span><span class="cell-go" aria-hidden="true">+</span></span><span class="answer-preview">{E(record['summary'])}</span></a>'''
+    words = len(record['title'].split())
+    # A short question can be a compact desktop strip. Longer questions keep
+    # a second row so the words and the familiar icon never compete. Phones
+    # get the extra row before text ever has to be reduced or clipped.
+    rows = 2 if words > 4 else 1
+    mobile_rows = 3 if words > 4 else 2
+    return f'''<a class="tile topic-question" href="/answers/help/{E(record['id'])}/" data-answer="{E(record['id'])}" data-family="{family}" data-accent="{TOPICS[family][1]}" data-material="mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(record['title'])}" data-columns="2" data-rows="{rows}" data-mobile-columns="2" data-mobile-rows="{mobile_rows}" aria-label="{E(record['question'])}"><span class="cell-face"><span class="cell-title">{E(record['title'])}</span><span class="cell-art">{icon(record['icon'])}</span><span class="cell-go" aria-hidden="true">+</span></span><span class="answer-preview">{E(record['summary'])}</span></a>'''
 
 
 def review_tile(review):
     quote = f'<blockquote class="review-quote">“{E(review["excerpt"])}”</blockquote>' if review['excerpt'] else '<p class="review-rating-only">Five-star rating</p>'
-    return f'''<a class="tile review-tile" href="{E(review['sourceUrl'])}" target="_blank" rel="noopener noreferrer" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="3" data-rows="3" data-cell-title="{E(review['displayName'])}’s Google review"><span class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="review-attribution">{E(review['displayName'])}</span><span class="review-source">Google <span aria-hidden="true">+</span></span></a>'''
+    # On a wide grid, two square units fit the complete review comfortably.
+    # A phone uses three so the exact quote, name, stars and source can remain
+    # at readable sizes without crop or ellipsis.
+    mobile_rows = 4 if len(review.get('excerpt') or '') > 40 else 3
+    return f'''<a class="tile review-tile" href="{E(review['sourceUrl'])}" target="_blank" rel="noopener noreferrer" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="2" data-rows="2" data-mobile-columns="3" data-mobile-rows="{mobile_rows}" data-cell-title="{E(review['displayName'])}’s Google review"><span class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="review-attribution">{E(review['displayName'])}</span><span class="review-source">Google <span aria-hidden="true">+</span></span></a>'''
 
 
 def anchor_front(markup, family):
@@ -133,14 +148,44 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
             markup = re.sub(r'<span class="photo-album-tile__images".*?</span>', photo, markup, flags=re.S)
             markup = re.sub(r'<span class="photo-album-tile__kicker">.*?</span>', '', markup)
         width, height = int(attrs.get('data-columns', 3)), int(attrs.get('data-rows', 2))
+        mobile_width = int(attrs.get('data-mobile-columns', width))
+        mobile_height = int(attrs.get('data-mobile-rows', height))
+        face = attrs.get('data-cell-face', '')
+        title = attrs.get('data-cell-title', '')
+        visible_title = re.search(r'<span class="cell-title">(.*?)</span>', markup, re.S)
+        if visible_title:
+            title = ' '.join(unescape(re.sub(r'<[^>]+>', ' ', visible_title.group(1))).split())
+            markup = set_attr(markup, 'data-cell-title', title)
+        title_words = len(title.split())
+        long_mobile_word = max((len(word.strip(".,?!'’—-")) for word in title.split()), default=0) >= 10
         if kind == 'service-anchor' or identity in ('brand-brief', 'google-reviews'):
-            width, height = 4, 2
+            width, height = mobile_width, mobile_height = 4, 2
         if kind == 'case-study':
-            width, height = 3, 2
+            width, height = mobile_width, mobile_height = 3, 2
         if kind == 'photo-album':
-            width, height = 4, 4
+            width, height = mobile_width, mobile_height = 4, 4
         if kind == 'review':
-            width, height = 3, 3
+            width, height = 2, 2
+            mobile_width, mobile_height = 3, max(3, mobile_height)
+        if identity.startswith('buyer-'):
+            # The four industry routes are concise title-plus-drawing cards.
+            # Two squares retain both without the unused lower half of 3×2.
+            width, height = 2, 2
+        # Original icon cards are deliberately all signal: one square, one
+        # recognizable object, and a complete accessible name. Strips carry a
+        # concise phrase and its icon without being inflated into a square.
+        if kind not in ('service-anchor', 'case-study', 'photo-album', 'review'):
+            if face == 'icon':
+                width, height = mobile_width, mobile_height = 1, 1
+            elif face == 'strip':
+                width, height = 2, 1
+                mobile_width, mobile_height = (3 if title_words > 3 or len(title) > 19 else 2), 1
+            elif face == 'type' and title_words <= 4 and len(title) <= 24:
+                # These cards contain a single concise thought. Their square
+                # source geometry was a staging artifact, not a reason to
+                # leave an empty lower half on the finished mosaic.
+                width, height = 2, 1
+                mobile_width, mobile_height = 2, (1 if title_words <= 2 else 2)
         # Visible words are the accessible name. Keep the original question as
         # a description, while icon-only cards retain their explicit name.
         if width > 1 and attrs.get('data-cell-face') != 'icon' and attrs.get('aria-label'):
@@ -149,11 +194,18 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
             markup = re.sub(r'\saria-label="[^"]*"', '', markup[:end])+markup[end:]
         style = attrs.get('style', '')
         style = re.sub(r'grid-area:[^;]+;?', '', style)
-        style += f';--preferred-columns:{width};--preferred-rows:{height};--mobile-columns:{width};--mobile-rows:{height}'
+        style += f';--preferred-columns:{width};--preferred-rows:{height};--mobile-columns:{mobile_width};--mobile-rows:{mobile_height}'
         markup = set_attr(markup, 'style', style)
-        for key, value in [('preferred-columns', width), ('preferred-rows', height), ('mobile-columns', width), ('mobile-rows', height)]:
+        # These are also the no-script geometry hooks used by the compact
+        # front compositions. The packer rewrites them only when a viewport
+        # needs a different, still integer, mobile shape.
+        markup = set_attr(markup, 'data-columns', width)
+        markup = set_attr(markup, 'data-rows', height)
+        if long_mobile_word and mobile_width < 3 and face != 'icon' and kind not in ('service-anchor', 'case-study', 'photo-album', 'review'):
+            markup = set_attr(markup, 'data-mobile-long-word', 'true')
+        for key, value in [('preferred-columns', width), ('preferred-rows', height), ('mobile-columns', mobile_width), ('mobile-rows', mobile_height)]:
             markup = set_attr(markup, 'data-'+key, value)
-        groups[topic].append((identity, kind, order, plus_navigation(markup)))
+        groups[topic].append((identity, kind, order, plus_navigation(inline_mosaic_symbols(markup))))
 
     # Put real photography into the opening composition. Everything else stays
     # in its authored order within its topic, including every question and URL.

@@ -315,13 +315,14 @@ async function run() {
       assert.ok(await page.locator('main[data-page-content] .photo-grid figure').count() > 0);
     });
 
-    await check('standalone app tile fetches its mini-reader while retaining the original URL and hard-navigates Try it', async () => {
+    await check('standalone VERA tile opens its working app inside the reader and returns to the hub', async () => {
       await page.goto(base + '/', { waitUntil: 'networkidle' });
-      const tile = page.locator('a.tile[data-reader-src]').first();
-      assert.ok(await tile.count(), 'Candidate needs a standalone-app reader fixture.');
+      const tile = page.locator('a.tile[href="/vera/"]').first();
+      assert.equal(await tile.count(), 1, 'Candidate needs one VERA tile.');
       const originalHref = await tile.getAttribute('href');
       const readerSource = await tile.getAttribute('data-reader-src');
-      assert.ok(originalHref && readerSource, 'Reader fixture needs both href and data-reader-src.');
+      assert.equal(originalHref, '/vera/');
+      assert.equal(readerSource, '/_readers/vera/');
       const readerFetch = page.waitForResponse(response => new URL(response.url()).pathname === readerSource && response.status() === 200);
       await tile.scrollIntoViewIfNeeded();
       await tile.click();
@@ -330,23 +331,23 @@ async function run() {
       const readerTitle = await page.title();
       assert.equal(await page.locator('#detail').evaluate(node => node.dataset.readerPath), originalHref);
       assert.notEqual(readerTitle, '', 'Mini-reader must set a document title.');
-      await page.keyboard.press('Escape');
+      assert.equal(await page.locator('#detail').getAttribute('data-reader-layout'), 'immersive');
+      const frame = page.locator('#detail-body [data-demo="vera"] iframe.reader-demo-frame');
+      await frame.waitFor({ state: 'attached', timeout: 20_000 });
+      await page.waitForFunction(() => Boolean(document.querySelector('#detail-body [data-demo="vera"] iframe[src]')));
+      const frameHandle = await frame.elementHandle();
+      const child = await frameHandle?.contentFrame();
+      assert.ok(child, 'VERA reader needs an iframe browsing context.');
+      await child.locator('[data-shell]').waitFor({ state: 'visible', timeout: 30_000 });
+      assert.equal(await child.evaluate(() => self !== top), true, 'VERA must remain inside its reader card.');
+      assert.equal(await page.locator('#detail-body [data-document-link]').count(), 0, 'Working-card reader must not expose a hard-navigation CTA.');
+      const close = page.locator('#close-detail');
+      const closeBox = await close.boundingBox();
+      assert.ok(closeBox && closeBox.width >= 44 && closeBox.height >= 44, 'Reader X must remain a 44px target.');
+      await close.click();
       await page.waitForURL(base + '/');
+      await page.waitForFunction(() => !document.querySelector('#detail-body iframe.reader-demo-frame'));
       assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')), originalHref);
-      await tile.click();
-      await page.waitForURL(base + originalHref);
-      await page.goBack({ waitUntil: 'networkidle' });
-      await page.waitForURL(base + '/');
-      await page.goForward({ waitUntil: 'networkidle' });
-      await page.locator('#detail[open]').waitFor();
-      assert.equal(await page.title(), readerTitle);
-      const tryIt = page.locator('#detail-body [data-document-link]').first();
-      await tryIt.scrollIntoViewIfNeeded();
-      const hardTarget = await tryIt.getAttribute('href');
-      assert.equal(hardTarget, originalHref);
-      await tryIt.click();
-      await page.waitForURL(base + hardTarget);
-      assert.equal(await page.evaluate(() => performance.getEntriesByType('navigation')[0]?.type), 'navigate');
     });
 
     await check('direct service route renders the approved waterfall and ownership story', async () => {
@@ -364,7 +365,7 @@ async function run() {
     await check('direct roofing landing keeps shared controls and leads to the native inquiry form', async () => {
       await page.goto(`${base}/industries/roofing/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('#detail').evaluate(node => node.open), false);
-      const contactPath = page.locator('a[data-document-link][href^="/tech-audit/"]').first();
+      const contactPath = page.locator('a[data-reader-link][href="/tech-audit/?intent=website"]').first();
       await contactPath.waitFor({ state: 'visible' });
       assert.match(await contactPath.getAttribute('href'), /^\/tech-audit\/\?intent=website$/);
       await page.locator('#explore-toggle').click();

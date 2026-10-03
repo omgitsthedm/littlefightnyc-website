@@ -12,6 +12,13 @@
   const menuClose = menu?.querySelector('.menu-close');
   const search = document.querySelector('#preview-search');
   const searchResults = document.querySelector('#search-results');
+  const readerBack = document.querySelector('#reader-back');
+  const readerPrevious = document.querySelector('#reader-previous');
+  const readerNext = document.querySelector('#reader-next');
+  const readerHub = document.querySelector('#reader-hub');
+  let readerTrail = [];
+  let readerRoutesPromise;
+  let readerRoutes = {};
   const motionToggle = document.querySelector('#motion-toggle');
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -73,6 +80,108 @@
     document.body.classList.add('reader-open');
   }
 
+  async function readerFetchPath(path, source) {
+    const explicit = sameOriginPath(source?.dataset.readerSrc);
+    readerRoutesPromise ||= fetch('/reader-routes.json', { credentials: 'same-origin' })
+      .then(response => response.ok ? response.json() : {}).then(routes => (readerRoutes = routes)).catch(() => ({}));
+    const routes = await readerRoutesPromise;
+    if (explicit && sameOriginPath(source?.href)?.split(/[?#]/)[0] === path.split(/[?#]/)[0]) return explicit;
+    const url = new URL(path, location.origin);
+    return routes[url.pathname] ? `${routes[url.pathname]}${url.search}${url.hash}` : path;
+  }
+
+  function releaseDemos() {
+    detailBody.querySelectorAll('iframe[data-demo-src]').forEach(frame => {
+      try { frame.contentDocument?.querySelectorAll('video,audio').forEach(media => media.pause()); } catch { /* frame may still be loading */ }
+      frame.remove();
+    });
+  }
+
+  function mountDemos(root = detailBody) {
+    root.querySelectorAll('iframe[data-demo-src]').forEach(frame => {
+      if (frame.hasAttribute('src')) return;
+      const source = sameOriginPath(frame.dataset.demoSrc);
+      if (!source) return;
+      const block = frame.closest('[data-reader-demo]');
+      const status = block?.querySelector('.reader-demo-status');
+      if (block) block.dataset.demoState = 'loading';
+      frame.addEventListener('load', () => {
+        if (!frame.isConnected) return;
+        if (block) block.dataset.demoState = 'ready';
+        if (status) status.hidden = true;
+        try {
+          // Keep the Lab's provenance beside its working surface rather than
+          // allowing the standalone site's fixed notice to cover its controls.
+          const disclosure = block?.dataset.demo !== 'vera' && frame.contentDocument?.querySelector('.lab-build-disclosure,.lab-concept-status');
+          if (disclosure && block) {
+            let note = block.querySelector('.reader-demo-disclosure');
+            if (!note) {
+              note = document.createElement('details');
+              note.className = 'reader-demo-disclosure';
+              const summary = document.createElement('summary');
+              summary.textContent = 'About this demo +';
+              const explanation = document.createElement('p');
+              explanation.textContent = disclosure.textContent;
+              note.append(summary, explanation);
+              block.append(note);
+            }
+            disclosure.style.setProperty('display', 'none', 'important');
+          }
+          // Start each study at its working surface. Only the iframe scrolls;
+          // the outer reader keeps the visitor's position and full explanation.
+          const starts = {
+            'micro-animations': 'main.playground', 'studio-engine': 'main.studio',
+            'aha-laser': 'section.signroom[data-room]', 'growth-street': 'main.story[data-story]',
+            'pill-scroll': 'section.pin[data-pin]', goliath: 'section.pin[data-pin]'
+          };
+          const start = starts[block?.dataset.demo];
+          const surface = start && frame.contentDocument?.querySelector(start);
+          if (surface) frame.contentWindow.scrollTo({ top: surface.getBoundingClientRect().top + frame.contentWindow.scrollY, behavior: 'instant' });
+          frame.contentDocument?.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && !event.defaultPrevented && dialogIsOpen()) {
+              event.preventDefault(); closeReader();
+            }
+          });
+          frame.contentDocument?.addEventListener('click', event => {
+            const link = event.target.closest('a[href]');
+            if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank' || link.hasAttribute('download')) return;
+            const path = sameOriginPath(link.href);
+            if (!path || !dialogIsOpen()) return;
+            if (path === '/') { event.preventDefault(); closeReader(); return; }
+            const targetPath = path.split(/[?#]/)[0];
+            // VERA keeps its own app routing. A Lab's agency links enter the
+            // outer reader, where forms and other pages are allowed to run.
+            if (block?.dataset.demo !== 'vera' && readerRoutes[targetPath]
+              && targetPath !== frame.contentWindow.location.pathname) {
+              event.preventDefault();
+              openReader(path, findTile(path) || activeSource);
+            }
+          });
+        } catch { /* External source links never acquire access to the shell. */ }
+      });
+      frame.src = source;
+    });
+  }
+
+  function updateNavigation(path) {
+    if (readerBack) readerBack.hidden = readerTrail.length < 2;
+    const seen = new Set();
+    const cards = [...(mosaic?.querySelectorAll('a.tile[href]') || [])].filter(tile => {
+      const target = sameOriginPath(tile.href);
+      if (!target || tile.target === '_blank' || seen.has(target)) return false;
+      seen.add(target); return true;
+    });
+    const index = cards.findIndex(tile => sameOriginPath(tile.href)?.split(/[?#]/)[0] === path.split(/[?#]/)[0]);
+    const previous = index > 0 ? cards[index - 1] : null;
+    const next = cards[index + 1] || null;
+    for (const [button, tile, name] of [[readerPrevious, previous, 'Previous'], [readerNext, next, 'Next']]) {
+      if (!button) continue;
+      button.disabled = !tile;
+      button.dataset.readerTarget = tile ? sameOriginPath(tile.href) : '';
+      button.setAttribute('aria-label', tile ? `${name} card: ${tile.dataset.cellTitle || tile.textContent.trim()}` : `${name} card`);
+    }
+  }
+
   async function fetchReader(path, signal) {
     const response = await fetch(path, { credentials: 'same-origin', signal, headers: { Accept: 'text/html' } });
     if (!response.ok) throw new Error(`Reader request failed: ${response.status}`);
@@ -80,7 +189,7 @@
     const parsed = new DOMParser().parseFromString(markup, 'text/html');
     const reader = parsed.querySelector('main[data-page-content]');
     if (!reader) throw new Error('Reader markup was not found.');
-    return { html: reader.innerHTML, title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
+    return { html: reader.innerHTML, layout: reader.dataset.readerLayout || '', title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
   }
 
   function focusReader() {
@@ -92,26 +201,31 @@
   async function openReader(path, source, options = {}) {
     const readerPath = sameOriginPath(path);
     if (!readerPath) return false;
+    if (readerPath === '/' && dialogIsOpen()) { await closeReader(); return true; }
     // A click can land in the microtask after the dialog disappears but before
     // its return-focus/history cleanup settles. Finish that finite close first.
     if (closingPromise) await closingPromise;
     const isInReader = dialogIsOpen();
     // Tiles for standalone public apps keep their canonical href. They can opt into a
     // small static reader document without changing the URL, browser history, or event payload.
-    const readerFetchPath = (!isInReader && sameOriginPath(source?.dataset.readerSrc)) || readerPath;
     activeController?.abort();
     const controller = new AbortController();
     activeController = controller;
     const version = ++requestVersion;
-    activeSource = source || findTile(readerPath);
+    activeSource = findTile(readerPath) || source || activeSource;
     loadingVersion = version;
     mosaic?.classList.add('is-loading-reader');
     if (menu?.open) setMenu(false, { returnFocus: false });
 
     try {
-      const reader = await fetchReader(readerFetchPath, controller.signal);
+      const readerDocument = await readerFetchPath(readerPath, findTile(readerPath) || source);
       if (version !== requestVersion || controller.signal.aborted) return false;
+      const reader = await fetchReader(readerDocument, controller.signal);
+      if (version !== requestVersion || controller.signal.aborted) return false;
+      releaseDemos();
       detailBody.innerHTML = reader.html;
+      detail.dataset.readerLayout = reader.layout;
+      panel.dataset.readerLayout = reader.layout;
       detailBody.scrollTop = 0;
       detailBody.dataset.readerPath = readerPath;
       detail.dataset.readerPath = readerPath;
@@ -119,11 +233,13 @@
       document.title = reader.title;
       // The bridge receives reader-ready on document and mounts against this URL.
       // Commit the state before that event, while the fetched reader is already in place.
-      lastOpenState = { lfReader: true, path: readerPath };
-      if (!options.fromHistory) {
-        if (isInReader || options.replaceHistory || history.state?.lfReader) history.replaceState(lastOpenState, '', readerPath);
-        else history.pushState(lastOpenState, '', readerPath);
-      }
+      if (options.fromHistory) readerTrail = history.state?.trail || [readerPath];
+      else if (options.backTrail) readerTrail = options.backTrail;
+      else readerTrail = isInReader ? [...readerTrail, readerPath] : [readerPath];
+      lastOpenState = { lfReader: true, path: readerPath, trail: readerTrail };
+      if (options.backTrail) history.replaceState(lastOpenState, '', readerPath);
+      else if (!options.fromHistory) history.pushState(lastOpenState, '', readerPath);
+      updateNavigation(readerPath);
       document.dispatchEvent(new CustomEvent('lf:reader-ready', { detail: { path: readerPath } }));
 
       showDialog();
@@ -131,6 +247,7 @@
       if (!isInReader && motion?.open) await motion.open({ source: activeSource, dialog: detail, panel });
       if (version !== requestVersion) return false;
       focusReader();
+      mountDemos();
 
       interaction(isInReader ? 'reader_change' : 'reader_open', contentId(readerPath), isInReader ? 'reader_link' : (source ? 'tile' : 'history'));
       return true;
@@ -160,6 +277,9 @@
         else detail.removeAttribute('open');
         document.body.classList.remove('reader-open');
         document.title = shellTitle;
+        releaseDemos();
+        delete detail.dataset.readerLayout;
+        delete panel.dataset.readerLayout;
         source?.focus?.({ preventScroll: true });
         interaction('reader_close', contentId(detailBody.dataset.readerPath), 'reader');
       } finally {
@@ -174,9 +294,12 @@
     // Native dialog cancel and the document Escape handler can fire in one keypress.
     // Claim the close synchronously so only one of them is allowed to step history.
     if (!dialogIsOpen() || isClosing) return;
-    const readerHistoryEntry = Boolean(history.state?.lfReader);
     await finishClose();
-    if (useHistory && readerHistoryEntry && history.state?.lfReader) history.back();
+    readerTrail = [];
+    if (!mosaic) { location.assign('/'); return; }
+    // Embedded apps and fragment links have their own joint history entries.
+    // Returning to the hub must never depend on guessing how many they added.
+    if (useHistory) history.replaceState({ lfHub: true }, '', '/');
   }
 
   mosaic?.addEventListener('click', event => {
@@ -197,18 +320,23 @@
     mineralLightTimer = setTimeout(() => { delete tile.dataset.mineralLit; }, 560);
   });
 
+  readerBack?.addEventListener('click', () => {
+    if (readerTrail.length < 2) return;
+    const trail = readerTrail.slice(0, -1);
+    const previous = trail[trail.length - 1];
+    openReader(previous, findTile(previous), { backTrail: trail });
+  });
+  readerHub?.addEventListener('click', () => closeReader());
+  [readerPrevious, readerNext].forEach(button => button?.addEventListener('click', () => {
+    if (button.dataset.readerTarget) openReader(button.dataset.readerTarget, findTile(button.dataset.readerTarget));
+  }));
+
   closeButton?.addEventListener('click', event => { event.preventDefault(); closeReader(); });
   detail.addEventListener('cancel', event => { event.preventDefault(); closeReader(); });
   detail.addEventListener('click', event => {
     if (event.target === detail) { closeReader(); return; }
     const link = event.target.closest('a[href]');
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
-    // Production CTAs can opt out of the reader island and load their document normally.
-    if (link.hasAttribute('data-document-link')) {
-      event.preventDefault();
-      location.assign(link.href);
-      return;
-    }
     const path = sameOriginPath(link.href);
     const currentPath = String(detailBody.dataset.readerPath || '').split('#')[0];
     if (!path || path === detailBody.dataset.readerPath || path.split('#')[0] === currentPath || path.startsWith('mailto:') || path.startsWith('tel:') || path.startsWith('sms:')) return;
@@ -221,7 +349,7 @@
     if (state?.lfReader && state.path) {
       openReader(state.path, findTile(state.path), { fromHistory: true });
     } else if (dialogIsOpen()) {
-      finishClose(findTile(detailBody.dataset.readerPath));
+      finishClose(findTile(detailBody.dataset.readerPath)).then(() => { readerTrail = []; });
     }
   });
 
@@ -372,5 +500,6 @@
     interaction('email_draft', contentId(detailBody.dataset.readerPath || location.pathname), 'reader_contact');
     location.href = `mailto:hello@littlefightnyc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
+  mountDemos(document.querySelector('main[data-page-content]') || document.createElement('div'));
   document.querySelectorAll('form[data-email-draft] textarea[name="message"]').forEach(field => { if (field.maxLength < 0) field.maxLength = 4000; });
 })();

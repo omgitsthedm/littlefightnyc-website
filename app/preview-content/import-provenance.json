@@ -12,6 +12,7 @@
     "cases.css",
     "topics.css",
     "tile-art.css",
-    "vendor/tile-motion.css"
+    "vendor/tile-motion.css",
+    "reader-app.css"
   ]
 }

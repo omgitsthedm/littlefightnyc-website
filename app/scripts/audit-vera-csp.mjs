@@ -45,6 +45,9 @@ const VERA_ONLY_ADDITIONS = {
   "worker-src": ["'self'", "blob:"],
   "child-src": ["blob:"],
   "object-src": ["'none'"],
+  // VERA is a working product inside Little Fight's same-origin reader. It
+  // remains unavailable to every external embedding origin.
+  "frame-ancestors": ["'self'"],
 };
 const VERA_ONLY_REMOVALS = {
   "script-src": [
@@ -61,6 +64,7 @@ const VERA_ONLY_REMOVALS = {
     "https://mpc2-prod-27-is5qnl632q-uk.a.run.app",
     "https://5z-2b6b7616f94640c2840d1841e1ac24c3.ecs.us-east-1.on.aws",
   ],
+  "frame-ancestors": ["'none'"],
 };
 const failures = [];
 
@@ -82,8 +86,17 @@ function policyFor(pathPattern) {
   return block?.[1] ?? null;
 }
 
+function headerFor(pathPattern, name) {
+  const escaped = pathPattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const block = toml.match(
+    new RegExp(`for = "${escaped}"[\\s\\S]*?${name} = "([^"]+)"`),
+  );
+  return block?.[1] ?? null;
+}
+
 const sitePolicy = policyFor("/*");
 const veraPolicy = policyFor("/vera/*");
+const veraFrameOptions = headerFor("/vera/*", "X-Frame-Options");
 
 if (!sitePolicy) {
   failures.push('netlify.toml: no Content-Security-Policy found for "/*"');
@@ -93,6 +106,11 @@ if (!veraPolicy) {
     'netlify.toml: /vera/* has no Content-Security-Policy block. Without it /vera/ ' +
       "inherits the site policy, which does not include VERA's map, address, blob, " +
       "and worker capabilities.",
+  );
+}
+if (veraFrameOptions !== "SAMEORIGIN") {
+  failures.push(
+    "netlify.toml: /vera/* must use X-Frame-Options SAMEORIGIN so the Little Fight reader can frame it while external sites remain blocked",
   );
 }
 

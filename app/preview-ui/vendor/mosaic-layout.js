@@ -26,6 +26,16 @@
     if (mobile && window.innerWidth <= 360 && card.classList.contains('review-tile')) {
       height = Math.max(height, 4);
     }
+    // Three phone columns preserve the review's readable line length. A
+    // tablet has enough physical width to use two rows; reserve the third
+    // only on a narrow handset, where it protects every word of the quote.
+    if (card.classList.contains('review-tile')) {
+      if (mobile && window.innerWidth > 600) height = 2;
+      if (!mobile && window.innerWidth <= 1200) {
+        width = 3;
+        height = 2;
+      }
+    }
     if (mobile && card.dataset.kind === 'case-study') {
       width = Math.max(width, 3);
       height = Math.max(height, 3);
@@ -35,6 +45,18 @@
     // width still preserves the authored bento rhythm.
     if (mobile && window.innerWidth <= 360 && card.classList.contains('topic-question')) {
       height = Math.max(height, 3);
+    }
+    // This existing question is the narrowest useful two-column title at
+    // 320px. One extra integer row keeps all four words visible at the
+    // approved 16px floor instead of clipping the last line.
+    if (mobile && window.innerWidth <= 360 && card.dataset.answer === 'it-guest-network') {
+      height = Math.max(height, 3);
+    }
+    // A whole word must remain whole at the smallest supported width. These
+    // marked titles take a third column rather than relying on break-word or
+    // hiding the final letters inside a two-column card.
+    if (mobile && window.innerWidth <= 360 && card.dataset.mobileLongWord === 'true') {
+      width = Math.max(width, 3);
     }
 
     // Each original card carries its approved geometry. Do not normalize the

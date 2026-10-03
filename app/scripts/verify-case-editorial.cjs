@@ -211,7 +211,7 @@ async function verifyStaticFallback(browser) {
     assert.equal(await page.locator('main[data-page-content]').count(), 1, 'No-JS work index needs static main content');
     assert.match(await page.locator('h1').first().innerText(), /Made for/i, 'No-JS work index needs the editorial heading');
     assert.equal(await page.locator('a.work-project[href^="/case-studies/"]').count(), 11, 'No-JS work index needs its 9 public cards plus 2 products');
-    assert.equal(await page.locator('a.work-lab[data-document-link]').count(), labs.length, 'No-JS work index needs all Labs as real links');
+    assert.equal(await page.locator('a.work-lab[data-reader-link]').count(), labs.length, 'No-JS work index needs all Labs as real links');
     const chromatic = page.locator('a.work-project[href="/case-studies/chromatic-painting-design/"]').first();
     assert.equal(await chromatic.count(), 1, 'No-JS work index must link to Chromatic');
     await go(page, '/case-studies/chromatic-painting-design/');
@@ -234,23 +234,23 @@ async function run() {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     try {
       await go(page, '/examples/');
-      await check('work index has nine public client cards, two Little Fight products, all nineteen case destinations, and protected VERA', async () => {
+      await check('work index has nine public client cards, two Little Fight products, all nineteen case destinations, and reader-card VERA', async () => {
         assert.equal(await page.locator('#client-work a.work-project').count(), 9, 'Public client card count');
         assert.equal(await page.locator('#our-products a.work-project').count(), 2, 'Little Fight product card count');
         const destinations = new Set(await page.locator('a[href^="/case-studies/"]').evaluateAll(links => links.map(link => new URL(link.href).pathname)));
         const expected = new Set(cases.map(caseStudy => `/case-studies/${caseStudy.slug}/`));
         assert.deepEqual([...destinations].sort(), [...expected].sort(), 'Work index must represent every catalog case destination');
-        const vera = page.locator('a.work-vera[href="/vera/"][data-document-link]');
-        assert.equal(await vera.count(), 1, 'VERA needs one direct working-app route');
-        assert.equal(await vera.getAttribute('data-reader-link'), null, 'VERA must not be replaced by an editorial reader');
-        return '9 public cards; 2 products; 19 case routes; VERA direct app';
+        const vera = page.locator('a.work-vera[href="/vera/"][data-reader-link]');
+        assert.equal(await vera.count(), 1, 'VERA needs one reader-card route');
+        assert.equal(await vera.getAttribute('data-document-link'), null, 'VERA must not hard-navigate away from the reader');
+        return '9 public cards; 2 products; 19 case routes; VERA reader card';
       });
       await check('work index loads each project image and all nine Lab thumbnails', async () => {
         await assertImagesLoaded(page, '.work-project-image img', 'work index project imagery');
         await assertImagesLoaded(page, '.work-lab > img', 'work index Lab imagery');
       });
-      await check('work index offers nine real Lab product URLs', async () => {
-        const hrefs = await page.locator('a.work-lab[data-document-link]').evaluateAll(links => links.map(link => link.getAttribute('href')));
+      await check('work index offers nine real Lab routes that open their working cards', async () => {
+        const hrefs = await page.locator('a.work-lab[data-reader-link]').evaluateAll(links => links.map(link => link.getAttribute('href')));
         assert.equal(hrefs.length, labs.length, 'Lab link count');
         assert.deepEqual(hrefs.sort(), labs.map(lab => `/examples/lab/concepts/${lab.slug}/`).sort(), 'Lab destinations');
         for (const route of hrefs) {
@@ -264,7 +264,7 @@ async function run() {
           report.labRoutes.push({ route, status: response.status(), title: await page.title() });
         }
         await go(page, '/examples/');
-        return `${hrefs.length} Lab routes opened locally`;
+        return `${hrefs.length} canonical Lab routes remain directly available; card embedding is verified separately`;
       });
       await check('public case studies expose exactly real new-tab website actions; pending and private records do not', async () => {
         for (const caseStudy of cases) {
@@ -302,7 +302,7 @@ async function run() {
       await check('Chromatic public case passes full Axe including color contrast', () => auditAxe(page, '/case-studies/chromatic-painting-design/'));
       await screenshotEvidence(page, path.join(screenshots, 'chromatic-1440.png'), 'Chromatic full-page evidence');
 
-      await check('homepage tile to website proof to Chromatic remains inside the reader and Escape restores mosaic focus', async () => {
+      await check('homepage tile to website proof to Chromatic remains inside the reader and Escape returns to the current hub card', async () => {
         await go(page, '/');
         const tile = page.locator('a.tile[href="/services/custom-local-websites/"]').first();
         await tile.scrollIntoViewIfNeeded();
@@ -316,8 +316,10 @@ async function run() {
         await page.keyboard.press('Escape');
         await page.waitForFunction(() => !document.querySelector('#detail')?.open);
         await page.waitForURL(base + '/');
-        assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')), '/services/custom-local-websites/', 'Escape returns focus to source website tile');
-        return 'tile → website proof → case reader → Escape → source tile focus';
+        const chromaticHubTile = page.locator('a.tile[href="/case-studies/chromatic-painting-design/"]').first();
+        await chromaticHubTile.waitFor({ state: 'visible' });
+        assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('a.tile[href="/case-studies/chromatic-painting-design/"]')), true, 'Escape returns focus to the current card in the hub');
+        return 'tile → website proof → case reader → Escape → current hub card focus';
       });
     } finally { await context.close(); }
 
