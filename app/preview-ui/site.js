@@ -69,7 +69,9 @@
     document.body.classList.toggle('no-motion', !enabled);
     if (motionToggle) {
       motionToggle.setAttribute('aria-pressed', String(!enabled));
-      motionToggle.setAttribute('aria-label', enabled ? 'Turn motion off' : 'Turn motion on');
+      motionToggle.setAttribute('aria-label', enabled ? 'Pause animations and image rotation' : 'Resume animations and image rotation');
+      const label = motionToggle.querySelector('.motion-label');
+      if (label) label.textContent = enabled ? 'Pause motion & slideshows' : 'Resume motion & slideshows';
     }
     if (announce) interaction(enabled ? 'motion_on' : 'motion_off', 'mosaic', 'controls');
   }

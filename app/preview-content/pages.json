@@ -402,5 +402,15 @@
       }
     ],
     "contactPrompt": "Tell us which prospective-client question the site needs to answer first. We will start with a free first look."
+  },
+  {
+    "path": "/how-we-help/",
+    "id": "brand-brief",
+    "family": "brand",
+    "title": "Websites & Technology Help for Small Businesses | Little Fight NYC",
+    "heading": "Problems? Solved.",
+    "summary": "Websites, everyday tech help, clearer decisions and custom software for independent businesses. Start with the thing you need to work better.",
+    "description": "Explore Little Fight NYC website design, tech support, consulting and custom software. Find the right help for your business and talk to a person.",
+    "sections": []
   }
 ]

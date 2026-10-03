@@ -23,7 +23,7 @@ const content = path.join(app, 'preview-content');
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'topic-mosaic');
 const screenshots = path.join(evidence, 'screenshots');
 const base = (process.env.TOPIC_MOSAIC_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
-const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 399, groups: 19 };
+const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 400, groups: 19 };
 const topics = [
   ['web', 'topic-web', 'Websites'],
   ['it', 'topic-it', 'Tech support'],
@@ -257,7 +257,7 @@ async function assertResponsiveAnchorPresentation(browser) {
           const rect = node.getBoundingClientRect();
           return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0 && rect.width > 2 && rect.height > 2;
         };
-        const webPhoto = document.querySelector('#topic-web a.tile[data-anchor="web"] .topic-anchor-photo img');
+        const webPhoto = document.querySelector('#topic-web a.tile[data-anchor="web"] .website-project-shot.is-active');
         const icons = [...document.querySelectorAll('.topic-section[data-topic] .topic-anchor-icon')]
           .map(node => {
             const rect = node.getBoundingClientRect();
@@ -279,7 +279,7 @@ async function assertResponsiveAnchorPresentation(browser) {
       assert.ok(presentation.photo.visible && presentation.photo.complete && presentation.photo.naturalWidth > 0
         && presentation.photo.width > 32 && presentation.photo.height > 20,
       `${viewport.width}px Website anchor photo is not visibly rendered: ${JSON.stringify(presentation.photo)}`);
-      assert.equal(presentation.icons.length, topics.length, `${viewport.width}px needs one icon frame for every service anchor`);
+      assert.equal(presentation.icons.length, topics.length + 1, `${viewport.width}px needs one icon frame for every service anchor`);
       assert.ok(presentation.icons.every(icon => icon.visible), `${viewport.width}px service anchor icon is hidden: ${JSON.stringify(presentation.icons)}`);
       const reference = presentation.icons[0];
       assert.ok(presentation.icons.every(icon => Math.abs(icon.width - reference.width) <= 1 && Math.abs(icon.height - reference.height) <= 1),
@@ -385,7 +385,7 @@ async function assertTopicStructure(page, manifest) {
   assert.equal(release.totalTileInventory, expected.totalInventory, 'release marker must preserve the full 129-tile inventory');
   assert.equal(release.originalTilesPreserved, expected.originals, 'release marker must record 106 remaining originals');
   assert.equal(release.consolidatedGroups, expected.groups, 'release marker must record all consolidated groups');
-  assert.equal(release.routes, expected.routes, 'release marker must record 399 routes');
+  assert.equal(release.routes, expected.routes, 'release marker must record 400 routes');
   assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length, 'homepage must expose exactly the consolidated visible tiles as real links');
   const homeTiles = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => ({ id: tile.dataset.answer, href: tile.getAttribute('href') })));
   assert.deepEqual(new Set(homeTiles.map(tile => tile.id)), new Set(manifest.visibleIds), 'homepage tile ids must exactly match the visible inventory');
@@ -479,16 +479,14 @@ async function assertTileGeometryAndType(page) {
     const anchor = page.locator(`#${id} a.tile[data-anchor="${topic}"]`).first();
     assert.equal(await anchor.count(), 1, `${label} must retain its service anchor tile`);
     const size = await dimensions(anchor);
-    if (topic === 'web') {
-      assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 4], 'Websites must lead with its larger service frame');
-      assert.equal(size.columns, 8, 'Websites must occupy two thirds of the desktop grid');
-      assert.ok(size.rows >= 4, 'Websites must preserve space for its explanation and real-work preview');
-      assert.match(await anchor.innerText(), /Websites/i, 'the Website anchor must identify the service clearly');
-      continue;
-    }
-    assert.deepEqual([size.columns, size.rows], [4, 2], `${label} anchor must lay out at 4 by 2`);
-    assert.deepEqual([size.preferredColumns, size.preferredRows], [4, 2], `${label} anchor must preserve its 4 by 2 preferred geometry`);
+    assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 4], `${label} must use the shared anchor frame`);
+    assert.equal(size.columns, 8, `${label} must occupy two thirds of the desktop grid`);
+    assert.ok(size.rows >= 4, `${label} must preserve room for meaningful art and its complete introduction`);
   }
+  const brand = await dimensions(page.locator('a.tile.brand-tile'));
+  assert.deepEqual([brand.preferredColumns, brand.preferredRows], [8, 4], 'Problems? Solved. must use the same anchor frame');
+  assert.equal(brand.columns, 8);
+  assert.ok(brand.rows >= 4);
   const artwork = page.locator('img.editorial-story-image');
   assert.ok(await artwork.count() >= 9, 'consolidated service stories need substantial original editorial artwork');
   await artwork.evaluateAll(async images => {
@@ -533,7 +531,7 @@ async function assertTileGeometryAndType(page) {
   const visibleSizes = await page.locator('a.tile[href]').evaluateAll(tiles => tiles
     .map(tile => `${tile.dataset.columns}x${tile.dataset.rows}`));
   assert.ok(new Set(visibleSizes).size >= 4, `consolidated homepage needs varied bento geometry, got ${[...new Set(visibleSizes)].join(', ')}`);
-  return `large Website anchor; 4x2 service anchors; seven individually styled compact reviews; ${albumSizes.length} source-4x4 photos that can grow whole units; visible bento sizes ${[...new Set(visibleSizes)].join(', ')}`;
+  return `five equal 8x4 desktop anchors; seven individually styled compact reviews; ${albumSizes.length} source-4x4 photos that can grow whole units; visible bento sizes ${[...new Set(visibleSizes)].join(', ')}`;
 }
 
 async function assertReadableLabels(page) {
@@ -544,7 +542,7 @@ async function assertReadableLabels(page) {
   }));
   assert.match(typography.body, /Atkinson Hyperlegible Next/i, `body must retain the approved Atkinson Hyperlegible Next family: ${typography.body}`);
   assert.match(typography.heading, /Atkinson Hyperlegible Next/i, `homepage topic headings must retain the approved Atkinson Hyperlegible Next family: ${typography.heading}`);
-  assert.equal(typography.anchorIcons, topics.length, 'each service anchor needs its approved icon treatment');
+  assert.equal(typography.anchorIcons, topics.length + 1, 'each service anchor needs its approved icon treatment');
   const failures = await page.evaluate(() => [...document.querySelectorAll('[data-topic-grid] .tile')].flatMap(tile => {
     const visibleText = [...tile.querySelectorAll('.cell-title,.tile-title,.anchor-title,.proof-tile-label,.cell-kicker,.topic-anchor-copy :is(span,strong,small),.review-quote,.review-name,.review-stars')]
       .filter(node => (node.textContent || '').trim() && node.getAttribute('aria-hidden') !== 'true')

@@ -1,4 +1,4 @@
-/* Native-scroll enhancement for the Websites reader. The document contains
+/* Native-scroll enhancement for the five anchor readers. The document contains
    the complete story; this module only publishes visual progress to CSS. */
 (() => {
   const roots = new Map();
@@ -108,7 +108,7 @@
   }
 
   function mount(root) {
-    if (!root?.matches('[data-reader-template="website-service"]') || roots.has(root)) return;
+    if (!root?.matches('[data-reader-template="website-service"], [data-reader-template="anchor-service"]') || roots.has(root)) return;
     const scenes = [...root.querySelectorAll('[data-rw-scene]')];
     if (!scenes.length) return;
     const items = [...root.querySelectorAll('[data-rw-item]')];
@@ -123,7 +123,7 @@
   }
 
   window.LFWebsiteStory = { mount, release };
-  const start = () => document.querySelectorAll('main[data-reader-template="website-service"]').forEach(mount);
+  const start = () => document.querySelectorAll('main[data-reader-template="website-service"], main[data-reader-template="anchor-service"]').forEach(mount);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
   else start();
 })();

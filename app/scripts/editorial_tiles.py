@@ -63,7 +63,7 @@ def anchor_trace():
     """The brand anchor uses the same finite edge-light contract as services."""
     return (
         '<svg class="anchor-trace" aria-hidden="true" focusable="false" '
-        'viewBox="0 0 456 222"><rect class="trace-rail" pathLength="100" '
+        '><rect class="trace-rail" pathLength="100" '
         'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
         'rx="20"></rect><rect class="trace-halo" pathLength="100" '
         'vector-effect="non-scaling-stroke" x="2" y="2" width="452" height="218" '
@@ -121,14 +121,15 @@ def brand_anchor_front(markup):
         '<span class="topic-anchor-face">'
         '<span class="topic-anchor-copy">'
         f'{boat}<span class="topic-anchor-label">Little Fight NYC</span>'
-        '<strong>Problems? Solved.</strong>'
+        '<h1>Problems? Solved.</h1>'
         '<span class="anchor-supporting-line">Websites, support, plans, and tools.</span>'
         '</span>'
         '<span class="topic-anchor-art"><span class="brand-anchor-art" aria-hidden="true">'
-        '<span class="brand-anchor-sun"></span><span class="brand-anchor-wake"></span>'
+        '<img src="/assets/hero-home-avenue-640.webp" srcset="/assets/hero-home-avenue-640.webp 640w, /assets/hero-home-avenue-1280.webp 1280w" sizes="(max-width:600px) 36vw, (max-width:1000px) 46vw, 440px" width="640" height="427" alt="" decoding="async" fetchpriority="high">'
         '</span></span><span class="anchor-go" aria-hidden="true">+</span></span>'
     )
-    return markup[:markup.index('>')+1] + front + anchor_trace() + '</a>'
+    trace = re.sub(r'<rect class="trace-rail"[^>]*></rect>', '', anchor_trace())
+    return markup[:markup.index('>')+1] + front + trace + '</a>'
 
 
 def enrich_editorial_tiles(mosaic):
@@ -182,7 +183,7 @@ def enrich_editorial_tiles(mosaic):
             # The same perimeter must follow wide and tall phone frames.
             # Default SVG "meet" would draw a second, inset card outline.
             trace_markup = trace.group(0).replace('<svg ', '<svg preserveAspectRatio="none" ', 1) if trace else ''
-            if family == 'web':
+            if trace_markup:
                 # Its responsive rim uses the live CSS pixel frame. Stretching
                 # the old 456px SVG made a second outline inside the card.
                 trace_markup = re.sub(r' viewBox="[^"]+"', '', trace_markup)

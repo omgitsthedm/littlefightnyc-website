@@ -33,7 +33,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 399
+EXPECTED_ROUTE_COUNT = 400
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # This must mirror the compiler's preserved-app boundary.  A reader companion
@@ -368,6 +368,19 @@ def consolidated_readers_ok(dist: Path, groups: list[dict], failures: list[str])
         rendered = References()
         rendered.feed(source)
         text = compact(" ".join(rendered.text))
+        anchor_family = {'/services/it-support/':'it', '/services/tech-consulting/':'consulting', '/services/business-systems/':'software'}.get(route)
+        if anchor_family:
+            anchor = json.loads((CONTENT / 'anchor-bodies.json').read_text())[anchor_family]
+            if 'data-reader-template="anchor-service"' not in source or 'anchor-story-body' not in source:
+                failures.append(f"anchor {identity} is missing its full story reader")
+            body = References()
+            body.feed(anchor['body'])
+            for value in [anchor['title'], anchor['summary'], *body.text]:
+                if compact(value) and compact(display(value)) not in text:
+                    failures.append(f"anchor {identity} lost authored story text: {compact(value)[:90]}")
+            if source.count('data-rw-scene=') != anchor['sceneCount'] + 1:
+                failures.append(f"anchor {identity} lost an authored story scene")
+            continue
         if group.get("preserveReader"):
             # The Website reader remains its richer, approved bespoke story;
             # the new group adds a factual FAQ without replacing that body.
@@ -412,7 +425,7 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
-    return route == "/" or route in ("/reviews/", "/websites-for-your-business/") or route.startswith("/industries/")
+    return route == "/" or route in ("/reviews/", "/websites-for-your-business/", "/how-we-help/") or route.startswith("/industries/")
 
 
 def redirect_patterns() -> list[re.Pattern[str]]:
@@ -634,8 +647,12 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         if not target.is_file():
             failures.append(f"tile {tile.get('data-answer') or href} reader document is missing: {route}")
             continue
+        document = target.read_text(errors="replace")
         anatomy = ReaderAnatomy()
-        anatomy.feed(target.read_text(errors="replace"))
+        anatomy.feed(document)
+        if tile.get("data-editorial-front") in {"web", "it", "consulting", "software", "brand"}:
+            if document.count('data-rw-scene=') < 5 or 'FAQPage' not in document:
+                failures.append(f"anchor {tile.get('data-answer')} needs a full static story and matching answer schema")
         checked += 1
         identity = tile.get("data-answer") or route
         if "review-collection" in anatomy.classes:
@@ -659,7 +676,7 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         # A sourced review collection is a complete explanatory body in its
         # own right: it holds the rating context, excerpts, attribution, and
         # direct source links instead of a generic prose section.
-        if "story-section" not in anatomy.classes and "group-story" not in anatomy.classes and "story-reviews" not in anatomy.classes:
+        if not ({"story-section", "group-story", "story-reviews", "anchor-story-body"} & anatomy.classes):
             missing.append("story-section, combined group story, or sourced story-reviews")
         if missing or anatomy.tag_counts.get("h1", 0) < 1:
             failures.append(f"tile {identity} reader is missing full context, explanation, image/icon, or next step: {', '.join(missing) or 'h1/image'}")

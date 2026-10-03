@@ -334,6 +334,7 @@
       if (row[0].card.classList.contains('review-tile')) {
         const reviewWidth = row[0].position.width;
         const partnerIndex = remaining.findIndex(entry => !entry.card.classList.contains('review-tile')
+          && entry.card.dataset.kind !== 'service-anchor'
           && entry.position.width <= cols - reviewWidth);
         if (partnerIndex >= 0) {
           const partner = remaining.splice(partnerIndex, 1)[0];
@@ -347,7 +348,7 @@
         const available = cols - used;
         let choice = -1;
         const hasBrand = row.some(entry => entry.card.dataset.answer === 'brand-brief');
-        const needsReviewPartner = !row.some(entry => !entry.card.classList.contains('review-tile'));
+        const needsFlexiblePartner = !row.some(entry => !entry.card.classList.contains('review-tile') && entry.card.dataset.kind !== 'service-anchor');
         // Equal-height cards preserve their established aspect ratio. If none
         // fit, choose the nearest height; that is the smallest truthful visual
         // adjustment required to close the row.
@@ -358,7 +359,7 @@
           // has an intentional vertical relationship at every viewport.
           if (hasBrand && candidate.card.dataset.answer === 'page-services-custom-local-websites') continue;
           if (candidate.position.width > available) continue;
-          if (needsReviewPartner && candidate.card.classList.contains('review-tile')) continue;
+          if (needsFlexiblePartner && (candidate.card.classList.contains('review-tile') || candidate.card.dataset.kind === 'service-anchor')) continue;
           if (choice < 0) {
             choice = index;
             continue;

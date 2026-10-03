@@ -18,6 +18,7 @@
     "reader-app.css",
     "editorial-tiles.css",
     "consolidated.css",
-    "review-tiles.css"
+    "review-tiles.css",
+    "anchor-stories.css"
   ]
 }

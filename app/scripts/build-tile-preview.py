@@ -52,7 +52,7 @@ def indexable(path):
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/areas/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
-    return path=='/' or path in ['/reviews/','/websites-for-your-business/'] or path.startswith('/industries/')
+    return path=='/' or path in ['/reviews/','/websites-for-your-business/','/how-we-help/'] or path.startswith('/industries/')
 
 def preserved(path):
     return PRODUCTION and path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file()
@@ -93,6 +93,13 @@ case_headlines = load('case-headlines.json')
 albums = load('albums.json')
 labs = load('labs.json')
 rewrite = load_rewrite(CONTENT)
+anchor_bodies = load('anchor-bodies.json')
+anchor_paths = {'/services/it-support/':'it', '/services/tech-consulting/':'consulting',
+                '/services/business-systems/':'software', '/how-we-help/':'brand'}
+anchor_icons = {'it':'/assets/mineral/wifi-high-bold.svg',
+                'consulting':'/assets/mineral/chats-circle-duotone.svg',
+                'software':'/assets/mineral/app-window-duotone.svg', 'brand':'/assets/boat-orange.svg'}
+anchor_labels = {'it':'Tech support', 'consulting':'Consulting', 'software':'Custom software', 'brand':'Little Fight NYC'}
 apply_catalog_hooks(rewrite, cases, labs, albums)
 lab_by_path = {'/examples/lab/concepts/'+x['slug']+'/':x for x in labs}
 LAB_IMAGES={'pool-room':'pool-room','walkup-3d':'brownstone-walkup','terminal-3d':'cinematic-3d','pill-scroll':'scroll-motion','micro-animations':'micro-animations','aha-laser':'aha-laser','studio-engine':'studio-engine','growth-street':'growth-street','goliath':'goliath'}
@@ -325,6 +332,11 @@ def article(p):
         headline=E(q['heading']).replace('easy to choose.', '<span class="rw-kinetic-phrase">easy to choose.</span>')
         benefits=''.join(f'<li><a href="{E(b["href"])}"><strong>{E(b["heading"])}</strong></a></li>' for b in q['heroBenefits'])
         hero=f'<header class="story-hero rw-scene rw-scene--hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker"><img src="/assets/mineral/browser-duotone.svg" width="32" height="32" alt="">{E(q["eyebrow"])}</p><h1 class="story-title" id="detail-title" tabindex="-1">{headline}</h1></div><div class="rw-hero-promise"><p class="story-summary">{E(q["summary"])}</p><ul class="rw-benefits" aria-label="Why choose a custom Little Fight website">{benefits}</ul></div></header>'
+    elif path in anchor_paths:
+        family = anchor_paths[path]
+        anchor = anchor_bodies[family]
+        benefits = ''.join(f'<li><a href="{E(item["href"])}">{E(item["label"])}</a></li>' for item in anchor['benefits'])
+        hero = f'<header class="story-hero rw-scene anchor-service-hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker"><img src="{anchor_icons[family]}" width="32" height="32" alt="">{anchor_labels[family]}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1></div><div class="rw-hero-promise"><p class="story-summary">{E(q["summary"])}</p><ul class="rw-benefits" aria-label="In this story">{benefits}</ul></div></header>'
     immersive = path == '/vera/'
     if immersive:
         # VERA opens as the working workspace. The complete agency context is
@@ -341,6 +353,8 @@ def article(p):
             body += lab_controls_section(lab_by_path[path])
     if path=='/services/custom-local-websites/':
         body+=(CONTENT/'website-body.html').read_text()
+    elif path in anchor_paths:
+        body+=anchor_bodies[anchor_paths[path]]['body']
     elif p.get('_homeGroup'):
         body+=render_group_sections(p['_homeGroup'],link)
     elif p.get('contentBlocks') and path not in authored and path not in lab_by_path:
@@ -396,6 +410,11 @@ pages['/services/it-support/']={'path':'/services/it-support/','title':'New York
 
 apply_readers(pages, authored, home_groups)
 apply_page_rewrite(pages, authored, rewrite)
+for path, family in anchor_paths.items():
+    anchor = anchor_bodies[family]
+    pages[path].update(heading=anchor['title'], summary=anchor['summary'], description=anchor['description'],
+                       family=family, sections=[], faqs=[{'question':item['q'], 'answer':item['a']} for item in anchor.get('faq',[])])
+    authored[path] = pages[path]
 
 def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
@@ -412,6 +431,10 @@ def head(q, home=False):
             graph.append({'@type':'Service','name':q['heading'],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
                           'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'}})
+    elif path == '/how-we-help/' and q.get('faqs'):
+        graph.append({'@type':'FAQPage', '@id':ORIGIN+path+'#questions',
+                      'mainEntity':[{'@type':'Question', 'name':item['question'],
+                                     'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
     return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
@@ -424,7 +447,7 @@ def site_footer():
 
 def shell_end(home=False):
     privacy = site_footer()
-    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Turn motion off"><span class="motion-label">Motion</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><button type="button" id="close-detail" aria-label="Return to homepage hub">×</button><section class="detail-window lf-reader reader-longform"><header class="detail-top"><button type="button" id="reader-back" aria-label="Back to previous card" hidden>Back</button><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight NYC</span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav></header><div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">All tiles +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'''
+    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close explore menu">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Pause animations and image rotation"><span class="motion-label">Pause motion &amp; slideshows</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><button type="button" id="close-detail" aria-label="Return to homepage hub">×</button><section class="detail-window lf-reader reader-longform"><header class="detail-top"><button type="button" id="reader-back" aria-label="Back to previous card" hidden>Back</button><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight NYC</span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav></header><div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">All tiles +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'''
 
 for path,p in pages.items():
     if path=='/':continue
@@ -434,7 +457,7 @@ for path,p in pages.items():
     rail='<nav class="direct-contact-rail contact-actions" aria-label="Quick contact">'+channels()+'</nav>'
     layout = ' data-reader-layout="immersive"' if path == '/vera/' else ''
     family = reader_family(p)
-    template = ' data-reader-template="website-service"' if path == '/services/custom-local-websites/' else (' data-reader-template="combined-story"' if p.get('_homeGroup') else '')
+    template = ' data-reader-template="website-service"' if path == '/services/custom-local-websites/' else (' data-reader-template="anchor-service"' if path in anchor_paths else (' data-reader-template="combined-story"' if p.get('_homeGroup') else ''))
     template += ' data-home-path="'+E(home_context.get(path,path))+'"'
     write(output_path+'index.html',head(q)+'<body class="page-home"><a class="skip-to-finder" href="#detail-title">Skip to content</a><nav class="reader-hub-return-nav" aria-label="Return to homepage hub"><a class="reader-hub-return" href="/" aria-label="Return to homepage hub">×</a></nav><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-reader-family="{E(family)}" data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}{template}>{body}</main></div>'+shell_end())
 
