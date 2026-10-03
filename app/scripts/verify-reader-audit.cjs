@@ -219,6 +219,26 @@ async function run() {
       }
     });
 
+    await check('two website readers retain distinct inquiry origins', async () => {
+      const session = await makePage(browser, { width: 390, height: 844 });
+      const origins = [];
+      try {
+        for (const reader of ['/answers/help/speed/', '/answers/help/booking/']) {
+          await session.page.goto(base + reader, { waitUntil: 'networkidle' });
+          const href = await session.page.locator('main .story-contact a.contact-plan').getAttribute('href');
+          const inquiry = new URL(href, base);
+          assert.equal(inquiry.searchParams.get('source'), reader);
+          assert.equal(inquiry.searchParams.get('intent'), 'website');
+          await session.page.goto(inquiry.href, { waitUntil: 'networkidle' });
+          const origin = session.page.locator('.lf-audit__form input[name="lead_origin"]');
+          await origin.waitFor({ state: 'attached' });
+          origins.push(await origin.inputValue());
+        }
+        assert.deepEqual(origins, ['/answers/help/speed/', '/answers/help/booking/']);
+        return 'same service, two distinct canonical reader origins in the form payload';
+      } finally { await session.context.close(); }
+    });
+
     for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
       await check('in-reader Form jump preserves the reader shell at ' + viewport.width + 'px', async () => {
         const session = await makePage(browser, viewport);

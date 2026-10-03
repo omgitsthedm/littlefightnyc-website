@@ -87,6 +87,7 @@ async function browserLanes() {
     run("node", ["scripts/verify-vera-freshness.cjs"], env);
     run("node", ["scripts/verify-case-editorial.cjs"], env);
     run("node", ["scripts/verify-inquiry-enhancement.cjs"], env);
+    run("node", ["scripts/verify-reader-audit.cjs"], { ...env, READER_AUDIT_URL: url });
   });
 }
 
