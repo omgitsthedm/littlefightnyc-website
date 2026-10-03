@@ -52,7 +52,11 @@
 }
 @media(min-width:1001px) and (max-width:1200px){
  .tile[data-narrow-compact=true] .cell-kicker{display:none}
- .tile[data-editorial-front] .topic-anchor-copy{padding:24px;gap:14px}
+ /* The twelve-column grid is physically narrow here. Keep the four anchors
+    equal by giving their longer service labels enough inline room, instead of
+    giving only Consulting or Custom Software an extra decorative row. */
+ .tile[data-editorial-front] .topic-anchor-copy{padding:18px;gap:10px;grid-template-columns:56px minmax(0,1fr)}
+ .tile[data-editorial-front] .topic-anchor-label{font-size:25px}
  .tile[data-editorial-front] .topic-anchor-copy :is(strong,h1){font-size:24px}
  .tile[data-editorial-front] .topic-anchor-art{padding:14px 14px 14px 0}
  .tile[data-editorial-story] .editorial-story-copy{padding:10px 8px}
