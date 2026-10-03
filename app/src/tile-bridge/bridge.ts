@@ -83,7 +83,10 @@ function trackTileEvent(eventName: string, contentId: string) {
 
 function observeTileExposure(contentId: string) {
   if (exposedTileIds.has(contentId)) return;
-  const target = document.querySelector<HTMLElement>("#detail-body > :first-child");
+  // Long readers can wrap their entire document in one element. Half of that
+  // wrapper may never fit on screen; measure the visible story heading instead.
+  const target = document.querySelector<HTMLElement>("#detail-body h1")
+    ?? document.querySelector<HTMLElement>("#detail-body > :first-child");
   if (!target || typeof IntersectionObserver === "undefined") return;
   let dwellTimer: number | undefined;
   const observer = new IntersectionObserver((entries) => {

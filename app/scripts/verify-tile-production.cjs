@@ -249,11 +249,20 @@ async function run() {
 
       const { context, state } = await makeContext(browser, { analytics: true });
       const page = await openPage(context, state, '/');
-      await page.locator('a.tile[href]').first().click();
+      // The contact reader wraps a long document in one element. Exposure must
+      // still register when its heading is visible, regardless of tile order.
+      await page.locator('a.tile[data-answer="brand-brief"]').click();
       await page.locator('#detail[open]').waitFor({ state: 'visible' });
       await page.waitForFunction(() => (window.dataLayer || []).some((row) => Array.from(row)[1] === 'tile_open'));
       await page.waitForFunction(() => (window.dataLayer || []).some((row) => Array.from(row)[1] === 'answer_view'));
       await page.waitForFunction(() => (window.dataLayer || []).some((row) => Array.from(row)[1] === 'tile_exposure'));
+      await page.locator('#close-detail').click();
+      await page.locator('a.tile[data-answer="page-services-custom-local-websites"]').click();
+      await page.locator('#detail[open]').waitFor({ state: 'visible' });
+      await page.waitForFunction(() => (window.dataLayer || []).some((row) => {
+        const values = Array.from(row);
+        return values[1] === 'tile_exposure' && values[2]?.tile_id === 'services_custom-local-websites';
+      }));
       await page.locator('#close-detail').click();
       await page.locator('#explore-toggle').click();
       await page.locator('#preview-search').fill('zzqvxy-unmatched-fixture');
