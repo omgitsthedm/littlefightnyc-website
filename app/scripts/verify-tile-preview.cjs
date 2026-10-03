@@ -540,9 +540,12 @@ async function run() {
     await check('direct roofing landing keeps shared controls and leads to the native inquiry form', async () => {
       await page.goto(`${base}/industries/roofing/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('#detail').evaluate(node => node.open), false);
-      const contactPath = page.locator('a[data-reader-link][href="/tech-audit/?intent=website"]').first();
+      const contactPath = page.locator('a[data-reader-link][href^="/tech-audit/?intent=website&source="]').first();
       await contactPath.waitFor({ state: 'visible' });
-      assert.match(await contactPath.getAttribute('href'), /^\/tech-audit\/\?intent=website$/);
+      const inquiryUrl = new URL(await contactPath.getAttribute('href'), base);
+      assert.equal(inquiryUrl.pathname, '/tech-audit/');
+      assert.equal(inquiryUrl.searchParams.get('intent'), 'website');
+      assert.equal(inquiryUrl.searchParams.get('source'), '/industries/roofing/');
       await page.locator('#explore-toggle').click();
       await page.locator('#explore-menu[open]').waitFor();
       await page.keyboard.press('Escape');

@@ -5,7 +5,7 @@
  * from silently being replaced while a later visual change is in progress.
  */
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { safeTechAuditLeadOrigin } from "../src/lib/techAuditOrigin.ts";
 
 const app = new URL("../", import.meta.url);
@@ -56,5 +56,27 @@ assert.equal(safeTechAuditLeadOrigin("website_service_proof"), "website_service_
 assert.equal(safeTechAuditLeadOrigin("/services/custom-local-websites/"), "/services/custom-local-websites/");
 assert.equal(safeTechAuditLeadOrigin("/services/custom-local-websites/?business=private"), "");
 assert.equal(safeTechAuditLeadOrigin("https://elsewhere.example/"), "");
+
+// Test the built public handoffs too: a source-only allowlist check can miss
+// newly generated answer cards added by the tile content library.
+const generatedOrigins = new Set();
+const dist = new URL("dist/", app);
+for (const file of await readdir(dist, { recursive: true })) {
+  if (!file.endsWith(".html") || /^(?:vera|brand-kit)\//u.test(file)) continue;
+  const html = await readFile(new URL(file, dist), "utf8");
+  for (const match of html.matchAll(/href=["']([^"']+)["']/gu)) {
+    const url = new URL(match[1].replaceAll("&amp;", "&"), "https://littlefightnyc.com");
+    if (url.origin !== "https://littlefightnyc.com" || url.pathname !== "/tech-audit/") continue;
+    const origin = url.searchParams.get("source");
+    if (origin) generatedOrigins.add(origin);
+  }
+}
+assert.ok(generatedOrigins.size > 300, "audit every generated reader handoff");
+for (const origin of generatedOrigins) {
+  assert.equal(safeTechAuditLeadOrigin(origin), origin, `generated inquiry origin must be accepted: ${origin}`);
+}
+for (const privateOrUnknown of ["//elsewhere.example/", "/not-a-public-page/", "/contact/#private", "/contact/?email=person@example.test", "/contact/../contact/", "x".repeat(161)]) {
+  assert.equal(safeTechAuditLeadOrigin(privateOrUnknown), "", "unknown or private attribution must be rejected");
+}
 
 console.log("PASS reader-audit-regressions — scroll, motion, contrast, responsive actions, and bounded origin contracts remain intact.");
