@@ -24,7 +24,7 @@ const securityHeadersFor=requestPath=>{
   return Object.fromEntries([['Content-Security-Policy',selected.csp],['X-Frame-Options',selected.xfo]].filter(([,value])=>value));
 };
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.webm':'video/webm','.vtt':'text/vtt; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8'};
-http.createServer(async(req,res)=>{
+const server=http.createServer(async(req,res)=>{
   if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);return res.end('Read-only preview');}
   let requestPath;try{requestPath=decodeURIComponent(new URL(req.url,'http://localhost').pathname);}catch{res.writeHead(400);return res.end();}
   // Mirror only the three existing public-feed rewrites. No functions, form
@@ -47,4 +47,5 @@ http.createServer(async(req,res)=>{
     if(/text|json|svg/.test(type)&&/gzip/.test(req.headers['accept-encoding']||'')){body=zlib.gzipSync(body);headers['Content-Encoding']='gzip';}
     headers['Content-Length']=body.length;res.writeHead(status,headers);res.end(req.method==='HEAD'?undefined:body);
   }catch{res.writeHead(404);res.end('Not found');}
-}).listen(port,'127.0.0.1',()=>process.stdout.write(`Little Fight review: http://127.0.0.1:${port}/\n`));
+});
+server.listen(port,'127.0.0.1',()=>process.stdout.write(`Little Fight review: http://127.0.0.1:${server.address().port}/\n`));

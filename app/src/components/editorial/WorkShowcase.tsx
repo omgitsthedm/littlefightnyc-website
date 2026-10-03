@@ -1,5 +1,4 @@
 import { caseStudies } from "@/data/site-cases";
-import ProjectMomentum from "./ProjectMomentum";
 import ProjectReviewGrid from "./ProjectReviewGrid";
 import "./WorkShowcase.css";
 
@@ -17,26 +16,9 @@ export const FEATURED_LIVE_CASE_SLUGS = [
 
 const OWNED_LIVE_CASE_SLUGS = ["after-hours-agenda"] as const;
 
-const INTERNAL_CASE_SLUGS = [
-  "legacy-music-group",
-  "army-navy-bags",
-  "brothers-pizzeria",
-  // Frozen in place as a separate recovery item, not current client proof.
-  "venuecircuit",
-  "surviving-game",
-  "pole-position-it",
-  "all-pets-animal-hospital",
-] as const;
-
-// PHC is not part of the fleet reconciliation. Its established approved case
-// presentation remains where it already lived; this prevents fleet work from
-// silently removing or rewriting the protected surface.
-const PROTECTED_EXISTING_CASE_SLUGS = ["public-house-creative"] as const;
-
 export const FLEET_PROJECT_CASE_SLUGS = [
   ...FEATURED_LIVE_CASE_SLUGS,
   ...OWNED_LIVE_CASE_SLUGS,
-  ...INTERNAL_CASE_SLUGS,
 ] as const;
 
 const featuredStudies = FEATURED_LIVE_CASE_SLUGS
@@ -45,44 +27,24 @@ const featuredStudies = FEATURED_LIVE_CASE_SLUGS
 
 const ownedStudies = OWNED_LIVE_CASE_SLUGS.map(slug => caseStudies.find(study => study.slug === slug)).filter((study): study is NonNullable<typeof study> => Boolean(study));
 
-const internalStudies = INTERNAL_CASE_SLUGS
-  .map((slug) => caseStudies.find((study) => study.slug === slug))
-  .filter((study): study is NonNullable<typeof study> => Boolean(study));
-
-const protectedExistingStudies = PROTECTED_EXISTING_CASE_SLUGS
-  .map((slug) => caseStudies.find((study) => study.slug === slug))
-  .filter((study): study is NonNullable<typeof study> => Boolean(study));
-
-export default function WorkShowcase({
-  mode = "featured",
-}: {
-  mode?: "featured" | "archive";
-}) {
-  const studies = mode === "featured"
-    ? featuredStudies
-    : [...internalStudies, ...protectedExistingStudies];
+export default function WorkShowcase() {
 
   return (
     <section
       className="lf-work-showcase"
-      aria-labelledby={`lf-work-showcase-${mode}-title`}
+      aria-labelledby="lf-work-showcase-featured-title"
     >
       <div className="lf-work-showcase__inner">
         <header className="lf-work-showcase__head">
-          <h2 id={`lf-work-showcase-${mode}-title`}>
-            {mode === "featured"
-              ? `${featuredStudies.length} live sites. ${featuredStudies.length} real customer paths.`
-              : "More work. No pretend launches."}
+          <h2 id="lf-work-showcase-featured-title">
+            {`${featuredStudies.length} live sites. ${featuredStudies.length} real customer paths.`}
           </h2>
           <p>
-            {mode === "featured"
-              ? "Every card names a real business and its live site. Visit any of them yourself. Each card shows when we last checked it."
-              : "These projects stay useful inside Little Fight. We show the work and how it works, without sending anyone to a temporary host or private system."}
+            Every card names a real business and its live site. Visit any of them yourself.
           </p>
         </header>
-        <ProjectReviewGrid studies={studies} />
-        {mode === "featured" && <div className="lf-work-showcase__owned"><header className="lf-work-showcase__head"><h2>Built for our own business.</h2><p>An owned project, separate from outside client work.</p></header><ProjectReviewGrid studies={ownedStudies} /></div>}
-        {mode === "archive" && <ProjectMomentum variant="embedded" />}
+        <ProjectReviewGrid studies={featuredStudies} />
+        <div className="lf-work-showcase__owned"><header className="lf-work-showcase__head"><h2>Built for our own business.</h2><p>An owned project, separate from outside client work.</p></header><ProjectReviewGrid studies={ownedStudies} /></div>
       </div>
     </section>
   );

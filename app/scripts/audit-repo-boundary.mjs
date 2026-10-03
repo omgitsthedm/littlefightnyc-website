@@ -36,7 +36,6 @@ const legacyRuntime = tracked.filter((file) =>
 // let local agents keep rediscovering them even though Netlify could not deploy
 // them.
 const retiredPaths = [
-  ".agents",
   ".claude",
   ".superpowers",
   "_audit",
@@ -57,6 +56,14 @@ const retiredPaths = [
 const returnedRetiredPaths = retiredPaths.filter((file) =>
   existsSync(join(repoRoot, file)),
 );
+// The owner's tile-rewrite runbook explicitly introduces one shared context
+// file. Keep the exception exact; it is authoring input, never a public asset.
+if (existsSync(join(repoRoot, ".agents"))) {
+  assert.deepEqual(readdirSync(join(repoRoot, ".agents")), ["product-marketing-context.md"],
+    "Only the requested product-marketing context belongs in .agents/");
+}
+assert.equal(existsSync(join(appRoot, "public/.agents")), false,
+  "Private authoring context must never be copied into public/");
 const retiredRootArtifacts = readdirSync(repoRoot)
   .filter((name) =>
     /^dist-corrupt-/.test(name) ||
@@ -135,5 +142,5 @@ for (const stray of ["_qa/probe.png", "probe-at-root.png"]) {
 }
 
 console.log(
-  "repo boundary ratchet OK — app/ is the only website tree and retired local context is absent.",
+  "repo boundary ratchet OK — app/ is the only website tree; only the requested private copywriting context is allowed.",
 );

@@ -1,0 +1,425 @@
+{
+  "groups": [
+    {
+      "id": "wifi",
+      "path": "/answers/help/wifi/",
+      "family": "it",
+      "title": "Wi-Fi that works where you work",
+      "heading": "Wi-Fi that works where you work",
+      "summary": "A weak signal, a provider outage, and a crowded guest network can look alike. Start by checking where the connection fails and which part of the setup is responsible before buying gear or changing settings.",
+      "icon": "wifi-high-bold.svg",
+      "absorb": [
+        "it-internet-outage",
+        "it-guest-network"
+      ],
+      "sections": [
+        {
+          "heading": "Find the break before changing anything",
+          "paragraphs": [
+            "Test the places where people actually work, not only the spot beside the router. Note the time, the devices affected, and any modem lights or messages. A wired test near the internet equipment can help separate a provider problem from a local Wi-Fi problem.",
+            "Walls, interference, device load, and access-point placement all affect coverage. A room-by-room check gives you a useful picture before moving equipment, adding a wired connection, or calling the provider."
+          ],
+          "bullets": [
+            "Map weak rooms and the work that fails there.",
+            "Record what changed just before the issue began.",
+            "Keep the provider ticket and any network changes together."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Give guests a separate lane",
+          "paragraphs": [
+            "A guest network can keep visitor traffic separate from the devices that run the business. It also makes troubleshooting clearer when a printer, payment device, or staff laptop loses its connection.",
+            "Document the current network names, who manages the account, and which devices need business access before making changes. That avoids disconnecting a tool someone relies on during the workday."
+          ],
+          "bullets": [
+            "Keep business and guest access clearly named.",
+            "Check the devices that matter after a change.",
+            "Do not share network passwords in a public note."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "email",
+      "path": "/answers/help/email/",
+      "family": "it",
+      "title": "Business email that works",
+      "heading": "Business email that works",
+      "summary": "When mail lands in spam, sends from the wrong person, or is at risk of stopping, the fix starts with the message path and the people who control the domain, mailbox, billing, and recovery accounts.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "it-shared-inbox-owner",
+        "it-domain-email-renewal"
+      ],
+      "sections": [
+        {
+          "heading": "Trace the message path",
+          "paragraphs": [
+            "Save a few affected messages and note whether the problem is sending, receiving, or a shared inbox reply. Delivery can be affected by domain authentication, sender reputation, message content, recipient settings, or a mailbox rule. Looking at the evidence first is safer than guessing.",
+            "A shared inbox can also reply from the wrong identity when permissions, default senders, and personal accounts overlap. Agree which business identity should send each kind of reply, then test it on the devices the team uses."
+          ],
+          "bullets": [
+            "Keep examples of the affected messages and times.",
+            "Check mailbox rules and the intended reply-from address.",
+            "Test a change before relying on it with customers."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Keep the account chain visible",
+          "paragraphs": [
+            "Email depends on more than a mailbox. The domain registrar, email provider, billing contact, recovery methods, and authorized account owners should be recorded in one private business record. Renewal notices are much easier to act on when the right person receives them.",
+            "Use the business-controlled accounts and approved recovery methods for changes. Do not send passwords or recovery codes by email or text."
+          ],
+          "bullets": [
+            "Record the registrar, provider, billing contact, and recovery owner.",
+            "Review renewal notices before a deadline becomes an interruption.",
+            "Keep personal and business accounts separate where possible."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "it-password-ownership",
+      "path": "/answers/help/it-password-ownership/",
+      "family": "it",
+      "title": "Keep team access under control",
+      "heading": "Keep team access under control",
+      "summary": "A small team needs the right people in the right accounts, with business ownership clear enough that a new hire, role change, or departure does not lock anyone out or leave work exposed.",
+      "icon": "desktop-tower-duotone.svg",
+      "absorb": [
+        "it-permission-review",
+        "it-new-hire-access",
+        "it-account-handoff"
+      ],
+      "sections": [
+        {
+          "heading": "Set access by role, not by shared passwords",
+          "paragraphs": [
+            "Microsoft and Google accounts can look similar while giving access to different files, email, licenses, and device settings. Establish which accounts the business owns, who administers them, and what each role needs for the first day of work.",
+            "Prepare a new team member's account, device, files, and instructions around their actual job. Test the first task with them instead of assuming an invitation or login is enough."
+          ],
+          "bullets": [
+            "Name a business owner for each important account.",
+            "Keep personal profiles separate from business access.",
+            "Test email, files, and the first real task before handoff."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Change access without losing the record",
+          "paragraphs": [
+            "When a contractor or employee leaves, removing one email address may not remove cloud shares, connected apps, or shared links. Review access with an authorized administrator, preserve business records that must remain, and document which account now owns the work.",
+            "Device return, shared folders, recovery details, and account ownership should follow the business's own policies. The goal is a clear handoff, not a rushed lockout that breaks the next person's work."
+          ],
+          "bullets": [
+            "Review shared files, links, apps, and device access together.",
+            "Preserve required records before changing ownership.",
+            "Keep recovery details in an approved private account tool."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "computer",
+      "path": "/answers/help/computer/",
+      "family": "it",
+      "title": "Set up your workspace",
+      "heading": "Set up your workspace",
+      "summary": "A new computer, office, or home workspace should be ready for the actual workday: accounts, files, calls, printers, and the connections between them. Plan first, then test the full path before people depend on it.",
+      "icon": "desktop-tower-duotone.svg",
+      "absorb": [
+        "move",
+        "it-home-work-boundary"
+      ],
+      "sections": [
+        {
+          "heading": "Plan the first working day",
+          "paragraphs": [
+            "Inventory the approved software, accounts, files, printers, monitors, and licenses before a device is handed over. For an office move, map the internet equipment, workstations, labels, access, and any business tool that needs to be available at the new location.",
+            "Backups, transfers, and timing deserve an agreed plan. That makes it less likely that a required file, license, or connection is discovered only after the old setup is gone."
+          ],
+          "bullets": [
+            "List the workstations, accounts, and devices the day depends on.",
+            "Confirm what must be ready before a move or handoff.",
+            "Schedule changes around the times disruption would hurt most."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Test the whole workflow",
+          "paragraphs": [
+            "A workspace is not complete because it turns on. Send and receive email, open the files people need, print, join a call, and check the connection where the work happens. A simple home setup deserves the same practical check.",
+            "Leave a plain record of cables, Wi-Fi, account settings, and any follow-up work. It gives the business a starting point when equipment changes later."
+          ],
+          "bullets": [
+            "Test email, files, printing, calls, and access in one pass.",
+            "Check the full setup in the physical place people will use it.",
+            "Record settings without putting passwords in public notes."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "page-services-it-support",
+      "path": "/services/it-support/",
+      "family": "it",
+      "title": "Tech support",
+      "heading": "A little help with everyday tech.",
+      "summary": "Computers, Wi-Fi, email, and the tools you rely on. Tell us what stopped working so we can discuss the right help. Ask about future New York on-site availability before planning a visit.",
+      "icon": "wifi-high-bold.svg",
+      "absorb": [
+        "human",
+        "onsite",
+        "care",
+        "it-support-notes",
+        "web-site-health-check"
+      ],
+      "sections": [
+        {
+          "heading": "Start with what is stopping work",
+          "paragraphs": [
+            "A useful request says what changed, who is affected, which device or service is involved, what work is blocked, and any exact error message. It also names a safe location and the business time when interruption would be most costly. Never send passwords in a help request.",
+            "The first step is to inspect the symptom and the recent changes before touching a risky setting. That can mean checking a payment device and network, a booking confirmation and email path, a mailbox rule, or the account that controls a website address."
+          ],
+          "bullets": [
+            "Describe the blocked job and the people affected.",
+            "Share error text or screenshots without private customer information.",
+            "Name the time and place where a change can safely happen."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Make each visit useful after the fix",
+          "paragraphs": [
+            "If we arrange an on-site visit, the work begins with what must keep running. Changes and approvals are explained before they happen, and the business can see what was adjusted and what still needs attention. Ongoing checks should be based on how much the business relies on each system and who manages it.",
+            "After a fix, a short plain-language note can record what happened, what changed, the account or device owner, and what to check next. That helps the next person begin with context instead of starting from zero."
+          ],
+          "bullets": [
+            "Confirm the scope and any on-site timing after the issue and location are known.",
+            "Keep a note of changes, owners, and the next check.",
+            "Review care needs around the systems the business relies on most."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "consulting-tool-choice",
+      "path": "/answers/help/consulting-tool-choice/",
+      "family": "consulting",
+      "title": "Keep useful tools. Cut wasted costs.",
+      "heading": "Keep useful tools. Cut wasted costs.",
+      "summary": "Before buying, replacing, or canceling software, give every tool a job, an owner, and a cost. The useful next move may be to keep it, connect it, replace it, or leave it alone.",
+      "icon": "sliders-horizontal-duotone.svg",
+      "absorb": [
+        "consulting-unused-subscriptions"
+      ],
+      "sections": [
+        {
+          "heading": "See what each tool really does",
+          "paragraphs": [
+            "List the recurring tools, their bills, the person who owns each one, and the job each tool performs. Include the quiet jobs: reminders, records, payment steps, booking, and customer follow-up. Compare those jobs with the way people actually work today.",
+            "Recent charges can reveal duplicate subscriptions or a tool that nobody uses. A bill alone is not a reason to cancel when it supports payments, booking, records, or a required safety process."
+          ],
+          "bullets": [
+            "Review a few months of charges with the owner and job beside each one.",
+            "Mark tools that do the same job or no clear job.",
+            "Check renewal dates and export options before making a change."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Try the change before committing",
+          "paragraphs": [
+            "Test one adjustment against an ordinary task and an awkward one. See whether the team can use it, whether records remain available, and whether another system still receives the information it needs.",
+            "A short trial can show whether the problem is the tool, its setup, or the connection between tools. That makes a smaller, safer decision possible."
+          ],
+          "bullets": [
+            "Change one part at a time.",
+            "Test with the people who do the work every day.",
+            "Keep a recovery or export path before ending a service."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "consulting-second-opinion",
+      "path": "/answers/help/consulting-second-opinion/",
+      "family": "consulting",
+      "title": "Get a second opinion",
+      "heading": "Get a second opinion",
+      "summary": "A second look can connect a vendor quote or provider recommendation to the way customers reach you, the tools you already use, and the work you cannot afford to interrupt. Sometimes the best advice is to leave a working setup alone.",
+      "icon": "chats-circle-duotone.svg",
+      "absorb": [
+        "consulting-vendor-quote",
+        "consulting-provider-review"
+      ],
+      "sections": [
+        {
+          "heading": "Bring the business context, not just the pitch",
+          "paragraphs": [
+            "A quote is easier to compare when the requested pages, features, content, connections, handoff, ownership, accounts, and ongoing costs are named. Tie each promised change to an actual customer path or staff task instead of a feature list.",
+            "For a provider review, gather the services in use, account owners, renewal dates, current symptoms, and business times when a change would be risky. Screenshots can help when they do not expose customer information."
+          ],
+          "bullets": [
+            "Ask what problem the recommendation solves.",
+            "Compare like-for-like scope, ownership, and ongoing commitments.",
+            "Name what must keep working during any change."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Make the recommendation usable",
+          "paragraphs": [
+            "A useful review explains the problem, the proposed change, the cost, the expected disruption, and whether leaving the current setup alone is reasonable. It turns terms in a quote into questions a business owner can answer.",
+            "Keep account access under business control. Use an authorized owner for provider changes and never send passwords by email or text. Written findings should be readable enough for the next qualified person to use."
+          ],
+          "bullets": [
+            "Ask for the tradeoffs and the next step in plain language.",
+            "Separate urgent action from a decision that can wait.",
+            "Keep credentials and recovery details private."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "page-services-business-systems",
+      "path": "/services/business-systems/",
+      "family": "software",
+      "title": "Custom software",
+      "heading": "Software you own, built around your day.",
+      "summary": "A custom tool earns its place when a repeated business job is costing real time or creating errors and a simpler tool no longer fits. Start with the current workflow, then decide whether to simplify, connect, or build something focused.",
+      "icon": "app-window-duotone.svg",
+      "absorb": [
+        "software"
+      ],
+      "sections": [
+        {
+          "heading": "Start with the work, not the software",
+          "paragraphs": [
+            "Map how a customer question, quote, job, payment, inventory record, or report moves through the business. Look for the handoffs where people retype information, wait for a reply, or depend on one person's memory. A clear map can show that a current tool needs better setup, not replacement.",
+            "If a focused build is useful, its scope should follow the work: the people using it, the information it needs, the decisions it supports, and the records that need to remain available."
+          ],
+          "bullets": [
+            "Choose one repeated job worth improving first.",
+            "Compare a simpler setup, a connection, and a focused build.",
+            "Test the work with the people who will use it."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Keep the business in control",
+          "paragraphs": [
+            "A useful system has a clear business owner for its files, data, accounts, web address, and instructions. That gives the business a usable record and makes a future handoff possible.",
+            "The aim is a tool sized for the job, with plain notes that another qualified person can understand. It should make the day less fragile, not create a new dependency that nobody can explain."
+          ],
+          "bullets": [
+            "Record the business owner for data and accounts.",
+            "Keep instructions with the system, not only in one person's memory.",
+            "Review access and handoff before the work depends on it."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "software-repeat-work",
+      "path": "/answers/help/software-repeat-work/",
+      "family": "software",
+      "title": "Stop entering things twice",
+      "heading": "Stop entering things twice",
+      "summary": "Repeated entry creates repeated chances for mistakes. Trace one record from the first customer contact to the final report, then fix the handoff before deciding whether a connection or a focused tool is needed.",
+      "icon": "app-window-duotone.svg",
+      "absorb": [
+        "software-duplicate-entry"
+      ],
+      "sections": [
+        {
+          "heading": "Trace one real record",
+          "paragraphs": [
+            "Follow a single customer, order, quote, or job through the current process. Note who enters the information, where it is copied, what gets changed, and who needs the result next. That shows whether the same data is being entered twice because of a tool gap or because the team has not agreed on one source of truth.",
+            "If people disagree about responsibilities, exceptions, or the expected outcome, software will only automate the confusion. Resolve those decisions first."
+          ],
+          "bullets": [
+            "Choose one common record and follow it end to end.",
+            "Mark every copy, handoff, and manual correction.",
+            "Agree what the final result should look like."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Connect only the handoff that needs help",
+          "paragraphs": [
+            "A focused connection can remove a repeat step when the fields, timing, owner, and exception path are clear. It should be tested with ordinary work and the awkward cases that tend to reveal gaps.",
+            "Keep a plain note of what the connection does, who owns the accounts, and how to check the result. That protects the business if the staff or tools change later."
+          ],
+          "bullets": [
+            "Start with the most costly repeat step.",
+            "Test both normal and exception cases.",
+            "Keep ownership and recovery details private and documented."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "software-business-ownership",
+      "path": "/answers/help/software-business-ownership/",
+      "family": "software",
+      "title": "Own your system",
+      "heading": "Own your system",
+      "summary": "The business should know where its files, data, accounts, web address, and instructions live, and who can take over. Clear ownership makes a system easier to maintain, change, and hand off responsibly.",
+      "icon": "book-open-text-duotone.svg",
+      "absorb": [
+        "software-handoff-notes"
+      ],
+      "sections": [
+        {
+          "heading": "Separate ownership from day-to-day access",
+          "paragraphs": [
+            "A staff member or vendor can have the access needed to do their work while the business remains the accountable owner of the important accounts and records. List the files, data, services, domain, billing contacts, and recovery methods that the system depends on.",
+            "Use business-controlled accounts and approved private tools for credentials and recovery information. Do not put passwords or codes into public documentation or send them by email or text."
+          ],
+          "bullets": [
+            "Name the business owner for every important account and record.",
+            "Keep billing and recovery contacts current.",
+            "Give access by role and review it when roles change."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Make a handoff usable before it is urgent",
+          "paragraphs": [
+            "Written notes should explain where the system lives, what it does, how routine work runs, and what another qualified person needs to check first. The notes do not need to expose private information to be useful.",
+            "Test the handoff while the current team is available. If someone can locate the records, understand the process, and complete a routine task from the notes, the business has a safer foundation for a future change."
+          ],
+          "bullets": [
+            "Write down files, data, accounts, and routine steps.",
+            "Test a routine task from the handoff notes.",
+            "Update the record after a meaningful change."
+          ],
+          "links": []
+        }
+      ],
+      "faqs": []
+    }
+  ],
+  "hiddenHomeIds": []
+}

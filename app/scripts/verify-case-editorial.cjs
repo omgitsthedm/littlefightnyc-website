@@ -49,8 +49,7 @@ async function check(name, task) {
 
 function pathname(value) { return new URL(value, base).pathname; }
 function isPublic(caseStudy) {
-  const status = caseStudy.type.toLowerCase();
-  return status.includes('public work, live') || status.includes('live storefront') || status.includes('public open beta');
+  return caseStudy.publicType === 'Website design' || caseStudy.publicType === 'Little Fight product';
 }
 
 async function makePage(browser, viewport, options = {}) {
@@ -187,20 +186,20 @@ async function verifyPublicCaseShareCards(page) {
 }
 
 async function assertCaseBriefClearsStickyRail(page, viewport) {
-  const storyLink = page.locator('.case-opening a[href="#case-brief"]');
-  await storyLink.click();
+  const heading = page.locator('#case-brief h2');
+  await heading.evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'start' }));
   await page.waitForFunction(() => {
-    const target = document.querySelector('#case-brief');
+    const target = document.querySelector('#case-brief h2');
     const rail = document.querySelector('.direct-contact-rail');
     if (!target || !rail) return false;
     return target.getBoundingClientRect().top >= rail.getBoundingClientRect().bottom + 8;
   }, null, { timeout: 5_000 });
   const positions = await page.evaluate(() => {
-    const target = document.querySelector('#case-brief .case-label')?.getBoundingClientRect();
+    const target = document.querySelector('#case-brief h2')?.getBoundingClientRect();
     const rail = document.querySelector('.direct-contact-rail')?.getBoundingClientRect();
-    return { labelTop: target?.top, railBottom: rail?.bottom };
+    return { headingTop: target?.top, railBottom: rail?.bottom };
   });
-  assert.ok(positions.labelTop >= positions.railBottom + 8, `${viewport.width}px case story label (${positions.labelTop}px) is obscured by sticky contact rail (${positions.railBottom}px)`);
+  assert.ok(positions.headingTop >= positions.railBottom + 8, `${viewport.width}px case story heading (${positions.headingTop}px) is obscured by sticky contact rail (${positions.railBottom}px)`);
   return positions;
 }
 
@@ -209,14 +208,14 @@ async function verifyStaticFallback(browser) {
   try {
     await go(page, '/examples/');
     assert.equal(await page.locator('main[data-page-content]').count(), 1, 'No-JS work index needs static main content');
-    assert.match(await page.locator('h1').first().innerText(), /Made for/i, 'No-JS work index needs the editorial heading');
+    assert.match((await page.locator('h1').first().innerText()).trim(), /^Our work\.?$/, 'No-JS work index needs the concise public heading');
     assert.equal(await page.locator('a.work-project[href^="/case-studies/"]').count(), 11, 'No-JS work index needs its 9 public cards plus 2 products');
     assert.equal(await page.locator('a.work-lab[data-reader-link]').count(), labs.length, 'No-JS work index needs all Labs as real links');
     const chromatic = page.locator('a.work-project[href="/case-studies/chromatic-painting-design/"]').first();
     assert.equal(await chromatic.count(), 1, 'No-JS work index must link to Chromatic');
     await go(page, '/case-studies/chromatic-painting-design/');
     assert.equal(await page.locator('main[data-page-content] .case-story').count(), 1, 'No-JS case study needs its complete static story');
-    assert.equal(await page.locator('a.case-primary[target="_blank"]').count(), 2, 'No-JS public case retains its live website actions');
+    assert.equal(await page.locator('a.case-primary[target="_blank"]').count(), 1, 'No-JS public case retains one clear live website action');
     return 'static work index and Chromatic case usable without JavaScript';
   } finally { await context.close(); }
 }
@@ -234,16 +233,18 @@ async function run() {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     try {
       await go(page, '/examples/');
-      await check('work index has nine public client cards, two Little Fight products, all nineteen case destinations, and reader-card VERA', async () => {
+      await check('work index has nine public client cards, two Little Fight products, all fifteen case destinations, and reader-card VERA', async () => {
+        assert.match((await page.locator('h1').first().innerText()).trim(), /^Our work\.?$/, 'Work index keeps a concise public heading');
         assert.equal(await page.locator('#client-work a.work-project').count(), 9, 'Public client card count');
         assert.equal(await page.locator('#our-products a.work-project').count(), 2, 'Little Fight product card count');
+        assert.equal(await page.locator('.work-project--featured').count(), 0, 'Client work cards use one equal treatment');
         const destinations = new Set(await page.locator('a[href^="/case-studies/"]').evaluateAll(links => links.map(link => new URL(link.href).pathname)));
         const expected = new Set(cases.map(caseStudy => `/case-studies/${caseStudy.slug}/`));
         assert.deepEqual([...destinations].sort(), [...expected].sort(), 'Work index must represent every catalog case destination');
         const vera = page.locator('a.work-vera[href="/vera/"][data-reader-link]');
         assert.equal(await vera.count(), 1, 'VERA needs one reader-card route');
         assert.equal(await vera.getAttribute('data-document-link'), null, 'VERA must not hard-navigate away from the reader');
-        return '9 public cards; 2 products; 19 case routes; VERA reader card';
+        return '9 public cards; 2 products; 15 case routes; VERA reader card';
       });
       await check('work index loads each project image and all nine Lab thumbnails', async () => {
         await assertImagesLoaded(page, '.work-project-image img', 'work index project imagery');
@@ -266,7 +267,7 @@ async function run() {
         await go(page, '/examples/');
         return `${hrefs.length} canonical Lab routes remain directly available; card embedding is verified separately`;
       });
-      await check('public case studies expose exactly real new-tab website actions; pending and private records do not', async () => {
+      await check('public case studies expose exactly real new-tab website actions; design concepts do not', async () => {
         for (const caseStudy of cases) {
           await go(page, `/case-studies/${caseStudy.slug}/`);
           const actions = page.locator('a.case-primary');
@@ -281,10 +282,23 @@ async function run() {
               assert.match(await action.getAttribute('rel') || '', /noopener/, `${caseStudy.slug}: live action isolates opener`);
             }
           } else {
-            assert.equal(count, 0, `${caseStudy.slug}: private/pending record must not claim a live external action`);
+            assert.equal(count, 0, `${caseStudy.slug}: design concept must not claim a live external action`);
           }
         }
-        return 'all 19 case routes checked against their catalog visibility status';
+        return 'all 15 case routes checked against their public presentation';
+      });
+      await check('case stories keep public labels and omit private project notes or status history', async () => {
+        for (const caseStudy of cases) {
+          await go(page, `/case-studies/${caseStudy.slug}/`);
+          const story = page.locator('.case-story');
+          const openingLabel = story.locator('.case-opening > .case-label');
+          assert.equal(await openingLabel.count(), 1, `${caseStudy.slug}: public type stays visible in the case opening`);
+          assert.equal((await openingLabel.textContent()).trim(), caseStudy.publicType, `${caseStudy.slug}: public type label`);
+          const copy = await story.innerText();
+          assert.doesNotMatch(copy, /project notes|project context|behind the scenes|private work|current status|build history|next milestone|last verified/i, `${caseStudy.slug}: internal project tracking leaked into public story`);
+          assert.doesNotMatch(copy, /client work\s*—|public work, live/i, `${caseStudy.slug}: internal catalog type leaked into public story`);
+        }
+        return '15 public stories use curated facts and plain public labels';
       });
       await check('nine public client cases have case-specific social cards that resolve locally', () => verifyPublicCaseShareCards(page));
 
@@ -296,30 +310,35 @@ async function run() {
       await check('Chromatic public case has usable desktop and phone screens plus a real live site action', async () => {
         assert.equal(await page.locator('.case-story[data-case="chromatic-painting-design"]').count(), 1);
         await assertImagesLoaded(page, '.case-stage-desktop img, .case-stage-phone img, .case-mobile-story img', 'Chromatic responsive case imagery');
-        const actions = page.locator('a.case-primary[href="https://chromaticaz.com"]');
-        assert.equal(await actions.count(), 2, 'Chromatic should have opening and handoff live actions');
+        const actions = page.locator('a.case-primary[href="https://chromaticaz.com/"]');
+        assert.equal(await actions.count(), 1, 'Chromatic should have one clear live action');
       });
       await check('Chromatic public case passes full Axe including color contrast', () => auditAxe(page, '/case-studies/chromatic-painting-design/'));
       await screenshotEvidence(page, path.join(screenshots, 'chromatic-1440.png'), 'Chromatic full-page evidence');
 
-      await check('homepage tile to website proof to Chromatic remains inside the reader and Escape returns to the current hub card', async () => {
+      await check('homepage Website gallery opens a client case in the reader, Back restores the Website story, and X returns to its hub tile', async () => {
         await go(page, '/');
         const tile = page.locator('a.tile[href="/services/custom-local-websites/"]').first();
         await tile.scrollIntoViewIfNeeded();
         await tile.click();
         await ensureReader(page, '/services/custom-local-websites/');
-        const proof = page.locator('#detail-body a.rw-project-link[href="/case-studies/chromatic-painting-design/"]');
+        const proof = page.locator('#detail-body .rw-client-project--easy-tiger a.rw-client-project-media[href="/case-studies/easy-tiger/"][data-reader-link]');
         await proof.scrollIntoViewIfNeeded();
         await proof.click();
-        await ensureReader(page, '/case-studies/chromatic-painting-design/');
-        assert.equal(await page.locator('#detail[open] .case-story[data-case="chromatic-painting-design"]').count(), 1, 'Case must stay in reader dialog');
-        await page.keyboard.press('Escape');
+        await ensureReader(page, '/case-studies/easy-tiger/');
+        assert.equal(await page.locator('#detail[open] .case-story[data-case="easy-tiger"]').count(), 1, 'Client case must stay in reader dialog');
+        const back = page.locator('#reader-back');
+        await back.waitFor({ state: 'visible' });
+        await back.click();
+        await ensureReader(page, '/services/custom-local-websites/');
+        assert.equal(await page.locator('#detail-body .rw-client-gallery .rw-client-project[data-rw-item]').count(), 9, 'Back must restore the full Website client gallery');
+        assert.equal(await back.isHidden(), true, 'Back is hidden after returning to the opening Website card');
+        await page.locator('#close-detail').click();
         await page.waitForFunction(() => !document.querySelector('#detail')?.open);
         await page.waitForURL(base + '/');
-        const chromaticHubTile = page.locator('a.tile[href="/case-studies/chromatic-painting-design/"]').first();
-        await chromaticHubTile.waitFor({ state: 'visible' });
-        assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('a.tile[href="/case-studies/chromatic-painting-design/"]')), true, 'Escape returns focus to the current card in the hub');
-        return 'tile → website proof → case reader → Escape → current hub card focus';
+        await tile.waitFor({ state: 'visible' });
+        assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('a.tile[href="/services/custom-local-websites/"]')), true, 'X returns focus to the opening Website card in the hub');
+        return 'tile → Website gallery → client case reader → Back → Website story → X → Website hub tile focus';
       });
     } finally { await context.close(); }
 
@@ -332,7 +351,7 @@ async function run() {
         try {
           await go(page, '/examples/');
           await page.locator('h1').first().waitFor({ state: 'visible' });
-          assert.match(await page.locator('h1').first().innerText(), /Made for/i, `${viewport.width}px work heading`);
+          assert.match((await page.locator('h1').first().innerText()).trim(), /^Our work\.?$/, `${viewport.width}px work heading`);
           const workOverflow = await assertNoOverflow(page, `${viewport.width}px work index`);
           await go(page, '/case-studies/chromatic-painting-design/');
           assert.match(await page.locator('h1').first().innerText(), /Chromatic Painting/i, `${viewport.width}px case heading`);

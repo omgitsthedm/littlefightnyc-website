@@ -1,0 +1,43 @@
+{
+  "identityFamilies": {
+    "lab-studio-engine": "software",
+    "lab-walkup-3d": "software",
+    "lab-terminal-3d": "software",
+    "lab-micro-animations": "software",
+    "lab-growth-street": "software",
+    "album-nyc": "consulting",
+    "album-marthas-vineyard": "consulting",
+    "album-arizona": "consulting",
+    "page-vera": "software",
+    "maps": "consulting",
+    "web-reviews-response": "consulting",
+    "web-newsletter-choice": "consulting",
+    "web-multilingual-start": "consulting",
+    "web-redesign-decision": "consulting",
+    "ownership": "it",
+    "web-domain-renewal": "it",
+    "web-hosting-ownership": "it",
+    "web-site-health-check": "it",
+    "album-hospitality": "consulting",
+    "album-roofing": "consulting",
+    "album-shops": "consulting",
+    "album-trades": "consulting",
+    "album-makers": "consulting",
+    "lab-pool-room": "software",
+    "lab-pill-scroll": "software",
+    "lab-aha-laser": "software",
+    "lab-goliath": "software",
+    "case-after-hours-agenda": "software"
+  },
+  "pathFamilies": {
+    "/vera/": "software",
+    "/markets/nyc/": "consulting",
+    "/markets/marthas-vineyard/": "consulting",
+    "/markets/arizona/": "consulting",
+    "/markets/louisiana-starbase-area/": "consulting",
+    "/markets/texas-starbase-area/": "consulting",
+    "/markets/florida-space-coast/": "consulting",
+    "/case-studies/after-hours-agenda/": "software"
+  },
+  "pathPrefixFamilies": {}
+}

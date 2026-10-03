@@ -1,0 +1,408 @@
+{
+  "categories": [
+    {
+      "id": "it",
+      "path": "/services/it-support/",
+      "title": "On-site tech help in New York",
+      "summary": "When the Wi-Fi, email, a computer, or a payment device gets in the way of work, start with the symptom. We confirm New York visit availability after we know the issue and location, then explain the next practical step.",
+      "metaTitle": "Small Business IT Support NYC | Little Fight NYC",
+      "metaDescription": "Help with Wi-Fi, email, computers, printers, and business devices. New York visit availability confirmed after we know the issue and location."
+    },
+    {
+      "id": "consulting",
+      "path": "/services/tech-consulting/",
+      "title": "Know what to fix first",
+      "summary": "Bring the tools, bills, and customer path you have now. We sort out what is working, what is costing you time, and which decision can wait.",
+      "metaTitle": "NYC Tech Consulting for Small Business | Little Fight NYC",
+      "metaDescription": "A practical second opinion on your small-business tools, bills, vendors, and customer path. Get a clear next step before spending more."
+    },
+    {
+      "id": "software",
+      "path": "/services/business-systems/",
+      "title": "Small tools for repeated work",
+      "summary": "When a handoff keeps getting lost or copied, we map the work before proposing software. The goal is one useful change your business can own and explain.",
+      "metaTitle": "Custom Business Software NYC | Little Fight NYC",
+      "metaDescription": "Custom business tools for repeated work, built only after the real handoff is clear. Keep control of your files, data, accounts, and instructions."
+    }
+  ],
+  "answers": [
+    {
+      "id": "wifi",
+      "category": "it",
+      "question": "Why does the Wi-Fi work in one room but not another?",
+      "answer": "Wi-Fi trouble can come from walls, interference, device placement, or a weak connection between your equipment and the internet.",
+      "detail": "Start by noting which rooms and devices fail, then compare the connection near the router with the trouble spot. A signal check can show whether placement, equipment, or the provider needs attention.",
+      "nextStep": "Tell us which rooms and devices are affected."
+    },
+    {
+      "id": "email",
+      "category": "it",
+      "question": "Why are my business emails going to spam?",
+      "answer": "Business email can land in spam when domain authentication, account security, sending history, or message content makes a mailbox cautious.",
+      "detail": "Check the sending address, SPF, DKIM, and DMARC records, then review whether an account has been misused. Keep the tests and changes documented so the business can maintain them.",
+      "nextStep": "Send the address you use to send mail and an example of the problem."
+    },
+    {
+      "id": "computer",
+      "category": "it",
+      "question": "What should happen before a new work computer replaces the old one?",
+      "answer": "Set up the new computer before the old one is retired, then test the work that cannot pause.",
+      "detail": "List the approved apps, accounts, files, printers, and shared folders. Plan the handover around real work and keep the old device available until the important tasks have been checked.",
+      "nextStep": "List the programs and files the new computer must have on day one."
+    },
+    {
+      "id": "onsite",
+      "category": "it",
+      "question": "What happens during an on-site tech visit?",
+      "answer": "An on-site visit starts with the symptom, the people affected, and the work that must keep moving.",
+      "detail": "We confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made.",
+      "nextStep": "Share the location, the problem, and what work is blocked."
+    },
+    {
+      "id": "printer",
+      "category": "it",
+      "question": "Why will one computer print but another cannot?",
+      "answer": "When one computer can print and another cannot, the issue is often the second computer’s network path, driver, or permission.",
+      "detail": "Check whether both devices are on the same intended network and whether they use the same printer settings. Record the working setup before changing drivers or buying hardware.",
+      "nextStep": "Tell us which computer prints and which one does not."
+    },
+    {
+      "id": "backup",
+      "category": "it",
+      "question": "How do I know our files are really backed up?",
+      "answer": "A backup is useful only when the business can restore a needed file and knows who owns the recovery process.",
+      "detail": "Identify what is backed up, where the copy lives, who can access it, and how a restore is requested. Test a safe sample restore before an emergency makes the question urgent.",
+      "nextStep": "Bring the backup service name and one file you would need back."
+    },
+    {
+      "id": "human",
+      "category": "it",
+      "question": "What should I include when I ask for tech help?",
+      "answer": "A useful tech request names what changed, who is affected, which device or service is involved, and what work is blocked.",
+      "detail": "A screenshot, exact error message, and the time the problem started can help. Do not send passwords by text or email; agree on a safe access method first.",
+      "nextStep": "Call, text, or email the symptom in your own words."
+    },
+    {
+      "id": "move",
+      "category": "it",
+      "question": "What should a small office plan before moving?",
+      "answer": "Plan the internet connection, equipment locations, and the critical work that must continue before the move day arrives.",
+      "detail": "Confirm the provider’s installation plan, map where network equipment and printers will live, and list the systems that staff need on the first day. Test the essentials once the space is ready.",
+      "nextStep": "Share the move date, new address, and the systems that must work first."
+    },
+    {
+      "id": "care",
+      "category": "it",
+      "question": "Do we need ongoing tech support?",
+      "answer": "Ongoing support should match how much the business depends on its systems, how often they change, and who already owns everyday upkeep.",
+      "detail": "Start with the recurring risks: account ownership, updates, backups, subscriptions, and customer-facing tools. Then choose a check-in rhythm that fits the work instead of signing up for help you will not use.",
+      "nextStep": "Tell us which systems cause repeat trouble."
+    },
+    {
+      "id": "it-guest-network",
+      "category": "it",
+      "question": "Should guest Wi-Fi be separate from business equipment?",
+      "answer": "Guest Wi-Fi should be separated from the network used for business devices, payment equipment, and private files.",
+      "detail": "Separate network access limits what a visitor’s phone can reach. Little Fight can review the router settings, staff devices, and payment requirements before changing the network.",
+      "nextStep": "Tell us what guests connect to and which business devices share the network."
+    },
+    {
+      "id": "it-internet-outage",
+      "category": "it",
+      "question": "Is the internet down, or is our Wi-Fi the problem?",
+      "answer": "A wired test can help separate a provider connection problem from a problem inside the Wi-Fi network.",
+      "detail": "If a computer works through a cable but not through Wi-Fi, focus on the local network. If both fail, check the provider status and the internet equipment before changing settings.",
+      "nextStep": "Tell us what works on a cable and what fails on Wi-Fi."
+    },
+    {
+      "id": "it-shared-inbox-owner",
+      "category": "it",
+      "question": "Why are customer replies missing from a shared inbox?",
+      "answer": "Shared inboxes lose customer replies when senders, permissions, forwarding rules, and ownership are unclear across the accounts involved.",
+      "detail": "Check the address customers see, the mailbox that receives replies, and who is responsible for watching it. Give each customer-facing address a clear owner and test it from an outside account.",
+      "nextStep": "Share the address customers use and where replies are expected to arrive."
+    },
+    {
+      "id": "it-account-handoff",
+      "category": "it",
+      "question": "What should we do when someone leaves the team?",
+      "answer": "Before removing access, protect the business records and transfer ownership of accounts, files, and subscriptions.",
+      "detail": "List the services the person used, preserve the work the business needs, move ownership to an authorized business account, then revoke access. Handle a device only after needed files and approvals are accounted for.",
+      "nextStep": "Start with the accounts and files the person owns."
+    },
+    {
+      "id": "it-security-basics",
+      "category": "it",
+      "question": "What security basics should a small business check first?",
+      "answer": "Start with unique account access, available multi-step sign-in, current devices, a tested backup, and a clear way to report suspicious messages.",
+      "detail": "These basics reduce avoidable problems, but no setup removes every risk. Review the accounts that matter most, document who can change them, and make the next staff action clear.",
+      "nextStep": "Bring the accounts and devices that would hurt most to lose."
+    },
+    {
+      "id": "it-password-ownership",
+      "category": "it",
+      "question": "Who should own our business passwords and recovery methods?",
+      "answer": "Business accounts should have named business owners, current recovery methods, and a safe record of who can administer them.",
+      "detail": "Personal accounts can strand a business when a staff member leaves. Review the registrar, email, payment tools, cloud storage, and recovery contacts before a change forces the issue.",
+      "nextStep": "Start with the account that controls your business email or domain."
+    },
+    {
+      "id": "it-license-renewal",
+      "category": "it",
+      "question": "How do we find duplicate subscriptions and surprise renewals?",
+      "answer": "List every business subscription with its cost, renewal date, owner, and job before deciding whether to cancel anything.",
+      "detail": "Look for tools that do the same job and for accounts nobody can explain. Keep a dated list so renewal decisions are based on the business’s real work.",
+      "nextStep": "Bring a recent list of recurring charges from your business."
+    },
+    {
+      "id": "it-video-call-room",
+      "category": "it",
+      "question": "How do we make a meeting room ready for a client call?",
+      "answer": "Test the camera, microphone, display, and connection from the room where the meeting will happen.",
+      "detail": "Use the same laptop, conferencing account, and display path the team expects to use. Little Fight can check the working inputs and a fallback contact method before an important meeting.",
+      "nextStep": "Tell us which room, devices, and call platform you use."
+    },
+    {
+      "id": "it-storage-full",
+      "category": "it",
+      "question": "What should we do when a work computer is out of storage?",
+      "answer": "Find what is using the storage before deleting anything, especially shared, synced, or business-critical files.",
+      "detail": "Photos, downloads, old installers, and duplicate sync folders are common places to inspect. Make a copy or confirm the source before removing business records, then document what changed.",
+      "nextStep": "Share a screenshot of the storage summary, not any private business files."
+    },
+    {
+      "id": "it-shared-files",
+      "category": "it",
+      "question": "How should a small team organize shared files?",
+      "answer": "Shared files work best when folder names match the work, permissions match roles, and someone owns each important area.",
+      "detail": "Test the structure with a normal task: can the right person find a recent invoice, client file, or approved template without asking around? Keep the answer in the system, not in one person’s memory.",
+      "nextStep": "Show us one folder that people regularly struggle to find."
+    },
+    {
+      "id": "it-phone-setup",
+      "category": "it",
+      "question": "What should we test before using a new business phone number?",
+      "answer": "Before announcing a business number, test the call, voicemail, message routing, and after-hours handling from another phone.",
+      "detail": "Confirm who receives messages and who calls customers back. Little Fight can test the public number, voicemail wording, and backup contact before the number is announced.",
+      "nextStep": "Tell us where calls should go during business hours and after hours."
+    },
+    {
+      "id": "it-software-updates",
+      "category": "it",
+      "question": "How should we handle software updates without disrupting work?",
+      "answer": "Inventory the devices and critical apps first, then schedule updates around the work that cannot be interrupted.",
+      "detail": "Check whether an update affects payment, booking, files, or shared access. Little Fight can plan a safe check of the customer-facing path after a meaningful change.",
+      "nextStep": "List the devices and apps your team relies on each working day."
+    },
+    {
+      "id": "it-permission-review",
+      "category": "it",
+      "question": "How do we make sure a former contractor no longer has access?",
+      "answer": "Removing an email account may leave separate access to cloud folders, shared links, and business applications.",
+      "detail": "Review the systems the person used, revoke permissions through the authorized administrator, and preserve records the business still needs. Confirm ownership before removing access so important files are not stranded.",
+      "nextStep": "List the services and folders the former contractor used."
+    },
+    {
+      "id": "it-payment-device-check",
+      "category": "it",
+      "question": "Why does the card reader disconnect during service?",
+      "answer": "A card reader can lose connection because of its network, signal, power, device settings, or the payment service itself.",
+      "detail": "Note the time, location, reader model, connection type, and what the device says when it fails. Test carefully around the business’s operating needs and keep payment data out of support messages.",
+      "nextStep": "Tell us the reader model, the error message, and when it drops out."
+    },
+    {
+      "id": "it-new-hire-access",
+      "category": "it",
+      "question": "What access should a new teammate receive?",
+      "answer": "Give a new teammate the accounts, devices, files, and instructions their role needs, then test a real first task with the manager.",
+      "detail": "Use role-based access rather than copying another person’s entire setup. Keep the owner of each account clear so later changes do not depend on memory.",
+      "nextStep": "Describe the role and the first task the person must complete."
+    },
+    {
+      "id": "it-domain-email-renewal",
+      "category": "it",
+      "question": "How do we avoid a domain or email renewal problem?",
+      "answer": "Keep the domain registrar, email provider, billing contact, recovery contact, and authorized account owner in one current record.",
+      "detail": "Review renewal notices and recovery methods before a deadline. Little Fight can help the business identify who can approve a change without searching old messages.",
+      "nextStep": "Start with the domain name, registrar or email provider, and renewal contact."
+    },
+    {
+      "id": "it-support-notes",
+      "category": "it",
+      "question": "Why should a tech fix be written down?",
+      "answer": "A clear support note makes the next problem easier to understand because it records what changed, who owns it, and what to check first.",
+      "detail": "Keep the note plain enough for the business owner to use. Include the symptom, action, affected account or device, and any follow-up the owner needs to schedule.",
+      "nextStep": "Ask for a plain-language record after the next important fix."
+    },
+    {
+      "id": "it-vendor-handoff",
+      "category": "it",
+      "question": "What should we gather before changing IT providers?",
+      "answer": "Gather the services, account owners, renewal dates, current symptoms, and business times when a change would be risky.",
+      "detail": "Do not send passwords by text or email. Agree on safe access, name the systems that must keep running, and decide how the business will verify a successful handoff.",
+      "nextStep": "Bring the service list and the work hours that cannot be disrupted."
+    },
+    {
+      "id": "it-home-work-boundary",
+      "category": "it",
+      "question": "What makes a home office ready for real work?",
+      "answer": "A useful home office starts with the work you need to do, then matches the devices, connection, and account access to that job.",
+      "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a simple record of cables, Wi-Fi details, and settings the owner may need later.",
+      "nextStep": "List the programs, devices, and calls you need to handle from home."
+    },
+    {
+      "id": "consulting-first-priority",
+      "category": "consulting",
+      "question": "What should we fix first?",
+      "answer": "Start with what customers see, what the business pays for, and where work repeatedly gets stuck.",
+      "detail": "Rank the issues by customer impact, business risk, and the effort needed to check them. A short review can separate an urgent broken path from an annoyance that can wait.",
+      "nextStep": "Show us one customer path and one recurring frustration."
+    },
+    {
+      "id": "consulting-tool-choice",
+      "category": "consulting",
+      "question": "Which tools should we keep?",
+      "answer": "Give every tool a job, an owner, and a cost before deciding whether it should stay.",
+      "detail": "Compare the tool with the work it actually supports, not the sales pitch that brought it in. Keep what fits, connect what has a clear job, and leave a working system alone when change adds risk.",
+      "nextStep": "Bring the tools your team uses in a normal week."
+    },
+    {
+      "id": "consulting-unused-subscriptions",
+      "category": "consulting",
+      "question": "Are we paying twice for the same thing?",
+      "answer": "Compare recurring charges with the work each tool supports, its owner, and the records it holds before canceling anything.",
+      "detail": "Look for overlapping tools, unused seats, and subscriptions with no clear owner. Protect payments, booking, records, and exports until the replacement path has been proven.",
+      "nextStep": "Bring recent subscription charges and the person who knows what each one does."
+    },
+    {
+      "id": "consulting-second-opinion",
+      "category": "consulting",
+      "question": "Do we need a second opinion?",
+      "answer": "A second opinion checks whether your tools still fit the business, the bills, and the way customers reach you.",
+      "detail": "The review starts with evidence from your actual customer path and account ownership. Sometimes the useful answer is to keep the setup you have and fix one smaller weak point.",
+      "nextStep": "Bring the decision you are about to make and the information behind it."
+    },
+    {
+      "id": "consulting-vendor-quote",
+      "category": "consulting",
+      "question": "Does this vendor quote fit our business?",
+      "answer": "A vendor quote is easier to judge when you can compare it with your customer path, current tools, account owners, and costs.",
+      "detail": "Ask what problem the quote solves, what changes for staff and customers, who owns the result, and what happens to your existing data. A proposal should answer those questions plainly.",
+      "nextStep": "Send the quote with the business problem it is meant to solve."
+    },
+    {
+      "id": "consulting-provider-review",
+      "category": "consulting",
+      "question": "How do we prepare for a technology review?",
+      "answer": "Bring your services, account owners, renewal dates, current symptoms, and the business times when change would be risky.",
+      "detail": "That gives the review a real operating picture instead of a vague wish list. It also lets Little Fight identify the first safe check with the owner and the business’s actual needs.",
+      "nextStep": "Start with the customer-facing tool you worry about most."
+    },
+    {
+      "id": "software",
+      "category": "software",
+      "question": "When is custom software worth building?",
+      "answer": "Custom software earns its cost when a repeated process creates real errors or wasted effort and the existing tools cannot handle it well.",
+      "detail": "Map the task first. A spreadsheet, a better setting, or a connection between tools may solve the problem with less disruption than a new build.",
+      "nextStep": "Show us the repeated task from start to finish."
+    },
+    {
+      "id": "software-repeat-work",
+      "category": "software",
+      "question": "Are we repeating the same task because of a process problem?",
+      "answer": "When people disagree about responsibilities, exceptions, or the desired result, software can carry the confusion forward.",
+      "detail": "Write down the current handoff, name the owner at each step, and agree on the exception rules. Once the process is clear, the smallest useful tool becomes easier to see.",
+      "nextStep": "Bring one task your team repeats or redoes each week."
+    },
+    {
+      "id": "software-approval-path",
+      "category": "software",
+      "question": "When do approvals need a shared system?",
+      "answer": "A shared approval system helps when requests regularly disappear between messages, spreadsheets, and memory before the next owner can act.",
+      "detail": "First map who starts the request, who decides, what evidence they need, and who acts next. Little Fight can turn that agreed sequence into a focused shared workflow.",
+      "nextStep": "Walk us through one approval that got stuck."
+    },
+    {
+      "id": "software-duplicate-entry",
+      "category": "software",
+      "question": "Why are we entering the same information twice?",
+      "answer": "Repeated data entry creates more chances for mistakes and usually points to a handoff that needs to be mapped.",
+      "detail": "Follow where the information begins, where it needs to go, and who touches it in between. The answer may be a clearer workflow, a connection between existing tools, or a focused new tool.",
+      "nextStep": "Show us one piece of information that gets copied more than once."
+    },
+    {
+      "id": "software-connect-existing-tools",
+      "category": "software",
+      "question": "Can our existing tools work together?",
+      "answer": "Existing tools can sometimes be configured or connected when a specific handoff is clear and the accounts allow it.",
+      "detail": "Check the current setup before building anything new. Compare the cost, ownership, data access, and staff impact of a connection with the smallest custom alternative.",
+      "nextStep": "List the tools and the one handoff you want to improve."
+    },
+    {
+      "id": "software-business-ownership",
+      "category": "software",
+      "question": "Who owns the system we build?",
+      "answer": "Your business should control the agreed files, data, accounts, and operating notes for the custom work.",
+      "detail": "Ownership works when another qualified person can understand where the system lives, who administers it, and how the business recovers access. Third-party platforms and licensed assets keep their own terms.",
+      "nextStep": "Ask which accounts, files, and instructions the project will hand over."
+    },
+    {
+      "id": "software-smallest-useful-change",
+      "category": "software",
+      "question": "How small can the first software change be?",
+      "answer": "Start with one repeated handoff and define the smallest change that makes the work clearer or less error-prone.",
+      "detail": "A first version should fit the real task and show the owner what changed. Once the business has used it, the next decision can come from evidence instead of a long feature list.",
+      "nextStep": "Name the handoff that causes the most repeat work."
+    },
+    {
+      "id": "software-handoff-notes",
+      "category": "software",
+      "question": "Can another qualified person take over the system later?",
+      "answer": "A system is easier to hand over when its files, data, accounts, and operating steps are documented for the business.",
+      "detail": "Keep the record practical: where the system runs, who administers it, how access is recovered, and what normal upkeep looks like. That documentation protects the business when support changes.",
+      "nextStep": "Ask for the handoff record as part of the project scope."
+    }
+  ],
+  "groupIntros": {
+    "wifi": {
+      "heading": "Wi-Fi should reach the work.",
+      "summary": "A weak signal, crowded network, or provider problem can look alike from the counter. We start by finding where the connection changes and what work it interrupts."
+    },
+    "email": {
+      "heading": "Email needs a clear owner.",
+      "summary": "Customer messages, shared inboxes, and domain settings should point to people who can see and act on them. We check the route before changing the tools."
+    },
+    "it-password-ownership": {
+      "heading": "The business needs the keys.",
+      "summary": "Domains, email, payments, and cloud files should have named business owners and usable recovery methods. We map the accounts before a missed renewal or staff change turns into an emergency."
+    },
+    "computer": {
+      "heading": "A new computer should feel familiar.",
+      "summary": "The goal is a working handover: the approved apps, files, and accounts are ready, and the work that matters has been checked before the old device leaves."
+    },
+    "page-services-it-support": {
+      "heading": "Start with what stopped working.",
+      "summary": "We listen for the symptom, the people affected, and the work that cannot wait. New York on-site availability is confirmed after the issue and location are known."
+    },
+    "consulting-tool-choice": {
+      "heading": "Keep the tools that earn their place.",
+      "summary": "Every subscription should have a job, an owner, and a cost the business recognizes. We separate useful tools from duplicate work before recommending a change."
+    },
+    "consulting-second-opinion": {
+      "heading": "A second look can stop a bad purchase.",
+      "summary": "Bring the vendor quote, bills, and the work it is meant to improve. We compare the promise with the business you actually run."
+    },
+    "page-services-business-systems": {
+      "heading": "Build only what the work needs.",
+      "summary": "A small custom tool should remove a repeated handoff, not create another screen to manage. We map the work first and define the smallest useful change."
+    },
+    "software-repeat-work": {
+      "heading": "Make the handoff visible.",
+      "summary": "Repeated entry, lost approvals, and unclear ownership are signs to study the process. Once the people agree on the work, software has a useful job to do."
+    },
+    "software-business-ownership": {
+      "heading": "Your business stays in control.",
+      "summary": "Custom work should leave the agreed files, data, accounts, and operating notes with the business. That keeps future support and recovery possible."
+    }
+  }
+}

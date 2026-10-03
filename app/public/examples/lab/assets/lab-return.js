@@ -200,7 +200,7 @@
       status = document.createElement('p');
       status.className = 'lab-concept-status';
       status.setAttribute('role', 'note');
-      status.textContent = 'Lab showroom build. Any people, places, numbers, or business states shown here are illustrative unless the page says otherwise. This is not a client result or a promise.';
+      status.textContent = 'Interactive demonstration. Any people, places, numbers, or business states shown here are illustrative unless the page says otherwise. This is not a client result or a promise.';
     }
 
     replay.addEventListener('click', function () {

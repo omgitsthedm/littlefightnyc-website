@@ -13,7 +13,6 @@ import LiveSiteExplorer from "@/components/editorial/LiveSiteExplorer";
 import FeatureProof from "@/components/editorial/FeatureProof";
 import ProofPassport, { ProofStatus } from "@/components/editorial/ProofPassport";
 import ProjectWalkthrough from "@/components/editorial/ProjectWalkthrough";
-import ProjectMomentum from "@/components/editorial/ProjectMomentum";
 import {
   caseProofLabel,
   caseProofPriority,
@@ -327,8 +326,6 @@ export default function CaseStudyDetail() {
         </section>
         {study.editorial && <ClientCaseEditorial study={study} />}
       </article>
-
-      {!study.editorial && <ProjectMomentum slug={study.slug} variant="detail" />}
 
       {related.length > 0 && (
         <section className="lf-case-next__related" aria-labelledby="lf-case-related-title">

@@ -5,9 +5,11 @@ from html import escape
 import hashlib
 import json
 from urllib.parse import urlsplit
+from tile_rewrite import CONTENT_UPDATED, load_rewrite, rewritten_paths
 
 ROOT = Path(__file__).resolve().parents[1] / 'dist'
 ORIGIN = 'https://littlefightnyc.com'
+updated = rewritten_paths(load_rewrite(ROOT.parent / 'preview-content'))
 
 
 class Head(HTMLParser):
@@ -38,7 +40,9 @@ for file in ROOT.rglob('*.html'):
 (ROOT / 'sitemap.xml').write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    '\n'.join('<url><loc>' + escape(url) + '</loc></url>' for url in sorted(urls)) +
+    '\n'.join('<url><loc>' + escape(url) + '</loc>' +
+              ('<lastmod>' + CONTENT_UPDATED + '</lastmod>' if urlsplit(url).path in updated else '') +
+              '</url>' for url in sorted(urls)) +
     '\n</urlset>\n'
 )
 digest = hashlib.sha256()

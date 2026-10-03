@@ -13,10 +13,7 @@ import {
   Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import {
-  CABINETRY_PROCESS_FILM,
-  type CinematicMediaAsset,
-} from "./cinematic-media";
+import type { CinematicMediaAsset } from "./cinematic-media";
 
 /* Re-export the split-out content arrays so every existing `@/data/site`
  * import keeps working; Vite tree-shakes each consumer to just its slice. */
@@ -66,7 +63,6 @@ export type StudioProject = {
   slug: string;
   name: string;
   kind: string;
-  status: "Active" | "Live" | "Sandbox" | "Archived";
   oneline: string;
   description: string;
   stack: string[];
@@ -393,8 +389,7 @@ export const services: Service[] = [
       "Plain notes another qualified person can use if you ever need them",
       "A look at the steps and software bills that slow the day down",
     ],
-    image: CABINETRY_PROCESS_FILM.poster,
-    video: CABINETRY_PROCESS_FILM,
+    image: "/assets/owner.webp",
     accent: "green",
     icon: ClipboardCheck,
     shortAnswer:
@@ -526,27 +521,9 @@ export const auditRoutes = [
 
 export const studioProjects: StudioProject[] = [
   {
-    slug: "cockpit",
-    name: "Estimator’s Cockpit",
-    kind: "Field-precision web app",
-    status: "Active",
-    oneline: "Private estimating software for a custom cabinetry team. Discovery, sorting, and reporting in one working system.",
-    description:
-      "The Cockpit turns the messy first pass of a cabinetry estimate into a structured record. Documents in. Rooms sorted. Price drivers checked. Report out. Private to the team. The biggest non-public build Little Fight has shipped.",
-    stack: ["Next.js", "Supabase", "Anthropic", "Netlify Functions"],
-    image: CABINETRY_PROCESS_FILM.poster,
-    video: CABINETRY_PROCESS_FILM,
-    body: [
-      "An estimator turns the messy first pass of a custom cabinetry estimate into a structured record. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers get checked. The report goes out. It is the largest non-public build Little Fight has shipped.",
-      "The build is Next.js, Supabase, Anthropic for classification, and Netlify Functions for the heavy processing. The screens show dense information without hiding anything. The data tells the truth. The estimator’s judgment makes the call.",
-      "Real estimates run through it. The math is honest. The team uses it on every project.",
-    ],
-  },
-  {
     slug: "venuecircuit",
     name: "VenueCircuit",
     kind: "Financial OS for live-event venues",
-    status: "Live",
     oneline:
       "A venue GM closes the night in 90 seconds and knows every number down to the receipt. The operating system for independent live-event venues—a full product Little Fight shipped to the public.",
     description:

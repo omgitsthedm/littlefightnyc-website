@@ -105,7 +105,7 @@
   },
   "case-venuecircuit": {
     "title": "VenueCircuit",
-    "summary": "A project for independent venues that keeps bar, door, staff, and promoter splits in one traceable closeout flow."
+    "summary": "A Little Fight venue closeout tool that keeps bar, door, staff, and promoter splits in one traceable flow."
   },
   "it-security-basics": {
     "title": "Start with practical security basics",
@@ -125,7 +125,7 @@
   },
   "case-deckspace": {
     "title": "DeckSpace",
-    "summary": "A project for a cruise that brings an onboard guide, guest network, and memory layer into one small world."
+    "summary": "A product design concept that brings an onboard guide, guest network, and memory layer into one cruise experience."
   },
   "forms": {
     "title": "Find why forms are abandoned",
@@ -284,7 +284,7 @@
     "summary": "One studio identity with separate paths for painting projects and mural commissions."
   },
   "case-hair-by-rachel-charles": {
-    "title": "Hair By Rachel Charles",
+    "title": "Hair By Rachel",
     "summary": "A salon website that explains services before booking while keeping Square in the booking path."
   },
   "page-areas": {
@@ -315,13 +315,9 @@
     "title": "After Hours Agenda",
     "summary": "A brand-led streetwear storefront that keeps product, payment, and made-to-order fulfillment connected."
   },
-  "case-all-pets-animal-hospital": {
-    "title": "All Pets Animal Hospital",
-    "summary": "A public project record that keeps private client details withheld until public proof is approved."
-  },
   "case-army-navy-bags": {
     "title": "Army & Navy Bags",
-    "summary": "A phone-first neighborhood field guide for a distinctive local shop."
+    "summary": "A phone-first design concept for a neighborhood shop, with product groups, hours, and directions close at hand."
   },
   "album-roofing": {
     "title": "Roofing work, ready for inquiry",
@@ -329,7 +325,7 @@
   },
   "case-brothers-pizzeria": {
     "title": "Brothers Pizzeria",
-    "summary": "A neighborhood-pizzeria concept with heritage, a full readable menu, and phone ordering together."
+    "summary": "A neighborhood-pizzeria design concept that brings heritage, a readable menu, and phone ordering together."
   },
   "case-grand-funding-llc": {
     "title": "Grand Funding LLC",
@@ -341,19 +337,7 @@
   },
   "case-legacy-music-group": {
     "title": "Legacy Music Group",
-    "summary": "A music-company release candidate with paths for artists, services, booking, company context, and reference material."
-  },
-  "case-pole-position-it": {
-    "title": "Pole Position IT",
-    "summary": "An active client project whose public proof stays private until its owner approves it."
-  },
-  "case-public-house-creative": {
-    "title": "Public House Creative",
-    "summary": "A private estimating system that brings documents, room classification, price drivers, and reporting into one checkable workspace."
-  },
-  "case-surviving-game": {
-    "title": "Surviving Game",
-    "summary": "A public project record that preserves privacy until client-approved proof is available."
+    "summary": "A music-company design concept with paths for artists, services, booking, company context, and reference material."
   },
   "album-shops": {
     "title": "Shops and salons, ready to visit",

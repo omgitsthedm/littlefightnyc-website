@@ -2,95 +2,89 @@
   {
     "path": "/services/custom-local-websites/",
     "title": "Custom Small Business Websites Nationwide | Little Fight NYC",
-    "description": "Custom websites for small businesses across the United States. Clear services, real proof, and a direct route to call, text, email, or ask for a first look.",
-    "eyebrow": "Websites for independent businesses",
-    "heading": "A website should make the next customer action easy.",
-    "summary": "We build custom small-business websites across the United States. The work starts with the customer question, then makes the answer, proof, and next step clear.",
+    "description": "Custom small business websites, built and managed by Little Fight NYC. Own your code, get search and marketing setup, and pay no monthly hosting fee.",
+    "eyebrow": "Custom websites",
+    "heading": "You built the business. We’ll build its website.",
+    "summary": "A website you’re proud to share. Built around your business, made to help people find you, and handled from first draft to launch.",
     "sections": [
       {
-        "id": "job",
-        "heading": "Start with the job your site has to do.",
+        "id": "what-you-get",
+        "heading": "Make the next step clear.",
         "paragraphs": [
-          "A website can help people call, request an estimate, book, visit, apply, or understand a bigger purchase. Those are different jobs. We plan the page around the one that matters most.",
-          "Bring an old site, a rough idea, or a new business. We check what people need to know before they can choose you. Then we build the shortest honest path to that conversation."
+          "We shape the pages, words, proof, and contact choices around what a customer needs to do next."
         ],
         "bullets": [
-          "Services written in the words customers use.",
-          "Real work, reviews, credentials, and answers you can stand behind.",
-          "Phone, text, email, and form options people can use on a phone.",
-          "A clear handoff to the tools you already use when that is useful."
+          "Custom pages and copy.",
+          "Mobile-ready layouts with clear, larger text.",
+          "Search-readable answers and contact tracking."
         ],
         "links": []
       },
       {
         "id": "ownership",
-        "heading": "Your name. Your domain. Your website.",
+        "heading": "A site you own.",
         "paragraphs": [
-          "You own the code, domain, and content. We do not lock your business inside a template account. The written scope says what we are building, what each side supplies, the review points, and what happens next.",
-          "The website offer is 50% to start and 50% on hosting. There is no monthly hosting fee. Free monthly checks, upgrades, and changes are included within the written scope. Faster ongoing help can be covered separately."
+          "You own the code, domain, and content. A custom quote sets the scope: 50% to start and 50% on hosting. There is no monthly hosting fee. Monthly checks, upgrades, and changes are included only within the scope agreed in writing; faster ongoing help can be covered separately."
         ],
         "bullets": [],
         "links": []
-      },
-      {
-        "id": "proof",
-        "heading": "Build around a real customer decision.",
-        "paragraphs": [
-          "A painting customer needs to see the right work and ask for an estimate. A salon customer needs guidance before booking. A film audience needs one official place for the work and press. We have built each of those paths.",
-          "We will not call those projects proof that we have solved your industry. They show how we turn a specific business question into a usable site."
-        ],
-        "bullets": [],
-        "links": [
-          {
-            "label": "See website work",
-            "href": "/examples/"
-          },
-          {
-            "label": "Read review excerpts",
-            "href": "/reviews/"
-          }
-        ]
-      },
-      {
-        "id": "first-look",
-        "heading": "Get a first look before you decide.",
-        "paragraphs": [
-          "We review your current site or idea, the customer action you need, and the tools that already matter. If a cleanup makes more sense than a replacement, we will say so. If we are not the right fit, we will say that too."
-        ],
-        "bullets": [],
-        "links": [
-          {
-            "label": "Get a free first look",
-            "href": "/tech-audit/?intent=website&source=website_service"
-          }
-        ]
       }
     ],
     "proofPaths": [
-      "/case-studies/chromatic-painting-design/",
+      "/case-studies/easy-tiger/",
       "/case-studies/hair-by-rachel-charles/",
+      "/case-studies/the-tarot-hotline/",
+      "/case-studies/grand-funding-llc/",
+      "/case-studies/the-break-room/",
+      "/case-studies/clearhelp/",
+      "/case-studies/logan-loans/",
       "/case-studies/cc-films/",
-      "/reviews/"
+      "/case-studies/chromatic-painting-design/"
     ],
     "faqs": [
       {
-        "question": "Can you build my website if my business is outside New York?",
-        "answer": "Yes. Website projects can run remotely across the United States. On-site IT work is a separate New York service with timing and scope confirmed first."
+        "question": "Can you build a website outside New York?",
+        "answer": "Yes. Website projects can run remotely across the United States. On-site IT is a separate New York service."
       },
       {
         "question": "Can I keep my domain and current software?",
-        "answer": "Usually. We check what you own and use before building. The written scope identifies what stays, what connects, and what needs testing."
-      },
-      {
-        "question": "Will a new website bring me more customers?",
-        "answer": "A website can make it easier for the right people to understand and contact you. It cannot promise traffic, rankings, calls, or sales. We can set up a clear way to track inquiries and follow-up."
-      },
-      {
-        "question": "How long does a website take?",
-        "answer": "The written scope sets the schedule and needed materials. The 14-day promise applies only to qualifying written scopes and includes its terms and remedy."
+        "answer": "Usually. We review what you use and confirm what stays, connects, or needs testing in writing."
       }
     ],
-    "contactPrompt": "Tell us what the site needs to do. Call, text, email, or ask for a free first look."
+    "contactPrompt": "Tell us about the business you’re building. We’ll work out what your website can do for it.",
+    "heroSlugs": [],
+    "heroBenefits": [
+      {
+        "heading": "Built around your business.",
+        "detail": "Your brand, your services, and your customer’s next step.",
+        "href": "#reader-compare"
+      },
+      {
+        "heading": "Built for search and marketing.",
+        "detail": "Useful pages, fast code, and clear ways to contact you.",
+        "href": "#reader-search"
+      },
+      {
+        "heading": "You own your website.",
+        "detail": "The code, domain, and content stay yours.",
+        "href": "#reader-ownership"
+      },
+      {
+        "heading": "We handle the technical work.",
+        "detail": "Design, writing, setup, launch, and monthly care.",
+        "href": "#reader-launch"
+      },
+      {
+        "heading": "No monthly hosting fee.",
+        "detail": "A custom quote. No builder subscription.",
+        "href": "#reader-plan"
+      },
+      {
+        "heading": "Live in six weeks or less.",
+        "detail": "From an agreed brief and ready materials.",
+        "href": "#reader-launch"
+      }
+    ]
   },
   {
     "path": "/industries/plumbers/",

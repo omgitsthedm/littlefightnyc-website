@@ -1556,15 +1556,6 @@
       "image": "/assets/cases/2026-09-29/og-case-clearhelp.webp"
     },
     {
-      "path": "/case-studies/public-house-creative/",
-      "title": "Private Estimating Software Case Study | Little Fight NYC",
-      "description": "How Little Fight NYC built private estimating software for a custom cabinetry team. Documents in, rooms sorted, math checked, report out.",
-      "h1": "Private estimating software",
-      "shortAnswer": "A private production system for the estimating work the team actually runs.",
-      "type": "Article",
-      "image": "/media/cabinetry-process-share-0a7876df.webp"
-    },
-    {
       "path": "/case-studies/brothers-pizzeria/",
       "title": "Neighborhood Pizzeria Website Concept | Little Fight NYC",
       "description": "How Little Fight NYC turned a generic digital menu into a family handbill built around a 1998 pizzeria’s real story, every price, and phone-first ordering.",
@@ -1616,15 +1607,6 @@
       "shortAnswer": "Short answer: VenueCircuit is Little Fight’s own shipped software product. A financial OS for independent live-event venues, live at venuecircuit.app in open beta.",
       "type": "Article",
       "image": "/assets/og-case-venuecircuit.webp"
-    },
-    {
-      "path": "/studio/cockpit/",
-      "title": "Estimator’s Cockpit \u2014 From the Studio | Little Fight NYC",
-      "description": "Private estimating software for a custom cabinetry team. Documents, rooms, price drivers, source checks, and reporting in one working system.",
-      "h1": "Estimator’s Cockpit",
-      "shortAnswer": "Short answer: Estimator’s Cockpit turns the first pass of a custom cabinetry estimate into one structured, source-traceable team record.",
-      "type": "Article",
-      "image": "/media/cabinetry-process-share-0a7876df.webp"
     },
     {
       "path": "/studio/venuecircuit/",

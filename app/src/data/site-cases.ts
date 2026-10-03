@@ -1,10 +1,7 @@
 /* Split out of site.ts so content routes load ONLY their own data slice
  * (this array was part of the ~200KB shared site chunk). Pure data, no icons. */
 
-import {
-  CABINETRY_PROCESS_FILM,
-  type CinematicMediaAsset,
-} from "./cinematic-media";
+import type { CinematicMediaAsset } from "./cinematic-media";
 
 export type CaseProofStatus =
   | "public-live"
@@ -659,59 +656,6 @@ const retainedCaseStudies: CaseStudy[] = [
       "Someone asking for help gets one clear public starting point, and the staff receive the request in the protected system built to handle it. Behind that are three connected places — one for the public, one for requests, one for the staff — that feel like one service, not three unrelated tabs.",
       "We kept the team’s own categories and names, so the human work did not have to change. A request now starts in one clear place and reaches the right staff view without someone retyping it.",
       "The result is a connected setup the team can use and update with confidence. The useful proof is not the plumbing. It is that a request can reach the right place without extra copying.",
-    ],
-  },
-  {
-    type: "Creative agency",
-    client: "Public House Creative",
-    url: "",
-    slug: "public-house-creative",
-    metrics: [
-      {
-        value: "3 tools to 1",
-        label: "Estimates in one source of truth",
-        evidence: "release",
-      },
-      {
-        value: "Every number",
-        label: "Audits back to its source",
-        evidence: "build",
-      },
-      {
-        value: "In production",
-        label: "Runs on the team’s real bids",
-        evidence: "release",
-      },
-    ],
-    showcase: {
-      label: "Private estimating software",
-      kind: "Private software",
-      context: "Custom cabinetry team",
-      availability: "private",
-      proof: { status: "private-client" },
-      heroPosition: "right center",
-      heroPositionMobile: "center center",
-      stages: [
-        { label: "Collect", detail: "Site photos, blueprints, notes, and scope emails enter one structured project record." },
-        { label: "Resolve", detail: "Rooms and price drivers get classified while the estimator keeps control of the final judgment." },
-        { label: "Audit", detail: "The math checks itself and every number can be traced back to its source." },
-        { label: "Export", detail: "A clean report leaves the system ready for the real bid, with no spreadsheet reconstruction." },
-      ],
-    },
-    image: CABINETRY_PROCESS_FILM.poster,
-    video: CABINETRY_PROCESS_FILM,
-    services: ["business-systems"],
-    published: "2026-05-13",
-    updated: "2026-07-12",
-    title: "An internal cockpit for the work they actually run.",
-    problem: "Public House Creative needed one internal system for their estimating, classification, and reporting work. It had to replace a pile of spreadsheets, documents, and know-how that lived in people’s heads.",
-    kept: "The estimator’s judgment and the workflow categories the team already used.",
-    changed: "Built Cockpit, a private web app. Documents come in. Rooms and price drivers get sorted. The math checks itself. The report exports cleanly. The screens are dense but never cramped.",
-    result: "The team runs the work through Cockpit. Estimates that lived in three tools now live in one. The math is honest. Any number can be traced back to its source. In production and in daily use.",
-    body: [
-      "Public House Creative came to Little Fight with a real internal-systems problem. Estimating decides whether a job makes money before it starts. That work was spread across documents, spreadsheets, email threads, and the senior estimator’s head. Every project dug up the same context again. Every quote took longer than it should. The team had outgrown the tools and was starting to feel it.",
-      "We built Cockpit. It is a private web app that turns the messy first pass of an estimate into something structured and checkable. Site photos, blueprints, hand-drawn notes, and scope emails come in. Rooms get sorted. Drivers, the variables that move the math, get resolved. The report exports. The screens show dense data without hiding anything, and never lie about confidence. The estimator’s judgment makes the final call. The system just makes that call cheap.",
-      "Cockpit is in production. The team uses it on real estimates. The math is honest. New scope items, room types, and export formats land in days, not sprints. The system is becoming what the senior estimator’s head used to hold. Now it scales past one person.",
     ],
   },
   {

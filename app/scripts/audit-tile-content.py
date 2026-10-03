@@ -16,25 +16,84 @@ import subprocess
 import sys
 from urllib.parse import unquote, urlsplit
 
+from tile_content import filtered_legacy_blocks
+
 
 APP = Path(__file__).resolve().parents[1]
 REPO = APP.parent
 CONTENT = APP / "preview-content"
 PUBLIC = APP / "public"
 ORIGIN = "https://littlefightnyc.com"
-EXPECTED_TILE_COUNT = 133
-EXPECTED_ORIGINAL_TILE_COUNT = 110
+EXPECTED_TOTAL_TILE_INVENTORY = 129
+EXPECTED_ORIGINAL_TILE_COUNT = 106
 EXPECTED_REVIEW_TILE_COUNT = 7
-EXPECTED_ROUTE_COUNT = 405
+EXPECTED_REVIEW_DISTRIBUTION = {
+    "topic-web": 2,
+    "topic-it": 2,
+    "topic-consulting": 2,
+    "topic-software": 1,
+}
+EXPECTED_ROUTE_COUNT = 399
+EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # This must mirror the compiler's preserved-app boundary.  A reader companion
 # may be generated under /_readers/, while the public application itself keeps
 # its own document, robots policy, and byte-for-byte source copy.
-STANDALONE = ("/vera/", "/examples/audit/", "/examples/lab/", "/brand-kit/", "/ads/", "/myspace-demo/")
+STANDALONE = ("/vera/", "/examples/audit/", "/examples/lab/", "/ads/", "/myspace-demo/")
 NOINDEX_PREFIXES = ("/markets/", "/photos/", "/areas/", "/answers/help/", "/_readers/")
 # Dedicated VERA documents are rendered after the marketing compiler from its
 # protected core and pinned public archive. Preserve their existing policy.
 VERA_DOCUMENTS = ("/vera/manual/", "/vera/archive/")
+RETIRED_PUBLISHED_ASSETS = (
+    "media/cabinetry-process-film-720-3d0d35f6.mp4",
+    "media/cabinetry-process-poster-c6d59dbc.webp",
+    "media/cabinetry-process-film-540-1a0bac73.mp4",
+    "media/cabinetry-process-share-0a7876df.webp",
+    "assets/proof/case-public-house-creative.webp",
+    "assets/proof/optimized/tile-public-house-creative-480.webp",
+)
+RETIRED_PUBLISHED_DIRECTORIES = ("brand-kit",)
+RETIRED_PUBLISHED_PATH_MARKERS = ("/brand-kit",)
+FORBIDDEN_PUBLISHED_MARKERS = (
+    "public house creative",
+    "public-house-creative",
+    "case-public-house-creative",
+    "cockpit",
+    "cabinetry",
+)
+INTERNAL_PROJECT_MARKERS = (
+    "project notes",
+    "project context",
+    "behind the scenes",
+    "private work",
+    "project records",
+    "build history",
+    "next milestone",
+    "last verified",
+    "lastverified",
+    "claims ledger",
+    "internal notes",
+    "qa notes",
+    "qa status",
+    "quality assurance notes",
+    "bug tracker",
+    "bug list",
+    "known bugs",
+    "approval notes",
+    "approval status",
+    "next milestones",
+    "nextmilestone",
+    "milestone status",
+    "project status",
+    "release checklist",
+    "internal tracking",
+    "upgrade log",
+    "upgrade notes",
+    "upgrade status",
+    "client work —",
+    "public work, live",
+)
+TEXT_ARTIFACT_SUFFIXES = {".html", ".css", ".js", ".json", ".txt", ".xml"}
 
 
 class References(HTMLParser):
@@ -79,6 +138,38 @@ class References(HTMLParser):
             self.anchors.append((self._anchor_href, " ".join("".join(self._anchor_text).split())))
             self._anchor_href = None
             self._anchor_text = []
+
+
+class TopicReviewDistribution(HTMLParser):
+    """Locate sourced review tiles inside the four semantic hub sections."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.sections: list[str] = []
+        self._section_stack: list[str] = []
+        self.reviews: dict[str, list[str]] = {topic: [] for topic in EXPECTED_REVIEW_DISTRIBUTION}
+        self.outside_topic = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        values = dict(attrs)
+        if tag == "section":
+            identity = values.get("id") or ""
+            self._section_stack.append(identity)
+            if identity:
+                self.sections.append(identity)
+            return
+        if tag != "a" or "data-review-tile" not in values:
+            return
+        topic = next((identity for identity in reversed(self._section_stack)
+                      if identity in EXPECTED_REVIEW_DISTRIBUTION), None)
+        if topic is None:
+            self.outside_topic += 1
+            return
+        self.reviews[topic].append(values.get("data-review-id") or values.get("href") or "")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag == "section" and self._section_stack:
+            self._section_stack.pop()
 
 
 def compact(value: object) -> str:
@@ -126,6 +217,180 @@ def source_pages() -> dict[str, dict]:
     for route in ("/reviews/", "/websites-for-your-business/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
     return pages
+
+
+def homepage_inventory(dist: Path, failures: list[str]) -> dict | None:
+    """Read the compiler's accounting of every original tile and route.
+
+    Consolidation changes what is visible on the hub; it must never erase a
+    destination, search entry, or reader.  This small manifest makes that
+    distinction auditable without treating a shorter hub as lost content.
+    """
+    inventory_file = dist / "homepage-inventory.json"
+    if not inventory_file.is_file():
+        failures.append("dist/homepage-inventory.json is missing")
+        return None
+    try:
+        data = json.loads(inventory_file.read_text())
+    except json.JSONDecodeError as error:
+        failures.append(f"homepage inventory is not valid JSON: {error}")
+        return None
+    if not isinstance(data, dict):
+        failures.append("homepage inventory must be a JSON object")
+        return None
+
+    for field in ("visibleTiles", "retainedRoutes", "groups", "hiddenHomeIds"):
+        if not isinstance(data.get(field), list):
+            failures.append(f"homepage inventory {field} must be a list")
+    if failures and any(message.startswith("homepage inventory") for message in failures):
+        return None
+    if data.get("sourceTileCount") != EXPECTED_ORIGINAL_TILE_COUNT:
+        failures.append(
+            f"homepage inventory has {data.get('sourceTileCount')} source tiles, "
+            f"expected {EXPECTED_ORIGINAL_TILE_COUNT}"
+        )
+    if data.get("totalTileInventory") != EXPECTED_TOTAL_TILE_INVENTORY:
+        failures.append(
+            f"homepage inventory has {data.get('totalTileInventory')} total tiles, "
+            f"expected {EXPECTED_TOTAL_TILE_INVENTORY}"
+        )
+    if len(data["groups"]) != EXPECTED_CONSOLIDATED_GROUP_COUNT:
+        failures.append(
+            f"homepage inventory has {len(data['groups'])} consolidated groups, "
+            f"expected {EXPECTED_CONSOLIDATED_GROUP_COUNT}"
+        )
+
+    visible_ids = [item.get("id") for item in data["visibleTiles"] if isinstance(item, dict)]
+    route_ids = [item.get("id") for item in data["retainedRoutes"] if isinstance(item, dict)]
+    if len(visible_ids) != len(data["visibleTiles"]) or not all(isinstance(item, str) and item for item in visible_ids):
+        failures.append("homepage inventory visible tiles need stable ids")
+    if len(route_ids) != len(data["retainedRoutes"]) or not all(isinstance(item, str) and item for item in route_ids):
+        failures.append("homepage inventory retained routes need stable ids")
+    if len(set(visible_ids)) != len(visible_ids):
+        failures.append("homepage inventory repeats a visible tile id")
+    if len(set(route_ids)) != len(route_ids):
+        failures.append("homepage inventory repeats a retained route id")
+    if len(route_ids) != EXPECTED_TOTAL_TILE_INVENTORY:
+        failures.append(
+            f"homepage inventory retains {len(route_ids)} tile routes, "
+            f"expected {EXPECTED_TOTAL_TILE_INVENTORY}"
+        )
+
+    member_ids: list[str] = []
+    group_ids: list[str] = []
+    for group in data["groups"]:
+        if not isinstance(group, dict):
+            failures.append("homepage inventory group must be an object")
+            continue
+        group_id = group.get("id")
+        members = group.get("members")
+        group_path = group.get("path")
+        if not isinstance(group_id, str) or not group_id or not isinstance(group_path, str) or not group_path.startswith("/"):
+            failures.append("homepage inventory group needs an id and local path")
+        else:
+            group_ids.append(group_id)
+        if not isinstance(members, list) or not all(isinstance(member, str) and member for member in members):
+            failures.append(f"homepage inventory group {group_id or '?'} needs member ids")
+        else:
+            member_ids.extend(members)
+    if len(set(group_ids)) != len(group_ids):
+        failures.append("homepage inventory repeats a consolidated group id")
+
+    hidden_ids = data["hiddenHomeIds"]
+    if not all(isinstance(item, str) and item for item in hidden_ids):
+        failures.append("homepage inventory hidden home ids must be non-empty strings")
+    removed_from_home = set(member_ids) | set(hidden_ids)
+    if len(data["visibleTiles"]) != EXPECTED_TOTAL_TILE_INVENTORY - len(removed_from_home):
+        failures.append(
+            "homepage inventory visible count does not equal total inventory minus unique absorbed/hidden ids"
+        )
+    if set(visible_ids) & removed_from_home:
+        failures.append("homepage inventory marks a visible tile as absorbed or hidden")
+    if set(route_ids) != set(visible_ids) | removed_from_home:
+        failures.append("homepage inventory routes do not account for visible and absorbed/hidden tile ids")
+    for item in data["visibleTiles"]:
+        if (not isinstance(item, dict) or not isinstance(item.get("path"), str)
+                or not item["path"].startswith(("/", "http://", "https://"))):
+            failures.append("homepage inventory visible tile needs a local or attributed external path")
+    for item in data["retainedRoutes"]:
+        if not isinstance(item, dict):
+            failures.append("homepage inventory retained route must be an object")
+            continue
+        for field in ("path", "title", "homePath"):
+            value = item.get(field)
+            if not isinstance(value, str) or not value:
+                failures.append(f"homepage inventory retained route {item.get('id') or '?'} lacks {field}")
+        if isinstance(item.get("path"), str) and not item["path"].startswith(("/", "http://", "https://")):
+            failures.append(f"homepage inventory retained route {item.get('id') or '?'} has an invalid path")
+    return data
+
+
+def consolidated_groups(failures: list[str]) -> list[dict]:
+    """Load the authored consolidation bodies that replace compact hub cards."""
+    groups: list[dict] = []
+    for name in ("consolidated-web.json", "consolidated-support.json"):
+        source = CONTENT / name
+        if not source.is_file():
+            failures.append(f"consolidated content source is missing: {name}")
+            continue
+        try:
+            data = json.loads(source.read_text())
+        except json.JSONDecodeError as error:
+            failures.append(f"consolidated content source is invalid: {name}: {error}")
+            continue
+        if not isinstance(data.get("groups"), list):
+            failures.append(f"consolidated content source has no group list: {name}")
+            continue
+        groups.extend(group for group in data["groups"] if isinstance(group, dict))
+    ids = [group.get("id") for group in groups]
+    if len(groups) != EXPECTED_CONSOLIDATED_GROUP_COUNT or len(set(ids)) != len(ids):
+        failures.append(f"consolidated sources must contain {EXPECTED_CONSOLIDATED_GROUP_COUNT} distinct groups")
+    from tile_rewrite import load_rewrite, prepare_groups
+    prepare_groups(groups, load_rewrite(CONTENT))
+    return groups
+
+
+def consolidated_readers_ok(dist: Path, groups: list[dict], failures: list[str]) -> set[str]:
+    """Check every compacted question still has its authored replacement story."""
+    paths: set[str] = set()
+    for group in groups:
+        identity = compact(group.get("id")) or "unknown group"
+        route = group.get("path")
+        if not isinstance(route, str) or not route.startswith("/"):
+            failures.append(f"consolidated group {identity} lacks a local route")
+            continue
+        paths.add(route)
+        target = output_file(dist, route)
+        if not target.is_file():
+            failures.append(f"consolidated group {identity} reader is missing: {route}")
+            continue
+        source = target.read_text(errors="replace")
+        rendered = References()
+        rendered.feed(source)
+        text = compact(" ".join(rendered.text))
+        if group.get("preserveReader"):
+            # The Website reader remains its richer, approved bespoke story;
+            # the new group adds a factual FAQ without replacing that body.
+            for faq in group.get("faqs") or []:
+                for value in (faq.get("question"), faq.get("answer")):
+                    if compact(value) and compact(display(value)) not in text:
+                        failures.append(f"consolidated group {identity} lost its added Website FAQ text")
+            continue
+        if 'data-reader-template="combined-story"' not in source or "group-story" not in source:
+            failures.append(f"consolidated group {identity} is missing its combined reader template")
+        for value in (group.get("heading"), group.get("summary")):
+            if compact(value) and compact(display(value)) not in text:
+                failures.append(f"consolidated group {identity} lost its reader heading or summary")
+        for section in group.get("sections") or []:
+            for value in [section.get("heading"), *(section.get("paragraphs") or []), *(section.get("bullets") or [])]:
+                if compact(value) and compact(display(value)) not in text:
+                    failures.append(f"consolidated group {identity} lost authored section text: {compact(value)[:90]}")
+            anchor_pairs = set(rendered.anchors)
+            for item in section.get("links") or []:
+                label, href = compact(item.get("label")), item.get("href")
+                if label and href and (href, label) not in anchor_pairs:
+                    failures.append(f"consolidated group {identity} lost authored section link: {label}")
+    return paths
 
 
 def source_is_standalone(route: str) -> bool:
@@ -210,6 +475,31 @@ def public_tree_matches(source: Path, destination: Path, label: str, failures: l
     return checked
 
 
+def public_project_boundary_ok(dist: Path, failures: list[str], marketing_routes: set[str]) -> None:
+    """Prove retired project traces and source-only media cannot ship."""
+    for relative in RETIRED_PUBLISHED_ASSETS:
+        if (dist / relative).exists():
+            failures.append(f"retired private-project media shipped: /{relative}")
+    for relative in RETIRED_PUBLISHED_DIRECTORIES:
+        if (dist / relative).exists():
+            failures.append(f"retired private-project directory shipped: /{relative}/")
+    for file in dist.rglob("*"):
+        if not file.is_file() or file.suffix.lower() not in TEXT_ARTIFACT_SUFFIXES:
+            continue
+        source = file.read_text(errors="replace").lower()
+        route = route_for_file(dist, file) if file.suffix.lower() == ".html" else "/" + file.relative_to(dist).as_posix()
+        for marker in FORBIDDEN_PUBLISHED_MARKERS:
+            if marker in source:
+                failures.append(f"{route}: retired private-project marker shipped: {marker}")
+        for marker in RETIRED_PUBLISHED_PATH_MARKERS:
+            if marker in source:
+                failures.append(f"{route}: omitted private-project path shipped: {marker}")
+        if route in marketing_routes:
+            for marker in INTERNAL_PROJECT_MARKERS:
+                if marker in source:
+                    failures.append(f"{route}: internal project tracking leaked: {marker}")
+
+
 def native_form_ok(dist: Path, failures: list[str]) -> None:
     detector = dist / "__forms.html"
     if not detector.is_file():
@@ -254,6 +544,9 @@ class ReaderAnatomy(HTMLParser):
         self.tag_counts[tag] = self.tag_counts.get(tag, 0) + 1
         values = dict(attrs)
         classes = set((values.get("class") or "").split())
+        # Original Website opening art meets the same image requirement as the shared hero.
+        if "rw-hero-intro" in classes:
+            classes.add("story-art")
         self.classes.update(classes)
         if "direct-contact-rail" in classes:
             self.direct_contact = True
@@ -263,7 +556,7 @@ class ReaderAnatomy(HTMLParser):
             tag == "img" or "reader-context-visual" in classes or "reader-context-icon" in classes
         ):
             self.hero_visuals += 1
-        if "story-section" in classes:
+        if "story-section" in classes or "group-chapter" in classes:
             self._section_text.append([])
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}:
             self._stack.append(classes)
@@ -276,7 +569,8 @@ class ReaderAnatomy(HTMLParser):
             self._section_text[-1].append(data)
 
     def handle_endtag(self, tag: str) -> None:
-        if tag == "section" and self._section_text and self._stack and "story-section" in self._stack[-1]:
+        if (tag == "section" and self._section_text and self._stack
+                and ({"story-section", "group-chapter"} & self._stack[-1])):
             self.section_words += len(compact(" ".join(self._section_text.pop())).split())
         if tag not in {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"} and self._stack:
             self._stack.pop()
@@ -344,6 +638,10 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         anatomy.feed(target.read_text(errors="replace"))
         checked += 1
         identity = tile.get("data-answer") or route
+        if "review-collection" in anatomy.classes:
+            if not anatomy.direct_contact or anatomy.tag_counts.get('h1',0) != 1 or anatomy.tag_counts.get('blockquote',0) < 6 or 'rw-review-tile' not in anatomy.classes or 'story-contact' not in anatomy.classes:
+                failures.append(f"tile {identity} review collection is missing its source-linked review tiles or contact")
+            continue
         if "case-opening" in anatomy.classes:
             required_classes = {"case-opening", "case-chapter", "story-contact"}
             missing = sorted(required_classes - anatomy.classes)
@@ -352,7 +650,7 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
             if missing or anatomy.tag_counts.get("h1", 0) < 1 or anatomy.tag_counts.get("img", 0) < 1:
                 failures.append(f"tile {identity} case reader is missing context, explanation, image, or contact: {', '.join(missing) or 'h1/image'}")
             continue
-        required_classes = {"story-hero", "story-kicker", "story-title", "story-summary", "story-art", "story-contact"}
+        required_classes = {"story-hero", "story-title", "story-summary", "story-art", "story-contact"}
         missing = sorted(required_classes - anatomy.classes)
         if not anatomy.direct_contact:
             missing.append("direct contact rail")
@@ -361,13 +659,16 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         # A sourced review collection is a complete explanatory body in its
         # own right: it holds the rating context, excerpts, attribution, and
         # direct source links instead of a generic prose section.
-        if "story-section" not in anatomy.classes and "story-reviews" not in anatomy.classes:
-            missing.append("story-section or sourced story-reviews")
+        if "story-section" not in anatomy.classes and "group-story" not in anatomy.classes and "story-reviews" not in anatomy.classes:
+            missing.append("story-section, combined group story, or sourced story-reviews")
         if missing or anatomy.tag_counts.get("h1", 0) < 1:
             failures.append(f"tile {identity} reader is missing full context, explanation, image/icon, or next step: {', '.join(missing) or 'h1/image'}")
     if exempt_external != EXPECTED_REVIEW_TILE_COUNT:
         failures.append(f"homepage has {exempt_external} external attribution tiles, expected {EXPECTED_REVIEW_TILE_COUNT} Google reviews")
-    if checked + exempt_external + exempt_apps != EXPECTED_TILE_COUNT:
+    # The hub intentionally shows only the consolidated set. Every retained
+    # route is checked separately from the complete static route inventory.
+    if checked + exempt_external + exempt_apps < 1:
+        failures.append("tile reader audit did not find any homepage tiles")
         failures.append("tile reader audit did not account for every homepage tile")
 
 
@@ -403,6 +704,7 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     stats = {"routes": 0, "tiles": 0, "references": 0, "imported_sources": 0, "standalone_files": 0}
     if not dist.is_dir():
         return [f"distribution directory does not exist: {dist}"], stats
+    groups = consolidated_groups(failures)
     artifact = dist / "tile-release.json"
     if not artifact.is_file():
         failures.append("dist/tile-release.json is missing; run the tile compiler")
@@ -410,11 +712,27 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     release_data = json.loads(artifact.read_text())
     if release_data.get("kind") != "static-production-candidate":
         failures.append("tile artifact is not marked as a static production candidate")
-    if (release_data.get("originalTilesPreserved") != EXPECTED_ORIGINAL_TILE_COUNT
-            or release_data.get("tiles") != EXPECTED_TILE_COUNT):
+    inventory = homepage_inventory(dist, failures)
+    if inventory and groups:
+        inventory_groups = {group.get("id"): group for group in inventory["groups"] if isinstance(group, dict)}
+        for group in groups:
+            identity = group.get("id")
+            recorded = inventory_groups.get(identity)
+            if not recorded:
+                failures.append(f"homepage inventory is missing consolidated group {identity}")
+                continue
+            if recorded.get("path") != group.get("path") or recorded.get("members") != group.get("absorb"):
+                failures.append(f"homepage inventory differs from the authored consolidation for {identity}")
+    if release_data.get("originalTilesPreserved") != EXPECTED_ORIGINAL_TILE_COUNT:
+        failures.append(f"tile artifact does not report {EXPECTED_ORIGINAL_TILE_COUNT} preserved originals")
+    if release_data.get("totalTileInventory") != EXPECTED_TOTAL_TILE_INVENTORY:
+        failures.append(f"tile artifact does not report {EXPECTED_TOTAL_TILE_INVENTORY} total inventory tiles")
+    if release_data.get("consolidatedGroups") != EXPECTED_CONSOLIDATED_GROUP_COUNT:
+        failures.append(f"tile artifact does not report {EXPECTED_CONSOLIDATED_GROUP_COUNT} consolidated groups")
+    if inventory and release_data.get("tiles") != len(inventory["visibleTiles"]):
         failures.append(
-            f"tile artifact does not report {EXPECTED_ORIGINAL_TILE_COUNT} preserved originals "
-            f"and {EXPECTED_TILE_COUNT} total tiles"
+            f"tile artifact reports {release_data.get('tiles')} visible tiles; "
+            f"homepage inventory has {len(inventory['visibleTiles'])}"
         )
     if release_data.get("routes") != EXPECTED_ROUTE_COUNT:
         failures.append(f"tile artifact reports {release_data.get('routes')} routes; expected {EXPECTED_ROUTE_COUNT}")
@@ -452,6 +770,8 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
         if not robots or robots.group(1) != expected_robots:
             failures.append(f"{route}: robots must be {expected_robots}")
 
+    combined_paths = consolidated_readers_ok(dist, groups, failures)
+
     home = dist / "index.html"
     parser = References()
     parser.feed(home.read_text())
@@ -463,26 +783,72 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
             f"expected {EXPECTED_ORIGINAL_TILE_COUNT}"
         )
     normalized_original = [
-        f"/photos/{href.removeprefix('/#album-')}/" if href.startswith("/#album-") else href
+        urlsplit(f"/photos/{href.removeprefix('/#album-')}/" if href.startswith("/#album-") else href).path
         for href in source_parser.tiles
     ]
-    if len(parser.tiles) != EXPECTED_TILE_COUNT:
-        failures.append(f"generated home has {len(parser.tiles)} tiles, expected {EXPECTED_TILE_COUNT}")
+    if inventory and len(parser.tiles) != len(inventory["visibleTiles"]):
+        failures.append(
+            f"generated home has {len(parser.tiles)} tiles, expected {len(inventory['visibleTiles'])} visible tiles"
+        )
+    elif not inventory:
+        failures.append("generated home cannot be checked without homepage inventory")
+    retained_paths = {
+        urlsplit(item.get("path")).path
+        for item in (inventory or {}).get("retainedRoutes", [])
+        if isinstance(item, dict) and isinstance(item.get("path"), str)
+    }
     for href in normalized_original:
-        if href not in parser.tiles:
-            failures.append(f"original tile destination was not preserved: {href}")
+        if href not in retained_paths:
+            failures.append(f"original tile destination was not retained: {href}")
     stats["tiles"] = len(parser.tiles)
+
+    if inventory:
+        search_index = dist / "search-index.json"
+        if not search_index.is_file():
+            failures.append("dist/search-index.json is missing")
+        else:
+            try:
+                search_rows = json.loads(search_index.read_text())
+            except json.JSONDecodeError as error:
+                failures.append(f"search index is not valid JSON: {error}")
+                search_rows = []
+            search_paths = {row.get("path") for row in search_rows if isinstance(row, dict)}
+            for item in inventory["retainedRoutes"]:
+                raw_route = item.get("path")
+                if not isinstance(raw_route, str):
+                    continue
+                parsed_route = urlsplit(raw_route)
+                if parsed_route.scheme or parsed_route.netloc:
+                    # Review attribution stays a direct external URL. It has
+                    # no local file or search-index entry by design.
+                    continue
+                route = parsed_route.path
+                if route.startswith("/"):
+                    target = output_file(dist, route)
+                    if not target.is_file() or not compact(target.read_text(errors="replace")):
+                        failures.append(f"retained tile route is missing or empty: {raw_route}")
+                    if route != "/" and route not in search_paths:
+                        failures.append(f"retained tile route is missing from search index: {raw_route}")
 
     home_source = home.read_text(errors="replace")
     topic_ids = ("topic-web", "topic-it", "topic-consulting", "topic-software")
     for topic_id in topic_ids:
         if not re.search(rf'<section\b[^>]*\bid=["\']{re.escape(topic_id)}["\'][^>]*\bdata-topic=', home_source, re.I):
             failures.append(f"homepage is missing semantic topic section {topic_id}")
-    if not re.search(r'<section\b[^>]*\bid=["\']topic-reviews["\']', home_source, re.I):
-        failures.append("homepage is missing the dedicated review section")
-    review_tiles = re.findall(r'<a\b[^>]*\bdata-review-tile(?:=[^ >]+)?[^>]*>', home_source, re.I)
-    if len(review_tiles) != EXPECTED_REVIEW_TILE_COUNT:
-        failures.append(f"homepage has {len(review_tiles)} individual review tiles, expected {EXPECTED_REVIEW_TILE_COUNT}")
+    review_distribution = TopicReviewDistribution()
+    review_distribution.feed(home_source)
+    if "topic-reviews" in review_distribution.sections:
+        failures.append("homepage must not render a standalone review section")
+    review_total = sum(len(items) for items in review_distribution.reviews.values())
+    review_total += review_distribution.outside_topic
+    if review_total != EXPECTED_REVIEW_TILE_COUNT:
+        failures.append(f"homepage has {review_total} individual review tiles, expected {EXPECTED_REVIEW_TILE_COUNT}")
+    if review_distribution.outside_topic:
+        failures.append("homepage has review tiles outside the four semantic topic sections")
+    for topic_id, expected in EXPECTED_REVIEW_DISTRIBUTION.items():
+        found = len(review_distribution.reviews[topic_id])
+        if found != expected:
+            failures.append(f"homepage has {found} review tiles in {topic_id}, expected {expected}")
     if "Custom websites. Built nationwide." in home_source:
         failures.append("homepage still contains the removed generic nationwide website callout")
     if "Let’s build ↗" in home_source or "Let's build ↗" in home_source:
@@ -515,12 +881,15 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
             if not route_or_redirect(dist, target, redirects):
                 failures.append(f"/site.css: asset does not resolve: {raw}")
 
-    # Prove that the imported page body still reaches the rendered source.  The
-    # exact source text is used after the approved display-name substitution;
-    # this is more useful than a count-only content check.
+    # Prove that imported customer answers still reach the rendered source.
+    # The shared helper excludes only the exact legacy contact/reference
+    # boilerplate that the reader deliberately suppresses.  The remaining
+    # source text is checked after the approved display-name substitution.
     for route, page in pages.items():
-        blocks = page.get("contentBlocks") or []
-        if not blocks or route in ("/", "/services/custom-local-websites/") or route in {x["path"] for x in json.loads((CONTENT / "pages.json").read_text())}:
+        blocks = filtered_legacy_blocks(page)
+        if (not blocks or route in ("/", "/services/custom-local-websites/")
+                or route in combined_paths
+                or route in {x["path"] for x in json.loads((CONTENT / "pages.json").read_text())}):
             continue
         target_route = generated_route(route)
         target = output_file(dist, target_route)
@@ -554,13 +923,13 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
         (PUBLIC / "vera", "VERA"),
         (PUBLIC / "examples/lab", "Labs"),
         (PUBLIC / "examples/audit", "Audit"),
-        (PUBLIC / "brand-kit", "Brand kit"),
         (PUBLIC / "ads", "Ads"),
         (PUBLIC / "myspace-demo", "Myspace demo"),
     ):
         stats["standalone_files"] += public_tree_matches(directory, dist / directory.relative_to(PUBLIC), label, failures)
     native_form_ok(dist, failures)
     retired_routes_ok(dist, failures)
+    public_project_boundary_ok(dist, failures, {route for route in generated if not route.startswith("/_readers/")})
     if release:
         release_ready(dist, failures)
     return failures, stats

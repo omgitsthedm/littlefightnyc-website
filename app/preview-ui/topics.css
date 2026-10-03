@@ -15,7 +15,7 @@
 .tile::before,.tile::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;transition:opacity 180ms ease}
 .tile::before{z-index:8;padding:1px;background:radial-gradient(160px circle at var(--mineral-x) var(--mineral-y),var(--tile-pop),transparent 85%);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor}
 .tile::after{z-index:0;background:radial-gradient(180px circle at var(--mineral-x) var(--mineral-y),color-mix(in srgb,var(--tile-pop) 7%,transparent),transparent 80%)}
-.tile:is(:hover,:focus-visible,[data-mineral-lit=true])::before{opacity:.85}.tile:is(:hover,[data-mineral-lit=true])::after{opacity:1}
+.tile:is(:hover,:focus-visible)::before{opacity:.85}.tile:hover::after{opacity:1}
 .tile:focus-visible{outline:3px solid #f6f3ec}.service-anchor{box-shadow:inset 0 1px color-mix(in srgb,var(--tile-pop) 35%,transparent),0 0 0 1px color-mix(in srgb,var(--tile-pop) 20%,transparent)}
 .mineral-icon{display:block;flex:none;width:var(--anchor-icon);height:var(--anchor-icon);background:var(--tile-pop,#ff7839);mask:var(--mineral-asset) center/contain no-repeat;-webkit-mask:var(--mineral-asset) center/contain no-repeat}
 .mineral-icon[data-icon=app-window-duotone]{mask-image:var(--mineral-asset),url('/assets/mineral/sliders-horizontal-bold.svg');mask-size:contain,48% 40%;mask-position:center,center 65%;mask-repeat:no-repeat;-webkit-mask-image:var(--mineral-asset),url('/assets/mineral/sliders-horizontal-bold.svg');-webkit-mask-size:contain,48% 40%;-webkit-mask-position:center,center 65%;-webkit-mask-repeat:no-repeat}
@@ -31,10 +31,13 @@
 .tile[data-cell-face=icon] .cell-face{padding:12px;justify-content:center}.tile[data-cell-face=icon] .cell-title,.tile[data-cell-face=icon] .cell-kicker{display:none}.tile[data-cell-face=icon] .cell-art{flex:none;height:100%}
 .tile[data-cell-face=icon] .cell-art :is(svg,.mineral-icon){width:72%;height:72%;max-width:96px;max-height:96px}
 .tile[data-rows="1"] .cell-face{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;padding:12px 16px}
-.tile[data-rows="1"] .cell-title{font-size:clamp(16px,7cqw,22px);flex:1;min-width:0}
-.tile[data-rows="1"] .cell-art{order:1;flex:none;width:32px;height:32px}
-.tile[data-rows="1"] .cell-art :is(svg,.mineral-icon){width:32px;height:32px}
+.tile[data-rows="1"] .cell-title{font-size:clamp(18px,10cqw,22px);flex:1;min-width:0}
+.tile[data-rows="1"] .cell-art{order:1;flex:none;width:clamp(40px,20cqw,48px);height:clamp(40px,20cqw,48px)}
+.tile[data-rows="1"] .cell-art :is(svg,.mineral-icon){width:100%;height:100%}
 .tile[data-rows="1"] .cell-title{font-weight:650;line-height:1.15}
+.tile[data-compact-label=true][data-columns="1"][data-rows="1"] .cell-face{padding:10px;align-items:stretch}
+.tile[data-compact-label=true][data-columns="1"][data-rows="1"] .cell-title{font-size:clamp(18px,18cqw,24px);font-weight:700;line-height:1.06;text-align:center;text-wrap:balance}
+.tile[data-compact-label=true][data-rows="1"] .cell-art{display:none}
 .tile[data-columns="1"][data-rows="1"] .cell-face::before{display:none}.tile[data-columns="1"][data-rows="1"] .cell-face{padding:10px;justify-content:center}.tile[data-columns="1"][data-rows="1"] .cell-art{width:100%;height:100%}.tile[data-columns="1"][data-rows="1"] .cell-art :is(svg,.mineral-icon){width:80%;height:80%}
 .answer-preview,.cell-go,.buyer-plus{display:none}
 .buyer-tile .cell-art{order:0}
@@ -53,6 +56,7 @@
 .proof-tile-face>strong{font-size:clamp(16px,7cqw,24px);font-weight:650;line-height:1.15;padding-right:14px}
 .proof-tile-face>img{display:block;width:100%;height:0;min-height:0;flex:1;object-fit:contain;object-position:center;border-radius:7px;background:#101113;border:1px solid #ffffff20}
 .proof-tile-plus{position:absolute;right:12px;top:10px;font-size:22px;line-height:1;color:#ffb58f}
+.tile[data-kind=lab]:not([data-family=brand]) :is(.proof-tile-label,.proof-tile-plus){color:var(--tile-pop)}
 /* The first photo always works without scripting. Only visible albums rotate. */
 .photo-album-tile__images{position:absolute;inset:0;display:block;overflow:hidden}
 .photo-album-tile__images img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 800ms ease;pointer-events:none}
@@ -63,7 +67,16 @@
 /* Each review keeps its own source and enough space for a comfortable quote. */
 .review-tile{display:flex;flex-direction:column;gap:8px;justify-content:center;padding:clamp(14px,5cqw,22px)}
 .review-stars{font-size:22px;line-height:1;color:#f5d95b;letter-spacing:.06em}.review-quote{margin:0;font-size:clamp(16px,7cqw,23px);font-weight:500;line-height:1.25;text-wrap:pretty;flex:none}.review-attribution{font-size:16px;font-weight:650;color:#ffc1a2}.review-source{font-size:16px;color:var(--tile-muted);display:flex;justify-content:space-between}.review-source span{font-size:22px;color:#ffb58f}.review-rating-only{font-size:22px;line-height:1.2}
-@media(min-width:1001px) and (max-width:1200px){:root{--anchor-icon:56px}.topic-anchor-face{padding:14px;gap:10px}.topic-anchor-photo{width:56px}.topic-anchor-art{gap:8px}.topic-anchor-copy strong{font-size:20px}.topic-anchor-label{font-size:16px}.brand-tile{padding:16px}.brand-tile h1{font-size:28px}.brand-tile .hero-route{right:16px}.tile[data-kind=review]{grid-column:span 3;grid-row:span 2}}
+@media(min-width:1001px) and (max-width:1200px){
+:root{--anchor-icon:56px}.topic-anchor-face{padding:14px;gap:10px}.topic-anchor-photo{width:56px}.topic-anchor-art{gap:8px}.topic-anchor-copy strong{font-size:20px}.topic-anchor-label{font-size:16px}.brand-tile{padding:16px}.brand-tile h1{font-size:28px}.brand-tile .hero-route{right:16px}.tile[data-kind=review]{grid-column:span 3;grid-row:span 3}
+/* A narrow desktop has the same twelve columns but a much shorter physical
+   row. Ordinary fronts stay legible by using a deliberate 18px horizontal
+   composition; only genuinely long labels receive a second whole row. */
+.tile[data-narrow-compact=true] .cell-face{flex-direction:row;align-items:center;justify-content:flex-start;gap:8px;padding:8px 12px}
+.tile[data-narrow-compact=true] .cell-title{font-size:18px;line-height:1.1;flex:1;min-width:0}
+.tile[data-narrow-compact=true] .cell-art{order:1;flex:none;width:36px;height:36px}
+.tile[data-narrow-compact=true] .cell-art :is(svg,.mineral-icon){width:100%;height:100%;max-width:none;max-height:none}
+}
 @media(max-width:1000px){
 :root{--anchor-icon:56px;--tile-radius:18px}
 .mosaic-home .app-shell{padding:12px 12px 30px}.mosaic-home #canvas{gap:52px}.topic-section{gap:14px}.topic-heading h2{font-size:30px}.topic-heading .mineral-icon{width:28px;height:28px}
@@ -74,7 +87,13 @@
 .topic-question .cell-face,.tile[data-cell-face=type][data-mobile-rows="2"] .cell-face{flex-direction:column;align-items:stretch;justify-content:center}.topic-question .cell-art{order:-1;width:100%;height:auto}.topic-question[data-rows="1"] .cell-face[data-short-label] .cell-title{display:block}.topic-question[data-rows="1"] .cell-face::before{display:none}
 .topic-anchor-photo{width:92px}.topic-anchor-copy strong{font-size:clamp(21px,6.2cqw,30px)}
 }
-@media(min-width:601px) and (max-width:1000px){.tile[data-kind=review]{grid-column:span 3;grid-row:span 2}}
+@media(min-width:601px) and (max-width:1000px){
+.tile[data-kind=review]{grid-column:span 3;grid-row:span 2}
+/* Tablets have a desktop-scale cell unit even though they share the six-column
+   packer. Keep compact prompts horizontal when that unit is selected. */
+.topic-question[data-rows="1"] .cell-face,.tile[data-cell-face=type][data-rows="1"] .cell-face{flex-direction:row;align-items:center;justify-content:flex-start}
+.topic-question[data-rows="1"] .cell-art{order:1;width:clamp(40px,20cqw,48px);height:clamp(40px,20cqw,48px)}
+}
 @media(max-width:600px){
 .topic-heading{gap:9px}.topic-heading h2{font-size:28px}.topic-heading .mineral-icon{width:26px;height:26px}
 .cell-face{padding:10px;gap:7px}.cell-title,.tile[data-cell-face=type] .cell-title{font-size:clamp(16px,10cqw,22px);line-height:1.13}.cell-kicker{display:none}
@@ -92,7 +111,7 @@
 @media(prefers-reduced-motion:reduce){.tile,.tile::before,.tile::after,.photo-album-tile__images img{transition:none}.tile *{animation:none!important}}
 body.no-motion .tile *,body.no-motion .tile::before,body.no-motion .tile::after{animation:none!important;transition:none!important}
 @media(forced-colors:active){.tile{border:1px solid ButtonText}.mineral-icon{background:ButtonText}.tile::before,.tile::after{display:none}}
-.lf-reader h1{color:#ff7839!important}
+.lf-reader h1{color:var(--reader-accent,#ff7839)}
 .lf-reader .reader-context-visual{--reader-pop:#ff7839;display:grid;grid-template-columns:64px minmax(0,1fr);gap:18px;align-items:center;max-width:760px;margin:28px auto;padding:18px;border:1px solid rgb(255 255 255 / .14);border-radius:18px;background:linear-gradient(135deg,#24252b,#18191d);box-shadow:inset 0 1px rgb(255 255 255 / .06)}
 .lf-reader .reader-context-visual[data-reader-family=web]{--reader-pop:#92bfff}.lf-reader .reader-context-visual[data-reader-family=it]{--reader-pop:#f5d95b}.lf-reader .reader-context-visual[data-reader-family=consulting]{--reader-pop:#a0df85}.lf-reader .reader-context-visual[data-reader-family=software]{--reader-pop:#f09bdd}
 .lf-reader .reader-context-icon{display:block;width:64px;height:64px;object-fit:contain;filter:brightness(0) invert(1);opacity:.94}

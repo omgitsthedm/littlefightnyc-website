@@ -1,0 +1,63 @@
+/* Sourced Google reviews use one calm, consistent proof tile across the mosaic. */
+.review-tile[data-review-tile=true]{
+  --review-orange:#ff7839;
+  --review-ink:#141417;
+  --review-paper:#f6f3ec;
+  --review-muted:#c1c1cb;
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  grid-template-rows:auto minmax(0,1fr) auto;
+  gap:clamp(10px,1.5cqw,18px);
+  min-width:0;
+  min-height:0;
+  padding:clamp(18px,2.25cqw,28px);
+  overflow:hidden;
+  isolation:isolate;
+  border:1px solid rgb(255 120 57 / .4);
+  border-radius:22px;
+  background:linear-gradient(145deg,rgb(255 120 57 / .12),transparent 42%),#141417;
+  box-shadow:inset 0 1px rgb(255 255 255 / .1),0 12px 28px rgb(0 0 0 / .18);
+  color:var(--review-paper);
+  font-family:"Atkinson Hyperlegible Next",LFAtkinson,Arial,sans-serif;
+  text-decoration:none;
+  -webkit-font-smoothing:antialiased;
+  transition-property:transform,border-color,box-shadow;
+  transition-duration:180ms;
+  transition-timing-function:cubic-bezier(.2,0,0,1);
+}
+.review-tile[data-review-tile=true] :is(.review-stars,.review-quote,.review-rating-only,.review-credit){position:relative;z-index:1;min-width:0}
+.review-tile[data-review-tile=true] .review-stars{display:flex;align-items:center;gap:6px;width:max-content;max-inline-size:100%;min-width:0;color:var(--review-orange);line-height:1}
+.review-tile[data-review-tile=true] .review-star{display:block;inline-size:28px;block-size:28px;flex:none;fill:currentColor;filter:drop-shadow(0 1px 0 rgb(0 0 0 / .4))}
+.review-tile[data-review-tile=true] .review-quote{align-self:center;margin:0;color:var(--review-paper);font:650 26px/1.16 "Atkinson Hyperlegible Next",LFAtkinson,Arial,sans-serif;letter-spacing:-.025em;text-wrap:pretty;overflow-wrap:normal;word-break:normal;hyphens:none}
+.review-tile[data-review-tile=true] .review-rating-only{align-self:center;margin:0;color:var(--review-paper);font:650 26px/1.16 "Atkinson Hyperlegible Next",LFAtkinson,Arial,sans-serif;letter-spacing:-.025em;text-wrap:balance}
+.review-tile[data-review-tile=true] .review-credit{grid-row:3;display:flex;align-items:end;justify-content:space-between;gap:12px;color:var(--review-muted);font-size:18px;line-height:1.25}
+.review-tile[data-review-tile=true] .review-attribution{color:var(--review-paper);font-weight:700;text-wrap:balance}
+.review-tile[data-review-tile=true] .review-source{display:flex;align-items:center;justify-content:end;min-inline-size:28px;color:var(--review-orange)}
+.review-tile[data-review-tile=true] .review-source>span[aria-hidden=true]{font-size:24px;line-height:.75}
+.review-tile[data-review-tile=true] .review-flourish{display:none}
+.review-tile[data-review-tile=true]::before,.review-tile[data-review-tile=true]::after{content:none}
+.review-tile[data-review-tile=true]:focus-visible{outline:3px solid var(--review-orange);outline-offset:4px}
+.review-tile[data-review-tile=true]:hover{border-color:rgb(255 120 57 / .72);box-shadow:inset 0 1px rgb(255 255 255 / .14),0 18px 34px rgb(0 0 0 / .28)}
+.review-tile[data-review-tile=true]:active{transform:scale(.96)}
+
+
+@media(prefers-reduced-motion:no-preference){
+  body:not(.no-motion) .review-tile[data-review-tile=true].is-performing .review-star{animation:review-star-settle 620ms cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--star-index) * 120ms);will-change:transform,opacity,filter}
+}
+@keyframes review-star-settle{0%{transform:scale(.25) rotate(-18deg);opacity:0;filter:blur(4px)}65%{opacity:1;filter:blur(0)}100%{transform:scale(1) rotate(0);opacity:1;filter:blur(0)}}
+
+@media(max-width:760px){
+  .review-tile[data-review-tile=true]{gap:10px;padding:16px;border-radius:18px}
+  .review-tile[data-review-tile=true] .review-star{inline-size:20px;block-size:20px}
+  .review-tile[data-review-tile=true] .review-quote,.review-tile[data-review-tile=true] .review-rating-only{font-size:20px;line-height:1.2}
+  .review-tile[data-review-tile=true] .review-credit{font-size:18px}
+}
+@media(max-width:400px){
+  .review-tile[data-review-tile=true]{padding:14px}
+  .review-tile[data-review-tile=true] .review-stars{gap:2px}
+  .review-tile[data-review-tile=true] .review-star{inline-size:18px;block-size:18px}
+  .review-tile[data-review-tile=true] .review-quote{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){.review-tile[data-review-tile=true] :is(.review-star,.review-flourish){animation:none!important;transition:none!important}}
+body.no-motion .review-tile[data-review-tile=true] :is(.review-star,.review-flourish){animation:none!important;transition:none!important}

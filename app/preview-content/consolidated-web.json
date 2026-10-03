@@ -1,0 +1,559 @@
+{
+  "groups": [
+    {
+      "id": "page-services-custom-local-websites",
+      "path": "/services/custom-local-websites/",
+      "family": "web",
+      "title": "Websites",
+      "heading": "Make your business easy to choose.",
+      "summary": "We design, write, build, and care for a website around the questions your customers need answered before they call, book, buy, or visit.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "website",
+        "cost",
+        "platform",
+        "web-launch-checklist"
+      ],
+      "preserveReader": true,
+      "sections": [],
+      "faqs": [
+        {
+          "question": "What shapes a custom quote?",
+          "answer": "The quote depends on the pages, content, customer actions, and connections your website needs. We agree the scope before work starts. There is no monthly hosting fee; domain renewal and optional paid tools remain separate business costs."
+        }
+      ]
+    },
+    {
+      "id": "maps",
+      "path": "/answers/help/maps/",
+      "family": "web",
+      "title": "Help people find you.",
+      "heading": "Give customers clear facts before they have to ask.",
+      "summary": "Help customers find the right business, understand what you offer, and reach you. Keep your website and Google Business Profile clear, accurate, and connected.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "web-local-facts",
+        "web-search-answer"
+      ],
+      "sections": [
+        {
+          "heading": "Start with the facts people use.",
+          "paragraphs": [
+            "Check the business name, address, hours, service area, phone number, and category. The website and public listing should tell the same truth. If visits are by appointment, travel is limited, or hours change by season, say so plainly.",
+            "Do not imply a larger service area than the business actually covers. Useful directions and access notes help a customer act without guessing.",
+            "If the facts differ from page to page, fix the source before adding more pages. A clear listing needs a clear business behind it."
+          ],
+          "bullets": [
+            "Put contact details on the pages where a customer is ready to act.",
+            "Keep service areas and hours current.",
+            "Record what changed before a listing stopped appearing."
+          ],
+          "links": [
+            {
+              "label": "Review local website facts",
+              "href": "/answers/help/web-local-facts/"
+            }
+          ]
+        },
+        {
+          "heading": "Answer the real question.",
+          "paragraphs": [
+            "A page is easier to understand when its heading names one practical question and the answer uses specific, current facts. Ordinary links to the next useful page help people continue without hunting.",
+            "Clear structure can help people and systems interpret a page. It cannot guarantee a Google result or how an AI tool will describe the business.",
+            "Use the words a customer would use when they need the service. Then make the next useful detail easy to open."
+          ],
+          "bullets": [
+            "Use plain headings.",
+            "Keep essential information as readable text.",
+            "Review claims when services, availability, or policies change."
+          ],
+          "links": [
+            {
+              "label": "Make website answers clearer",
+              "href": "/answers/help/web-search-answer/"
+            }
+          ]
+        },
+        {
+          "heading": "Reviews help people decide.",
+          "paragraphs": [
+            "Review count and positive ratings can support local visibility through Google Maps and a Business Profile. They do not automatically raise a website in ordinary search results or guarantee placement in an AI answer.",
+            "Use genuine excerpts, link to their source, and keep the service details around them accurate."
+          ],
+          "bullets": [],
+          "links": [
+            {
+              "label": "Read Google reviews",
+              "href": "/reviews/"
+            },
+            {
+              "label": "How Google ranks local results",
+              "href": "https://support.google.com/business/answer/7091?hl=en"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "ownership",
+      "path": "/answers/help/ownership/",
+      "family": "web",
+      "title": "Keep your accounts yours.",
+      "heading": "Keep control of the accounts that keep your site running.",
+      "summary": "Before a redesign, renewal, or provider change, know who controls the domain, hosting, site platform, and connected tools.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "web-domain-renewal",
+        "web-hosting-ownership"
+      ],
+      "sections": [
+        {
+          "heading": "Make the account list first.",
+          "paragraphs": [
+            "Find the owner of the domain registrar, hosting, site platform, analytics, forms, email, and any booking or shop tool. Use business-controlled accounts where that fits. Keep the renewal email, payment method, and recovery contact where an owner can find them.",
+            "A domain can become an emergency when it is tied to a former employee or vendor. Check those details before the renewal notice arrives.",
+            "If one login controls several services, write down the dependencies before changing it. A recovery method is part of ownership too."
+          ],
+          "bullets": [
+            "Confirm the registrar login and recovery contact.",
+            "Record renewal contacts and account owners.",
+            "Store the record somewhere the business can keep using."
+          ],
+          "links": [
+            {
+              "label": "Check domain control",
+              "href": "/answers/help/web-domain-renewal/"
+            }
+          ]
+        },
+        {
+          "heading": "Choose the path that fits the work.",
+          "paragraphs": [
+            "A website builder can be useful when it covers the work and someone can maintain it. A custom build can give the business more control over the code, content, and customer path. Compare either choice against the actual tasks, editing needs, and connections you use.",
+            "Ownership terms can differ for custom work, licensed themes, photography, and third-party software. Put those terms in the written scope.",
+            "The question is not whether one path is always better. It is whether the business can control, maintain, and use what it is paying for."
+          ],
+          "bullets": [
+            "Name the visitor's main task.",
+            "Check editing, ownership, and integrations.",
+            "Plan for maintenance after launch."
+          ],
+          "links": [
+            {
+              "label": "Compare website paths",
+              "href": "/answers/help/platform/"
+            }
+          ]
+        },
+        {
+          "heading": "Move carefully.",
+          "paragraphs": [
+            "Before changing hosts, map the domain, email, files or platform, backups, renewal contacts, and anything else that depends on the current setup. Plan the move before ending service.",
+            "Document access with the account owner's approval. A move should not cut off email or leave the business unable to recover its own site.",
+            "Back up what can be backed up, confirm the plan in writing, and test the customer path after the move."
+          ],
+          "bullets": [],
+          "links": [
+            {
+              "label": "Prepare for a hosting move",
+              "href": "/answers/help/web-hosting-ownership/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "speed",
+      "path": "/answers/help/speed/",
+      "family": "web",
+      "title": "Fast. Clear. Easy to use.",
+      "heading": "Make the important path work on a phone.",
+      "summary": "A site can look fine on a computer and still make a customer work too hard on a phone. Start with the pages, controls, and information they need most.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "mobile",
+        "web-accessibility-basics"
+      ],
+      "sections": [
+        {
+          "heading": "Check the real phone experience.",
+          "paragraphs": [
+            "Large media files, heavy scripts, fonts, hosting delays, and complex page behavior can slow a phone page. Fixed-width layouts, cramped controls, and poor reading order can make the same page awkward even after it loads.",
+            "Measure a representative page on a realistic connection. Then check the actual phone layout, tap targets, forms, and the order information is read.",
+            "Do not start by changing everything. Fix the largest problem first, then see whether the customer can read, choose, and send the request more easily.",
+            "Look at the page where a customer asks for help, books, calls, or buys. A faster decorative page does not fix a slow contact path."
+          ],
+          "bullets": [
+            "Find the heaviest images, scripts, and layout problems.",
+            "Prioritize the task a mobile visitor needs most.",
+            "Retest the customer-facing path after each useful change."
+          ],
+          "links": [
+            {
+              "label": "Check phone layouts",
+              "href": "/answers/help/mobile/"
+            }
+          ]
+        },
+        {
+          "heading": "Make the path usable for more people.",
+          "paragraphs": [
+            "Keep essential facts as readable text. Use clear labels and meaningful buttons. Make focus visible for keyboard use, and make forms understandable when something needs fixing.",
+            "Accessibility is practical care for the customer path. It is not a one-time badge.",
+            "Good contrast, larger readable type, and a visible next action help on a bright phone screen as much as they help a keyboard user.",
+            "Check the finished page without relying on hover or tiny visual cues. The action should still make sense when a person is tired, on a small screen, or using assistive technology."
+          ],
+          "bullets": [
+            "Try the main action with a keyboard.",
+            "Use explicit labels for controls and forms.",
+            "Keep important details out of images alone."
+          ],
+          "links": [
+            {
+              "label": "Review accessibility basics",
+              "href": "/answers/help/web-accessibility-basics/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "booking",
+      "path": "/answers/help/booking/",
+      "family": "web",
+      "title": "Make it easy to reach you.",
+      "heading": "A contact path should tell people what happens next.",
+      "summary": "Whether someone books, calls, or sends an inquiry, the path should be clear on a phone and connected to the way your business actually responds.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "forms"
+      ],
+      "sections": [
+        {
+          "heading": "Explain the next step before the form.",
+          "paragraphs": [
+            "Name the service, any important conditions, and what happens after someone sends a request. Put a consistent booking or contact route on the pages where a person is ready to decide.",
+            "Choose a flow that fits the business's real scheduling or follow-up process. A button is only useful if the request reaches the right place.",
+            "If a request needs a fast response, say who sees it and when. Do not make a booking screen sound like a confirmed appointment if the business still has to review it.",
+            "For a visit, estimate, or appointment, say what the business needs first and what the customer will hear back. Clear expectations reduce unnecessary back-and-forth."
+          ],
+          "bullets": [
+            "Explain what information a customer needs before booking.",
+            "Keep the booking route visible on high-intent pages.",
+            "Connect the request to the actual inbox or workflow."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Ask for only what you need first.",
+          "paragraphs": [
+            "People leave forms when they are confusing, broken, too long, or silent about what follows. Start with the information needed for a useful first response. Leave deeper questions for the right point in the conversation.",
+            "Test the form on a phone and with a keyboard. Check error messages, delivery, and the person or system that receives it.",
+            "A short test can catch a broken link, a form that never arrives, or a booking tool that does not match the office calendar. Test without creating a real customer appointment.",
+            "Use the same plain language in the button, form, confirmation, and reply. A customer should not have to guess whether they booked, asked a question, or started an application."
+          ],
+          "bullets": [
+            "Use clear labels.",
+            "Keep required fields few and useful.",
+            "Confirm submissions reach the intended place."
+          ],
+          "links": [
+            {
+              "label": "Check an inquiry form",
+              "href": "/answers/help/forms/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "web-homepage-priority",
+      "path": "/answers/help/web-homepage-priority/",
+      "family": "web",
+      "title": "Give customers a reason to choose you.",
+      "heading": "Show the right proof before the pitch.",
+      "summary": "A useful website helps a new customer understand the problem you solve, see why the business fits, and take one clear next step.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "web-proof-before-pitch",
+        "web-service-page"
+      ],
+      "sections": [
+        {
+          "heading": "Lead with the customer problem.",
+          "paragraphs": [
+            "A homepage does not need to explain every service at once. Lead with the clearest problem you solve. Group related services into a few paths, then send each person to the detail that fits.",
+            "A short summary can do the first job. The next page should answer the practical questions without making someone start over.",
+            "The first screen should help a visitor choose a path, not make every part of the business compete for attention.",
+            "Keep the language familiar. A customer should understand the first choice without learning your internal names for services."
+          ],
+          "bullets": [
+            "Name the main problem plainly.",
+            "Group related services into clear paths.",
+            "Give each path one obvious next action."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Use proof that belongs to the business.",
+          "paragraphs": [
+            "Show what you do, who is behind it, and how a person can make contact. Relevant work, accurate service details, and authorized reviews can help someone feel confident.",
+            "Do not use vague claims, borrowed images, or testimonials without permission. Put important terms where people can find them.",
+            "A review can support a decision when it is real and linked to its source. It cannot replace a clear explanation of the service."
+          ],
+          "bullets": [
+            "Use real examples and approved photos.",
+            "Keep service details current.",
+            "Make contact and important terms easy to find."
+          ],
+          "links": [
+            {
+              "label": "See what useful proof looks like",
+              "href": "/answers/help/web-proof-before-pitch/"
+            }
+          ]
+        },
+        {
+          "heading": "Answer the service question first.",
+          "paragraphs": [
+            "A service page should name the problem, explain the next practical move, say who it fits, and make the first contact step obvious. Add the details that only your business can provide.",
+            "Clear writing is more useful than a promise that could describe any company.",
+            "When someone needs a detail that changes the decision, put it on the service page instead of hiding it behind a generic contact button."
+          ],
+          "bullets": [],
+          "links": [
+            {
+              "label": "Build a useful service page",
+              "href": "/answers/help/web-service-page/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "web-content-collection",
+      "path": "/answers/help/web-content-collection/",
+      "family": "web",
+      "title": "What we need to get started.",
+      "heading": "Bring the facts that make a site useful.",
+      "summary": "You do not need perfect paperwork. We need enough reliable material to make the first customer path clear and keep important details accurate.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "web-photos-with-purpose",
+        "web-menu-and-hours"
+      ],
+      "sections": [
+        {
+          "heading": "Start with what is true now.",
+          "paragraphs": [
+            "Collect approved service descriptions, current contact details, access to the domain and existing site, and the questions customers ask most. Name the people who can approve facts and update them later.",
+            "The first version does not need every detail. It needs the right details for a person deciding whether to call, visit, book, or buy.",
+            "Send what you have. We can sort the useful material and identify the missing facts before the work begins.",
+            "If a fact is uncertain, flag it. It is better to confirm a service area or policy than publish a guess that a customer will rely on."
+          ],
+          "bullets": [
+            "Current services and contact details.",
+            "Account owners and access details.",
+            "Real customer questions and approved answers."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Choose photos with a job to do.",
+          "paragraphs": [
+            "Useful photos show the place, the work, the people, or the result a customer is trying to understand. Pair an image with context when it matters. Decorative images can set a mood, but they should not hide a service, instruction, or important fact.",
+            "Use only photos the business can publish.",
+            "A complete image should show the thing it is meant to explain. Do not crop out important lettering or context just to make it fit a shape."
+          ],
+          "bullets": [
+            "Choose images tied to a customer question.",
+            "Confirm permission to use them.",
+            "Add captions when context changes the meaning."
+          ],
+          "links": [
+            {
+              "label": "Choose useful business photos",
+              "href": "/answers/help/web-photos-with-purpose/"
+            }
+          ]
+        },
+        {
+          "heading": "Keep changing details easy to update.",
+          "paragraphs": [
+            "Put hours, opening dates, limited service, and off-season contact options where customers expect them. Make the difference between regular hours, holiday changes, and future plans clear.",
+            "Set a simple owner-controlled update process so a useful page does not become an old page.",
+            "A simple update routine is better than a seasonal page that no one can change when plans shift."
+          ],
+          "bullets": [],
+          "links": [
+            {
+              "label": "Explain hours clearly",
+              "href": "/answers/help/web-menu-and-hours/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "web-redesign-decision",
+      "path": "/answers/help/web-redesign-decision/",
+      "family": "web",
+      "title": "Rebuild, or make a few fixes?",
+      "heading": "Decide what to fix, test it, then share it.",
+      "summary": "Some sites need focused repairs. Others need a new structure. Start with the customer path, then check the real website before and after any change.",
+      "icon": "browser-duotone.svg",
+      "absorb": [],
+      "sections": [
+        {
+          "heading": "Fix what is in the way.",
+          "paragraphs": [
+            "Focused fixes can be enough when the site is maintainable and the basic structure still works. A rebuild can be more useful when navigation, phone behavior, performance, content accuracy, or ownership problems run through the whole site.",
+            "Review the important customer journeys before deciding how much to replace. Start with the smallest change that solves the present business problem.",
+            "Keep the pages and tools that still help. Replace the parts that make a customer or owner work around the site."
+          ],
+          "bullets": [
+            "Check phone use, speed, content, and editing friction.",
+            "Name the customer task that is failing.",
+            "Explain when a structural problem needs a rebuild."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Check the basics before sharing.",
+          "paragraphs": [
+            "Confirm the real contact details, the main customer action, phone behavior, ownership of the domain and hosting, and the way a message reaches the business. Ask someone unfamiliar with the project to try the path.",
+            "Their confusion can show the last useful fix before a customer finds it.",
+            "Check the path from a customer question to the person who can answer it. That is more useful than judging a launch by a homepage alone."
+          ],
+          "bullets": [
+            "Check facts and contact routes.",
+            "Test the main action on a phone.",
+            "Use a fresh pair of eyes."
+          ],
+          "links": [
+            {
+              "label": "Use the launch checklist",
+              "href": "/answers/help/web-launch-checklist/"
+            }
+          ]
+        },
+        {
+          "heading": "Check again after an update.",
+          "paragraphs": [
+            "Review the pages and customer actions affected by the change. Test contact, booking, checkout, navigation, and phone layouts that changed. Confirm content, links, notifications, and expected tracking still reflect the intended update.",
+            "Keep a short record of what changed so an unexpected problem has a starting point.",
+            "If a change needs follow-up, name the next check while the work is still fresh."
+          ],
+          "bullets": [],
+          "links": [
+            {
+              "label": "Check a live update",
+              "href": "/answers/help/web-site-health-check/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    },
+    {
+      "id": "page-industries",
+      "path": "/industries/",
+      "family": "web",
+      "title": "A website for your business.",
+      "heading": "Show people what you do and what happens next.",
+      "summary": "Different businesses need different proof, questions, and contact paths. We build the site around the decision your customer is actually making.",
+      "icon": "browser-duotone.svg",
+      "absorb": [
+        "buyer-plumbers",
+        "buyer-roofing",
+        "buyer-homes",
+        "buyer-law"
+      ],
+      "sections": [
+        {
+          "heading": "Trades need an obvious next step.",
+          "paragraphs": [
+            "For plumbing, roofing, and other home work, people need to know what you handle, where you work, what the work looks like, and how to request an estimate or inspection. A customer with an urgent repair needs a fast answer. A larger project needs enough detail to decide whether to call.",
+            "Use real services, service areas, photos, credentials, and reviews you can verify. Do not invent emergency availability, warranties, or project results."
+          ],
+          "bullets": [
+            "Service pages for the work you actually perform.",
+            "Phone and estimate paths that work on a phone.",
+            "Work examples that help someone decide."
+          ],
+          "links": [
+            {
+              "label": "Websites for plumbers",
+              "href": "/industries/plumbers/"
+            },
+            {
+              "label": "Websites for roofers",
+              "href": "/industries/roofing/"
+            },
+            {
+              "label": "Websites for home services",
+              "href": "/industries/luxury-home-services/"
+            }
+          ]
+        },
+        {
+          "heading": "Professional services need clear boundaries.",
+          "paragraphs": [
+            "A law firm needs people to understand the kind of matter it handles, where it practices, and how the first contact works. General information should not sound like legal advice, promise a result, or create an attorney-client relationship.",
+            "The firm supplies or approves practice details, jurisdiction facts, disclaimers, and intake language before anything goes live."
+          ],
+          "bullets": [
+            "Plain, approved practice-area explanations.",
+            "Accurate attorney, office, and jurisdiction details.",
+            "A clear contact path with appropriate intake language."
+          ],
+          "links": [
+            {
+              "label": "Websites for law firms",
+              "href": "/industries/law-firms/"
+            }
+          ]
+        },
+        {
+          "heading": "Appointments, shops, and hospitality need usable details.",
+          "paragraphs": [
+            "A salon, shop, restaurant, or hospitality business may need booking, hours, menus, stock, events, or directions. Put the current details where a person expects them, then keep the path simple on a phone.",
+            "The right mix depends on the business. We start with the customer question that matters most and the tools the owner already uses.",
+            "A clean customer path is more useful than adding every feature at once."
+          ],
+          "bullets": [
+            "Current hours and contact details.",
+            "A clear booking, order, visit, or inquiry path.",
+            "Photos and proof that belong to the business."
+          ],
+          "links": [
+            {
+              "label": "See website work",
+              "href": "/examples/"
+            }
+          ]
+        }
+      ],
+      "faqs": []
+    }
+  ],
+  "hiddenHomeIds": [
+    "market-nyc",
+    "market-marthas-vineyard",
+    "market-arizona",
+    "market-louisiana-starbase-area",
+    "market-texas-starbase-area",
+    "market-florida-space-coast",
+    "web-events-calendar",
+    "web-ecommerce-inventory",
+    "web-multilingual-start",
+    "web-reviews-response",
+    "web-newsletter-choice"
+  ]
+}

@@ -96,9 +96,7 @@ type Props = {
 };
 
 const PROTECTED_PRESENTATION_PATHS = new Set([
-  "/studio/cockpit/",
   "/studio/venuecircuit/",
-  "/case-studies/public-house-creative/",
   "/case-studies/venuecircuit/",
 ]);
 

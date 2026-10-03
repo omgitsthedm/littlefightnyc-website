@@ -3,9 +3,9 @@
 The preview compiler imports public source-page blocks that were already
 rendered in the approved reader.  This module keeps that material as prose:
 headings establish chapters, paragraphs stay paragraphs, and source links stay
-in the sentence or list item that introduced them.  It intentionally does not
-deduplicate body copy, apart from an exact opening sentence already used as the
-reader hero.
+in the sentence or list item that introduced them.  It omits only exact shared
+reader boilerplate and an exact opening sentence already used as the reader
+hero.
 """
 
 from __future__ import annotations
@@ -105,6 +105,87 @@ def _intro_values(page: Mapping[str, Any]) -> set[str]:
     return values
 
 
+_GENERIC_CONTACT_HEADING = "what you can count on"
+_GENERIC_CONTACT_TEXT = _canonical(
+    "The first look is free. Some website plans include our written 14-day promise. "
+    "The plan says which jobs qualify, when the days start, what each side needs to "
+    "provide, and what you receive if our work is late. Urgent on-site help is a New "
+    "York service; call so we can assess the issue and location, then confirm any "
+    "on-site timing. A real person answers 9am–9pm Eastern. After hours, leave a message."
+)
+_GENERIC_REFERENCE_HEADING = "useful outside references"
+_GENERIC_REFERENCE_HREFS = frozenset(
+    {
+        "https://support.google.com/business",
+        "https://developers.google.com/search/docs",
+        "https://www.sba.gov/business-guide/manage-your-business",
+        "https://littlefightnyc.com/tech-audit",
+    }
+)
+
+
+def _heading(block: Mapping[str, Any]) -> bool:
+    return _text(block.get("type")).lower() in {"h2", "h3", "h4"}
+
+
+def _section_end(blocks: list[Mapping[str, Any]], start: int) -> int:
+    """Return the first block after the heading-led section at ``start``."""
+    index = start + 1
+    while index < len(blocks) and not _heading(blocks[index]):
+        index += 1
+    return index
+
+
+def _is_generic_reference_section(blocks: list[Mapping[str, Any]], start: int) -> bool:
+    """Recognize only the repeated four-link reference block.
+
+    A heading named ``Useful outside references`` can still carry useful,
+    topic-specific citations.  The shared legacy block is safe to omit only
+    when every authored link is one of its exact Google, SBA, and Tech Audit
+    destinations.
+    """
+    if _canonical(blocks[start].get("text")) != _GENERIC_REFERENCE_HEADING:
+        return False
+    hrefs = {
+        _canonical(href).rstrip("/")
+        for block in blocks[start + 1 : _section_end(blocks, start)]
+        for _, href in _source_links(block)
+    }
+    return hrefs == _GENERIC_REFERENCE_HREFS
+
+
+def _is_generic_contact_section(blocks: list[Mapping[str, Any]], start: int) -> bool:
+    """Recognize the one repeated contact-pitch paragraph, not its heading alone."""
+    if _canonical(blocks[start].get("text")) != _GENERIC_CONTACT_HEADING:
+        return False
+    body = blocks[start + 1 : _section_end(blocks, start)]
+    return len(body) == 1 and _canonical(body[0].get("text")) == _GENERIC_CONTACT_TEXT
+
+
+def filtered_legacy_blocks(page: Mapping[str, Any]) -> list[Mapping[str, Any]]:
+    """Return imported blocks after removing exact shared reader boilerplate.
+
+    The repeated ``What you can count on`` section is a single identical
+    marketing/contact paragraph across unrelated readers.  It includes an
+    obsolete 14-day website promise and repeated hours.  The common reader
+    contact controls already supply the current contact path, so this helper
+    removes that exact section and the exact four-link generic reference block.
+    All other headings, prose, and topic-specific citations remain intact.
+    """
+    blocks = [block for block in page.get("contentBlocks") or [] if isinstance(block, Mapping)]
+    kept: list[Mapping[str, Any]] = []
+    index = 0
+    while index < len(blocks):
+        block = blocks[index]
+        if _heading(block):
+            if _is_generic_contact_section(blocks, index) or _is_generic_reference_section(blocks, index):
+                index = _section_end(blocks, index)
+                continue
+        kept.append(block)
+        index += 1
+    return kept
+
+
 def render_legacy_sections(
     page: Mapping[str, Any],
     display: Display = _identity,
@@ -113,15 +194,17 @@ def render_legacy_sections(
     """Render all imported source blocks as grouped semantic reader sections.
 
     ``h1`` is deliberately omitted because the reader has already rendered one
-    page title.  The only body omission is one paragraph whose full text is an
-    exact hero summary/description before the source reaches its first section
-    heading.  Repeated facts, headings, and later paragraphs remain intact.
+    page title.  Shared legacy boilerplate is removed by
+    :func:`filtered_legacy_blocks`.  One paragraph whose full text is an exact
+    hero summary/description is also omitted before the source reaches its
+    first section heading.  Other facts, headings, and later paragraphs remain
+    intact.
     """
     intro_values = _intro_values(page)
     intro_available = True
     before_first_heading = True
     sections: list[tuple[str, list[str]]] = []
-    current_heading = "The details"
+    current_heading = ""
     current_parts: list[str] = []
     pending_items: list[str] = []
 
@@ -137,9 +220,7 @@ def render_legacy_sections(
             sections.append((current_heading, current_parts.copy()))
             current_parts.clear()
 
-    for block in page.get("contentBlocks") or []:
-        if not isinstance(block, Mapping):
-            continue
+    for block in filtered_legacy_blocks(page):
         kind = _text(block.get("type")).lower()
         text = _text(block.get("text"))
         if not text:
@@ -173,8 +254,9 @@ def render_legacy_sections(
     flush_section()
 
     return "".join(
-        '<section class="story-section story-section--imported">'
-        f"<h2>{escape(display(heading))}</h2><div>{''.join(parts)}</div></section>"
+        '<section class="story-section story-section--imported' + (' story-section--plain' if not heading else '') + '">'
+        + (f"<h2>{escape(display(heading))}</h2>" if heading else "")
+        + f"<div>{''.join(parts)}</div></section>"
         for heading, parts in sections
     )
 

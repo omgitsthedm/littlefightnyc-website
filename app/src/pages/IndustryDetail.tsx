@@ -120,10 +120,6 @@ const INDUSTRY_RECOGNITION: Record<string, IndustryRecognition> = {
       height: 941,
       widths: [480, 640, 900, 1200],
     },
-    proof: {
-      to: "/case-studies/public-house-creative/",
-      label: "See what changed",
-    },
   },
   "restaurants-bars": {
     situation:

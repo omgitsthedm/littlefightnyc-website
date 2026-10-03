@@ -1,0 +1,255 @@
+{
+  "kind": "Original editorial illustrations",
+  "created": "2026-10-02",
+  "generator": "Built-in image generation",
+  "purpose": "Fictional illustrations for service and booking tiles, not client proof",
+  "prompts": {
+    "booking": "Create a new ORIGINAL editorial still-life illustration for a small-business website tile about making appointments easy. A substantial open appointment diary in blue cloth binding, one simple orange ribbon marking a page, an elegant small brass service bell, and a pencil on a flat warm cream desktop. Three or four small handwritten time marks are okay but NO readable words, numbers, letters, brand logos, screens, UI, border, masthead or watermark. Composition is a tightly cropped close-up, objects fill 80 percent of a square canvas with little empty background, considered oblique overhead perspective. Muted cornflower blue #92BFFF and deep ink blue, warm paper #F6F3EC, one tiny burnt-orange accent. Fine slightly irregular pen contour, dry gouache flat fills, subtle printed-paper grain, confident economical drawn forms, witty refined mid-century metropolitan magazine illustration. No photorealism, no 3D, no gradients, no clipart, no generic SaaS symbols. Entirely fresh composition; do not recreate any existing cover or campaign artwork. The image must remain legible at 200px. No people.",
+    "it": "Create a new ORIGINAL editorial illustration for a small-business website tile about reliable tech support. A familiar cream laptop with a simple blue screen sits on a small mustard-yellow desk beside an ordinary cream Wi-Fi router with two antennae. One dark ink-blue cable makes a pleasing loose unknotted loop between the two, visual shorthand for restoring connection. A small desk lamp casts a flat pool of warm light. No readable text, words, numbers, letters, logos, icons in a grid, UI elements, border, watermark or masthead. Tight square composition, equipment and desk fill 85 percent of canvas, strong silhouette, understandable at 200px. Limited butter-yellow #F5D95B, warm cream #F6F3EC and deep charcoal/navy palette, tiny warm orange detail. Fine imperfect ink contours, flat dry gouache areas, delicate print grain, slightly eccentric but believable perspective, warm mid-century metropolitan editorial illustration. Not photorealistic, not futuristic, no 3D, no gradients, no robotic diagram, no people. Entirely new composition, never copy a cover or existing campaign.",
+    "consulting": "Create a new ORIGINAL editorial illustration for a small-business website tile about a calm conversation and choosing the next step. An intimate round cafe table seen obliquely from above, two different elegant ordinary wooden chairs pulled up to it, two small coffee cups, one OPEN cream notebook and a pencil set across it. No people. The chairs and tabletop together fill 85 percent of a square image; composed as a charming close-up, not a spacious room or distant scene. Limited leafy pale green #A0DF85, deep bottle green, warm cream #F6F3EC and one small ochre accent. Thin irregular ink contour and dry hand-painted flat gouache, subtle paper grain, intelligent visual economy, slightly playful perspective, classic mid-century metropolitan magazine editorial warmth. No readable text, numbers, lettering, logos, masthead, watermark, frame, generic clipart, 3D or photorealism. Not a copy of any old cover or existing campaign composition. Must be instantly understandable at 200px.",
+    "software": "Create a new ORIGINAL editorial still-life illustration for a small-business website tile about fewer repetitive admin tasks through custom software. A familiar open ring-bound office ledger viewed from a slightly eccentric oblique angle, with three small ordinary receipt slips gathered neatly under one dark binder clip on the left, and a fountain pen resting across the neat right-hand page. A simple hand-drawn ledger ruling suggests order but includes NO readable text or numbers. Only these recognizable desk objects, no gadgets or screens, no abstract network diagrams. Tight square composition filling 85 percent of image, single strong silhouette, understandable at 200px. Limited dusty magenta #F09BDD, dark plum ink, warm paper cream #F6F3EC and tiny moss green detail. Fine imperfect ink drawing, dry matte gouache fills, subtle print grain, warm witty mid-century metropolitan editorial illustration. No people, no photorealism, no 3D, no gradients, no logos, masthead, frame, watermark. Entirely fresh original composition, do not recreate any cover or past ad."
+  },
+  "storyIllustrations": {
+    "platform": {
+      "title": "Choosing a website foundation",
+      "prompt": "Radical constructivist graphic illustration. Three dramatically different architectural support structures hold a single small independent shop: one is a stack of red rectangles, one a cobalt arch, one a yellow triangular truss. The useful chosen foundation stands firmly below the shop; other options sit apart. Flat hard-edged geometry, no shading, no texture, asymmetric diagonal composition, extreme red/cobalt/yellow/black palette with pale pink negative space. The appearance must be graphic modernist poster abstraction, not a scene painted with a brush, not cut-paper texture, not 3D. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-21dca68e-0578-4304-804f-7e937c950bf3.png",
+      "assets": {
+        "320": "/assets/illustrations/story-platform-320.webp",
+        "640": "/assets/illustrations/story-platform-640.webp",
+        "960": "/assets/illustrations/story-platform-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Constructivist geometry"
+    },
+    "ownership": {
+      "title": "Keeping ownership of a website",
+      "prompt": "Authentic hand-carved linocut print. Extreme close-up of two ordinary human hands exchanging one enormous old-fashioned key, key crossing from bottom-left to top-right. Owner control and receiving your own key is the metaphor. Thick irregular black ink masses, visible white knife gouges, emphatic silhouette, two inks only: bone white and brilliant burnt orange behind dense black. Tight cropped hands, cropped wrists, anatomically coherent fingers. Rough relief-print edges. Absolutely no smooth shading, pastel, polished vector, or modeled objects. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-59843c5d-e8b4-469a-9354-7cbbab5dcad5.png",
+      "assets": {
+        "320": "/assets/illustrations/story-ownership-320.webp",
+        "640": "/assets/illustrations/story-ownership-640.webp",
+        "960": "/assets/illustrations/story-ownership-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Hand-carved linocut"
+    },
+    "cost": {
+      "title": "Understanding a website quote",
+      "prompt": "Experimental fluorescent risograph editorial print about understanding a business quote. A broad accordion receipt zigzags vertically across the image; simple rows of thick horizontal strokes and three colored circles stand for a clearly itemized scope without actual text or figures. A tiny business-owner silhouette at the bottom looks up at the paper. Acid yellow ground, fluorescent hot pink and electric blue overprinted inks, deliberate misregistration, translucent ink overlap, coarse risograph grain. Dynamic huge typography-like abstract bars but NO actual letters or numerals. No object tabletop, no retro adding machine, no shaded paper. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-2411c09f-c269-41f8-b458-fc53c548da49.png",
+      "assets": {
+        "320": "/assets/illustrations/story-cost-320.webp",
+        "640": "/assets/illustrations/story-cost-640.webp",
+        "960": "/assets/illustrations/story-cost-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Fluorescent risograph"
+    },
+    "mobile": {
+      "title": "A website that works on a phone",
+      "prompt": "Beautifully art-directed 16-bit pixel-art night street. A giant upright smartphone becomes the front doorway of a tiny bright independent shop; a small customer walks from the street into the phone-shop. Blocky blue-violet brick city, cyan window light, coral awning, deep midnight sky, two pixelated stars. All shapes are crisply stepped on a strict low-resolution pixel grid, no smooth edges, no anti-aliased curves, no realistic phone mockup. Side-view game-world composition with a strong vertical phone silhouette, rich constrained arcade palette. No app logos or readable signs. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-98caa475-f0bd-4818-9d03-4b951755b467.png",
+      "assets": {
+        "320": "/assets/illustrations/story-mobile-320.webp",
+        "640": "/assets/illustrations/story-mobile-640.webp",
+        "960": "/assets/illustrations/story-mobile-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "16-bit pixel city"
+    },
+    "forms": {
+      "title": "An inquiry reaching a real person",
+      "prompt": "Witty sparse pen-and-ink magazine cartoon, pure black line on clean white. A comically oversized envelope is being delivered through an ordinary shop mail slot; inside, the shopkeeper reaches out to receive it with both hands. One tiny vermilion stamp is the only color accent. Confident loose economical nib lines, expressive small human gesture, humorous change of scale, airy white field, deliberately no hatching, no shading, no painted textures. Envelope occupies the upper-left, shopkeeper lower-right. No speech bubbles, no labels, no caption. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-7b90de42-6d80-49a3-a291-aa3e984c0944.png",
+      "assets": {
+        "320": "/assets/illustrations/story-forms-320.webp",
+        "640": "/assets/illustrations/story-forms-640.webp",
+        "960": "/assets/illustrations/story-forms-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Black-ink editorial cartoon"
+    },
+    "web-redesign-decision": {
+      "title": "Repairing or rebuilding a website",
+      "prompt": "Daring analog photographic collage with sharply visible cut edges. A black-and-white photograph-like row of old urban storefront facades is peeled back diagonally as though a paper skin; underneath appears a vividly colored new doorway opening into a bright turquoise sky. One very large red circular sun floats behind the collage. Juxtapose grainy halftone monochrome photography with saturated turquoise and vermilion flat paper fragments. Surreal scale, off-center tall architectural composition, editorial dada montage, no cozy craft desk, no smooth painted render. No recognizable real business or city landmark, no readable facade signs. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-41948ad6-dd4f-4a2c-9083-8a88842cb62e.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-redesign-decision-320.webp",
+        "640": "/assets/illustrations/story-web-redesign-decision-640.webp",
+        "960": "/assets/illustrations/story-web-redesign-decision-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Surreal photographic collage"
+    },
+    "web-accessibility-basics": {
+      "title": "An easier first path",
+      "prompt": "Austere Swiss graphic-design illustration built from a few enormous flat symbols. A huge black open doorway, a low chartreuse ramp flowing into it, one clean white walking human silhouette and one clean white wheelchair-user silhouette approaching side by side. Broad simple geometry, deliberate optical spacing, pure flat cobalt-blue ground, stark black/chartreuse/white contrast. No gradients, no outlines, no texture, no tiny detail, no text. The accessible entrance and two paths join in a clear composition that occupies most of the square. Gallery-quality graphic reduction, not a UI icon sheet. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-3ad0d9d9-f52d-4e22-b8c6-5c907fe0e44d.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-accessibility-basics-320.webp",
+        "640": "/assets/illustrations/story-web-accessibility-basics-640.webp",
+        "960": "/assets/illustrations/story-web-accessibility-basics-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Swiss pictogram poster"
+    },
+    "web-content-collection": {
+      "title": "Gathering useful website material",
+      "prompt": "Hand-embroidered textile illustration photographed straight-on as a flat artwork. A rich dark plum felt quilt made of five irregular overlapping appliqué patches: an orange camera, a mint shopfront, a cream price-tag shape without text, a red flower, a small cyan folded brochure. Dense visible stitches, wool fibers, scalloped raw felt edges, thread knots and handmade imperfections, jewel colors. The disparate business ingredients join into one coherent patchwork. Fill the frame, irregular patch proportions, no pins or desk, no paper, no ink drawing, no 3D plastic. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-df27185d-ce81-42a6-805e-4f8b5d854061.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-content-collection-320.webp",
+        "640": "/assets/illustrations/story-web-content-collection-640.webp",
+        "960": "/assets/illustrations/story-web-content-collection-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Embroidered textile collage"
+    },
+    "web-service-page": {
+      "title": "Explaining services clearly",
+      "prompt": "Lush Art Nouveau decorative illustration with long flowing organic lines. Three tall emerald workshop doorways nested under a single sweeping floral arch, each doorway showing one large tool silhouette: paintbrush, wrench, scissors. Stylized ivy connects all three while each doorway stays distinct. Sinuous peacock-green and gold linework, rich ivory black emerald palette, flat ornamental enamel-like fills, strong vertical triptych integrated as ONE image, sophisticated botanical curves. Front elevation, doors fill canvas; no lettering, no tiny repeated embellishment, no modern tech screen, no relief-print gouges. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-df725335-64ed-40c5-8fe2-1b68a43d7921.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-service-page-320.webp",
+        "640": "/assets/illustrations/story-web-service-page-640.webp",
+        "960": "/assets/illustrations/story-web-service-page-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Art Nouveau stained ink"
+    },
+    "web-photos-with-purpose": {
+      "title": "Choosing useful business photos",
+      "prompt": "A striking authentic cyanotype photogram. Deep Prussian blue square paper with white silhouettes of a fern, a small ceramic cup, and the rectangular outline of a camera, overlapping with varying exposure and luminous translucent details. One broad orange crop-corner gesture highlights the cup as the useful subject, the only non-blue color. Strong photographic shadow silhouettes, irregular sun-exposed edges, visible fibrous cyanotype chemistry, horizontal asymmetry. No cream field, no illustrated tabletop, no conventional colored-camera drawing, no contact sheet grid, no readable labels. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-2df0371f-0b31-4bfa-8862-5fc736aca708.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-photos-with-purpose-320.webp",
+        "640": "/assets/illustrations/story-web-photos-with-purpose-640.webp",
+        "960": "/assets/illustrations/story-web-photos-with-purpose-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Cyanotype photogram"
+    },
+    "web-menu-and-hours": {
+      "title": "Making hours easy to find",
+      "prompt": "Expressive cinematic nocturne oil painting. Close street-level view of a warm little diner doorway at night, a huge luminous circular analog clock without numerals in the window, two chunky clock hands clearly visible. Electric coral and amber light spills across rain-black pavement; deep ultramarine shadows surround it. Thick visible impasto brush strokes, smeared neon reflections, dramatic diagonal street perspective, moody film-noir warmth. Doorway and clock dominate, no actual sign words, no photograph realism, no flat print, no beige paper texture. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-c76f9e10-cbc9-4774-924a-8d800c6b3148.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-menu-and-hours-320.webp",
+        "640": "/assets/illustrations/story-web-menu-and-hours-640.webp",
+        "960": "/assets/illustrations/story-web-menu-and-hours-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Neon noir oil painting"
+    },
+    "web-ecommerce-inventory": {
+      "title": "Showing what is in stock",
+      "prompt": "Punchy 1960s pop-art comic illustration: extreme close-up of a grocery shelf filled with six bold yellow tins and coral-red bottles, with one unmistakably empty rectangular slot in the center. Thick black contour outlines, large cyan and magenta Ben-Day halftone dots, flat lemon-yellow ground, high saturation and hard contrast. Exaggerated product scale, oblique shelf perspective, decisive empty negative-space slot. Blank generic packaging, no numbers, no brand labels, no speech bubble, no 3D render or watercolor. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement. CRITICAL COMPOSITION CORRECTION: The center of the square MUST have one large completely EMPTY shelf compartment taking 35% of the image area, surrounded left and right by brightly colored stocked cans and bottles. The bare dark backing and horizontal shelf beneath the empty bay must be obvious even at 120px. No object, package, decoration, or can may occupy that central empty bay. Make the inventory gap the undeniable main subject. Retain bold Ben-Day halftone Pop Art, hard thick outlines and saturated primary-color printing.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-21661683-8315-4289-b024-00f1ca8a723b.png",
+      "assets": {
+        "320": "/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+        "640": "/assets/illustrations/story-web-ecommerce-inventory-640.webp",
+        "960": "/assets/illustrations/story-web-ecommerce-inventory-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Ben-Day Pop Art"
+    },
+    "wifi": {
+      "title": "Connection across rooms",
+      "prompt": "Original Japanese woodblock-inspired panoramic city scene adapted to a square. An elegant curling indigo band of wind flows over a sequence of three ochre city roofs and into three warmly lit rooms with small laptop silhouettes, visually linking separate spaces. Layered flat woodblock color, visible woodgrain and slightly irregular ink registration, plum evening sky, indigo, ochre, pale jade. High horizon, dramatic curved rhythm across the whole canvas, stylized clouds and rooftops. No text, no kanji, no radio icons or arrows, no computer-interface diagram, no copied historic print. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-695b2f2a-5ec3-43ec-a6fd-340aced87a87.png",
+      "assets": {
+        "320": "/assets/illustrations/story-wifi-320.webp",
+        "640": "/assets/illustrations/story-wifi-640.webp",
+        "960": "/assets/illustrations/story-wifi-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Japanese woodblock landscape"
+    },
+    "email": {
+      "title": "A message arriving",
+      "prompt": "A sculptural minimalist illustration made from ONE continuous bright red wire line against a flat pale icy-gray ground. The wire traces a large open envelope on the left, loops through the space like an elegant scribble, and resolves into a small open hand on the right holding a single message. Wire casts a tiny crisp physical shadow; all forms otherwise linear and airy. Extremely restricted palette: red line and cold gray only, spacious horizontal composition, graphic sophistication. No filled objects, no postal-cubby still life, no pen shading, no pastel paint. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement. COMPOSITION CORRECTION: Fill the entire square with the continuous red wire. Make one huge square envelope occupy the upper-left 55 percent and the receiving hand occupy the lower-right 55 percent, connected by a confident large looping line that crosses the center. Thick bold red wire diameter, highly visible at 120px. Only 15 percent unused pale gray background. Tight extreme close crop, red contours reaching near all four edges. Preserve physically bent red wire with tiny realistic shadows, no paper cartoon, no black ink. No text.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-e9748811-082c-401a-9256-2bff651a903b.png",
+      "assets": {
+        "320": "/assets/illustrations/story-email-320.webp",
+        "640": "/assets/illustrations/story-email-640.webp",
+        "960": "/assets/illustrations/story-email-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Continuous wire drawing"
+    },
+    "backup": {
+      "title": "A second copy kept separately",
+      "prompt": "Dreamlike soft-pastel landscape: two enormous matching archive vaults stand far apart on two isolated mesas in a coral desert, connected only by their identical golden contents glowing softly through open doors. Vast mint sky, low lilac hills, salmon sand, delicate powdery pastel blending, impossible calm scale. The closest vault is cropped at lower-left; distant matching vault occupies upper-right, depth through open space. No cables connecting the vaults, no labels, no sci-fi machinery, no tabletop, no digital gradients; unmistakably hand-worked chalk pastel. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement. COMPOSITION CORRECTION: Two EQUALLY LARGE warm luminous vaults, one upper-right and one lower-left, sit on separate coral rock outcrops. Each vault occupies at least 30 percent of image width and 40 percent of height. Their open fronts and identical folder-shaped contents must both read at 120px. Tight cropped close view with a narrow chasm making the separation evident. Only 15 percent mint sky. Soft dusty pastel drawing, dreamy surreal color, no photographic detail, no letters, no gold bars.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-cf701e07-5a1d-4780-9a5a-b8dce966bed4.png",
+      "assets": {
+        "320": "/assets/illustrations/story-backup-320.webp",
+        "640": "/assets/illustrations/story-backup-640.webp",
+        "960": "/assets/illustrations/story-backup-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Surreal soft pastel"
+    },
+    "it-shared-files": {
+      "title": "Finding the shared file",
+      "prompt": "A witty premium stop-motion set made entirely from visibly hand-sculpted plasticine clay. Two tiny simplified clay office workers on opposite sides of a gigantic coral filing cabinet, each reaching toward ONE bright yellow shared folder protruding from its center. Chunky teal and lavender furniture, fingerprints and little tool marks on clay, playful uneven handmade forms, turquoise cyclorama background, warm directional studio light and physical cast shadows. Three-quarter camera angle, tight scene, not a glossy 3D SaaS render, not photoreal people, no text on folders. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-f05b5c08-a891-4857-9328-86f7eb6d4733.png",
+      "assets": {
+        "320": "/assets/illustrations/story-it-shared-files-320.webp",
+        "640": "/assets/illustrations/story-it-shared-files-640.webp",
+        "960": "/assets/illustrations/story-it-shared-files-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Plasticine stop-motion"
+    },
+    "consulting-first-priority": {
+      "title": "Choosing what to fix first",
+      "prompt": "Powerful loose charcoal drawing on cold white textured paper. A pair of oversized competent hands isolates ONE central knot from a huge tangle of black cord; one short bright spring-green strand clearly leads out of the knot being worked on. Broad expressive charcoal smudges, broken contour lines, erased highlights, intentionally unfinished peripheral loops, dynamic close crop. Hands and one chosen knot are the only focus, black and white with exactly one green accent. No objects on a desk, no trees, no colored gouache fill, no cartoon facial expression. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-460bade0-21ee-4f46-8a78-3a5fca6e5f03.png",
+      "assets": {
+        "320": "/assets/illustrations/story-consulting-first-priority-320.webp",
+        "640": "/assets/illustrations/story-consulting-first-priority-640.webp",
+        "960": "/assets/illustrations/story-consulting-first-priority-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Gestural charcoal"
+    },
+    "consulting-tool-choice": {
+      "title": "Choosing tools that fit",
+      "prompt": "Precise cyan-and-white architectural blueprint illustration, full deep navy ground. Exploded view of one useful adjustable wrench above a single large bolt, surrounded by a few thin circles and construction lines; two redundant mismatched wrenches are faint ghost outlines off to the far sides. One useful fit reads clearly. Thin luminous white technical drafting linework, sharp orthographic geometry, meticulous cross-section hatching, blueprint-grid texture extremely subtle. One small emerald highlight on the working jaw. No numbers, dimensions, labels, arrows, fake text, paper desk or painted objects. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-9031bc39-7693-4aea-9072-848897b70d4a.png",
+      "assets": {
+        "320": "/assets/illustrations/story-consulting-tool-choice-320.webp",
+        "640": "/assets/illustrations/story-consulting-tool-choice-640.webp",
+        "960": "/assets/illustrations/story-consulting-tool-choice-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Technical blueprint"
+    },
+    "software-repeat-work": {
+      "title": "Replacing repeated entry",
+      "prompt": "Bold optical-art editorial illustration, flat black, brilliant magenta, and pure white only. A single large white hand presses one simple black circular lever at the lower left; five identical white rectangular sheets fan into a precise repeating rhythm across the magenta field, linked by one continuous black ribbon. Strong graphic vibration from alternating stripes and hard parallel lines, no gradient or 3D shading. The composition communicates one deliberate action doing repeated work. Dynamic asymmetry, oversized shapes, no text on pages, no gear or generic automation icon, no tabletop. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-fd0626ad-5a31-42e3-b00d-1e74e38d3603.png",
+      "assets": {
+        "320": "/assets/illustrations/story-software-repeat-work-320.webp",
+        "640": "/assets/illustrations/story-software-repeat-work-640.webp",
+        "960": "/assets/illustrations/story-software-repeat-work-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Magenta Op Art"
+    },
+    "software-approval-path": {
+      "title": "A clear approval handoff",
+      "prompt": "An original luminous stained-glass artwork shown straight-on, filling the square. Three large stylized hands in separate connected geometric glass sections pass ONE glowing golden circular seal upward from lower-left to upper-right. Emerald, amethyst, ruby, amber, and electric blue translucent glass, bold black lead seams, uneven ripples and tiny bubbles in glass, radiant backlighting. Clear recognizable handoff gesture with calm competent hands, no religious figures, no logos, no text, no stamped words, no separate collage panels, no flat vector imitation. Square 1024x1024 standalone editorial artwork, one finished image. No lettering, readable words, numbers, logos, watermark, captions, arrows, or UI chrome. Make the main metaphor recognizable at a 140px thumbnail. Invent a fresh composition, never reproduce an existing cover or campaign. Do not use a cream tabletop, blue gouache still life, generic SaaS clipart, or a uniform centered product arrangement.",
+      "originalPath": "/Users/davidmarsh/.codex/generated_images/01a0fbe8-92b6-7260-9971-dad131e64b6d/exec-539a6e11-6d2c-4c67-84a2-59df40a88834.png",
+      "assets": {
+        "320": "/assets/illustrations/story-software-approval-path-320.webp",
+        "640": "/assets/illustrations/story-software-approval-path-640.webp",
+        "960": "/assets/illustrations/story-software-approval-path-960.webp"
+      },
+      "usage": "Original illustration used on the selected mosaic tile and its matching reader.",
+      "style": "Jewel stained glass"
+    }
+  },
+  "storyArtDirection": "Twenty distinct media, palettes, and compositions, replacing the uniform gouache set at the owner’s request."
+}

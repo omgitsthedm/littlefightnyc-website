@@ -1,12 +1,8 @@
 #!/usr/bin/env node
 /**
- * Indexable meta descriptions must fit the SERP.
- *
- * Google truncates around 160 characters on desktop and less on mobile. Past
- * that the tail is not shortened, it is replaced with an ellipsis — so the last
- * clause of seven descriptions was written, reviewed, shipped, and never shown
- * to anyone. Two of them ended on the actual differentiator ("and we show up in
- * person", "you own the code and the domain").
+ * Keep indexable descriptions within our 160-character editorial budget.
+ * Search engines choose and truncate snippets dynamically; this budget is
+ * a copy check, not a guarantee of the text or length shown in search.
  *
  * Measured on the RENDERED text, not the attribute: "&amp;" is five characters
  * in the HTML and one on the page, and counting the raw attribute overstates
@@ -75,9 +71,9 @@ if (over.length) {
   );
   for (const item of over.sort((a, b) => b.length - a.length)) {
     console.error(`  ${item.route}  (${item.length})`);
-    console.error(`    never shown: "…${item.cut}"`);
+    console.error(`    beyond editorial budget: "…${item.cut}"`);
   }
-  console.error("\nTrim in app/src/data/seo-pages.json and route-meta.json together.");
+  console.error("\nUpdate the page's authored meta description in preview-content/; retained legacy routes use src/data/.");
   process.exit(1);
 }
 

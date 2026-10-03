@@ -1,0 +1,440 @@
+{
+  "category": {
+    "id": "web",
+    "path": "/services/custom-local-websites/",
+    "title": "Make your business easy to choose.",
+    "summary": "We design, write, and build websites that show independent businesses clearly and give customers a direct next step.",
+    "metaTitle": "Custom Websites for Independent Businesses | Little Fight NYC",
+    "metaDescription": "Custom websites for independent businesses. Clear copy, real proof, business-owned accounts, and a practical path for customers to get in touch."
+  },
+  "answers": [
+    {
+      "id": "maps",
+      "question": "Why is my business not showing on Google Maps?",
+      "answer": "A missing Google Maps listing needs a check of its verification status, business details, and any duplicate or restricted profiles.",
+      "detail": "We trace the public listing, the website, and the facts you can verify, then identify what needs correcting. Google controls the result, while the business should control its account and records.",
+      "nextStep": "Send the listing that worries you and the public details it should show."
+    },
+    {
+      "id": "platform",
+      "question": "Should I use a website builder or hire someone to build my site?",
+      "answer": "Choose the option that keeps your accounts in your name and makes the customer path clear from the first screen.",
+      "detail": "We compare the pages, updates, and connections your business needs, then say when a simpler setup is enough and when custom work earns its place.",
+      "nextStep": "Show us the site you have and the customer action it needs to support."
+    },
+    {
+      "id": "speed",
+      "question": "Why is my small business website slow on a phone?",
+      "answer": "Oversized photos and extra scripts can leave customers staring at a blank screen before they see what you offer.",
+      "detail": "We measure the page on a phone, fix the heaviest parts first, and compare the result without stripping away the proof customers need.",
+      "nextStep": "Send the page that feels slow and tell us what a visitor needs to do there."
+    },
+    {
+      "id": "ownership",
+      "question": "How do I make sure I own my domain, website, and website accounts?",
+      "answer": "Your domain, hosting, site platform, and connected tools should live in accounts the business can renew and recover.",
+      "detail": "We map who holds each account, move ownership where it belongs, and leave usable handoff notes so one person is never the only key.",
+      "nextStep": "Bring the account names and renewal notices you can find; keep passwords private."
+    },
+    {
+      "id": "booking",
+      "question": "How can my website make it easier for customers to book an appointment?",
+      "answer": "Booking is easier when customers can see the service, choose a time or send a request, and understand what happens next.",
+      "detail": "We test the full path from service choice to confirmation, then connect the request to the way your business actually responds.",
+      "nextStep": "Show us the booking link or form customers use now."
+    },
+    {
+      "id": "cost",
+      "question": "How much does a small business website cost?",
+      "answer": "A useful website quote reflects the pages, words, photos, and connections your business actually needs, not a package someone guessed at.",
+      "detail": "Current terms are 50% to start and 50% on hosting, with no monthly hosting fee. Domain renewals and optional paid tools stay separate; monthly checks, upgrades, and changes are free within the agreed scope.",
+      "nextStep": "Tell us what customers need to understand or do on the new site."
+    },
+    {
+      "id": "web-domain-renewal",
+      "question": "How can a business avoid losing control of its domain name?",
+      "answer": "Your domain needs a business-controlled login, renewal email, payment method, and recovery contact before the next notice arrives.",
+      "detail": "We identify the registrar and authorized account owner, then record the details that keep a later renewal or provider change manageable.",
+      "nextStep": "Send the domain name and the email that receives its renewal notices."
+    },
+    {
+      "id": "mobile",
+      "question": "Why does my website look good on a computer but awkward on a phone?",
+      "answer": "A site can look polished on a laptop and still make a customer pinch, squint, or abandon the contact path on a phone.",
+      "detail": "We test the service and contact pages at real phone sizes, repair what gets in the way, and keep the parts of the site that still work.",
+      "nextStep": "Send the phone page that feels hardest to use."
+    },
+    {
+      "id": "web-homepage-priority",
+      "question": "What should I write on a homepage when I have too many services to explain?",
+      "answer": "A homepage earns its place when a new visitor quickly sees the problem you solve and where to go next.",
+      "detail": "We turn your customer questions into a few clear paths, then add the proof and service detail each path needs to carry a decision.",
+      "nextStep": "Tell us the questions you hear before someone chooses your business."
+    },
+    {
+      "id": "forms",
+      "question": "Why are people visiting our website but not completing the contact form?",
+      "answer": "A contact form loses people when it asks too much, hides the next step, or fails before the business sees the message.",
+      "detail": "We shorten the request to what your team needs first, test it on a phone, and make sure a call, text, or email remains easy to find.",
+      "nextStep": "Send the form URL and explain where requests should land."
+    },
+    {
+      "id": "web-redesign-decision",
+      "question": "Does my small business website need a rebuild or a few focused fixes?",
+      "answer": "A rebuild earns its cost when the platform, pages, ownership, or customer path keeps fighting the business every day.",
+      "detail": "We review what a customer sees, what your team maintains, and what is worth preserving before recommending repairs or a new structure.",
+      "nextStep": "Show us one service page and the path a customer takes to contact you."
+    },
+    {
+      "id": "web-accessibility-basics",
+      "question": "What should a small business fix first to make a website more accessible?",
+      "answer": "Readable text, clear controls, keyboard access, and usable forms help more customers finish the task they came to do.",
+      "detail": "We check the important path with a keyboard and phone, then make sure key facts are real text instead of information trapped inside an image.",
+      "nextStep": "Send the page customers rely on most."
+    },
+    {
+      "id": "web-local-facts",
+      "question": "What location information should a local business put on its website?",
+      "answer": "A local customer needs your current name, phone, address or service area, hours, and practical visit details before they contact you.",
+      "detail": "We put those facts where people look and align them with the Google Business Profile, then make seasonal hours and service boundaries easy to update.",
+      "nextStep": "Send the public facts a new customer should find first."
+    },
+    {
+      "id": "web-proof-before-pitch",
+      "question": "What should a small business website show to help a new customer feel confident?",
+      "answer": "A new customer looks for real work, real people, clear service details, and a reason to believe the business can help.",
+      "detail": "We organize your approved photos, reviews, and service facts around the questions behind a first visit, then make contact feel like the natural next step.",
+      "nextStep": "Show us the proof a customer should see before they call."
+    },
+    {
+      "id": "website",
+      "question": "What pages does a small business website need before it launches?",
+      "answer": "A first website needs enough pages to explain the business, show the services, prove the work, and make contact simple.",
+      "detail": "We plan the first useful path, then aim to launch in six weeks or less once scope and supplied materials are agreed.",
+      "nextStep": "Tell us what a customer should understand before they contact you."
+    },
+    {
+      "id": "web-service-page",
+      "question": "What should a service page answer before someone contacts us?",
+      "answer": "A service page should name the customer's problem, show who the work fits, and make the first contact feel straightforward.",
+      "detail": "We write the practical details only your business knows, including preparation, service area, and what happens after a request arrives.",
+      "nextStep": "Share the questions people ask before they request this service."
+    },
+    {
+      "id": "web-photos-with-purpose",
+      "question": "Which photos are useful on a small business website?",
+      "answer": "Useful website photos show the place, the work, the people, and the result a customer is trying to understand.",
+      "detail": "We choose approved images with a job to do, add context where it matters, and keep important words outside the image itself.",
+      "nextStep": "Send the photos that show your work at its clearest."
+    },
+    {
+      "id": "web-menu-and-hours",
+      "question": "How can a seasonal business explain its hours on a website?",
+      "answer": "Seasonal hours work when the current schedule, opening dates, and off-season contact path appear where customers expect them.",
+      "detail": "We create one clear update routine so the website, Google listing, and booking tools agree before a customer makes the trip.",
+      "nextStep": "Send the current schedule and the dates that are most likely to change."
+    },
+    {
+      "id": "web-events-calendar",
+      "question": "What should an event page include before someone decides to attend?",
+      "answer": "An event page needs the plan in plain sight: what is happening, when, where, who it is for, and how to join.",
+      "detail": "We put those facts near the top, connect the registration path, and make changes easy to publish when the schedule moves.",
+      "nextStep": "Send the event details and the action a visitor should take."
+    },
+    {
+      "id": "web-ecommerce-inventory",
+      "question": "What does a small shop need before selling products online?",
+      "answer": "A shop is ready to sell online when its product details, stock, payment, fulfillment, and customer policies agree with real operations.",
+      "detail": "We map one product from listing to delivery, then test the supported checkout path before a customer has to discover the gaps.",
+      "nextStep": "Show us the product and fulfillment path you want customers to use."
+    },
+    {
+      "id": "web-multilingual-start",
+      "question": "Should my business website have pages in more than one language?",
+      "answer": "Another language earns its place when it matches the people you serve and someone can approve the words your customers rely on.",
+      "detail": "We start with the decision pages, then plan how every version stays current as services, hours, policies, and booking details change.",
+      "nextStep": "Tell us the languages customers use and the pages that must stay accurate."
+    },
+    {
+      "id": "web-site-health-check",
+      "question": "What should I check after a website update goes live?",
+      "answer": "A website update is finished when the customer path it touched still looks right, works on a phone, and reaches the business.",
+      "detail": "We test the pages, forms, links, booking, or checkout involved, then leave a short record of what changed for the next update.",
+      "nextStep": "Send the update you made and the customer action it was meant to improve."
+    },
+    {
+      "id": "web-hosting-ownership",
+      "question": "What should a business know about website hosting before changing providers?",
+      "answer": "A hosting move needs a clear account owner, domain registrar, renewal contact, email dependencies, and backup plan before anything changes.",
+      "detail": "We map what the site depends on, keep the business as the account owner, and plan the move around the pages customers rely on.",
+      "nextStep": "Send the hosting provider and domain details before you end any service."
+    },
+    {
+      "id": "web-reviews-response",
+      "question": "How should a small business respond to a public review without sounding scripted?",
+      "answer": "A good review reply thanks the person for something specific, answers a useful question, and keeps private details off the public page.",
+      "detail": "We help shape a short response that sounds like your business and gives future customers a clear sense of how you handle people.",
+      "nextStep": "Send one review that feels difficult to answer well."
+    },
+    {
+      "id": "web-search-answer",
+      "question": "How do I make my website easier for customers and AI tools to understand?",
+      "answer": "Customers and search tools understand a site when it answers real questions with current facts, clear headings, and useful links.",
+      "detail": "We turn the questions people ask before they call into readable pages, then keep service areas, hours, policies, and availability accurate as the business changes.",
+      "nextStep": "Bring the questions customers ask before they request a quote or book."
+    },
+    {
+      "id": "web-newsletter-choice",
+      "question": "When does a small business need an email signup on its website?",
+      "answer": "An email signup works when customers have a real reason to hear from you and someone can keep the list useful.",
+      "detail": "We decide what the signup promises, where it belongs, and whether a direct contact path would serve the business better right now.",
+      "nextStep": "Tell us what update customers would want to receive."
+    },
+    {
+      "id": "web-launch-checklist",
+      "question": "What should a business check before sharing a new website?",
+      "answer": "A site is ready to share when its facts are current, its main action works on a phone, and every message reaches a real person.",
+      "detail": "We test the service pages, forms, booking or checkout path, confirmation messages, and account handoff before the business sends customers there.",
+      "nextStep": "Tell us the one action a new customer must be able to complete."
+    }
+  ],
+  "industries": {
+    "/industries/plumbers/": {
+      "title": "Websites for plumbers that answer before the phone rings.",
+      "summary": "Show the services, service area, real work, and direct call path a homeowner needs when a repair cannot wait. A custom site keeps the business facts clear and the domain, hosting, and logins in the business's control.",
+      "sections": [
+        {
+          "heading": "Different calls need different answers.",
+          "paragraphs": [
+            "A blocked drain, a water-heater replacement, and a planned renovation are different decisions. The site should help each customer see what you handle and how to start the right conversation.",
+            "Put the services you want to be known for beside the areas your team actually serves. Keep the phone and estimate-request path easy to use on a phone."
+          ],
+          "bullets": [
+            "Service pages for the work you perform.",
+            "Service-area facts you can keep current.",
+            "A direct route to call or request an estimate."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Let the proof do useful work.",
+          "paragraphs": [
+            "Real project photos, credentials, and reviews help a homeowner understand the business before they contact you. Give each piece of proof enough context to show what it means.",
+            "The site should use your actual availability, services, credentials, and coverage. A clear fact is more useful than a broad claim."
+          ],
+          "bullets": [
+            "Current photos of the work.",
+            "Reviews and credentials you can verify.",
+            "Plain wording about the services you offer."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Keep the office in the loop.",
+          "paragraphs": [
+            "An estimate request needs to reach the person who can respond, with enough detail to begin. We shape the request path around the way your office already handles a new call.",
+            "Your domain, site, and business accounts stay in business-controlled hands. The handoff leaves a usable record of what runs the site and who maintains the public details."
+          ],
+          "bullets": [
+            "A request path matched to your real process.",
+            "Business-controlled accounts and renewals.",
+            "Plain notes for future updates."
+          ],
+          "links": []
+        }
+      ],
+      "metaDescription": "Custom websites for plumbers with clear services, real work, service areas, and a phone-friendly contact path. Your business keeps control of its accounts."
+    },
+    "/industries/roofing/": {
+      "title": "Websites for roofers that earn trust before the estimate.",
+      "summary": "Finished work, clear service details, reviews, and an understandable estimate path help a property owner decide who to call. The site should make it easy to see what you handle and how a request reaches the team.",
+      "sections": [
+        {
+          "heading": "Make the work easy to understand.",
+          "paragraphs": [
+            "Roof repair, replacement, maintenance, and commercial work ask a customer to make different decisions. Separate the services so a property owner can find the work that fits their situation.",
+            "Show where you work and what a request for an inspection or estimate looks like. Those details help a serious prospect decide whether to contact the team."
+          ],
+          "bullets": [
+            "Pages for the roofing work you actually perform.",
+            "Service areas that match real coverage.",
+            "A phone-friendly inspection or estimate path."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Use proof with context.",
+          "paragraphs": [
+            "Finished projects, reviews, licenses, warranties, and certifications can help when they are current and approved for publication. Explain what the photo, credential, or review tells a visitor instead of treating it as decoration.",
+            "Keep claims tied to facts the company can stand behind. The site should make a property owner more informed before the first conversation."
+          ],
+          "bullets": [
+            "Project photos that identify the kind of work.",
+            "Verified credentials and review links.",
+            "Service details written in plain language."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Make the estimate path useful for the office.",
+          "paragraphs": [
+            "A request form should collect the few details the team needs to respond without turning a homeowner into an intake clerk. The handoff should match the tools and people your office already uses.",
+            "We review the current customer path and the accounts behind it before changing anything. The business keeps control of the domain, site, and public information."
+          ],
+          "bullets": [
+            "Clear inquiry fields and a named recipient.",
+            "Testing for the request and response path.",
+            "Ownership records for the accounts behind the site."
+          ],
+          "links": []
+        }
+      ],
+      "metaDescription": "Custom roofing websites that show finished work, explain services, and make an estimate request easy. Built around the way your team handles a new inquiry."
+    },
+    "/industries/luxury-home-services/": {
+      "title": "Websites for home-service businesses that make the next step clear.",
+      "summary": "For painters, electricians, cleaners, and other home-service businesses, real proof and a plain contact path matter before a visit is booked. Explain the service area, the work, and how customers can reach the right person.",
+      "sections": [
+        {
+          "heading": "Show people whether the work fits.",
+          "paragraphs": [
+            "A customer considering a painter, electrician, cleaner, designer, or property-care team wants to understand the work, the service area, and whether a first conversation makes sense. The site should give them those facts without making them decode a sales page.",
+            "Place strong examples of the work beside the services and project types they represent. That helps the right customer recognize the fit."
+          ],
+          "bullets": [
+            "Clear service and project-type pages.",
+            "Real project photos with useful context.",
+            "Service-area and contact details kept current."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Let the portfolio tell the truth.",
+          "paragraphs": [
+            "Use project photography, reviews, credentials, and process details that belong to the business. Good design makes the work easier to see; it does not need invented claims to carry the page.",
+            "A project story can explain the scope, the approach, and the outcome that the business is approved to share. It gives a prospective customer something real to evaluate."
+          ],
+          "bullets": [
+            "Approved photography and project facts.",
+            "Reviews or credentials you can verify.",
+            "A process explained in the business's own words."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Make a first inquiry practical.",
+          "paragraphs": [
+            "The first contact should collect only the information your team needs to decide what happens next. Make the phone, email, and form path easy to find for someone looking from a phone.",
+            "The website and its accounts remain business-controlled, with written notes for updates and handoff. That gives the business a useful foundation as the portfolio grows."
+          ],
+          "bullets": [
+            "A focused inquiry path.",
+            "A clear response expectation you approve.",
+            "Business ownership of accounts and content."
+          ],
+          "links": []
+        }
+      ],
+      "metaDescription": "Custom websites for home-service businesses. Show the work, explain where you serve, and help customers take the next step with confidence."
+    },
+    "/industries/law-firms/": {
+      "title": "Websites for law firms, written for people under pressure.",
+      "summary": "A prospective client needs to understand what the firm handles, who it serves, what the first contact involves, and how to reach someone. Clear language and current contact details make the first step less difficult.",
+      "sections": [
+        {
+          "heading": "Help a prospective client find the right door.",
+          "paragraphs": [
+            "People often arrive with a problem rather than the legal term for it. Practice-area pages, attorney details, office information, and a clear contact path can help them understand whether the firm is a possible fit.",
+            "The site should state the jurisdiction, services, and first contact process in plain language approved by the firm."
+          ],
+          "bullets": [
+            "Practice areas explained in approved language.",
+            "Attorney, office, and jurisdiction facts.",
+            "A direct route to the appropriate contact."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Keep the information careful and human.",
+          "paragraphs": [
+            "Legal information needs care without becoming cold or vague. The firm supplies or approves the facts, disclaimers, intake language, and privacy details before publication.",
+            "The website can explain a process and a next step while keeping legal advice, promises, and unsupported claims out of the public copy."
+          ],
+          "bullets": [
+            "Firm-approved facts and disclaimers.",
+            "Plain descriptions of the first contact.",
+            "Privacy-aware handling of inquiry details."
+          ],
+          "links": []
+        },
+        {
+          "heading": "Treat the website as part of intake.",
+          "paragraphs": [
+            "An inquiry form should support the firm's real intake process and ask only for appropriate information. The people receiving requests need a clear handoff, not another inbox without context.",
+            "The written scope identifies the content, review process, connections, and testing before launch. The firm remains in control of its domain, site, and accounts."
+          ],
+          "bullets": [
+            "A focused inquiry path.",
+            "A clear recipient and handoff process.",
+            "Business-controlled website accounts."
+          ],
+          "links": []
+        }
+      ],
+      "metaDescription": "Custom law-firm websites with clear practice areas, attorney details, and a considered first-contact path. Your firm approves the facts and intake wording."
+    }
+  },
+  "groupIntros": {
+    "page-services-custom-local-websites": {
+      "heading": "Make your business easy to choose.",
+      "summary": "A custom website should answer the questions a customer has before they call, book, buy, or visit. We shape the pages, proof, and contact path around the way your business actually works."
+    },
+    "maps": {
+      "heading": "Give customers clear facts before they have to ask.",
+      "summary": "Keep the website and Google Business Profile accurate, connected, and easy to understand. The public facts should help a customer find the right business and reach a real person."
+    },
+    "ownership": {
+      "heading": "Keep your accounts in your hands.",
+      "summary": "Know who controls the domain, hosting, email, and connected tools before a renewal or provider change. We help put access and recovery details under your business’s control."
+    },
+    "speed": {
+      "heading": "Make the important path work on a phone.",
+      "summary": "A site can look fine on a computer and still make a customer work too hard on a phone. Start with the pages, controls, and information they need most."
+    },
+    "booking": {
+      "heading": "A contact path should tell people what happens next.",
+      "summary": "Whether someone books, calls, or sends an inquiry, the path should be clear on a phone and connected to the way your business actually responds."
+    },
+    "web-homepage-priority": {
+      "heading": "Show the right proof before the pitch.",
+      "summary": "A useful website helps a new customer understand the problem you solve, see why the business fits, and take one clear next step."
+    },
+    "web-content-collection": {
+      "heading": "Bring the facts that make a site useful.",
+      "summary": "You do not need perfect paperwork. We need enough reliable material to make the first customer path clear and keep important details accurate.",
+      "sections": [
+        {
+          "heading": "What we need from you",
+          "paragraphs": [
+            "Bring the services you offer, current contact details, any existing site or domain access, approved photos, and the questions customers ask most often. We use those materials to build the first useful path through the site.",
+            "Missing pieces are normal. We can identify what matters first, then gather the rest without filling the site with guesses."
+          ],
+          "bullets": [
+            "Current service and contact facts.",
+            "Photos you have permission to publish.",
+            "The questions customers ask before they choose you."
+          ],
+          "links": []
+        }
+      ]
+    },
+    "web-redesign-decision": {
+      "heading": "Fix what works. Rebuild what holds you back.",
+      "summary": "Bring the site you have and the problem you want to solve. We look at the customer path, the tools behind it, and the cost of keeping it before recommending repairs or a rebuild."
+    },
+    "page-industries": {
+      "heading": "Show people what you do and what happens next.",
+      "summary": "Different businesses need different proof, questions, and contact paths. We build the site around the decision your customer is actually making."
+    }
+  }
+}

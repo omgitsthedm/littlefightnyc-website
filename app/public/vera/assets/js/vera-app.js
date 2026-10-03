@@ -1069,7 +1069,7 @@
     var passedCount = POOL.length - clearedCount;
 
     page.innerHTML =
-      (usedFallbackPool ? '<p class="notice">Feed is serving the pre-overhaul contract — the drop is limited to curated lanes until tonight\'s publish.</p>' : '') +
+      (usedFallbackPool ? '<p class="notice">The full listing feed is unavailable. This drop shows a limited selection from the available listings.</p>' : '') +
       '<header class="drophead">' +
         '<p class="kicker">The drop · sweep ' + timeago(D && D.generated_at) + '</p>' +
         '<h1 class="drophead__title">' + esc(dateStr) + '</h1>' +
@@ -1077,7 +1077,7 @@
           (drop.length
             ? 'Out of <b>' + POOL.length + '</b> listings across the four-borough net, <b>' + clearedCount + '</b> clear' + (clearedCount === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.' +
               (beyondDrop ? ' The <b>' + drop.length + '</b> strongest are below; <a href="#/browse" data-view-jump="cleared">the other ' + beyondDrop + ' are here ↗</a>' : '')
-            : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. That is not a bug. The net stays out and tomorrow sweeps again.') +
+            : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. The net stays out and tomorrow sweeps again.') +
         '</p>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
         '<p class="drophead__next">next scheduled sweep <span class="mono" data-countdown>—</span></p>' +

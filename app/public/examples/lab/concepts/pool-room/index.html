@@ -396,7 +396,7 @@
 <style>.lfc{display:inline-flex;align-items:center;gap:0.7em;min-height:44px;padding:0.25em 0.15em;color:inherit;font-size:var(--lfc-size,1em);font-weight:400;line-height:1;text-decoration:none;-webkit-tap-highlight-color:transparent}.lfc-boat{position:relative;display:block;flex:none;width:3.1em;height:2.2em}.lfc-hull{position:absolute;bottom:0.28em;left:50%;width:2.2em;transform:translateX(-50%);transform-origin:50% 92%;animation:lfc-bob 5.2s ease-in-out infinite}.lfc-mark{display:block;width:100%;height:auto;fill:currentColor}.lfc-beacon{position:absolute;top:-0.16em;left:0.64em;width:0.3em;height:0.3em;border-radius:50%;background:var(--lfc-signal,#f97316);box-shadow:0 0 0.5em 0.06em rgb(249 115 22 / 0.55);animation:lfc-beacon 2.6s ease-in-out infinite}.lfc-sea{position:absolute;inset:auto 0 0;display:block;overflow:hidden;width:100%;height:0.8em;opacity:0.75}.lfc-wave{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}.lfc-wave path{fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;animation:lfc-drift 3.6s linear infinite}.lfc-wave--back path{stroke-width:0.9;opacity:0.42;animation-duration:6s;animation-direction:reverse}.lfc-text{white-space:nowrap}.lfc-name{font-weight:600}.lfc:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}@keyframes lfc-bob{0%,100%{transform:translateX(-50%) translateY(0) rotate(-2.2deg)}50%{transform:translateX(-50%) translateY(-0.09em) rotate(2.2deg)}}@keyframes lfc-beacon{0%,100%{opacity:0.35;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}@keyframes lfc-drift{from{transform:translateX(0)}to{transform:translateX(-16px)}}@media (hover:hover) and (pointer:fine){.lfc:hover .lfc-hull{animation-duration:2.6s}.lfc:hover .lfc-wave path{animation-duration:1.8s}.lfc:hover .lfc-wave--back path{animation-duration:3s}.lfc:hover .lfc-name{text-decoration:underline;text-underline-offset:0.25em}}@media (prefers-reduced-motion:reduce){.lfc-hull,.lfc-beacon,.lfc-wave path,.lfc:hover .lfc-hull,.lfc:hover .lfc-wave path{animation:none}.lfc-hull{transform:translateX(-50%) rotate(-1.5deg)}.lfc-beacon{opacity:1}}.lfc-embed{--lfc-size:11px;display:flex;align-items:center;margin-top:10px;color:inherit;opacity:.8}.lfc-embed:hover{opacity:1}</style>
 </head>
 <body>
-  <p class="lab-build-disclosure" role="note">Lab showroom build. Any people, places, numbers, or business states shown here are illustrative unless this page says otherwise. This is not a client result or a promise.</p>
+  <p class="lab-build-disclosure" role="note">Interactive demonstration. Any people, places, numbers, or business states shown here are illustrative unless this page says otherwise. This is not a client result or a promise.</p>
 
 <a class="skip" href="#content">Skip to content</a>
 
@@ -584,8 +584,6 @@
       <p class="measure" style="margin-top:1.3em">Tell the physics where the cue ball sits, how hard
         it’s hit and where the tip lands, and it works out the rest: <strong>248 collisions</strong>
         over 7.8 seconds. We didn’t place a single one.</p>
-      <p class="measure dim">Then we checked it. <strong>216 tests</strong> confirm what you see
-        matches the physics on every frame, to within a fifteenth of a degree.</p>
       <p class="note">We simulated 90 different breaks and threw out 26 — scratches, weak racks,
         balls left blocking a pocket. This is the best of the 64 that were legal.</p>
     </div>

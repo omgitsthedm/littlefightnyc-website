@@ -6,8 +6,6 @@ import { openConsentPreferences } from "@/lib/consent";
 import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
-import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
-import { DeferredCinematicMedia } from "@/components/editorial/CinematicMedia";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import type { ConnectedPath } from "@/components/dataviz/connectedPath";
 import LifiCredit from "@/components/editorial/LifiCredit";
@@ -87,15 +85,6 @@ const PROOF = [
     fact: "Vea el caso público para la prueba y el sitio en vivo.",
     image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-900.webp",
     alt: "La página de reservas de Hair By Rachel Charles",
-  },
-  {
-    client: "Sistema privado de presupuestos",
-    status: "Proyecto privado",
-    line: "El proceso real de presupuestos reunido en un sistema que el equipo usa todos los días.",
-    fact: "Sistema privado: mostramos el enfoque, no datos del cliente.",
-    image: CABINETRY_PROCESS_FILM.poster,
-    video: CABINETRY_PROCESS_FILM,
-    alt: "Panel privado para preparar presupuestos de carpintería",
   },
   {
     client: "CC Films",
@@ -276,14 +265,12 @@ export default function Espanol() {
           <div className="lf-es__section-head">
             <p>Proyectos reales</p>
             <h2>Esto ya está funcionando para clientes.</h2>
-            <span>Sitios públicos y sistemas privados, claramente identificados.</span>
+            <span>Sitios públicos que puede visitar y comprobar.</span>
           </div>
           <ul>
             {PROOF.map((item) => (
               <li key={item.client} className={item.client === "Hair By Rachel Charles" ? "lf-es__proof-rachel" : undefined}>
-                {item.video ? (
-                  <DeferredCinematicMedia media={item.video} alt={item.alt} />
-                ) : item.client === "Hair By Rachel Charles" ? (
+                {item.client === "Hair By Rachel Charles" ? (
                   <picture>
                     <source media="(min-width: 53.75rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
                     <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />

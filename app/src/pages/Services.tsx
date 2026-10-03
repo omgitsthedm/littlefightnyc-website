@@ -55,7 +55,7 @@ const ENTRY_ROUTES = [
 export default function Services() {
   const studioOverview = studioProjects.map((project) => ({
     body: project.oneline,
-    eyebrow: `${project.kind} / ${project.status}`,
+    eyebrow: project.kind,
     icon: Boxes,
     image: project.image,
     video: project.video,

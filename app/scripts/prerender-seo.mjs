@@ -632,7 +632,7 @@ const BREADCRUMB_LABELS = {
 // Section roots that no longer exist as pages. Building a breadcrumb from the
 // URL alone pointed 87 of 130 indexed pages at a parent that 301s — every
 // /journal/ (37), /answers/ (27), /case-studies/ (13), /industries/ (7) and
-// /studio/ (3) crumb. Structured data should name the canonical destination,
+// /studio/ (1) crumb. Structured data should name the canonical destination,
 // not a hop, so each maps to where it actually lands. Fragments are dropped:
 // a breadcrumb item identifies a page, not a scroll position within one.
 const BREADCRUMB_PARENT_CANONICAL = {
@@ -1446,7 +1446,7 @@ function contextualLinksFor(page) {
     );
   } else if (HUB_CHILD_PREFIXES[page.path]) {
     // 23 pages had no inbound link from anywhere in the prerendered HTML: 13
-    // case studies, 7 industries, 3 studio projects, 6 glossary terms (minus
+    // case studies, 7 industries, 1 studio project, 6 glossary terms (minus
     // overlap). The sitemap lists them, so they are found — but in the HTML a
     // crawler reads first, nothing pointed at them, so nothing pointed value at
     // them either. On a site whose whole crawl model is prerender-first.
@@ -2147,7 +2147,7 @@ function esSnapshot() {
       <p class="es-sub">Usted ya sabe llevar su negocio. Nosotros escuchamos cómo trabaja, conservamos lo que sirve y arreglamos lo que estorba. No tiene que volverse experto en tecnología.</p>
       <p class="es-eyebrow">PROYECTOS REALES</p>
       <h2>Esto ya está funcionando para clientes.</h2>
-      <ul class="es-list"><li>Sitio público Hair By Rachel Charles: una página que nuevos clientes pueden encontrar, entender y usar para llegar a su proceso habitual de reservas. El caso público enlaza la prueba y el sitio en vivo.</li><li>Proyecto privado Sistema privado de presupuestos: mostramos el enfoque, no datos del cliente.</li><li>Sitio público CC Films: una sede oficial más clara para una película independiente. El caso público enlaza la prueba y el sitio en vivo.</li></ul>
+      <ul class="es-list"><li>Sitio público Hair By Rachel Charles: una página que nuevos clientes pueden encontrar, entender y usar para llegar a su proceso habitual de reservas. El caso público enlaza la prueba y el sitio en vivo.</li><li>Sitio público CC Films: una sede oficial más clara para una película independiente. El caso público enlaza la prueba y el sitio en vivo.</li></ul>
       <p class="es-actions"><a class="es-cta" href="/examples/">Ver todos los proyectos</a></p>
       <p class="es-eyebrow">SIN SORPRESAS</p>
       <h2>Desde la primera llamada hasta después del lanzamiento.</h2>
@@ -2172,9 +2172,7 @@ function ownerStartBlock(page) {
       "/privacy/",
       "/terms/",
       "/thanks/",
-      "/studio/cockpit/",
       "/studio/venuecircuit/",
-      "/case-studies/public-house-creative/",
       "/case-studies/venuecircuit/",
     ]).has(page.path)
   ) {

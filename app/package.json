@@ -18,7 +18,7 @@
     "dev": "vite",
     "generate:social-cards": "node scripts/generate-social-cards.mjs",
     "build": "node scripts/build-tile-measurement.mjs && tsc -b && vite build --config vite.tiles.config.ts && python3 scripts/build-tile-preview.py --production && node scripts/vera-prerender.mjs && node scripts/write-release-metadata.mjs && python3 scripts/finalize-tile-artifact.py",
-    "postbuild": "python3 scripts/audit-tile-content.py --dist dist && npm run audit:retired-product",
+    "postbuild": "python3 scripts/audit-tile-content.py --dist dist && python3 scripts/audit-tile-rewrite.py --dist dist && npm run audit:retired-product",
     "lint": "eslint .",
     "audit:audit": "node scripts/audit-audit-archive.mjs",
     "audit:audit-integrations": "node scripts/audit-audit-integrations.mjs",

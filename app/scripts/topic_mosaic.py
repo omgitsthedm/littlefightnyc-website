@@ -3,13 +3,23 @@ from html import escape, unescape
 from html.parser import HTMLParser
 import re
 
+from service_taxonomy import override_family
+
 E = lambda value: escape(str(value or ''), quote=True)
 TOPICS = {
     'web': ('Websites', 'blue', 'browser-duotone.svg'),
     'it': ('Tech support', 'yellow', 'wifi-high-bold.svg'),
     'consulting': ('Consulting', 'green', 'chats-circle-duotone.svg'),
     'software': ('Custom software', 'magenta', 'app-window-duotone.svg'),
-    'reviews': ('Google reviews', 'orange', 'chats-circle-duotone.svg'),
+}
+REVIEW_PLACEMENT = {
+    'google-review-1': ('web', 'case-hair-by-rachel-charles'),
+    'google-review-4': ('web', 'web-homepage-priority'),
+    'google-review-3': ('it', 'email'),
+    'google-review-2': ('it', 'it-video-call-room'),
+    'google-review-5': ('consulting', 'album-shops'),
+    'google-review-7': ('consulting', 'consulting-second-opinion'),
+    'google-review-6': ('software', 'software-repeat-work'),
 }
 TILE = re.compile(r'<a\b[^>]*\bclass="[^"]*\btile\b[^"]*"[^>]*>.*?</a>', re.S)
 
@@ -52,23 +62,28 @@ def icon(filename, cls=''):
 
 
 def question_tile(record):
-    family = record['family']
-    words = len(record['title'].split())
-    # A short question can be a compact desktop strip. Longer questions keep
-    # a second row so the words and the familiar icon never compete. Phones
-    # get the extra row before text ever has to be reduced or clipped.
-    rows = 2 if words > 4 else 1
-    mobile_rows = 3 if words > 4 else 2
-    return f'''<a class="tile topic-question" href="/answers/help/{E(record['id'])}/" data-answer="{E(record['id'])}" data-family="{family}" data-accent="{TOPICS[family][1]}" data-material="mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(record['title'])}" data-columns="2" data-rows="{rows}" data-mobile-columns="2" data-mobile-rows="{mobile_rows}" aria-label="{E(record['question'])}"><span class="cell-face"><span class="cell-title">{E(record['title'])}</span><span class="cell-art">{icon(record['icon'])}</span><span class="cell-go" aria-hidden="true">+</span></span><span class="answer-preview">{E(record['summary'])}</span></a>'''
+    family = override_family(record.get('id', ''), '/answers/help/'+record['id']+'/') or record['family']
+    title = record['title']
+    words = len(title.split())
+    # Question cards are concise enough to read as horizontal prompts on a
+    # desktop.  A three-unit strip buys a whole-word line length for longer
+    # questions; handsets retain the second or third row needed for the same
+    # 16px-or-larger type and its familiar icon.
+    columns = 3 if words > 3 or len(title) > 18 else 2
+    mobile_columns = 3 if words > 2 or len(title) > 18 else 2
+    mobile_rows = 3 if mobile_columns == 3 else 2
+    return f'''<a class="tile topic-question" href="/answers/help/{E(record['id'])}/" data-answer="{E(record['id'])}" data-family="{family}" data-accent="{TOPICS[family][1]}" data-material="mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(title)}" data-columns="{columns}" data-rows="1" data-mobile-columns="{mobile_columns}" data-mobile-rows="{mobile_rows}" aria-label="{E(record['question'])}"><span class="cell-face"><span class="cell-title">{E(title)}</span><span class="cell-art">{icon(record['icon'])}</span><span class="cell-go" aria-hidden="true">+</span></span><span class="answer-preview">{E(record['summary'])}</span></a>'''
 
 
 def review_tile(review):
-    quote = f'<blockquote class="review-quote">“{E(review["excerpt"])}”</blockquote>' if review['excerpt'] else '<p class="review-rating-only">Five-star rating</p>'
-    # On a wide grid, two square units fit the complete review comfortably.
-    # A phone uses three so the exact quote, name, stars and source can remain
-    # at readable sizes without crop or ellipsis.
+    quote = f'<blockquote class="review-quote">“{E(review["excerpt"])}”</blockquote>' if review['excerpt'] else ''
+    style = 'standard'
+    star = '<path d="m12 2 2.9 6.1 6.7 1-4.8 4.7 1.1 6.7-5.9-3.2-5.9 3.2 1.1-6.7-4.8-4.7 6.7-1Z"/>'
+    stars = ''.join(f'<svg class="review-star" viewBox="0 0 24 24" aria-hidden="true" style="--star-index:{index}">{star}</svg>' for index in range(5))
+    flourish = ''
+    columns = 3
     mobile_rows = 4 if len(review.get('excerpt') or '') > 40 else 3
-    return f'''<a class="tile review-tile" href="{E(review['sourceUrl'])}" target="_blank" rel="noopener noreferrer" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="2" data-rows="2" data-mobile-columns="3" data-mobile-rows="{mobile_rows}" data-cell-title="{E(review['displayName'])}’s Google review"><span class="review-stars" role="img" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="review-attribution">{E(review['displayName'])}</span><span class="review-source">Google <span aria-hidden="true">+</span></span></a>'''
+    return f'''<a class="tile review-tile{' review-rating-only' if not quote else ''}" href="{E(review['sourceUrl'])}" target="_blank" rel="noopener noreferrer" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-review-style="{style}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="{columns}" data-rows="2" data-mobile-columns="3" data-mobile-rows="{mobile_rows}" data-cell-title="{E(review['displayName'])}’s Google review" aria-label="Read {E(review['displayName'])}’s five-star Google review (opens in a new tab)">{flourish}<span class="review-stars" role="img" aria-label="5 out of 5 stars">{stars}</span>{quote}<span class="review-credit"><span class="review-attribution">{E(review['displayName'])}</span><span class="review-source"><span class="sr-only">Google review</span><span aria-hidden="true">+</span></span></span></a>'''
 
 
 def anchor_front(markup, family):
@@ -94,24 +109,42 @@ def business_art(identity):
     return ('<span class="cell-art"><svg class="cell-sketch" viewBox="0 0 110 90" aria-hidden="true">'+drawing+'</svg></span>') if drawing else ''
 
 
+def compact_strip_dimensions(title):
+    """Return a legible horizontal desktop shape and its phone counterpart."""
+    words = len(title.split())
+    columns = 2 if words <= 3 and len(title) <= 18 else 3
+    mobile_columns = 2 if words <= 2 and len(title) <= 18 else 3
+    mobile_rows = 2 if mobile_columns == 2 else 3
+    return columns, 1, mobile_columns, mobile_rows
+
+
+COMPACT_LABELS = {
+    'website': (3, 2),
+    'maps': (3, 2),
+    'speed': (2, 2),
+    'move': (2, 2),
+    'human': (2, 2),
+}
+
+
 def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
     originals = TILE.findall(mosaic)
-    assert len(originals) == 115, f'Expected 110 originals and five existing additions, found {len(originals)}'
+    assert len(originals) == 111, f'Expected 106 originals and five existing additions, found {len(originals)}'
     tiles = originals+[question_tile(record) for record in topic_tiles]+[review_tile(record) for record in reviews['reviews']]
     groups = {family: [] for family in TOPICS}
     album_by_id = {album['id']: album for album in albums}
-    special_topics = {'case-public-house-creative': 'software', 'lab-studio-engine': 'software', 'lab-growth-street': 'consulting'}
-    buyer_titles = {'buyer-plumbers': 'Websites for plumbers', 'buyer-roofing': 'Websites for roofers', 'buyer-homes': 'Websites for home services', 'buyer-law': 'Websites for law firms', 'google-reviews': 'Read our Google reviews'}
+    buyer_titles = {'buyer-plumbers': 'Websites for plumbers', 'buyer-roofing': 'Websites for roofers', 'buyer-homes': 'Websites for home services', 'buyer-law': 'Websites for law firms', 'google-reviews': 'Google reviews'}
 
     for order, markup in enumerate(tiles):
         attrs = attributes(markup)
         identity = attrs.get('data-answer') or 'brand-brief'
-        family = attrs.get('data-family', 'brand')
+        source_family = attrs.get('data-family', 'brand')
         kind = attrs.get('data-kind', '')
-        topic = special_topics.get(identity, family if family in TOPICS else 'web')
-        if identity == 'google-reviews' or kind == 'review':
-            topic = 'reviews'
-        brand = kind in ('case-study', 'lab', 'photo-album', 'review') or family == 'brand' or identity == 'page-vera'
+        explicit_family = override_family(identity, attrs.get('href', ''))
+        topic = explicit_family or (source_family if source_family in TOPICS else 'web')
+        if kind == 'review':
+            topic = REVIEW_PLACEMENT[identity][0]
+        brand = not explicit_family and (kind in ('case-study', 'lab', 'photo-album', 'review') or source_family == 'brand' or identity == 'page-vera')
         family = 'brand' if brand else topic
         markup = set_attr(markup, 'data-answer', identity)
         markup = set_attr(markup, 'data-topic', topic)
@@ -156,39 +189,50 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
         if visible_title:
             title = ' '.join(unescape(re.sub(r'<[^>]+>', ' ', visible_title.group(1))).split())
             markup = set_attr(markup, 'data-cell-title', title)
-        title_words = len(title.split())
         long_mobile_word = max((len(word.strip(".,?!'’—-")) for word in title.split()), default=0) >= 10
-        if kind == 'service-anchor' or identity in ('brand-brief', 'google-reviews'):
+        if kind == 'service-anchor':
+            # The artwork pass owns the service anchors and will set their
+            # final featured geometry after this ordinary-card pass.
             width, height = mobile_width, mobile_height = 4, 2
+        if identity == 'brand-brief':
+            width, height = 4, 1
+            mobile_width, mobile_height = 6, 2
+        if identity == 'google-reviews':
+            # This is an introduction to the sourced quote cards, not a
+            # second story card.  Preserve phone breathing room only.
+            width, height = 3, 1
+            mobile_width, mobile_height = 3, 2
         if kind == 'case-study':
             width, height = mobile_width, mobile_height = 3, 2
         if kind == 'photo-album':
             width, height = mobile_width, mobile_height = 4, 4
         if kind == 'review':
-            width, height = 2, 2
+            width, height = int(attrs.get('data-columns', 3)), 2
             mobile_width, mobile_height = 3, max(3, mobile_height)
         if identity.startswith('buyer-'):
-            # The four industry routes are concise title-plus-drawing cards.
-            # Two squares retain both without the unused lower half of 3×2.
-            width, height = 2, 2
+            # Industry routes carry only a title and one original drawing.
+            # They read cleanly beside each other in one desktop row.
+            width, height, mobile_width, mobile_height = 3, 1, 3, 2
+        if identity in COMPACT_LABELS:
+            # These are the shortest original prompts. At a full desktop unit
+            # the words themselves become the composition, rather than a
+            # small label stranded beside an icon. Phone geometry remains
+            # deliberately roomy and keeps the authored illustration visible.
+            mobile_width, mobile_height = COMPACT_LABELS[identity]
+            width, height = 1, 1
+            markup = set_attr(markup, 'data-compact-label', 'true')
         # Original icon cards are deliberately all signal: one square, one
-        # recognizable object, and a complete accessible name. Strips carry a
-        # concise phrase and its icon without being inflated into a square.
-        if kind not in ('service-anchor', 'case-study', 'photo-album', 'review'):
+        # recognizable object, and a complete accessible name. Every other
+        # ordinary front is a short message plus its diagram or symbol, so it
+        # earns a compact horizontal strip instead of a mostly empty square.
+        if kind not in ('service-anchor', 'case-study', 'photo-album', 'review', 'lab'):
             if face == 'icon':
                 width, height = mobile_width, mobile_height = 1, 1
-            elif face == 'strip':
-                width, height = 2, 1
-                mobile_width, mobile_height = (3 if title_words > 3 or len(title) > 19 else 2), 1
-            elif face == 'type' and title_words <= 4 and len(title) <= 24:
-                # These cards contain a single concise thought. Their square
-                # source geometry was a staging artifact, not a reason to
-                # leave an empty lower half on the finished mosaic.
-                width, height = 2, 1
-                mobile_width, mobile_height = 2, (1 if title_words <= 2 else 2)
+            elif identity not in ('brand-brief', 'google-reviews', 'page-vera', 'booking', 'it-payment-device-check', *COMPACT_LABELS):
+                width, height, mobile_width, mobile_height = compact_strip_dimensions(title)
         # Visible words are the accessible name. Keep the original question as
         # a description, while icon-only cards retain their explicit name.
-        if width > 1 and attrs.get('data-cell-face') != 'icon' and attrs.get('aria-label'):
+        if (width > 1 or identity in ('website', 'maps', 'speed', 'move', 'human')) and attrs.get('data-cell-face') != 'icon' and attrs.get('aria-label'):
             markup = set_attr(markup, 'aria-description', attrs['aria-label'])
             end = markup.index('>')
             markup = re.sub(r'\saria-label="[^"]*"', '', markup[:end])+markup[end:]
@@ -209,15 +253,25 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
 
     # Put real photography into the opening composition. Everything else stays
     # in its authored order within its topic, including every question and URL.
-    leads = {'web': ['page-services-custom-local-websites', 'brand-brief', 'album-hospitality', 'case-chromatic-painting-design', 'case-hair-by-rachel-charles', 'website'],
-             'it': ['page-services-it-support', 'album-nyc'],
-             'consulting': ['page-services-tech-consulting'],
-             'software': ['page-services-business-systems', 'case-venuecircuit', 'page-vera'],
-             'reviews': [record['id'] for record in reviews['reviews']]+['google-reviews']}
+    leads = {'web': ['brand-brief', 'page-services-custom-local-websites', 'case-chromatic-painting-design', 'case-hair-by-rachel-charles', 'website'],
+             'it': ['page-services-it-support'],
+             'consulting': ['page-services-tech-consulting', 'album-nyc', 'album-marthas-vineyard', 'album-arizona'],
+             'software': ['page-services-business-systems', 'case-venuecircuit', 'page-vera']}
     sections = []
     for family, (label, _, symbol) in TOPICS.items():
         preferred = leads[family]
         entries = sorted(groups[family], key=lambda item: (preferred.index(item[0]) if item[0] in preferred else len(preferred), item[2]))
+        review_entries = {entry[0]: entry for entry in entries if entry[1] == 'review'}
+        ordered = []
+        for entry in entries:
+            if entry[1] == 'review':
+                continue
+            ordered.append(entry)
+            for identity, (topic, after) in REVIEW_PLACEMENT.items():
+                if topic == family and after == entry[0]:
+                    ordered.append(review_entries.pop(identity))
+        assert not review_entries, f'Reviews need an explicit position among the {family} cards'
+        entries = ordered
         contents = ''.join(entry[3] for entry in entries)
         sections.append(f'<section class="topic-section" id="topic-{family}" data-topic="{family}" aria-labelledby="heading-{family}"><header class="topic-heading">{icon(symbol)}<h2 id="heading-{family}" tabindex="-1">{label}</h2></header><div class="mosaic" data-topic-grid="{family}" data-topic="{family}">{contents}</div></section>')
     return ''.join(sections)

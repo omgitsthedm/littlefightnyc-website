@@ -6,8 +6,6 @@ import { openConsentPreferences } from "@/lib/consent";
 import { installLocalizedMeta } from "@/lib/localizedMeta";
 import "./Espanol.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
-import { CABINETRY_PROCESS_FILM } from "@/data/cinematic-media";
-import { DeferredCinematicMedia } from "@/components/editorial/CinematicMedia";
 import ConnectedPathDiagram from "@/components/dataviz/ConnectedPathDiagram";
 import type { ConnectedPath } from "@/components/dataviz/connectedPath";
 import LifiCredit from "@/components/editorial/LifiCredit";
@@ -86,15 +84,6 @@ const PROOF = [
     fact: "公开案例里有可点击的验证信息和上线网站。",
     image: "/assets/cases/2026-09-29/case-hair-by-rachel-charles-900.webp",
     alt: "Hair By Rachel Charles 的在线预约网站",
-  },
-  {
-    client: "私人报价系统",
-    status: "私人客户项目",
-    line: "把真实报价流程集中到团队每天使用的一套系统里。",
-    fact: "私人项目：展示做法，不公开客户资料。",
-    image: CABINETRY_PROCESS_FILM.poster,
-    video: CABINETRY_PROCESS_FILM,
-    alt: "用于准备木工报价的私人工作面板",
   },
   {
     client: "CC Films",
@@ -270,14 +259,12 @@ export default function Zhongwen() {
           <div className="lf-es__section-head">
             <p>真实项目</p>
             <h2>这些已经在为客户做事。</h2>
-            <span>公开网站和私人系统都会清楚标明。</span>
+            <span>可以亲自访问和验证的公开网站。</span>
           </div>
           <ul>
             {PROOF.map((item) => (
               <li key={item.client} className={item.client === "Hair By Rachel Charles" ? "lf-es__proof-rachel" : undefined}>
-                {item.video ? (
-                  <DeferredCinematicMedia media={item.video} alt={item.alt} />
-                ) : item.client === "Hair By Rachel Charles" ? (
+                {item.client === "Hair By Rachel Charles" ? (
                   <picture>
                     <source media="(min-width: 53.75rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp" />
                     <source media="(min-width: 48rem)" srcSet="/assets/cases/2026-09-29/case-hair-by-rachel-charles-tablet-1024.webp" />

@@ -22,6 +22,8 @@ const base = (process.env.PREVIEW_URL || 'http://127.0.0.1:4393').replace(/\/$/,
 const productionMode = process.env.TILE_DIST === 'production' || new URL(base).port === '4394';
 const artifactDir = productionMode ? 'dist' : 'preview-dist';
 const releaseFilename = productionMode ? 'tile-release.json' : 'preview-release.json';
+const verifiedReviewSources = new Set(JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews.map(review => review.sourceUrl));
+const expectedInventory = { total: 129, originals: 106, groups: 19, reviews: 7 };
 const report = {
   kind: 'tile-preview-browser-verification',
   base,
@@ -44,6 +46,53 @@ const check = async (name, task) => {
   catch (error) { report.assertions.push({ name, passed: false, detail: error.stack || String(error) }); throw error; }
 };
 const sameOrigin = raw => new URL(raw).origin === new URL(base).origin;
+
+function artifactFile(route) {
+  const clean = route.replace(/^\/+/, '');
+  if (!clean) return path.join(app, artifactDir, 'index.html');
+  if (route.endsWith('/') || !path.basename(clean).includes('.')) return path.join(app, artifactDir, clean, 'index.html');
+  return path.join(app, artifactDir, clean);
+}
+
+function readHomepageInventory() {
+  const file = path.join(app, artifactDir, 'homepage-inventory.json');
+  assert.ok(fs.existsSync(file), 'tile artifact must include homepage-inventory.json');
+  const inventory = JSON.parse(fs.readFileSync(file, 'utf8'));
+  assert.equal(inventory.sourceTileCount, expectedInventory.originals, 'inventory must retain all source tiles');
+  assert.equal(inventory.totalTileInventory, expectedInventory.total, 'inventory must retain all tile routes');
+  assert.equal(inventory.groups?.length, expectedInventory.groups, 'inventory must retain all consolidated groups');
+  assert.ok(Array.isArray(inventory.visibleTiles) && Array.isArray(inventory.retainedRoutes) && Array.isArray(inventory.hiddenHomeIds), 'inventory needs visible, retained, and hidden records');
+  const members = inventory.groups.flatMap(group => {
+    assert.ok(group && typeof group.id === 'string' && group.id && Array.isArray(group.members), 'consolidated groups need stable leaders and member ids');
+    return group.members;
+  });
+  const hidden = new Set([...members, ...inventory.hiddenHomeIds]);
+  const visibleIds = inventory.visibleTiles.map(tile => tile?.id);
+  const retainedIds = inventory.retainedRoutes.map(route => route?.id);
+  assert.equal(new Set(visibleIds).size, visibleIds.length, 'visible tile ids must be unique');
+  assert.equal(new Set(retainedIds).size, retainedIds.length, 'retained route ids must be unique');
+  assert.equal(retainedIds.length, expectedInventory.total, 'all 129 tile routes must remain retained');
+  assert.equal(inventory.visibleTiles.length, expectedInventory.total - hidden.size, 'visible count must be total inventory minus unique absorbed/hidden ids');
+  assert.ok(visibleIds.every(id => id && !hidden.has(id)), 'absorbed/hidden tiles cannot appear on the hub');
+  assert.deepEqual(new Set(retainedIds), new Set([...visibleIds, ...hidden]), 'retained records must cover every visible and absorbed/hidden tile');
+  return { inventory, hidden, visibleIds };
+}
+
+function assertRetainedRouteArtifacts(manifest) {
+  const search = JSON.parse(fs.readFileSync(path.join(app, artifactDir, 'search-index.json'), 'utf8'));
+  const searchPaths = new Set(search.filter(row => row && typeof row === 'object').map(row => row.path));
+  for (const route of manifest.inventory.retainedRoutes) {
+    assert.ok(route && typeof route.id === 'string' && route.id && typeof route.path === 'string' && route.path,
+      'every retained record needs an id and path');
+    if (!route.path.startsWith('/')) continue;
+    const pathname = new URL(route.path, 'https://littlefightnyc.com').pathname;
+    const target = artifactFile(pathname);
+    assert.ok(fs.existsSync(target), `${route.id}: retained route is missing: ${route.path}`);
+    assert.ok(fs.readFileSync(target, 'utf8').trim(), `${route.id}: retained route is empty: ${route.path}`);
+    assert.ok(searchPaths.has(pathname), `${route.id}: retained route is absent from search index: ${route.path}`);
+  }
+  return `${expectedInventory.total} retained tile routes have non-empty local destinations and search records`;
+}
 
 async function makePage(browser, viewport, reducedMotion = 'no-preference') {
   const context = await browser.newContext({ viewport, deviceScaleFactor: 1, reducedMotion });
@@ -95,29 +144,123 @@ async function auditAxe(page, label) {
 }
 
 async function inspectWebsiteBody(page, label) {
-  const body = page.locator('.rw-body');
+  const body = page.locator('.rw-body.website-service-body').last();
   await body.waitFor({ state: 'visible' });
-  assert.equal(await page.locator('.rw-waterfall .rw-project').count(), 3, label + ': three approved work cards');
-  assert.equal(await page.locator('.rw-ownership').count(), 1, label + ': ownership section');
-  assert.match(await page.locator('.rw-ownership').innerText(), /Your site\.\s*Your keys\./i, label + ': ownership copy');
-  const scrollProof = await page.evaluate(() => {
-    const detail = document.querySelector('#detail');
-    const target = document.querySelector('.rw-ownership');
-    const scroller = detail?.open ? document.querySelector('#detail-body') : document.scrollingElement;
-    const maxScroll = scroller.scrollHeight - scroller.clientHeight;
-    const before = scroller.scrollTop;
-    const previousBehavior = scroller.style.scrollBehavior;
-    scroller.style.scrollBehavior = 'auto';
-    if (detail?.open) scroller.scrollTop = Math.min(maxScroll, target.offsetTop);
-    else window.scrollTo({ top: Math.min(maxScroll, target.getBoundingClientRect().top + window.scrollY), behavior: 'instant' });
-    const after = detail?.open ? scroller.scrollTop : window.scrollY;
-    scroller.style.scrollBehavior = previousBehavior;
-    return { maxScroll, before, after };
+  const reader = page.locator('.lf-reader[data-reader-template="website-service"]').filter({ has: body }).last();
+  const hero = reader.locator('.rw-scene--hero[data-rw-scene="opening"]');
+  assert.equal(await hero.count(), 1, label + ': one Website opening scene');
+  assert.equal((await hero.locator('#detail-title').innerText()).replace(/\s+/g, ' ').trim(), 'Make your business easy to choose.', label + ': Website opening uses the rewritten customer promise');
+  assert.equal(await hero.locator('.rw-kinetic-phrase').count(), 1, label + ': rewritten headline retains its restrained motion hook');
+
+  const benefitLinks = hero.locator('.rw-benefits a');
+  assert.equal(await benefitLinks.count(), 6, label + ': six hero benefits link into the reader');
+  const benefitTargets = await benefitLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
+  for (const href of benefitTargets) {
+    assert.match(href || '', /^#reader-[a-z-]+$/, label + ': benefit must use a local reader section');
+    assert.equal(await body.locator(href).count(), 1, label + ': benefit target resolves once: ' + href);
+  }
+  if (await page.locator('#detail[open]').count()) {
+    // Real clicks must retain the card's history state, not close the dialog.
+    for (let index = 0; index < benefitTargets.length; index += 1) {
+      await benefitLinks.nth(index).click();
+      assert.equal(await page.locator('#detail[open]').count(), 1, label + ': benefit jump keeps reader open');
+      assert.equal(await body.locator(benefitTargets[index]).evaluate(node => document.activeElement === node), true, label + ': benefit jump moves keyboard focus to its destination');
+    }
+  }
+
+  assert.equal(await reader.locator(':is(.rw-journey-controls,[role="tablist"],[role="tab"],[data-rw-choice],.rw-journey-panel,.rw-hero-actions)').count(), 0, label + ': Website story has no goal selector or secondary hero action');
+  assert.equal(await page.locator('#reader-motion-toggle').count(), 0, label + ': reader does not expose a Motion control');
+
+  const scenes = reader.locator('[data-rw-scene]');
+  assert.deepEqual(await scenes.evaluateAll(items => items.map(item => item.dataset.rwScene)), [
+    'opening',
+    'different-worlds',
+    'your-business-not-template',
+    'a-question-needs-an-answer',
+    'six-weeks-from-brief',
+    'you-keep-the-keys',
+  ], label + ': Website story remains a complete linear sequence');
+
+  assert.equal(await hero.locator('.rw-opening-work, .rw-opening-project').count(), 0, label + ': opening keeps its icon and does not duplicate client project screens');
+
+  const gallery = body.locator('#reader-work .rw-client-gallery');
+  assert.equal(await gallery.count(), 1, label + ': one real-client Website gallery');
+  const projects = gallery.locator('figure.rw-client-project');
+  assert.equal(await projects.count(), 9, label + ': nine real client website examples');
+  assert.equal(await gallery.locator('figure.rw-client-project[data-rw-item]').count(), 9, label + ': every client example participates in native-scroll enhancement');
+  const expectedCases = [
+    'easy-tiger', 'hair-by-rachel-charles', 'the-tarot-hotline', 'grand-funding-llc', 'the-break-room',
+    'clearhelp', 'logan-loans', 'cc-films', 'chromatic-painting-design',
+  ];
+  const galleryProof = [];
+  for (let index = 0; index < expectedCases.length; index += 1) {
+    const project = projects.nth(index);
+    const media = project.locator('a.rw-client-project-media[data-reader-link]');
+    assert.equal(await media.count(), 1, label + ': gallery item has an in-reader case link for ' + expectedCases[index]);
+    assert.equal(await media.getAttribute('href'), '/case-studies/' + expectedCases[index] + '/', label + ': gallery item leads to the matching case');
+    const image = media.locator('img');
+    assert.equal(await image.count(), 1, label + ': gallery item has one proof image for ' + expectedCases[index]);
+    await image.scrollIntoViewIfNeeded();
+    await image.evaluate(node => node.decode());
+    const proof = await image.evaluate(node => ({
+      src: node.getAttribute('src') || '', complete: node.complete,
+      naturalWidth: node.naturalWidth, naturalHeight: node.naturalHeight,
+    }));
+    assert.ok(proof.complete && proof.naturalWidth > 0 && proof.naturalHeight > 0, label + ': gallery proof image loads for ' + expectedCases[index]);
+    galleryProof.push({ case: expectedCases[index], ...proof });
+  }
+  assert.equal(new Set(galleryProof.map(project => project.src)).size, 9, label + ': the single nine-client gallery uses a distinct screen for every project');
+
+  const details = body.locator('details');
+  assert.ok(await details.count() >= 7, label + ': detailed Website story uses native disclosures');
+  assert.equal(await body.locator('details > summary').count(), await details.count(), label + ': every disclosure keeps a native summary');
+  const firstInsight = body.locator('.rw-custom-copy details').first();
+  assert.equal(await firstInsight.getAttribute('open'), null, label + ': detail starts closed without hiding its story behind JavaScript');
+  await firstInsight.locator('summary').click();
+  assert.equal(await firstInsight.getAttribute('open'), '', label + ': native detail opens without a custom selector');
+
+  const color = await reader.locator('.rw-scene-heading').first().evaluate(node => getComputedStyle(node).color);
+  assert.equal(color, 'rgb(146, 191, 255)', label + ': Websites story headings use service blue');
+  const contact = page.locator('#detail[open] .reader-rail a').first();
+  if (await contact.count()) {
+    assert.equal(await contact.evaluate(node => getComputedStyle(node).backgroundColor), 'rgb(255, 120, 57)', label + ': reader contact actions keep Little Fight orange');
+  }
+  const ownership = body.locator('#reader-ownership.rw-scene--ownership');
+  assert.equal(await ownership.count(), 1, label + ': ownership section');
+  assert.equal(await ownership.locator('.rw-ownership-passport dl > div').count(), 3, label + ': ownership covers code, domain, and content');
+  assert.deepEqual(await ownership.locator('.rw-ownership-passport dt').allTextContents(), ['Code', 'Domain', 'Content'], label + ': ownership passport keeps the three business assets');
+  assert.match(await ownership.innerText(), /finished website files belong to your business[\s\S]*web address stays in an account you control[\s\S]*business information remain yours/i, label + ': ownership copy');
+  assert.match(await body.locator('#reader-launch').innerText(), /six weeks or less/i, label + ': launch promise is six weeks or less with an agreed brief');
+  assert.match(await ownership.innerText(), /No monthly hosting fee/i, label + ': offer keeps the no-monthly-hosting-fee term');
+  assert.equal(await reader.locator('.story-faq details').count(), 2, label + ': only the two service-specific FAQs remain outside the full answer collection');
+  assert.equal(await reader.locator('.category-answer#answer-cost').count(), 1, label + ': the custom-quote answer appears once in the category collection');
+  const reviewTiles = reader.locator('a.rw-review-tile');
+  assert.equal(await reviewTiles.count(), 3, label + ': reader keeps three single-link Google review tiles');
+  const reviewSection = reviewTiles.first().locator('xpath=ancestor::section[1]');
+  assert.equal(await reviewSection.locator(':is(h1,h2,h3)').count(), 0, label + ': review tiles have no redundant heading');
+  assert.equal(await reviewSection.locator('a:not(.rw-review-tile)').count(), 0, label + ': review tiles have no separate Read action');
+  assert.doesNotMatch(await reviewSection.innerText(), /\b5\.0\b|\b7 reviews\b|read all/i, label + ': review tiles omit rating-count copy');
+  for (let index = 0; index < await reviewTiles.count(); index += 1) {
+    const tile = reviewTiles.nth(index);
+    const href = await tile.getAttribute('href');
+    assert.ok(verifiedReviewSources.has(href), label + ': review tile uses a verified Google review source');
+    assert.match(await tile.innerText(), /★★★★★/, label + ': review tile keeps five visible stars');
+    assert.equal(await tile.locator('blockquote').count(), 1, label + ': review tile keeps one quoted client excerpt');
+    assert.equal(await tile.locator('cite').count(), 1, label + ': review tile credits its reviewer');
+    assert.equal(await tile.getAttribute('target'), '_blank', label + ': entire review tile intentionally opens its Google source');
+    assert.match(await tile.getAttribute('rel') || '', /\bnoopener\b/i, label + ': review tile isolates the external destination');
+  }
+  await ownership.scrollIntoViewIfNeeded();
+  const scrollProof = await ownership.evaluate(target => {
+    const detail = target.closest('#detail');
+    const scroller = detail?.open ? detail.querySelector('#detail-body') : document.scrollingElement;
+    const rect = target.getBoundingClientRect();
+    return { maxScroll: scroller.scrollHeight - scroller.clientHeight, scrollTop: scroller.scrollTop, targetTop: rect.top, targetBottom: rect.bottom };
   });
-  assert.ok(scrollProof.maxScroll > 0 && scrollProof.after > scrollProof.before, label + ': waterfall and ownership must be reachable by scrolling');
+  assert.ok(scrollProof.maxScroll > 0 && scrollProof.scrollTop > 0, label + ': complete Website story is reachable by native scrolling');
   const overflow = await expectNoOverflow(page, label);
-  report.routeAudit.push({ label, route: new URL(page.url()).pathname, waterfallProjects: 3, ownership: true, scrollProof, overflow: JSON.parse(overflow) });
-  return 'waterfall + ownership; ' + JSON.stringify(scrollProof) + '; ' + overflow;
+  report.routeAudit.push({ label, route: new URL(page.url()).pathname, scenes: await scenes.count(), galleryProjects: galleryProof, ownership: true, scrollProof, overflow: JSON.parse(overflow) });
+  return 'linear Website story + ownership; ' + JSON.stringify(scrollProof) + '; ' + overflow;
 }
 
 async function inspectDirectContactRail(page, label) {
@@ -131,6 +274,22 @@ async function inspectDirectContactRail(page, label) {
   const after = await rail.boundingBox();
   assert.ok(after, `${label}: contact rail disappeared after scroll`);
   assert.ok(after.y >= 0 && after.y <= 120, `${label}: contact rail scrolled out of view (${Math.round(after.y)}px)`);
+  const controls = await rail.locator('a').evaluateAll(links => {
+    const close = document.querySelector('.reader-hub-return')?.getBoundingClientRect();
+    return links.map(link => {
+      const box = link.getBoundingClientRect();
+      const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+      return { label: link.textContent, width: box.width, height: box.height,
+        overlapped: Boolean(close && box.left < close.right && box.right > close.left && box.top < close.bottom && box.bottom > close.top),
+        reachable: hit === link || link.contains(hit) };
+    });
+  });
+  assert.equal(controls.length, 3, `${label}: three direct contact actions`);
+  for (const control of controls) {
+    assert.ok(control.width >= 44 && control.height >= 44, `${label}: ${control.label} is at least 44px`);
+    assert.equal(control.overlapped, false, `${label}: close button must not overlap ${control.label}`);
+    assert.equal(control.reachable, true, `${label}: ${control.label} remains reachable after scrolling`);
+  }
   return JSON.stringify({ beforeTop: Math.round(before.y), afterTop: Math.round(after.y) });
 }
 
@@ -214,29 +373,41 @@ async function observeTileFlight(page) {
 }
 
 async function run() {
+  const manifest = readHomepageInventory();
   const release = JSON.parse(fs.readFileSync(path.join(app, artifactDir, releaseFilename), 'utf8'));
-  assert.equal(release.tiles, 133, 'Preview release must retain 133 total tiles.');
-  assert.equal(release.originalTilesPreserved, 110, 'Preview release must retain all original 110 tiles.');
-  pass('release manifest preserves 133 tiles and 110 original tiles', `artifact ${release.artifactSha256}`);
+  assert.equal(release.tiles, manifest.inventory.visibleTiles.length, 'Preview release must record the consolidated visible tile count.');
+  assert.equal(release.totalTileInventory, expectedInventory.total, 'Preview release must retain all 129 tile routes.');
+  assert.equal(release.originalTilesPreserved, expectedInventory.originals, 'Preview release must retain all 106 remaining original tiles.');
+  assert.equal(release.consolidatedGroups, expectedInventory.groups, 'Preview release must record all 19 consolidated groups.');
+  pass('release manifest preserves all routes while recording the consolidated hub', `visible ${release.tiles}; artifact ${release.artifactSha256}`);
+  pass('all retained tile destinations are non-empty and searchable', assertRetainedRouteArtifacts(manifest));
 
   const sourceMosaic = fs.readFileSync(path.join(app, 'preview-content', 'mosaic.html'), 'utf8');
   const originalTiles = (sourceMosaic.match(/<a\b[^>]*>/gi) || []).filter(tag =>
     /\bclass=(['"])[^'"]*\btile\b[^'"]*\1/i.test(tag) && /\bhref=(['"])[^'"]+\1/i.test(tag)
   );
-  assert.equal(originalTiles.length, 110, 'Source mosaic must contain 110 original tile anchors.');
+  assert.equal(originalTiles.length, 106, 'Source mosaic must contain 106 original tile anchors.');
   const photoIds = ['nyc', 'marthas-vineyard', 'arizona', 'hospitality', 'roofing', 'shops', 'trades', 'makers'];
-  for (const id of photoIds) assert.match(fs.readFileSync(path.join(app, 'preview-dist', 'index.html'), 'utf8'), new RegExp(`href="/photos/${id}/"`));
-  pass('all 110 source tile anchors remain and 8 known photo anchors use static gallery routes', photoIds.join(', '));
+  const retainedPaths = new Set(manifest.inventory.retainedRoutes.map(route => route.path));
+  for (const id of photoIds) assert.ok(retainedPaths.has(`/photos/${id}/`), `photo destination must remain retained: ${id}`);
+  pass('all 106 remaining source tile anchors remain in the retained inventory and 8 known photo anchors retain static gallery routes', photoIds.join(', '));
 
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     await page.goto(`${base}/`, { waitUntil: 'networkidle' });
-    await check('home exposes 133 real tile links', async () => {
-      assert.equal(await page.locator('a.tile[href]').count(), 133);
-      assert.equal(await page.locator('a.tile[href^="/"]').count(), 126);
+    await check('home exposes every consolidated tile link exactly once', async () => {
+      assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length);
+      const ids = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => tile.dataset.answer));
+      assert.deepEqual(new Set(ids), new Set(manifest.visibleIds), 'home must exactly match the visible inventory');
+      for (const group of manifest.inventory.groups) {
+        assert.equal(ids.filter(id => id === group.id).length, 1, `${group.id} lead must appear once`);
+        for (const member of group.members) assert.equal(ids.filter(id => id === member).length, 0, `${member} must be absorbed`);
+      }
+      for (const hiddenId of manifest.inventory.hiddenHomeIds) assert.equal(ids.filter(id => id === hiddenId).length, 0, `${hiddenId} must not consume homepage space`);
+      assert.equal(await page.locator('a.tile[href^="/"]').count(), manifest.inventory.visibleTiles.length - expectedInventory.reviews);
       const external = await page.locator('a.tile[href^="https://"]').evaluateAll(tiles => tiles.map(tile => ({ href: tile.getAttribute('href'), target: tile.getAttribute('target'), rel: tile.getAttribute('rel') || '' })));
-      assert.equal(external.length, 7, 'seven review cards must keep their direct Google sources');
+      assert.equal(external.length, expectedInventory.reviews, 'seven review cards must keep their direct Google sources');
       for (const link of external) {
         assert.match(link.href || '', /^https:\/\//, 'review tile needs an external source');
         assert.equal(link.target, '_blank', 'review source must intentionally open externally');
@@ -264,9 +435,9 @@ async function run() {
     });
 
     await check('Back and Forward restore reader state and title', async () => {
-      await openTile(page, '/industries/roofing/');
+      await openTile(page, '/answers/help/maps/');
       const readerTitle = await page.title();
-      assert.match(readerTitle, /roof/i);
+      assert.match(readerTitle, /find|maps/i);
       await page.goBack({ waitUntil: 'networkidle' });
       await page.waitForFunction(() => !document.querySelector('#detail')?.open);
       assert.equal(await page.url(), `${base}/`);
@@ -276,9 +447,13 @@ async function run() {
     });
 
     await check('nested reader link replaces reader and close returns home', async () => {
-      const inner = page.locator('#detail-body a[data-reader-link]').first();
+      const currentReader = '/answers/help/maps/';
+      const innerLinks = page.locator('#detail-body a[data-reader-link]');
+      const nextIndex = await innerLinks.evaluateAll((links, current) => links.findIndex(link => link.getAttribute('href') !== current), currentReader);
+      assert.ok(nextIndex >= 0, 'combined Maps reader needs a useful next in-card link');
+      const inner = innerLinks.nth(nextIndex);
       await inner.click();
-      await page.waitForFunction(() => document.querySelector('#detail-body')?.dataset.readerPath !== '/industries/roofing/');
+      await page.waitForFunction(path => document.querySelector('#detail-body')?.dataset.readerPath !== path, currentReader);
       assert.equal(await page.locator('#detail').evaluate(node => node.open), true);
       await page.locator('#close-detail').click();
       await page.waitForFunction(() => !document.querySelector('#detail')?.open);
@@ -350,7 +525,7 @@ async function run() {
       assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')), originalHref);
     });
 
-    await check('direct service route renders the approved waterfall and ownership story', async () => {
+    await check('direct service route renders the complete linear Website story and ownership terms', async () => {
       await page.goto(base + '/services/custom-local-websites/', { waitUntil: 'networkidle' });
       await inspectWebsiteBody(page, 'desktop direct website route');
       await inspectDirectContactRail(page, 'desktop direct website route');
@@ -399,9 +574,18 @@ async function run() {
     for (const viewport of [{ width: 390, height: 844 }, { width: 320, height: 720 }]) {
       const { context: directContext, page: directPage } = await makePage(browser, viewport);
       await directPage.goto(base + '/services/custom-local-websites/', { waitUntil: 'networkidle' });
-      await check('direct website waterfall and ownership fit ' + viewport.width + 'px', () => inspectWebsiteBody(directPage, viewport.width + ' direct website route'));
+      await check('direct linear Website story and ownership fit ' + viewport.width + 'px', () => inspectWebsiteBody(directPage, viewport.width + ' direct website route'));
       await check('direct contact rail stays available at ' + viewport.width + 'px', () => inspectDirectContactRail(directPage, viewport.width + ' direct website route'));
       await directPage.screenshot({ path: path.join(screenshots, 'verify-website-direct-' + viewport.width + '.png'), fullPage: true });
+      for (const route of ['/services/it-support/', '/services/tech-consulting/', '/services/business-systems/']) {
+        await directPage.goto(base + route, { waitUntil: 'networkidle' });
+        await check(`${route} contact and close controls stay separate at ${viewport.width}px`, () => inspectDirectContactRail(directPage, route));
+        await directPage.locator('.direct-contact-rail a').evaluateAll(links => {
+          const sizes = links.map(link => parseFloat(getComputedStyle(link).fontSize));
+          links.forEach((link, index) => { link.style.fontSize = sizes[index] * 2 + 'px'; });
+        });
+        await check(`${route} enlarged contact text stays reachable at ${viewport.width}px`, () => inspectDirectContactRail(directPage, route + ' 200% contact text'));
+      }
       await directContext.close();
     }
 
@@ -424,7 +608,7 @@ async function run() {
       const { context: viewportContext, page: viewportPage } = await makePage(browser, viewport);
       await viewportPage.goto(`${base}/`, { waitUntil: 'networkidle' });
       const homeOverflow = await expectNoOverflow(viewportPage, `${viewport.width} home`);
-      await openTile(viewportPage, '/industries/roofing/');
+      await openTile(viewportPage, '/answers/help/maps/');
       const dialogOverflow = await expectNoOverflow(viewportPage, `${viewport.width} reader`);
       await viewportPage.screenshot({ path: path.join(screenshots, `verify-reader-${viewport.width}.png`), fullPage: true });
       report.viewports.push({ ...viewport, homeOverflow: JSON.parse(homeOverflow), dialogOverflow: JSON.parse(dialogOverflow) });

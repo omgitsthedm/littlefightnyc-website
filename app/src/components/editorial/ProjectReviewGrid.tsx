@@ -36,7 +36,7 @@ export default function ProjectReviewGrid({
             {study.video ? (
               <DeferredCinematicMedia
                 media={study.video}
-                alt={`${study.client}: cabinetry plans becoming a finished kitchen`}
+                alt={`${study.client}: project overview`}
               />
             ) : study.editorial ? (
               <Link to={`/case-studies/${study.slug}/`} aria-label={`Read the ${study.client} case study`}>
@@ -89,11 +89,11 @@ export default function ProjectReviewGrid({
               <div
                 className="lf-project-review__inventory-media"
                 role="img"
-                aria-label={`${study.client}: public-safe internal project walkthrough`}
+                aria-label={`${study.client}: case study overview`}
               >
-                <span>Internal project</span>
+                <span>Case study</span>
                 <strong>{study.client}</strong>
-                <small>Public-safe walkthrough</small>
+                <small>Project overview</small>
               </div>
             )}
           </div>

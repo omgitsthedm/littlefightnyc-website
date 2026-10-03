@@ -23,12 +23,46 @@ const content = path.join(app, 'preview-content');
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'topic-mosaic');
 const screenshots = path.join(evidence, 'screenshots');
 const base = (process.env.TOPIC_MOSAIC_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
-const expected = { tiles: 133, originals: 110, reviews: 7, routes: 405 };
+const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 399, groups: 19 };
 const topics = [
   ['web', 'topic-web', 'Websites'],
   ['it', 'topic-it', 'Tech support'],
   ['consulting', 'topic-consulting', 'Consulting'],
   ['software', 'topic-software', 'Custom software'],
+];
+const topicTileCounts = { web: 21, it: 20, consulting: 16, software: 20 };
+// These original cards deliberately keep their canonical URLs while their
+// homepage context changes. Keep this list explicit: the regression is a
+// wrong topic/color/reader identity, not an expected visual variation.
+const regroupedCards = [
+  ['lab-walkup-3d', 'software', 'magenta'],
+  ['lab-terminal-3d', 'software', 'magenta'],
+  ['lab-micro-animations', 'software', 'magenta'],
+  ['lab-studio-engine', 'software', 'magenta'],
+  ['lab-growth-street', 'software', 'magenta'],
+  ['lab-pool-room', 'software', 'magenta'],
+  ['lab-pill-scroll', 'software', 'magenta'],
+  ['lab-aha-laser', 'software', 'magenta'],
+  ['lab-goliath', 'software', 'magenta'],
+  ['page-vera', 'software', 'magenta'],
+  ['case-after-hours-agenda', 'software', 'magenta'],
+  ['album-nyc', 'consulting', 'green'],
+  ['album-marthas-vineyard', 'consulting', 'green'],
+  ['album-arizona', 'consulting', 'green'],
+  ['album-hospitality', 'consulting', 'green'],
+  ['album-roofing', 'consulting', 'green'],
+  ['album-shops', 'consulting', 'green'],
+  ['album-trades', 'consulting', 'green'],
+  ['album-makers', 'consulting', 'green'],
+  ['maps', 'consulting', 'green'],
+  ['web-redesign-decision', 'consulting', 'green'],
+  ['ownership', 'it', 'yellow'],
+];
+const regroupedReaderSamples = [
+  ['lab-studio-engine', 'software', 'a software Lab'],
+  ['album-nyc', 'consulting', 'a geographic album'],
+  ['maps', 'consulting', 'a moved answer'],
+  ['page-vera', 'software', 'the VERA agency wrapper'],
 ];
 const report = {
   kind: 'topic-mosaic-browser-verification',
@@ -57,12 +91,60 @@ function sourceOriginalDestinations() {
   const html = fs.readFileSync(path.join(content, 'mosaic.html'), 'utf8');
   const hrefs = [...html.matchAll(/<a\b(?=[^>]*\bclass=(['"])[^'"]*\btile\b[^'"]*\1)(?=[^>]*\bhref=(['"])([^'"]+)\2)[^>]*>/gi)]
     .map(match => match[3]);
-  assert.equal(hrefs.length, expected.originals, 'source mosaic must retain exactly 110 original identities');
+  assert.equal(hrefs.length, expected.originals, 'source mosaic must retain exactly 106 remaining original identities');
   return hrefs.map(href => href.startsWith('/#album-') ? `/photos/${href.slice('/#album-'.length)}/` : href);
 }
 
-async function makePage(browser, viewport, javaScriptEnabled = true) {
-  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, javaScriptEnabled });
+function sourceReviews() {
+  const reviews = JSON.parse(fs.readFileSync(path.join(content, 'reviews.json'), 'utf8')).reviews;
+  assert.equal(reviews.length, expected.reviews, 'source must retain seven verified Google review records');
+  assert.equal(reviews.filter(review => review.showAsQuote).length, 6, 'source must retain six exact quoted excerpts');
+  assert.deepEqual(reviews.filter(review => !review.showAsQuote).map(review => review.displayName), ['Emilee'],
+    'only Emilee may remain a source-linked rating without an invented quote');
+  return reviews;
+}
+
+function readHomepageInventory() {
+  const file = path.join(app, 'dist', 'homepage-inventory.json');
+  assert.ok(fs.existsSync(file), 'production artifact must include homepage-inventory.json');
+  const inventory = JSON.parse(fs.readFileSync(file, 'utf8'));
+  assert.equal(inventory.sourceTileCount, expected.originals, 'inventory must retain all 106 source identities');
+  assert.equal(inventory.totalTileInventory, expected.totalInventory, 'inventory must account for all 129 tiles');
+  assert.equal(inventory.groups?.length, expected.groups, 'inventory must record all 19 consolidated groups');
+  assert.ok(Array.isArray(inventory.visibleTiles), 'inventory needs visible homepage tiles');
+  assert.ok(Array.isArray(inventory.retainedRoutes), 'inventory needs every retained destination');
+  assert.ok(Array.isArray(inventory.hiddenHomeIds), 'inventory needs explicitly hidden homepage ids');
+  const memberIds = inventory.groups.flatMap(group => {
+    assert.ok(group && typeof group.id === 'string' && group.id, 'each consolidated group needs a stable lead id');
+    assert.ok(typeof group.path === 'string' && group.path.startsWith('/'), `${group.id}: consolidated lead needs a local reader path`);
+    assert.ok(Array.isArray(group.members), `${group.id}: consolidated group needs absorbed member ids`);
+    return group.members;
+  });
+  const hidden = new Set([...memberIds, ...inventory.hiddenHomeIds]);
+  const visibleIds = inventory.visibleTiles.map(tile => tile?.id);
+  const retainedIds = inventory.retainedRoutes.map(route => route?.id);
+  assert.equal(new Set(visibleIds).size, visibleIds.length, 'visible homepage ids must be unique');
+  assert.equal(new Set(retainedIds).size, retainedIds.length, 'retained route ids must be unique');
+  assert.equal(retainedIds.length, expected.totalInventory, 'every one of the 129 tiles needs a retained route/search record');
+  assert.equal(inventory.visibleTiles.length, expected.totalInventory - hidden.size,
+    'visible count must equal total inventory minus unique absorbed/hidden ids');
+  assert.ok(visibleIds.every(id => typeof id === 'string' && id && !hidden.has(id)), 'visible ids cannot also be absorbed/hidden');
+  assert.deepEqual(new Set(retainedIds), new Set([...visibleIds, ...hidden]),
+    'retained route ids must account for visible plus absorbed/hidden tiles');
+  for (const tile of inventory.visibleTiles) {
+    assert.ok(typeof tile?.path === 'string' && (tile.path.startsWith('/') || /^https?:\/\//.test(tile.path)), `${tile?.id || '?'}: visible tile needs a local or attributed external path`);
+    assert.ok(typeof tile.title === 'string' && tile.title.trim(), `${tile.id}: visible tile needs a title`);
+  }
+  for (const route of inventory.retainedRoutes) {
+    assert.ok(typeof route.path === 'string' && route.path, `${route.id}: retained route needs a path`);
+    assert.ok(typeof route.title === 'string' && route.title.trim(), `${route.id}: retained route needs a title`);
+    assert.ok(typeof route.homePath === 'string' && route.homePath, `${route.id}: retained route needs a home path`);
+  }
+  return { inventory, hidden, visibleIds, retainedIds };
+}
+
+async function makePage(browser, viewport, javaScriptEnabled = true, contextOptions = {}) {
+  const context = await browser.newContext({ viewport, deviceScaleFactor: 1, javaScriptEnabled, ...contextOptions });
   const page = await context.newPage();
   await page.route('**/*', async route => {
     const request = route.request();
@@ -176,7 +258,7 @@ async function assertResponsiveAnchorPresentation(browser) {
           return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) > 0 && rect.width > 2 && rect.height > 2;
         };
         const webPhoto = document.querySelector('#topic-web a.tile[data-anchor="web"] .topic-anchor-photo img');
-        const icons = [...document.querySelectorAll('.topic-section[data-topic]:not(#topic-reviews) .topic-anchor-icon')]
+        const icons = [...document.querySelectorAll('.topic-section[data-topic] .topic-anchor-icon')]
           .map(node => {
             const rect = node.getBoundingClientRect();
             return { width: rect.width, height: rect.height, visible: visible(node) };
@@ -230,7 +312,8 @@ async function assessGeometry(page, width) {
     const overlap = (a, b) => Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left))
       * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
     const groups = [...document.querySelectorAll('section.topic-section[data-topic]')].map(section => {
-      const tiles = [...section.querySelectorAll('.mosaic[data-topic-grid] a.tile[href]')];
+      const grid = section.querySelector('.mosaic[data-topic-grid]');
+      const tiles = [...grid.querySelectorAll('a.tile[href]')];
       const rects = tiles.map(tile => {
         const rect = tile.getBoundingClientRect();
         return { href: tile.getAttribute('href'), left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height, visible: visible(tile) };
@@ -242,43 +325,149 @@ async function assessGeometry(page, width) {
           if (area > 2) overlaps.push({ left: rects[left].href, right: rects[right].href, area: Math.round(area) });
         }
       }
-      return { id: section.id, topic: section.dataset.topic, tileCount: tiles.length, hidden: rects.filter(rect => !rect.visible), overlaps };
+      const positions = tiles.map(tile => ({
+        id: tile.dataset.answer || tile.getAttribute('href') || '',
+        columnStart: Number.parseInt(tile.style.gridColumnStart, 10),
+        columnEnd: Number.parseInt(tile.style.gridColumnEnd, 10),
+        rowStart: Number.parseInt(tile.style.gridRowStart, 10),
+        rowEnd: Number.parseInt(tile.style.gridRowEnd, 10),
+      }));
+      const invalidPositions = positions.filter(position => !Number.isInteger(position.columnStart) || !Number.isInteger(position.columnEnd)
+        || !Number.isInteger(position.rowStart) || !Number.isInteger(position.rowEnd)
+        || position.columnEnd <= position.columnStart || position.rowEnd <= position.rowStart);
+      const maxColumn = Math.max(0, ...positions.map(position => position.columnEnd - 1));
+      const maxRow = Math.max(0, ...positions.map(position => position.rowEnd - 1));
+      const occupied = new Set();
+      for (const position of positions) {
+        for (let row = position.rowStart; row < position.rowEnd; row += 1) {
+          for (let column = position.columnStart; column < position.columnEnd; column += 1) occupied.add(`${column}:${row}`);
+        }
+      }
+      const vacancies = [];
+      for (let row = 1; row <= maxRow; row += 1) {
+        for (let column = 1; column <= maxColumn; column += 1) {
+          if (!occupied.has(`${column}:${row}`)) vacancies.push(`${column}:${row}`);
+        }
+      }
+      return {
+        id: section.id, topic: section.dataset.topic, tileCount: tiles.length, hidden: rects.filter(rect => !rect.visible), overlaps,
+        occupancy: { maxColumn, maxRow, invalidPositions, vacancies, lastRowVacancies: vacancies.filter(cell => cell.endsWith(`:${maxRow}`)), packVacancies: grid.dataset.packVacancies },
+      };
     });
     const root = document.documentElement;
-    const reviewTiles = [...document.querySelectorAll('#topic-reviews [data-review-tile]')].map(tile => {
+    const reviewTiles = [...document.querySelectorAll('[data-review-tile]')].map(tile => {
       const rect = tile.getBoundingClientRect();
-      return { width: rect.width, height: rect.height, visible: visible(tile) };
+      const stars = [...tile.querySelectorAll('svg.review-star')].map(star => {
+        const bounds = star.getBoundingClientRect();
+        return {
+          width: bounds.width,
+          height: bounds.height,
+          contained: bounds.left >= rect.left - .75 && bounds.right <= rect.right + .75
+            && bounds.top >= rect.top - .75 && bounds.bottom <= rect.bottom + .75,
+        };
+      });
+      const columns = Number.parseInt(tile.style.gridColumnEnd, 10) - Number.parseInt(tile.style.gridColumnStart, 10);
+      return { width: rect.width, height: rect.height, columns, visible: visible(tile), topic: tile.closest('.topic-section')?.dataset.topic || '', stars };
     });
     return {
       groups,
       reviewTiles,
+      reviewSections: document.querySelectorAll('#topic-reviews,[data-topic="reviews"]').length,
       documentOverflow: root.scrollWidth - root.clientWidth,
       bodyOverflow: document.body.scrollWidth - root.clientWidth,
     };
   });
 }
 
-async function assertTopicStructure(page) {
+async function assertTopicStructure(page, manifest) {
   const release = JSON.parse(fs.readFileSync(path.join(app, 'dist', 'tile-release.json'), 'utf8'));
-  assert.equal(release.tiles, expected.tiles, 'release marker must record 133 tiles');
-  assert.equal(release.originalTilesPreserved, expected.originals, 'release marker must record 110 originals');
-  assert.equal(release.routes, expected.routes, 'release marker must record 405 routes');
-  assert.equal(await page.locator('a.tile[href]').count(), expected.tiles, 'homepage must expose every tile as a real link');
-  const homeHrefs = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => tile.getAttribute('href')));
-  for (const href of sourceOriginalDestinations()) assert.ok(homeHrefs.includes(href), `original tile destination disappeared: ${href}`);
+  assert.equal(release.tiles, manifest.inventory.visibleTiles.length, 'release marker must record the consolidated visible tile count');
+  assert.equal(release.totalTileInventory, expected.totalInventory, 'release marker must preserve the full 129-tile inventory');
+  assert.equal(release.originalTilesPreserved, expected.originals, 'release marker must record 106 remaining originals');
+  assert.equal(release.consolidatedGroups, expected.groups, 'release marker must record all consolidated groups');
+  assert.equal(release.routes, expected.routes, 'release marker must record 399 routes');
+  assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length, 'homepage must expose exactly the consolidated visible tiles as real links');
+  const homeTiles = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => ({ id: tile.dataset.answer, href: tile.getAttribute('href') })));
+  assert.deepEqual(new Set(homeTiles.map(tile => tile.id)), new Set(manifest.visibleIds), 'homepage tile ids must exactly match the visible inventory');
+  for (const group of manifest.inventory.groups) {
+    assert.equal(homeTiles.filter(tile => tile.id === group.id).length, 1, `${group.id} consolidated lead must appear once`);
+    for (const member of group.members) assert.equal(homeTiles.filter(tile => tile.id === member).length, 0, `${member} must be absorbed into ${group.id}`);
+  }
+  for (const hiddenId of manifest.inventory.hiddenHomeIds) {
+    assert.equal(homeTiles.filter(tile => tile.id === hiddenId).length, 0, `${hiddenId} must remain available without taking homepage space`);
+  }
+  const retainedPaths = new Set(manifest.inventory.retainedRoutes.map(route => route.path));
+  for (const href of sourceOriginalDestinations()) assert.ok(retainedPaths.has(href), `original tile destination disappeared from retained routes: ${href}`);
+  const nineClientPaths = [
+    '/case-studies/easy-tiger/', '/case-studies/hair-by-rachel-charles/', '/case-studies/the-tarot-hotline/',
+    '/case-studies/grand-funding-llc/', '/case-studies/the-break-room/', '/case-studies/clearhelp/',
+    '/case-studies/logan-loans/', '/case-studies/cc-films/', '/case-studies/chromatic-painting-design/',
+  ];
+  for (const route of [...nineClientPaths, '/vera/']) assert.ok(retainedPaths.has(route), `protected/client route disappeared from inventory: ${route}`);
+  assert.ok(sourceOriginalDestinations().some(route => route.startsWith('/examples/lab/')), 'source inventory must include Labs');
+  for (const route of sourceOriginalDestinations().filter(route => route.startsWith('/examples/lab/'))) {
+    assert.ok(retainedPaths.has(route), `Lab destination disappeared from inventory: ${route}`);
+  }
   for (const [topic, id, label] of topics) {
     const section = page.locator(`section.topic-section#${id}[data-topic="${topic}"]`);
     assert.equal(await section.count(), 1, `${label} needs one semantic topic section`);
     await section.locator(':scope > header.topic-heading > h2').waitFor({ state: 'visible' });
-    assert.ok(await section.locator(`.mosaic[data-topic-grid][data-topic="${topic}"] a.tile[href]`).count() > 0, `${label} needs at least one tile`);
+    assert.equal(await section.locator(`.mosaic[data-topic-grid][data-topic="${topic}"] a.tile[href]`).count(), topicTileCounts[topic],
+      `${label} must retain its approved semantic card count after regrouping`);
   }
-  const reviewSection = page.locator('section.topic-section#topic-reviews[data-topic="reviews"]');
-  assert.equal(await reviewSection.count(), 1, 'Google reviews needs its own semantic topic section');
-  await reviewSection.locator(':scope > header.topic-heading > h2').waitFor({ state: 'visible' });
-  assert.ok(await reviewSection.locator('.mosaic[data-topic-grid][data-topic="reviews"] a.tile[href]').count() > 0, 'Google reviews needs a topic grid');
-  const reviews = page.locator('#topic-reviews [data-review-tile]');
-  assert.equal(await reviews.count(), expected.reviews, 'review section must contain seven individual review tiles');
-  return `133 links; 110 original destinations; ${topics.length} service groups plus review group; seven reviews`;
+  assert.equal(await page.locator('section.topic-section#topic-reviews,[data-topic="reviews"]').count(), 0,
+    'reviews must be interleaved through services, never collected in a standalone topic');
+  const distribution = await page.locator('section.topic-section[data-topic]').evaluateAll(sections => sections.map(section => {
+    const tiles = [...section.querySelectorAll('[data-topic-grid] > a.tile')];
+    const reviewIndexes = tiles.flatMap((tile, index) => tile.hasAttribute('data-review-tile') ? [index] : []);
+    return { topic: section.dataset.topic, reviews: reviewIndexes.length, adjacent: reviewIndexes.some((index, offset) => offset && index === reviewIndexes[offset - 1] + 1) };
+  }));
+  assert.equal(distribution.length, topics.length, 'homepage must retain exactly four service topic sections');
+  assert.ok(distribution.every(group => group.reviews >= 1), `each service group needs a sourced review: ${JSON.stringify(distribution)}`);
+  assert.ok(distribution.every(group => !group.adjacent), `review cards must be interleaved rather than piled together: ${JSON.stringify(distribution)}`);
+  assert.equal(await page.locator('[data-review-tile]').count(), expected.reviews, 'homepage must retain seven individual source-linked review cards');
+  return `${manifest.inventory.visibleTiles.length} visible links; ${expected.totalInventory} retained routes; ${expected.groups} consolidated groups; four service groups each interleave reviews; seven reviews`;
+}
+
+async function assertBrandLeadsWebsite(page) {
+  const brand = page.locator('a.tile.brand-tile').first();
+  const website = page.locator('#topic-web a.tile[data-anchor="web"]').first();
+  assert.equal(await brand.count(), 1, 'Problems? Solved. must remain one homepage brand card');
+  assert.equal(await website.count(), 1, 'Websites must retain one service anchor');
+  const relation = await page.evaluate(() => {
+    const brandTile = document.querySelector('a.tile.brand-tile');
+    const websiteTile = document.querySelector('#topic-web a.tile[data-anchor="web"]');
+    const brand = brandTile.getBoundingClientRect();
+    const website = websiteTile.getBoundingClientRect();
+    return {
+      brand: { top: brand.top, bottom: brand.bottom, rowStart: Number.parseInt(brandTile.style.gridRowStart, 10), rowEnd: Number.parseInt(brandTile.style.gridRowEnd, 10) },
+      website: { top: website.top, bottom: website.bottom, rowStart: Number.parseInt(websiteTile.style.gridRowStart, 10), rowEnd: Number.parseInt(websiteTile.style.gridRowEnd, 10) },
+    };
+  });
+  assert.ok(relation.brand.rowEnd <= relation.website.rowStart && relation.brand.bottom <= relation.website.top + 1,
+    `Problems? Solved. must sit above, never beside, Websites: ${JSON.stringify(relation)}`);
+  return 'Problems? Solved. occupies a complete grid row above the Websites service anchor';
+}
+
+function artifactFile(route) {
+  const clean = route.replace(/^\/+/, '');
+  if (!clean) return path.join(app, 'dist', 'index.html');
+  if (route.endsWith('/') || !path.basename(clean).includes('.')) return path.join(app, 'dist', clean, 'index.html');
+  return path.join(app, 'dist', clean);
+}
+
+function assertRetainedRouteArtifacts(manifest) {
+  const search = JSON.parse(fs.readFileSync(path.join(app, 'dist', 'search-index.json'), 'utf8'));
+  const searchPaths = new Set(search.filter(row => row && typeof row === 'object').map(row => row.path));
+  for (const route of manifest.inventory.retainedRoutes) {
+    if (!route.path.startsWith('/')) continue;
+    const pathname = new URL(route.path, 'https://littlefightnyc.com').pathname;
+    const target = artifactFile(pathname);
+    assert.ok(fs.existsSync(target), `${route.id}: retained route file is missing: ${route.path}`);
+    assert.ok(fs.readFileSync(target, 'utf8').trim(), `${route.id}: retained route file is empty: ${route.path}`);
+    assert.ok(searchPaths.has(pathname), `${route.id}: retained route is missing from search index: ${route.path}`);
+  }
+  return `${expected.totalInventory} inventory destinations retain non-empty local readers and searchable records`;
 }
 
 async function assertTileGeometryAndType(page) {
@@ -288,32 +477,63 @@ async function assertTileGeometryAndType(page) {
   }));
   for (const [topic, id, label] of topics) {
     const anchor = page.locator(`#${id} a.tile[data-anchor="${topic}"]`).first();
-    assert.equal(await anchor.count(), 1, `${label} must retain its 4 by 2 anchor tile`);
+    assert.equal(await anchor.count(), 1, `${label} must retain its service anchor tile`);
     const size = await dimensions(anchor);
+    if (topic === 'web') {
+      assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 4], 'Websites must lead with its larger service frame');
+      assert.equal(size.columns, 8, 'Websites must occupy two thirds of the desktop grid');
+      assert.ok(size.rows >= 4, 'Websites must preserve space for its explanation and real-work preview');
+      assert.match(await anchor.innerText(), /Websites/i, 'the Website anchor must identify the service clearly');
+      continue;
+    }
     assert.deepEqual([size.columns, size.rows], [4, 2], `${label} anchor must lay out at 4 by 2`);
     assert.deepEqual([size.preferredColumns, size.preferredRows], [4, 2], `${label} anchor must preserve its 4 by 2 preferred geometry`);
   }
-  const brand = page.locator('#topic-reviews a.tile[data-answer="google-reviews"]').first();
-  assert.equal(await brand.count(), 1, 'the existing aggregate Google review link must remain a tile');
-  const brandSize = await dimensions(brand);
-  assert.deepEqual([brandSize.columns, brandSize.rows], [4, 2], 'aggregate Google review tile must lay out at 4 by 2');
-  const reviewSizes = await page.locator('#topic-reviews [data-review-tile]').evaluateAll(nodes => nodes.map(node => [Number(node.dataset.columns), Number(node.dataset.rows)]));
-  assert.ok(reviewSizes.every(([columns, rows]) => columns === 2 && rows === 2), `wide-grid review tiles must stay compact 2x2 cards: ${JSON.stringify(reviewSizes)}`);
+  const artwork = page.locator('img.editorial-story-image');
+  assert.ok(await artwork.count() >= 9, 'consolidated service stories need substantial original editorial artwork');
+  await artwork.evaluateAll(async images => {
+    images.forEach(image => { image.loading = 'eager'; });
+    await Promise.all(images.map(image => image.decode()));
+  });
+  const artCoverage = await artwork.evaluateAll(images => images.map(image => {
+    const box = image.getBoundingClientRect();
+    const tile = image.closest('.tile').getBoundingClientRect();
+    return { loaded: image.naturalWidth > 0, fraction: box.width * box.height / (tile.width * tile.height) };
+  }));
+  assert.ok(artCoverage.every(image => image.loaded && image.fraction >= .4), `featured artwork must be substantial and loaded: ${JSON.stringify(artCoverage)}`);
+  const reviewSizes = await page.locator('[data-review-tile]').evaluateAll(nodes => nodes.map(node => ({
+    id: node.dataset.reviewId,
+    style: node.dataset.reviewStyle,
+    preferredColumns: Number(node.dataset.preferredColumns), preferredRows: Number(node.dataset.preferredRows),
+    mobileColumns: Number(node.dataset.mobileColumns), mobileRows: Number(node.dataset.mobileRows),
+    quote: node.querySelector('.review-quote')?.textContent?.trim() || '',
+  })));
+  assert.equal(reviewSizes.length, expected.reviews, 'seven review cards need responsive compact geometry');
+  assert.ok(reviewSizes.every(review => review.style === 'standard'),
+    `review cards must use one coherent standard treatment: ${JSON.stringify(reviewSizes)}`);
+  for (const review of reviewSizes) {
+    assert.deepEqual([review.preferredColumns, review.preferredRows], [3, 2],
+      `${review.id} must preserve the promised compact desktop review geometry before responsive content growth`);
+    assert.deepEqual([review.mobileColumns, review.mobileRows], [3, review.quote.length > 40 ? 4 : 3],
+      `${review.id} must use the promised readable mobile review geometry`);
+  }
   const albums = page.locator('a.tile[data-kind="photo-album"]');
   assert.ok(await albums.count() > 0, 'original photo albums must remain');
-  const albumSizes = await albums.evaluateAll(nodes => nodes.map(node => [Number(node.dataset.columns), Number(node.dataset.rows)]));
-  assert.ok(albumSizes.every(([columns, rows]) => columns === 4 && rows === 4), `photo tiles must retain 4 by 4 geometry: ${JSON.stringify(albumSizes)}`);
-  const originalHrefs = new Set(sourceOriginalDestinations());
-  const originalSizes = await page.locator('a.tile[href]').evaluateAll((tiles, hrefs) => tiles
-    .filter(tile => hrefs.includes(tile.getAttribute('href')))
-    .map(tile => `${tile.dataset.columns}x${tile.dataset.rows}`), [...originalHrefs]);
-  // Icon-only originals contract to a single square instead of preserving a
-  // tall empty staging shape. The remaining set still proves an intentional
-  // bento vocabulary rather than a uniform card feed.
-  for (const needed of ['1x1', '2x1', '2x2', '2x3', '3x2']) {
-    assert.ok(originalSizes.includes(needed), `original varied geometry ${needed} disappeared`);
-  }
-  return `4x2 anchors + brand; seven compact 2x2 reviews; ${albumSizes.length} 4x4 photos; varied originals ${[...new Set(originalSizes)].join(', ')}`;
+  const albumSizes = await albums.evaluateAll(nodes => nodes.map(node => ({
+    id: node.dataset.answer,
+    columns: Number(node.dataset.columns), rows: Number(node.dataset.rows),
+    preferredColumns: Number(node.dataset.preferredColumns), preferredRows: Number(node.dataset.preferredRows),
+    gridColumns: getComputedStyle(node.closest('[data-topic-grid]')).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length,
+  })));
+  assert.ok(albumSizes.every(album => album.preferredColumns === 4 && album.preferredRows === 4),
+    `photo cards must preserve their authored 4 by 4 source geometry: ${JSON.stringify(albumSizes)}`);
+  assert.ok(albumSizes.every(album => Number.isInteger(album.columns) && Number.isInteger(album.rows)
+    && album.columns >= 4 && album.rows >= 4 && album.columns <= album.gridColumns),
+  `photo cards may grow by whole grid units for content, never shrink or exceed their grid: ${JSON.stringify(albumSizes)}`);
+  const visibleSizes = await page.locator('a.tile[href]').evaluateAll(tiles => tiles
+    .map(tile => `${tile.dataset.columns}x${tile.dataset.rows}`));
+  assert.ok(new Set(visibleSizes).size >= 4, `consolidated homepage needs varied bento geometry, got ${[...new Set(visibleSizes)].join(', ')}`);
+  return `large Website anchor; 4x2 service anchors; seven individually styled compact reviews; ${albumSizes.length} source-4x4 photos that can grow whole units; visible bento sizes ${[...new Set(visibleSizes)].join(', ')}`;
 }
 
 async function assertReadableLabels(page) {
@@ -376,6 +596,7 @@ async function assertVisibleTileTextFits(page, viewportWidth) {
       const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
       let textNode;
       while ((textNode = walker.nextNode())) {
+        if (textNode.parentElement?.closest('.sr-only')) continue;
         for (const match of textNode.data.matchAll(/\S+/g)) {
           const range = document.createRange();
           range.setStart(textNode, match.index);
@@ -397,29 +618,159 @@ async function assertVisibleTileTextFits(page, viewportWidth) {
 }
 
 async function assertReviewEvidence(page) {
-  const details = await page.locator('#topic-reviews [data-review-tile]').evaluateAll(tiles => tiles.map(tile => ({
-    id: tile.getAttribute('data-review-id'),
-    quote: tile.querySelector('.review-quote')?.textContent?.trim() || '',
-    ratingOnly: tile.querySelector('.review-rating-only')?.textContent?.trim() || '',
-    stars: tile.querySelector('.review-stars')?.getAttribute('aria-label') || tile.querySelector('.review-stars')?.textContent?.trim() || '',
-    href: tile.matches('a[href^="https://"]') ? tile.getAttribute('href') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('href') || '',
-    target: tile.matches('a') ? tile.getAttribute('target') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('target') || '',
-    rel: tile.matches('a') ? tile.getAttribute('rel') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('rel') || '',
-  })));
+  const details = await page.locator('[data-review-tile]').evaluateAll(tiles => tiles.map(tile => {
+    const stars = tile.querySelector('.review-stars');
+    const credit = tile.querySelector('.review-credit');
+    return {
+      id: tile.getAttribute('data-review-id'),
+      name: tile.querySelector('.review-attribution')?.textContent?.trim() || '',
+      quote: tile.querySelector('.review-quote')?.textContent?.trim().replace(/[“”]/g, '') || '',
+      style: tile.dataset.reviewStyle || '',
+      starsAria: stars?.getAttribute('aria-label') || '',
+      stars: stars?.querySelectorAll('svg.review-star').length || 0,
+      credit: credit?.textContent?.replace(/\s+/g, ' ').trim() || '',
+      href: tile.matches('a[href^="https://"]') ? tile.getAttribute('href') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('href') || '',
+      target: tile.matches('a') ? tile.getAttribute('target') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('target') || '',
+      rel: tile.matches('a') ? tile.getAttribute('rel') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('rel') || '',
+    };
+  }));
+  const source = sourceReviews();
   assert.equal(details.length, expected.reviews);
   assert.equal(new Set(details.map(item => item.id)).size, expected.reviews, 'each review needs a stable identity');
-  assert.equal(details.filter(item => item.quote.length >= 12).length, 6, 'six verified excerpts must remain quoted');
-  assert.equal(details.filter(item => /five-star rating/i.test(item.ratingOnly)).length, 1, 'the text-free rating must remain an honest rating-only tile');
-  for (const item of details) {
-    assert.ok(item.id, 'review tile is missing data-review-id');
-    assert.ok(item.quote.length >= 12 || /five-star rating/i.test(item.ratingOnly), `review ${item.id} has neither a verified quote nor the approved rating-only treatment`);
-    assert.match(item.stars, /5(?:\.0)?\s*(?:out of\s*)?5|★★★★★/i, `review ${item.id} does not expose a five-star rating`);
+  assert.ok(details.every(item => item.style === 'standard'), 'all review cards must use the same standard visual treatment');
+  for (const record of source) {
+    const item = details.find(review => review.id === record.id);
+    assert.ok(item, `source review ${record.id} must remain on the homepage`);
+    assert.equal(item.name, record.displayName, `${record.id} may display only its source first name/initials`);
+    assert.equal(item.quote, record.showAsQuote ? record.excerpt : '', `${record.id} must preserve its exact sourced excerpt or remain quote-free`);
+    assert.equal(item.href, record.sourceUrl, `${record.id} must preserve its source path`);
+    assert.equal(item.stars, 5, `${record.id} must show five SVG stars`);
+    assert.match(item.starsAria, /^5(?:\.0)?\s*out of\s*5\s*stars?$/i, `${record.id} needs a precise five-star accessible label`);
+    assert.ok(item.credit.includes(record.displayName) && /Google/i.test(item.credit),
+      `${record.id} review credit must repeat the same attribution and source: ${item.credit}`);
     assert.match(item.href, /^https:\/\//, `review ${item.id} has no attributable external source link`);
     assert.equal(item.target, '_blank', `review ${item.id} must open its external source intentionally`);
     assert.match(item.rel, /\bnoopener\b/i, `review ${item.id} external link needs noopener`);
     assert.match(item.rel, /\bnoreferrer\b/i, `review ${item.id} external link needs noreferrer`);
   }
-  return 'six verified excerpts plus one honest rating-only tile, all with five stars, distinct IDs, and safe external source links';
+  assert.equal(details.filter(item => item.quote).length, 6, 'only six review cards may show sourced quotes');
+  assert.equal(details.find(item => item.id === 'google-review-7')?.name, 'Emilee', 'Emilee must stay the source-linked rating-only review');
+  return 'six exact first-name-only source quotes plus Emilee’s quote-free rating card, each with five SVG stars and matching credit';
+}
+
+async function assertReducedReviewMotion(page, label) {
+  const motion = await page.locator('[data-review-tile]').evaluateAll(nodes => {
+    const elements = nodes.flatMap(node => [node, ...node.querySelectorAll('*')]);
+    return {
+      styles: elements.map(node => {
+        const style = getComputedStyle(node);
+        return { animationName: style.animationName, animationDuration: style.animationDuration };
+      }),
+      animations: nodes.flatMap(node => node.getAnimations({ subtree: true }).map(animation => animation.animationName || animation.constructor?.name || 'animation')),
+    };
+  });
+  assert.ok(motion.styles.every(style => style.animationName === 'none' || style.animationDuration === '0s'),
+    `${label} reduced-motion review cards must not animate: ${JSON.stringify(motion.styles.filter(style => style.animationName !== 'none' && style.animationDuration !== '0s'))}`);
+  assert.deepEqual(motion.animations, [], `${label} reduced-motion review cards must begin stable, not with a pending animation`);
+}
+
+async function assertReviewMotion(browser) {
+  const normal = await makePage(browser, { width: 1440, height: 940 });
+  try {
+    await waitForHome(normal.page);
+    const cards = normal.page.locator('[data-review-tile]');
+    const before = await cards.evaluateAll(nodes => nodes.map(node => node.textContent.replace(/\s+/g, ' ').trim()));
+    const timings = [];
+    for (let index = 0; index < expected.reviews; index += 1) {
+      const card = cards.nth(index);
+      await card.scrollIntoViewIfNeeded();
+      await card.hover();
+      await normal.page.waitForTimeout(70);
+      timings.push(await card.evaluate(node => node.getAnimations({ subtree: true }).map(animation => ({
+        name: animation.animationName || animation.constructor?.name || '',
+        iterations: animation.effect?.getComputedTiming?.().iterations,
+      }))));
+    }
+    assert.ok(timings.every(animations => animations.length > 0), 'each review style must provide a real hover response');
+    assert.ok(timings.flat().every(animation => Number.isFinite(animation.iterations)),
+      `review motion must always finish rather than loop: ${JSON.stringify(timings)}`);
+    await normal.page.waitForTimeout(900);
+    const after = await cards.evaluateAll(nodes => nodes.map(node => node.textContent.replace(/\s+/g, ' ').trim()));
+    assert.deepEqual(after, before, 'review motion must never change a sourced quote, name, rating, or credit');
+  } finally { await normal.context.close(); }
+
+  const reduced = await makePage(browser, { width: 390, height: 844 }, true, { reducedMotion: 'reduce' });
+  try {
+    await waitForHome(reduced.page);
+    await assertReducedReviewMotion(reduced.page, '390px');
+  } finally { await reduced.context.close(); }
+  return 'seven coherent review hover responses complete finitely without changing source text; reduced motion disables them';
+}
+
+async function assertReviewTextGrowthAt390(browser) {
+  const entry = await makePage(browser, { width: 390, height: 844 }, true, { reducedMotion: 'reduce' });
+  try {
+    await waitForHome(entry.page);
+    await assertReducedReviewMotion(entry.page, '390px enlarged-text setup');
+    const snapshot = await entry.page.locator('[data-review-tile]').evaluateAll(tiles => tiles.map(tile => ({
+      id: tile.dataset.reviewId,
+      quote: tile.querySelector('.review-quote') ? parseFloat(getComputedStyle(tile.querySelector('.review-quote')).fontSize) : null,
+      attribution: parseFloat(getComputedStyle(tile.querySelector('.review-attribution')).fontSize),
+    })));
+    assert.equal(snapshot.length, expected.reviews, '390px enlarged-text test needs all seven reviews');
+    await entry.page.evaluate(sizes => {
+      for (const size of sizes) {
+        const tile = document.querySelector(`[data-review-id="${size.id}"]`);
+        const quote = tile?.querySelector('.review-quote');
+        const attribution = tile?.querySelector('.review-attribution');
+        if (quote && size.quote) quote.style.fontSize = `${size.quote * 2}px`;
+        if (attribution && size.attribution) attribution.style.fontSize = `${size.attribution * 2}px`;
+      }
+      window.LF_MOSAIC?.layout?.();
+    }, snapshot);
+    await entry.page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await entry.page.waitForTimeout(100);
+    const bounds = await entry.page.locator('[data-review-tile]').evaluateAll(tiles => tiles.map(tile => {
+      const tileBounds = tile.getBoundingClientRect();
+      const words = [];
+      for (const block of tile.querySelectorAll('.review-quote,.review-credit')) {
+        const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+        let text;
+        while ((text = walker.nextNode())) {
+          if (text.parentElement?.closest('.sr-only')) continue;
+          for (const match of text.data.matchAll(/\S+/g)) {
+            const range = document.createRange();
+            range.setStart(text, match.index);
+            range.setEnd(text, match.index + match[0].length);
+            for (const rect of range.getClientRects()) {
+              words.push({
+                word: match[0],
+                contained: rect.left >= tileBounds.left - .75 && rect.right <= tileBounds.right + .75
+                  && rect.top >= tileBounds.top - .75 && rect.bottom <= tileBounds.bottom + .75,
+              });
+            }
+          }
+        }
+      }
+      const stars = [...tile.querySelectorAll('svg.review-star')].map(star => {
+        const rect = star.getBoundingClientRect();
+        return {
+          width: rect.width,
+          height: rect.height,
+          contained: rect.left >= tileBounds.left - .75 && rect.right <= tileBounds.right + .75
+            && rect.top >= tileBounds.top - .75 && rect.bottom <= tileBounds.bottom + .75,
+        };
+      });
+      return { id: tile.dataset.reviewId, words, stars };
+    }));
+    assert.ok(bounds.every(review => review.words.length > 0 && review.words.every(word => word.contained)),
+      `390px doubled review text must remain inside its card: ${JSON.stringify(bounds)}`);
+    assert.ok(bounds.every(review => review.stars.length === 5 && review.stars.every(star => star.width > 0 && star.height > 0 && star.contained)),
+      `390px doubled review text must not clip any star: ${JSON.stringify(bounds)}`);
+    const geometry = await assessGeometry(entry.page, 390);
+    for (const group of geometry.groups) assert.deepEqual(group.overlaps, [], `390px enlarged text makes ${group.id} overlap: ${JSON.stringify(group.overlaps)}`);
+    return '390px reduced-motion review quote and credit text can double, relayout in whole grid units, and retain every word/star without overlap';
+  } finally { await entry.context.close(); }
 }
 
 async function assertHeaderFooter(page) {
@@ -485,21 +836,76 @@ async function assertBacksAndReaders(page) {
   return `four distinct topic-back colors: ${colors.join(', ')}`;
 }
 
-async function assertOriginalOrangePolicy(page) {
-  const colors = await page.locator('a.tile[data-accent="orange"], a.tile[data-kind="photo-album"], a.tile[data-kind="lab"], a.tile[data-kind="project"]').evaluateAll(tiles => tiles.map(tile => ({
-    href: tile.getAttribute('href'), color: getComputedStyle(tile).getPropertyValue('--motion-pop').trim(),
-  })));
-  assert.ok(colors.length > 0, 'original orange editorial tiles must remain in the grouped mosaic');
-  const nonOrange = colors.filter(item => !/ff7839|ff9a68|orange/i.test(item.color));
-  assert.deepEqual(nonOrange, [], `original brand, case, Lab, and album cards must preserve orange material: ${JSON.stringify(nonOrange)}`);
-  return `${colors.length} original editorial cards retain orange material`;
+async function assertRegroupedCardPlacement(page) {
+  for (const [cardId, family, accent] of regroupedCards) {
+    const tile = page.locator(`a.tile[data-answer="${cardId}"]`);
+    assert.equal(await tile.count(), 1, `${cardId} must have one visible homepage card`);
+    await tile.scrollIntoViewIfNeeded();
+    const semantics = await tile.evaluate(node => ({
+      sectionTopic: node.closest('section.topic-section')?.dataset.topic || '',
+      gridTopic: node.closest('[data-topic-grid]')?.dataset.topic || '',
+      tileTopic: node.dataset.topic || '',
+      family: node.dataset.family || '',
+      materialFamily: node.dataset.materialFamily || '',
+      accent: node.dataset.accent || '',
+    }));
+    assert.deepEqual(semantics, {
+      sectionTopic: family,
+      gridTopic: family,
+      tileTopic: family,
+      family,
+      materialFamily: family,
+      accent,
+    }, `${cardId} must use its ${family} topic, material family, and ${accent} accent: ${JSON.stringify(semantics)}`);
+  }
+  return `${regroupedCards.length} preserved cards sit in their intended topic sections with matching family and accent semantics`;
 }
 
-async function assertNoJavaScript(browser) {
+async function assertRegroupedReaderContext(page) {
+  for (const [cardId, family, label] of regroupedReaderSamples) {
+    const tile = page.locator(`a.tile[data-answer="${cardId}"]`);
+    await tile.scrollIntoViewIfNeeded();
+    const href = await tile.getAttribute('href');
+    assert.ok(href, `${cardId} needs its canonical link`);
+    await tile.click();
+    await page.locator('#detail[open]').waitFor({ state: 'visible' });
+    const context = await page.locator('#detail').evaluate(detail => ({
+      family: detail.dataset.readerFamily || '',
+      path: detail.dataset.readerPath || '',
+      panelFamily: detail.querySelector('.detail-window')?.dataset.readerFamily || '',
+    }));
+    assert.equal(context.family, family, `${label} must open with its ${family} reader category`);
+    assert.equal(context.panelFamily, family, `${label} panel must retain its ${family} reader category`);
+    assert.equal(context.path, new URL(href, base).pathname, `${label} must load its own retained app reader`);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.querySelector('#detail')?.open);
+    assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')), href,
+      `${label} must return focus to its originating card after closing`);
+  }
+  return 'software Lab, geographic album, moved answer, and VERA wrapper retain reader category and app-like close/focus return';
+}
+
+async function assertOriginalOrangePolicy(page) {
+  const colors = await page.locator('a.tile[data-accent="orange"]').evaluateAll(tiles => tiles.map(tile => ({
+    id: tile.dataset.answer || '',
+    kind: tile.dataset.kind || '',
+    family: tile.dataset.family || '',
+    href: tile.getAttribute('href'),
+    color: getComputedStyle(tile).getPropertyValue('--motion-pop').trim(),
+  })));
+  assert.ok(colors.some(item => item.kind === 'case-study'), 'case-study cards must retain Little Fight orange material');
+  assert.ok(colors.some(item => item.family === 'brand' || item.id === ''), 'Little Fight brand cards must retain orange material');
+  assert.ok(colors.some(item => item.kind === 'review' || /review/i.test(item.id)), 'review cards must retain orange material');
+  const nonOrange = colors.filter(item => !/ff7839|ff9a68|orange/i.test(item.color));
+  assert.deepEqual(nonOrange, [], `Little Fight brand, case, and review cards must preserve orange material: ${JSON.stringify(nonOrange)}`);
+  return `${colors.length} remaining Little Fight brand, case, and review cards retain orange material`;
+}
+
+async function assertNoJavaScript(browser, manifest) {
   const { context, page } = await makePage(browser, { width: 390, height: 844 }, false);
   try {
     await page.goto(`${base}/`, { waitUntil: 'domcontentloaded', timeout: 60_000 });
-    assert.equal(await page.locator('a.tile[href]').count(), expected.tiles, 'no-JS page must keep all 133 tile links');
+    assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length, 'no-JS page must keep the complete consolidated tile hub');
     for (const [, id, label] of topics) {
       assert.equal(await page.locator(`#${id} > header.topic-heading > h2`).count(), 1, `no-JS page must retain ${label} heading`);
     }
@@ -510,7 +916,7 @@ async function assertNoJavaScript(browser) {
     const footer = page.locator('footer.site-footer');
     await footer.scrollIntoViewIfNeeded();
     assert.equal(await footer.isVisible(), true, 'no-JS footer must remain reachable');
-    return '133 readable links, four headings, and footer without JavaScript';
+    return `${manifest.inventory.visibleTiles.length} readable links, four headings, and footer without JavaScript`;
   } finally { await context.close(); }
 }
 
@@ -558,12 +964,83 @@ async function assertReaderContextFigures(browser) {
   return `context figures stay useful at 1440/768px: ${measurements.map(item => `${item.label} ${item.figureWidth.toFixed(0)}px`).join(', ')}`;
 }
 
+async function assertEdgeLightClears(page) {
+  await page.mouse.move(2, 2);
+  const cards = page.locator('#topic-web .tile');
+  const sample = () => cards.evaluateAll(tiles => tiles.slice(0, 4).map(tile => ({
+    shadow: getComputedStyle(tile).boxShadow,
+    edge: Number(getComputedStyle(tile, '::before').opacity),
+    surface: Number(getComputedStyle(tile, '::after').opacity),
+  })));
+  const resting = await sample();
+  // Cross several tiles before the former shared 560ms timeout could finish.
+  for (let index = 0; index < 4; index += 1) {
+    const box = await cards.nth(index).boundingBox();
+    assert.ok(box, 'hover test tile must be visible');
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.waitForTimeout(70);
+  }
+  await page.mouse.move(2, 2);
+  await page.waitForTimeout(800);
+  assert.deepEqual(await sample(), resting, 'rapidly crossed tiles must return to their resting surface after pointer exit');
+
+  // Clearing pointer light must preserve the independent keyboard focus cue.
+  for (let index = 0; index < 20; index += 1) {
+    await page.keyboard.press('Tab');
+    if (await page.locator('.tile:focus-visible').count()) break;
+  }
+  const focused = page.locator('.tile:focus-visible');
+  assert.equal(await focused.count(), 1, 'keyboard navigation must visibly focus a tile');
+  await page.waitForTimeout(220);
+  assert.ok(await focused.evaluate(tile => {
+    const style = getComputedStyle(tile);
+    return style.outlineStyle !== 'none' && parseFloat(style.outlineWidth) >= 2
+      && Number(getComputedStyle(tile, '::before').opacity) >= .8;
+  }), 'keyboard focus must keep a clear outline and active edge light');
+  return 'real pointer sweep clears all four tiles; keyboard focus retains its separate visible cue';
+}
+
+async function assertStoryArtworkFits(page, width) {
+  const cards = await page.locator('.tile[data-editorial-story]').evaluateAll(tiles => tiles.map(tile => {
+    const image = tile.querySelector('.editorial-story-image');
+    const frame = tile.querySelector('.editorial-story-art').getBoundingClientRect();
+    const art = image.getBoundingClientRect();
+    const caption = tile.querySelector('.editorial-story-copy').getBoundingClientRect();
+    const title = tile.querySelector('.editorial-story-copy .cell-title');
+    return {
+      id: tile.dataset.editorialStory,
+      contained: art.left >= frame.left - 1 && art.top >= frame.top - 1
+        && art.right <= frame.right + 1 && art.bottom <= frame.bottom + 1,
+      overlap: Math.max(0, Math.min(art.right, caption.right) - Math.max(art.left, caption.left))
+        * Math.max(0, Math.min(art.bottom, caption.bottom) - Math.max(art.top, caption.top)),
+      fit: getComputedStyle(image).objectFit,
+      visibleSide: Math.min(art.width, art.height),
+      textOverflow: title.scrollWidth - title.clientWidth,
+    };
+  }));
+  assert.ok(cards.length >= 9, `${width}px consolidated homepage needs at least nine distinct illustrated story fronts`);
+  for (const card of cards) {
+    assert.ok(card.contained, `${width}px ${card.id}: artwork extends outside its frame`);
+    assert.equal(card.fit, 'contain', `${width}px ${card.id}: drawing must remain whole`);
+    assert.ok(card.overlap <= 1, `${width}px ${card.id}: caption covers artwork`);
+    assert.ok(card.visibleSide >= 100, `${width}px ${card.id}: whole drawing is too small (${card.visibleSide}px)`);
+    assert.ok(card.textOverflow <= 1, `${width}px ${card.id}: title overflows its own column by ${card.textOverflow}px`);
+  }
+  return `${width}px: ${cards.length} drawings fit their frames without caption overlap`;
+}
+
 async function run() {
+  const manifest = readHomepageInventory();
+  pass('homepage inventory preserves every route while consolidating the hub',
+    `${manifest.inventory.visibleTiles.length} visible of ${expected.totalInventory}; ${expected.groups} groups`);
+  pass('all retained tile destinations have non-empty local readers and search records', assertRetainedRouteArtifacts(manifest));
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     await waitForHome(page);
-    await check('release marker and grouped homepage preserve all content', () => assertTopicStructure(page));
+    await check('edge light clears after rapid pointer movement and preserves keyboard focus', () => assertEdgeLightClears(page));
+    await check('release marker and grouped homepage preserve all content', () => assertTopicStructure(page, manifest));
+    await check('Problems? Solved. leads visually above the Websites anchor', () => assertBrandLeadsWebsite(page));
     await check('tile geometry preserves anchors, photographs, and original variety', () => assertTileGeometryAndType(page));
     await check('visible tile labels meet the 16px accessibility floor', () => assertReadableLabels(page));
     await check('icon-only desktop cards visibly contain their familiar symbol', () => assertIconOnlyFronts(page, 1440));
@@ -572,26 +1049,44 @@ async function run() {
     await check('header and footer use the requested document structure', () => assertHeaderFooter(page));
     await check('navigation uses plus marks instead of arrows', () => assertNavigationGlyphs(page));
     await check('each topic uses a distinct colored tile back and opens accessibly', () => assertBacksAndReaders(page));
-    await check('original case, Lab, album, and brand cards retain orange material', () => assertOriginalOrangePolicy(page));
+    await check('reclassified cards use their correct homepage section, family, material, and accent', () => assertRegroupedCardPlacement(page));
+    await check('representative reclassified readers keep their category and return to the app hub', () => assertRegroupedReaderContext(page));
+    await check('Little Fight brand, case, and review cards retain orange material', () => assertOriginalOrangePolicy(page));
     await page.screenshot({ path: path.join(screenshots, 'topic-mosaic-1440.png'), fullPage: true });
     await context.close();
 
-    for (const viewport of [{ width: 320, height: 720 }, { width: 390, height: 844 }, { width: 768, height: 1024 }, { width: 1440, height: 940 }]) {
+    for (const viewport of [{ width: 320, height: 720 }, { width: 390, height: 844 }, { width: 600, height: 940 }, { width: 768, height: 1024 }, { width: 1024, height: 940 }, { width: 1440, height: 940 }]) {
       const entry = await makePage(browser, viewport);
       try {
+        // Geometry is measured in the stable accessible mode, so an entering
+        // ribbon cannot briefly mask a clipped star or quote at a breakpoint.
+        await entry.page.emulateMedia({ reducedMotion: 'reduce' });
         await waitForHome(entry.page);
+        await assertReducedReviewMotion(entry.page, `${viewport.width}px`);
+        await check(`${viewport.width}px Problems? Solved. stays above Websites`, () => assertBrandLeadsWebsite(entry.page));
+        await check(`${viewport.width}px story artwork stays whole and clear of its caption`, () => assertStoryArtworkFits(entry.page, viewport.width));
         const geometry = await assessGeometry(entry.page, viewport.width);
         assert.ok(geometry.documentOverflow <= 1, `${viewport.width}px document overflows by ${geometry.documentOverflow}px`);
         assert.ok(geometry.bodyOverflow <= 1, `${viewport.width}px body overflows by ${geometry.bodyOverflow}px`);
-        assert.equal(geometry.groups.length, topics.length + 1, `${viewport.width}px must retain four service groups plus reviews`);
+        assert.equal(geometry.groups.length, topics.length, `${viewport.width}px must retain exactly four service groups`);
         for (const group of geometry.groups) {
           assert.ok(group.tileCount > 0, `${viewport.width}px ${group.id} has no tiles`);
           assert.deepEqual(group.hidden, [], `${viewport.width}px ${group.id} contains hidden or zero-size tiles`);
           assert.deepEqual(group.overlaps, [], `${viewport.width}px ${group.id} tiles overlap: ${JSON.stringify(group.overlaps)}`);
+          assert.deepEqual(group.occupancy.invalidPositions, [], `${viewport.width}px ${group.id} needs exact integer grid placement: ${JSON.stringify(group.occupancy.invalidPositions)}`);
+          assert.equal(group.occupancy.packVacancies, 'false', `${viewport.width}px ${group.id} packer reported a vacant cell`);
+          assert.deepEqual(group.occupancy.vacancies, [], `${viewport.width}px ${group.id} has empty cells inside its occupied grid rectangle: ${JSON.stringify(group.occupancy.vacancies)}`);
+          assert.deepEqual(group.occupancy.lastRowVacancies, [], `${viewport.width}px ${group.id} leaves empty cells on its final occupied grid row: ${JSON.stringify(group.occupancy.lastRowVacancies)}`);
         }
-        assert.ok(geometry.groups.some(group => group.id === 'topic-reviews' && group.topic === 'reviews'), `${viewport.width}px must retain the review group boundary`);
+        assert.equal(geometry.reviewSections, 0, `${viewport.width}px review cards must never form a standalone review section`);
         assert.equal(geometry.reviewTiles.length, expected.reviews, `${viewport.width}px must retain seven reviews`);
         assert.ok(geometry.reviewTiles.every(tile => tile.visible && tile.width > 2 && tile.height > 2), `${viewport.width}px review cards are clipped or hidden`);
+        assert.ok(geometry.reviewTiles.every(tile => tile.columns === 3),
+          `${viewport.width}px review cards must keep the same three-column measure instead of stretching to fill gaps: ${JSON.stringify(geometry.reviewTiles)}`);
+        assert.ok(new Set(geometry.reviewTiles.map(tile => tile.topic)).size >= topics.length,
+          `${viewport.width}px reviews must stay distributed across all service groups: ${JSON.stringify(geometry.reviewTiles)}`);
+        assert.ok(geometry.reviewTiles.every(tile => tile.stars.length === 5 && tile.stars.every(star => star.width > 0 && star.height > 0 && star.contained)),
+          `${viewport.width}px every review star must remain visible inside its card: ${JSON.stringify(geometry.reviewTiles)}`);
         const iconOnly = await assertIconOnlyFronts(entry.page, viewport.width);
         const textFit = await assertVisibleTileTextFits(entry.page, viewport.width);
         report.viewports.push({ ...viewport, ...geometry, iconOnly, textFit });
@@ -600,7 +1095,9 @@ async function run() {
     }
     await check('homepage accepts real desktop wheel and keyboard input, mobile touch input, and resumes after a reader closes', () => assertInputScrollingAndReaderResume(browser));
     await check('Website anchor photos and equal icon frames remain visible at phone sizes with six columns through 1000px', () => assertResponsiveAnchorPresentation(browser));
-    await check('no-JavaScript homepage remains a complete readable document', () => assertNoJavaScript(browser));
+    await check('review micro-interactions remain finite, source-faithful, and reduced-motion-safe', () => assertReviewMotion(browser));
+    await check('390px review text enlargement relayouts complete square units without clipping', () => assertReviewTextGrowthAt390(browser));
+    await check('no-JavaScript homepage remains a complete readable document', () => assertNoJavaScript(browser, manifest));
     await check('ordinary readers and the VERA companion keep useful contextual figures', () => assertReaderContextFigures(browser));
     assert.deepEqual(report.blockedMutations, [], `unexpected mutating requests: ${JSON.stringify(report.blockedMutations)}`);
     assert.deepEqual(report.pageErrors, [], `page errors: ${report.pageErrors.join(' | ')}`);

@@ -178,7 +178,7 @@
     });
   }
 
-  function updateNavigation(path) {
+  function updateNavigation(path, homePath = path) {
     if (readerBack) readerBack.hidden = readerTrail.length < 2;
     const seen = new Set();
     const cards = [...(mosaic?.querySelectorAll('a.tile[href]') || [])].filter(tile => {
@@ -186,9 +186,9 @@
       if (!target || tile.target === '_blank' || seen.has(target)) return false;
       seen.add(target); return true;
     });
-    const index = cards.findIndex(tile => sameOriginPath(tile.href)?.split(/[?#]/)[0] === path.split(/[?#]/)[0]);
+    const index = cards.findIndex(tile => sameOriginPath(tile.href)?.split(/[?#]/)[0] === homePath.split(/[?#]/)[0]);
     const previous = index > 0 ? cards[index - 1] : null;
-    const next = cards[index + 1] || null;
+    const next = index >= 0 ? cards[index + 1] || null : null;
     for (const [button, tile, name] of [[readerPrevious, previous, 'Previous'], [readerNext, next, 'Next']]) {
       if (!button) continue;
       button.disabled = !tile;
@@ -204,7 +204,7 @@
     const parsed = new DOMParser().parseFromString(markup, 'text/html');
     const reader = parsed.querySelector('main[data-page-content]');
     if (!reader) throw new Error('Reader markup was not found.');
-    return { html: reader.innerHTML, layout: reader.dataset.readerLayout || '', title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
+    return { html: reader.innerHTML, layout: reader.dataset.readerLayout || '', family: reader.dataset.readerFamily || 'brand', template: reader.dataset.readerTemplate || '', homePath: reader.dataset.homePath || path, title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
   }
 
   function focusReader() {
@@ -238,10 +238,16 @@
       const reader = await fetchReader(readerDocument, controller.signal);
       if (version !== requestVersion || controller.signal.aborted) return false;
       releaseDemos();
+      window.LFWebsiteStory?.release(panel);
       detailBody.innerHTML = reader.html;
+      activeSource = findTile(reader.homePath) || activeSource;
       detail.dataset.readerLayout = reader.layout;
       panel.dataset.readerLayout = reader.layout;
+      detail.dataset.readerFamily = reader.family;
+      panel.dataset.readerFamily = reader.family;
+      panel.dataset.readerTemplate = reader.template;
       detailBody.scrollTop = 0;
+      panel.scrollTop = 0;
       detailBody.dataset.readerPath = readerPath;
       detail.dataset.readerPath = readerPath;
       panel.dataset.readerPath = readerPath;
@@ -254,7 +260,7 @@
       lastOpenState = { lfReader: true, path: readerPath, trail: readerTrail };
       if (options.backTrail) history.replaceState(lastOpenState, '', readerPath);
       else if (!options.fromHistory) history.pushState(lastOpenState, '', readerPath);
-      updateNavigation(readerPath);
+      updateNavigation(readerPath, reader.homePath);
       document.dispatchEvent(new CustomEvent('lf:reader-ready', { detail: { path: readerPath } }));
 
       showDialog();
@@ -263,6 +269,7 @@
       if (version !== requestVersion) return false;
       focusReader();
       mountDemos();
+      window.LFWebsiteStory?.mount(panel);
 
       interaction(isInReader ? 'reader_change' : 'reader_open', contentId(readerPath), isInReader ? 'reader_link' : (source ? 'tile' : 'history'));
       return true;
@@ -285,6 +292,7 @@
       requestVersion += 1;
       loadingVersion = 0;
       mosaic?.classList.remove('is-loading-reader');
+      window.LFWebsiteStory?.release(panel);
       try {
         const motion = window.LFTileMotion;
         if (motion?.close && dialogIsOpen()) await motion.close({ source, dialog: detail, panel });
@@ -326,15 +334,6 @@
     event.preventDefault();
     openReader(path, tile);
   });
-  let mineralLightTimer = 0;
-  mosaic?.addEventListener('pointerover', event => {
-    const tile = event.target.closest('.tile');
-    if (!tile || !mosaic.contains(tile) || tile.dataset.mineralLit) return;
-    tile.dataset.mineralLit = 'true';
-    clearTimeout(mineralLightTimer);
-    mineralLightTimer = setTimeout(() => { delete tile.dataset.mineralLit; }, 560);
-  });
-
   readerBack?.addEventListener('click', () => {
     if (readerTrail.length < 2) return;
     const trail = readerTrail.slice(0, -1);
@@ -354,6 +353,21 @@
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
     const path = sameOriginPath(link.href);
     const currentPath = String(detailBody.dataset.readerPath || '').split('#')[0];
+    // Fragment navigation belongs to this card. A native fragment history entry
+    // loses the reader state and would make popstate close the dialog.
+    if (path?.split('#')[0] === currentPath && path.includes('#')) {
+      let targetId;
+      try { targetId = decodeURIComponent(path.slice(path.indexOf('#') + 1)); } catch { return; }
+      const target = [...detailBody.querySelectorAll('[id]')].find(node => node.id === targetId);
+      if (target) {
+        event.preventDefault();
+        history.replaceState(lastOpenState, '', path);
+        target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        return;
+      }
+    }
     if (!path || path === detailBody.dataset.readerPath || path.split('#')[0] === currentPath || path.startsWith('mailto:') || path.startsWith('tel:') || path.startsWith('sms:')) return;
     event.preventDefault();
     openReader(path, activeSource, { replaceHistory: true });

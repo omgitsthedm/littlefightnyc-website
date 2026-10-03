@@ -132,7 +132,7 @@ export default function FieldGuide() {
         }}
       />
 
-      <WorkShowcase mode="featured" />
+      <WorkShowcase />
 
       <section className="lf-ex-tools" aria-labelledby="lf-ex-tools-title">
         <div className="lf-ex-tools__inner">
@@ -273,8 +273,6 @@ export default function FieldGuide() {
           </div>
         </div>
       </section>
-
-      <WorkShowcase mode="archive" />
 
       <section id="industries" className="lf-ex-industries" aria-labelledby="lf-ex-ind-title">
         <div className="lf-ex-industries__inner">

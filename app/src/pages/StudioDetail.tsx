@@ -49,12 +49,6 @@ export default function StudioDetail() {
               <p className="lf-studio-detail__meta-label">Kind</p>
               <p className="lf-studio-detail__meta-value">{project.kind}</p>
             </div>
-            <div className="lf-studio-detail__meta-item">
-              <p className="lf-studio-detail__meta-label">Status</p>
-              <p className={`lf-studio-detail__meta-value lf-studio-detail__status--${project.status.toLowerCase()}`}>
-                {project.status}
-              </p>
-            </div>
             {project.external && (
               <div className="lf-studio-detail__meta-item">
                 <p className="lf-studio-detail__meta-label">Try it</p>
@@ -77,9 +71,6 @@ export default function StudioDetail() {
             <EditorialBody dropcap>
               {project.body?.map((p, i) => <p key={i}>{p}</p>)}
             </EditorialBody>
-
-            {/* Internal ops telemetry removed from the public site 2026-07-12 —
-                editorial directive: "nothing internal should show." */}
           </div>
         </div>
       </article>

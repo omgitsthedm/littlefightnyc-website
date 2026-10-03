@@ -1,0 +1,101 @@
+/* A larger tile earns its footprint with meaningful artwork or real work.
+   Text remains native, outside the picture, and readable at every size. */
+.tile[data-compact-label=true][data-columns="1"][data-rows="1"] .cell-title{display:grid;align-content:center}
+.tile[data-editorial-front] .topic-anchor-face{padding:0;gap:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.tile[data-editorial-front] .topic-anchor-copy{padding:14px 12px 14px 18px;gap:8px;grid-template-columns:var(--anchor-icon) minmax(0,1fr);align-content:center;align-self:stretch;align-items:center;min-width:0}
+.tile[data-editorial-front] .topic-anchor-icon{display:block;width:var(--anchor-icon);height:var(--anchor-icon);grid-column:auto;grid-row:auto;justify-self:start;align-self:auto;flex:none}
+.tile[data-editorial-front] .topic-anchor-label{display:block;font-size:16px;line-height:1.15}
+.tile[data-editorial-front] .topic-anchor-copy strong{grid-column:1/-1;font-size:clamp(22px,6cqw,31px);line-height:1.04;letter-spacing:-.025em;text-wrap:balance}
+.tile[data-editorial-front] .topic-anchor-art{display:flex;align-items:stretch;min-width:0;min-height:0;overflow:hidden;border-radius:0 var(--tile-radius) var(--tile-radius) 0}
+.tile[data-editorial-front] .editorial-illustration{display:block;object-fit:cover;object-position:center;width:100%;height:100%;min-width:0;min-height:0}
+.tile[data-editorial-front] .anchor-go{left:auto;right:9px;top:9px;bottom:auto;width:28px;height:28px;border-radius:50%;background:#141417;color:var(--tile-pop);z-index:2;font-size:24px}
+.tile[data-editorial-front=web] .topic-anchor-face{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.tile[data-editorial-front=web]{border-color:color-mix(in srgb,var(--tile-pop) 24%,transparent);box-shadow:inset 0 1px #ffffff12,0 4px 8px #0003}
+.tile[data-editorial-front=web] .anchor-trace rect{x:1px;y:1px;width:calc(100% - 2px);height:calc(100% - 2px);rx:calc(var(--tile-radius) - 1px)}
+.tile[data-editorial-front=web] .topic-anchor-copy{padding:clamp(22px,3.5cqw,34px);gap:16px;grid-template-columns:var(--anchor-icon) minmax(0,1fr)}
+.tile[data-editorial-front=web] .topic-anchor-label{font-size:clamp(32px,5.5cqw,48px);font-weight:700;letter-spacing:-.025em;line-height:1.05}
+.tile[data-editorial-front=web] .topic-anchor-copy strong{font-size:clamp(22px,3.8cqw,32px);line-height:1.12;text-wrap:pretty;font-weight:500}
+.tile[data-editorial-front=web] .website-anchor-action{grid-column:1/-1;display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;margin-top:4px;min-height:44px;padding:8px 14px;border-radius:12px;background:var(--tile-pop);color:#141417;font-size:18px;font-weight:650;line-height:1.2}
+.website-anchor-action>span{font-size:24px;line-height:1;flex:none}
+.tile[data-editorial-front=web] .anchor-go{display:none}
+.tile[data-editorial-front=web] .topic-anchor-art{padding:18px 18px 18px 0;align-items:center}
+.tile[data-editorial-front=web] .topic-anchor-photo{display:grid;width:100%;gap:8px;align-self:center;grid-column:auto;grid-row:auto}
+.tile[data-editorial-front=web] .topic-anchor-photo img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;border-radius:7px}
+.tile[data-editorial-front=web] .topic-anchor-photo>span{display:block;font-size:16px;color:var(--tile-muted);line-height:1.2}
+.tile[data-editorial-story]{isolation:isolate}
+.tile[data-editorial-story] .editorial-story-card{position:absolute;inset:0;display:grid;grid-template-columns:minmax(0,1.22fr) minmax(0,.78fr);align-items:stretch;overflow:hidden}
+.tile[data-editorial-story] .editorial-story-art{position:relative;display:grid;place-items:center;min-width:0;min-height:0;overflow:hidden;padding:0;background:color-mix(in srgb,var(--tile-pop) 10%,#141417)}
+.tile[data-editorial-story] .editorial-story-image{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:contain;object-position:center}
+.tile[data-editorial-story] .editorial-story-copy{position:relative;display:grid;align-content:center;gap:8px;min-width:0;padding:15px 14px 14px;background:linear-gradient(150deg,#1b1b20,#141417)}
+.tile[data-editorial-story] .editorial-story-copy .cell-title{display:block;font-size:clamp(18px,4.1cqw,27px);line-height:1.07;letter-spacing:-.022em;text-wrap:balance}
+.tile[data-editorial-story] .editorial-story-plus{position:absolute;right:10px;top:8px;color:var(--tile-pop);font-size:25px;line-height:1}
+.tile[data-editorial-story][data-editorial-story-alignment=art-end] .editorial-story-art{order:2}
+.tile[data-editorial-story][data-editorial-story-alignment=art-end] .editorial-story-copy{order:1}
+.tile[data-editorial-story][data-editorial-story-alignment=art-end] .editorial-story-card{grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)}
+.editorial-story-face{position:absolute;inset:0;display:grid;grid-template-rows:minmax(0,1fr) auto;overflow:hidden}
+.editorial-story-face>.editorial-illustration{display:block;width:100%;height:100%;min-height:0;object-fit:cover;object-position:50% 37%}
+.editorial-story-caption{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:#141417;color:var(--tile-paper)}
+.editorial-story-caption .cell-title{font-size:clamp(17px,6.5cqw,24px);line-height:1.12}
+.editorial-story-caption>span:last-child{font-size:25px;color:var(--tile-pop)}
+.brand-tile{padding:10px 18px}
+.brand-tile h1{font-size:clamp(26px,7.3cqw,38px);padding-right:calc(var(--anchor-icon) + 10px);line-height:.97}
+.brand-tile .hero-route{right:18px}
+/* Illustrated answer readers keep the supplied image whole and let its caption
+   explain the business question.  This overrides the older generic context
+   helper only when one of the selected twenty answer pages is open. */
+.lf-reader .story-art>.reader-story-visual{max-width:960px!important;margin-inline:auto!important}
+.lf-reader .story-art .reader-story-visual .reader-story-figure{width:100%!important}
+.lf-reader .story-art .reader-story-visual .reader-story-image{width:100%!important;height:auto!important;max-width:960px!important;max-height:none!important;aspect-ratio:1!important;object-fit:contain!important;object-position:center!important;background:color-mix(in srgb,var(--reader-pop) 9%,#15161a)!important}
+.lf-reader .story-art .reader-story-visual .reader-story-figure figcaption{color:#d7d7db!important;font-size:16px!important;line-height:1.45!important}
+@media(min-width:601px) and (max-width:1000px){
+ .tile[data-editorial-front]:not([data-editorial-front=booking]){--mobile-columns:4;--mobile-rows:2}
+ .tile[data-editorial-front=web]{--mobile-columns:6;--mobile-rows:3;grid-column:span 6;grid-row:span 3}
+}
+@media(min-width:1001px) and (max-width:1200px){
+ .tile[data-narrow-compact=true] .cell-kicker{display:none}
+ .tile[data-editorial-front] .topic-anchor-copy{padding:10px 8px 10px 12px;gap:4px}
+ .tile[data-editorial-front] .topic-anchor-copy strong{font-size:21px}
+ .tile[data-editorial-front=web] .topic-anchor-copy{padding:24px;gap:14px}
+ .tile[data-editorial-front=web] .topic-anchor-copy strong{font-size:24px}
+ .tile[data-editorial-front=web] .topic-anchor-art{padding:14px 14px 14px 0}
+ .tile[data-editorial-story] .editorial-story-copy{padding:10px 8px}
+ .tile[data-editorial-story] .editorial-story-copy .cell-title{font-size:17px;line-height:1.1}
+ .tile[data-editorial-story] .editorial-story-plus{right:7px;top:6px;font-size:21px}
+ .brand-tile{padding:8px 14px}.brand-tile h1{font-size:26px}.brand-tile .hero-route{right:14px}
+}
+@media(max-width:600px){
+ .tile[data-editorial-front] .topic-anchor-face{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+ .tile[data-editorial-front] .topic-anchor-copy{padding:10px 9px 10px 12px;gap:4px;grid-row:auto;align-self:stretch}
+ .tile[data-editorial-front] .topic-anchor-copy strong{font-size:clamp(20px,6cqw,26px);line-height:1.05}
+ .tile[data-editorial-front] .topic-anchor-art{display:flex}
+ .tile[data-editorial-front=web] .topic-anchor-face{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+ .tile[data-editorial-front=web] .topic-anchor-copy{padding:20px 14px;gap:12px;grid-template-columns:minmax(0,1fr)}
+ .tile[data-editorial-front=web] .topic-anchor-label{font-size:32px}
+ .tile[data-editorial-front=web] .topic-anchor-copy strong{font-size:20px;line-height:1.12}
+ .tile[data-editorial-front=web] .website-anchor-action{font-size:16px;padding:8px 10px;gap:6px;margin-top:0}
+ .tile[data-editorial-front=web] .topic-anchor-art{padding:12px 12px 12px 0}
+ .tile[data-editorial-front=web] .topic-anchor-photo>span{font-size:16px}
+ .tile[data-editorial-story] .editorial-story-card,.tile[data-editorial-story][data-editorial-story-alignment=art-end] .editorial-story-card{grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto}
+ .tile[data-editorial-story] .editorial-story-art{order:1!important;padding:0}
+ .tile[data-editorial-story] .editorial-story-copy{order:2!important;padding:10px 12px 12px;min-height:66px}
+ .tile[data-editorial-story] .editorial-story-copy .cell-title{font-size:clamp(17px,6.6cqw,23px)}
+ .brand-tile h1{font-size:clamp(29px,11cqw,38px)}
+ .editorial-story-caption{padding:9px 10px;gap:5px}
+ .editorial-story-caption .cell-title{font-size:18px}
+}
+@media(prefers-reduced-motion:no-preference){
+ .tile[data-editorial-front] .editorial-illustration{transition:transform 320ms var(--ease)}
+ .tile[data-editorial-front]:is(:hover,:focus-visible) .editorial-illustration{transform:scale(1.025)}
+}
+.tile[data-editorial-front=web][data-editorial-stack] .topic-anchor-face{grid-template-columns:minmax(0,1fr);grid-template-rows:max-content max-content;align-content:center}
+.tile[data-editorial-front=web][data-editorial-stack] .topic-anchor-copy{grid-template-columns:minmax(0,1fr)}
+.tile[data-editorial-front=web][data-editorial-stack] .topic-anchor-art{padding:0 18px 18px;justify-content:center}
+.tile[data-editorial-front=web][data-editorial-stack] .topic-anchor-photo{max-width:320px}
+@media(max-width:360px){
+ .tile[data-editorial-story] .editorial-story-art{padding:0}
+ .tile[data-editorial-story] .editorial-story-copy{min-height:58px;padding:8px 9px 9px}
+ .tile[data-editorial-story] .editorial-story-copy .cell-title{font-size:16px;line-height:1.1}
+ .tile[data-editorial-story] .editorial-story-plus{right:7px;top:6px;font-size:21px}
+ .tile[data-editorial-front]:not([data-editorial-front=booking],[data-editorial-front=web]){--mobile-rows:4;grid-row:span 4}
+ .tile[data-editorial-front=web]{grid-row:span 6}
+}

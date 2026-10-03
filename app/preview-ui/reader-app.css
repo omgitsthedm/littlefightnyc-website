@@ -413,8 +413,43 @@ body:has(.reader-hub-return) .page-shell>.topbar{padding-right:66px}
   #detail[data-reader-layout='immersive'] .reader-demo[data-demo='vera'] .reader-demo-stage{border-radius:0}
   .reader-hub-return{top:max(8px,env(safe-area-inset-top));right:max(10px,env(safe-area-inset-right));width:44px;height:44px;font-size:28px}
   body:has(.reader-hub-return) .page-shell>.topbar{padding-right:58px}
+  /* Direct readers keep both exit and contact reachable when the rail sticks.
+     The Website reader already reserves its own 64px close-control lane. */
+  body:has(.reader-hub-return) .page-shell:not(:has(>main[data-reader-template='website-service']))>.direct-contact-rail{
+    width:calc(100% - 54px);
+    margin-right:54px!important;
+  }
+  body:has(.reader-hub-return) .page-shell:not(:has(>main[data-reader-template='website-service']))>.direct-contact-rail a{
+    min-width:max-content;
+  }
 }
 
 @media (prefers-reduced-motion:reduce){
   #detail>#close-detail,.reader-navigation button{transition:none}
 }
+
+/* Large text must grow the contact rail instead of pushing Email under the X. */
+#detail .detail-top{display:flex;flex-wrap:wrap;flex:none;align-items:center}
+#detail .detail-top .reader-brand{flex:1 1 auto;min-width:0;white-space:normal;font-size:1.1875rem}
+#detail .detail-top .reader-brand img{flex:none}
+#detail .detail-top .reader-brand>span{min-width:0;overflow-wrap:anywhere}
+#detail .detail-top .reader-rail{flex:0 1 auto;max-width:100%;flex-wrap:wrap;justify-content:flex-end}
+#detail .reader-rail a{flex:1 1 auto;min-width:0;font-size:1rem;line-height:1.25}
+#detail #reader-back{flex:none}
+@media(max-width:760px){
+  #detail .detail-top .reader-rail{flex-basis:100%;justify-content:flex-start}
+  #detail .reader-rail a{flex:1 1 3.5em}
+}
+/* At heavy zoom or in a short landscape window, let the complete card scroll.
+   Keeping two large fixed rails would otherwise leave no room for its answer. */
+@media(max-height:420px){
+  #detail .detail-window.lf-reader{overflow-y:auto;overscroll-behavior:contain}
+  #detail .detail-body{flex:none;overflow:visible;min-height:auto}
+  #detail .reader-navigation{flex:none}
+}
+/* Whole navigation buttons wrap when their labels grow; text is never squeezed
+   into a fixed third of the viewport or clipped outside its button. */
+#detail .detail-body+.reader-navigation,
+#detail .detail-window>.reader-navigation,
+#detail-body>.reader-navigation{display:flex;flex-wrap:wrap}
+.reader-navigation button{flex:1 0 max-content;overflow-wrap:anywhere}

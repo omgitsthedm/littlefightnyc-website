@@ -1,7 +1,9 @@
 {
   "source": "Approved revision 8 tile mosaic and shared reader review, October 2 2026",
   "sourceRevision": "297f0d4806d79becbb0122657a5d8c5bfd8afcb1",
-  "preservedTiles": 110,
+  "originalImportTiles": 110,
+  "preservedTiles": 106,
+  "retentionNote": "Four withdrawn case-study cards were removed from public source. The 106 remaining original tile destinations are retained in the consolidated hub and reader library.",
   "reviewVerifiedAt": "2026-10-02",
   "routeRecords": 380,
   "activeCssOrder": [
@@ -13,6 +15,9 @@
     "topics.css",
     "tile-art.css",
     "vendor/tile-motion.css",
-    "reader-app.css"
+    "reader-app.css",
+    "editorial-tiles.css",
+    "consolidated.css",
+    "review-tiles.css"
   ]
 }

@@ -6,7 +6,6 @@
  */
 import { execFileSync, spawn } from "node:child_process";
 import { access } from "node:fs/promises";
-import net from "node:net";
 import path from "node:path";
 import process from "node:process";
 
@@ -24,20 +23,17 @@ function run(command, args, environment = process.env) {
   execFileSync(command, args, { stdio: "inherit", cwd: process.cwd(), env: environment });
 }
 
-async function waitForServer(port, child) {
+async function waitForServer(child, startedUrl) {
   const deadline = Date.now() + 15_000;
   while (Date.now() < deadline) {
-    if (child.exitCode !== null) throw new Error(`tile server on ${port} exited before becoming ready`);
-    const ready = await new Promise((resolve) => {
-      const socket = net.connect({ host: "127.0.0.1", port });
-      const finish = (value) => { socket.destroy(); resolve(value); };
-      socket.once("connect", () => finish(true));
-      socket.once("error", () => finish(false));
-    });
-    if (ready) return;
+    if (child.exitCode !== null) throw new Error("The task's tile server exited before becoming ready");
+    // Only this child's listen callback can establish readiness. A socket on
+    // a remembered port may belong to an unrelated or stale preview process.
+    const url = startedUrl();
+    if (url) return url;
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
-  throw new Error(`tile server on ${port} did not become ready within 15 seconds`);
+  throw new Error("The task's tile server did not announce readiness within 15 seconds");
 }
 
 async function stopServer(child) {
@@ -51,8 +47,9 @@ async function stopServer(child) {
 }
 
 async function withProductionServer(verify) {
-  // Dedicated port: never touch a developer or review server already on 4393/4394.
-  const port = Number(process.env.TILE_QUALITY_PORT || 4396);
+  // Let the OS assign an unused port. An explicit occupied port fails closed;
+  // existing developer/review servers and their data remain untouched.
+  const port = Number(process.env.TILE_QUALITY_PORT || 0);
   const env = { ...process.env, TILE_DIST: "production", TILE_PORT: String(port) };
   const child = spawn(process.execPath, ["scripts/serve-tile-preview.mjs"], {
     cwd: process.cwd(), env, stdio: ["ignore", "pipe", "pipe"],
@@ -61,8 +58,8 @@ async function withProductionServer(verify) {
   child.stdout.on("data", (data) => { output += data; process.stdout.write(data); });
   child.stderr.on("data", (data) => { output += data; process.stderr.write(data); });
   try {
-    await waitForServer(port, child);
-    await verify(`http://127.0.0.1:${port}`);
+    const url = await waitForServer(child, () => output.match(/Little Fight review: (http:\/\/127\.0\.0\.1:\d+)\//)?.[1]);
+    await verify(url);
   } catch (error) {
     if (output) console.error(`tile quality server output:\n${output}`);
     throw error;
@@ -94,6 +91,7 @@ async function browserLanes() {
 }
 
 run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? ["--release"] : [])]);
+run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
 
 if (functional) {
   // Preserve real contracts: native inquiry delivery, consent/privacy,

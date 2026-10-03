@@ -9,9 +9,10 @@ const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
 const failures = [];
-const expectedTileCount = 133;
-const expectedOriginalTileCount = 110;
-const expectedRouteCount = 405;
+const expectedTotalTileInventory = 129;
+const expectedOriginalTileCount = 106;
+const expectedConsolidatedGroups = 19;
+const expectedRouteCount = 399;
 
 function git(args, fallback = "") {
   try {
@@ -32,6 +33,67 @@ async function exists(file) {
   } catch {
     return false;
   }
+}
+
+function outputFile(route) {
+  const clean = route.replace(/^\/+/, "");
+  if (!clean) return path.join(distRoot, "index.html");
+  if (route.endsWith("/") || !path.basename(clean).includes(".")) return path.join(distRoot, clean, "index.html");
+  return path.join(distRoot, clean);
+}
+
+async function readHomepageInventory() {
+  const file = path.join(distRoot, "homepage-inventory.json");
+  if (!(await exists(file))) {
+    failures.push("dist/homepage-inventory.json is missing");
+    return null;
+  }
+  let inventory;
+  try {
+    inventory = JSON.parse(await readFile(file, "utf8"));
+  } catch (error) {
+    failures.push(`homepage inventory is not valid JSON: ${error.message}`);
+    return null;
+  }
+  if (!inventory || typeof inventory !== "object") {
+    failures.push("homepage inventory must be an object");
+    return null;
+  }
+  for (const field of ["visibleTiles", "retainedRoutes", "groups", "hiddenHomeIds"]) {
+    if (!Array.isArray(inventory[field])) failures.push(`homepage inventory ${field} must be an array`);
+  }
+  if (!Array.isArray(inventory.visibleTiles) || !Array.isArray(inventory.retainedRoutes)
+    || !Array.isArray(inventory.groups) || !Array.isArray(inventory.hiddenHomeIds)) return null;
+  if (inventory.sourceTileCount !== expectedOriginalTileCount) failures.push(`homepage inventory source count must be ${expectedOriginalTileCount}`);
+  if (inventory.totalTileInventory !== expectedTotalTileInventory) failures.push(`homepage inventory total count must be ${expectedTotalTileInventory}`);
+  if (inventory.groups.length !== expectedConsolidatedGroups) failures.push(`homepage inventory must contain ${expectedConsolidatedGroups} consolidated groups`);
+  const visibleIds = inventory.visibleTiles.map(item => item?.id);
+  const retainedIds = inventory.retainedRoutes.map(item => item?.id);
+  const members = inventory.groups.flatMap(group => Array.isArray(group?.members) ? group.members : []);
+  const hidden = new Set([...members, ...inventory.hiddenHomeIds]);
+  if (visibleIds.some(id => typeof id !== "string" || !id) || new Set(visibleIds).size !== visibleIds.length) {
+    failures.push("homepage inventory visible tiles need unique ids");
+  }
+  if (retainedIds.some(id => typeof id !== "string" || !id) || new Set(retainedIds).size !== retainedIds.length
+    || retainedIds.length !== expectedTotalTileInventory) {
+    failures.push(`homepage inventory must retain ${expectedTotalTileInventory} unique tile routes`);
+  }
+  if (inventory.visibleTiles.length !== expectedTotalTileInventory - hidden.size) {
+    failures.push("homepage inventory visible count must equal total inventory minus unique absorbed/hidden ids");
+  }
+  if (visibleIds.some(id => hidden.has(id))) failures.push("homepage inventory exposes an absorbed or hidden tile");
+  if (new Set(retainedIds).size === retainedIds.length
+    && (retainedIds.some(id => !visibleIds.includes(id) && !hidden.has(id))
+      || [...visibleIds, ...hidden].some(id => !retainedIds.includes(id)))) {
+    failures.push("homepage inventory routes do not account for every visible or absorbed/hidden tile");
+  }
+  for (const item of inventory.retainedRoutes) {
+    if (!item || typeof item.path !== "string" || !item.path || typeof item.title !== "string" || !item.title
+      || typeof item.homePath !== "string" || !item.homePath) {
+      failures.push(`homepage inventory retained route ${item?.id || "?"} needs path, title, and homePath`);
+    }
+  }
+  return inventory;
 }
 
 async function artifactFiles(directory) {
@@ -113,9 +175,9 @@ if (!(await exists(tileReleasePath))) {
   if (tileRelease.routes !== expectedRouteCount) {
     failures.push(`expected ${expectedRouteCount} static routes, found ${tileRelease.routes}`);
   }
-  if (tileRelease.tiles !== expectedTileCount || tileRelease.originalTilesPreserved !== expectedOriginalTileCount) {
-    failures.push(`expected ${expectedTileCount} tiles with ${expectedOriginalTileCount} originals preserved`);
-  }
+  if (tileRelease.originalTilesPreserved !== expectedOriginalTileCount) failures.push(`expected ${expectedOriginalTileCount} original tiles preserved`);
+  if (tileRelease.totalTileInventory !== expectedTotalTileInventory) failures.push(`expected ${expectedTotalTileInventory} total tile inventory`);
+  if (tileRelease.consolidatedGroups !== expectedConsolidatedGroups) failures.push(`expected ${expectedConsolidatedGroups} consolidated groups`);
   if (tileRelease.hashScope !== "All final artifact files except release markers") {
     failures.push("tile release hash scope is not the final artifact marker exclusion contract");
   }
@@ -125,6 +187,28 @@ if (!(await exists(tileReleasePath))) {
   }
   if (tileRelease.artifactFiles !== actual.files) {
     failures.push(`tile release file count ${tileRelease.artifactFiles} does not match ${actual.files}`);
+  }
+}
+
+const homepageInventory = await readHomepageInventory();
+if (homepageInventory && (await exists(tileReleasePath))) {
+  const tileRelease = JSON.parse(await readFile(tileReleasePath, "utf8"));
+  if (tileRelease.tiles !== homepageInventory.visibleTiles.length) {
+    failures.push(`release marker visible tiles ${tileRelease.tiles} do not match homepage inventory ${homepageInventory.visibleTiles.length}`);
+  }
+  const searchFile = path.join(distRoot, "search-index.json");
+  if (!(await exists(searchFile))) {
+    failures.push("dist/search-index.json is missing");
+  } else {
+    const search = JSON.parse(await readFile(searchFile, "utf8"));
+    const searchPaths = new Set(search.filter(row => row && typeof row === "object").map(row => row.path));
+    for (const item of homepageInventory.retainedRoutes) {
+      if (!item?.path?.startsWith("/")) continue;
+      const pathname = new URL(item.path, "https://littlefightnyc.com").pathname;
+      const target = outputFile(pathname);
+      if (!(await exists(target)) || !(await readFile(target, "utf8")).trim()) failures.push(`retained route is missing or empty: ${item.path}`);
+      if (pathname !== "/" && !searchPaths.has(pathname)) failures.push(`retained route is missing from search index: ${item.path}`);
+    }
   }
 }
 
@@ -160,7 +244,7 @@ if (failures.length) {
   process.exitCode = 1;
 } else {
   console.log(
-    `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} static routes, ${expectedTileCount} tiles, final artifact hash, sitemaps, and public recovery files are present.`,
+    `Release artifact verified at ${revision.slice(0, 12)}: ${expectedRouteCount} static routes, ${expectedTotalTileInventory} retained tile routes, final artifact hash, sitemaps, and public recovery files are present.`,
   );
   console.log(
     "External form delivery, authenticated analytics/search, social debugger, and owner-evidence checks remain manual evidence gates outside this audit.",

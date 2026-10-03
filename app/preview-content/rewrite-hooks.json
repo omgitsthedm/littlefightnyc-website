@@ -1,0 +1,211 @@
+{
+  "cases": {
+    "after-hours-agenda": {
+      "summary": "A Little Fight streetwear storefront that takes a product from the first look through Square payment and made-to-order fulfillment."
+    },
+    "army-navy-bags": {
+      "summary": "A design concept for a Lower East Side shop: find the goods, check the hours, and get directions without digging."
+    },
+    "brothers-pizzeria": {
+      "summary": "A design concept that puts a neighborhood pizzeria’s history, menu, and phone ordering in the same easy path."
+    },
+    "cc-films": {
+      "summary": "The official film home for viewers, press, and premiere guests who each need a different way in."
+    },
+    "chromatic-painting-design": {
+      "summary": "One studio with clear paths for a painting project or a mural commission."
+    },
+    "clearhelp": {
+      "summary": "A resource-finding site that starts with what a person needs and where they are, with a separate path for people offering help."
+    },
+    "easy-tiger": {
+      "summary": "Tonight’s plan, the menu, and the way to the bar, together on a phone."
+    },
+    "grand-funding-llc": {
+      "summary": "A real-estate funding site that helps people understand the options before they ask about their own project."
+    },
+    "hair-by-rachel-charles": {
+      "summary": "See the services, get a feel for Rachel’s work, and book through Square."
+    },
+    "legacy-music-group": {
+      "summary": "A design concept that gives an independent music company clear paths for artists, services, booking, and company information."
+    },
+    "logan-loans": {
+      "summary": "A mortgage-information site that gives buyers, homeowners, investors, and realtors the route that fits their question."
+    },
+    "the-break-room": {
+      "summary": "Find the games, the menu, the room, and the way there before you head out."
+    },
+    "the-tarot-hotline": {
+      "summary": "Choose between voice notes and live talks after seeing what each reading is for."
+    },
+    "venuecircuit": {
+      "summary": "A Little Fight venue closeout tool that keeps bar, door, staff, and promoter splits in one traceable flow."
+    },
+    "deckspace": {
+      "summary": "A design concept for finding events, places, and people during a cruise without digging through a dashboard."
+    }
+  },
+  "labs": {
+    "pool-room": {
+      "summary": "An original 3D dive-bar scene that ends with a physics-solved pool break."
+    },
+    "walkup-3d": {
+      "summary": "An illustrative New York corner built as one living 3D asset for real estate, games, and cinema."
+    },
+    "terminal-3d": {
+      "summary": "An interactive invented night district with people, cabs, beacons, and changing moments."
+    },
+    "pill-scroll": {
+      "summary": "A scroll-controlled study that places sixteen New York moments inside one frame."
+    },
+    "micro-animations": {
+      "summary": "Seven interaction studies that show how small feedback can clarify an action."
+    },
+    "aha-laser": {
+      "summary": "A responsive poster experiment with a laser-drawn wordmark and a pull-chain interaction."
+    },
+    "studio-engine": {
+      "summary": "An illustrative business-direction generator that turns a rough idea into a sample creative direction."
+    },
+    "growth-street": {
+      "summary": "An invented flower-shop story that uses interactive props to explain a possible path from attention to orders."
+    },
+    "goliath": {
+      "summary": "A Little Fight campaign study that uses ten scroll-controlled street posters to carry one message."
+    }
+  },
+  "albums": {
+    "album-nyc": {
+      "summary": "Start with the customer path and the daily work that is getting in the way. Decide whether the next useful step is clearer information, a website change, or tech support.",
+      "sections": [
+        {
+          "heading": "Follow one customer.",
+          "body": "Look at how someone finds you, checks the hours, asks a question, and pays or books. The point where they get stuck tells us where to start."
+        },
+        {
+          "heading": "Look behind the counter.",
+          "body": "Bring the task your team keeps working around. We help decide whether to fix the setup, change a routine, or choose a better tool."
+        }
+      ]
+    },
+    "album-marthas-vineyard": {
+      "summary": "Plan for the facts that change with the season: dates, hours, services, and booking details. Decide who updates them and what needs attention before opening.",
+      "sections": [
+        {
+          "heading": "Plan before the season.",
+          "body": "Walk through how a visitor finds you, books, and gets a reply. Choose the changes that need to be ready before the busy weeks."
+        },
+        {
+          "heading": "Give every update an owner.",
+          "body": "Agree who changes the schedule and where it appears. A short routine can keep the website, listing, and booking tool in step."
+        }
+      ]
+    },
+    "album-arizona": {
+      "summary": "Start with the service, the places you serve, and what a customer needs to do next. Decide whether the work calls for a website change, an existing tool, or a new system.",
+      "sections": [
+        {
+          "heading": "Make the service area clear.",
+          "body": "Look at the jobs you want, the places your team covers, and the questions customers ask before requesting a quote."
+        },
+        {
+          "heading": "Trace the request.",
+          "body": "Follow one inquiry from the first message to scheduling and follow-up. We help identify the missing step before choosing more software."
+        }
+      ]
+    },
+    "album-hospitality": {
+      "summary": "Plan around the moments that matter to a guest: finding you, choosing a time, arriving, and coming back. Start with the step that makes extra work for the team.",
+      "sections": [
+        {
+          "heading": "Walk through a visit.",
+          "body": "Look at the menu, opening hours, reservation, and arrival details together. Check where guests have to call for information that should be easy to find."
+        },
+        {
+          "heading": "Give the team a workable routine.",
+          "body": "Choose who updates the details and who receives each request. Then decide whether a website change, booking tool, or simpler process would help."
+        }
+      ]
+    },
+    "album-roofing": {
+      "summary": "Follow a roofing inquiry from the first call to the estimate and follow-up. Find the missing step before adding another tool to the office.",
+      "sections": [
+        {
+          "heading": "Choose the work you want.",
+          "body": "Start with the services, property types, and areas the business actually covers. Those choices guide what customers should see and what the office needs to ask."
+        },
+        {
+          "heading": "Keep the request moving.",
+          "body": "Look at how photos, job details, appointments, and estimates reach the right person. Decide what needs a clearer routine and what needs software."
+        }
+      ]
+    },
+    "album-shops": {
+      "summary": "Look at how people browse, ask about stock, buy, and collect an order. Plan the tools around the way your shop actually works.",
+      "sections": [
+        {
+          "heading": "Start on the shop floor.",
+          "body": "Bring one common customer question and follow it through the till, stock record, or inbox. The repeated workaround is a useful place to start."
+        },
+        {
+          "heading": "Decide what belongs online.",
+          "body": "A readable catalog, a stock question, and a full checkout need different setups. Choose the smallest approach your team can keep accurate."
+        }
+      ]
+    },
+    "album-trades": {
+      "summary": "Plan the handoff between the customer, the office, and the person doing the job. Make it clear who receives the request and what happens next.",
+      "sections": [
+        {
+          "heading": "Trace one job.",
+          "body": "Follow the first message through scheduling, the visit, and follow-up. Note where details get copied, lost, or held by one person."
+        },
+        {
+          "heading": "Choose the useful fix.",
+          "body": "Decide whether the gap needs a clearer process, reliable tech, or a small tool. Start with the change that helps the team finish the job."
+        }
+      ]
+    },
+    "album-makers": {
+      "summary": "Plan how an inquiry becomes an order or commission. Keep the customer informed while protecting the time you need to make the work.",
+      "sections": [
+        {
+          "heading": "Make the choices clear.",
+          "body": "Look at what can be ordered, what can be customized, and which details you need before quoting. Use that to shape the first conversation."
+        },
+        {
+          "heading": "Keep track of the promise.",
+          "body": "Review approvals, lead times, progress updates, and collection or delivery. Choose a routine or tool that fits the way you make things."
+        }
+      ]
+    }
+  },
+  "markets": {
+    "/markets/nyc/": {
+      "summary": "Plan around the way your New York business works. Start with customer questions and daily bottlenecks, then decide what needs a website change, a better tool, or tech support."
+    },
+    "/markets/marthas-vineyard/": {
+      "summary": "Plan the season before it gets busy. Work through opening dates, booking, customer replies, and the tools your team needs to keep the details current."
+    },
+    "/markets/arizona/": {
+      "summary": "Choose the next useful change for your Arizona business. Review service areas, inquiries, and follow-up before deciding whether to repair a setup or build something new."
+    },
+    "/markets/louisiana-starbase-area/": {
+      "summary": "Look at how customers find your Louisiana business and how your team handles the next step. Use these questions to choose what to fix first."
+    },
+    "/markets/texas-starbase-area/": {
+      "summary": "Plan around the customers and places your South Texas business serves. Trace the path from first question to follow-up, then choose the tools the work needs."
+    },
+    "/markets/florida-space-coast/": {
+      "summary": "Start with the daily work of your Space Coast business. Review customer information, requests, and team handoffs to decide where a practical change would help."
+    }
+  },
+  "brand": {
+    "/about/": {
+      "title": "Little Fight NYC.",
+      "summary": "We build custom websites, sort everyday technology, and make focused software for independent businesses. Website and software projects can run remotely. New York on-site timing is confirmed after we understand the request.",
+      "metaDescription": "Little Fight NYC builds custom websites and focused software for independent businesses, with plain-language technology help and business-controlled accounts."
+    }
+  }
+}
