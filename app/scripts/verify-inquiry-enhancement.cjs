@@ -220,6 +220,8 @@ async function run() {
           const form = page.locator('form.static-inquiry');
           assert.equal(await form.locator('[name="intent"]').inputValue(), 'general');
           await form.locator('[name="intent"]').selectOption(intent);
+          const serviceControl = await form.locator('[name="intent"]').boundingBox();
+          assert.ok(serviceControl && serviceControl.height >= 44, 'native service selector remains a comfortable touch target');
           await form.locator('[name="name"]').fill('Local service test');
           await form.locator('[name="business"]').fill('Example business');
           await form.locator('[name="contact"]').fill('service@example.test');
