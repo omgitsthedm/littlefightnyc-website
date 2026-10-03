@@ -124,11 +124,21 @@ proof_slugs = ['easy-tiger','hair-by-rachel-charles','grand-funding-llc']
 # These examples are intentionally category-adjacent, never claimed as work in
 # a trade we have not served. Each card links to the actual public case story.
 INDUSTRY_PROOF = {
+    '/industries/galleries-creative-studios/': [('cc-films', 'A creative-industry website example: CC Films.')],
+    '/industries/law-firms/': [('grand-funding-llc', 'A professional-services website example: Grand Funding LLC.')],
+    '/industries/medical-wellness-practices/': [('hair-by-rachel-charles', 'A wellness-service website example: Hair By Rachel.')],
     '/industries/plumbers/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
+    '/industries/professional-services/': [('logan-loans', 'A professional-services website example: Logan Loans.')],
+    '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.')],
+    '/industries/retail-ecommerce/': [('after-hours-agenda', 'A Little Fight storefront example: After Hours Agenda.')],
     '/industries/roofing/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/luxury-home-services/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
-    '/industries/law-firms/': [('grand-funding-llc', 'A professional-services website example: Grand Funding LLC.')],
+    '/industries/salons-wellness/': [('hair-by-rachel-charles', 'A salon website example: Hair By Rachel.')],
 }
+_industry_routes = {path for path in pages if path.startswith('/industries/') and path != '/industries/'}
+_missing_industry_proof = _industry_routes - set(INDUSTRY_PROOF)
+if _missing_industry_proof:
+    raise RuntimeError(f'Every industry reader needs an honest linked proof example: {sorted(_missing_industry_proof)}')
 def picture(slug, eager=False):
     c = cases[slug]
     visual = case_visuals.get(slug, {}).get('desktop', {})
