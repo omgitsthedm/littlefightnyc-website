@@ -65,8 +65,12 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const lerp = (a, b, t) => a + (b - a) * t;
 const ease = (t) => t * t * (3 - 2 * t);
 
-/* pill rest shape (matches the CSS starting clip) */
-const PILL = { top: 41, right: 34, bottom: 41, left: 34 };
+/* The reader card starts with a legible image capsule; standalone keeps the
+   smaller, slower-opening resting pill. */
+const EMBED = document.documentElement.classList.contains('lab-concept-embed') || new URLSearchParams(location.search).has('embed') || window.self !== window.top;
+const PILL = EMBED
+  ? { top: 30, right: 14, bottom: 30, left: 14 }
+  : { top: 41, right: 34, bottom: 41, left: 34 };
 
 let smooth = 0;
 let raf = 0;

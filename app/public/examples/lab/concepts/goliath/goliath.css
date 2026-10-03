@@ -270,3 +270,32 @@ html, body {
   .poster--giant .poster__word { transform: none !important; }
   .poster__line em { color: var(--p-hot, var(--accent)); }
 }
+
+/* The phone card opens directly on the poster film. Its native scroll still
+   scrubs each cut; only the standalone framing copy is withheld here. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+html.lab-concept-embed .pin { height: 280svh; }
+html.lab-concept-embed .stage { height: 100svh; min-height: 240px; }
+html.lab-concept-embed .counter { top: 12px; right: 14px; }
+html.lab-concept-embed .ticks { bottom: 14px; }
+
+@media (max-width: 420px) {
+  html.lab-concept-embed .pin { height: 245svh; }
+  html.lab-concept-embed .poster { padding: 16px 14px; }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .pin { height: 220svh; }
+  html.lab-concept-embed .stage { min-height: 0; }
+}
+
+/* The poster film begins beneath the fixed shared return rail. */
+html.lab-concept-embed .pin { padding-top: 56px; height: calc(280svh + 56px); }
+html.lab-concept-embed .stage { top: 56px; height: calc(100svh - 56px); }
+@media (max-width: 420px) { html.lab-concept-embed .pin { height: calc(245svh + 56px); } }
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .pin { height: calc(220svh + 56px); }
+  html.lab-concept-embed .stage { height: calc(100svh - 56px); }
+}

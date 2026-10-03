@@ -949,3 +949,26 @@ html, body {
   .ticket { opacity: 1; transform: translateY(var(--stack, 0px)) rotate(var(--rot, 0deg)); }
   .nstar { animation: none; opacity: 0.8; }
 }
+
+/* Reader embeds keep the five chapters as a scrollable visual story, without
+   making a phone-card visitor pass the standalone introduction first. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+html.lab-concept-embed .ch { min-height: 0; padding: 28px 18px 34px; gap: 18px; }
+html.lab-concept-embed .ch__scene { height: clamp(210px, 44svh, 300px); }
+html.lab-concept-embed .ch__copy { max-width: none; }
+html.lab-concept-embed .ch__title { font-size: clamp(25px, 8.5vw, 38px); }
+html.lab-concept-embed .ch__line { margin-bottom: 12px; }
+html.lab-concept-embed .ch__stat b { font-size: clamp(44px, 17vw, 72px); }
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .ch { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 16px; gap: 16px; }
+  html.lab-concept-embed .ch:nth-child(even) .ch__scene { order: 1; }
+  html.lab-concept-embed .ch:nth-child(even) .ch__copy { order: 2; }
+  html.lab-concept-embed .ch__scene { height: clamp(150px, 65svh, 220px); }
+}
+
+/* Keep chapter one clear of the shared return rail. */
+html.lab-concept-embed .story { padding-top: 56px; }
+@media (orientation: landscape) and (max-height: 480px) { html.lab-concept-embed .story { padding-top: 48px; } }

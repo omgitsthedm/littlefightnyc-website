@@ -334,3 +334,33 @@ html, body {
   }
   .frame__shade, .frame__tag, .frame__word, .frame__count, .frame__ticks { display: none; }
 }
+
+/* The reader embeds the working film in a phone-sized panel. Keep the scroll
+   scrub visible at once, while the standalone story keeps its full pacing. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+
+html.lab-concept-embed .pin { height: 260svh; }
+html.lab-concept-embed .stage { height: 100svh; min-height: 240px; }
+html.lab-concept-embed .frame__tag { max-width: calc(100% - 32px); text-align: center; }
+
+@media (max-width: 420px) {
+  html.lab-concept-embed .pin { height: 230svh; }
+  html.lab-concept-embed .frame__word { max-width: 92%; text-align: center; }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .pin { height: 210svh; }
+  html.lab-concept-embed .stage { min-height: 0; }
+  html.lab-concept-embed .frame__tag { font-size: 9px; }
+}
+
+/* The shared return control is an overlay; keep the film below its 44px rail. */
+html.lab-concept-embed .pin { padding-top: 56px; height: calc(260svh + 56px); }
+html.lab-concept-embed .stage { top: 56px; height: calc(100svh - 56px); }
+@media (max-width: 420px) { html.lab-concept-embed .pin { height: calc(230svh + 56px); } }
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .pin { height: calc(210svh + 56px); }
+  html.lab-concept-embed .stage { height: calc(100svh - 56px); }
+}

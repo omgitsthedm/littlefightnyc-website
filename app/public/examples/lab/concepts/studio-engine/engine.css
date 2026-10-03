@@ -785,3 +785,48 @@ html, body {
   .bake-marquee__track { animation: none; }
   .pil-breath i { animation: none; }
 }
+
+/* The card version starts with the generator itself. Controls stay full-size
+   and the rendered sample owns the remaining phone height. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+html.lab-concept-embed .studio { padding: 8px 10px 14px; }
+html.lab-concept-embed .console { gap: 8px; margin-bottom: 10px; }
+html.lab-concept-embed .ask { padding: 4px; gap: 4px; }
+html.lab-concept-embed .ask__input { min-height: 44px; padding: 10px 12px; }
+html.lab-concept-embed .ask__go,
+html.lab-concept-embed .picks button,
+html.lab-concept-embed .vibes button { min-height: 44px; }
+html.lab-concept-embed .ask__go { padding-inline: 16px; }
+html.lab-concept-embed .picks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+html.lab-concept-embed .picks button { padding: 8px; }
+html.lab-concept-embed .stage { gap: 8px; }
+html.lab-concept-embed .frame { border-radius: 14px; }
+html.lab-concept-embed .frame__bar { padding: 8px 12px; }
+html.lab-concept-embed .frame__body { height: clamp(190px, 48svh, 330px); }
+html.lab-concept-embed .vibes { justify-content: stretch; gap: 6px; }
+html.lab-concept-embed .vibes button { flex: 1 1 92px; padding: 8px; }
+
+@media (max-width: 340px) {
+  html.lab-concept-embed .studio { padding-inline: 6px; }
+  html.lab-concept-embed .ask__go { padding-inline: 12px; }
+  html.lab-concept-embed .frame__url { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .studio { padding-top: 4px; }
+  html.lab-concept-embed .picks { display: flex; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+  html.lab-concept-embed .picks button { flex: 0 0 auto; }
+  html.lab-concept-embed .frame__body { height: clamp(130px, 48svh, 220px); }
+  html.lab-concept-embed .vibes { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; padding-bottom: 2px; }
+  html.lab-concept-embed .vibes button { flex: 0 0 auto; }
+}
+
+/* The shared return sits above the compact builder. */
+html.lab-concept-embed .studio { padding-top: 64px; }
+html.lab-concept-embed .frame__body { height: clamp(160px, calc(100svh - 250px), 330px); }
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .studio { padding-top: 56px; }
+  html.lab-concept-embed .frame__body { height: max(116px, calc(100svh - 184px)); }
+}

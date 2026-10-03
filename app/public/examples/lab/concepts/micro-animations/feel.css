@@ -831,3 +831,59 @@ html, body {
   .panel { transition: opacity 180ms ease; transform: none; }
   .coach { transition: opacity 180ms ease; }
 }
+
+/* Compact reader mode: the bodega remains a fully usable touch app rather
+   than a scaled-down page. Standalone presentation and its explanation stay intact. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .rail,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+
+html.lab-concept-embed .playground { display: block; padding: 8px 10px 12px; }
+html.lab-concept-embed .phone {
+  width: 100%;
+  height: clamp(264px, calc(100svh - 20px), 440px);
+  min-height: 0;
+  border-radius: 26px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
+}
+html.lab-concept-embed .app-bar { padding: 18px 16px 8px; }
+html.lab-concept-embed .theme,
+html.lab-concept-embed .bag,
+html.lab-concept-embed .heart,
+html.lab-concept-embed .tabs__base button,
+html.lab-concept-embed .add,
+html.lab-concept-embed .zap,
+html.lab-concept-embed .toast button { min-width: 44px; min-height: 44px; }
+html.lab-concept-embed .tabs__base button { padding-block: 10px; }
+html.lab-concept-embed .add { padding-inline: 14px; }
+html.lab-concept-embed .panel { padding: 8px 12px 12px; }
+html.lab-concept-embed .row { gap: 8px; padding: 8px; margin-bottom: 7px; }
+html.lab-concept-embed .row__tile { width: 40px; height: 40px; font-size: 21px; }
+html.lab-concept-embed .sheet { height: 84%; }
+html.lab-concept-embed .sheet__head { padding-inline: 16px; }
+html.lab-concept-embed .sheet__foot { padding: 8px 16px 16px; }
+
+@media (max-width: 340px) {
+  html.lab-concept-embed .playground { padding-inline: 6px; }
+  html.lab-concept-embed .phone { border-radius: 22px; }
+  html.lab-concept-embed .app-brand { font-size: 20px; }
+  html.lab-concept-embed .app-bar__side { gap: 4px; }
+  html.lab-concept-embed .tabs { margin-inline: 12px; }
+  html.lab-concept-embed .add { min-width: 58px; padding-inline: 9px; }
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .playground { padding-top: 4px; }
+  html.lab-concept-embed .phone { height: calc(100svh - 12px); min-height: 0; }
+  html.lab-concept-embed .app-bar { padding-top: 12px; }
+  html.lab-concept-embed .coach { top: 8px; }
+}
+
+/* The shared reader return is overlay-only, so the app begins below it. */
+html.lab-concept-embed .playground { padding-top: 64px; }
+html.lab-concept-embed .phone { height: max(176px, calc(100svh - 76px)); }
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .playground { padding-top: 56px; }
+  html.lab-concept-embed .phone { height: max(176px, calc(100svh - 64px)); }
+}

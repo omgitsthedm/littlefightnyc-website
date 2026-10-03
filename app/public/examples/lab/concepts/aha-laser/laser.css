@@ -372,3 +372,30 @@ html, body {
   .sign__backlight::before,
   .sign__backlight::after { animation: none; }
 }
+
+/* In-card mode leads with the sign and preserves the pull-chain as a real
+   44px control; the full explanation remains on the standalone Lab page. */
+html.lab-concept-embed .intro,
+html.lab-concept-embed .outro,
+html.lab-concept-embed .lab-build-disclosure { display: none; }
+html.lab-concept-embed .stagewrap { padding: 8px 12px 14px; }
+html.lab-concept-embed .signroom { min-height: calc(100svh - 22px); align-content: center; }
+html.lab-concept-embed .sign { border-radius: 16px; }
+html.lab-concept-embed .chain { min-width: 44px; min-height: 122px; right: clamp(12px, 5%, 28px); }
+html.lab-concept-embed .signroom__hint { margin: 0; font-size: 12px; }
+
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .stagewrap { padding-block: 4px; }
+  html.lab-concept-embed .signroom { min-height: calc(100svh - 8px); }
+  html.lab-concept-embed .chain { height: 104px; min-height: 104px; }
+  html.lab-concept-embed .chain__links { height: 92px; }
+  html.lab-concept-embed .chain__knob { top: 88px; }
+}
+
+/* Reserve the shared fixed return rail without changing standalone geometry. */
+html.lab-concept-embed .stagewrap { padding-top: 64px; }
+html.lab-concept-embed .signroom { min-height: calc(100svh - 78px); }
+@media (orientation: landscape) and (max-height: 480px) {
+  html.lab-concept-embed .stagewrap { padding-top: 56px; }
+  html.lab-concept-embed .signroom { min-height: calc(100svh - 64px); }
+}

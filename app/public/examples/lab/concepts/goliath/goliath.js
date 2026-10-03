@@ -14,6 +14,7 @@ const counter = $('[data-counter]');
 const ticksEl = $('[data-ticks]');
 
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMBED = document.documentElement.classList.contains('lab-concept-embed') || new URLSearchParams(location.search).has('embed') || window.self !== window.top;
 const TESTMODE = new URLSearchParams(location.search).has('test');
 
 /* ---------- the cuts ---------- */
@@ -130,7 +131,9 @@ let fpsAvg = 60;
 function progressNow() {
   const rect = pin.getBoundingClientRect();
   const total = rect.height - innerHeight;
-  return total > 0 ? clamp(-rect.top / total, 0, 1) : 0;
+  const raw = total > 0 ? clamp(-rect.top / total, 0, 1) : 0;
+  /* A card needs a poster, not an empty grain field, on first open. */
+  return EMBED ? 0.04 + raw * 0.96 : raw;
 }
 
 function tick(ts) {
