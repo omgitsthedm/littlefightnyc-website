@@ -66,7 +66,11 @@ async function frameFor(page, demo) {
     const handle = await matching.elementHandle();
     const frame = await handle?.contentFrame();
     if (frame) {
-      await frame.waitForLoadState('domcontentloaded', { timeout: 20_000 }).catch(() => {});
+      // A remote iframe briefly has a ready about:blank document before its
+      // real navigation starts. Await the requested URL, not that empty page.
+      const source = new URL(await matching.getAttribute('src'), base);
+      await frame.waitForURL(url => url.pathname === source.pathname, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+      await page.waitForFunction(expected => document.querySelector(`#detail [data-demo="${expected}"]`)?.dataset.demoState === 'ready', demo);
       return { frame, frameElement: matching };
     }
     await page.waitForTimeout(50);
@@ -195,6 +199,35 @@ async function run() {
         await page.waitForFunction(() => !document.querySelector('#detail-body iframe.reader-demo-frame'), null, { timeout: 8_000 });
         assert.equal(new URL(page.url()).pathname, '/', 'iframe Escape returns to the hub');
         return 'child-frame Escape closes outer reader and cleans up iframe';
+      });
+
+      await check('iframe Escape works while a nonessential asset is still downloading', async () => {
+        let releaseAsset;
+        const pendingAsset = new Promise(resolve => { releaseAsset = resolve; });
+        const assetMatch = '**/__card_app_slow_asset.svg';
+        const documentMatch = url => url.pathname === '/examples/lab/concepts/micro-animations/' && url.searchParams.get('embed') === '1';
+        await page.route(assetMatch, async route => {
+          await pendingAsset;
+          await route.fulfill({ contentType: 'image/svg+xml', body: '<svg xmlns="http://www.w3.org/2000/svg" width="1" height="1"/>' }).catch(() => {});
+        });
+        await page.route(documentMatch, async route => {
+          const response = await route.fetch();
+          const body = (await response.text()).replace('</body>', '<img src="/__card_app_slow_asset.svg" width="1" height="1" alt=""></body>');
+          await route.fulfill({ response, body });
+        });
+        try {
+          const { frame } = await openCard(page, '/examples/lab/concepts/micro-animations/', 'micro-animations');
+          assert.equal(await frame.evaluate(() => document.readyState), 'interactive', 'fixture must keep window.load pending');
+          await frame.locator('button[data-theme-btn]').click();
+          await page.keyboard.press('Escape');
+          await page.waitForFunction(() => !document.querySelector('#detail')?.open, null, { timeout: 8_000 });
+          assert.equal(new URL(page.url()).pathname, '/', 'Escape returns home before the delayed asset completes');
+        } finally {
+          releaseAsset();
+          await page.unroute(documentMatch);
+          await page.unroute(assetMatch);
+        }
+        return 'a deliberately delayed asset cannot block iframe Escape or return to the hub';
       });
 
       await check('a Lab inquiry CTA opens the top-level inquiry reader, Back restores the Lab, and All tiles returns to the hub', async () => {

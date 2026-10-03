@@ -105,11 +105,19 @@
       const block = frame.closest('[data-reader-demo]');
       const status = block?.querySelector('.reader-demo-status');
       if (block) block.dataset.demoState = 'loading';
-      frame.addEventListener('load', () => {
-        if (!frame.isConnected) return;
-        if (block) block.dataset.demoState = 'ready';
-        if (status) status.hidden = true;
+      frame.inert = true;
+      let preparedDocument;
+      let readinessPoll;
+      const prepareDocument = () => {
+        if (!frame.isConnected) { clearInterval(readinessPoll); return; }
         try {
+          const child = frame.contentDocument;
+          if (!child?.body || child.readyState === 'loading' || child.URL === 'about:blank') return;
+          const domReady = frame.contentWindow.performance.getEntriesByType('navigation')[0]?.domContentLoadedEventEnd;
+          if (child.readyState !== 'complete' && !domReady) return;
+          if (child === preparedDocument) return;
+          preparedDocument = child;
+          clearInterval(readinessPoll);
           // Keep the Lab's provenance beside its working surface rather than
           // allowing the standalone site's fixed notice to cover its controls.
           const disclosure = block?.dataset.demo !== 'vera' && frame.contentDocument?.querySelector('.lab-build-disclosure,.lab-concept-status');
@@ -157,8 +165,15 @@
               openReader(path, findTile(path) || activeSource);
             }
           });
+          frame.inert = false;
+          if (block) block.dataset.demoState = 'ready';
+          if (status) status.hidden = true;
         } catch { /* External source links never acquire access to the shell. */ }
-      });
+      };
+      // Install navigation as soon as the document is interactive. Fonts,
+      // images and video must not hold Escape hostage until window.load.
+      frame.addEventListener('load', prepareDocument);
+      readinessPoll = setInterval(prepareDocument, 50);
       frame.src = source;
     });
   }
