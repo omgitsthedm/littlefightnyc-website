@@ -95,6 +95,9 @@ async function openCard(page, route, demo) {
   assert.equal(child.embedded, true, `${demo}: working app must run inside the card iframe`);
   assert.ok(child.body && child.title, `${demo}: iframe needs a real document`);
   assert.equal(await page.evaluate(() => Boolean(window.__cardAppParentMarker)), true, `${demo}: iframe load must not replace parent document`);
+  // Move the outer reader to its working surface before operating fixed
+  // controls inside the iframe. Child scrolling cannot reveal its parent.
+  await pair.frameElement.evaluate(node => node.scrollIntoView({ block:'end', behavior:'instant' }));
   return pair;
 }
 
@@ -137,10 +140,52 @@ async function assertReaderNavigation(page, route) {
 }
 
 async function runRepresentativeInteraction(frame, slug) {
+  if (slug === 'aha-laser') {
+    await frame.waitForFunction(() => window.__laser && !window.__laser.info().drawing, null, { timeout:20_000 });
+    const chain = frame.locator('[data-chain]');
+    const box = await chain.boundingBox();
+    assert.ok(box.width >= 44 && box.height >= 44, 'AHA pull-chain keeps a usable touch target');
+    await chain.click();
+    await frame.waitForFunction(() => document.querySelector('[data-chain]').getAttribute('aria-pressed') === 'false');
+    await frame.waitForTimeout(550); // The authored switch has a 500ms settling interval.
+    await chain.press('Enter');
+    await frame.waitForFunction(() => document.querySelector('[data-chain]').getAttribute('aria-pressed') === 'true' && document.querySelectorAll('.tube.is-lit').length === 6);
+    return 'pull-chain switches off by touch and back on by keyboard';
+  }
+  if (slug === 'pill-scroll' || slug === 'goliath') {
+    const counter = slug === 'pill-scroll' ? '[data-count]' : '[data-counter]';
+    await frame.evaluate(() => {
+      const pin = document.querySelector('[data-pin]');
+      scrollTo({ top:pin.offsetTop + (pin.offsetHeight - innerHeight) * .66, behavior:'instant' });
+    });
+    await frame.waitForFunction(selector => {
+      const text = document.querySelector(selector)?.textContent.trim();
+      return text && !/^0?1\s*\//.test(text) && text.includes('/');
+    }, counter);
+    return `native scroll advances film to ${(await frame.locator(counter).textContent()).trim()}`;
+  }
+  if (slug === 'growth-street') {
+    await frame.locator('[data-ch="3"]').evaluate(node => window.scrollTo({ top:node.offsetTop, behavior:'instant' }));
+    const chapter = await frame.locator('[data-ch="3"]').evaluate(node => ({ top:node.getBoundingClientRect().top, width:node.getBoundingClientRect().width }));
+    assert.ok(Math.abs(chapter.top) <= 2 && chapter.width > 0, 'Growth Street can move through chapters inside the card');
+    return 'third chapter reached through native scrolling';
+  }
   if (slug === 'micro-animations' || slug === 'studio-engine') {
     const button = frame.locator(slug === 'micro-animations' ? 'button[data-theme-btn]' : 'button[data-pick="wine"]');
     await button.waitFor({ state: 'visible', timeout: 15_000 });
     await button.click();
+    if (slug === 'studio-engine') await frame.locator('[data-site].m-done').waitFor({ state:'visible' });
+    if (slug === 'micro-animations') {
+      const clipped = await frame.locator('.row').evaluateAll(rows => rows.filter(row => {
+        const box = row.getBoundingClientRect();
+        if (!box.width || !box.height) return false;
+        return [...row.querySelectorAll('.row__name,.row__price')].some(text => {
+          const b = text.getBoundingClientRect();
+          return b.top < box.top - 1 || b.bottom > box.bottom + 1;
+        });
+      }).map(row => row.textContent.trim()));
+      assert.deepEqual(clipped, [], 'product names and prices must fit their scrollable rows');
+    }
     return `${slug === 'micro-animations' ? 'theme toggle' : 'sample business choice'} clicked`;
   }
   if (slug === 'pool-room') {
@@ -158,7 +203,33 @@ async function runRepresentativeInteraction(frame, slug) {
     const state = await canvas.evaluate(node => ({ width: node.width, height: node.height, webgl: Boolean(node.getContext('webgl2') || node.getContext('webgl')) }));
     assert.ok(state.width > 0 && state.height > 0, `${slug}: WebGL canvas has render dimensions`);
     assert.equal(state.webgl, true, `${slug}: Chrome must provide a WebGL context`);
-    return `WebGL ${state.width}×${state.height}`;
+    if (slug === 'walkup-3d') {
+      await frame.waitForFunction(() => Number(getComputedStyle(document.querySelector('[data-veil]')).opacity) < .01);
+      for (const view of ['front', 'stairs', 'block']) {
+        const button = frame.locator(`[data-walkup-view="${view}"]`);
+        const box = await button.boundingBox();
+        assert.ok(box?.height >= 44 && box.width >= 44, `${view}: touch-friendly camera preset`);
+        await button.click();
+        assert.equal(await button.getAttribute('aria-pressed'), 'true');
+      }
+    } else {
+      const menu = frame.locator('[data-rail-menu]');
+      const compact = await menu.isVisible();
+      if (compact) await menu.click();
+      await frame.locator('[data-rail-speed]').click();
+      assert.equal(await frame.locator('[data-rail-speed]').textContent(), '3×', 'Neon time control changes the simulation');
+      if (compact) {
+        assert.equal(await menu.getAttribute('aria-expanded'), 'false', 'choosing a control restores scene space');
+        await menu.click();
+      }
+      await frame.locator('[data-rail-tour]').click();
+      await frame.locator('[data-tour]:not([hidden])').waitFor({ state:'visible' });
+      await frame.locator('[data-tour-next]').click();
+      assert.equal(await frame.locator('[data-tour-step]').textContent(), '2 / 6', 'tour navigation advances');
+      await frame.locator('[data-tour-end]').click();
+      assert.equal(await frame.locator('[data-tour]').isVisible(), false);
+    }
+    return `WebGL ${state.width}×${state.height}; ${slug === 'walkup-3d' ? 'three camera presets' : 'time controls and guided tour'} exercised`;
   }
   return 'document loaded';
 }
@@ -244,16 +315,17 @@ async function run() {
         return 'a deliberately delayed asset cannot block iframe Escape or return to the hub';
       });
 
-      await check('a Lab inquiry CTA opens the top-level inquiry reader, Back restores the Lab, and All tiles returns to the hub', async () => {
+      await check('retained Lab agency links route through the top-level reader and preserve its Back trail', async () => {
         const labRoute = '/examples/lab/concepts/micro-animations/';
         const { frame } = await openCard(page, labRoute, 'micro-animations');
         const marker = `micro-cta-${Date.now()}`;
         await page.evaluate(value => { window.__cardAppCtaMarker = value; }, marker);
         const cta = frame.locator('.outro__cta[href^="/tech-audit/"]');
-        await cta.scrollIntoViewIfNeeded();
         const ctaPath = await cta.getAttribute('href');
         assert.equal(ctaPath, '/tech-audit/?intent=website&source=lab', 'Micro CTA retains its declared inquiry route');
-        await cta.click();
+        // Compact embeds omit the standalone outro. Activate its retained
+        // authored link to exercise routing independently of that presentation.
+        await cta.evaluate(node => node.click());
         await page.waitForFunction(expected => document.querySelector('#detail-body')?.dataset.readerPath === expected, ctaPath, { timeout: 12_000 });
         assert.equal(new URL(page.url()).pathname, '/tech-audit/', 'Lab CTA changes the outer reader route');
         assert.equal(await page.evaluate(expected => window.__cardAppCtaMarker === expected, marker), true, 'Lab CTA must not replace the parent document');
@@ -266,6 +338,22 @@ async function run() {
         await page.waitForFunction(() => !document.querySelector('#detail')?.open, null, { timeout: 8_000 });
         assert.equal(new URL(page.url()).pathname, '/', 'All tiles returns to the hub after a Lab CTA reader trail');
         return 'Micro CTA → top-level inquiry reader → Back to working Lab → All tiles hub';
+      });
+
+      await check('a directly opened Lab reader returns home through its in-app exit', async () => {
+        const routes = await (await page.request.get(`${base}/reader-routes.json`)).json();
+        const readerRoute = routes['/examples/lab/concepts/micro-animations/'];
+        assert.ok(readerRoute?.startsWith('/_readers/'), 'Lab retains its direct companion reader');
+        await page.goto(base + readerRoute, { waitUntil:'domcontentloaded' });
+        const holder = page.locator('main[data-page-content] [data-demo="micro-animations"][data-demo-state="ready"] iframe');
+        await holder.waitFor({ state:'visible' });
+        await holder.evaluate(node => node.scrollIntoView({ block:'start', behavior:'instant' }));
+        const frame = await (await holder.elementHandle()).contentFrame();
+        await frame.locator('.lab-embed-exit').click();
+        await page.waitForURL(base + '/');
+        assert.equal(await page.locator('iframe.reader-demo-frame').count(), 0, 'direct reader exit leaves no working demo mounted');
+        assert.ok(await page.locator('a.tile').count() > 0, 'the full hub is restored');
+        return 'direct reader → embedded exit → homepage';
       });
 
       await check('VERA opens as an immersive, same-origin full-card working app', async () => {
@@ -283,7 +371,7 @@ async function run() {
       });
     } finally { await context.close(); }
 
-    for (const viewport of [{ width:320, height:740 }, { width:390, height:844 }, { width:844, height:390 }]) {
+    for (const viewport of [{ width:320, height:740 }, { width:390, height:844 }, { width:568, height:320 }, { width:844, height:390 }]) {
       await check(`all nine Labs fit ${viewport.width}×${viewport.height} and exit back to their originating tile`, async () => {
         const { context, page } = await makePage(browser, viewport);
         try {

@@ -1,6 +1,8 @@
 @font-face {
   font-family: "LF Lab Atkinson";
   src: url('/assets/mineral/atkinson-hyperlegible-next-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
   font-display: swap;
 }
 

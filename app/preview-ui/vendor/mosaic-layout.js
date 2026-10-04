@@ -102,7 +102,7 @@
       height = token(card, 'preferredRows', defaultRows);
     }
     // Service anchors hold a compact six-by-four phone/tablet frame. The hub
-    // above Websites is deliberately half their desktop area and stays even
+    // above Websites is deliberately half its former desktop area and stays
     // smaller below the breakpoint, so the grid remains information-dense.
     if (mobile && card.dataset.editorialFront && window.innerWidth > 600) {
       width = 6;

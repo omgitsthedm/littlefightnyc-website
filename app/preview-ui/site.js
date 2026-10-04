@@ -153,7 +153,7 @@
           // the outer reader keeps the visitor's position and full explanation.
           const starts = {
             'micro-animations': 'main.playground', 'studio-engine': 'main.studio',
-            'aha-laser': 'section.signroom[data-room]', 'growth-street': 'main.story[data-story]',
+            'aha-laser': 'main.stagewrap', 'growth-street': 'main.story[data-story]',
             'pill-scroll': 'section.pin[data-pin]', goliath: 'section.pin[data-pin]'
           };
           const start = starts[block?.dataset.demo];

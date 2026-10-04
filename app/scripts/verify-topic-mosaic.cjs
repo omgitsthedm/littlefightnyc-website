@@ -218,7 +218,9 @@ async function assertInputScrollingAndReaderResume(browser) {
     await desktop.page.keyboard.press('Home');
     await desktop.page.waitForFunction(() => window.scrollY < 8, null, { timeout: 1_500 });
     await desktop.page.keyboard.press('PageDown');
-    await desktop.page.waitForTimeout(180);
+    // Native smooth scrolling can take longer under parallel browser load.
+    // Require real movement within a bound, rather than sampling one frame.
+    await desktop.page.waitForFunction(() => window.scrollY > 80, null, { timeout: 2_000 });
     const afterPageDown = await scrollMetrics(desktop.page);
     assert.ok(afterPageDown.top > 80, `PageDown did not scroll homepage: ${JSON.stringify(afterPageDown)}`);
   } finally { await desktop.context.close(); }

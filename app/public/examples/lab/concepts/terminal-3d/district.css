@@ -489,6 +489,8 @@ html, body {
   .rail__options { display: none; }
 
   .rail.is-expanded {
+    max-height: calc(100svh - 76px);
+    overflow-y: auto;
     padding: 7px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 18px;
