@@ -887,3 +887,31 @@ html.lab-concept-embed .phone { height: max(176px, calc(100svh - 76px)); }
   html.lab-concept-embed .playground { padding-top: 56px; }
   html.lab-concept-embed .phone { height: max(176px, calc(100svh - 64px)); }
 }
+
+/* Product names need their own flexible column. The reader card stays compact,
+   but a name may wrap and the list itself scrolls instead of clipping text. */
+html.lab-concept-embed .device { display: block; width: 100%; }
+html.lab-concept-embed .phone { width: min(390px, 100%); margin-inline: auto; }
+html.lab-concept-embed .row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 44px 58px;
+  align-items: center;
+  gap: 4px;
+  min-height: 56px;
+  padding: 6px;
+}
+html.lab-concept-embed .row__tile { width: 36px; height: 36px; font-size: 19px; }
+html.lab-concept-embed .row__info { align-self: center; min-width: 0; }
+html.lab-concept-embed .row__name {
+  overflow-wrap: anywhere;
+  font-size: 12.5px;
+  line-height: 1.16;
+}
+html.lab-concept-embed .row__price { font-size: 11px; line-height: 1.2; }
+html.lab-concept-embed .heart,
+html.lab-concept-embed .add { align-self: center; }
+
+@media (max-width: 300px) {
+  html.lab-concept-embed .row { grid-template-columns: 34px minmax(0, 1fr) 44px 54px; }
+  html.lab-concept-embed .add { min-width: 54px; padding-inline: 7px; }
+}
