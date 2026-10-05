@@ -282,12 +282,11 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   // Keep a shared site URL visible and editable. A bare domain, Google Business
   // Profile, or social URL are all useful context, so this is intentionally a
   // plain text field rather than a type=url control that rejects domain-only input.
-  const initialFields = useMemo<ContactFields>(() => ({
+  const [fields, setFields] = useState<ContactFields>(() => ({
     ...EMPTY_FIELDS,
     ...activeDraft?.fields,
     website_url: activeDraft?.fields.website_url?.trim() || websiteUrl,
-  }), [activeDraft, websiteUrl]);
-  const [fields, setFields] = useState<ContactFields>(initialFields);
+  }));
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitIssue, setSubmitIssue] = useState("");
