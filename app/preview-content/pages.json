@@ -282,18 +282,14 @@
         "id": "proof",
         "heading": "Good design should guide the decision.",
         "paragraphs": [
-          "Our work for a painting and mural business uses visible projects to lead into an estimate conversation. Our film work creates one official place for work and press. Those are different businesses, but the same rule applies: show the right proof, then make the next step clear.",
-          "We start with a first look at your business, your current site, and the customer decision that matters most."
+          "Chromatic Painting & Design separates painting and mural services, shows the work, and connects each service to its own inquiry.",
+          "Start with the project types you want, the work you can show, the places you serve, and the few details your team needs before the first conversation."
         ],
         "bullets": [],
         "links": [
           {
-            "label": "See website work",
-            "href": "/examples/"
-          },
-          {
-            "label": "Get a free first look",
-            "href": "/tech-audit/?intent=website&source=industry_luxury_home_services"
+            "label": "See the Chromatic Painting & Design website",
+            "href": "/case-studies/chromatic-painting-design/"
           }
         ]
       }
@@ -321,7 +317,7 @@
         "answer": "No. We build a custom site around your work and customer path. You own the code, domain, and content."
       }
     ],
-    "contactPrompt": "Show us the work and tell us what kind of project you want next. Start with a free first look."
+    "contactPrompt": "Send the work you can share and name the project you want next. We will start with a free first look."
   },
   {
     "path": "/industries/law-firms/",

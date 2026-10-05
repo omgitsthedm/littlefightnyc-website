@@ -144,6 +144,7 @@ type ContactFields = {
   name: string;
   business: string;
   contact: string;
+  website_url: string;
   follow_up: TechAuditFollowUpPreference;
   discovery_source: TechAuditDiscoverySource;
 };
@@ -152,6 +153,7 @@ const EMPTY_FIELDS: ContactFields = {
   name: "",
   business: "",
   contact: "",
+  website_url: "",
   follow_up: "fastest",
   discovery_source: "",
 };
@@ -194,6 +196,7 @@ function readDraft(): Draft | null {
         name: typeof savedFields.name === "string" ? savedFields.name : "",
         business: typeof savedFields.business === "string" ? savedFields.business : "",
         contact: typeof savedFields.contact === "string" ? savedFields.contact : "",
+        website_url: typeof savedFields.website_url === "string" ? savedFields.website_url : "",
         follow_up: normalizeTechAuditFollowUpPreference(savedFields.follow_up),
         discovery_source: normalizeTechAuditDiscoverySource(savedFields.discovery_source),
       },
@@ -276,7 +279,15 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     message: string;
     resolve: (status: FirstLookStageStatus) => void;
   } | null>(null);
-  const [fields, setFields] = useState<ContactFields>(activeDraft?.fields ?? EMPTY_FIELDS);
+  // Keep a shared site URL visible and editable. A bare domain, Google Business
+  // Profile, or social URL are all useful context, so this is intentionally a
+  // plain text field rather than a type=url control that rejects domain-only input.
+  const initialFields = useMemo<ContactFields>(() => ({
+    ...EMPTY_FIELDS,
+    ...activeDraft?.fields,
+    website_url: activeDraft?.fields.website_url?.trim() || websiteUrl,
+  }), [activeDraft, websiteUrl]);
+  const [fields, setFields] = useState<ContactFields>(initialFields);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitIssue, setSubmitIssue] = useState("");
@@ -320,6 +331,8 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   const messageId = domId("fit-message");
   const messageNoteId = domId("fit-message-note");
   const messageErrorId = domId("fit-message-error");
+  const websiteUrlId = domId("fit-website-url");
+  const websiteUrlHintId = domId("fit-website-url-hint");
   const discoverySourceId = domId("fit-discovery-source");
   const exampleTitleId = domId("lf-audit-example-title");
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
@@ -858,7 +871,6 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                       detector registers it; malformed or absent context posts
                       an empty value, never unchecked query input. */}
                   <input type="hidden" name="report_id" value={reportId} />
-                  {websiteUrl && <input type="hidden" name="website_url" value={websiteUrl} />}
                   {symptom && <input type="hidden" name="symptom" value={symptom} />}
                   {urgency && <input type="hidden" name="urgency" value={urgency} />}
                   {Object.entries(attribution).map(([key, value]) => (
@@ -916,6 +928,29 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                         {errors.business}
                       </p>
                     )}
+                  </div>
+
+                  <div className="lf-audit__field lf-audit__field--full">
+                    <label htmlFor={websiteUrlId}>
+                      Website or business profile link <span>(optional)</span>
+                    </label>
+                    <input
+                      id={websiteUrlId}
+                      name="website_url"
+                      type="text"
+                      inputMode="url"
+                      autoComplete="url"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      maxLength={2048}
+                      placeholder="yourbusiness.com"
+                      value={fields.website_url}
+                      onChange={(e) => setField("website_url", e.target.value)}
+                      aria-describedby={websiteUrlHintId}
+                    />
+                    <p className="lf-audit__hint" id={websiteUrlHintId}>
+                      A website, Google profile, or social link. Leave blank if you’re starting fresh.
+                    </p>
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("contact", fields.contact)}`}>

@@ -43,6 +43,13 @@ async function run() {
       assert.ok(imageWidth >= (width === 320 ? 120 : 155), `${width}: project preview remains meaningful (${imageWidth})`);
       await shot(page, `home-${width}.png`);
       await page.locator('#explore-toggle').click();
+      await page.waitForFunction(() => document.activeElement?.id === 'preview-search');
+      const lastExploreLink = page.locator('#explore-menu .menu-links a').last();
+      await lastExploreLink.focus();
+      await page.keyboard.press('Tab');
+      assert.equal(await page.evaluate(() => document.activeElement?.classList.contains('menu-close')), true, `${width}: Tab from the final Explore action returns to the menu close control`);
+      await page.keyboard.press('Shift+Tab');
+      assert.equal(await lastExploreLink.evaluate(link => document.activeElement === link), true, `${width}: Shift+Tab from close returns to the final Explore action`);
       await page.locator('[data-filter="software"]').click();
       await page.waitForFunction(() => document.activeElement?.closest('#topic-software'));
       pass(`${width}: named Services menu reaches Software with keyboard focus`);
@@ -141,11 +148,12 @@ async function run() {
     {
       const { ctx, page } = await context(browser);
       await ctx.route('**/assets/TechAudit-*.js', route => route.abort('blockedbyclient'));
-      await page.goto(base + '/tech-audit/?intent=website&source=%2Fservices%2Fcustom-local-websites%2F', { waitUntil: 'networkidle' });
+      await page.goto(base + '/tech-audit/?intent=website&source=%2Fservices%2Fcustom-local-websites%2F&url=https%3A%2F%2Fexamplebusiness.com', { waitUntil: 'networkidle' });
       const form = page.locator('form.static-inquiry');
       assert.equal(await form.locator('[name="intent"]').inputValue(), 'website');
       assert.equal(await page.locator('[data-inquiry-title]').innerText(), copies.website.title);
       assert.equal(await form.locator('[name="source"]').inputValue(), '/services/custom-local-websites/');
+      assert.equal(await form.locator('[name="website_url"]').inputValue(), 'https://examplebusiness.com');
       await form.locator('[name="message"]').fill('Keep my draft while I choose a service.');
       await form.locator('[name="intent"]').selectOption('support');
       assert.equal(await page.locator('[data-inquiry-title]').innerText(), copies.support.title);

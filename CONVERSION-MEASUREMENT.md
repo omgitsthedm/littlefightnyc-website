@@ -1,6 +1,6 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-09-29. Resolve production revision from `/release.json`;
+Last updated: 2026-10-05. Resolve production revision from `/release.json`;
 account configuration is dated evidence, separate from code publication.
 
 ## Privacy boundary
@@ -145,6 +145,56 @@ Run this once per month and after any form or deploy change:
 6. Do not send passwords, client data, or a real prospect's contact information in the test.
 
 The browser success page proves only the POST path. The loop is not green until both Netlify capture and inbox delivery are observed.
+
+## Private received-lead reconciliation
+
+The production form, phone, text and email links intentionally do not create a
+public CRM or expose inquiry data through the site. Reconcile actual received
+inquiries in the local private ledger instead. Its data lives outside this
+repository in `~/.local/share/littlefightnyc/operations/lead-reconciliation.json`
+with file mode `600`. New private directories are created with mode `700`; the
+tool never changes permissions on an existing parent directory. Set
+`LFNYC_LEAD_STORE_DIR` to an absolute private directory to use another location.
+
+The tool fetches only the exact production site ID (`0907d8fe-7018-48db-a6be-1f906e4b2619`)
+when `NETLIFY_AUTH_TOKEN` is supplied through the shell. It stores the fields
+needed to follow up and attribute a lead, but intentionally drops provider IP
+addresses, user agents and raw submission metadata. It never prints contact
+details or the token.
+
+```bash
+# Read-only provider fetch plus local private import. Re-running deduplicates by provider id.
+NETLIFY_AUTH_TOKEN="…" npm run leads:import -- --pages 20
+
+# A downloaded Netlify submissions array can be imported without another API request.
+npm run leads:import-file -- --file /absolute/path/submissions.json
+
+# Record calls, texts and emails received outside the form. Contact fields are optional and remain local.
+npm run leads:add -- --channel text --intent website --source referral --discovery referral
+
+# Avoid putting contact data in shell history by supplying one private JSON object instead.
+npm run leads:add -- --file /absolute/private/path/received-lead.json
+
+# Record confirmed human follow-up and commercial outcome, with an optional known value.
+npm run leads:stage -- --id manual:opaque-id --stage qualified
+npm run leads:stage -- --id manual:opaque-id --stage won --value 1800
+
+# Keep explicit provider spam or internal QA out of totals. Do not infer QA from an ambiguous message.
+npm run leads:exclude -- --id netlify:provider-id --reason qa
+npm run leads:list
+npm run leads:summary
+
+# Private spreadsheet export; formulas from inquiry fields are rendered as text.
+npm run leads:export -- --file /absolute/private/path/little-fight-leads.csv
+```
+
+The import output and `summary` group received leads by origin, a bounded source
+bucket and intent without printing contact fields. `list` is the non-PII ID/date/stage/form view used
+to select a lead for an operator update. `new` means an inquiry was received, not qualified. `contacted`, `qualified`,
+`proposal`, `won` and `lost` require an operator update with their recorded
+date. The summary prints counts, sources, stage totals and won value only; it
+does not prove delivery, qualification or revenue until the corresponding
+operator step has been recorded.
 
 ## QA and diagnostic traffic
 

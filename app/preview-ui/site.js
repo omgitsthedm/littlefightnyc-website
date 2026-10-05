@@ -87,6 +87,17 @@
     if (sourceField && source && /^[a-z0-9/_-]{1,160}$/i.test(source)) {
       sourceField.defaultValue = sourceField.value = source;
     }
+    // Keep supplied context in the visible field. It remains optional: a new
+    // business can ask for help without a current domain, and a bare domain is
+    // as useful here as a complete URL.
+    const websiteField = form.elements.namedItem('website_url');
+    const directWebsite = params.get('url');
+    const sharedText = `${params.get('text') || ''} ${params.get('title') || ''}`;
+    const sharedMatch = sharedText.match(/https?:\/\/[^\s]+/i);
+    const sharedWebsite = (directWebsite || sharedMatch?.[0] || '').trim().slice(0, 2048);
+    if (websiteField instanceof HTMLInputElement && sharedWebsite) {
+      websiteField.defaultValue = websiteField.value = sharedWebsite;
+    }
     const showCopy = () => {
       const copy = copies[selector.value] || copies.general;
       host.dataset.inquiryIntent = selector.value;
@@ -458,6 +469,41 @@
     }
   });
 
+  function focusExploreEntry() {
+    const target = search || menuClose;
+    target?.focus({ preventScroll: true });
+    // Native dialog focus can settle after showModal in some Chrome builds.
+    // Reassert the useful first stop only if the browser left focus on body.
+    requestAnimationFrame(() => {
+      if (menu?.open && document.activeElement === document.body) target?.focus({ preventScroll: true });
+    });
+  }
+
+  function exploreFocusableControls() {
+    if (!menu) return [];
+    return [...menu.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+      .filter(control => {
+        const style = getComputedStyle(control);
+        return control.getClientRects().length > 0 && style.visibility !== 'hidden' && style.display !== 'none';
+      });
+  }
+
+  function keepExploreFocus(event) {
+    if (event.key !== 'Tab' || !menu?.open) return;
+    const controls = exploreFocusableControls();
+    if (!controls.length) return;
+    const first = controls[0];
+    const last = controls.at(-1);
+    const active = document.activeElement;
+    if (event.shiftKey && (active === first || !menu.contains(active))) {
+      event.preventDefault();
+      last.focus({ preventScroll: true });
+    } else if (!event.shiftKey && (active === last || !menu.contains(active))) {
+      event.preventDefault();
+      first.focus({ preventScroll: true });
+    }
+  }
+
   function setMenu(open, { returnFocus = true } = {}) {
     if (!menu) return;
     if (open && !menu.open) {
@@ -471,13 +517,14 @@
     menuToggle?.setAttribute('aria-expanded', String(open));
     if (open) {
       loadSearchIndex();
-      search?.focus({ preventScroll: true });
+      focusExploreEntry();
     } else if (returnFocus) menuToggle?.focus({ preventScroll: true });
     interaction(open ? 'explore_open' : 'explore_close', 'mosaic', 'explore');
   }
   menuToggle?.addEventListener('click', () => setMenu(!menu?.open));
   menuClose?.addEventListener('click', () => setMenu(false));
   menu?.addEventListener('cancel', event => { event.preventDefault(); setMenu(false); });
+  menu?.addEventListener('keydown', keepExploreFocus);
 
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;

@@ -24,7 +24,17 @@
     "quality:live": "npm --prefix app run quality:live",
     "quality:maintenance": "npm run typecheck:functions && npm --prefix app run quality:maintenance",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json",
-    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts app/src/lib/rum.test.ts netlify/functions/_shared/public-audit/intake.test.ts netlify/functions/_shared/public-audit/cleanup-expired.test.ts"
+    "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts app/src/lib/rum.test.ts netlify/functions/_shared/public-audit/intake.test.ts netlify/functions/_shared/public-audit/cleanup-expired.test.ts && npm run leads:test",
+    "leads:test": "node --test app/scripts/lead-reconciliation.test.mjs",
+    "leads:help": "node app/scripts/lead-reconciliation.mjs help",
+    "leads:summary": "node app/scripts/lead-reconciliation.mjs summary",
+    "leads:import": "node app/scripts/lead-reconciliation.mjs import-netlify",
+    "leads:import-file": "node app/scripts/lead-reconciliation.mjs import-file",
+    "leads:add": "node app/scripts/lead-reconciliation.mjs add",
+    "leads:stage": "node app/scripts/lead-reconciliation.mjs stage",
+    "leads:exclude": "node app/scripts/lead-reconciliation.mjs exclude",
+    "leads:list": "node app/scripts/lead-reconciliation.mjs list",
+    "leads:export": "node app/scripts/lead-reconciliation.mjs export-csv"
   },
   "dependencies": {
     "@netlify/blobs": "10.7.13",

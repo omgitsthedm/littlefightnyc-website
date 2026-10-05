@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-09-29
+Last updated: 2026-10-05
 
 ## Current code readiness
 
@@ -77,6 +77,44 @@ In the verified profile:
 7. Publish one useful update per month: a shipped case study, an owner guide, or a service change.
 8. Ask real clients for reviews without incentives. Reply to every review with specific, private-data-safe language.
 9. Check profile performance monthly: website clicks, calls, direction requests if applicable, and the search terms report. Record raw counts and date ranges.
+
+## Current acquisition focus — 2026-10-05
+
+Prioritize three existing buyer paths with actual published work:
+
+1. Appointment businesses: Hair By Rachel and The Tarot Hotline; service choice
+   and booking paths. Booking actions are not confirmed appointments or revenue.
+2. Visual home-service trades: Chromatic Painting & Design; real project imagery,
+   service detail and a clear inquiry path. Do not imply plumbing or roofing work.
+3. Hospitality and venues: Easy Tiger and The Break Room; menus, events,
+   directions and visit planning. Do not imply measured footfall increases.
+
+Use the existing industry and case pages. Connect each offer to relevant real
+work and the contextual website inquiry. Do not create pages for every query
+variation or publish the reported client-acquisition anecdote without a sourced
+result and permission. The existing private proof process is
+`CLIENT-PROOF-COLLECTION.md`.
+
+The first readout is received inquiries and qualified opportunities per buyer
+path, then proposals and won work in the private lead ledger. GA4 contact taps
+remain intent only. At an assumed 25% qualified-opportunity close rate, four
+projects per week requires 16 qualified opportunities; this is planning math,
+not a measured close rate or forecast. Report actual counts before changing it.
+
+Search Console was read live on October 5:
+
+- July 3–October 2 web search: 11 clicks, 909 impressions, 1.2% CTR, average
+  position 20.9. The website service page had 48 impressions and no clicks.
+- Search generative AI features: 43 impressions in the selected three-month
+  report. These are not clicks, inquiries, cross-engine citations or sales.
+- Homepage, website service and Hair case URL Inspection records were indexed.
+- Sitemap index: Success, last read October 5, 290 discovered pages. Sitemap:
+  Success, last read October 2, 143 discovered pages. Counts can overlap and
+  do not establish that every discovered page is indexed.
+
+These observations identify weak search-to-visit performance, not a crawl
+block. They predate any business-result measurement for the October 5 release.
+Keep dated older snapshots below separate from these current observations.
 
 ## Monthly acquisition review
 

@@ -124,9 +124,10 @@ async function run() {
     await check('typed native inquiry survives delayed React enhancement and retains focus', async () => {
       const fixture = await heldTechAuditPage(browser);
       try {
-        const expected = { name: 'Casey Test', business: 'Test Plumbing', contact: 'casey@example.test', message: 'Please make it easier to request an estimate.' };
+        const expected = { name: 'Casey Test', business: 'Test Plumbing', website_url: 'testplumbing.example', contact: 'casey@example.test', message: 'Please make it easier to request an estimate.' };
         await fixture.form.locator('[name="name"]').fill(expected.name);
         await fixture.form.locator('[name="business"]').fill(expected.business);
+        await fixture.form.locator('[name="website_url"]').fill(expected.website_url);
         await fixture.form.locator('[name="contact"]').fill(expected.contact);
         const message = fixture.form.locator('[name="message"]');
         await message.fill(expected.message);
@@ -141,7 +142,7 @@ async function run() {
         await post;
         const payload = report.posts.at(-1);
         assert.deepEqual(payload, {
-          fieldNames: ['bot-field', 'business', 'contact', 'follow_up', 'form-name', 'intent', 'message', 'name', 'source'],
+          fieldNames: ['bot-field', 'business', 'contact', 'follow_up', 'form-name', 'intent', 'message', 'name', 'source', 'website_url'],
           formName: 'tech-audit-scratch', intent: 'general', source: '/tech-audit/',
         }, 'native Netlify POST contract');
         return 'typed values + focus preserved; intercepted native Netlify payload remained valid';
@@ -187,6 +188,21 @@ async function run() {
       } finally { await fixture.context.close(); }
     });
 
+    await check('a shared site link pre-fills one editable enhanced field', async () => {
+      const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+      try {
+        const page = await context.newPage();
+        await page.goto(`${base}/tech-audit/?intent=website&url=https%3A%2F%2Fexamplebusiness.com`, { waitUntil: 'networkidle' });
+        await page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'enhanced');
+        const websiteField = page.locator('form [name="website_url"]');
+        assert.equal(await websiteField.count(), 1, 'enhanced form keeps one registered website_url field');
+        assert.equal(await websiteField.inputValue(), 'https://examplebusiness.com');
+        await websiteField.fill('examplebusiness.com');
+        assert.equal(await websiteField.inputValue(), 'examplebusiness.com', 'domain-only context remains editable');
+        return 'shared URL prefills one editable enhanced field; a domain-only value is accepted';
+      } finally { await context.close(); }
+    });
+
     await check('choosing only a service before enhancement preserves the native selection', async () => {
       const fixture = await heldTechAuditPage(browser);
       try {
@@ -225,6 +241,7 @@ async function run() {
           await form.locator('[name="name"]').fill('Local service test');
           await form.locator('[name="business"]').fill('Example business');
           await form.locator('[name="contact"]').fill('service@example.test');
+          await form.locator('[name="website_url"]').fill('examplebusiness.com');
           await form.locator('[name="message"]').fill('Local validation of the selected service.');
           await page.screenshot({ path: path.join(screenshots, `no-js-${intent}-390.png`), fullPage: true });
           // Exercise native keyboard submission with page JavaScript disabled.
@@ -232,6 +249,7 @@ async function run() {
           await page.waitForURL(/\/thanks\//);
           assert.equal(posted?.get('intent'), intent);
           assert.equal(posted?.get('form-name'), 'tech-audit-scratch');
+          assert.equal(posted?.get('website_url'), 'examplebusiness.com');
           assert.equal(new URL(page.url()).search, '', 'native form must not place personal details in the URL');
         } finally { await context.close(); }
       }
