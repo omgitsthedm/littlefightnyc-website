@@ -183,6 +183,10 @@ async function inspectWebsiteBody(page, label) {
 
   assert.equal(await hero.locator('.rw-opening-work, .rw-opening-project').count(), 0, label + ': opening keeps its icon and does not duplicate client project screens');
 
+  const fullGallery = body.locator('.rw-full-gallery');
+  if (await fullGallery.count() && !await fullGallery.evaluate(node => node.open)) {
+    await fullGallery.locator('summary').click();
+  }
   const gallery = body.locator('#reader-work .rw-client-gallery');
   assert.equal(await gallery.count(), 1, label + ': one real-client Website gallery');
   const projects = gallery.locator('figure.rw-client-project');

@@ -85,6 +85,16 @@
   box-sizing: border-box;
 }
 
+.production-island--tech-audit {
+  --tile-ink: #141417;
+  --tile-paper: #f6f3ec;
+  --tile-rim: #484850;
+  --lf-paper: #1c1c20;
+  --lf-paper-2: #19191d;
+  --lf-bone-soft: #ddd9d2;
+  --lf-bone-dim: #c1c1cb;
+}
+
 .production-island :where(a) {
   color: inherit;
 }
@@ -103,6 +113,52 @@
 .production-island .lf-thanks {
   background: var(--tile-ink);
   color: var(--tile-paper);
+}
+
+/* Inquiry context carries the service color while the contact actions remain
+   orange. The static card host sets data-inquiry-intent before React mounts,
+   so this same signal survives a slow connection and matches the hydrated
+   Tech Audit. */
+[data-production-island="tech-audit"] {
+  --lf-inquiry-accent: var(--tile-orange);
+}
+
+[data-production-island="tech-audit"][data-inquiry-intent="website"] {
+  --lf-inquiry-accent: #92bfff;
+}
+
+[data-production-island="tech-audit"][data-inquiry-intent="support"] {
+  --lf-inquiry-accent: #f5d95b;
+}
+
+[data-production-island="tech-audit"][data-inquiry-intent="consulting"] {
+  --lf-inquiry-accent: #a0df85;
+}
+
+[data-production-island="tech-audit"][data-inquiry-intent="systems"] {
+  --lf-inquiry-accent: #f09bdd;
+}
+
+[data-production-island="tech-audit"] .production-island .lf-audit-intro {
+  background:
+    radial-gradient(88% 120% at 0% 0%, color-mix(in srgb, var(--lf-inquiry-accent) 19%, transparent), transparent 66%),
+    linear-gradient(145deg, #1c1b1d, #141417 62%);
+}
+
+[data-production-island="tech-audit"] .production-island .lf-audit__form {
+  border-radius: 22px;
+  background: linear-gradient(145deg, #1a1a1e, #141417 72%);
+  box-shadow: 0 18px 42px rgb(0 0 0 / 24%);
+}
+
+[data-production-island="tech-audit"] .production-island :where(input, select, textarea) {
+  border-color: color-mix(in srgb, var(--lf-inquiry-accent) 30%, #8c8578);
+  border-radius: 12px;
+}
+
+[data-production-island="tech-audit"] .production-island .lf-audit-intro__eyebrow,
+[data-production-island="tech-audit"] .production-island .lf-audit__step-title {
+  color: var(--lf-inquiry-accent);
 }
 
 .production-island .lf-audit__inner,

@@ -23,7 +23,8 @@
       range.selectNodeContents(label);
       const styles = getComputedStyle(copy);
       const handset = window.innerWidth <= 600;
-      const share = handset ? 1.3 / 2 : 1 / 2;
+      const websiteShare = window.innerWidth <= 360 ? 1.1 / 2 : 1.05 / 2;
+      const share = handset ? (card.dataset.editorialFront === 'web' ? websiteShare : 1.3 / 2) : 1 / 2;
       const icon = card.querySelector('.topic-anchor-icon');
       const iconSpace = handset || !icon ? 0 : icon.getBoundingClientRect().width + parseFloat(styles.columnGap);
       const available = card.clientWidth * share - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight) - iconSpace;

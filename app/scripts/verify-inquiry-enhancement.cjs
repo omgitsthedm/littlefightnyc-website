@@ -218,7 +218,7 @@ async function run() {
           const page = await context.newPage();
           await page.goto(`${base}/tech-audit/?intent=${intent}`);
           const form = page.locator('form.static-inquiry');
-          assert.equal(await form.locator('[name="intent"]').inputValue(), 'general');
+          assert.equal(await form.locator('[name="intent"]').inputValue(), '', 'without scripts the visitor explicitly chooses a service');
           await form.locator('[name="intent"]').selectOption(intent);
           const serviceControl = await form.locator('[name="intent"]').boundingBox();
           assert.ok(serviceControl && serviceControl.height >= 44, 'native service selector remains a comfortable touch target');

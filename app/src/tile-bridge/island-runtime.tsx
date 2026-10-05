@@ -6,10 +6,10 @@ import SiteNotices from "@/components/SiteNotices";
 import "./tile-bridge.css";
 
 type IslandKind = "tech-audit" | "contact" | "thanks" | "website-check";
-type IslandModule = { default: ComponentType };
+type IslandModule = { default: ComponentType<{ idPrefix?: string }> };
 
 const pageImporters: Record<IslandKind, () => Promise<IslandModule>> = {
-  "tech-audit": () => import("@/pages/TechAudit"),
+  "tech-audit": () => import("@/pages/TechAudit").then(({ TechAudit }) => ({ default: TechAudit })),
   contact: () => import("@/pages/Contact"),
   thanks: () => import("@/pages/Thanks"),
   "website-check": () => import("@/pages/WebsiteCheck"),
@@ -84,10 +84,18 @@ export async function mountProductionIsland(host: HTMLElement, kind: IslandKind)
   const root = createRoot(host);
   roots.set(host, root);
   host.dataset.productionIslandMode = "enhanced";
+  // A direct /tech-audit/ page can remain enhanced behind an inquiry opened in
+  // the reader. Prefix only that nested instance; the ordinary homepage flow
+  // retains its stable IDs and test-facing fragment targets.
+  const duplicateTechAuditInReader = kind === "tech-audit"
+    && Boolean(host.closest("#detail"))
+    && [...document.querySelectorAll<HTMLElement>('[data-production-island="tech-audit"][data-production-island-mode="enhanced"]')]
+      .some(candidate => candidate !== host && !host.contains(candidate));
+  const idPrefix = duplicateTechAuditInReader ? "reader-" : "";
   const application = (
     <BrowserRouter>
       <div className={`production-island production-island--${kind}`} onClickCapture={preserveDocumentNavigation}>
-        <Page />
+        <Page idPrefix={idPrefix} />
       </div>
     </BrowserRouter>
   );

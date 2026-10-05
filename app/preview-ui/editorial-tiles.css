@@ -110,3 +110,19 @@
 @media(max-width:600px){.website-project-dots{bottom:5px;padding:3px 6px}}
 body.no-motion .website-project-shot{transition:none}
 @media(prefers-reduced-motion:reduce){.website-project-shot{transition:none}}
+
+/* On a phone the Website anchor is the one service card that carries live
+   proof. Give that proof nearly half the tile instead of treating it like a
+   thumbnail. The text retains its 20px promise and grows into full grid rows
+   through mosaic-layout when a visitor enlarges it. The five-dot rail stays
+   below the screenshot, so neither client lettering nor the selected frame is
+   hidden by an overlay. */
+@media(max-width:600px){
+ .tile[data-editorial-front=web] .topic-anchor-face{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)}
+ .tile[data-editorial-front=web] .website-project-rotator{aspect-ratio:4/3}
+ .tile[data-editorial-front=web] .website-project-shot{bottom:18px;height:calc(100% - 18px)}
+ .tile[data-editorial-front=web] .website-project-dots{bottom:3px}
+}
+@media(max-width:360px){
+ .tile[data-editorial-front=web] .topic-anchor-face{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+}

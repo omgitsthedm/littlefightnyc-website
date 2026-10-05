@@ -10,13 +10,13 @@
 
 
 /* A static form remains a complete and legible fallback before React enhances it. */
-.lf-reader .static-inquiry{display:grid;gap:18px;max-width:760px;margin:28px auto;padding:clamp(22px,4vw,34px);border:1px solid rgb(255 255 255 / .15);border-radius:26px;background:linear-gradient(135deg,#24252b,#18181c 58%,#251b18);box-shadow:inset 0 1px 0 rgb(255 255 255 / .07),0 20px 48px rgb(0 0 0 / .18);color:#f8f5f1}
-.lf-reader .static-inquiry label{display:grid;gap:8px;color:#f8f5f1;font-size:15px;font-weight:650}
+.lf-reader .static-inquiry{display:grid;gap:18px;max-width:760px;margin:28px auto;padding:clamp(22px,4vw,34px);border:1px solid rgb(255 255 255 / .15);border-radius:26px;background:linear-gradient(135deg,#1d1d22,#141417 72%);box-shadow:inset 0 1px 0 rgb(255 255 255 / .07),0 20px 48px rgb(0 0 0 / .18);color:#f8f5f1}
+.lf-reader .static-inquiry label{display:grid;gap:8px;color:#f8f5f1;font-size:1rem;font-weight:650}
 .lf-reader .static-inquiry :is(input,textarea,select){width:100%;min-height:52px;padding:14px 15px;border:1px solid rgb(255 255 255 / .18);border-radius:14px;background:#0d0d10;color:#f8f5f1;font:inherit;line-height:1.4;box-shadow:inset 0 1px 0 rgb(255 255 255 / .04);transition-property:border-color,box-shadow,background-color;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .lf-reader .static-inquiry textarea{min-height:166px;resize:vertical}.lf-reader .static-inquiry :is(input,textarea,select):focus{border-color:#ff9f72;background:#131317;outline:0;box-shadow:0 0 0 3px rgb(255 120 57 / .25),inset 0 1px 0 rgb(255 255 255 / .06)}
 .lf-reader .static-inquiry button{min-height:52px;padding:14px 22px;border:0;border-radius:26px;background:#ff7839;color:#160c07;font:750 16px/1.2 'Atkinson Hyperlegible Next',sans-serif;box-shadow:0 8px 20px rgb(255 120 57 / .2);transition-property:transform,box-shadow,background-color;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .lf-reader .static-inquiry button:hover{background:#ff9061;box-shadow:0 10px 24px rgb(255 120 57 / .28)}.lf-reader .static-inquiry button:active{transform:scale(.96)}
-.lf-reader .static-inquiry>p{margin:0;color:#bfc0c6;font-size:13px;line-height:1.5}.lf-reader .static-inquiry>p a{color:#ffd0ba;text-underline-offset:3px}
+.lf-reader .static-inquiry>p{margin:0;color:#c1c1cb;font-size:1rem;line-height:1.5}.lf-reader .static-inquiry>p a{color:#ffd0ba;text-underline-offset:3px}
 
 /* Reader prose and proof stay editorial, while screenshots keep their lettering intact. */
 .lf-reader :is(p,li,input,textarea,label,small,a){font-family:'Atkinson Hyperlegible Next',LFAtkinson,Arial,sans-serif}
@@ -43,3 +43,13 @@
 
 .topbar .wordmark .nyc{font-size:inherit;font-weight:inherit;letter-spacing:inherit}
 #explore-menu #motion-toggle{display:inline-flex;align-items:center;gap:10px;min-height:44px;margin:18px 0 0;padding:10px 16px;color:#f6f3ec;background:#25262b;border:1px solid #777780;border-radius:12px;font:700 1rem/1.25 LFAtkinson,Arial,sans-serif}
+
+/* The ordinary HTML inquiry keeps the same readable service context even if
+   the optional React island cannot load. */
+[data-production-island="tech-audit"]{--lf-inquiry-accent:#ff7839}
+[data-production-island="tech-audit"][data-inquiry-intent="website"]{--lf-inquiry-accent:#92bfff}
+[data-production-island="tech-audit"][data-inquiry-intent="support"]{--lf-inquiry-accent:#f5d95b}
+[data-production-island="tech-audit"][data-inquiry-intent="consulting"]{--lf-inquiry-accent:#a0df85}
+[data-production-island="tech-audit"][data-inquiry-intent="systems"]{--lf-inquiry-accent:#f09bdd}
+[data-production-island="tech-audit"]> .story-hero{background:#141417}
+[data-production-island="tech-audit"] :is([data-inquiry-title],[data-inquiry-eyebrow]){color:var(--lf-inquiry-accent)}

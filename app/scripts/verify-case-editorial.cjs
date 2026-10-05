@@ -322,6 +322,7 @@ async function run() {
         await tile.scrollIntoViewIfNeeded();
         await tile.click();
         await ensureReader(page, '/services/custom-local-websites/');
+        await page.locator('#detail-body .rw-full-gallery > summary').click();
         const proof = page.locator('#detail-body .rw-client-project--easy-tiger a.rw-client-project-media[href="/case-studies/easy-tiger/"][data-reader-link]');
         await proof.scrollIntoViewIfNeeded();
         await proof.click();

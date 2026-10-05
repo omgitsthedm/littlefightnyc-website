@@ -93,8 +93,8 @@
   min-height: var(--lf-control-min);
   color: var(--lf-bone-dim);
   cursor: pointer;
-  font: 500 var(--lf-text-2xs) / 1.45 var(--lf-mono);
-  letter-spacing: 0.02em;
+  font: 600 var(--lf-text-2xs) / 1.45 var(--lf-body);
+  letter-spacing: 0.01em;
   list-style: none;
 }
 
@@ -105,7 +105,7 @@
 .lf-first-look--compact summary::after {
   color: var(--lf-fight);
   content: "+";
-  font: 500 var(--lf-text-md) / 1 var(--lf-mono);
+  font: 700 var(--lf-text-md) / 1 var(--lf-body);
 }
 
 .lf-first-look--compact[open] summary::after {
@@ -134,7 +134,7 @@
 
 .lf-editorial .lf-first-look__compact-copy a {
   color: var(--lf-fight);
-  font: 500 var(--lf-text-2xs) / 1.45 var(--lf-mono);
+  font: 600 var(--lf-text-2xs) / 1.45 var(--lf-body);
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }

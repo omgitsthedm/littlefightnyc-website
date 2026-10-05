@@ -65,6 +65,46 @@
     return tilePath && tilePath.split('#')[0] === String(path || '').split('#')[0];
   }) || null;
 
+  function prepareNativeInquiry(root, path) {
+    const form = root.querySelector('form.static-inquiry');
+    const host = form?.closest('[data-production-island]');
+    const copyNode = host?.querySelector('[data-inquiry-copy]');
+    if (!form || !copyNode || form.dataset.contextReady) return;
+    let copies;
+    try { copies = JSON.parse(copyNode.textContent); } catch { return; }
+    const selector = form.elements.namedItem('intent');
+    if (!(selector instanceof HTMLSelectElement)) return;
+    const params = new URL(path, location.origin).searchParams;
+    const queryIntent = params.get('intent');
+    const requested = queryIntent && Object.prototype.hasOwnProperty.call(copies, queryIntent) ? queryIntent : 'general';
+    if (Object.prototype.hasOwnProperty.call(copies, requested)) {
+      for (const option of selector.options) {
+        option.defaultSelected = option.selected = option.value === requested;
+      }
+    }
+    const source = params.get('source');
+    const sourceField = form.elements.namedItem('source');
+    if (sourceField && source && /^[a-z0-9/_-]{1,160}$/i.test(source)) {
+      sourceField.defaultValue = sourceField.value = source;
+    }
+    const showCopy = () => {
+      const copy = copies[selector.value] || copies.general;
+      host.dataset.inquiryIntent = selector.value;
+      for (const [attribute, field] of [
+        ['title', 'title'], ['summary', 'summary'], ['eyebrow', 'eyebrow'],
+        ['message-label', 'messageLabel'], ['submit', 'submit'],
+      ]) {
+        const target = host.querySelector(`[data-inquiry-${attribute}]`);
+        if (target && typeof copy[field] === 'string') target.textContent = copy[field];
+      }
+      const message = form.elements.namedItem('message');
+      if (message && typeof copy.placeholder === 'string') message.placeholder = copy.placeholder;
+    };
+    showCopy();
+    selector.addEventListener('change', showCopy);
+    form.dataset.contextReady = 'true';
+  }
+
   function setMotionState(enabled, { announce = true } = {}) {
     document.body.classList.toggle('no-motion', !enabled);
     if (motionToggle) {
@@ -194,6 +234,9 @@
 
   function updateNavigation(path, homePath = path) {
     if (readerBack) readerBack.hidden = readerTrail.length < 2;
+    // Once someone starts an inquiry, keep the return path without suggesting
+    // unrelated cards or leaving two disabled controls beside the form.
+    const isInquiry = ['/tech-audit/', '/contact/', '/thanks/'].includes(path.split(/[?#]/)[0]);
     const seen = new Set();
     const cards = [...(mosaic?.querySelectorAll('a.tile[href]') || [])].filter(tile => {
       const target = sameOriginPath(tile.href);
@@ -205,6 +248,7 @@
     const next = index >= 0 ? cards[index + 1] || null : null;
     for (const [button, tile, name] of [[readerPrevious, previous, 'Previous'], [readerNext, next, 'Next']]) {
       if (!button) continue;
+      button.hidden = isInquiry;
       button.disabled = !tile;
       button.dataset.readerTarget = tile ? sameOriginPath(tile.href) : '';
       button.setAttribute('aria-label', tile ? `${name} card: ${tile.dataset.cellTitle || tile.textContent.trim()}` : `${name} card`);
@@ -275,6 +319,11 @@
       if (options.backTrail) history.replaceState(lastOpenState, '', readerPath);
       else if (!options.fromHistory) history.pushState(lastOpenState, '', readerPath);
       updateNavigation(readerPath, reader.homePath);
+      prepareNativeInquiry(detailBody, readerPath);
+      // A standalone page can have its own detail-title behind this dialog.
+      // Name the modal from its own content, never a duplicate background ID.
+      detail.removeAttribute('aria-labelledby');
+      detail.setAttribute('aria-label', detailBody.querySelector('h1')?.textContent.trim() || reader.title);
       document.dispatchEvent(new CustomEvent('lf:reader-ready', { detail: { path: readerPath } }));
 
       showDialog();
@@ -388,6 +437,10 @@
         });
         if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
         target.focus({ preventScroll: true });
+        // Focusing a link can nudge a hidden outer scroller by a border pixel.
+        // The body is the only scrolling surface; keep both shell layers fixed.
+        detail.scrollTop = 0;
+        panel.scrollTop = 0;
         return;
       }
     }
@@ -552,6 +605,7 @@
     interaction('email_draft', contentId(detailBody.dataset.readerPath || location.pathname), 'reader_contact');
     location.href = `mailto:hello@littlefightnyc.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
+  prepareNativeInquiry(document, location.href);
   mountDemos(document.querySelector('main[data-page-content]') || document.createElement('div'));
   document.querySelectorAll('form[data-email-draft] textarea[name="message"]').forEach(field => { if (field.maxLength < 0) field.maxLength = 4000; });
 })();

@@ -58,10 +58,10 @@ body.reader-open{overflow:hidden}
 .lf-reader .review-collection .story-reviews{padding:28px clamp(22px,4vw,48px)}
 .lf-reader .story-contact .contact-actions a.contact-plan{color:#1b100a}
 
-/* The persistent reader rail already supplies Call, Text and Email. Keep the
-   editorial intro focused on the in-card form jump; standalone Tech Audit
-   pages never live inside #detail and retain every contact channel. */
-#detail[data-reader-rail=true] .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]){display:none}
+/* A persistent contact rail already supplies Call, Text and Email. Keep the
+   inquiry intro focused on its form jump wherever that rail is present. */
+#detail[data-reader-rail=true] .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]),
+.page-shell>.direct-contact-rail~main .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]){display:none}
 
 /* On a narrow reader, three quick contact controls keep their compact row and
    the longer planning action owns a full, readable row beneath it. */

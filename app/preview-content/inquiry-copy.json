@@ -1,0 +1,47 @@
+{
+  "website": {
+    "accent": "#92BFFF",
+    "eyebrow": "Websites · a first look",
+    "title": "Make your business easy to choose.",
+    "summary": "Tell us what customers need to find, understand, or do. We’ll look at the path and send a clear next step.",
+    "messageLabel": "What should your website make easier?",
+    "placeholder": "For example: customers cannot tell what we do, we need a first website, or booking is hard to find.",
+    "submit": "Send my website request"
+  },
+  "support": {
+    "accent": "#F5D95B",
+    "eyebrow": "Support · a first look",
+    "title": "Get your day moving again.",
+    "summary": "Tell us what stopped working or keeps slowing everyone down. We’ll help name the next useful move.",
+    "messageLabel": "What needs support?",
+    "placeholder": "For example: our Wi-Fi drops, the register is unreliable, or we cannot get into an account.",
+    "submit": "Send my support request"
+  },
+  "consulting": {
+    "accent": "#A0DF85",
+    "eyebrow": "Consulting · a first look",
+    "title": "Make a confident next move.",
+    "summary": "Tell us what needs a clear decision before you change it. We’ll help map the next useful move.",
+    "messageLabel": "What needs a clearer plan?",
+    "placeholder": "For example: we are choosing a new tool, our customer handoffs are messy, or we need to know what to keep.",
+    "submit": "Send my consulting request"
+  },
+  "systems": {
+    "accent": "#F09BDD",
+    "eyebrow": "Custom software · a first look",
+    "title": "Plan software that fits your business.",
+    "summary": "Tell us where a repeated handoff breaks down. We’ll help decide whether to keep, connect, replace, or build.",
+    "messageLabel": "What should work together?",
+    "placeholder": "For example: staff copy the same information between tools, a client handoff gets lost, or a repeat job needs a simpler system.",
+    "submit": "Send my software request"
+  },
+  "general": {
+    "accent": "#FF7839",
+    "eyebrow": "Free first look",
+    "title": "Get a clear next step.",
+    "summary": "Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.",
+    "messageLabel": "What would you like to improve or fix?",
+    "placeholder": "For example: We have no website yet and customers find us on Instagram, we need online booking, or a tool is slowing us down.",
+    "submit": "Send my first-look request"
+  }
+}

@@ -81,8 +81,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 
 @media (max-width:360px){
   .primary-nav{grid-template-columns:.9fr .9fr 1.2fr}
-  .topbar :is(.explore-label,.motion-label){display:none}
-  .topbar :is(#explore-toggle,#motion-toggle){width:44px;min-width:44px;padding:0}
+  .topbar .motion-label{display:none}
+  .topbar #motion-toggle{width:44px;min-width:44px;padding:0}
   .wordmark{gap:5px;padding:0;font-size:16px}
   .wordmark .boat{width:32px;height:30px}
   .wordmark .nyc{font-size:8px}
@@ -92,4 +92,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* Keep the service finder named on phones without adding another header row. */
+@media(max-width:760px){
+  .topbar .explore-search-label{display:none}
+  .topbar #explore-toggle{width:auto;min-width:44px;padding:10px 8px;gap:6px}
+  .topbar .explore-label{display:inline;font-size:1rem}
 }

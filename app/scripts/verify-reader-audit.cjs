@@ -210,10 +210,13 @@ async function run() {
         assert.equal(response?.status(), 200, 'standalone Tech Audit must return 200');
         const channels = session.page.locator('.lf-audit-intro__channels');
         await channels.waitFor({ state: 'visible' });
-        for (const href of ['tel:', 'sms:', 'mailto:', '#fit-step-title']) {
-          await channels.locator('a[href^="' + href + '"]').waitFor({ state: 'visible' });
+        for (const href of ['tel:', 'sms:', 'mailto:']) {
+          await session.page.locator('.direct-contact-rail a[href^="' + href + '"]').waitFor({ state: 'visible' });
+          assert.equal(await channels.locator('a[href^="' + href + '"]').isVisible(), false,
+            'the intro must not repeat a channel already present in the persistent rail');
         }
-        return 'Call, Text, Email, and Form remain visible outside the reader';
+        await channels.locator('a[href="#fit-step-title"]').waitFor({ state: 'visible' });
+        return 'Call, Text, and Email stay in the persistent rail; the intro keeps its form link';
       } finally {
         await session.context.close();
       }
@@ -276,6 +279,7 @@ async function run() {
         if (mobile.textScale !== 1) {
           await session.page.addStyleTag({ content: 'html { font-size: ' + mobile.textScale + 'em !important; }' });
         }
+        await session.page.locator('#detail .rw-full-gallery > summary').click();
         const plus = session.page.locator('#detail-body .rw-client-project__plus').first();
         await plus.scrollIntoViewIfNeeded();
         await plus.waitFor({ state: 'visible' });

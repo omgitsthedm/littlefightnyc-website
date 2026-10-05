@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Plus, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone, Send } from "lucide-react";
-import type { FormEvent } from "react";
+import { Plus, CalendarDays, Check, ClipboardCheck, Clock, Flame, Mail, MessageSquare, Phone } from "lucide-react";
+import type { CSSProperties, FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import FaqList from "@/components/editorial/FaqList";
 import FirstLookScope from "@/components/editorial/FirstLookScope";
@@ -14,6 +14,7 @@ import { readAttribution } from "@/lib/attribution";
 import { safeTechAuditLeadOrigin } from "@/lib/techAuditOrigin";
 import { registerFirstLookWebMcp, type FirstLookStageStatus } from "@/lib/firstLookWebMcp";
 import { skelImg } from "@/lib/imgSkeleton";
+import { inquiryCopyForIntent } from "@/lib/inquiryCopy";
 import {
   isInternalTechAuditTest,
   normalizeTechAuditDiscoverySource,
@@ -36,6 +37,7 @@ import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact
 
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
 type Step = 1 | 2 | 3;
+type TechAuditProps = { idPrefix?: string };
 
 const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
@@ -155,7 +157,7 @@ const EMPTY_FIELDS: ContactFields = {
 };
 
 type Draft = {
-  intent: "general" | "website";
+  intent: TechAuditLeadIntent;
   step: Step;
   symptom: string | null;
   urgency: string | null;
@@ -176,13 +178,10 @@ function readDraft(): Draft | null {
     const urgency = typeof d.urgency === "string" ? d.urgency : null;
     // Drafts written before intent was stored can be identified safely: the
     // general flow cannot reach step 3 without an urgency choice.
-    const intent = d.intent === "website"
-      ? "website"
-      : d.intent === "general"
-        ? "general"
-        : step === 3 && symptom === WEBSITE_ROUTE.label && urgency === null
-          ? "website"
-          : "general";
+    const intent = parseTechAuditLeadIntent(d.intent)
+      ?? (step === 3 && symptom === WEBSITE_ROUTE.label && urgency === null
+        ? "website"
+        : "general");
     const savedFields = d.fields ?? EMPTY_FIELDS;
     return {
       intent,
@@ -212,7 +211,7 @@ function writeDraft(draft: Draft): void {
   }
 }
 
-export default function TechAudit() {
+export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   const [searchParams] = useSearchParams();
   const websiteUrl = sharedWebsiteUrl(searchParams);
   const reportId = auditReportId(searchParams);
@@ -236,7 +235,7 @@ export default function TechAudit() {
     (websiteUrl && (searchParams.has("text") || searchParams.has("title"))
       ? "pwa_share"
       : "littlefightnyc.com");
-  const intentMode = websiteIntent ? "website" : "general";
+  const intentMode = leadIntent;
   // Restore any in-tab draft once per mount, before state initializes.
   const draft = useMemo(() => readDraft(), []);
   const activeDraft = draft?.intent === intentMode ? draft : null;
@@ -277,7 +276,7 @@ export default function TechAudit() {
     message: string;
     resolve: (status: FirstLookStageStatus) => void;
   } | null>(null);
-  const [fields, setFields] = useState<ContactFields>(draft?.fields ?? EMPTY_FIELDS);
+  const [fields, setFields] = useState<ContactFields>(activeDraft?.fields ?? EMPTY_FIELDS);
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitIssue, setSubmitIssue] = useState("");
@@ -300,6 +299,29 @@ export default function TechAudit() {
     discoverySource: fields.discovery_source,
     internalTest,
   });
+  const inquiryCopy = inquiryCopyForIntent(leadIntent);
+  // The standalone inquiry can remain mounted behind a reader-launched
+  // inquiry. The reader receives a prefix only in that nested case so labels
+  // and descriptions never resolve to the background form.
+  const domId = (name: string) => `${idPrefix}${name}`;
+  const detailTitleId = domId("detail-title");
+  const stepTitleId = domId("fit-step-title");
+  const botFieldId = domId("bot-field");
+  const nameId = domId("fit-name");
+  const nameErrorId = domId("fit-name-error");
+  const businessId = domId("fit-business");
+  const businessHintId = domId("fit-business-hint");
+  const businessErrorId = domId("fit-business-error");
+  const contactId = domId("fit-contact");
+  const contactErrorId = domId("fit-contact-error");
+  const followUpId = domId("fit-follow-up");
+  const followUpNoteId = domId("fit-follow-up-note");
+  const followUpErrorId = domId("fit-follow-up-error");
+  const messageId = domId("fit-message");
+  const messageNoteId = domId("fit-message-note");
+  const messageErrorId = domId("fit-message-error");
+  const discoverySourceId = domId("fit-discovery-source");
+  const exampleTitleId = domId("lf-audit-example-title");
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
   // buzz when validation blocks it.
@@ -618,15 +640,21 @@ export default function TechAudit() {
 
   return (
     <>
-      <section className="lf-audit-intro" aria-labelledby="lf-audit-intro-title" data-lf-owner-intro="true">
+      <section
+        className="lf-audit-intro"
+        aria-labelledby={detailTitleId}
+        data-lf-owner-intro="true"
+        data-lf-intent={leadIntent}
+        style={{ "--lf-audit-intent": inquiryCopy.accent } as CSSProperties}
+      >
         <div className="lf-audit-intro__inner">
           <div className="lf-audit-intro__copy">
             <p className="lf-audit-intro__eyebrow">
               <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
-              Free first look
+              {inquiryCopy.eyebrow}
             </p>
-            <h1 id="lf-audit-intro-title">Get a clear next step.</h1>
-            <p>Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.</p>
+            <h1 id={detailTitleId}>{inquiryCopy.title}</h1>
+            <p>{inquiryCopy.summary}</p>
             <FirstLookScope compact />
             <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
               <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
@@ -642,9 +670,8 @@ export default function TechAudit() {
                   <Mail size={16} strokeWidth={2} aria-hidden="true" />
                   Email
                 </a>
-                <a href="#fit-step-title" data-lf-label="audit_intro_form">
-                  <Send size={16} strokeWidth={2} aria-hidden="true" />
-                  Form
+                <a href={`#${stepTitleId}`} data-lf-label="audit_intro_form">
+                  Write your message +
                 </a>
               </div>
               <p className="lf-audit-intro__hours">
@@ -679,7 +706,7 @@ export default function TechAudit() {
               <div className="lf-audit__step">
                 <h2
                   className="lf-audit__step-title"
-                  id="fit-step-title"
+                  id={stepTitleId}
                   tabIndex={-1}
                   ref={headingRef}
                 >
@@ -693,7 +720,7 @@ export default function TechAudit() {
                 <div
                   className="lf-audit__cards"
                   role="group"
-                  aria-labelledby="fit-step-title"
+                  aria-labelledby={stepTitleId}
                 >
                   {auditRoutes.map((route) => {
                     const Icon = route.icon;
@@ -743,7 +770,7 @@ export default function TechAudit() {
               <div className="lf-audit__step">
                 <h2
                   className="lf-audit__step-title"
-                  id="fit-step-title"
+                  id={stepTitleId}
                   tabIndex={-1}
                   ref={headingRef}
                 >
@@ -755,7 +782,7 @@ export default function TechAudit() {
                 <div
                   className="lf-audit__cards lf-audit__cards--three"
                   role="group"
-                  aria-labelledby="fit-step-title"
+                  aria-labelledby={stepTitleId}
                 >
                   {URGENCY_OPTIONS.map((option) => {
                     const Icon = option.icon;
@@ -805,7 +832,7 @@ export default function TechAudit() {
                   className={`lf-audit__step-title${
                     payoff ? " lf-audit__step-title--payoff" : ""
                   }`}
-                  id="fit-step-title"
+                  id={stepTitleId}
                   tabIndex={-1}
                   ref={headingRef}
                 >
@@ -838,14 +865,14 @@ export default function TechAudit() {
                     <input key={key} type="hidden" name={key} value={value} />
                   ))}
                   <p className="lf-audit__honeypot" aria-hidden="true">
-                    <label htmlFor="bot-field">Do not fill this out</label>
-                    <input id="bot-field" name="bot-field" tabIndex={-1} autoComplete="off" />
+                    <label htmlFor={botFieldId}>Do not fill this out</label>
+                    <input id={botFieldId} name="bot-field" tabIndex={-1} autoComplete="off" />
                   </p>
 
                   <div className={`lf-audit__field${fieldClass("name", fields.name)}`}>
-                    <label htmlFor="fit-name">Your name</label>
+                    <label htmlFor={nameId}>Your name</label>
                     <input
-                      id="fit-name"
+                      id={nameId}
                       name="name"
                       autoComplete="name"
                       required
@@ -856,19 +883,19 @@ export default function TechAudit() {
                       }}
                       onBlur={(e) => validateField("name", e.target.value)}
                       aria-invalid={errors.name ? true : undefined}
-                      aria-describedby={errors.name ? "fit-name-error" : undefined}
+                      aria-describedby={errors.name ? nameErrorId : undefined}
                     />
                     {errors.name && (
-                      <p className="lf-audit__error" role="alert" id="fit-name-error">
+                      <p className="lf-audit__error" role="alert" id={nameErrorId}>
                         {errors.name}
                       </p>
                     )}
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("business", fields.business)}`}>
-                    <label htmlFor="fit-business">Business or idea</label>
+                    <label htmlFor={businessId}>Business or idea</label>
                     <input
-                      id="fit-business"
+                      id={businessId}
                       name="business"
                       autoComplete="organization"
                       required
@@ -879,20 +906,20 @@ export default function TechAudit() {
                       }}
                       onBlur={(e) => validateField("business", e.target.value)}
                       aria-invalid={errors.business ? true : undefined}
-                      aria-describedby={`fit-business-hint${errors.business ? " fit-business-error" : ""}`}
+                      aria-describedby={`${businessHintId}${errors.business ? ` ${businessErrorId}` : ""}`}
                     />
-                    <p className="lf-audit__hint" id="fit-business-hint">
+                    <p className="lf-audit__hint" id={businessHintId}>
                       No name yet? Tell us what you are starting.
                     </p>
                     {errors.business && (
-                      <p className="lf-audit__error" role="alert" id="fit-business-error">
+                      <p className="lf-audit__error" role="alert" id={businessErrorId}>
                         {errors.business}
                       </p>
                     )}
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("contact", fields.contact)}`}>
-                    <label htmlFor="fit-contact">
+                    <label htmlFor={contactId}>
                       {fields.follow_up === "email"
                         ? "Email"
                         : fields.follow_up === "text" || fields.follow_up === "phone"
@@ -900,7 +927,7 @@ export default function TechAudit() {
                           : "Phone or email"}
                     </label>
                     <input
-                      id="fit-contact"
+                      id={contactId}
                       name="contact"
                       autoComplete={
                         fields.follow_up === "text" || fields.follow_up === "phone"
@@ -930,27 +957,27 @@ export default function TechAudit() {
                       }}
                       onBlur={(e) => validateField("contact", e.target.value)}
                       aria-invalid={errors.contact ? true : undefined}
-                      aria-describedby={errors.contact ? "fit-contact-error" : undefined}
+                      aria-describedby={errors.contact ? contactErrorId : undefined}
                     />
                     {errors.contact && (
-                      <p className="lf-audit__error" role="alert" id="fit-contact-error">
+                      <p className="lf-audit__error" role="alert" id={contactErrorId}>
                         {errors.contact}
                       </p>
                     )}
                   </div>
 
                   <div className={`lf-audit__field${errors.follow_up ? " is-error" : ""}`}>
-                    <label htmlFor="fit-follow-up">Best way to reach you</label>
+                    <label htmlFor={followUpId}>Best way to reach you</label>
                     <select
-                      id="fit-follow-up"
+                      id={followUpId}
                       name="follow_up"
                       value={fields.follow_up}
                       onChange={(e) => setFollowUpPreference(e.target.value)}
                       aria-invalid={errors.follow_up ? true : undefined}
                       aria-describedby={
                         errors.follow_up
-                          ? "fit-follow-up-note fit-follow-up-error"
-                          : "fit-follow-up-note"
+                          ? `${followUpNoteId} ${followUpErrorId}`
+                          : followUpNoteId
                       }
                     >
                       <option value="fastest">Whatever’s fastest</option>
@@ -958,12 +985,12 @@ export default function TechAudit() {
                       <option value="phone" disabled={contactRoute === "email"}>Call me</option>
                       <option value="email" disabled={contactRoute === "phone"}>Email me</option>
                     </select>
-                    <p className="lf-audit__note" id="fit-follow-up-note">
+                    <p className="lf-audit__note" id={followUpNoteId}>
                       We use only the route you choose. Text and phone need a phone number;
                       email needs an email address.
                     </p>
                     {errors.follow_up && (
-                      <p className="lf-audit__error" role="alert" id="fit-follow-up-error">
+                      <p className="lf-audit__error" role="alert" id={followUpErrorId}>
                         {errors.follow_up}
                       </p>
                     )}
@@ -974,9 +1001,9 @@ export default function TechAudit() {
                       fieldClass("message", message)
                     }`}
                   >
-                    <label htmlFor="fit-message">What would you like to improve or fix?</label>
+                    <label htmlFor={messageId}>{inquiryCopy.messageLabel}</label>
                     <textarea
-                      id="fit-message"
+                      id={messageId}
                       name="message"
                       rows={5}
                       required
@@ -988,27 +1015,27 @@ export default function TechAudit() {
                         clearErrorIfFilled("message", e.target.value);
                       }}
                       onBlur={(e) => validateField("message", e.target.value)}
-                      placeholder="For example: We have no website yet and customers find us on Instagram, we need online booking, or a tool is slowing us down."
+                      placeholder={inquiryCopy.messagePlaceholder}
                       aria-invalid={errors.message ? true : undefined}
                       aria-describedby={
-                        errors.message ? "fit-message-error" : "fit-message-note"
+                        errors.message ? messageErrorId : messageNoteId
                       }
                     />
-                    <p className="lf-audit__note" id="fit-message-note">
+                    <p className="lf-audit__note" id={messageNoteId}>
                       No passwords or private customer data. A short sentence is enough. If helpful,
                       add your city, social page, or how customers find you.
                     </p>
                     {errors.message && (
-                      <p className="lf-audit__error" role="alert" id="fit-message-error">
+                      <p className="lf-audit__error" role="alert" id={messageErrorId}>
                         {errors.message}
                       </p>
                     )}
                   </div>
 
                   <div className="lf-audit__field lf-audit__field--full">
-                    <label htmlFor="fit-discovery-source">How did you first hear about us? <span>(optional)</span></label>
+                    <label htmlFor={discoverySourceId}>How did you first hear about us? <span>(optional)</span></label>
                     <select
-                      id="fit-discovery-source"
+                      id={discoverySourceId}
                       name="discovery_source"
                       value={fields.discovery_source}
                       onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
@@ -1033,7 +1060,7 @@ export default function TechAudit() {
                       </>
                     ) : (
                       <>
-                        Send my first-look request{" "}
+                        {inquiryCopy.submitLabel}{" "}
                         <Plus size={16} strokeWidth={2} aria-hidden="true" />
                       </>
                     )}
@@ -1087,7 +1114,7 @@ export default function TechAudit() {
               <summary>See a first-look example</summary>
               <div className="lf-audit__example-content">
                 <p className="lf-audit__example-label">Public work example</p>
-                <h2 id="lf-audit-example-title">Keep the booking system. Make the path clearer.</h2>
+                <h2 id={exampleTitleId}>Keep the booking system. Make the path clearer.</h2>
                 <p className="lf-audit__example-lead">
                   Hair By Rachel kept Square Appointments. The website explains the work and services, then sends a ready visitor to book.
                 </p>
@@ -1119,4 +1146,9 @@ export default function TechAudit() {
       </div>
     </>
   );
+}
+
+/** The ordinary route has no island-specific configuration. */
+export default function TechAuditRoute() {
+  return <TechAudit />;
 }
