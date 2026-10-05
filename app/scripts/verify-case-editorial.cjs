@@ -359,7 +359,17 @@ async function run() {
           let caseBrief;
           if (viewport.width <= 390) caseBrief = await assertCaseBriefClearsStickyRail(page, viewport);
           const caseOverflow = await assertNoOverflow(page, `${viewport.width}px Chromatic case`);
-          report.viewports.push({ ...viewport, workOverflow, caseOverflow, caseBrief });
+          let enlargedCaseBrief;
+          if (viewport.width <= 390) {
+            await page.locator('.direct-contact-rail a').evaluateAll(links => {
+              const sizes = links.map(link => parseFloat(getComputedStyle(link).fontSize));
+              links.forEach((link, index) => { link.style.fontSize = `${sizes[index] * 2}px`; });
+            });
+            await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+            enlargedCaseBrief = await assertCaseBriefClearsStickyRail(page, viewport);
+            await assertNoOverflow(page, `${viewport.width}px enlarged contact rail`);
+          }
+          report.viewports.push({ ...viewport, workOverflow, caseOverflow, caseBrief, enlargedCaseBrief });
         } finally { await context.close(); }
       }
       return '320, 390, 768, and 1440px all have visible headings and no overflow';

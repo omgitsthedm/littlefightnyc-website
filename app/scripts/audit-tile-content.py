@@ -36,6 +36,12 @@ EXPECTED_REVIEW_DISTRIBUTION = {
 EXPECTED_ROUTE_COUNT = 400
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
+# Credits are public attribution, not imported source markup.  A malformed
+# Wikimedia extraction once stored page CSS in the photographer field and
+# rendered it as a 1,100px caption.  Keep the source field plain text so every
+# credit remains readable while its license and original-source links stay in
+# the generated figure.
+UNSAFE_PHOTO_CREDIT = re.compile(r"<|>|\.mw-parser-output|@(?:media|import)|[{}]", re.I)
 # This must mirror the compiler's preserved-app boundary.  A reader companion
 # may be generated under /_readers/, while the public application itself keeps
 # its own document, robots policy, and byte-for-byte source copy.
@@ -756,6 +762,15 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
         failures.append(f"tile artifact reports {release_data.get('routes')} routes; expected {EXPECTED_ROUTE_COUNT}")
 
     pages = source_pages()
+    for album in json.loads((CONTENT / "albums.json").read_text()):
+        for photo in album.get("photos", []):
+            credit = str(photo.get("photographer", "")).strip()
+            if not credit:
+                failures.append(f"{album.get('id', 'album')}/{photo.get('id', 'photo')}: photo credit is missing")
+            elif UNSAFE_PHOTO_CREDIT.search(credit):
+                failures.append(
+                    f"{album.get('id', 'album')}/{photo.get('id', 'photo')}: photo credit contains source markup"
+                )
     if release_data.get("routes") != len(pages):
         failures.append(f"tile artifact reports {release_data.get('routes')} routes; source compiler expects {len(pages)}")
     meta = route_meta()

@@ -76,6 +76,9 @@
  .tile[data-editorial-front] .topic-anchor-copy{padding:12px;gap:8px;grid-template-columns:44px minmax(0,1fr);grid-row:auto;align-self:stretch}
  .tile[data-editorial-front] .topic-anchor-icon{display:block;width:44px;height:44px}
  .tile[data-editorial-front] .topic-anchor-label{font-size:clamp(23px,7.4cqw,27px)}
+ /* The two-word Software label shares a fixed 6 × 3 anchor with the other
+    services. This remains a clear 21px label instead of making one anchor taller. */
+ .tile[data-editorial-front=software] .topic-anchor-label{font-size:21px}
  /* The visible plus is a navigation affordance, never part of a service
     name. Reserve its touch lane before a visitor enlarges the type. */
  .tile[data-editorial-front] .topic-anchor-label{grid-column:2;align-self:center}

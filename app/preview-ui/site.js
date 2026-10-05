@@ -29,6 +29,20 @@
   readerRail?.setAttribute('aria-label', 'Quick contact');
   if (readerRail) detail.dataset.readerRail = 'true';
 
+  // Direct links use a sticky contact rail. Measure its rendered height so
+  // enlarged labels and wrapped phone layouts cannot cover a jumped-to answer.
+  const directContactRail = document.querySelector('.page-shell>.direct-contact-rail');
+  if (directContactRail) {
+    const updateContactClearance = () => {
+      const stickyTop = Math.max(0, parseFloat(getComputedStyle(directContactRail).top) || 0);
+      const clearance = Math.ceil(directContactRail.getBoundingClientRect().height + stickyTop + 12);
+      document.documentElement.style.setProperty('--direct-contact-clearance', `${clearance}px`);
+    };
+    updateContactClearance();
+    if ('ResizeObserver' in window) new ResizeObserver(updateContactClearance).observe(directContactRail);
+    window.addEventListener('resize', updateContactClearance, { passive: true });
+  }
+
   let activeController = null;
   let requestVersion = 0;
   let loadingVersion = 0;

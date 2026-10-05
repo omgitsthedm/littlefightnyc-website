@@ -365,6 +365,7 @@ def article(p):
         # source-backed explanation remain below, in the same reader.
         if path in lab_by_path:
             body += lab_controls_section(lab_by_path[path])
+    simple_answer = False
     if path=='/services/custom-local-websites/':
         body+=(CONTENT/'website-body.html').read_text()
     elif path in anchor_paths:
@@ -379,7 +380,14 @@ def article(p):
     elif p.get('contentBlocks') and path not in authored and path not in lab_by_path:
         body+=render_legacy_sections(p,display,link)
     else:
-        body+=sections_html(q['sections'])
+        section_body = sections_html(q['sections'])
+        # A short answer and its illustration share one composition. Keep the
+        # text first in document order; long guides and grouped stories retain
+        # their existing section flow.
+        simple_answer = bool(answer_first and art and len(q['sections']) == 1
+            and section_body.startswith('<section class="story-section story-section--plain"')
+            and not q.get('sourceDepth') and not q.get('faqs') and not q.get('_rewriteCategory'))
+        body+=('<div class="answer-composition">' if simple_answer else '')+section_body
     if q.get('sourceDepth'):
         body+=render_legacy_sections(q['sourceDepth'],display,link)
     if path in ['/nationwide/','/websites-for-your-business/']:
@@ -393,6 +401,8 @@ def article(p):
         body+=render_category_answers(rewrite,q['_rewriteCategory'])
     if answer_first and art and not p.get('_answerGuide'):
         body+='<aside class="answer-visual" aria-label="Illustration">'+art+'</aside>'
+    if simple_answer:
+        body+='</div>'
     service_path=q.get('_servicePath') or p.get('_homeGroup',{}).get('servicePath')
     if service_path:
         body+='<nav class="answer-service-link" aria-label="Related service">'+link({'web':'Website design','it':'Tech support','consulting':'Tech consulting','software':'Custom software'}[reader_family(p)]+' +',service_path)+'</nav>'

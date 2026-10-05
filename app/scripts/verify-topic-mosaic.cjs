@@ -198,7 +198,7 @@ async function assertInputScrollingAndReaderResume(browser) {
     assert.ok(afterWheel.top > 80, `desktop wheel input did not scroll homepage: ${JSON.stringify(afterWheel)}`);
 
     await desktop.page.keyboard.press('Home');
-    await desktop.page.waitForFunction(() => window.scrollY < 8, null, { timeout: 1_500 });
+    await desktop.page.waitForFunction(() => window.scrollY === 0, null, { timeout: 2_000 });
     const afterHome = await scrollMetrics(desktop.page);
     assert.ok(afterHome.top < 8, `Home key did not return desktop homepage to its beginning: ${JSON.stringify(afterHome)}`);
     const source = desktop.page.locator('#topic-web a.tile[data-anchor="web"]').first();
@@ -216,7 +216,7 @@ async function assertInputScrollingAndReaderResume(browser) {
     assert.ok(afterCloseWheel.top > 80,
       `desktop homepage did not resume wheel scrolling after reader close: ${JSON.stringify(afterCloseWheel)}`);
     await desktop.page.keyboard.press('Home');
-    await desktop.page.waitForFunction(() => window.scrollY < 8, null, { timeout: 1_500 });
+    await desktop.page.waitForFunction(() => window.scrollY === 0, null, { timeout: 2_000 });
     await desktop.page.keyboard.press('PageDown');
     // Native smooth scrolling can take longer under parallel browser load.
     // Require real movement within a bound, rather than sampling one frame.
@@ -263,7 +263,8 @@ async function assertResponsiveAnchorPresentation(browser) {
         const icons = [...document.querySelectorAll('.topic-section[data-topic] .topic-anchor-icon')]
           .map(node => {
             const rect = node.getBoundingClientRect();
-            return { width: rect.width, height: rect.height, visible: visible(node) };
+            return { family: node.closest('[data-editorial-front]')?.dataset.editorialFront,
+              width: rect.width, height: rect.height, visible: visible(node) };
           });
         const grid = document.querySelector('#topic-web [data-topic-grid]');
         const columns = getComputedStyle(grid).gridTemplateColumns.trim().split(/\s+/).filter(Boolean).length;
@@ -283,9 +284,14 @@ async function assertResponsiveAnchorPresentation(browser) {
       `${viewport.width}px Website anchor photo is not visibly rendered: ${JSON.stringify(presentation.photo)}`);
       assert.equal(presentation.icons.length, topics.length + 1, `${viewport.width}px needs one icon frame for every service anchor`);
       assert.ok(presentation.icons.every(icon => icon.visible), `${viewport.width}px service anchor icon is hidden: ${JSON.stringify(presentation.icons)}`);
-      const reference = presentation.icons[0];
-      assert.ok(presentation.icons.every(icon => Math.abs(icon.width - reference.width) <= 1 && Math.abs(icon.height - reference.height) <= 1),
-        `${viewport.width}px service anchor icon frames are inconsistent: ${JSON.stringify(presentation.icons)}`);
+      const services = presentation.icons.filter(icon => icon.family !== 'brand');
+      const brand = presentation.icons.find(icon => icon.family === 'brand');
+      assert.equal(services.length, topics.length, 'all four service icons remain present');
+      const reference = services[0];
+      assert.ok(services.every(icon => Math.abs(icon.width - reference.width) <= 1 && Math.abs(icon.height - reference.height) <= 1),
+        `${viewport.width}px service anchor icon frames are inconsistent: ${JSON.stringify(services)}`);
+      assert.ok(brand && brand.width >= 32 && brand.height >= 32 && brand.width <= reference.width,
+        `${viewport.width}px the compact brand strip retains a visible, proportionate tugboat`);
       if (viewport.width <= 1000) assert.equal(presentation.columns, 6, `${viewport.width}px topic mosaic must use six columns`);
       else assert.equal(presentation.columns, 12, `${viewport.width}px topic mosaic must use twelve columns`);
       measurements.push({ viewport: viewport.width, ...presentation });

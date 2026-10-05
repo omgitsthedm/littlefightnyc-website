@@ -126,7 +126,8 @@ async function run() {
       const { ctx, page } = await context(browser);
       await page.goto(base + '/tech-audit/?intent=website', { waitUntil: 'networkidle' });
       await page.locator('#fit-name').fill('Original local draft');
-      await page.locator('.primary-nav a[href="/services/custom-local-websites/"]').click();
+      await page.locator('#explore-toggle').click();
+      await page.locator('#explore-menu .menu-links a[href="/services/custom-local-websites/"]').click();
       await page.locator('#detail .website-service-body').waitFor();
       assert.ok(await page.getByRole('dialog', { name: copies.website.title, exact: true }).isVisible());
       await page.locator('#detail a[href*="/tech-audit/?intent=website"]').first().click();
@@ -169,7 +170,11 @@ async function run() {
       assert.ok(await page.getByRole('button', { name: copies[intent].submit, exact: true }).isVisible());
       assert.ok(await page.locator('.direct-contact-rail a[href^="tel:"]').isVisible());
       assert.equal(await page.locator('.lf-audit-intro__channels a[href^="tel:"]').isVisible(), false);
-      assert.ok(await page.locator('.lf-audit-intro__channels a[href="#fit-step-title"]').isVisible());
+      if (intent === 'support') {
+        assert.equal(await page.locator('.lf-audit-intro__channels').count(), 0, 'support leads directly to the form without a duplicate contact row');
+      } else {
+        assert.ok(await page.locator('.lf-audit-intro__channels a[href="#fit-step-title"]').isVisible());
+      }
       pass(`${intent}: shared inquiry uses the right service copy`);
       await ctx.close();
     }

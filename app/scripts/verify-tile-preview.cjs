@@ -288,7 +288,8 @@ async function inspectDirectContactRail(page, label) {
         reachable: hit === link || link.contains(hit) };
     });
   });
-  assert.equal(controls.length, 3, `${label}: three direct contact actions`);
+  assert.equal(controls.length, 4, `${label}: Call, Text, Email and an in-page Write route`);
+  assert.deepEqual(controls.map(control => control.label.trim()), ['Call', 'Text', 'Email', 'Write'], `${label}: consistent help order`);
   for (const control of controls) {
     assert.ok(control.width >= 44 && control.height >= 44, `${label}: ${control.label} is at least 44px`);
     assert.equal(control.overlapped, false, `${label}: close button must not overlap ${control.label}`);
@@ -633,6 +634,14 @@ async function run() {
     await browser.close();
   }
   for (let run = 1; run <= 3; run += 1) await coldMobileRun(run);
+  // A repeatable local regression budget, not a field Core Web Vitals claim.
+  // https://web.dev/articles/lcp and https://web.dev/articles/cls describe the
+  // user-experience thresholds; real traffic still needs separate measurement.
+  const lcpSamples = report.performance.map(run => run.lcpMs).sort((a, b) => a - b);
+  assert.ok(lcpSamples.every(value => Number.isFinite(value) && value > 0), 'cold mobile runs must record actual content paint');
+  assert.ok(lcpSamples[1] <= 2500, `cold mobile median LCP exceeds the 2500ms local budget: ${lcpSamples.join(', ')}ms`);
+  assert.ok(report.performance.every(run => run.cls <= 0.1), 'cold mobile layout shift exceeds the local 0.1 budget');
+  pass('cold mobile performance budget', `median LCP ${lcpSamples[1]}ms; maximum CLS ${Math.max(...report.performance.map(run => run.cls))}`);
   assert.deepEqual(report.blockedMutations, [], 'Unexpected mutating requests: ' + JSON.stringify(report.blockedMutations));
   assert.deepEqual(report.pageErrors, [], 'Page errors: ' + report.pageErrors.join(' | '));
   assert.deepEqual(report.resourceFailures, [], 'Failed or 404 local resources: ' + JSON.stringify(report.resourceFailures));
