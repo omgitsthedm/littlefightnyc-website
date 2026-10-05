@@ -23,7 +23,7 @@ const content = path.join(app, 'preview-content');
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'topic-mosaic');
 const screenshots = path.join(evidence, 'screenshots');
 const base = (process.env.TOPIC_MOSAIC_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
-const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 400, groups: 19 };
+const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 402, groups: 19 };
 const topics = [
   ['web', 'topic-web', 'Websites'],
   ['it', 'topic-it', 'Tech support'],
@@ -410,7 +410,7 @@ async function assertTopicStructure(page, manifest) {
   assert.equal(release.totalTileInventory, expected.totalInventory, 'release marker must preserve the full 129-tile inventory');
   assert.equal(release.originalTilesPreserved, expected.originals, 'release marker must record 106 remaining originals');
   assert.equal(release.consolidatedGroups, expected.groups, 'release marker must record all consolidated groups');
-  assert.equal(release.routes, expected.routes, 'release marker must record 400 routes');
+  assert.equal(release.routes, expected.routes, 'release marker must record 402 routes, including the two printed QR destinations');
   assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length, 'homepage must expose exactly the consolidated visible tiles as real links');
   const homeTiles = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => ({ id: tile.dataset.answer, href: tile.getAttribute('href') })));
   assert.deepEqual(new Set(homeTiles.map(tile => tile.id)), new Set(manifest.visibleIds), 'homepage tile ids must exactly match the visible inventory');

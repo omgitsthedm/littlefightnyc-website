@@ -33,7 +33,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 400
+EXPECTED_ROUTE_COUNT = 402
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -211,7 +211,7 @@ def route_for_file(root: Path, file: Path) -> str:
 
 def source_pages() -> dict[str, dict]:
     pages: dict[str, dict] = {}
-    for name in ("live-pages.json", "answer-pages.json", "market-pages.json", "pages.json"):
+    for name in ("live-pages.json", "answer-pages.json", "market-pages.json", "qr-pages.json", "pages.json"):
         for page in json.loads((CONTENT / name).read_text()):
             pages[page["path"]] = page
     for album in json.loads((CONTENT / "albums.json").read_text()):

@@ -114,7 +114,7 @@ reviews = load('reviews.json')
 summaries = load('reader-summaries.json')
 authored = {p['path']:p for p in load('pages.json')}
 pages = {}
-for filename in ['live-pages.json','answer-pages.json','market-pages.json']:
+for filename in ['live-pages.json','answer-pages.json','market-pages.json','qr-pages.json']:
     for p in load(filename): pages[p['path']] = p
 for p in load('pages.json'): pages[p['path']] = p
 topic_tiles = load('topic-tiles.json')
@@ -176,7 +176,8 @@ def contact(path, prompt='Tell us what you need help with.'):
     intent=contact_intent(path)
     heading='Let’s make it yours.' if path=='/services/custom-local-websites/' else 'Talk to Little Fight.'
     introduction=prompt
-    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels(intent, path)}</nav><p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p></div></section>'''
+    hours = '' if path in ('/start/', '/trivia/1979/') else '<p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p>'
+    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels(intent, path)}</nav>{hours}</div></section>'''
 
 def channels(intent='general', source=''):
     query = '?intent='+quote(intent, safe='')
