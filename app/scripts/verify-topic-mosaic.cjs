@@ -182,6 +182,23 @@ async function scrollMetrics(page) {
   });
 }
 
+async function waitForHomeScrollSettled(page) {
+  // Chrome can expose y=0 one frame before native smooth Home scrolling has
+  // finished on the compositor. Keep using real key input, but do not race
+  // PageDown against that last frame. Eight repeated input sequences verify
+  // continuous rest avoids the race without changing application scrolling.
+  await page.waitForFunction(() => new Promise(resolve => {
+    let zeroSince = performance.now();
+    const check = () => {
+      const now = performance.now();
+      if (window.scrollY !== 0) zeroSince = now;
+      if (window.scrollY === 0 && now - zeroSince >= 150) resolve(true);
+      else requestAnimationFrame(check);
+    };
+    check();
+  }), null, { timeout: 3_000 });
+}
+
 async function assertInputScrollingAndReaderResume(browser) {
   const desktop = await makePage(browser, { width: 1440, height: 940 });
   try {
@@ -198,7 +215,7 @@ async function assertInputScrollingAndReaderResume(browser) {
     assert.ok(afterWheel.top > 80, `desktop wheel input did not scroll homepage: ${JSON.stringify(afterWheel)}`);
 
     await desktop.page.keyboard.press('Home');
-    await desktop.page.waitForFunction(() => window.scrollY === 0, null, { timeout: 2_000 });
+    await waitForHomeScrollSettled(desktop.page);
     const afterHome = await scrollMetrics(desktop.page);
     assert.ok(afterHome.top < 8, `Home key did not return desktop homepage to its beginning: ${JSON.stringify(afterHome)}`);
     const source = desktop.page.locator('#topic-web a.tile[data-anchor="web"]').first();
@@ -216,7 +233,7 @@ async function assertInputScrollingAndReaderResume(browser) {
     assert.ok(afterCloseWheel.top > 80,
       `desktop homepage did not resume wheel scrolling after reader close: ${JSON.stringify(afterCloseWheel)}`);
     await desktop.page.keyboard.press('Home');
-    await desktop.page.waitForFunction(() => window.scrollY === 0, null, { timeout: 2_000 });
+    await waitForHomeScrollSettled(desktop.page);
     await desktop.page.keyboard.press('PageDown');
     // Native smooth scrolling can take longer under parallel browser load.
     // Require real movement within a bound, rather than sampling one frame.

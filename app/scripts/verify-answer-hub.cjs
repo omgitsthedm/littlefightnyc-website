@@ -38,6 +38,62 @@ async function layout(page) {
   });
 }
 
+async function editorialAnchorHeightsWhileIdle(page) {
+  const sample = () => page.evaluate(() => Object.fromEntries(
+    [...document.querySelectorAll('[data-editorial-front]:not([data-editorial-front="brand"])')]
+      .map(node => [node.dataset.editorialFront, node.getBoundingClientRect().height])
+  ));
+  const samples = [await sample()];
+  // A stretched editorial copy must not promote its allocated grid height
+  // into a new content requirement on a later ResizeObserver pass. Sample a
+  // quiet 1.5-second window after fonts/layout settle; this catches that
+  // feedback loop without masking legitimate user text enlargement.
+  for (let index = 0; index < 6; index += 1) {
+    await page.waitForTimeout(250);
+    samples.push(await sample());
+  }
+  return samples;
+}
+
+async function enlargeEditorialAnchorText(page) {
+  const baseline = await page.evaluate(() => {
+    const targets = [...document.querySelectorAll('[data-editorial-front] :is(.topic-anchor-label,strong,h1,.anchor-supporting-line)')]
+      .filter(node => node.textContent.trim());
+    return targets.map((node, index) => {
+      const id = `answer-hub-font-stress-${index}`;
+      node.dataset.answerHubFontStress = id;
+      return {
+        id,
+        text: node.textContent.trim(),
+        family: node.closest('[data-editorial-front]')?.dataset.editorialFront,
+        fontSize: parseFloat(getComputedStyle(node).fontSize),
+      };
+    });
+  });
+  assert.ok(baseline.length, 'editorial text stress test found anchor text');
+  await page.addStyleTag({ content: baseline.map(({ id, fontSize }) => `[data-answer-hub-font-stress="${id}"]{font-size:${fontSize * 2}px!important}`).join('') });
+  // Font-size is a genuine content change, not a global root-size proxy. Give
+  // the content ResizeObserver time to choose complete grid rows before we
+  // inspect the final, enlarged text geometry.
+  await page.evaluate(async () => { await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))); });
+  await page.waitForTimeout(500);
+  return { baseline, after: await page.evaluate(() => {
+    const rect = node => { const box = node.getBoundingClientRect(); return { left: box.left, right: box.right, top: box.top, bottom: box.bottom, width: box.width, height: box.height }; };
+    return [...document.querySelectorAll('[data-answer-hub-font-stress]')].map(node => {
+      const range = document.createRange();
+      range.selectNodeContents(node);
+      const card = node.closest('[data-editorial-front]');
+      return {
+        id: node.dataset.answerHubFontStress,
+        text: node.textContent.trim(),
+        fontSize: parseFloat(getComputedStyle(node).fontSize),
+        card: rect(card),
+        textRects: [...range.getClientRects()].map(box => ({ left: box.left, right: box.right, top: box.top, bottom: box.bottom, width: box.width, height: box.height })),
+      };
+    });
+  }) };
+}
+
 (async () => {
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
@@ -54,6 +110,35 @@ async function layout(page) {
         assert.ok(brand.height <= 210, `${width}: brand must not balloon (${brand.height}px)`);
         assert.ok(web.height <= 400, `${width}: website anchor must not balloon (${web.height}px)`);
       }
+      if (width === 924) {
+        const idleSamples = await editorialAnchorHeightsWhileIdle(page);
+        for (const [family, baseline] of Object.entries(idleSamples[0])) {
+          assert.ok(baseline <= 400, `924: ${family} anchor must remain compact (${baseline}px)`);
+          for (const snapshot of idleSamples.slice(1)) {
+            assert.ok(Math.abs(snapshot[family] - baseline) <= 1, `924: ${family} anchor grew while idle (${baseline}px → ${snapshot[family]}px)`);
+          }
+        }
+        report.layouts.push({ width, idleSamples });
+        pass('924px: editorial service anchors stay compact and do not grow during 1.5 seconds of settled idle time');
+      }
+      if ([320, 390, 924].includes(width)) {
+        const stress = await enlargeEditorialAnchorText(page);
+        const afterById = new Map(stress.after.map(item => [item.id, item]));
+        for (const before of stress.baseline) {
+          const after = afterById.get(before.id);
+          assert.ok(after, `${width}: enlarged ${before.family} text remains present`);
+          assert.equal(after.text, before.text, `${width}: enlarged ${before.family} text stays complete`);
+          assert.ok(Math.abs(after.fontSize - before.fontSize * 2) <= 0.6, `${width}: ${before.family} text actually doubles (${before.fontSize}px → ${after.fontSize}px)`);
+          assert.ok(after.textRects.length, `${width}: ${before.family} enlarged text remains rendered`);
+          for (const rect of after.textRects) {
+            assert.ok(rect.left >= after.card.left - 1 && rect.right <= after.card.right + 1 && rect.top >= after.card.top - 1 && rect.bottom <= after.card.bottom + 1, `${width}: ${before.family} enlarged text stays inside its anchor`);
+          }
+        }
+        const enlarged = await layout(page);
+        assert.ok(enlarged.documentWidth <= width + 1, `${width}: 200% anchor text does not create page overflow`);
+        assert.deepEqual(enlarged.overlaps, [], `${width}: 200% anchor text does not overlap tiles`);
+        report.layouts.push({ width, enlargedText: stress.after.map(({ id, fontSize, card }) => ({ id, fontSize, card })) });
+      }
       assert.equal(await page.locator('.brand-anchor-art').count(), 0, `${width}: abstract filler is removed`);
       assert.match(await page.locator('.primary-nav .start-button').innerText(), /get help/i);
       report.layouts.push(measured);
@@ -61,6 +146,7 @@ async function layout(page) {
       await context.close();
     }
     pass('Nine widths: no overlapping tiles, no horizontal page overflow, compact mid-width anchors and clear contact label');
+    pass('Actual rendered anchor label, promise and supporting text doubles cleanly at 320px, 390px and 924px');
 
     const plain = await openContext(browser, { javaScriptEnabled: false });
     await plain.page.goto(base + '/library/');

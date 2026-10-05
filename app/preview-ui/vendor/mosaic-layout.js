@@ -33,17 +33,30 @@
       // the service name or letting it run across the screenshot.
       card.toggleAttribute('data-editorial-stack', range.getBoundingClientRect().width > available + 1);
       const children = [...copy.children]
-        .map(child => child.getBoundingClientRect())
+        .flatMap(child => {
+          const range = document.createRange();
+          range.selectNodeContents(child);
+          // A border box can be smaller than its rendered line box at large
+          // accessibility text sizes (notably the brand mark and h1). Include
+          // the actual text line rectangles so a whole extra grid row is
+          // chosen before glyphs reach the clipped tile edge.
+          return [child.getBoundingClientRect(), ...range.getClientRects()];
+        })
         // At handset widths the large icon is intentionally hidden.  A
         // display:none child reports a zero rect at the document origin;
         // including it in the range makes each layout pass invent extra rows.
         .filter(box => box.width > 0 && box.height > 0);
       if (!children.length) return height;
-      const copyHeight = Math.max(
-        copy.scrollHeight,
-        Math.max(...children.map(box => box.bottom)) - Math.min(...children.map(box => box.top))
-          + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom)
-      );
+      // This copy grid deliberately stretches to fill an already-packed
+      // anchor. Its scrollHeight is therefore the current card height, not
+      // the height its text needs. Feeding that value into row selection made
+      // each ResizeObserver pass request another row (and could grow a
+      // mid-width anchor indefinitely). The visible children retain their
+      // natural wrapped heights even inside the stretched grid, so their
+      // union is the stable intrinsic measure. Padding belongs to the copy,
+      // not to the current allocated row height.
+      const copyHeight = Math.max(...children.map(box => box.bottom)) - Math.min(...children.map(box => box.top))
+        + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
       const art = card.querySelector('.topic-anchor-art');
       const artStyle = art ? getComputedStyle(art) : styles;
       const visual = art && art.querySelector('.website-project-rotator,.brand-anchor-art,.editorial-illustration');
