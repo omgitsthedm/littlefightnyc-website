@@ -55,6 +55,10 @@
 .lf-reader .story-art .reader-story-visual .reader-story-image{width:100%!important;height:auto!important;max-width:960px!important;max-height:none!important;aspect-ratio:1!important;object-fit:contain!important;object-position:center!important;background:color-mix(in srgb,var(--reader-pop) 9%,#15161a)!important}
 .lf-reader .story-art .reader-story-visual .reader-story-figure figcaption{color:#d7d7db!important;font-size:16px!important;line-height:1.45!important}
 @media(min-width:601px) and (max-width:1000px){
+ /* Tablet anchors share one readable label scale. It keeps the two-word
+    software service inside the same shallow frame as the other services. */
+ .tile[data-editorial-front]:not([data-editorial-front=brand]) .topic-anchor-label{font-size:clamp(25px,3.4cqw,32px)}
+ .tile[data-editorial-front]:not([data-editorial-front=brand]) .topic-anchor-copy :is(strong,h1){font-size:24px}
  .tile[data-editorial-front]:not([data-editorial-front=booking],[data-editorial-front=brand]){--mobile-columns:6;--mobile-rows:2;grid-column:span 6;grid-row:span 2}
  .tile[data-editorial-front=brand]{--mobile-columns:6;--mobile-rows:1;grid-column:span 6;grid-row:span 1}
 }
