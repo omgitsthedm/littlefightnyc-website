@@ -111,3 +111,11 @@
   .lf-reader .answer-composition>.answer-visual .reader-context-image{width:auto;max-width:min(260px,100%);height:auto;max-height:260px;aspect-ratio:auto;object-fit:contain}
   .lf-reader .answer-composition>.answer-visual .reader-context-icon{width:56px;height:56px}
 }
+/* The short-answer composition reads as one stack below tablet width. Its
+   paired 24px block padding creates a calm, measured handoff to evidence. */
+@media(max-width:919px){
+  .lf-reader .answer-composition>.story-section--plain{padding-block:24px}
+  .lf-reader .answer-composition>.story-section--plain p:last-child{margin-bottom:0}
+  .lf-reader .answer-composition>.answer-visual{padding-block:24px}
+  .lf-reader .answer-composition>.answer-visual>.reader-context-visual{margin:0}
+}
