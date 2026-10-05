@@ -3,7 +3,7 @@ const content = new URL('../preview-content/', import.meta.url);
 const read = async file => JSON.parse(await readFile(new URL(file, content), 'utf8'));
 const old = JSON.parse(await readFile(new URL('../src/data/route-meta.json', import.meta.url), 'utf8'));
 const paths = new Set(old.pages.map(page => page.path));
-for (const file of ['live-pages.json', 'answer-pages.json', 'market-pages.json', 'pages.json']) {
+for (const file of ['live-pages.json', 'answer-pages.json', 'market-pages.json', 'qr-pages.json', 'pages.json']) {
   for (const page of await read(file)) paths.add(page.path);
 }
 // build-tile-preview creates one canonical reader route for every topic tile.
