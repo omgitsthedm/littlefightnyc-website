@@ -481,8 +481,11 @@ async function run() {
       assert.ok(await page.evaluate(() => window.__tilePreviewInteractions.some(event => event.event === 'search_result_selected' && event.contentId === 'industries_roofing')),
         'Search selection event must dispatch before opening the reader.');
       await page.keyboard.press('Escape');
-      await page.waitForFunction(() => !document.querySelector('#explore-menu')?.open);
       await page.waitForFunction(() => !document.querySelector('#detail')?.open);
+      await page.locator('#explore-menu[open]').waitFor();
+      assert.equal(await page.locator('#preview-search').inputValue(), 'roofer', 'closing a search answer preserves the query');
+      await page.keyboard.press('Escape');
+      await page.waitForFunction(() => !document.querySelector('#explore-menu')?.open);
       await page.waitForURL(base + '/');
     });
 
