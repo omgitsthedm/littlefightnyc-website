@@ -11,6 +11,7 @@ import {
   setLeadExclusion,
   updateLeadStage,
 } from "./lead-reconciliation-lib.mjs";
+import { providerSubmissions } from "./lead-reconciliation.mjs";
 
 const realReceipt = {
   id: "provider-1",
@@ -60,6 +61,119 @@ test("only explicit QA and spam receipts are excluded from totals", () => {
   assert.equal(ledger.leads.find((lead) => lead.id === "netlify:uncertain-1").exclusion, null);
 });
 
+test("provider quarantines stay visible but outside the sales funnel", () => {
+  const ledger = emptyLedger();
+  mergeNetlifySubmissions(ledger, [{ ...realReceipt, id: "quarantine-1", provider_state: "spam" }]);
+  const lead = ledger.leads[0];
+  assert.equal(lead.providerState, "spam");
+  assert.deepEqual(lead.exclusion, {
+    reason: "provider_spam",
+    source: "provider",
+    at: lead.importedAt,
+  });
+  assert.deepEqual(leadSummary(ledger), {
+    received: 0,
+    excluded: 1,
+    quarantined: 1,
+    stages: { new: 0, contacted: 0, qualified: 0, proposal: 0, won: 0, lost: 0 },
+    origins: {},
+    sources: {},
+    intents: {},
+    wonValue: 0,
+  });
+  assert.deepEqual(leadList(ledger)[0], {
+    id: "netlify:quarantine-1",
+    receivedAt: "2026-10-05T12:00:00.000Z",
+    stage: "new",
+    excluded: true,
+    exclusionReason: "provider_spam",
+    providerState: "spam",
+    reviewStatus: "pending_review",
+    origin: "netlify_form",
+    formName: "tech-audit-scratch",
+  });
+  assert.match(ledgerCsv(ledger), /"provider_state"/);
+  assert.match(ledgerCsv(ledger), /"pending_review"/);
+  lead.exclusion = null;
+  assert.equal(leadSummary(ledger).received, 0);
+  assert.throws(
+    () => clearLeadExclusion(ledger, "netlify:quarantine-1"),
+    /provider-quarantined receipt cannot be included/,
+  );
+});
+
+test("a complete provider re-import clears only a provider-created quarantine", () => {
+  const ledger = emptyLedger();
+  const quarantined = { ...realReceipt, id: "state-change-1", provider_state: "spam" };
+  mergeNetlifySubmissions(ledger, [quarantined], "2026-10-05T13:00:00.000Z");
+  updateLeadStage(ledger, "netlify:state-change-1", "contacted", "2026-10-05T13:30:00.000Z");
+  mergeNetlifySubmissions(ledger, [{ ...quarantined, provider_state: "verified" }], "2026-10-05T14:00:00.000Z");
+  const lead = ledger.leads[0];
+  assert.equal(lead.providerState, "verified");
+  assert.equal(lead.exclusion, null);
+  assert.equal(lead.stage, "contacted");
+  assert.equal(leadSummary(ledger).received, 1);
+  assert.equal(leadSummary(ledger).quarantined, 0);
+});
+
+test("operator and internal-QA exclusions survive provider state changes", () => {
+  const ledger = emptyLedger();
+  const operatorReceipt = { ...realReceipt, id: "operator-exclusion-1", provider_state: "verified" };
+  mergeNetlifySubmissions(ledger, [operatorReceipt]);
+  setLeadExclusion(ledger, "netlify:operator-exclusion-1", "provider_spam");
+  mergeNetlifySubmissions(ledger, [{ ...operatorReceipt, provider_state: "spam" }]);
+  mergeNetlifySubmissions(ledger, [operatorReceipt]);
+  assert.deepEqual(ledger.leads[0].exclusion?.source, "operator");
+  assert.equal(leadSummary(ledger).received, 0);
+
+  const qaReceipt = {
+    ...realReceipt,
+    id: "qa-state-change-1",
+    provider_state: "spam",
+    data: { ...realReceipt.data, subject: "Internal Little Fight NYC test — not a lead" },
+  };
+  mergeNetlifySubmissions(ledger, [qaReceipt]);
+  mergeNetlifySubmissions(ledger, [{ ...qaReceipt, provider_state: "verified" }]);
+  assert.deepEqual(ledger.leads.find((lead) => lead.id === "netlify:qa-state-change-1").exclusion?.source, "system");
+  assert.equal(ledger.leads.find((lead) => lead.id === "netlify:qa-state-change-1").exclusion?.reason, "internal_test");
+});
+
+test("provider import fetches both complete queues and rejects a partial result", async () => {
+  const requests = [];
+  const response = (payload, link = "") => ({
+    ok: true,
+    status: 200,
+    json: async () => payload,
+    headers: { get: (name) => (name === "link" ? link : null) },
+  });
+  const request = async (url) => {
+    const parsed = new URL(url);
+    const state = parsed.searchParams.get("state") || "verified";
+    const page = parsed.searchParams.get("page");
+    requests.push(`${state}:${page}`);
+    if (state === "verified" && page === "1") return response([{ id: "verified-1" }], '<https://api.netlify.com/next>; rel="next"');
+    if (state === "verified") return response([{ id: "verified-2" }]);
+    return response([{ id: "quarantined-1" }]);
+  };
+  const imported = await providerSubmissions("private-token", 2, request);
+  assert.deepEqual(requests.sort(), ["spam:1", "verified:1", "verified:2"]);
+  assert.deepEqual(imported.map((submission) => [submission.id, submission.provider_state]).sort(), [
+    ["quarantined-1", "spam"],
+    ["verified-1", "verified"],
+    ["verified-2", "verified"],
+  ]);
+
+  await assert.rejects(
+    providerSubmissions("private-token", 1, async (url) => ({
+      ok: !new URL(url).searchParams.has("state"),
+      status: 503,
+      json: async () => [],
+      headers: { get: () => null },
+    })),
+    /Netlify spam submissions request failed with HTTP 503/,
+  );
+});
+
 test("manual lead and operator stage history feed a privacy-safe funnel summary", () => {
   const ledger = emptyLedger();
   const manual = createManualLead({ channel: "text", receivedAt: "2026-10-05T12:00:00.000Z", knownValue: "1800" });
@@ -84,6 +198,8 @@ test("manual lead and operator stage history feed a privacy-safe funnel summary"
     stage: "won",
     excluded: false,
     exclusionReason: null,
+    providerState: null,
+    reviewStatus: null,
     origin: "text",
     formName: null,
   });

@@ -146,6 +146,14 @@ Run this once per month and after any form or deploy change:
 
 The browser success page proves only the POST path. The loop is not green until both Netlify capture and inbox delivery are observed.
 
+On 2026-10-05, a marked native delivery check was captured in Netlify's spam
+queue, then manually changed to verified. The known QA receipt reached the
+configured inbox with the correct reply route and submitted website context.
+A separate Website Audit completed and its owned-recipient email arrived 29
+seconds after submission. This proves recovery for those checks, not automatic
+delivery monitoring or delivery for every form submission. Raw receipts remain
+outside Git in the private operations store.
+
 ## Private received-lead reconciliation
 
 The production form, phone, text and email links intentionally do not create a
@@ -157,7 +165,13 @@ tool never changes permissions on an existing parent directory. Set
 `LFNYC_LEAD_STORE_DIR` to an absolute private directory to use another location.
 
 The tool fetches only the exact production site ID (`0907d8fe-7018-48db-a6be-1f906e4b2619`)
-when `NETLIFY_AUTH_TOKEN` is supplied through the shell. It stores the fields
+when `NETLIFY_AUTH_TOKEN` is supplied through the shell. It imports both the
+verified and provider-quarantined queues before writing the ledger. A
+quarantined receipt is visible as `provider_state=spam` and `pending_review`,
+but is excluded from sales totals; that state is the provider's queue decision,
+not certainty about the sender. A complete later import reflects a provider
+change back to verified, while preserving operator exclusions and internal QA.
+It stores the fields
 needed to follow up and attribute a lead, but intentionally drops provider IP
 addresses, user agents and raw submission metadata. It never prints contact
 details or the token.

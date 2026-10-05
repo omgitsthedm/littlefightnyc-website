@@ -69,9 +69,21 @@ function submissionId(submission, data) {
   return `netlify:fingerprint:${createHash("sha256").update(fingerprint).digest("hex")}`;
 }
 
+function providerState(submission) {
+  // The import client records the queue that supplied the receipt because the
+  // Netlify submission payload does not reliably include a state field.
+  return text(submission?.provider_state, 20).toLowerCase() === "spam" || submission?.spam === true || text(submission?.state, 20).toLowerCase() === "spam"
+    ? "spam"
+    : "verified";
+}
+
+function isProviderQuarantined(lead) {
+  return lead?.origin?.type === "netlify_form" && lead.providerState === "spam";
+}
+
 export function isExplicitlyExcludedSubmission(submission) {
   const data = submissionData(submission);
-  if (submission?.spam === true || text(submission?.state).toLowerCase() === "spam") return "provider_spam";
+  if (providerState(submission) === "spam") return "provider_spam";
   if (text(data["bot-field"])) return "honeypot";
   if (text(data.subject).toLowerCase() === "internal little fight nyc test — not a lead") return "internal_test";
   return null;
@@ -80,6 +92,7 @@ export function isExplicitlyExcludedSubmission(submission) {
 export function normalizeNetlifySubmission(submission, importedAt = new Date().toISOString()) {
   const data = submissionData(submission);
   const receivedAt = safeTimestamp(submission?.created_at, importedAt);
+  const state = providerState(submission);
   const exclusionReason = isExplicitlyExcludedSubmission(submission);
   return {
     id: submissionId(submission, data),
@@ -90,13 +103,18 @@ export function normalizeNetlifySubmission(submission, importedAt = new Date().t
     },
     receivedAt,
     importedAt: safeTimestamp(importedAt),
+    providerState: state,
     stage: "new",
     stageHistory: [{ stage: "new", at: receivedAt, source: "provider_receipt" }],
     context: pick(data, CONTEXT_FIELDS),
     attribution: pick(data, ATTRIBUTION_FIELDS),
     contact: normalizedContact(data),
     knownValue: null,
-    exclusion: exclusionReason ? { reason: exclusionReason, at: safeTimestamp(importedAt) } : null,
+    exclusion: exclusionReason ? {
+      reason: exclusionReason,
+      source: exclusionReason === "provider_spam" ? "provider" : "system",
+      at: safeTimestamp(importedAt),
+    } : null,
   };
 }
 
@@ -131,6 +149,8 @@ export function validateLedger(ledger) {
   for (const lead of ledger.leads) {
     if (!lead || typeof lead.id !== "string" || !lead.id || ids.has(lead.id)) throw new Error("Lead ledger contains an invalid or duplicate lead id.");
     if (!LEAD_STAGES.includes(lead.stage)) throw new Error(`Lead ${lead.id} has an invalid stage.`);
+    if (lead.providerState !== undefined && lead.providerState !== null && !["verified", "spam"].includes(lead.providerState)) throw new Error(`Lead ${lead.id} has an invalid provider state.`);
+    if (lead.exclusion?.source !== undefined && !["provider", "system", "operator"].includes(lead.exclusion.source)) throw new Error(`Lead ${lead.id} has an invalid exclusion source.`);
     ids.add(lead.id);
   }
   return ledger;
@@ -157,7 +177,15 @@ export function mergeNetlifySubmissions(ledger, submissions, importedAt = new Da
     existing.context = imported.context;
     existing.attribution = imported.attribution;
     existing.contact = imported.contact;
-    if (!existing.exclusion && imported.exclusion) existing.exclusion = imported.exclusion;
+    existing.providerState = imported.providerState;
+    // Only an exclusion created from the provider queue follows provider state.
+    // Operator decisions, including an operator-supplied reason named
+    // "provider_spam", are preserved.
+    if (existing.exclusion?.source === "provider") {
+      existing.exclusion = imported.exclusion;
+    } else if (!existing.exclusion && imported.exclusion) {
+      existing.exclusion = imported.exclusion;
+    }
     updated += 1;
   }
   ledger.updatedAt = safeTimestamp(importedAt);
@@ -189,7 +217,7 @@ export function setLeadExclusion(ledger, id, reason, at = new Date().toISOString
   if (!lead) throw new Error("No lead exists with that id.");
   const normalizedReason = text(reason, 160);
   if (!normalizedReason) throw new Error("An exclusion reason is required.");
-  lead.exclusion = { reason: normalizedReason, at: safeTimestamp(at) };
+  lead.exclusion = { reason: normalizedReason, source: "operator", at: safeTimestamp(at) };
   ledger.updatedAt = safeTimestamp(at);
   return lead;
 }
@@ -198,6 +226,7 @@ export function clearLeadExclusion(ledger, id, at = new Date().toISOString()) {
   validateLedger(ledger);
   const lead = ledger.leads.find((candidate) => candidate.id === id);
   if (!lead) throw new Error("No lead exists with that id.");
+  if (isProviderQuarantined(lead)) throw new Error("A provider-quarantined receipt cannot be included until the provider verifies it.");
   lead.exclusion = null;
   ledger.updatedAt = safeTimestamp(at);
   return lead;
@@ -205,7 +234,8 @@ export function clearLeadExclusion(ledger, id, at = new Date().toISOString()) {
 
 export function leadSummary(ledger) {
   validateLedger(ledger);
-  const included = ledger.leads.filter((lead) => !lead.exclusion);
+  const included = ledger.leads.filter((lead) => !lead.exclusion && !isProviderQuarantined(lead));
+  const quarantined = ledger.leads.filter(isProviderQuarantined).length;
   const stages = Object.fromEntries(LEAD_STAGES.map((stage) => [stage, 0]));
   const origins = {};
   const sources = {};
@@ -223,6 +253,7 @@ export function leadSummary(ledger) {
   return {
     received: included.length,
     excluded: ledger.leads.length - included.length,
+    quarantined,
     stages,
     origins,
     sources,
@@ -240,6 +271,8 @@ export function leadList(ledger) {
       stage: lead.stage,
       excluded: Boolean(lead.exclusion),
       exclusionReason: lead.exclusion?.reason || null,
+      providerState: lead.origin.type === "netlify_form" ? (lead.providerState || "unknown") : null,
+      reviewStatus: isProviderQuarantined(lead) ? "pending_review" : null,
       origin: lead.origin.type === "manual" ? lead.origin.channel : "netlify_form",
       formName: lead.origin.formName || null,
     }))
@@ -257,7 +290,7 @@ function csvCell(value) {
 export function ledgerCsv(ledger) {
   validateLedger(ledger);
   const columns = [
-    "id", "received_at", "stage", "stage_updated_at", "excluded_reason", "excluded_at",
+    "id", "received_at", "stage", "stage_updated_at", "excluded_reason", "excluded_source", "excluded_at", "provider_state", "review_status",
     "origin_type", "origin_channel", "form_name", "provider_submission_id", "known_value",
     "intent", "source", "lead_origin", "placement", "tile", "discovery_source", "follow_up",
     ...ATTRIBUTION_FIELDS,
@@ -271,7 +304,10 @@ export function ledgerCsv(ledger) {
       stage: lead.stage,
       stage_updated_at: latest?.at || "",
       excluded_reason: lead.exclusion?.reason || "",
+      excluded_source: lead.exclusion?.source || "",
       excluded_at: lead.exclusion?.at || "",
+      provider_state: lead.origin.type === "netlify_form" ? (lead.providerState || "unknown") : "",
+      review_status: isProviderQuarantined(lead) ? "pending_review" : "",
       origin_type: lead.origin.type,
       origin_channel: lead.origin.channel || "",
       form_name: lead.origin.formName || "",

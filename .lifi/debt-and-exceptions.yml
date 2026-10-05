@@ -1,5 +1,5 @@
 schema_version: 1
-updated_at: "2026-08-10"
+updated_at: "2026-10-05"
 quality_charter:
   source: "/Users/davidmarsh/Code/LiFi NYC/agency-ops/doctrine/UNIVERSAL-WEBSITE-LAUNCH-AUDIT-AND-REMEDIATION-STANDARD.md"
   version: "2026-08-10"
@@ -77,22 +77,27 @@ items:
 
   - id: "EXT-001"
     type: "external-delivery-proof"
-    status: "open"
+    status: "closed"
     risk: "high"
-    finding: "Current end-to-end evidence for Tech Audit form capture/inbox delivery and Website Audit report email delivery is missing."
+    finding: "Dated production capture, inbox receipt and recovery evidence now exists for both inquiry and Website Audit delivery."
     evidence:
-      - "Provider registration markup and delivery code exist."
-      - "The repository does not prove current Netlify Forms capture, configured inbox receipt, Gmail API delivery, spam placement, or failure alerting."
-    impact: "A visitor can receive an on-site confirmation while the lead or generated report fails to reach its intended recipient."
+      - "2026-10-05: native inquiry reached /thanks/ on application revision 7c03e462f6b92c57b8b99c825a30ae0a1dbad470; Netlify captured the optional website context and intent."
+      - "The controlled inquiry initially entered provider spam. Releasing only that known test produced an inbox notification with the correct reply address. This is recovery evidence, not proof that every inquiry bypasses spam."
+      - "A controlled Website Audit completed with measured results and a report email received about 29 seconds after submission."
+      - "Private receipts: ~/.local/share/littlefightnyc/operations/native-delivery-20261005.json and audit-delivery-20261005.json. Raw messages and submissions remain outside Git and public output."
+    impact: "Delivery is proven for the controlled journeys on this date; ongoing provider classification and availability still require review."
     mitigation:
-      - "Run a production-safe test submission and Website Audit delivery with controlled test identities."
-      - "Verify provider capture, inbox receipt, reply path, spam handling, and alert behavior without committing submitted data."
+      - "Import and review both verified and quarantined Netlify submissions in the private lead reconciliation tool; retain quarantine separately from sales totals."
+      - "If a genuine inquiry is quarantined, verify its contents, mark only that receipt verified in Netlify, check inbox delivery, and re-import. Never bulk-release spam."
+      - "Website Audit email failure is recorded in private provider status and exposed to the visitor with the available report link and human email contact; no separate proactive operator alert is claimed."
+      - "Repeat controlled delivery proof after relevant form/provider changes under existing scoped authorization."
     owner: "David Marsh"
-    review_by: null
+    review_by: "2026-11-05"
     accepted_risk_expiry: null
     close_evidence:
-      - "Dated, redacted provider-capture and inbox-receipt evidence for both journeys."
-      - "Documented alert/escalation behavior for delivery failure."
+      - "Controlled native inquiry: provider capture, quarantine recovery, configured inbox receipt, reply path and submitted context confirmed on 2026-10-05."
+      - "Controlled Website Audit: completed measurements, report HTTP 200 and actual inbox email confirmed on 2026-10-05; recipient absent from public report."
+      - "Live browser with mocked provider email failure exposed the report recovery link and human contact without sending another email."
 
   - id: "RES-001"
     type: "audience-research"

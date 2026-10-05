@@ -8,6 +8,7 @@ import { chmod, lstat, mkdir, readFile, realpath, rename, unlink, writeFile } fr
 import { randomUUID } from "node:crypto";
 import { homedir } from "node:os";
 import { dirname, isAbsolute, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import {
   LEAD_STAGES,
   clearLeadExclusion,
@@ -155,24 +156,44 @@ function privateResult(message) {
   process.stdout.write(`${message}\n`);
 }
 
-async function providerSubmissions(token, pages) {
+async function providerQueue(token, pages, state, request) {
   const limit = Number(pages || 20);
   if (!Number.isInteger(limit) || limit < 1 || limit > 100) throw new Error("--pages must be an integer from 1 through 100.");
   const collected = [];
   for (let page = 1; page <= limit; page += 1) {
-    const response = await fetch(`https://api.netlify.com/api/v1/sites/${SITE_ID}/submissions?per_page=100&page=${page}`, {
+    const query = new URLSearchParams({ per_page: "100", page: String(page) });
+    if (state === "spam") query.set("state", "spam");
+    const response = await request(`https://api.netlify.com/api/v1/sites/${SITE_ID}/submissions?${query}`, {
       headers: { authorization: `Bearer ${token}`, accept: "application/json" },
     });
-    if (!response.ok) throw new Error(`Netlify submissions request failed with HTTP ${response.status}.`);
+    if (!response.ok) throw new Error(`Netlify ${state} submissions request failed with HTTP ${response.status}.`);
     const payload = await response.json();
     if (!Array.isArray(payload)) throw new Error("Netlify submissions response was not an array.");
-    collected.push(...payload);
+    collected.push(...payload.map((submission) => ({ ...submission, provider_state: state })));
     const links = response.headers.get("link") || "";
     const hasNext = /rel="?next"?/i.test(links);
     if (!hasNext || payload.length === 0) break;
     if (page === limit) throw new Error("Netlify returned another submissions page; rerun with a higher --pages value. Nothing was imported.");
   }
   return collected;
+}
+
+export async function providerSubmissions(token, pages, request = fetch) {
+  // Import both queues before writing so a transient provider failure never
+  // creates a partial private ledger update. Spam is a provider quarantine,
+  // not a sales lead or a certainty about the sender.
+  const [verified, quarantined] = await Promise.all([
+    providerQueue(token, pages, "verified", request),
+    providerQueue(token, pages, "spam", request),
+  ]);
+  const byProviderId = new Map();
+  for (const submission of [...verified, ...quarantined]) {
+    const key = typeof submission.id === "string" && submission.id ? submission.id : JSON.stringify(submission);
+    // A state race may return the same receipt from both queues. Prefer the
+    // quarantined view until the next complete import resolves it.
+    byProviderId.set(key, submission);
+  }
+  return [...byProviderId.values()];
 }
 
 async function submissionsFromFile(path) {
@@ -261,7 +282,9 @@ async function main() {
   throw new Error(`Unknown command: ${command}\n\n${usage()}`);
 }
 
-main().catch((error) => {
-  process.stderr.write(`Lead reconciliation failed: ${error.message}\n`);
-  process.exitCode = 1;
-});
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    process.stderr.write(`Lead reconciliation failed: ${error.message}\n`);
+    process.exitCode = 1;
+  });
+}
