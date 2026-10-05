@@ -107,6 +107,7 @@
   .lf-reader .answer-composition>.answer-visual{display:grid;align-content:center;min-width:0;padding:clamp(28px,3.5vw,52px);background:#141619}
   .lf-reader .answer-composition>.answer-visual>.reader-context-visual{width:100%;max-width:400px;margin:0 auto;grid-template-columns:56px minmax(0,1fr);gap:14px;padding:16px}
   .lf-reader .answer-composition>.answer-visual .reader-context-figure{justify-items:center}
+  .lf-reader .answer-composition>.answer-visual .reader-context-figure figcaption{width:100%;justify-self:stretch}
   .lf-reader .answer-composition>.answer-visual .reader-context-image{width:min(260px,100%);height:auto;max-height:none;aspect-ratio:1;object-fit:contain}
   .lf-reader .answer-composition>.answer-visual .reader-context-icon{width:56px;height:56px}
 }
