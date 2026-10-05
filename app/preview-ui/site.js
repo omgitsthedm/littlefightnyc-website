@@ -36,6 +36,10 @@
   let lastOpenState = null;
   let indexPromise = null;
   let searchIndex = [];
+  let searchAliases = {};
+  let searchDebounce = 0;
+  let searchRequest = 0;
+  let searchReturn = null;
   let isClosing = false;
   let closingPromise = null;
   const shellTitle = document.title;
@@ -248,6 +252,12 @@
     // Once someone starts an inquiry, keep the return path without suggesting
     // unrelated cards or leaving two disabled controls beside the form.
     const isInquiry = ['/tech-audit/', '/contact/', '/thanks/'].includes(path.split(/[?#]/)[0]);
+    const write = panel.querySelector('.reader-rail .contact-plan');
+    if (write) {
+      write.hidden = isInquiry;
+      const intent = { web: 'website', it: 'support', consulting: 'consulting', software: 'systems' }[panel.dataset.readerFamily] || 'general';
+      write.href = '/tech-audit/?' + new URLSearchParams({ intent, source: path.split(/[?#]/)[0] });
+    }
     const seen = new Set();
     const cards = [...(mosaic?.querySelectorAll('a.tile[href]') || [])].filter(tile => {
       const target = sameOriginPath(tile.href);
@@ -280,6 +290,23 @@
     // Keep the focus ring on the familiar escape hatch, never across the display headline.
     const target = closeButton || detailBody.querySelector('[data-reader-focus], a, button, input, textarea');
     target?.focus?.({ preventScroll: true });
+  }
+
+  function focusReaderFragment(path) {
+    const hash = String(path || '').split('#')[1];
+    if (!hash) return false;
+    let id;
+    try { id = decodeURIComponent(hash); } catch { return false; }
+    const target = [...detailBody.querySelectorAll('[id]')].find(node => node.id === id);
+    if (!target) return false;
+    const bodyRect = detailBody.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    detailBody.scrollTo({ top: Math.max(0, detailBody.scrollTop + targetRect.top - bodyRect.top - detailBody.clientTop), behavior: 'instant' });
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({ preventScroll: true });
+    detail.scrollTop = 0;
+    panel.scrollTop = 0;
+    return true;
   }
 
   async function openReader(path, source, options = {}) {
@@ -341,7 +368,7 @@
       const motion = window.LFTileMotion;
       if (!isInReader && motion?.open) await motion.open({ source: activeSource, dialog: detail, panel });
       if (version !== requestVersion) return false;
-      focusReader();
+      if (!focusReaderFragment(readerPath)) focusReader();
       mountDemos();
       window.LFWebsiteStory?.mount(panel);
 
@@ -397,6 +424,23 @@
     // Embedded apps and fragment links have their own joint history entries.
     // Returning to the hub must never depend on guessing how many they added.
     if (useHistory) history.replaceState({ lfHub: true }, '', '/');
+    await restoreSearchContext();
+  }
+
+  async function restoreSearchContext() {
+    // Search is a task path, not a dead end. Returning from an answer restores
+    // the private in-memory query and the result list without putting it in the URL.
+    const returnState = searchReturn;
+    searchReturn = null;
+    if (returnState?.query && search) {
+      setMenu(true, { returnFocus: false });
+      search.value = returnState.query;
+      const clear = searchClearControl();
+      if (clear) clear.hidden = false;
+      const request = ++searchRequest;
+      await runSearch(returnState.query, request);
+      search.focus({ preventScroll: true });
+    }
   }
 
   mosaic?.addEventListener('click', event => {
@@ -465,7 +509,10 @@
     if (state?.lfReader && state.path) {
       openReader(state.path, findTile(state.path), { fromHistory: true });
     } else if (dialogIsOpen()) {
-      finishClose(findTile(detailBody.dataset.readerPath)).then(() => { readerTrail = []; });
+      finishClose(findTile(detailBody.dataset.readerPath)).then(async () => {
+        readerTrail = [];
+        await restoreSearchContext();
+      });
     }
   });
 
@@ -527,6 +574,27 @@
   menu?.addEventListener('keydown', keepExploreFocus);
 
   document.addEventListener('keydown', event => {
+    if (event.key === 'Tab' && dialogIsOpen()) {
+      // A keyboard action takes priority over the finite opening animation.
+      // Its temporary inert panel must not leave Tab with only the close
+      // control (or the browser chrome) available during the half-turn.
+      if (panel.dataset.motionPhase === 'open') window.LFTileMotion?.cancel?.();
+      const controls = [...detail.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])')]
+        .filter(control => {
+          const style = getComputedStyle(control);
+          return !control.closest('[inert]') && control.getClientRects().length > 0 && style.visibility !== 'hidden' && style.display !== 'none';
+        });
+      const first = controls[0], last = controls.at(-1);
+      const active = document.activeElement;
+      if (first && (event.shiftKey && active === first || !detail.contains(active))) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus({ preventScroll: true });
+      } else if (last && !event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+      }
+      return;
+    }
     if (event.key !== 'Escape') return;
     if (dialogIsOpen()) { event.preventDefault(); closeReader(); }
     else if (menu?.open) { event.preventDefault(); setMenu(false); }
@@ -563,27 +631,81 @@
 
   async function loadSearchIndex() {
     if (!indexPromise) {
-      indexPromise = fetch('/search-index.json', { credentials: 'same-origin' })
-        .then(response => response.ok ? response.json() : [])
-        .then(rows => Array.isArray(rows) ? rows.filter(row => sameOriginPath(row.path)).slice(0, 500) : [])
-        .catch(() => []);
+      indexPromise = Promise.all([
+        fetch('/search-index.json', { credentials: 'same-origin' }).then(response => response.ok ? response.json() : []),
+        fetch('/search-aliases.json', { credentials: 'same-origin' }).then(response => response.ok ? response.json() : {})
+      ]).then(([rows, aliases]) => {
+        searchAliases = aliases && typeof aliases === 'object' ? aliases : {};
+        return Array.isArray(rows) ? rows.filter(row => sameOriginPath(row.path)).slice(0, 500) : [];
+      }).catch(() => []);
     }
     searchIndex = await indexPromise;
     return searchIndex;
   }
 
+  function searchStatus() {
+    let status = document.querySelector('#search-status');
+    if (!status && searchResults) {
+      status = document.createElement('p');
+      status.id = 'search-status';
+      status.className = 'sr-only';
+      status.setAttribute('aria-live', 'polite');
+      status.setAttribute('aria-atomic', 'true');
+      searchResults.insertAdjacentElement('afterend', status);
+      searchResults.setAttribute('aria-live', 'off');
+    }
+    return status;
+  }
+
+  function searchClearControl() {
+    let clear = document.querySelector('#search-clear');
+    if (!clear && search) {
+      clear = document.createElement('button');
+      clear.type = 'button';
+      clear.id = 'search-clear';
+      clear.className = 'search-clear';
+      clear.textContent = 'Clear search';
+      clear.setAttribute('aria-label', 'Clear search');
+      clear.hidden = true;
+      search.insertAdjacentElement('afterend', clear);
+      clear.addEventListener('click', () => {
+        clearTimeout(searchDebounce);
+        searchRequest += 1;
+        search.value = '';
+        clear.hidden = true;
+        searchResults?.replaceChildren();
+        const status = searchStatus();
+        if (status) status.textContent = '';
+        search.focus({ preventScroll: true });
+      });
+    }
+    return clear;
+  }
+
   function drawSearchResults(rows, query) {
     if (!searchResults) return;
     searchResults.replaceChildren();
+    const status = searchStatus();
     if (!query) return;
     if (!rows.length) {
       const empty = document.createElement('p');
       empty.className = 'search-empty';
-      empty.textContent = 'No clear match yet. Try a service, problem, or kind of business.';
-      searchResults.append(empty);
+      empty.textContent = 'No clear match yet.';
+      const help = document.createElement('a');
+      help.className = 'search-help';
+      help.href = '/tech-audit/?intent=support&source=search-no-match';
+      help.textContent = "Can’t find it? Get help";
+      searchResults.append(empty, help);
+      if (status) status.textContent = 'No matching answers.';
       return;
     }
-    rows.slice(0, 8).forEach(row => {
+    const visibleRows = rows.slice(0, 8);
+    const count = document.createElement('p');
+    count.className = 'search-count';
+    count.textContent = rows.length > visibleRows.length ? `Showing ${visibleRows.length} of ${rows.length} answers.` : `${rows.length} matching ${rows.length === 1 ? 'answer' : 'answers'}.`;
+    searchResults.append(count);
+    if (status) status.textContent = count.textContent;
+    visibleRows.forEach(row => {
       const link = document.createElement('a');
       link.href = sameOriginPath(row.path);
       link.className = 'search-result';
@@ -595,24 +717,28 @@
     });
   }
 
-  search?.addEventListener('input', async () => {
-    const query = safeText(search.value).toLowerCase().trim();
+  async function runSearch(query, request) {
     const rows = await loadSearchIndex();
-    const words = query.split(/\s+/).filter(Boolean);
-    const variantsFor = word => {
-      const variants = new Set([word]);
-      if (/ers?$/.test(word)) variants.add(`${word.replace(/ers?$/, '')}ing`);
-      if (/ing$/.test(word)) variants.add(`${word.slice(0, -3)}er`);
-      return [...variants];
-    };
-    const matches = !words.length ? [] : rows.map(row => {
-      const haystack = `${row.title || ''} ${row.description || ''} ${row.family || ''}`.toLowerCase();
-      return { row, score: words.reduce((score, word) => score + (variantsFor(word).some(variant => haystack.includes(variant)) ? 1 : 0), 0) };
-    }).filter(result => result.score).sort((a, b) => b.score - a.score).map(result => result.row);
+    if (request !== searchRequest || query !== safeText(search?.value).trim()) return;
+    const matcher = window.LFSearch?.rank;
+    const matches = typeof matcher === 'function' ? matcher(rows, query, searchAliases) : [];
     drawSearchResults(matches, query);
-    // Search terms are private input. The bridge only needs the fixed no-match
-    // signal to improve the known content library, never the query itself.
+    // The bridge only receives the fixed no-match signal. Search text itself
+    // can contain personal or business information and never leaves this DOM.
     if (query && !matches.length) interaction('search_no_match', 'mosaic', 'explore');
+  }
+
+  search?.addEventListener('input', () => {
+    const query = safeText(search.value).trim();
+    const clear = searchClearControl();
+    if (clear) clear.hidden = !query;
+    clearTimeout(searchDebounce);
+    const request = ++searchRequest;
+    if (!query) {
+      drawSearchResults([], '');
+      return;
+    }
+    searchDebounce = setTimeout(() => runSearch(query, request), 140);
   });
   searchResults?.addEventListener('click', event => {
     const link = event.target.closest('a.search-result');
@@ -621,9 +747,10 @@
     const path = sameOriginPath(link.getAttribute('href'));
     if (!path) return;
     event.preventDefault();
+    searchReturn = { query: search?.value || '' };
     interaction('search_result_selected', contentId(path), 'explore');
     setMenu(false, { returnFocus: false });
-    openReader(path, findTile(path));
+    openReader(path, findTile(path) || search);
   });
 
   document.addEventListener('click', event => {
@@ -633,7 +760,7 @@
     if (!path) return;
     event.preventDefault();
     setMenu(false, { returnFocus: false });
-    openReader(path, findTile(path));
+    openReader(path, findTile(path) || trigger);
   });
 
   document.addEventListener('submit', event => {

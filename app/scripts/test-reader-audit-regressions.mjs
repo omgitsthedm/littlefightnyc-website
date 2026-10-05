@@ -34,8 +34,6 @@ assert.match(readerCss, /#detail\[data-reader-rail=true\][\s\S]*?\.lf-audit-intr
   "only a reader with the persistent rail may hide duplicate intro channels");
 assert.match(site, /detail\.dataset\.readerRail = 'true'/u,
   "the reader rail state is explicit before duplicate channels can hide");
-assert.match(readerCss, /a\.contact-plan\{grid-column:1\/-1\}/u,
-  "the longer plan action gets its own mobile row");
 assert.match(readerCss, /\.rw-client-project__plus\{display:inline-block;white-space:nowrap\}/u,
   "gallery plus signs stay with their project labels");
 

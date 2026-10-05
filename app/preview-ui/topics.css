@@ -4,8 +4,8 @@
 .mosaic-home .app-shell{max-width:1560px;padding:16px clamp(12px,2.5vw,34px) 36px;margin:auto;height:auto;min-height:100dvh;display:block}
 .mosaic-home #canvas{display:grid;gap:72px;overflow:visible}
 .topic-section{display:grid;gap:18px;min-width:0;container-type:inline-size;scroll-margin-top:24px}
-.topic-heading{display:flex;align-items:center;gap:12px;padding:4px 2px}
-.topic-heading h2{margin:0;font-size:clamp(28px,3vw,42px);font-weight:700;line-height:1.12;letter-spacing:-.025em}
+.topic-heading{display:flex;align-items:center;gap:12px;padding:4px 2px;min-width:0}
+.topic-heading h2{min-width:0;margin:0;font-size:clamp(28px,3vw,42px);font-weight:700;line-height:1.12;letter-spacing:-.025em;overflow-wrap:anywhere}
 .topic-heading .mineral-icon{width:32px;height:32px;background:var(--topic-pop)}
 [data-topic=web]{--topic-pop:#92bfff}[data-topic=it]{--topic-pop:#f5d95b}[data-topic=consulting]{--topic-pop:#a0df85}[data-topic=software]{--topic-pop:#f09bdd}[data-topic=reviews]{--topic-pop:#ff7839}
 [data-family=web]{--tile-pop:#92bfff}[data-family=it]{--tile-pop:#f5d95b}[data-family=consulting]{--tile-pop:#a0df85}[data-family=software]{--tile-pop:#f09bdd}[data-family=brand]{--tile-pop:#ff7839}
@@ -89,6 +89,7 @@
 }
 @media(min-width:601px) and (max-width:1000px){
 .tile[data-kind=review]{grid-column:span 3;grid-row:span 2}
+.tile[data-kind=case-study]{grid-column:span 3;grid-row:span 2}
 /* Tablets have a desktop-scale cell unit even though they share the six-column
    packer. Keep compact prompts horizontal when that unit is selected. */
 .topic-question[data-rows="1"] .cell-face,.tile[data-cell-face=type][data-rows="1"] .cell-face{flex-direction:row;align-items:center;justify-content:flex-start}

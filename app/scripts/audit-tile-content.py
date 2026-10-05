@@ -557,8 +557,9 @@ class ReaderAnatomy(HTMLParser):
         self.tag_counts[tag] = self.tag_counts.get(tag, 0) + 1
         values = dict(attrs)
         classes = set((values.get("class") or "").split())
-        # Original Website opening art meets the same image requirement as the shared hero.
-        if "rw-hero-intro" in classes:
+        # Keep the visual requirement while allowing task answers to place
+        # their illustration after the practical guidance instead of in the hero.
+        if "rw-hero-intro" in classes or "answer-visual" in classes:
             classes.add("story-art")
         self.classes.update(classes)
         if "direct-contact-rail" in classes:
@@ -607,7 +608,7 @@ def protected_reader_contract(dist: Path, tile: dict[str, str], failures: list[s
     if not anatomy.direct_contact:
         missing.append("direct contact rail")
     if anatomy.hero_visuals < 1:
-        missing.append("contextual hero visual/icon")
+        missing.append("contextual visual/icon")
     if anatomy.section_words < 40:
         missing.append("substantive explanation")
     public_href = tile.get("href", "")
@@ -672,7 +673,7 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         if not anatomy.direct_contact:
             missing.append("direct contact rail")
         if anatomy.hero_visuals < 1:
-            missing.append("contextual hero visual/icon")
+            missing.append("contextual visual/icon")
         # A sourced review collection is a complete explanatory body in its
         # own right: it holds the rating context, excerpts, attribution, and
         # direct source links instead of a generic prose section.
@@ -898,13 +899,50 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
             if not route_or_redirect(dist, target, redirects):
                 failures.append(f"/site.css: asset does not resolve: {raw}")
 
-    # Prove that imported customer answers still reach the rendered source.
+    # The owner-authorized answer overhaul replaces these eight short imports
+    # with complete guides. Prove the new authored body survives rather than
+    # demanding that superseded prose appear alongside its replacement.
+    guides = json.loads((CONTENT / "answer-guides.json").read_text())["guides"]
+    guide_paths = {guide["path"] for guide in guides}
+    expected_guide_paths = {
+        "/answers/wix-vs-custom-website-reddit/",
+        "/answers/website-design-for-small-business-nyc/",
+        "/answers/website-form-not-working-small-business/",
+        "/journal/how-to-own-your-domain-name-not-your-web-guy/",
+        "/journal/migrate-off-squarespace-without-breaking-booking/",
+        "/journal/how-to-stop-double-bookings-small-business/",
+        "/journal/wordpress-vs-webflow-vs-custom-nyc/",
+        "/journal/what-google-looks-for-business-website/",
+    }
+    if guide_paths != expected_guide_paths or len(guides) != 8:
+        failures.append("the authored answer overhaul must preserve its eight established guide routes")
+    stats["authored_guides"] = 0
+    for guide in guides:
+        target = output_file(dist, guide["path"])
+        if not target.is_file():
+            failures.append(f"authored guide is missing: {guide['path']}")
+            continue
+        expected_parser = References()
+        expected_parser.feed(guide["bodyHtml"])
+        rendered_parser = References()
+        rendered_parser.feed(target.read_text(errors="replace"))
+        expected_text = compact(" ".join(expected_parser.text))
+        rendered_text = compact(" ".join(rendered_parser.text))
+        if not expected_text or expected_text not in rendered_text:
+            failures.append(f"{guide['path']}: complete authored guide body is absent from static HTML")
+        if compact(guide["heading"]) not in rendered_text or compact(guide["summary"]) not in rendered_text:
+            failures.append(f"{guide['path']}: authored title or immediate answer is missing")
+        if any(anchor not in rendered_parser.anchors for anchor in expected_parser.anchors):
+            failures.append(f"{guide['path']}: authored source or related link is missing")
+        stats["authored_guides"] += 1
+
+    # Prove that all remaining imported customer answers still reach the rendered source.
     # The shared helper excludes only the exact legacy contact/reference
     # boilerplate that the reader deliberately suppresses.  The remaining
     # source text is checked after the approved display-name substitution.
     for route, page in pages.items():
         blocks = filtered_legacy_blocks(page)
-        if (not blocks or route in ("/", "/services/custom-local-websites/")
+        if (not blocks or route in ("/", "/services/custom-local-websites/") or route in guide_paths
                 or route in combined_paths
                 or route in {x["path"] for x in json.loads((CONTENT / "pages.json").read_text())}):
             continue
@@ -933,8 +971,8 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
                 label = compact(display(item.get("text")))
                 if label and label not in anchor_labels:
                     failures.append(f"{target_route}: imported inline link label was lost: {label}")
-    if stats["imported_sources"] < 68:
-        failures.append(f"only {stats['imported_sources']} imported authored sources were checked; expected at least 68")
+    if stats["imported_sources"] + stats["authored_guides"] < 68:
+        failures.append(f"only {stats['imported_sources']} imported sources and {stats['authored_guides']} authored guides were checked; expected at least 68 in total")
 
     for directory, label in (
         (PUBLIC / "vera", "VERA"),

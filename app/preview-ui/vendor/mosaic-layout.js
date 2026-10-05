@@ -14,7 +14,7 @@
   const token = (card, name, fallback) => integer(card.dataset[name], integer(getComputedStyle(card).getPropertyValue(`--${name.replace(/[A-Z]/g, part => `-${part.toLowerCase()}`)}`), fallback));
 
   function editorialRowsForContent(card, height, unit) {
-    const copy = card.querySelector('.topic-anchor-copy');
+    const copy = card.querySelector('.topic-anchor-copy,.brand-anchor-copy');
     if (!copy) return height;
     if (card.dataset.editorialFront && card.dataset.editorialFront !== 'booking') {
       const label = copy.querySelector('.topic-anchor-label');
@@ -24,7 +24,7 @@
       const styles = getComputedStyle(copy);
       const handset = window.innerWidth <= 600;
       const websiteShare = window.innerWidth <= 360 ? 1.1 / 2 : 1.05 / 2;
-      const share = handset ? (card.dataset.editorialFront === 'web' ? websiteShare : 1.3 / 2) : 1 / 2;
+      const share = card.dataset.editorialFront === 'brand' ? 1 : handset ? (card.dataset.editorialFront === 'web' ? websiteShare : 1.3 / 2) : 1 / 2;
       const icon = card.querySelector('.topic-anchor-icon');
       const iconSpace = handset || !icon ? 0 : icon.getBoundingClientRect().width + parseFloat(styles.columnGap);
       const available = card.clientWidth * share - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight) - iconSpace;
@@ -39,16 +39,19 @@
         // including it in the range makes each layout pass invent extra rows.
         .filter(box => box.width > 0 && box.height > 0);
       if (!children.length) return height;
-      const copyHeight = Math.max(...children.map(box => box.bottom)) - Math.min(...children.map(box => box.top))
-        + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+      const copyHeight = Math.max(
+        copy.scrollHeight,
+        Math.max(...children.map(box => box.bottom)) - Math.min(...children.map(box => box.top))
+          + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom)
+      );
       const art = card.querySelector('.topic-anchor-art');
-      const artStyle = getComputedStyle(art);
+      const artStyle = art ? getComputedStyle(art) : styles;
       const visual = art && art.querySelector('.website-project-rotator,.brand-anchor-art,.editorial-illustration');
       // A side-by-side visual fills the anchor's already-established height.
       // Measuring that rendered height feeds the newly-added grid row back
       // into the next pass and can grow the card forever. Only a true stacked
       // composition contributes a fixed, width-derived visual height.
-      const ratio = visual?.matches('.editorial-illustration') ? 1 : 5 / 8;
+      const ratio = visual?.matches('.editorial-illustration') ? 1 : visual?.matches('.website-project-rotator') && handset ? 3 / 4 : 5 / 8;
       const artHeight = card.hasAttribute('data-editorial-stack') && visual
         ? visual.getBoundingClientRect().width * ratio + parseFloat(artStyle.paddingTop) + parseFloat(artStyle.paddingBottom)
         : 0;
@@ -102,15 +105,22 @@
       width = token(card, 'preferredColumns', defaultColumns);
       height = token(card, 'preferredRows', defaultRows);
     }
-    // Service anchors hold a compact six-by-four phone/tablet frame. The hub
-    // above Websites is deliberately half its former desktop area and stays
-    // smaller below the breakpoint, so the grid remains information-dense.
+    // A tablet is not an enlarged phone. Six columns are physically broad at
+    // 601–1000px, so a 6×4 service card becomes a mostly empty banner. Keep
+    // the identity route to a single strip and the four equal service routes
+    // to two rows; phone widths retain their three-row composition below.
     if (mobile && card.dataset.editorialFront && window.innerWidth > 600) {
       width = 6;
-      height = card.dataset.editorialFront === 'brand' ? 3 : 4;
+      height = card.dataset.editorialFront === 'brand' ? 1 : 2;
+    }
+    // A 480–600px device has the inline room for the same one-row identity
+    // strip used on tablets.  Preserve the phone mosaic, but do not leave a
+    // two-row brand introduction above the service proof once it can fit.
+    if (mobile && window.innerWidth >= 480 && card.dataset.editorialFront === 'brand') {
+      height = 1;
     }
     if (mobile && window.innerWidth <= 360 && card.dataset.editorialFront) {
-      height = Math.max(height, card.dataset.editorialFront === 'brand' ? 3 : 4);
+      height = Math.max(height, card.dataset.editorialFront === 'brand' ? 2 : 3);
     }
     if (card.dataset.editorialFront) {
       height = editorialRowsForContent(card, height, unit);
@@ -167,7 +177,11 @@
     }
     if (mobile && card.dataset.kind === 'case-study') {
       width = Math.max(width, 3);
-      height = Math.max(height, 3);
+      // Landscape site captures need a landscape frame on a tablet. A square
+      // 3×3 proof card forced an honest, whole screenshot to sit in a large
+      // black letterbox. Handsets keep the square bento beat; 601–1000px uses
+      // a 3×2 frame that shows the work at a useful scale without cropping it.
+      height = Math.max(height, window.innerWidth > 600 ? 2 : 3);
     }
     if (!mobile && window.innerWidth <= 1200 && card.dataset.kind === 'case-study') {
       width = 4;
@@ -522,7 +536,7 @@
     });
   };
   const contentObserver = new ResizeObserver(queueContentLayout);
-  grids().forEach(grid => grid.querySelectorAll('.tile[data-editorial-front] .topic-anchor-copy').forEach(copy => {
+  grids().forEach(grid => grid.querySelectorAll('.tile[data-editorial-front] :is(.topic-anchor-copy,.brand-anchor-copy)').forEach(copy => {
     contentObserver.observe(copy);
     [...copy.children].forEach(child => contentObserver.observe(child));
   }));

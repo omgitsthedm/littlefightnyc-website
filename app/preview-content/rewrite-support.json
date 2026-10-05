@@ -38,9 +38,9 @@
       "id": "email",
       "category": "it",
       "question": "Why are my business emails going to spam?",
-      "answer": "Business email can land in spam when domain authentication, account security, sending history, or message content makes a mailbox cautious.",
-      "detail": "Check the sending address, SPF, DKIM, and DMARC records, then review whether an account has been misused. Keep the tests and changes documented so the business can maintain them.",
-      "nextStep": "Send the address you use to send mail and an example of the problem."
+      "answer": "Email can be flagged because of its content, how it was sent, or settings on either account. Check whether it affects everyone or only some people.",
+      "detail": "Check Junk or Spam and note any error. We can review sender checks, mailbox rules, and account access. Leave domain settings alone until the cause is clear.",
+      "nextStep": "Tell us what happened and the sending address. Never include passwords, sign-in codes, or private customer messages."
     },
     {
       "id": "computer",
@@ -62,16 +62,16 @@
       "id": "printer",
       "category": "it",
       "question": "Why will one computer print but another cannot?",
-      "answer": "When one computer can print and another cannot, the issue is often the second computer’s network path, driver, or permission.",
-      "detail": "Check whether both devices are on the same intended network and whether they use the same printer settings. Record the working setup before changing drivers or buying hardware.",
+      "answer": "If one computer can print but another cannot, compare their connections and settings before replacing the printer. Check their Wi-Fi networks, selected printer, and error messages first.",
+      "detail": "Choose the same printer on both devices and check whether a stuck job is holding the queue. Note which computer works before changing settings. We can help check the printer software and connection if the difference is unclear.",
       "nextStep": "Tell us which computer prints and which one does not."
     },
     {
       "id": "backup",
       "category": "it",
       "question": "How do I know our files are really backed up?",
-      "answer": "A backup is useful only when the business can restore a needed file and knows who owns the recovery process.",
-      "detail": "Identify what is backed up, where the copy lives, who can access it, and how a restore is requested. Test a safe sample restore before an emergency makes the question urgent.",
+      "answer": "Keep a separate copy of important files and check that you can recover a sample. Seeing a backup icon is not the same as knowing your files can be restored.",
+      "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample into a new location, protecting the working file. Ask us if the settings are unclear.",
       "nextStep": "Bring the backup service name and one file you would need back."
     },
     {
@@ -365,16 +365,16 @@
   ],
   "groupIntros": {
     "wifi": {
-      "heading": "Wi-Fi should reach the work.",
-      "summary": "A weak signal, crowded network, or provider problem can look alike from the counter. We start by finding where the connection changes and what work it interrupts."
+      "heading": "Why does my Wi-Fi keep dropping?",
+      "summary": "Check whether one device, one room, or the whole business loses its connection. That helps separate a local signal problem from an internet-provider outage."
     },
     "email": {
-      "heading": "Email needs a clear owner.",
-      "summary": "Customer messages, shared inboxes, and domain settings should point to people who can see and act on them. We check the route before changing the tools."
+      "heading": "What is going wrong with my business email?",
+      "summary": "First, note whether messages will not send, do not arrive, or land in spam. Tell us who is affected and any error you see; keep passwords and private messages out of your request."
     },
     "it-password-ownership": {
-      "heading": "The business needs the keys.",
-      "summary": "Domains, email, payments, and cloud files should have named business owners and usable recovery methods. We map the accounts before a missed renewal or staff change turns into an emergency."
+      "heading": "Who controls our business accounts?",
+      "summary": "The business should control its accounts and have a working way to recover them. If you cannot sign in, start with the provider’s recovery option; never send anyone your password or sign-in codes."
     },
     "computer": {
       "heading": "A new computer should feel familiar.",

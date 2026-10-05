@@ -23,6 +23,7 @@ import {
   safeTechAuditReportId,
   TECH_AUDIT_SESSION_KEYS,
   TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS,
+  techAuditBusinessProblem,
   techAuditConfirmationPath,
   techAuditContactProblem,
   techAuditContactRoute,
@@ -41,10 +42,17 @@ type TechAuditProps = { idPrefix?: string };
 
 const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
-  { name: "business", message: "Add your business name." },
   { name: "contact", message: "Add a phone or email so we can reply." },
   { name: "message", message: "Tell us what you want to improve or build." },
 ];
+
+const FIELD_LABELS: Record<FieldName, string> = {
+  name: "Your name",
+  business: "Business or idea",
+  contact: "Contact detail",
+  follow_up: "How we should reply",
+  message: "What happened",
+};
 
 const URGENCY_OPTIONS = [
   {
@@ -138,6 +146,14 @@ function appendAuditContext(message: string, websiteUrl: string): string {
   const lines = [message];
   if (websiteUrl && !message.includes("Website:")) lines.push(`Website: ${websiteUrl}`);
   return lines.filter(Boolean).join("\n");
+}
+
+function urlEncodedFormBody(form: HTMLFormElement): URLSearchParams {
+  const body = new URLSearchParams();
+  new FormData(form).forEach((value, key) => {
+    if (typeof value === "string") body.append(key, value);
+  });
+  return body;
 }
 
 type ContactFields = {
@@ -290,14 +306,34 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   const [errors, setErrors] = useState<Partial<Record<FieldName, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitIssue, setSubmitIssue] = useState("");
+  const [showContactFallback, setShowContactFallback] = useState(false);
   // Payoff beat — plays once when step 3 is REACHED with both choices made
   // (not when a saved draft restores straight into step 3).
   const [payoff, setPayoff] = useState(false);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const mountedRef = useRef(false);
   const auditStartedRef = useRef(false);
+  const submissionInFlightRef = useRef(false);
+  const submissionAttemptRef = useRef(0);
+  const submissionControllerRef = useRef<AbortController | null>(null);
   const attribution = readAttribution();
   const contactRoute = techAuditContactRoute(fields.contact);
+  const supportIntent = leadIntent === "support";
+  const contactInputType = fields.follow_up === "email"
+    ? "email"
+    : fields.follow_up === "text" || fields.follow_up === "phone"
+      ? "tel"
+      : "text";
+  const contactAutoComplete = fields.follow_up === "email"
+    ? "email"
+    : fields.follow_up === "text" || fields.follow_up === "phone"
+      ? "tel"
+      : "off";
+  const contactInputMode = fields.follow_up === "email"
+    ? "email"
+    : fields.follow_up === "text" || fields.follow_up === "phone"
+      ? "tel"
+      : "text";
   const internalTest = isInternalTechAuditTest(fields.contact, message);
   const preferredRoute = contactRoute
     ? techAuditPreferredRoute(contactRoute, fields.follow_up)
@@ -333,7 +369,16 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   const websiteUrlId = domId("fit-website-url");
   const websiteUrlHintId = domId("fit-website-url-hint");
   const discoverySourceId = domId("fit-discovery-source");
+  const errorSummaryId = domId("fit-error-summary");
   const exampleTitleId = domId("lf-audit-example-title");
+  const errorEntries = Object.entries(errors) as [FieldName, string][];
+  const fieldIds: Record<FieldName, string> = {
+    name: nameId,
+    business: businessId,
+    contact: contactId,
+    follow_up: followUpId,
+    message: messageId,
+  };
   // Tactile feedback on the intake (Android/Chrome; a no-op elsewhere): a light
   // tap as each step advances, a confident triple on a clean submit, a longer
   // buzz when validation blocks it.
@@ -402,7 +447,21 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   // submit button works again and the preserved draft can be re-sent.
   useEffect(() => {
     const onPageShow = (e: PageTransitionEvent) => {
-      if (e.persisted) setSubmitting(false);
+      if (!e.persisted) return;
+      // A form page restored from BFCache may have been frozen while a request
+      // was still pending. Retire that attempt so the owner can retry, and do
+      // not let an old response redirect or overwrite the restored form.
+      submissionAttemptRef.current += 1;
+      submissionControllerRef.current?.abort();
+      submissionControllerRef.current = null;
+      submissionInFlightRef.current = false;
+      setSubmitting(false);
+      try {
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.internalTest);
+      } catch {
+        /* Storage can be unavailable; the restored form remains usable. */
+      }
     };
     window.addEventListener("pageshow", onPageShow);
     return () => window.removeEventListener("pageshow", onPageShow);
@@ -437,6 +496,16 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
         else delete next.contact;
         if (followUpIssue) next.follow_up = followUpIssue;
         else delete next.follow_up;
+        return next;
+      });
+      return;
+    }
+    if (name === "business") {
+      const problem = techAuditBusinessProblem(value, leadIntent);
+      setErrors((prev) => {
+        const next = { ...prev };
+        if (problem) next.business = problem;
+        else delete next.business;
         return next;
       });
       return;
@@ -521,6 +590,10 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    if (event.defaultPrevented || submissionInFlightRef.current) {
+      event.preventDefault();
+      return;
+    }
     const form = event.currentTarget;
     const nextErrors: Partial<Record<FieldName, string>> = {};
 
@@ -541,6 +614,9 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
           ? "Choose how you want us to reply."
           : techAuditFollowUpProblem(contact, preference);
         if (problem) nextErrors.follow_up = problem;
+      } else if (name === "business") {
+        const problem = techAuditBusinessProblem(value, leadIntent);
+        if (problem) nextErrors.business = problem;
       } else {
         const field = REQUIRED_FIELDS.find((candidate) => candidate.name === name);
         if (value.trim() === "" && field) nextErrors[name] = field.message;
@@ -550,6 +626,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     if (Object.keys(nextErrors).length > 0) {
       event.preventDefault();
       setSubmitIssue("");
+      setShowContactFallback(false);
       setErrors(nextErrors);
       hapticError();
       const first = form.elements.namedItem(
@@ -560,6 +637,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     }
 
     setSubmitIssue("");
+    setShowContactFallback(false);
     // A native POST cannot recover an offline request. Keep the completed
     // form in place, persist the same draft as a navigation would, and let the
     // owner retry when their connection returns. This must precede all submit
@@ -568,7 +646,8 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       event.preventDefault();
       writeDraft({ intent: intentMode, step, symptom, urgency, message, messageDirty, fields });
       setSubmitting(false);
-      setSubmitIssue("You’re offline. Your answers are still here. Reconnect, then send again.");
+      setSubmitIssue("Your request was not sent because you’re offline. Your answers are still here.");
+      setShowContactFallback(true);
       hapticError();
       return;
     }
@@ -584,7 +663,10 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       (form.elements.namedItem("follow_up") as HTMLSelectElement | null)?.value,
     );
     const submittedContactRoute = techAuditContactRoute(submittedContact);
-    const discoveryInput = form.elements.namedItem("discovery_source") as HTMLSelectElement | null;
+    const discoveryInput = form.elements.namedItem("discovery_source") as
+      | HTMLInputElement
+      | HTMLSelectElement
+      | null;
     const submittedDiscoverySource = normalizeTechAuditDiscoverySource(discoveryInput?.value);
     // This select is optional. In the hydrated path, normalize its native
     // payload before the browser submits and analytics observes the event.
@@ -606,12 +688,14 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       internalTest: submittedInternalTest,
     }));
 
-    hapticSubmit();
-
-    // Valid — let the native Netlify POST proceed, show the loading state.
-    // The draft is deliberately NOT cleared here: if the POST fails (offline,
-    // server error) the user's answers survive a Back navigation. /thanks/
-    // clears it on confirmed success instead.
+    // Keep a normal HTML form for no-JavaScript browsers. In a hydrated
+    // browser, use the identical same-origin, URL-encoded Netlify POST so a
+    // rejected connection can leave this exact form and its values in place.
+    // The confirmation route is only opened after the endpoint accepts it.
+    event.preventDefault();
+    submissionInFlightRef.current = true;
+    const submissionAttempt = submissionAttemptRef.current + 1;
+    submissionAttemptRef.current = submissionAttempt;
     setErrors({});
     try {
       // This marker is the client-side proof used by /thanks/ that a hydrated,
@@ -648,6 +732,51 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       /* Storage can be unavailable; submission still proceeds. */
     }
     setSubmitting(true);
+
+    const submitAction = form.action;
+    const requestBody = urlEncodedFormBody(form);
+    const requestController = new AbortController();
+    submissionControllerRef.current = requestController;
+    const requestTimeout = window.setTimeout(() => requestController.abort(), 20_000);
+    void fetch(submitAction, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: requestBody.toString(),
+      credentials: "same-origin",
+      redirect: "follow",
+      signal: requestController.signal,
+    }).then((response) => {
+      if (submissionAttempt !== submissionAttemptRef.current) return;
+      if (!response.ok) throw new Error(`Form request returned ${response.status}`);
+      hapticSubmit();
+      if (!submittedInternalTest) {
+        trackEvent("tech_audit_submit", {
+          form_name: "tech-audit-scratch",
+          page_path: "/tech-audit/",
+          ...(submittedDiscoverySource ? { discovery_source: submittedDiscoverySource } : {}),
+        });
+      }
+      window.location.assign(submitAction);
+    }).catch(() => {
+      if (submissionAttempt !== submissionAttemptRef.current) return;
+      submissionInFlightRef.current = false;
+      submissionControllerRef.current = null;
+      setSubmitting(false);
+      setSubmitIssue("Your request was not confirmed sent. Your answers are still here.");
+      setShowContactFallback(true);
+      try {
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);
+        window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.internalTest);
+      } catch {
+        /* Storage can be unavailable; the preserved visible form still recovers. */
+      }
+      hapticError();
+    }).finally(() => {
+      window.clearTimeout(requestTimeout);
+      if (submissionAttempt === submissionAttemptRef.current) {
+        submissionControllerRef.current = null;
+      }
+    });
   }
 
   return (
@@ -661,37 +790,47 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       >
         <div className="lf-audit-intro__inner">
           <div className="lf-audit-intro__copy">
-            <p className="lf-audit-intro__eyebrow">
-              <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
-              {inquiryCopy.eyebrow}
-            </p>
+            {!supportIntent && (
+              <p className="lf-audit-intro__eyebrow">
+                <ClipboardCheck size={18} strokeWidth={1.8} aria-hidden="true" />
+                {inquiryCopy.eyebrow}
+              </p>
+            )}
             <h1 id={detailTitleId}>{inquiryCopy.title}</h1>
             <p>{inquiryCopy.summary}</p>
-            <FirstLookScope compact />
-            <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
-              <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
-                <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
-                  <Phone size={16} strokeWidth={2} aria-hidden="true" />
-                  Call {PHONE_DISPLAY}
-                </a>
-                <a href={SMS_HREF} data-lf-label="audit_intro_sms">
-                  <MessageSquare size={16} strokeWidth={2} aria-hidden="true" />
-                  Text
-                </a>
-                <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="audit_intro_email">
-                  <Mail size={16} strokeWidth={2} aria-hidden="true" />
-                  Email
-                </a>
-                <a href={`#${stepTitleId}`} data-lf-label="audit_intro_form">
-                  Write your message +
-                </a>
-              </div>
-              <p className="lf-audit-intro__hours">
-                9am–9pm Eastern: a human answers. After hours: leave a message.
-              </p>
-            </div>
+            {!supportIntent && (
+              <>
+                <FirstLookScope compact />
+                <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
+                  <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
+                    <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
+                      <Phone size={16} strokeWidth={2} aria-hidden="true" />
+                      Call {PHONE_DISPLAY}
+                    </a>
+                    <a href={SMS_HREF} data-lf-label="audit_intro_sms">
+                      <MessageSquare size={16} strokeWidth={2} aria-hidden="true" />
+                      Text
+                    </a>
+                    <a href={`mailto:${HELLO_EMAIL}`} data-lf-label="audit_intro_email">
+                      <Mail size={16} strokeWidth={2} aria-hidden="true" />
+                      Email
+                    </a>
+                    <a href={`#${stepTitleId}`} data-lf-label="audit_intro_form">
+                      Write your message +
+                    </a>
+                  </div>
+                  <p className="lf-audit-intro__hours">
+                    9am–9pm Eastern: a human answers. After hours: leave a message.
+                  </p>
+                  <p className="lf-audit-intro__contact-details">
+                    <span>Phone: {PHONE_DISPLAY}</span>
+                    <span>Email: {HELLO_EMAIL}</span>
+                  </p>
+                </div>
+              </>
+            )}
           </div>
-          <article className="lf-audit-intro__proof">
+          {!supportIntent && <article className="lf-audit-intro__proof">
             <Link
               className="lf-audit-intro__proof-image"
               to="/case-studies/hair-by-rachel-charles/"
@@ -707,7 +846,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
             <span className="lf-audit-intro__proof-links">
               <Link to="/case-studies/hair-by-rachel-charles/">See the website and what we improved</Link>
             </span>
-          </article>
+          </article>}
         </div>
       </section>
 
@@ -880,6 +1019,21 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                     <input id={botFieldId} name="bot-field" tabIndex={-1} autoComplete="off" />
                   </p>
 
+                  {errorEntries.length > 0 && (
+                    <div className="lf-audit__error-summary" role="alert" aria-labelledby={errorSummaryId}>
+                      <p id={errorSummaryId}>Check these before sending:</p>
+                      <ul>
+                        {errorEntries.map(([name, problem]) => (
+                          <li key={name}>
+                            <a href={`#${fieldIds[name]}`}>
+                              {FIELD_LABELS[name]}: {problem}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
                   <div className={`lf-audit__field${fieldClass("name", fields.name)}`}>
                     <label htmlFor={nameId}>Your name</label>
                     <input
@@ -904,12 +1058,14 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                   </div>
 
                   <div className={`lf-audit__field${fieldClass("business", fields.business)}`}>
-                    <label htmlFor={businessId}>Business or idea</label>
+                    <label htmlFor={businessId}>
+                      {supportIntent ? "Business name (optional)" : "Business or idea"}
+                    </label>
                     <input
                       id={businessId}
                       name="business"
                       autoComplete="organization"
-                      required
+                      required={!supportIntent}
                       value={fields.business}
                       onChange={(e) => {
                         setField("business", e.target.value);
@@ -920,7 +1076,9 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                       aria-describedby={`${businessHintId}${errors.business ? ` ${businessErrorId}` : ""}`}
                     />
                     <p className="lf-audit__hint" id={businessHintId}>
-                      No name yet? Tell us what you are starting.
+                      {supportIntent
+                        ? "Helpful if you have it. We can ask later."
+                        : "No name yet? Tell us what you are starting."}
                     </p>
                     {errors.business && (
                       <p className="lf-audit__error" role="alert" id={businessErrorId}>
@@ -963,19 +1121,12 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                     <input
                       id={contactId}
                       name="contact"
-                      autoComplete={
-                        fields.follow_up === "text" || fields.follow_up === "phone"
-                          ? "tel"
-                          : "email"
-                      }
-                      inputMode={
-                        fields.follow_up === "text" || fields.follow_up === "phone"
-                          ? "tel"
-                          : "email"
-                      }
+                      type={contactInputType}
+                      autoComplete={contactAutoComplete}
+                      inputMode={contactInputMode}
                       autoCapitalize="none"
                       spellCheck={false}
-                      maxLength={254}
+                      maxLength={contactInputType === "tel" ? 40 : 254}
                       required
                       placeholder={
                         fields.follow_up === "email"
@@ -1015,9 +1166,9 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                       }
                     >
                       <option value="fastest">Whatever’s fastest</option>
-                      <option value="text" disabled={contactRoute === "email"}>Text me</option>
-                      <option value="phone" disabled={contactRoute === "email"}>Call me</option>
-                      <option value="email" disabled={contactRoute === "phone"}>Email me</option>
+                      <option value="text">Text me</option>
+                      <option value="phone">Call me</option>
+                      <option value="email">Email me</option>
                     </select>
                     <p className="lf-audit__note" id={followUpNoteId}>
                       We use only the route you choose. Text and phone need a phone number;
@@ -1066,20 +1217,24 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                     )}
                   </div>
 
-                  <div className="lf-audit__field lf-audit__field--full">
-                    <label htmlFor={discoverySourceId}>How did you first hear about us? <span>(optional)</span></label>
-                    <select
-                      id={discoverySourceId}
-                      name="discovery_source"
-                      value={fields.discovery_source}
-                      onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
-                    >
-                      <option value="">Choose one</option>
-                      {TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => (
-                        <option key={option.value} value={option.value}>{option.label}</option>
-                      ))}
-                    </select>
-                  </div>
+                  {supportIntent ? (
+                    <input type="hidden" name="discovery_source" value="" />
+                  ) : (
+                    <div className="lf-audit__field lf-audit__field--full">
+                      <label htmlFor={discoverySourceId}>How did you first hear about us? <span>(optional)</span></label>
+                      <select
+                        id={discoverySourceId}
+                        name="discovery_source"
+                        value={fields.discovery_source}
+                        onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
+                      >
+                        <option value="">Choose one</option>
+                        {TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => (
+                          <option key={option.value} value={option.value}>{option.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
 
                   <button
                     className="lf-audit__submit"
@@ -1102,14 +1257,27 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                   <p className="lf-audit__submit-status" role="status" aria-live="polite" aria-atomic="true">
                     {submitIssue || (submitting ? "Sending securely. Keep this tab open for confirmation." : "")}
                   </p>
+                  {showContactFallback && (
+                    <p className="lf-audit__submit-recovery">
+                      Reconnect and try again, or call <a href={PHONE_HREF} data-lf-label="tech_audit_form_phone">{PHONE_DISPLAY}</a>.
+                    </p>
+                  )}
                   <p className="lf-audit__assurance">
-                    Free first look / No obligation / We reply 9am-9pm Eastern /
-                    Urgent? Call <a href={PHONE_HREF} data-lf-label="tech_audit_form_phone">{PHONE_DISPLAY}</a>
+                    {supportIntent ? (
+                      <>9am-9pm Eastern: a human answers. After hours: leave a message.</>
+                    ) : (
+                      <>Free first look / No obligation / We reply 9am-9pm Eastern / Urgent? Call <a href={PHONE_HREF} data-lf-label="tech_audit_form_phone">{PHONE_DISPLAY}</a></>
+                    )}
                   </p>
                   <p className="lf-audit__assurance lf-audit__assurance--data">
                     Your details stay with Little Fight NYC. We use them only to understand
                     the request and prepare the right response.
                   </p>
+                  {supportIntent && (
+                    <p className="lf-audit__contact-details">
+                      Prefer another device? Phone: {PHONE_DISPLAY} · Email: {HELLO_EMAIL}
+                    </p>
+                  )}
                 </form>
 
               </div>

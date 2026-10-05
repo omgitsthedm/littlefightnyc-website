@@ -34,6 +34,138 @@ test(
   },
 );
 
+test("support intake keeps the reply path short and validates without a live submission @chromium-desktop", async ({ page }) => {
+  await page.goto("/tech-audit/?intent=support&source=accessibility_check");
+  const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+  await form.waitFor();
+  const nameBox = await form.locator('[name="name"]').boundingBox();
+  expect(nameBox).not.toBeNull();
+  expect(nameBox!.y).toBeLessThan(852);
+  const contact = form.locator('[name="contact"]');
+  const followUp = form.locator('[name="follow_up"]');
+  await expect(form.locator('[name="business"]')).not.toHaveAttribute("required", "");
+  await expect(form.getByLabel("Business name (optional)", { exact: true })).toBeVisible();
+  await expect(form.locator('select[name="discovery_source"]')).toHaveCount(0);
+  await expect(form.locator('input[type="hidden"][name="discovery_source"]')).toHaveValue("");
+  await expect(form.locator('[name="website_url"]')).toHaveAttribute("type", "text");
+  await expect(form.locator('[name="website_url"]')).toHaveAttribute("inputmode", "url");
+  await expect(form.locator(".lf-audit__contact-details")).toContainText("(646) 360-0318");
+  await expect(form.locator(".lf-audit__contact-details")).toContainText("hello@littlefightnyc.com");
+  await form.locator('button[type="submit"]').click();
+  await expect(form.locator("#fit-error-summary")).toContainText("Check these before sending");
+  await expect(form.locator("#fit-error-summary")).not.toContainText("Business or idea");
+  await expect(form.locator("#fit-name-error, #fit-contact-error, #fit-message-error")).toHaveCount(3);
+  await followUp.selectOption("email");
+  await expect(contact).toHaveAttribute("type", "email");
+  await expect(contact).toHaveAttribute("autocomplete", "email");
+  await followUp.selectOption("fastest");
+  await expect(contact).toHaveAttribute("type", "text");
+  await expect(contact).toHaveAttribute("autocomplete", "off");
+  await followUp.selectOption("text");
+  await expect(contact).toHaveAttribute("type", "tel");
+  await expect(contact).toHaveAttribute("autocomplete", "tel");
+  await expect(contact).toHaveAttribute("inputmode", "tel");
+  await form.locator('[name="name"]').fill("Local support check");
+  await contact.fill("(646) 555-0118");
+  await form.locator('[name="message"]').fill("Our printer stopped working.");
+  await page.context().setOffline(true);
+  await form.locator('button[type="submit"]').click();
+  await expect(form.locator(".lf-audit__submit-status")).toContainText(/not sent because you’re offline/i);
+  await expect(form.locator(".lf-audit__submit-recovery")).toContainText(/reconnect and try again/i);
+  await expect(contact).toHaveValue("(646) 555-0118");
+  await expect(form.locator('[name="message"]')).toHaveValue("Our printer stopped working.");
+  await page.context().setOffline(false);
+});
+
+test("support intake posts only to a local mock after validation @chromium-desktop", async ({ page }) => {
+  let postedBody = "";
+  await page.route("**/thanks/**", async route => {
+    if (route.request().method() === "POST") postedBody = route.request().postData() ?? "";
+    await route.fulfill({ status: 200, contentType: "text/html", body: "<main>Local confirmation</main>" });
+  });
+  await page.goto("/tech-audit/?intent=support&source=local_mock");
+  const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+  await form.waitFor();
+  await form.locator('[name="follow_up"]').selectOption("phone");
+  await form.locator('[name="name"]').fill("Local support check");
+  await form.locator('[name="contact"]').fill("(646) 555-0118");
+  await form.locator('[name="message"]').fill("Our printer stopped working.");
+  await Promise.all([
+    page.waitForResponse(response => response.request().method() === "POST" && response.url().includes("/thanks/")),
+    form.locator('button[type="submit"]').click(),
+  ]);
+  const body = new URLSearchParams(postedBody);
+  expect(body.get("intent")).toBe("support");
+  expect(body.get("business")).toBe("");
+  expect(body.get("contact")).toBe("(646) 555-0118");
+  expect(body.get("follow_up")).toBe("phone");
+  expect(body.get("discovery_source")).toBe("");
+  await expect(page.getByText("Local confirmation")).toBeVisible();
+});
+
+test("support intake keeps the draft through local failures, then retries @chromium-desktop", async ({ page }) => {
+  let postAttempts = 0;
+  await page.route("**/thanks/**", async route => {
+    if (route.request().method() !== "POST") return route.fulfill({ status: 200, contentType: "text/html", body: "<main>Local confirmation</main>" });
+    postAttempts += 1;
+    if (postAttempts === 1) return route.fulfill({ status: 500, body: "Local failure" });
+    if (postAttempts === 2) return route.abort("failed");
+    return route.fulfill({ status: 200, body: "accepted locally" });
+  });
+  await page.goto("/tech-audit/?intent=support&source=local_mock_failure");
+  const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+  await form.waitFor();
+  await form.locator('[name="follow_up"]').selectOption("phone");
+  await form.locator('[name="name"]').fill("Local support check");
+  await form.locator('[name="contact"]').fill("(646) 555-0118");
+  await form.locator('[name="message"]').fill("Our printer stopped working.");
+  for (const expectedAttempt of [1, 2]) {
+    await form.locator('button[type="submit"]').click();
+    await expect.poll(() => postAttempts).toBe(expectedAttempt);
+    await expect(form.locator(".lf-audit__submit-status")).toContainText(/not confirmed sent/i);
+    await expect(form.locator(".lf-audit__submit-recovery")).toContainText(/reconnect and try again/i);
+    await expect(form.locator('[name="contact"]')).toHaveValue("(646) 555-0118");
+    await expect(form.locator('[name="message"]')).toHaveValue("Our printer stopped working.");
+    expect(await page.evaluate(() => sessionStorage.getItem("lf_tech_audit_submitted"))).toBeNull();
+  }
+  await form.locator('button[type="submit"]').click();
+  await expect.poll(() => postAttempts).toBe(3);
+  await expect(page.getByText("Local confirmation")).toBeVisible();
+});
+
+test("a BFCache-restored support form retires a stalled request and permits one safe retry @chromium-desktop", async ({ page }) => {
+  await page.addInitScript(() => {
+    const nativeFetch = window.fetch.bind(window);
+    let firstRequest = true;
+    window.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
+      const requestUrl = typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+      const requestMethod = (init?.method ?? (input instanceof Request ? input.method : "GET")).toUpperCase();
+      if (firstRequest && requestMethod === "POST" && new URL(requestUrl, window.location.href).pathname === "/thanks/") {
+        firstRequest = false;
+        return new Promise<Response>(() => {});
+      }
+      return nativeFetch(input, init);
+    }) as typeof fetch;
+  });
+  await page.route("**/thanks/**", async route => route.fulfill({ status: 200, contentType: "text/html", body: "<main>Local confirmation</main>" }));
+  await page.goto("/tech-audit/?intent=support&source=local_bfcache");
+  const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+  await form.waitFor();
+  await form.locator('[name="follow_up"]').selectOption("phone");
+  await form.locator('[name="name"]').fill("Local support check");
+  await form.locator('[name="contact"]').fill("(646) 555-0118");
+  await form.locator('[name="message"]').fill("Our printer stopped working.");
+  const submit = form.locator('button[type="submit"]');
+  await submit.click();
+  await expect(submit).toBeDisabled();
+  await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent("pageshow", { persisted: true })));
+  await expect(submit).toBeEnabled();
+  expect(await page.evaluate(() => sessionStorage.getItem("lf_tech_audit_submitted"))).toBeNull();
+  await expect(form.locator('[name="contact"]')).toHaveValue("(646) 555-0118");
+  await submit.click();
+  await expect(page.getByText("Local confirmation")).toBeVisible();
+});
+
 test("WebMCP stages a first-look request for review without sending or replacing a draft @chromium-desktop", async ({ page }) => {
   const posts: string[] = [];
   await page.addInitScript(() => {

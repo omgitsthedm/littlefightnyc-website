@@ -37,7 +37,7 @@ async function run() {
       const { ctx, page } = await context(browser, { viewport: { width, height: width > 600 ? 1000 : 844 } });
       await page.goto(base, { waitUntil: 'networkidle' });
       await noOverflow(page, 'html,.topbar,.tile[data-editorial-front="web"]', `${width}: homepage fits`);
-      assert.match(await page.locator('#explore-toggle').innerText(), /Services/);
+      assert.match(await page.locator('#explore-toggle').innerText(), /Search answers/);
       assert.equal(await page.locator('.tile[data-editorial-front="web"] .website-project-shot').count(), 5);
       const imageWidth = await page.locator('.tile[data-editorial-front="web"] .website-project-shot').first().evaluate(el => el.getBoundingClientRect().width);
       assert.ok(imageWidth >= (width === 320 ? 120 : 155), `${width}: project preview remains meaningful (${imageWidth})`);

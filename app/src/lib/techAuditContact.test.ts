@@ -9,6 +9,7 @@ import {
   readTechAuditConfirmation,
   safeTechAuditReportId,
   techAuditConfirmationPath,
+  techAuditBusinessProblem,
   techAuditContactProblem,
   techAuditContactRoute,
   techAuditFollowUpProblem,
@@ -66,6 +67,12 @@ describe("Tech Audit contact contract", () => {
     expect(techAuditFollowUpProblem("owner@example.com", "phone")).toMatch(/phone number/i);
     expect(techAuditFollowUpProblem("(646) 555-0118", "email")).toMatch(/email address/i);
     expect(techAuditFollowUpProblem("owner@example.com", "fastest")).toBeNull();
+  });
+
+  it("does not make someone name their business before requesting support", () => {
+    expect(techAuditBusinessProblem("", "support")).toBeNull();
+    expect(techAuditBusinessProblem("", "website")).toMatch(/business name or idea/i);
+    expect(techAuditBusinessProblem("Neighborhood repair", "website")).toBeNull();
   });
 
   it("uses the safe exact-route default for missing or stale drafts", () => {

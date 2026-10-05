@@ -90,6 +90,10 @@ async function browserLanes() {
     run("node", ["scripts/verify-reader-audit.cjs"], { ...env, READER_AUDIT_URL: url });
     run("node", ["scripts/verify-anchor-readers.cjs"], { ...env, ANCHOR_READER_URL: url });
     run("node", ["scripts/verify-research-improvements.cjs"], { ...env, RESEARCH_URL: url });
+    run("node", ["scripts/verify-answer-hub.cjs"], { ...env, ANSWER_HUB_URL: url });
+    run("node", ["scripts/verify-answer-accessibility.cjs"], { ...env, ANSWER_HUB_URL: url });
+    run("node", ["scripts/verify-search-browser.cjs"], { ...env, SEARCH_URL: url });
+    run("npx", ["playwright", "test", "--config=playwright.support-form.config.ts"], { ...env, SUPPORT_FORM_URL: url });
   });
 }
 
@@ -118,6 +122,7 @@ if (functional) {
     "audit:claim-scope",
   ]) run("npm", ["run", script]);
 
+  run("node", ["scripts/verify-search-relevance.cjs"]);
   run("npx", ["tsc", "-b"]);
   run("npx", ["eslint", "src/tile-bridge", "scripts/quality-tiles.mjs", "scripts/verify-tile-production.cjs"]);
   await browserLanes();

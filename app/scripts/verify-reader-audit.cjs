@@ -316,10 +316,14 @@ async function run() {
         const plan = layout.controls.find((control) => String(control.className).includes('contact-plan'));
         const quick = layout.controls.filter((control) => control !== plan);
         assert.ok(plan && quick.length >= 3, 'story contact keeps three quick controls and one plan action');
-        assert.ok(plan.top > Math.max(...quick.map((control) => control.bottom)) - 1,
-          'the longer plan action uses its own row');
+        for (const [index, control] of layout.controls.entries()) {
+          assert.ok(control.bottom - control.top >= 43, 'contact actions preserve a comfortable touch target');
+          for (const other of layout.controls.slice(index + 1)) {
+            assert.ok(Math.min(control.right, other.right) - Math.max(control.left, other.left) <= 1 || Math.min(control.bottom, other.bottom) - Math.max(control.top, other.top) <= 1, 'contact actions never overlap');
+          }
+        }
         assert.ok(plan.left >= layout.bounds.left - 1 && plan.right <= layout.bounds.right + 1,
-          'the longer plan action remains inside the reader width');
+          'the Write action remains inside the reader width');
         assert.ok(layout.controls.every((control) => control.scrollWidth <= control.clientWidth + 1),
           'contact labels do not overflow their controls');
         return 'gallery plus and four contact actions remain bounded at ' + mobile.width + 'px / ' + (mobile.textScale * 100) + '% text';

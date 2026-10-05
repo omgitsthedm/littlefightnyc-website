@@ -408,5 +408,56 @@
     "summary": "Websites, everyday tech help, clearer decisions and custom software for independent businesses. Start with the thing you need to work better.",
     "description": "Explore Little Fight NYC website design, tech support, consulting and custom software. Find the right help for your business and talk to a person.",
     "sections": []
+  },
+  {
+    "path": "/library/",
+    "title": "Answers for Independent Businesses | Little Fight NYC",
+    "description": "Practical steps for your website, bookings, accounts, software and everyday business technology.",
+    "eyebrow": "Little Fight NYC · answers",
+    "heading": "Find your answer.",
+    "summary": "Practical steps for your website, bookings, accounts and everyday tech.",
+    "sections": [],
+    "contactPrompt": "Tell us what is happening. You do not need a perfect brief."
+  },
+  {
+    "path": "/about/",
+    "title": "About Little Fight NYC | Help for Small Businesses",
+    "description": "Little Fight NYC designs websites, helps with business technology, and builds software independent businesses can own. A real person answers 9am–9pm Eastern.",
+    "eyebrow": "Little Fight NYC",
+    "heading": "One studio. One accountable person.",
+    "summary": "We work directly with independent businesses on websites, everyday technology, clearer decisions, and software they can own.",
+    "sections": [
+      {
+        "heading": "How we work.",
+        "paragraphs": [
+          "You deal with the person doing the work. Start with a free first look. We look at the problem, say what we would keep or change, and separate that from any paid scope.",
+          "For a website, the written plan names the pages, materials, review points, launch timing, and care included. For New York on-site help, we confirm the issue, location, and timing before promising a visit."
+        ],
+        "links": [
+          {
+            "label": "See how website work starts",
+            "href": "/services/custom-local-websites/"
+          },
+          {
+            "label": "See the work",
+            "href": "/examples/"
+          }
+        ]
+      },
+      {
+        "heading": "A person, during real hours.",
+        "paragraphs": [
+          "Call, text, email, or write to us. From 9am–9pm Eastern, a person answers. After hours, leave a message.",
+          "If we are not the right fit, we will say so plainly and point you toward the next useful move."
+        ],
+        "links": [
+          {
+            "label": "Ask a question",
+            "href": "/tech-audit/"
+          }
+        ]
+      }
+    ],
+    "contactPrompt": "Tell us what needs to work better."
   }
 ]

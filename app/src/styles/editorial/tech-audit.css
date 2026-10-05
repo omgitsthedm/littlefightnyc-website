@@ -230,6 +230,35 @@
   line-height: 1.4;
 }
 
+.lf-audit-intro__contact-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.4;
+  user-select: text;
+}
+
+.lf-audit-intro[data-lf-intent="support"] {
+  padding-block: var(--lf-space-3);
+}
+
+.lf-audit-intro[data-lf-intent="support"] .lf-audit-intro__inner {
+  gap: 0;
+}
+
+.lf-audit-intro[data-lf-intent="support"] h1 {
+  max-width: 17ch;
+  font-size: clamp(2.15rem, 9vw, 3.25rem);
+}
+
+.lf-audit-intro[data-lf-intent="support"] .lf-audit-intro__copy > p {
+  margin-top: var(--lf-space-2);
+}
+
 .lf-audit-intro__proof {
   display: none;
   overflow: hidden;
@@ -863,6 +892,47 @@
   min-height: 0;
 }
 
+.lf-audit__error-summary {
+  grid-column: 1 / -1;
+  padding: var(--lf-space-3) var(--lf-space-4);
+  border-inline-start: 3px solid var(--lf-audit-warn);
+  background: color-mix(in srgb, var(--lf-audit-warn) 10%, transparent);
+  color: var(--lf-bone);
+}
+
+.lf-audit__error-summary p,
+.lf-audit__error-summary ul {
+  margin: 0;
+}
+
+.lf-audit__error-summary p {
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-sm);
+  font-weight: 700;
+}
+
+.lf-audit__error-summary ul {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.45rem;
+  padding-inline-start: 1.1rem;
+}
+
+.lf-editorial .lf-audit__error-summary a {
+  color: var(--lf-bone);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--lf-audit-warn);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.17em;
+}
+
+.lf-editorial .lf-audit__error-summary a:focus-visible {
+  outline: 2px solid var(--lf-fight);
+  outline-offset: 3px;
+}
+
 /* Quiet guidance beside the field it applies to (the no-secrets note). */
 .lf-audit__note {
   font-family: var(--lf-body);
@@ -887,6 +957,32 @@
 .lf-audit__assurance--data {
   letter-spacing: 0.02em;
   margin-top: -2px;
+}
+
+.lf-audit__submit-recovery {
+  grid-column: 1 / -1;
+  margin: -0.35rem 0 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-sm);
+  line-height: 1.45;
+}
+
+.lf-audit__contact-details {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--lf-bone-soft);
+  font-family: var(--lf-body);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.45;
+  user-select: text;
+}
+
+.lf-editorial .lf-audit__submit-recovery a {
+  color: var(--lf-fight);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
 }
 
 .lf-editorial .lf-audit__assurance a {

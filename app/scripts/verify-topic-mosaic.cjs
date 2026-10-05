@@ -481,14 +481,14 @@ async function assertTileGeometryAndType(page) {
     const anchor = page.locator(`#${id} a.tile[data-anchor="${topic}"]`).first();
     assert.equal(await anchor.count(), 1, `${label} must retain its service anchor tile`);
     const size = await dimensions(anchor);
-    assert.deepEqual([size.preferredColumns, size.preferredRows], [8, 3], `${label} must use the compact service anchor frame`);
-    assert.equal(size.columns, 8, `${label} must occupy two thirds of the desktop grid`);
+    assert.deepEqual([size.preferredColumns, size.preferredRows], [6, 3], `${label} must use the service anchor frame reduced by 25 percent`);
+    assert.equal(size.columns, 6, `${label} must occupy half of the desktop grid`);
     assert.ok(size.rows >= 3, `${label} must preserve room for meaningful art and its complete introduction`);
   }
   const brand = await dimensions(page.locator('a.tile.brand-tile'));
-  assert.deepEqual([brand.preferredColumns, brand.preferredRows], [8, 2], 'Problems? Solved. must use half its original anchor area');
-  assert.equal(brand.columns, 8);
-  assert.ok(brand.rows >= 2);
+  assert.deepEqual([brand.preferredColumns, brand.preferredRows], [6, 1], 'Problems? Solved. must remain a compact identity strip');
+  assert.equal(brand.columns, 6);
+  assert.ok(brand.rows >= 1);
   assert.equal(await page.locator('a.tile.brand-tile .brand-anchor-art img').count(), 0, 'Problems? Solved. must not contain the NYC photograph');
   const artwork = page.locator('img.editorial-story-image');
   assert.ok(await artwork.count() >= 9, 'consolidated service stories need substantial original editorial artwork');
@@ -779,7 +779,7 @@ async function assertHeaderFooter(page) {
   await nav.waitFor({ state: 'visible' });
   const navText = await nav.innerText();
   const normalizedNav = navText.toLowerCase().replace(/[’']/g, '');
-  for (const label of ['Websites', 'Our work', 'Let’s build']) {
+  for (const label of ['Websites', 'Our work', 'Get help']) {
     assert.ok(normalizedNav.includes(label.toLowerCase().replace(/[’']/g, '')), `primary header navigation lacks ${label}`);
   }
   const dock = page.locator('footer.dock');
@@ -943,7 +943,7 @@ async function assertReaderContextFigures(browser) {
           await summary.click();
           await page.waitForFunction(() => document.querySelector('details.reader-demo-context')?.open === true);
         }
-        const figure = page.locator('.story-art .reader-context-figure');
+        const figure = page.locator('.story-art .reader-context-figure, .answer-visual .reader-context-figure');
         const caption = figure.locator('figcaption');
         await figure.waitFor({ state: 'visible' });
         const bounds = await figure.evaluate(node => {

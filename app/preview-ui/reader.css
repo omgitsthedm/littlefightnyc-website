@@ -63,11 +63,9 @@ body.reader-open{overflow:hidden}
 #detail[data-reader-rail=true] .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]),
 .page-shell>.direct-contact-rail~main .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]){display:none}
 
-/* On a narrow reader, three quick contact controls keep their compact row and
-   the longer planning action owns a full, readable row beneath it. */
+/* Four short contact labels keep a balanced two-by-two phone layout. */
 @media (max-width:760px){
-  .lf-reader .story-contact .contact-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lf-reader .story-contact .contact-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
   .lf-reader .story-contact .contact-actions>a{min-width:0}
-  .lf-reader .story-contact .contact-actions>a.contact-plan{grid-column:1/-1}
   .lf-reader .rw-client-project__plus{display:inline-block;white-space:nowrap}
 }

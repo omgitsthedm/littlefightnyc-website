@@ -105,6 +105,20 @@ export function techAuditContactProblem(value: string): string | null {
   return "That phone number includes characters we cannot dial — check for a typo.";
 }
 
+/**
+ * Someone asking for help with a broken system should not need to remember or
+ * type a business name before they can ask us to call them back. New-project
+ * inquiries still benefit from a little context, so this remains required
+ * outside the support route.
+ */
+export function techAuditBusinessProblem(
+  value: string,
+  intent: TechAuditLeadIntent,
+): string | null {
+  if (intent === "support" || value.trim()) return null;
+  return "Add your business name or idea.";
+}
+
 export function normalizeTechAuditFollowUpPreference(
   value: unknown,
 ): TechAuditFollowUpPreference {

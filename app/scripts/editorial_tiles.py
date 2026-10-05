@@ -110,10 +110,11 @@ def website_project_rotator():
 
 
 def brand_anchor_front(markup):
-    """Make Problems? Solved. a first-class anchor without changing its reader."""
-    # This is the compact, literal hub for the whole system.  Its job is to
-    # lead into the Websites anchor below it, not consume the same real estate.
-    markup = geometry(markup, 8, 2, 6, 3)
+    """Make Problems? Solved. a compact, literal route into the hub."""
+    # The identity tile introduces Little Fight; it is not a billboard or an
+    # illustration slot.  It stays above Websites but earns only a short strip
+    # of the mosaic, leaving the first substantial frame for actual work.
+    markup = geometry(markup, 6, 1, 6, 2)
     markup = set_attr(markup, 'data-editorial-front', 'brand')
     markup = set_attr(markup, 'data-kind', 'service-anchor')
     markup = set_attr(markup, 'data-anchor', 'brand')
@@ -121,12 +122,10 @@ def brand_anchor_front(markup):
     boat = icon('tugboat.svg', 'topic-anchor-icon')
     front = (
         '<span class="topic-anchor-face">'
-        '<span class="topic-anchor-copy">'
-        f'{boat}<span class="topic-anchor-label">Little Fight NYC</span>'
+        '<span class="brand-anchor-copy">'
+        f'<span class="brand-anchor-mark">{boat}<span class="topic-anchor-label">Little Fight NYC</span></span>'
         '<h1>Problems? Solved.</h1>'
-        '</span>'
-        '<span class="topic-anchor-art"><span class="brand-anchor-art" aria-hidden="true">'
-        '</span></span><span class="anchor-go" aria-hidden="true">+</span></span>'
+        '</span><span class="anchor-go" aria-hidden="true">+</span></span>'
     )
     trace = re.sub(r'<rect class="trace-rail"[^>]*></rect>', '', anchor_trace())
     return markup[:markup.index('>')+1] + front + trace + '</a>'
@@ -165,7 +164,11 @@ def enrich_editorial_tiles(mosaic):
             # These are all primary routes through the mosaic.  They earn the
             # same substantial frame, rather than making support, consulting,
             # or custom software look like a smaller afterthought.
-            markup = geometry(markup, 8, 3, 6, 4)
+            # All four service paths have the same frame.  Six by three is
+            # deliberately 25% smaller than the older eight by three anchor:
+            # it has room for a real example without turning every section
+            # into a hero banner.
+            markup = geometry(markup, 6, 3, 6, 3)
             markup = set_attr(markup, 'data-editorial-front', family)
             if family == 'web':
                 art = website_project_rotator()

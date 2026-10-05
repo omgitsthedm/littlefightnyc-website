@@ -113,6 +113,13 @@ _GENERIC_CONTACT_TEXT = _canonical(
     "service; call so we can assess the issue and location, then confirm any on-site "
     "timing. A real person answers 9am–9pm Eastern. After hours, leave a message."
 )
+_GENERIC_PROCESS_TEXT = tuple(map(_canonical, (
+    "Before recommending anything for a question like this, we look at what customers see, "
+    "where staff repeat work, who controls the accounts, and what the business already pays "
+    "for. We do not begin by selling a rebuild or another monthly tool.",
+    "The next-step list says what to keep, what to fix now, what can wait, and what we still "
+    "need to learn before anyone should guess.",
+)))
 _GENERIC_REFERENCE_HEADING = "useful outside references"
 _GENERIC_REFERENCE_HREFS = frozenset(
     {
@@ -162,6 +169,14 @@ def _is_generic_contact_section(blocks: list[Mapping[str, Any]], start: int) -> 
     return len(body) == 1 and _canonical(body[0].get("text")) == _GENERIC_CONTACT_TEXT
 
 
+def _is_generic_process_section(blocks: list[Mapping[str, Any]], start: int) -> bool:
+    """Remove only the identical sales preamble repeated across older answers."""
+    if _canonical(blocks[start].get("text")) != "how the work starts":
+        return False
+    body = blocks[start + 1 : _section_end(blocks, start)]
+    return tuple(_canonical(block.get("text")) for block in body) == _GENERIC_PROCESS_TEXT
+
+
 def filtered_legacy_blocks(page: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     """Return imported blocks after removing exact shared reader boilerplate.
 
@@ -169,7 +184,8 @@ def filtered_legacy_blocks(page: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     marketing/contact paragraph across unrelated readers.  It includes an
     retired delivery-time promise and repeated hours.  The common reader
     contact controls already supply the current contact path, so this helper
-    removes that exact section and the exact four-link generic reference block.
+    removes that exact section, the repeated two-paragraph sales preamble, and
+    the exact four-link generic reference block.
     All other headings, prose, and topic-specific citations remain intact.
     """
     blocks = [block for block in page.get("contentBlocks") or [] if isinstance(block, Mapping)]
@@ -178,7 +194,9 @@ def filtered_legacy_blocks(page: Mapping[str, Any]) -> list[Mapping[str, Any]]:
     while index < len(blocks):
         block = blocks[index]
         if _heading(block):
-            if _is_generic_contact_section(blocks, index) or _is_generic_reference_section(blocks, index):
+            if (_is_generic_contact_section(blocks, index)
+                    or _is_generic_reference_section(blocks, index)
+                    or _is_generic_process_section(blocks, index)):
                 index = _section_end(blocks, index)
                 continue
         kept.append(block)

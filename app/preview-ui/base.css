@@ -26,8 +26,8 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{min-width:320px;min-height:100%;height:auto;overflow-x:clip;overflow-y:visible;background:var(--lf-black);scroll-behavior:smooth}
-body{min-width:320px;min-height:100%;height:auto;margin:0;overflow-x:clip;overflow-y:visible;background:var(--lf-black);color:var(--lf-paper);font:400 16px/1.5 'Atkinson Hyperlegible Next',Arial,sans-serif}
+html{min-width:0;min-height:100%;height:auto;overflow-x:clip;overflow-y:visible;background:var(--lf-black);scroll-behavior:smooth}
+body{min-width:0;min-height:100%;height:auto;margin:0;overflow-x:clip;overflow-y:visible;background:var(--lf-black);color:var(--lf-paper);font:400 16px/1.5 'Atkinson Hyperlegible Next',Arial,sans-serif}
 body:has(dialog[open]){overflow:hidden}
 body.reader-open,body.explore-open{overflow:hidden}
 img,svg{max-width:100%}
@@ -55,6 +55,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .primary-nav a,.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:0;border-radius:999px;background:transparent;color:#e8e6e2;font:700 16px/1 'Atkinson Hyperlegible Next',Arial,sans-serif;text-decoration:none;white-space:nowrap}
 .primary-nav a:hover,.primary-nav a:focus-visible,.pill:hover,.pill:focus-visible{background:#25252a}
 .primary-nav .start-button{background:var(--lf-orange);color:#160c07}.primary-nav .start-button:hover,.primary-nav .start-button:focus-visible{background:#ff9a70;color:#160c07}
+.primary-nav .start-button__short{display:none}
 .topbar :is(#explore-toggle,#motion-toggle){gap:8px;min-width:44px;color:var(--lf-paper)}
 
 .site-footer{display:block;width:100%;margin-top:clamp(44px,8vw,104px);padding:24px 0 0;border-top:1px solid #3a3a40}
@@ -63,17 +64,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .utility-nav :is(a,.privacy-control):hover,.utility-nav :is(a,.privacy-control):focus-visible{color:var(--lf-paper);text-decoration:underline;text-underline-offset:4px}
 
 @media (min-width:761px) and (max-width:1000px){
-  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px}
-  .primary-nav{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0}
-  .primary-nav a{min-width:0}
+  /* This range has room for one calm navigation row.  Stacking the header
+     consumed the first useful screenful and made a 924px browser feel like a
+     phone stretched wide. */
+  .topbar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;min-height:60px;margin-bottom:18px}
+  .primary-nav{grid-column:auto;grid-row:auto;display:flex;justify-content:center;min-width:0;margin:0;gap:2px}
+  .primary-nav a{min-width:0;padding-inline:10px;font-size:16px}
+  .topbar #explore-toggle{padding-inline:8px}
 }
 
 @media (max-width:760px){
   .app-shell,.page-shell{padding:10px 12px 26px}
-  .topbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;margin-bottom:20px}
-  .wordmark{height:44px;font-size:18px}
-  .primary-nav{grid-column:1/-1;grid-row:2;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;margin:0;gap:4px}
-  .primary-nav a{min-width:0;padding-inline:6px;font-size:16px}
+  .topbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+  .wordmark{min-height:44px;height:auto;font-size:18px;flex:0 1 auto}
+  .wordmark>span{white-space:normal}
+  .topbar #explore-toggle{margin-left:auto}
+  .primary-nav{order:3;display:flex;flex-wrap:wrap;width:100%;margin:0;gap:4px}
+  .primary-nav a{flex:1 1 auto;min-width:max-content;padding-inline:6px;font-size:16px}
   .site-footer{margin-top:60px}
   .utility-nav{gap:0;font-size:16px}
   .utility-nav :is(a,.privacy-control){padding-inline:9px}
@@ -87,6 +94,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .wordmark .boat{width:32px;height:30px}
   .wordmark .nyc{font-size:8px}
   .primary-nav a{padding-inline:4px;font-size:15px}
+}
+
+/* Keep the three header actions in one useful phone row.  The source keeps the
+   complete accessible name; this is only the compact visible label. */
+@media (max-width:440px){
+  .primary-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .primary-nav .start-button{grid-column:auto;justify-self:stretch;padding-inline:5px}
+  .primary-nav .start-button__long{display:none}
+  .primary-nav .start-button__short{display:inline;font-size:15px;line-height:1;white-space:nowrap}
 }
 
 @media (prefers-reduced-motion:reduce){

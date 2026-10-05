@@ -168,17 +168,22 @@ def review_cards(limit=None):
         rows.append(f'<a class="review-card rw-review-tile" href="{E(r["sourceUrl"])}" target="_blank" rel="noopener noreferrer"><span class="review-stars" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="rw-review-credit"><cite>{E(r["displayName"])}</cite><span aria-hidden="true">+</span></span><span class="sr-only">Google review</span></a>')
     return '<div class="review-grid">'+''.join(rows)+'</div>'
 
-def contact(path, prompt='Tell us what you need help with.'):
+def contact_intent(path):
     family=reader_family(pages.get(path,{'path':path}))
-    intent={'web':'website','it':'support','consulting':'consulting','software':'systems'}.get(family,'general')
-    if path.startswith('/industries/') or path in ('/nationwide/','/websites-for-your-business/'):intent='website'
+    return {'web':'website','it':'support','consulting':'consulting','software':'systems'}.get(family,'general')
+
+def contact(path, prompt='Tell us what you need help with.'):
+    intent=contact_intent(path)
     heading='Let’s make it yours.' if path=='/services/custom-local-websites/' else 'Talk to Little Fight.'
     introduction=prompt
-    source = quote(path, safe='')
-    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels()}{link('Write to us +', f'/tech-audit/?intent={intent}&source={source}', 'contact-plan')}</nav><p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p></div></section>'''
+    return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels(intent, path)}</nav><p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p></div></section>'''
 
-def channels():
-    return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'
+def channels(intent='general', source=''):
+    query = '?intent='+quote(intent, safe='')
+    if source:
+        query += '&source='+quote(source, safe='')
+    write='' if source in ('/tech-audit/','/contact/','/thanks/') else '<a class="contact-plan" data-reader-link href="/tech-audit/'+query+'">Write</a>'
+    return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'+write
 
 def sections_html(sections):
     html=[]
@@ -313,6 +318,7 @@ def article(p):
     if not art: art=reader_visual(p,q,cases,albums)
     if p.get('_homeGroup'):
         art=group_hero(p['_homeGroup']) or art
+    answer_first = path.startswith('/answers/')
     demo = embedded_demo(path, q)
     primary_action='<a href="#contact">Tell us what you need +</a>'
     if demo:
@@ -328,6 +334,10 @@ def article(p):
     kicker=f'<p class="story-kicker">{E(q["eyebrow"])}</p>' if q['eyebrow'] not in quiet_labels else ''
     hero_action=f'<nav class="contact-actions" aria-label="Your next step">{primary_action}</nav>' if demo else ''
     hero=f'<header class="story-hero"><div>{kicker}<h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{hero_action}</div><div class="story-art">{art}</div></header>'
+    if p.get('_answerGuide') or path.startswith('/answers/') or path=='/library/':
+        # These are an answer and a map, not a second service pitch. Get the
+        # visitor to the substance before any project evidence further down.
+        hero=f'<header class="story-hero answer-guide-hero"><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p></header>'
     if path=='/services/custom-local-websites/':
         headline=E(q['heading']).replace('easy to choose.', '<span class="rw-kinetic-phrase">easy to choose.</span>')
         benefits=''.join(f'<li><a href="{E(b["href"])}"><strong>{E(b["heading"])}</strong></a></li>' for b in q['heroBenefits'])
@@ -344,6 +354,10 @@ def article(p):
         body = demo + '<details class="reader-demo-context"><summary>About VERA +</summary><div class="reader-demo-context-body">' + hero
     else:
         body = hero + demo
+    if answer_first and p.get('_homeGroup'):
+        questions=[section for section in p['_homeGroup']['sections'] if section.get('id') and section.get('heading')]
+        if len(questions)>1:
+            body+='<nav class="answer-jumps" aria-label="In this answer">'+''.join('<a href="#'+E(section['id'])+'">'+E(section['heading'])+'</a>' for section in questions)+'</nav>'
     if path=='/library/':
         body+=render_retained_answers(home_groups,source_routes(CONTENT,home_groups),pages,link,hidden_home_ids)
     if demo and not immersive:
@@ -357,6 +371,11 @@ def article(p):
         body+=anchor_bodies[anchor_paths[path]]['body']
     elif p.get('_homeGroup'):
         body+=render_group_sections(p['_homeGroup'],link)
+    elif p.get('_answerGuide'):
+        # Authored guide HTML is rendered into both the direct route and the
+        # in-hub reader. Older abbreviated source blocks were removed when the
+        # guide record was installed, so this is the only long-form body.
+        body+=p['_answerGuide']['bodyHtml']
     elif p.get('contentBlocks') and path not in authored and path not in lab_by_path:
         body+=render_legacy_sections(p,display,link)
     else:
@@ -372,6 +391,8 @@ def article(p):
         body+='<section class="story-faq"><h2>Before we begin.</h2>'+''.join(f'<details><summary>{E(x["question"])}</summary><p>{E(display(x["answer"]))}</p>'+('<nav class="group-references" aria-label="Website service areas">'+''.join(link(item['label'],item['href']) for item in x['links'])+'</nav>' if x.get('links') else '')+'</details>' for x in q['faqs'])+'</section>'
     if q.get('_rewriteCategory'):
         body+=render_category_answers(rewrite,q['_rewriteCategory'])
+    if answer_first and art and not p.get('_answerGuide'):
+        body+='<aside class="answer-visual" aria-label="Illustration">'+art+'</aside>'
     service_path=q.get('_servicePath') or p.get('_homeGroup',{}).get('servicePath')
     if service_path:
         body+='<nav class="answer-service-link" aria-label="Related service">'+link({'web':'Website design','it':'Tech support','consulting':'Tech consulting','software':'Custom software'}[reader_family(p)]+' +',service_path)+'</nav>'
@@ -386,15 +407,15 @@ def article(p):
     if PRODUCTION and path in ISLANDS:
         # The full existing journey replaces only this island. The fallback
         # remains useful if scripts are unavailable and never claims delivery.
-        fallback=f'<section class="story-hero"><div><h1 id="detail-title" class="story-title">{E(q["heading"])}</h1><p>{E(q["summary"])}</p><nav class="contact-actions">{channels()}</nav></div></section>'
+        fallback=f'<section class="story-hero"><div><h1 id="detail-title" class="story-title">{E(q["heading"])}</h1><p>{E(q["summary"])}</p><nav class="contact-actions">{channels(contact_intent(path),path)}</nav></div></section>'
         if path=='/contact/':
             fallback=body
         if path=='/tech-audit/':
             inquiry_copy=json.loads((CONTENT/'inquiry-copy.json').read_text())
             general=inquiry_copy['general']
-            fallback=f'<section class="story-hero"><div><p class="story-kicker" data-inquiry-eyebrow>{E(general["eyebrow"])}</p><h1 id="detail-title" class="story-title" data-inquiry-title>{E(general["title"])}</h1><p data-inquiry-summary>{E(general["summary"])}</p><nav class="contact-actions">{channels()}</nav></div></section>'
+            fallback=f'<section class="story-hero"><div><p class="story-kicker" data-inquiry-eyebrow>{E(general["eyebrow"])}</p><h1 id="detail-title" class="story-title" data-inquiry-title>{E(general["title"])}</h1><p data-inquiry-summary>{E(general["summary"])}</p><nav class="contact-actions">{channels(contact_intent(path),path)}</nav></div></section>'
             fallback+='<script type="application/json" data-inquiry-copy>'+json.dumps(inquiry_copy,ensure_ascii=False).replace('<','\\u003c')+'</script>'
-            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="source" value="/tech-audit/"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name<input name="business" autocomplete="organization" required maxlength="150"></label><label>Website or business profile link <span>(optional)</span><input name="website_url" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="2048" placeholder="yourbusiness.com" aria-describedby="static-website-url-hint"><small id="static-website-url-hint">A website, Google profile, or social link. Leave blank if you’re starting fresh.</small></label><label>Your email<input name="contact" type="email" autocomplete="email" required maxlength="250"></label><label>What do you need help with?<select name="intent" required><option value="" selected disabled>Choose a service</option><option value="general">General question</option><option value="website">Website</option><option value="support">Tech support</option><option value="consulting">Tech consulting</option><option value="systems">Custom software</option></select></label><input type="hidden" name="follow_up" value="email"><label><span data-inquiry-message-label>What would you like to change?</span><textarea name="message" required maxlength="4000"></textarea></label><button type="submit" data-inquiry-submit>Send your inquiry +</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
+            fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="source" value="/tech-audit/"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name (optional)<input name="business" autocomplete="organization" maxlength="150"></label><label>Website or business profile link <span>(optional)</span><input name="website_url" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="2048" placeholder="yourbusiness.com" aria-describedby="static-website-url-hint"><small id="static-website-url-hint">A website, Google profile, or social link. Leave blank if you’re starting fresh.</small></label><label>Phone or email<input name="contact" type="text" inputmode="text" autocomplete="off" required maxlength="250" aria-describedby="static-contact-hint"><small id="static-contact-hint">Use a phone number for a call or text, or an email address for an email reply.</small></label><label>What do you need help with?<select name="intent" required><option value="" selected disabled>Choose a service</option><option value="general">General question</option><option value="website">Website</option><option value="support">Tech support</option><option value="consulting">Tech consulting</option><option value="systems">Custom software</option></select></label><label>How should we reply?<select name="follow_up"><option value="fastest" selected>Whatever is fastest</option><option value="text">Text me</option><option value="phone">Call me</option><option value="email">Email me</option></select></label><label><span data-inquiry-message-label>What would you like to change?</span><textarea name="message" required maxlength="4000"></textarea></label><button type="submit" data-inquiry-submit>Send your inquiry +</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}">{fallback}</div>'
     return q,body
 
@@ -414,6 +435,39 @@ pages['/services/it-support/']={'path':'/services/it-support/','title':'New York
 
 apply_readers(pages, authored, home_groups)
 apply_page_rewrite(pages, authored, rewrite)
+
+# Eight existing, indexable routes receive deeper decision guides. The source
+# route stays stable; its earlier abbreviated blocks are intentionally replaced
+# so a reader never receives a new guide followed by the same old answer.
+guide_records = load('answer-guides.json').get('guides', [])
+guide_paths = set()
+for guide in guide_records:
+    path = guide.get('path')
+    body = guide.get('bodyHtml')
+    if not isinstance(path, str) or not path.startswith(('/answers/', '/journal/')) or not isinstance(body, str):
+        raise RuntimeError('Answer guide needs a retained answer or journal path and bodyHtml')
+    if re.search(r'<(?:script|style|iframe|form)\b', body, re.I):
+        raise RuntimeError('Answer guide bodyHtml may not introduce executable or embedded markup')
+    if path in guide_paths or path not in pages:
+        raise RuntimeError('Answer guide path is missing or duplicated: '+str(path))
+    guide_paths.add(path)
+    page = dict(pages[path])
+    for key in ('answerContent', 'marketContent', 'contentBlocks', 'sourceDepth', 'extraHtml', 'faqs'):
+        page.pop(key, None)
+    body = re.sub(r'<a href=(["\'])/', r'<a data-reader-link href=\1/', body)
+    body = body.replace(
+        "<div class='guide-table-wrap'>",
+        "<div class='guide-table-wrap' tabindex='0' role='region' aria-label='Guide comparison table'>",
+    )
+    page.update(
+        title=guide['title'], heading=guide['heading'], summary=guide['summary'],
+        description=guide['description'], family={'/journal/how-to-own-your-domain-name-not-your-web-guy/':'consulting', '/journal/how-to-stop-double-bookings-small-business/':'software'}.get(path,'web'), sections=[], _answerGuide={**guide, 'bodyHtml': body},
+    )
+    pages[path] = page
+    authored[path] = page
+if len(guide_paths) != 8:
+    raise RuntimeError('Expected eight retained answer guides, found '+str(len(guide_paths)))
+
 for path, family in anchor_paths.items():
     anchor = anchor_bodies[family]
     pages[path].update(heading=anchor['title'], summary=anchor['summary'], description=anchor['description'],
@@ -441,10 +495,11 @@ def head(q, home=False):
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
-    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+link('Let’s build +','/tech-audit/','start-button')+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Services and search"><span class="explore-label">Services<span class="explore-search-label"> &amp; search</span></span> <span aria-hidden="true">☰</span></button></header>'
+    question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
+    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span> <span aria-hidden="true">☰</span></button></header>'
 
 def site_footer():
     return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
@@ -458,12 +513,13 @@ for path,p in pages.items():
     q,body=article(p)
     output_path='/_readers'+path if preserved(path) else path
     if preserved(path):q=dict(q,path=output_path,canonicalPath=path)
-    rail='<nav class="direct-contact-rail contact-actions" aria-label="Quick contact">'+channels()+'</nav>'
+    rail='<nav class="direct-contact-rail contact-actions" aria-label="Quick contact">'+channels(contact_intent(path),path)+'</nav>'
     layout = ' data-reader-layout="immersive"' if path == '/vera/' else ''
     family = reader_family(p)
+    page_class = 'page-home answer-page' if path.startswith('/answers/') or p.get('_answerGuide') or path in ('/library/','/tech-audit/') else 'page-home'
     template = ' data-reader-template="website-service"' if path == '/services/custom-local-websites/' else (' data-reader-template="anchor-service"' if path in anchor_paths else (' data-reader-template="combined-story"' if p.get('_homeGroup') else ''))
     template += ' data-home-path="'+E(home_context.get(path,path))+'"'
-    write(output_path+'index.html',head(q)+'<body class="page-home"><a class="skip-to-finder" href="#detail-title">Skip to content</a><nav class="reader-hub-return-nav" aria-label="Return to homepage hub"><a class="reader-hub-return" href="/" aria-label="Return to homepage hub">×</a></nav><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-reader-family="{E(family)}" data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}{template}>{body}</main></div>'+shell_end())
+    write(output_path+'index.html',head(q)+f'<body class="{page_class}"><a class="skip-to-finder" href="#detail-title">Skip to content</a><nav class="reader-hub-return-nav" aria-label="Return to homepage hub"><a class="reader-hub-return" href="/" aria-label="Return to homepage hub">×</a></nav><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-reader-family="{E(family)}" data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}{template}>{body}</main></div>'+shell_end())
 
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.tiles=[]
@@ -509,7 +565,7 @@ write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False
 q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
 home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
-rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/']
+rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/']
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
 # The browser shell reads this map before it fetches an internal reader. It
 # lets links from search, the work collection, and direct pages retain their
@@ -534,7 +590,8 @@ css='\n'.join((UI/name).read_text() for name in css_files)
 minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
 write('site.css',minified_css)
 for name in ['tile-motion.js','mosaic-layout.js']:shutil.copy2(UI/'vendor'/name,OUT/name)
-for name in ['site.js', 'tile-effects.js', 'website-story.js']:shutil.copy2(UI/name,OUT/name)
+for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js']:shutil.copy2(UI/name,OUT/name)
+shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)
 for relative in RETIRED_PUBLISHED_ASSETS:
     target = OUT / relative

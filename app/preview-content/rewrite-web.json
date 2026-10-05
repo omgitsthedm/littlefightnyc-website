@@ -394,15 +394,15 @@
       "summary": "Keep the website and Google Business Profile accurate, connected, and easy to understand. The public facts should help a customer find the right business and reach a real person."
     },
     "ownership": {
-      "heading": "Keep your accounts in your hands.",
-      "summary": "Know who controls the domain, hosting, email, and connected tools before a renewal or provider change. We help put access and recovery details under your business’s control."
+      "heading": "Who owns my website and business accounts?",
+      "summary": "Your business should control the domain, website files, email, and connected accounts. Check that you can sign in and recover access before changing providers."
     },
     "speed": {
-      "heading": "Make the important path work on a phone.",
+      "heading": "Why is my website slow or hard to use?",
       "summary": "A site can look fine on a computer and still make a customer work too hard on a phone. Start with the pages, controls, and information they need most."
     },
     "booking": {
-      "heading": "A contact path should tell people what happens next.",
+      "heading": "How can customers contact or book with us?",
       "summary": "Whether someone books, calls, or sends an inquiry, the path should be clear on a phone and connected to the way your business actually responds."
     },
     "web-homepage-priority": {

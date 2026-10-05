@@ -129,7 +129,8 @@ def render_group_sections(group, link):
             art_id = None
         art = re.sub(r'<figcaption>.*?</figcaption>', '', _story_figure(art_id)) if art_id in STORY_ART else ''
         heading = '<h2>' + escape(section['heading']) + '</h2>' if section.get('heading') else ''
-        chapters.append('<section class="group-chapter' + (' group-chapter--illustrated' if art else '') + '"><div class="group-chapter-heading">' + heading + art + '</div><div class="group-chapter-copy">' + body + '</div></section>')
+        identity=' id="'+escape(section['id'])+'"' if section.get('id') else ''
+        chapters.append('<section'+identity+' class="group-chapter' + (' group-chapter--illustrated' if art else '') + '"><div class="group-chapter-heading">' + heading + '</div><div class="group-chapter-copy">' + body + art + '</div></section>')
     return '<div class="group-story">' + ''.join(chapters) + '</div>'
 
 
