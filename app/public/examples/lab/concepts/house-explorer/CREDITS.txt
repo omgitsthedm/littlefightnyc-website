@@ -1,0 +1,9 @@
+House Explorer — public credits
+
+3D renderer: Three.js r180, MIT License
+https://github.com/mrdoob/three.js/blob/r180/LICENSE
+
+The house geometry is an anonymized Little Fight NYC design-study derivative.
+The retained roof texture is procedural and embedded in the study model.
+No third-party property imagery, maps, photographs, addresses, or survey material
+are included in this public experience.

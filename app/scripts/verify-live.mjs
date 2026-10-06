@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import path from "node:path";
+import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -82,7 +83,10 @@ if (releaseResponse.ok) {
   if (release.source_dirty) failures.push("/release.json: production artifact reports dirty source");
 }
 
+const labs = JSON.parse(readFileSync(path.join(repoRoot, "app/preview-content/labs.json"), "utf8"));
 const htmlRoutes = [
+  "/construction/",
+  ...labs.map(lab => lab.sharePath),
   "/",
   "/services/",
   "/services/custom-local-websites/",

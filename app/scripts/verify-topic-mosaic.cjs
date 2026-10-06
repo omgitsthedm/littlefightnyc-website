@@ -23,14 +23,22 @@ const content = path.join(app, 'preview-content');
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'topic-mosaic');
 const screenshots = path.join(evidence, 'screenshots');
 const base = (process.env.TOPIC_MOSAIC_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
-const expected = { totalInventory: 129, originals: 106, reviews: 7, routes: 402, groups: 19 };
+const labs = JSON.parse(fs.readFileSync(path.join(content, 'labs.json'), 'utf8'));
+const addedLabs = Math.max(0, labs.length - 9);
+const expected = {
+  totalInventory: 129 + addedLabs + 1,
+  originals: 106,
+  reviews: 7,
+  routes: 402 + labs.length + 1,
+  groups: 19,
+};
 const topics = [
   ['web', 'topic-web', 'Websites'],
   ['it', 'topic-it', 'Tech support'],
   ['consulting', 'topic-consulting', 'Consulting'],
   ['software', 'topic-software', 'Custom software'],
 ];
-const topicTileCounts = { web: 21, it: 20, consulting: 16, software: 20 };
+const topicTileCounts = { web: 21, it: 20, consulting: 16, software: 20 + addedLabs + 1 };
 // These original cards deliberately keep their canonical URLs while their
 // homepage context changes. Keep this list explicit: the regression is a
 // wrong topic/color/reader identity, not an expected visual variation.
@@ -44,6 +52,8 @@ const regroupedCards = [
   ['lab-pill-scroll', 'software', 'magenta'],
   ['lab-aha-laser', 'software', 'magenta'],
   ['lab-goliath', 'software', 'magenta'],
+  ['lab-cabinet-concept', 'software', 'magenta'],
+  ['lab-house-explorer', 'software', 'magenta'],
   ['page-vera', 'software', 'magenta'],
   ['case-after-hours-agenda', 'software', 'magenta'],
   ['album-nyc', 'consulting', 'green'],
@@ -109,7 +119,7 @@ function readHomepageInventory() {
   assert.ok(fs.existsSync(file), 'production artifact must include homepage-inventory.json');
   const inventory = JSON.parse(fs.readFileSync(file, 'utf8'));
   assert.equal(inventory.sourceTileCount, expected.originals, 'inventory must retain all 106 source identities');
-  assert.equal(inventory.totalTileInventory, expected.totalInventory, 'inventory must account for all 129 tiles');
+  assert.equal(inventory.totalTileInventory, expected.totalInventory, 'inventory must account for every retained tile');
   assert.equal(inventory.groups?.length, expected.groups, 'inventory must record all 19 consolidated groups');
   assert.ok(Array.isArray(inventory.visibleTiles), 'inventory needs visible homepage tiles');
   assert.ok(Array.isArray(inventory.retainedRoutes), 'inventory needs every retained destination');
@@ -125,7 +135,7 @@ function readHomepageInventory() {
   const retainedIds = inventory.retainedRoutes.map(route => route?.id);
   assert.equal(new Set(visibleIds).size, visibleIds.length, 'visible homepage ids must be unique');
   assert.equal(new Set(retainedIds).size, retainedIds.length, 'retained route ids must be unique');
-  assert.equal(retainedIds.length, expected.totalInventory, 'every one of the 129 tiles needs a retained route/search record');
+  assert.equal(retainedIds.length, expected.totalInventory, 'every retained tile needs a route/search record');
   assert.equal(inventory.visibleTiles.length, expected.totalInventory - hidden.size,
     'visible count must equal total inventory minus unique absorbed/hidden ids');
   assert.ok(visibleIds.every(id => typeof id === 'string' && id && !hidden.has(id)), 'visible ids cannot also be absorbed/hidden');
@@ -407,10 +417,10 @@ async function assessGeometry(page, width) {
 async function assertTopicStructure(page, manifest) {
   const release = JSON.parse(fs.readFileSync(path.join(app, 'dist', 'tile-release.json'), 'utf8'));
   assert.equal(release.tiles, manifest.inventory.visibleTiles.length, 'release marker must record the consolidated visible tile count');
-  assert.equal(release.totalTileInventory, expected.totalInventory, 'release marker must preserve the full 129-tile inventory');
+  assert.equal(release.totalTileInventory, expected.totalInventory, 'release marker must preserve the full tile inventory');
   assert.equal(release.originalTilesPreserved, expected.originals, 'release marker must record 106 remaining originals');
   assert.equal(release.consolidatedGroups, expected.groups, 'release marker must record all consolidated groups');
-  assert.equal(release.routes, expected.routes, 'release marker must record 402 routes, including the two printed QR destinations');
+  assert.equal(release.routes, expected.routes, 'release marker must record every compiled route');
   assert.equal(await page.locator('a.tile[href]').count(), manifest.inventory.visibleTiles.length, 'homepage must expose exactly the consolidated visible tiles as real links');
   const homeTiles = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => ({ id: tile.dataset.answer, href: tile.getAttribute('href') })));
   assert.deepEqual(new Set(homeTiles.map(tile => tile.id)), new Set(manifest.visibleIds), 'homepage tile ids must exactly match the visible inventory');
@@ -422,7 +432,9 @@ async function assertTopicStructure(page, manifest) {
     assert.equal(homeTiles.filter(tile => tile.id === hiddenId).length, 0, `${hiddenId} must remain available without taking homepage space`);
   }
   const retainedPaths = new Set(manifest.inventory.retainedRoutes.map(route => route.path));
-  for (const href of sourceOriginalDestinations()) assert.ok(retainedPaths.has(href), `original tile destination disappeared from retained routes: ${href}`);
+  for (const href of sourceOriginalDestinations().filter(route => !route.startsWith('/examples/lab/'))) {
+    assert.ok(retainedPaths.has(href), `original tile destination disappeared from retained routes: ${href}`);
+  }
   const nineClientPaths = [
     '/case-studies/easy-tiger/', '/case-studies/hair-by-rachel-charles/', '/case-studies/the-tarot-hotline/',
     '/case-studies/grand-funding-llc/', '/case-studies/the-break-room/', '/case-studies/clearhelp/',
@@ -431,7 +443,10 @@ async function assertTopicStructure(page, manifest) {
   for (const route of [...nineClientPaths, '/vera/']) assert.ok(retainedPaths.has(route), `protected/client route disappeared from inventory: ${route}`);
   assert.ok(sourceOriginalDestinations().some(route => route.startsWith('/examples/lab/')), 'source inventory must include Labs');
   for (const route of sourceOriginalDestinations().filter(route => route.startsWith('/examples/lab/'))) {
-    assert.ok(retainedPaths.has(route), `Lab destination disappeared from inventory: ${route}`);
+    const slug = route.split('/').filter(Boolean).pop();
+    const sharePath = labs.find(lab => lab.slug === slug)?.sharePath;
+    assert.ok(retainedPaths.has(route) || (sharePath && retainedPaths.has(sharePath)),
+      `Lab destination disappeared from inventory: ${route}`);
   }
   for (const [topic, id, label] of topics) {
     const section = page.locator(`section.topic-section#${id}[data-topic="${topic}"]`);

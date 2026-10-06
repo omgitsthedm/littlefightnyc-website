@@ -23,7 +23,8 @@ const productionMode = process.env.TILE_DIST === 'production' || new URL(base).p
 const artifactDir = productionMode ? 'dist' : 'preview-dist';
 const releaseFilename = productionMode ? 'tile-release.json' : 'preview-release.json';
 const verifiedReviewSources = new Set(JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews.map(review => review.sourceUrl));
-const expectedInventory = { total: 129, originals: 106, groups: 19, reviews: 7 };
+const catalogLabs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
+const expectedInventory = { total: 129 + catalogLabs.length - 9 + 1, originals: 106, groups: 19, reviews: 7 };
 const report = {
   kind: 'tile-preview-browser-verification',
   base,
@@ -71,7 +72,7 @@ function readHomepageInventory() {
   const retainedIds = inventory.retainedRoutes.map(route => route?.id);
   assert.equal(new Set(visibleIds).size, visibleIds.length, 'visible tile ids must be unique');
   assert.equal(new Set(retainedIds).size, retainedIds.length, 'retained route ids must be unique');
-  assert.equal(retainedIds.length, expectedInventory.total, 'all 129 tile routes must remain retained');
+  assert.equal(retainedIds.length, expectedInventory.total, 'all tile routes must remain retained');
   assert.equal(inventory.visibleTiles.length, expectedInventory.total - hidden.size, 'visible count must be total inventory minus unique absorbed/hidden ids');
   assert.ok(visibleIds.every(id => id && !hidden.has(id)), 'absorbed/hidden tiles cannot appear on the hub');
   assert.deepEqual(new Set(retainedIds), new Set([...visibleIds, ...hidden]), 'retained records must cover every visible and absorbed/hidden tile');
@@ -381,7 +382,7 @@ async function run() {
   const manifest = readHomepageInventory();
   const release = JSON.parse(fs.readFileSync(path.join(app, artifactDir, releaseFilename), 'utf8'));
   assert.equal(release.tiles, manifest.inventory.visibleTiles.length, 'Preview release must record the consolidated visible tile count.');
-  assert.equal(release.totalTileInventory, expectedInventory.total, 'Preview release must retain all 129 tile routes.');
+  assert.equal(release.totalTileInventory, expectedInventory.total, 'Preview release must retain all tile routes.');
   assert.equal(release.originalTilesPreserved, expectedInventory.originals, 'Preview release must retain all 106 remaining original tiles.');
   assert.equal(release.consolidatedGroups, expectedInventory.groups, 'Preview release must record all 19 consolidated groups.');
   pass('release manifest preserves all routes while recording the consolidated hub', `visible ${release.tiles}; artifact ${release.artifactSha256}`);

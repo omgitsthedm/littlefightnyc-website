@@ -37,9 +37,16 @@ function localTarget(reference, sourceFile) {
   if (
     clean === "/" ||
     clean === "/examples/" ||
+    clean === "/construction/" ||
+    clean.startsWith("/labs/") ||
     clean === "/legal/" ||
     clean.startsWith("/tech-audit/")
   ) return null;
+  // Vite emits the shared font from preview-ui during the application build.
+  // It is intentionally not duplicated into the static Lab archive.
+  if (clean.startsWith("/assets/mineral/")) {
+    return path.join(appRoot, "preview-ui", clean);
+  }
   if (clean.startsWith("/")) return path.join(publicRoot, clean);
   return path.resolve(path.dirname(sourceFile), clean);
 }
@@ -66,8 +73,9 @@ const conceptLinks = [...hub.matchAll(/<a\b(?=[^>]*\bdata-concept-card\b)[^>]*\b
   (match) => match[1],
 );
 
-if (conceptLinks.length !== 9) {
-  failures.push(`expected 9 concept links, found ${conceptLinks.length}`);
+const catalog = JSON.parse(fs.readFileSync(path.join(appRoot, "preview-content", "labs.json"), "utf8"));
+if (conceptLinks.length !== catalog.length) {
+  failures.push(`expected ${catalog.length} catalog concept links, found ${conceptLinks.length}`);
 }
 
 if (
@@ -86,11 +94,14 @@ for (const reference of conceptLinks) {
 }
 
 if (manifest.version !== 3) failures.push(`expected concepts manifest version 3, found ${manifest.version}`);
-if (manifest.suites?.length !== 5) {
-  failures.push(`expected 5 suites in concepts.json, found ${manifest.suites?.length ?? 0}`);
+if (manifest.suites?.length !== 6) {
+  failures.push(`expected the five retained suites and Construction, found ${manifest.suites?.length ?? 0}`);
 }
-if (manifest.concepts?.length !== 9) {
-  failures.push(`expected 9 concepts in concepts.json, found ${manifest.concepts?.length ?? 0}`);
+if (manifest.concepts?.length !== catalog.length) {
+  failures.push(`expected ${catalog.length} catalog concepts, found ${manifest.concepts?.length ?? 0}`);
+}
+for (const lab of catalog) {
+  if (!manifest.concepts?.some(concept => concept.slug === lab.slug)) failures.push(`manifest omits catalog Lab: ${lab.slug}`);
 }
 const suiteSlugs = (manifest.suites || []).map((suite) => suite.slug);
 const manifestSlugs = (manifest.concepts || []).map((concept) => concept.slug);
@@ -193,7 +204,7 @@ for (const file of htmlFiles) {
   }
   if (
     relative.startsWith(`concepts${path.sep}`) &&
-    !source.includes('class="lab-build-disclosure"')
+    !/\bclass=["'][^"']*\blab-build-disclosure\b[^"']*["']/i.test(source)
   ) {
     failures.push(`${relative} is missing its visible illustrative-build disclosure`);
   }
@@ -233,8 +244,17 @@ for (const file of htmlFiles) {
 }
 
 for (const file of textFiles) {
-  const source = fs.readFileSync(file, "utf8");
   const relative = path.relative(labRoot, file);
+  // These are third-party implementation bundles. A quoted cube-map filename
+  // inside a renderer is not a request made by this Lab; active Lab markup,
+  // authored CSS, and authored modules are still checked below.
+  if (
+    (relative.endsWith('.js') && relative.includes(`${path.sep}vendor${path.sep}`)) ||
+    /^concepts[\\/]cabinet-concept[\\/]cabinet-lab(?:-chunk)?[^/\\]*\.js$/i.test(relative)
+  ) {
+    continue;
+  }
+  const source = fs.readFileSync(file, "utf8");
   const inlineAssetReferences = new Set(
     [
       ...source.matchAll(

@@ -127,10 +127,13 @@ COMPACT_LABELS = {
 }
 
 
-def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
+def build_topic_mosaic(mosaic, reviews, topic_tiles, albums, extra_tiles=()):
     originals = TILE.findall(mosaic)
     assert len(originals) == 111, f'Expected 106 originals and five existing additions, found {len(originals)}'
-    tiles = originals+[question_tile(record) for record in topic_tiles]+[review_tile(record) for record in reviews['reviews']]
+    # New public cards enter after the immutable source inventory check. That
+    # keeps the old 106 identities and five legacy additions independently
+    # auditable while allowing new Labs to join the mosaic.
+    tiles = originals + list(extra_tiles) + [question_tile(record) for record in topic_tiles] + [review_tile(record) for record in reviews['reviews']]
     groups = {family: [] for family in TOPICS}
     album_by_id = {album['id']: album for album in albums}
     buyer_titles = {'buyer-plumbers': 'Websites for plumbers', 'buyer-roofing': 'Websites for roofers', 'buyer-homes': 'Websites for home services', 'buyer-law': 'Websites for law firms', 'google-reviews': 'Google reviews'}

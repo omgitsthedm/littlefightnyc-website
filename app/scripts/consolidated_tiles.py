@@ -3,6 +3,7 @@ from copy import deepcopy
 from html import escape
 import json
 import re
+from pathlib import Path
 from urllib.parse import urlsplit
 
 from editorial_tiles import geometry, story_illustration
@@ -146,7 +147,9 @@ def apply_homepage_groups(mosaic, groups, hidden):
     fallback_titles = {'brand-brief': 'Problems? Solved.', 'page-services-tech-consulting': 'Consulting'}
     removed = set(hidden) | {identity for group in groups for identity in group['absorb']}
     before = [attributes(match.group()) for match in TILE.finditer(mosaic)]
-    assert len(before) == 129, 'The source tile inventory changed unexpectedly'
+    labs = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/labs.json').read_text())
+    expected = 129 + len(labs) - 9 + 1  # new Labs and the construction collection
+    assert len(before) == expected, 'The source tile inventory changed unexpectedly'
     all_ids = {item['data-answer'] for item in before}
     assert set(by_id) | removed <= all_ids, 'Consolidation names a missing homepage tile'
 

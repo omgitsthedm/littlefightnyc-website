@@ -15,6 +15,7 @@ import subprocess
 import sys
 from tile_content import render_legacy_sections
 from case_studies import render_case, render_work
+from construction_showcase import construction_tile, render_construction
 from topic_mosaic import build_topic_mosaic, plus_navigation
 from editorial_tiles import enrich_editorial_tiles
 from reader_visuals import reader_visual, reader_family
@@ -52,7 +53,7 @@ def indexable(path):
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/areas/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
-    return path=='/' or path in ['/reviews/','/websites-for-your-business/','/how-we-help/'] or path.startswith('/industries/')
+    return path=='/' or path in ['/reviews/','/websites-for-your-business/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
 
 def preserved(path):
     return PRODUCTION and path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file()
@@ -92,6 +93,14 @@ case_visuals = load('case-visuals.json')['cases']
 case_headlines = load('case-headlines.json')
 albums = load('albums.json')
 labs = load('labs.json')
+# A Lab has two stable addresses.  Its embedded engine keeps the protected
+# original path, while its public story lives at a short, shareable route.
+# Keep the defaults here while the catalog is being migrated so old records
+# cannot accidentally become unshareable.
+for lab in labs:
+    slug = lab['slug']
+    lab.setdefault('embedPath', f'/examples/lab/concepts/{slug}/')
+    lab.setdefault('sharePath', f'/labs/{slug}/')
 rewrite = load_rewrite(CONTENT)
 anchor_bodies = load('anchor-bodies.json')
 anchor_paths = {'/services/it-support/':'it', '/services/tech-consulting/':'consulting',
@@ -101,8 +110,22 @@ anchor_icons = {'it':'/assets/mineral/wifi-high-bold.svg',
                 'software':'/assets/mineral/app-window-duotone.svg', 'brand':'/assets/boat-orange.svg'}
 anchor_labels = {'it':'Tech support', 'consulting':'Consulting', 'software':'Custom software', 'brand':'Little Fight NYC'}
 apply_catalog_hooks(rewrite, cases, labs, albums)
-lab_by_path = {'/examples/lab/concepts/'+x['slug']+'/':x for x in labs}
+lab_by_embed_path = {x['embedPath']: x for x in labs}
+lab_by_share_path = {x['sharePath']: x for x in labs}
+lab_by_path = {**lab_by_embed_path, **lab_by_share_path}
 LAB_IMAGES={'pool-room':'pool-room','walkup-3d':'brownstone-walkup','terminal-3d':'cinematic-3d','pill-scroll':'scroll-motion','micro-animations':'micro-animations','aha-laser':'aha-laser','studio-engine':'studio-engine','growth-street':'growth-street','goliath':'goliath'}
+
+def lab_tile_image(lab, width=800):
+    """Return an authored Lab cover, with the legacy resized cover as fallback."""
+    if lab.get('tileImage'):
+        return lab['tileImage']
+    stem = LAB_IMAGES.get(lab['slug'], lab['slug'])
+    return f'/images/lab-showcase/{stem}-{width}.webp'
+
+def lab_mosaic_tile(lab):
+    """Create a new Lab card without changing the protected source mosaic."""
+    image = lab_tile_image(lab)
+    return f'''<a class="tile has-real-proof" href="{E(lab['sharePath'])}" data-answer="lab-{E(lab['slug'])}" data-family="software" data-kind="lab" data-material="mineral" data-material-family="software" data-cell-face="mixed" data-cell-title="{E(lab['name'])}" data-columns="3" data-rows="3" data-mobile-columns="3" data-mobile-rows="4" aria-label="{E(lab['name'])}: {E(lab['summary'])}"><span class="lab-tile-face" data-lab-scene="{E(lab['slug'])}"><span class="lab-tile-media"><img src="{E(image)}" width="{E(lab.get('tileImageWidth') or 800)}" height="{E(lab.get('tileImageHeight') or 500)}" alt="{E(lab.get('tileImageAlt') or lab['name'])}" loading="lazy" decoding="async"></span><span class="lab-tile-copy"><strong class="lab-tile-title">{E(display(lab['name']))}</strong><span class="lab-tile-hook">{E(lab.get('tileDescription') or lab['summary'])}</span><span class="lab-tile-action">{E(lab.get('tileAction') or 'Open the working demo')}</span></span><span class="lab-tile-plus" aria-hidden="true">+</span></span></a>'''
 for name in LAB_IMAGES.values():
     for width in [480,800]:
         source=APP/'public/images/lab-showcase'/f'{name}-{width}.webp'
@@ -243,10 +266,14 @@ def embedded_demo(path, q):
         modifier = ' reader-demo--immersive'
         demo_id = 'vera'
     elif path in lab_by_path:
-        source = path + '?embed=1'
+        lab = lab_by_path[path]
+        # Never point a public reader back to itself.  The Lab engine always
+        # mounts from its fixed, protected document; the share route is the
+        # crawlable story and card shell around it.
+        source = lab['embedPath'] + '?embed=1'
         label = q['heading'] + ' working demo'
         modifier = ''
-        demo_id = lab_by_path[path]['slug']
+        demo_id = lab['slug']
     else:
         return ''
     fallback = path
@@ -260,6 +287,10 @@ def first_sentence(value):
 def lab_controls_section(lab):
     notes = [note for note in lab.get('interactionNotes', []) if 'direct html' not in note.lower()]
     return f'<section class="story-section story-section--plain reader-demo-notes"><div><p>{E(first_sentence(notes[0]))}</p></div></section>' if notes else ''
+
+def lab_share_controls(lab):
+    share_path = lab['sharePath']
+    return f'''<div class="lab-share"><button type="button" data-copy-lab-link="{E(share_path)}">Copy link</button><a href="{E(share_path)}" data-share-fallback hidden>Link to this Lab</a><span role="status" data-copy-status></span></div>'''
 
 def normalize(p):
     q=dict(p);q['title']=display(p.get('title','Little Fight NYC'));q['heading']=display(p.get('heading') or q['title'].split(' | ')[0]);q['description']=display(p.get('description') or p.get('metaDescription') or 'Practical help for your business from Little Fight NYC.')
@@ -296,6 +327,15 @@ def normalize(p):
 
 def article(p):
     q=normalize(p);path=q['path']
+    if path == '/construction/':
+        q.update(
+            title='Websites & Interactive Tools for Builders | Little Fight NYC',
+            heading='Websites & Interactive Tools for Builders',
+            summary='Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.',
+            description='Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.',
+            family='software',
+        )
+        return q, render_construction(labs, cases, link) + contact(path, 'Tell us about the work your customers need to see or choose.')
     if path=='/reviews/':
         body='<div class="review-collection"><h1 class="sr-only" id="detail-title" tabindex="-1">Google reviews for Little Fight NYC</h1><section class="story-reviews" aria-label="Google reviews">'+review_cards()+'</section></div>'+contact(path)
         return q,body
@@ -324,7 +364,7 @@ def article(p):
             art=f'<figure><img src="{E(photo["localUrl"])}" width="{photo["width"]}" height="{photo["height"]}" alt="{E(photo["title"])}" fetchpriority="high"><figcaption>{E(photo["photographer"])}</figcaption></figure>'
     if path in lab_by_path:
         lab=lab_by_path[path]
-        candidate=lab.get('tileImage') or '/images/lab-showcase/'+LAB_IMAGES[lab['slug']]+'-800.webp'
+        candidate=lab_tile_image(lab)
         image_alt=lab.get('tileImageAlt') or f'{lab["name"]} — original Lab artwork'
         image_width=lab.get('tileImageWidth') or 1440
         image_height=lab.get('tileImageHeight') or 900
@@ -352,6 +392,8 @@ def article(p):
     kicker=f'<p class="story-kicker">{E(q["eyebrow"])}</p>' if q['eyebrow'] not in quiet_labels else ''
     hero_action=f'<nav class="contact-actions" aria-label="Your next step">{primary_action}</nav>' if demo else ''
     hero=f'<header class="story-hero"><div>{kicker}<h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{hero_action}</div><div class="story-art">{art}</div></header>'
+    if path in lab_by_path:
+        hero += lab_share_controls(lab_by_path[path])
     if p.get('_answerGuide') or path.startswith('/answers/') or path=='/library/':
         # These are an answer and a map, not a second service pitch. Get the
         # visitor to the substance before any project evidence further down.
@@ -460,6 +502,21 @@ pages['/websites-for-your-business/']={'path':'/websites-for-your-business/','ti
 pages['/tech-audit/']={'path':'/tech-audit/','title':'Tell Us What You Need | Little Fight NYC','heading':'What needs to work better?','summary':'Bring the old website, the rough idea or the problem you cannot quite name. We’ll help you work out the next step.','description':'Call, text or email Little Fight NYC about a new website or a business technology problem.','sections':[]}
 pages['/thanks/']={'path':'/thanks/','title':'Your Next Step | Little Fight NYC','heading':'Thanks for reaching out.','summary':'If you just sent an inquiry, we’ll use the contact details you provided to reply. You can also call, text or email us.','description':'What happens after you contact Little Fight NYC.','sections':[]}
 pages['/services/it-support/']={'path':'/services/it-support/','title':'New York Tech Support | Little Fight NYC','heading':'A little help with the everyday tech.','summary':'Computers, Wi-Fi, email and the tools you rely on. Tell us what stopped working so we can discuss the right kind of help.','description':'Practical technology help for New York residents and small businesses. Ask about future on-site availability.','sections':[{'heading':'New York visits, planned with you.','paragraphs':['We are currently prioritizing website projects nationwide. Ask about future New York on-site availability before planning a visit.','Share the issue and your neighborhood. We’ll confirm the scope, timing and available options directly. No appointment is implied by this page.']},{'heading':'Start with the interruption.','bullets':['A computer that will not cooperate.','Wi-Fi that does not reach the rooms you use.','An email account or device that needs attention.','A change of equipment without losing your files.']}]}
+pages['/construction/']={'path':'/construction/','id':'construction-showcase','title':'Websites & Interactive Tools for Builders | Little Fight NYC','heading':'Websites & Interactive Tools for Builders','summary':'Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.','description':'Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.','family':'software','sections':[]}
+for lab in labs:
+    share_path = lab['sharePath']
+    pages[share_path] = {
+        'id': 'lab-'+lab['slug']+'-share',
+        'path': share_path,
+        'title': lab['name']+' | Little Fight NYC',
+        'heading': lab['name'],
+        'summary': lab['summary'],
+        'description': lab['summary'],
+        'eyebrow': lab['type'],
+        'category': 'labs',
+        'family': 'software',
+        'sections': lab['sections'],
+    }
 
 apply_readers(pages, authored, home_groups)
 apply_page_rewrite(pages, authored, rewrite)
@@ -506,6 +563,12 @@ def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
     visual=case_visuals.get(path.strip('/').split('/')[-1],{}) if path.startswith('/case-studies/') else {}
     share=visual.get('social') or visual.get('desktop') or {}
+    lab = lab_by_path.get(path)
+    if lab:
+        share = {'src': lab_tile_image(lab), 'alt': lab.get('tileImageAlt') or lab['name']+' — Little Fight Lab'}
+    elif path == '/construction/':
+        cabinet = next(lab for lab in labs if lab['slug'] == 'cabinet-concept')
+        share = {'src': lab_tile_image(cabinet), 'alt': cabinet.get('tileImageAlt') or 'Interactive cabinet design study'}
     share_image=E(ORIGIN+share.get('src','/assets/social/og-tiles.jpg'))
     share_alt=E(share.get('alt','Little Fight NYC — custom websites for independent businesses'))
     graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
@@ -566,16 +629,19 @@ original=Links();original.feed(mosaic);assert len(original.tiles)==106
 for tile in original.tiles:
     route=urlsplit(tile.get('href','')).path
     slug=route.strip('/').split('/')[-1]
-    record=cases.get(slug) if route.startswith('/case-studies/') else lab_by_path.get(route)
+    record=cases.get(slug) if route.startswith('/case-studies/') else lab_by_embed_path.get(route)
     if not record or 'pending' in record.get('type','').lower():continue
-    photo=('/assets/proof/optimized/tile-'+slug+'-480.webp') if record.get('image') else ('/images/lab-showcase/'+LAB_IMAGES[slug]+'-480.webp' if route in lab_by_path else '')
+    photo=('/assets/proof/optimized/tile-'+slug+'-480.webp') if record.get('image') else (lab_tile_image(record, 480) if route in lab_by_embed_path else '')
     if slug=='hair-by-rachel-charles':photo='/assets/proof/optimized/website-rachel-services-640.webp'
     if not photo:continue
     pattern=r'<a\b[^>]*href="'+re.escape(tile['href'])+r'"[^>]*>.*?</a>'
     found=re.search(pattern,mosaic,re.S)
     if not found:continue
     old=found.group(0);start=old[:old.index('>')+1].replace('class="','class="has-real-proof ',1)
-    if route in lab_by_path:
+    if route in lab_by_embed_path:
+        # The source engine keeps its original URL. The public card points to
+        # the useful, indexable Lab story that embeds that engine.
+        start=start.replace('href="'+tile['href']+'"', 'href="'+record['sharePath']+'"', 1)
         # A Lab front is an invitation into the real working experience.  The
         # optional tile fields let each Lab keep an authored image, plain hook,
         # and action without ever covering lettering inside the capture.
@@ -601,14 +667,15 @@ if PRODUCTION:
 additions=[]
 for identity,title,path,family,kicker in [('buyer-plumbers','Make plumbing easier to book.','/industries/plumbers/','web','WEBSITES FOR PLUMBERS'),('buyer-roofing','Show your roofing expertise.','/industries/roofing/','web','WEBSITES FOR ROOFERS'),('buyer-homes','Work worth showing.','/industries/luxury-home-services/','web','BUILDERS + HOME SERVICES'),('buyer-law','A clearer first impression.','/industries/law-firms/','web','WEBSITES FOR LAW FIRMS'),('google-reviews','Google reviews','/reviews/','brand','★★★★★')]:
     additions.append(f'<a class="tile buyer-tile" href="{path}" data-answer="{identity}" data-family="{family}" data-material="soft-mineral" data-material-family="{family}" data-cell-face="mixed" data-cell-title="{E(title)}"><span class="cell-face"><span class="cell-kicker">{kicker}</span><span class="cell-title">{E(title)}</span><span class="buyer-plus" aria-hidden="true">+</span></span></a>')
-mosaic=build_topic_mosaic(''.join(additions)+mosaic,reviews,topic_tiles,albums)
+new_lab_tiles = [lab_mosaic_tile(lab) for lab in labs if lab['embedPath'] not in {urlsplit(tile.get('href', '')).path for tile in original.tiles}]
+mosaic=build_topic_mosaic(''.join(additions)+mosaic,reviews,topic_tiles,albums,[construction_tile(), *new_lab_tiles])
 mosaic=enrich_editorial_tiles(mosaic)
 mosaic,homepage_inventory=apply_homepage_groups(mosaic,home_groups,hidden_home_ids)
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
 q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
 home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
-rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/']
+rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
 # The browser shell reads this map before it fetches an internal reader. It
 # lets links from search, the work collection, and direct pages retain their

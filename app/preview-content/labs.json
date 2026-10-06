@@ -1,1 +1,494 @@
-[{"slug":"pool-room","name":"The Pool Room","type":"Cinema build","summary":"Step inside a New York dive-bar film and watch the final pool break.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/pool-room/","tagline":"A made-up bar. A real pool break.","lead":"Step inside an original 3D bar, then watch the final pool shot play out inside the room.","tileDescription":"Step inside. Watch the cue ball fly.","tileAction":"Watch the break","sections":[{"heading":"Built from scratch","paragraphs":["The room, props, lighting, and shots were created for this original showroom build. It is not a real bar or a client space.","The scene is designed to show how a concept can feel tangible before a physical location or shoot exists."],"bullets":["Original 3D environment","Cinematic camera path","Physics-solved billiards break"]},{"heading":"A room with a point of view","paragraphs":["The visual system uses a dive-bar setting to make material, light, sound, and motion part of one authored moment.","It is a Lab experiment, not evidence of client work or a real-world outcome."],"bullets":[]}],"features":["All-3D environment","Cinematic film","Collision-tied sound","Pool physics"],"disclaimer":"An original Little Fight Lab concept.","interactionNotes":["Watch the cinematic opening and pool-break film."],"sourceAssets":["https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/01-street-neon.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/02-threshold.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/03-front-room.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/04-bar-reveal.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/05-clean-bar.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/06-patron-barware.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/07-booths.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/08-booth-patina.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/09-wall-history.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/10-bathroom-door.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/11-pool-light.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/13-table-hero.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/14-break-line.webp","https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/15-rack-detail.webp"],"tileImage":"/examples/lab/concepts/pool-room/img/opening/04-bar-reveal.webp","tileImageAlt":"The imagined Pool Room bar, with neon in the window and a green pool table.","tileImageWidth":1600,"tileImageHeight":900},{"slug":"walkup-3d","name":"Six-Story Walk-Up","type":"Interactive 3D scene","summary":"Spin around a made-up New York corner and see every angle.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/walkup-3d/","tagline":"Take the long way around.","lead":"Drag around an invented walk-up, tilt up to the roof, and zoom into the details.","tileDescription":"Spin a tiny New York corner.","tileAction":"Spin the block","sections":[{"heading":"Explore the whole corner","paragraphs":["The walkthrough uses a single interactive 3D environment rather than a fixed image.","It is an illustrative capability build for thinking about place, not a client result."],"bullets":["Real estate","Games","Cinema"]}],"features":["Interactive 3D model","Orbit","Tilt","Zoom"],"disclaimer":"An illustrative Little Fight Lab concept.","interactionNotes":["Drag sideways to orbit, drag vertically to tilt, and pinch or scroll to zoom."],"sourceAssets":[],"tileImage":"/images/lab-covers/walkup.jpg","tileImageAlt":"Warm windows, brickwork, and fire escapes on the interactive New York walk-up.","tileImageWidth":1000,"tileImageHeight":700},{"slug":"terminal-3d","name":"Neon District","type":"Interactive city scene","summary":"Tap into a neon city of cabs, citizens, beacons, and changing weather.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/terminal-3d/","tagline":"The city changes when you touch it.","lead":"Spin through an invented district, tap a beacon, then switch the scene from lunch rush to rain or night.","tileDescription":"Make it rain on a neon city.","tileAction":"Enter the district","sections":[{"heading":"A city you can touch","paragraphs":["Beacons, citizens, and cabs invite interaction while a guided tour moves through the scene.","Time-of-day and event controls change the illustrative environment without making a business-performance claim."],"bullets":["Lunch rush","Rain","Night","Grand opening"]}],"features":["Interactive city scene","Guided tour","Orbit and zoom","Moment controls"],"disclaimer":"An illustrative Little Fight Lab concept.","interactionNotes":["Tap beacons, citizens, and cabs; drag to orbit; pinch to zoom; use the on-page tour and time controls."],"sourceAssets":[],"tileImage":"/images/lab-covers/neon-district.jpg","tileImageAlt":"The lit streets and yellow windows of Neon District beneath a vivid blue and violet sky.","tileImageWidth":800,"tileImageHeight":500},{"slug":"pill-scroll","name":"Scroll Into Motion","type":"Motion study","summary":"Use your thumb to cut a 16-frame New York film.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/pill-scroll/","tagline":"Your thumb runs the edit.","lead":"Scroll forward, pull back, or stop on any of sixteen New York frames. The film waits for you.","tileDescription":"Slide through sixteen New York scenes.","tileAction":"Run the edit","sections":[{"heading":"Scroll is the editor","paragraphs":["The study is built around direct control instead of autoplay: the scene changes only when the visitor moves it.","It demonstrates a motion approach for launch films, lookbooks, campaigns, and brand stories."],"bullets":["Launch films","Lookbooks","Campaigns","Brand stories"]}],"features":["Scroll-driven sequence","Sixteen moments","Direct playback control"],"disclaimer":"A Little Fight Lab motion study.","interactionNotes":["Scroll forward, pull back, or pause at any moment; the sequence does not autoplay."],"sourceAssets":[],"tileImage":"/examples/lab/concepts/pill-scroll/assets/nyc-grand-central-busy-2.webp","tileImageAlt":"A crowd moving through Grand Central, one of the New York scenes in the scroll-controlled film.","tileImageWidth":1600,"tileImageHeight":1062},{"slug":"micro-animations","name":"Micro-Animations","type":"Interaction arcade","summary":"Play through seven tiny moments that make software feel alive.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/micro-animations/","tagline":"Press every button.","lead":"Press, throw, hold, undo, slide, flip, and commit. Every move answers back.","tileDescription":"Press, swipe, and flip a tiny app.","tileAction":"Play the arcade","sections":[{"heading":"Feedback carries the action","paragraphs":["The studies focus on button acknowledgement, sheets, destructive holds, undo, tabs, theme changes, and form completion.","The ordering interface is illustrative; it is a place to test motion behavior, not a real order flow or client result."],"bullets":["Press","Throw","Hold","Undo","Slide","Flip","Commit"]}],"features":["Seven motion moments","Illustrative ordering UI","Action feedback"],"disclaimer":"A Little Fight Lab interaction study.","interactionNotes":["Try the press, throw, hold, undo, slide, flip, and commit interactions."],"sourceAssets":[],"tileImage":"/images/lab-covers/micro-animations.jpg","tileImageAlt":"The Bodega demo with a coffee added and its sliding shopping bag open.","tileImageWidth":390,"tileImageHeight":424},{"slug":"aha-laser","name":"AHA Laser Poster","type":"Interactive poster","summary":"Pull a chain and watch a wordmark turn into light.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/aha-laser/","tagline":"Pull the chain.","lead":"A laser draws the letters. The pull chain changes the room.","tileDescription":"Pull the chain. Light up the poster.","tileAction":"Light the sign","sections":[{"heading":"Poster as interaction","paragraphs":["This is a responsive design demo centered on a laser-drawn wordmark and one pull-chain gesture.","Its AHA name is separate from the After Hours Agenda client/product case study; it is a Lab poster experiment."],"bullets":["Responsive poster","Laser-drawn wordmark","Pull-chain interaction"]}],"features":["Responsive poster","Typographic motion","Pull-chain control"],"disclaimer":"A Little Fight Lab poster study.","interactionNotes":["Use the pull-chain control to trigger the poster behavior."],"sourceAssets":[],"tileImage":"/images/lab-showcase/aha-laser-800.webp","tileImageAlt":"The AHA poster glowing pink, with its pull chain at the upper right.","tileImageWidth":800,"tileImageHeight":500},{"slug":"studio-engine","name":"Studio Engine","type":"Interactive website sketch","summary":"Name a business and watch a sample site change shape.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/studio-engine/","tagline":"Type a business. Change the mood.","lead":"Choose a sample business, switch the visual direction, and watch the site respond.","tileDescription":"Pick a shop. Give it a new look.","tileAction":"Build a sample","sections":[{"heading":"Start with a direction","paragraphs":["The project uses sample business types and visual directions to demonstrate an interactive starting point.","It is not a real client site or client result."],"bullets":["Wine bar","Barbershop","Bakery","Pilates studio","Warm minimal","Bold editorial","Late night"]}],"features":["Business-type choices","Direction choices","Live sample site"],"disclaimer":"An illustrative Little Fight Lab tool.","interactionNotes":["Select a sample business type and visual direction to drive the illustrative experience."],"sourceAssets":[],"tileImage":"/images/lab-covers/studio-engine.jpg","tileImageAlt":"The bright bakery website sketch made in Studio Engine, with bold type and a warm orange illustration.","tileImageWidth":920,"tileImageHeight":680},{"slug":"growth-street","name":"Growth Street","type":"Interactive story","summary":"Follow a made-up flower shop from a quiet street to a busy window.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/growth-street/","tagline":"A flower-shop story told in pictures.","lead":"Scroll through an invented shop story that turns discovery, orders, and follow-through into a street scene.","tileDescription":"Meet a florist. Follow her shop\u2019s story.","tileAction":"Walk the story","sections":[{"heading":"A model for explanation","paragraphs":["The flower-shop narrative is invented to show relationships among discovery, action, and follow-through.","Dots, tickets, crowd scenes, reviews, and money are explanatory props, not reported traffic, sales, reviews, or revenue."],"bullets":["Illustrative discovery path","Illustrative orders","Illustrative review and crowd scenes","Illustrative money visuals"]}],"features":["Interactive systems narrative","Fictional business","Explanatory visual props"],"disclaimer":"An illustrative Little Fight Lab systems story.","interactionNotes":["Use the interactive story props to explore the relationship between discovery, action, and follow-through."],"sourceAssets":[],"tileImage":"/images/lab-covers/growth-street.jpg","tileImageAlt":"Rosie\u2019s illustrated flower shop beside a phone, with a striped awning, flowers, and a bright blue sky.","tileImageWidth":534,"tileImageHeight":301},{"slug":"goliath","name":"Goliath","type":"Poster campaign","summary":"Scroll through ten Little Fight posters as they paste themselves up.","sourceUrl":"https://littlefightnyc.com/examples/lab/concepts/goliath/","tagline":"Ten posters. One loud idea.","lead":"Scroll forward to paste up the campaign. Pull back to peel it away, frame by frame.","tileDescription":"Paste up ten posters with one scroll.","tileAction":"Run the posters","sections":[{"heading":"One message, many frames","paragraphs":["This is Little Fight\u2019s own campaign study, built around a sequence of ten posters and a scroll-controlled projection effect.","It demonstrates how a clear idea can organize a campaign; it is not a client result."],"bullets":["Ten posters","Scroll-controlled sequence","No photography","No video"]}],"features":["Brand campaign","Ten-poster sequence","Scroll as projector"],"disclaimer":"A Little Fight Lab campaign study.","interactionNotes":["Use scroll as the projector that carries the poster sequence."],"sourceAssets":[],"tileImage":"/images/lab-showcase/goliath-800.webp","tileImageAlt":"The bold orange Little Fight poster from the scrolling campaign.","tileImageWidth":800,"tileImageHeight":500}]
+[
+  {
+    "slug": "pool-room",
+    "name": "The Pool Room",
+    "type": "Cinema build",
+    "summary": "Step inside a New York dive-bar film and watch the final pool break.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+    "tagline": "A made-up bar. A real pool break.",
+    "lead": "Step inside an original 3D bar, then watch the final pool shot play out inside the room.",
+    "tileDescription": "Step inside. Watch the cue ball fly.",
+    "tileAction": "Watch the break",
+    "sections": [
+      {
+        "heading": "Built from scratch",
+        "paragraphs": [
+          "The room, props, lighting, and shots were created for this original showroom build. It is not a real bar or a client space.",
+          "The scene is designed to show how a concept can feel tangible before a physical location or shoot exists."
+        ],
+        "bullets": [
+          "Original 3D environment",
+          "Cinematic camera path",
+          "Physics-solved billiards break"
+        ]
+      },
+      {
+        "heading": "A room with a point of view",
+        "paragraphs": [
+          "The visual system uses a dive-bar setting to make material, light, sound, and motion part of one authored moment.",
+          "It is a Lab experiment, not evidence of client work or a real-world outcome."
+        ],
+        "bullets": []
+      }
+    ],
+    "features": [
+      "All-3D environment",
+      "Cinematic film",
+      "Collision-tied sound",
+      "Pool physics"
+    ],
+    "disclaimer": "An original Little Fight Lab concept.",
+    "interactionNotes": [
+      "Watch the cinematic opening and pool-break film."
+    ],
+    "sourceAssets": [
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/01-street-neon.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/02-threshold.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/03-front-room.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/04-bar-reveal.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/05-clean-bar.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/06-patron-barware.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/07-booths.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/08-booth-patina.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/09-wall-history.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/10-bathroom-door.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/11-pool-light.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/12-room-hero.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/13-table-hero.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/14-break-line.webp",
+      "https://littlefightnyc.com/examples/lab/concepts/pool-room/img/opening/15-rack-detail.webp"
+    ],
+    "tileImage": "/examples/lab/concepts/pool-room/img/opening/04-bar-reveal.webp",
+    "tileImageAlt": "The imagined Pool Room bar, with neon in the window and a green pool table.",
+    "tileImageWidth": 1600,
+    "tileImageHeight": 900,
+    "embedPath": "/examples/lab/concepts/pool-room/",
+    "sharePath": "/labs/pool-room/"
+  },
+  {
+    "slug": "walkup-3d",
+    "name": "Six-Story Walk-Up",
+    "type": "Interactive 3D scene",
+    "summary": "Spin around a made-up New York corner and see every angle.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/walkup-3d/",
+    "tagline": "Take the long way around.",
+    "lead": "Drag around an invented walk-up, tilt up to the roof, and zoom into the details.",
+    "tileDescription": "Spin a tiny New York corner.",
+    "tileAction": "Spin the block",
+    "sections": [
+      {
+        "heading": "Explore the whole corner",
+        "paragraphs": [
+          "The walkthrough uses a single interactive 3D environment rather than a fixed image.",
+          "It is an illustrative capability build for thinking about place, not a client result."
+        ],
+        "bullets": [
+          "Real estate",
+          "Games",
+          "Cinema"
+        ]
+      }
+    ],
+    "features": [
+      "Interactive 3D model",
+      "Orbit",
+      "Tilt",
+      "Zoom"
+    ],
+    "disclaimer": "An illustrative Little Fight Lab concept.",
+    "interactionNotes": [
+      "Drag sideways to orbit, drag vertically to tilt, and pinch or scroll to zoom."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-covers/walkup.jpg",
+    "tileImageAlt": "Warm windows, brickwork, and fire escapes on the interactive New York walk-up.",
+    "tileImageWidth": 1000,
+    "tileImageHeight": 700,
+    "embedPath": "/examples/lab/concepts/walkup-3d/",
+    "sharePath": "/labs/walkup-3d/"
+  },
+  {
+    "slug": "terminal-3d",
+    "name": "Neon District",
+    "type": "Interactive city scene",
+    "summary": "Tap into a neon city of cabs, citizens, beacons, and changing weather.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/terminal-3d/",
+    "tagline": "The city changes when you touch it.",
+    "lead": "Spin through an invented district, tap a beacon, then switch the scene from lunch rush to rain or night.",
+    "tileDescription": "Make it rain on a neon city.",
+    "tileAction": "Enter the district",
+    "sections": [
+      {
+        "heading": "A city you can touch",
+        "paragraphs": [
+          "Beacons, citizens, and cabs invite interaction while a guided tour moves through the scene.",
+          "Time-of-day and event controls change the illustrative environment without making a business-performance claim."
+        ],
+        "bullets": [
+          "Lunch rush",
+          "Rain",
+          "Night",
+          "Grand opening"
+        ]
+      }
+    ],
+    "features": [
+      "Interactive city scene",
+      "Guided tour",
+      "Orbit and zoom",
+      "Moment controls"
+    ],
+    "disclaimer": "An illustrative Little Fight Lab concept.",
+    "interactionNotes": [
+      "Tap beacons, citizens, and cabs; drag to orbit; pinch to zoom; use the on-page tour and time controls."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-covers/neon-district.jpg",
+    "tileImageAlt": "The lit streets and yellow windows of Neon District beneath a vivid blue and violet sky.",
+    "tileImageWidth": 800,
+    "tileImageHeight": 500,
+    "embedPath": "/examples/lab/concepts/terminal-3d/",
+    "sharePath": "/labs/terminal-3d/"
+  },
+  {
+    "slug": "pill-scroll",
+    "name": "Scroll Into Motion",
+    "type": "Motion study",
+    "summary": "Use your thumb to cut a 16-frame New York film.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/pill-scroll/",
+    "tagline": "Your thumb runs the edit.",
+    "lead": "Scroll forward, pull back, or stop on any of sixteen New York frames. The film waits for you.",
+    "tileDescription": "Slide through sixteen New York scenes.",
+    "tileAction": "Run the edit",
+    "sections": [
+      {
+        "heading": "Scroll is the editor",
+        "paragraphs": [
+          "The study is built around direct control instead of autoplay: the scene changes only when the visitor moves it.",
+          "It demonstrates a motion approach for launch films, lookbooks, campaigns, and brand stories."
+        ],
+        "bullets": [
+          "Launch films",
+          "Lookbooks",
+          "Campaigns",
+          "Brand stories"
+        ]
+      }
+    ],
+    "features": [
+      "Scroll-driven sequence",
+      "Sixteen moments",
+      "Direct playback control"
+    ],
+    "disclaimer": "A Little Fight Lab motion study.",
+    "interactionNotes": [
+      "Scroll forward, pull back, or pause at any moment; the sequence does not autoplay."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/examples/lab/concepts/pill-scroll/assets/nyc-grand-central-busy-2.webp",
+    "tileImageAlt": "A crowd moving through Grand Central, one of the New York scenes in the scroll-controlled film.",
+    "tileImageWidth": 1600,
+    "tileImageHeight": 1062,
+    "embedPath": "/examples/lab/concepts/pill-scroll/",
+    "sharePath": "/labs/pill-scroll/"
+  },
+  {
+    "slug": "micro-animations",
+    "name": "Micro-Animations",
+    "type": "Interaction arcade",
+    "summary": "Play through seven tiny moments that make software feel alive.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/micro-animations/",
+    "tagline": "Press every button.",
+    "lead": "Press, throw, hold, undo, slide, flip, and commit. Every move answers back.",
+    "tileDescription": "Press, swipe, and flip a tiny app.",
+    "tileAction": "Play the arcade",
+    "sections": [
+      {
+        "heading": "Feedback carries the action",
+        "paragraphs": [
+          "The studies focus on button acknowledgement, sheets, destructive holds, undo, tabs, theme changes, and form completion.",
+          "The ordering interface is illustrative; it is a place to test motion behavior, not a real order flow or client result."
+        ],
+        "bullets": [
+          "Press",
+          "Throw",
+          "Hold",
+          "Undo",
+          "Slide",
+          "Flip",
+          "Commit"
+        ]
+      }
+    ],
+    "features": [
+      "Seven motion moments",
+      "Illustrative ordering UI",
+      "Action feedback"
+    ],
+    "disclaimer": "A Little Fight Lab interaction study.",
+    "interactionNotes": [
+      "Try the press, throw, hold, undo, slide, flip, and commit interactions."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-covers/micro-animations.jpg",
+    "tileImageAlt": "The Bodega demo with a coffee added and its sliding shopping bag open.",
+    "tileImageWidth": 390,
+    "tileImageHeight": 424,
+    "embedPath": "/examples/lab/concepts/micro-animations/",
+    "sharePath": "/labs/micro-animations/"
+  },
+  {
+    "slug": "aha-laser",
+    "name": "AHA Laser Poster",
+    "type": "Interactive poster",
+    "summary": "Pull a chain and watch a wordmark turn into light.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/aha-laser/",
+    "tagline": "Pull the chain.",
+    "lead": "A laser draws the letters. The pull chain changes the room.",
+    "tileDescription": "Pull the chain. Light up the poster.",
+    "tileAction": "Light the sign",
+    "sections": [
+      {
+        "heading": "Poster as interaction",
+        "paragraphs": [
+          "This is a responsive design demo centered on a laser-drawn wordmark and one pull-chain gesture.",
+          "Its AHA name is separate from the After Hours Agenda client/product case study; it is a Lab poster experiment."
+        ],
+        "bullets": [
+          "Responsive poster",
+          "Laser-drawn wordmark",
+          "Pull-chain interaction"
+        ]
+      }
+    ],
+    "features": [
+      "Responsive poster",
+      "Typographic motion",
+      "Pull-chain control"
+    ],
+    "disclaimer": "A Little Fight Lab poster study.",
+    "interactionNotes": [
+      "Use the pull-chain control to trigger the poster behavior."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-showcase/aha-laser-800.webp",
+    "tileImageAlt": "The AHA poster glowing pink, with its pull chain at the upper right.",
+    "tileImageWidth": 800,
+    "tileImageHeight": 500,
+    "embedPath": "/examples/lab/concepts/aha-laser/",
+    "sharePath": "/labs/aha-laser/"
+  },
+  {
+    "slug": "studio-engine",
+    "name": "Studio Engine",
+    "type": "Interactive website sketch",
+    "summary": "Name a business and watch a sample site change shape.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/studio-engine/",
+    "tagline": "Type a business. Change the mood.",
+    "lead": "Choose a sample business, switch the visual direction, and watch the site respond.",
+    "tileDescription": "Pick a shop. Give it a new look.",
+    "tileAction": "Build a sample",
+    "sections": [
+      {
+        "heading": "Start with a direction",
+        "paragraphs": [
+          "The project uses sample business types and visual directions to demonstrate an interactive starting point.",
+          "It is not a real client site or client result."
+        ],
+        "bullets": [
+          "Wine bar",
+          "Barbershop",
+          "Bakery",
+          "Pilates studio",
+          "Warm minimal",
+          "Bold editorial",
+          "Late night"
+        ]
+      }
+    ],
+    "features": [
+      "Business-type choices",
+      "Direction choices",
+      "Live sample site"
+    ],
+    "disclaimer": "An illustrative Little Fight Lab tool.",
+    "interactionNotes": [
+      "Select a sample business type and visual direction to drive the illustrative experience."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-covers/studio-engine.jpg",
+    "tileImageAlt": "The bright bakery website sketch made in Studio Engine, with bold type and a warm orange illustration.",
+    "tileImageWidth": 920,
+    "tileImageHeight": 680,
+    "embedPath": "/examples/lab/concepts/studio-engine/",
+    "sharePath": "/labs/studio-engine/"
+  },
+  {
+    "slug": "growth-street",
+    "name": "Growth Street",
+    "type": "Interactive story",
+    "summary": "Follow a made-up flower shop from a quiet street to a busy window.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/growth-street/",
+    "tagline": "A flower-shop story told in pictures.",
+    "lead": "Scroll through an invented shop story that turns discovery, orders, and follow-through into a street scene.",
+    "tileDescription": "Meet a florist. Follow her shop’s story.",
+    "tileAction": "Walk the story",
+    "sections": [
+      {
+        "heading": "A model for explanation",
+        "paragraphs": [
+          "The flower-shop narrative is invented to show relationships among discovery, action, and follow-through.",
+          "Dots, tickets, crowd scenes, reviews, and money are explanatory props, not reported traffic, sales, reviews, or revenue."
+        ],
+        "bullets": [
+          "Illustrative discovery path",
+          "Illustrative orders",
+          "Illustrative review and crowd scenes",
+          "Illustrative money visuals"
+        ]
+      }
+    ],
+    "features": [
+      "Interactive systems narrative",
+      "Fictional business",
+      "Explanatory visual props"
+    ],
+    "disclaimer": "An illustrative Little Fight Lab systems story.",
+    "interactionNotes": [
+      "Use the interactive story props to explore the relationship between discovery, action, and follow-through."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-covers/growth-street.jpg",
+    "tileImageAlt": "Rosie’s illustrated flower shop beside a phone, with a striped awning, flowers, and a bright blue sky.",
+    "tileImageWidth": 534,
+    "tileImageHeight": 301,
+    "embedPath": "/examples/lab/concepts/growth-street/",
+    "sharePath": "/labs/growth-street/"
+  },
+  {
+    "slug": "goliath",
+    "name": "Goliath",
+    "type": "Poster campaign",
+    "summary": "Scroll through ten Little Fight posters as they paste themselves up.",
+    "sourceUrl": "https://littlefightnyc.com/examples/lab/concepts/goliath/",
+    "tagline": "Ten posters. One loud idea.",
+    "lead": "Scroll forward to paste up the campaign. Pull back to peel it away, frame by frame.",
+    "tileDescription": "Paste up ten posters with one scroll.",
+    "tileAction": "Run the posters",
+    "sections": [
+      {
+        "heading": "One message, many frames",
+        "paragraphs": [
+          "This is Little Fight’s own campaign study, built around a sequence of ten posters and a scroll-controlled projection effect.",
+          "It demonstrates how a clear idea can organize a campaign; it is not a client result."
+        ],
+        "bullets": [
+          "Ten posters",
+          "Scroll-controlled sequence",
+          "No photography",
+          "No video"
+        ]
+      }
+    ],
+    "features": [
+      "Brand campaign",
+      "Ten-poster sequence",
+      "Scroll as projector"
+    ],
+    "disclaimer": "A Little Fight Lab campaign study.",
+    "interactionNotes": [
+      "Use scroll as the projector that carries the poster sequence."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-showcase/goliath-800.webp",
+    "tileImageAlt": "The bold orange Little Fight poster from the scrolling campaign.",
+    "tileImageWidth": 800,
+    "tileImageHeight": 500,
+    "embedPath": "/examples/lab/concepts/goliath/",
+    "sharePath": "/labs/goliath/"
+  },
+  {
+    "slug": "cabinet-concept",
+    "name": "Cabinet Lab",
+    "type": "Interactive design study",
+    "summary": "Try cabinet styles, finishes and hardware before choosing a direction.",
+    "sourceUrl": "https://littlefightnyc.com/labs/cabinet-concept/",
+    "tagline": "Try the room before choosing a direction.",
+    "lead": "Compare finishes, cabinet styles, hardware, and lighting in a hands-on visual study.",
+    "tileDescription": "Try finishes and cabinet details.",
+    "tileAction": "Open the cabinet study",
+    "sections": [
+      {
+        "heading": "Start with a direction",
+        "paragraphs": [
+          "Move through a small set of cabinet styles, finishes, and hardware to see how the choices work together.",
+          "This is a visual study for early conversations. It is not a quote, construction drawing, order form, or measured plan."
+        ],
+        "bullets": [
+          "Save and compare designs",
+          "Cabinet styles",
+          "Finishes and hardware",
+          "Light and camera views"
+        ]
+      }
+    ],
+    "features": [
+      "Interactive 3D room",
+      "Style and finish choices",
+      "Lighting controls",
+      "Shareable saved state"
+    ],
+    "disclaimer": "A Little Fight visual study. Not a quote or construction drawing.",
+    "interactionNotes": [
+      "Choose a cabinet style, finish, and viewpoint; save a design to compare it with another."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-showcase/cabinet-concept-800.webp",
+    "tileImageAlt": "A cabinet design study with a warm wood island, painted cabinetry, and adjustable room controls.",
+    "tileImageWidth": 800,
+    "tileImageHeight": 500,
+    "embedPath": "/examples/lab/concepts/cabinet-concept/",
+    "sharePath": "/labs/cabinet-concept/"
+  },
+  {
+    "slug": "house-explorer",
+    "name": "House Explorer",
+    "type": "Interactive design study",
+    "summary": "Explore a house in three dimensions and watch the light change. An anonymized design study, not a measured building plan.",
+    "sourceUrl": "https://littlefightnyc.com/labs/house-explorer/",
+    "tagline": "Walk around the idea before it is built.",
+    "lead": "Explore an anonymized house study in three dimensions and compare the scene through changing light.",
+    "tileDescription": "Explore a house as the light changes.",
+    "tileAction": "Open the house study",
+    "sections": [
+      {
+        "heading": "Explore the study",
+        "paragraphs": [
+          "Move around an anonymized house study to compare its shape and light from more than one point of view.",
+          "This is an illustrative design study, not a measured building plan, property record, construction drawing, or listing."
+        ],
+        "bullets": [
+          "Interactive 3D view",
+          "Changing light",
+          "Anonymized design study"
+        ]
+      }
+    ],
+    "features": [
+      "Interactive 3D house",
+      "Orbit and zoom",
+      "Light changes"
+    ],
+    "disclaimer": "An anonymized Little Fight design study, not a measured building plan.",
+    "interactionNotes": [
+      "Drag to orbit, pinch or scroll to zoom, and use the controls to change the light."
+    ],
+    "sourceAssets": [],
+    "tileImage": "/images/lab-showcase/house-explorer-800.webp",
+    "tileImageAlt": "An anonymized house study rendered in three dimensions under changing daylight.",
+    "tileImageWidth": 800,
+    "tileImageHeight": 560,
+    "embedPath": "/examples/lab/concepts/house-explorer/",
+    "sharePath": "/labs/house-explorer/"
+  }
+]

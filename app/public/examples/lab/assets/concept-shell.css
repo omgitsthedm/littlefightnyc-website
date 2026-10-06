@@ -252,6 +252,16 @@ html.lab-concept-embed body {
 .lab-embed-exit:focus-visible { outline: 3px solid #f6f3ec; outline-offset: 2px; }
 .lab-embed-exit:active { background: #3a2b23; }
 
+html[data-lab-concept="cabinet-concept"] .lab-embed-exit,
+html[data-lab-concept="house-explorer"] .lab-embed-exit {
+  left: auto;
+  right: max(8px, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  font-size: 28px;
+}
+
 @media (max-width: 620px) {
   .lab-concept-shell {
     left: max(8px, env(safe-area-inset-left));

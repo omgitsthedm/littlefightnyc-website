@@ -1,5 +1,5 @@
 /*
- * Browser contract for the nine Lab tile fronts.
+ * Browser contract for the catalog-driven Lab tile fronts.
  *
  * Run after the candidate has been built and served locally:
  *   LAB_FRONTS_URL=http://127.0.0.1:4396 node scripts/verify-lab-fronts.cjs
@@ -27,7 +27,7 @@ const viewports = [
   { width: 1024, height: 900 },
   { width: 1440, height: 940 },
 ];
-const expectedByHref = new Map(labs.map(lab => [`/examples/lab/concepts/${lab.slug}/`, lab]));
+const expectedByHref = new Map(labs.map(lab => [lab.sharePath || `/labs/${lab.slug}/`, lab]));
 const report = {
   kind: 'lab-fronts-browser-verification',
   base,
@@ -115,10 +115,10 @@ async function assertCatalog(page, label) {
     visible: Boolean(node.offsetWidth && node.offsetHeight && getComputedStyle(node).visibility !== 'hidden'),
     active: !node.hidden && getComputedStyle(node).display !== 'none',
   })));
-  assert.equal(observed.length, labs.length, `${label}: exactly nine Lab tiles`);
+  assert.equal(observed.length, labs.length, `${label}: every catalog Lab has one tile`);
   assert.equal(new Set(observed.map(item => item.href)).size, labs.length, `${label}: Lab tile routes must be unique`);
   assert.deepEqual([...new Set(observed.map(item => item.href))].sort(), [...expectedByHref.keys()].sort(),
-    `${label}: each approved Lab route remains active on the hub`);
+    `${label}: each catalog Lab share route remains active on the hub`);
   assert.ok(observed.every(item => item.visible && item.active), `${label}: every Lab tile must remain active and visible`);
   return `${observed.length} active Lab links`;
 }
@@ -156,7 +156,7 @@ async function awaitImage(image, label) {
 }
 
 async function inspectLab(page, lab, label) {
-  const href = `/examples/lab/concepts/${lab.slug}/`;
+  const href = lab.sharePath || `/labs/${lab.slug}/`;
   const tile = page.locator(`a.tile[data-kind="lab"][href="${href}"]`);
   assert.equal(await tile.count(), 1, `${label}/${lab.slug}: one Lab tile`);
   await tile.scrollIntoViewIfNeeded();
@@ -336,7 +336,8 @@ async function captureEvidence(page, viewport) {
   if (![390, 1440].includes(viewport.width)) return;
   await page.evaluate(() => document.activeElement?.blur());
   for (const lab of labs) {
-    const tile = page.locator(`a.tile[data-kind="lab"][href="/examples/lab/concepts/${lab.slug}/"]`);
+    const href = lab.sharePath || `/labs/${lab.slug}/`;
+    const tile = page.locator(`a.tile[data-kind="lab"][href="${href}"]`);
     await tile.scrollIntoViewIfNeeded();
     const target = path.join(screenshots, `lab-${lab.slug}-${viewport.width}.png`);
     await tile.screenshot({ path: target });
@@ -363,7 +364,7 @@ async function run() {
       const { context, page } = await makePage(browser, viewport);
       try {
         await waitForHome(page);
-        await check(`${label}: all nine active Lab routes survive`, () => assertCatalog(page, label));
+        await check(`${label}: all active Lab share routes survive`, () => assertCatalog(page, label));
         await check(`${label}: full mosaic grid fits`, () => assertGridFits(page, label));
         await check(`${label}: each Lab front is readable and its cover decodes`, async () => {
           for (const lab of labs) await inspectLab(page, lab, label);
@@ -388,7 +389,7 @@ async function run() {
           await assertCatalog(page, `${width}px/no-js`);
           for (const lab of labs) await inspectLab(page, lab, `${width}px/no-js`);
           await assertGridFits(page, `${width}px/no-js`);
-          return 'all nine descriptions, previews, and native links remain readable';
+          return 'all Lab descriptions, previews, and native links remain readable';
         });
       } finally { await context.close(); }
     }

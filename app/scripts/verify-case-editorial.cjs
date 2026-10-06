@@ -246,14 +246,14 @@ async function run() {
         assert.equal(await vera.getAttribute('data-document-link'), null, 'VERA must not hard-navigate away from the reader');
         return '9 public cards; 2 products; 15 case routes; VERA reader card';
       });
-      await check('work index loads each project image and all nine Lab thumbnails', async () => {
+      await check('work index loads each project image and every Lab thumbnail', async () => {
         await assertImagesLoaded(page, '.work-project-image img', 'work index project imagery');
         await assertImagesLoaded(page, '.work-lab > img', 'work index Lab imagery');
       });
-      await check('work index offers nine real Lab routes that open their working cards', async () => {
+      await check('work index offers every shareable Lab route that opens its working card', async () => {
         const hrefs = await page.locator('a.work-lab[data-reader-link]').evaluateAll(links => links.map(link => link.getAttribute('href')));
         assert.equal(hrefs.length, labs.length, 'Lab link count');
-        assert.deepEqual(hrefs.sort(), labs.map(lab => `/examples/lab/concepts/${lab.slug}/`).sort(), 'Lab destinations');
+        assert.deepEqual(hrefs.sort(), labs.map(lab => lab.sharePath || `/labs/${lab.slug}/`).sort(), 'Lab destinations');
         for (const route of hrefs) {
           // Several Labs deliberately keep an animation loop or asset stream
           // alive. A document response plus DOM readiness proves the actual

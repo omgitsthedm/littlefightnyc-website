@@ -110,7 +110,12 @@ def render_work(page, cases, visuals, labs, lab_images, link):
     result += '<section class="work-section" id="working-labs"><div class="case-section-heading"><div><h2>Working<br>Labs.</h2></div></div><div class="work-labs">'
     for lab in labs:
         slug = lab['slug']
-        result += f'<a class="work-lab" href="/examples/lab/concepts/{slug}/" data-reader-link><img src="/images/lab-showcase/{lab_images[slug]}-480.webp" width="480" height="300" alt="{text(lab["name"])} — Lab artwork" loading="lazy" decoding="async"><div><h3>{text(lab["name"])}</h3><span aria-hidden="true">+</span></div></a>'
+        image = lab.get('tileImage') or f'/images/lab-showcase/{lab_images.get(slug, slug)}-480.webp'
+        width = int(lab.get('tileImageWidth') or 480)
+        height = int(lab.get('tileImageHeight') or 300)
+        alt = lab.get('tileImageAlt') or f'{lab["name"]} — Lab artwork'
+        share_path = lab.get('sharePath') or f'/labs/{slug}/'
+        result += f'<a class="work-lab" href="{text(share_path)}" data-reader-link><img src="{text(image)}" width="{width}" height="{height}" alt="{text(alt)}" loading="lazy" decoding="async"><div><h3>{text(lab["name"])}</h3><span aria-hidden="true">+</span></div></a>'
     result += '</div></section><section class="work-section work-other" id="design-concepts"><div class="case-section-heading"><div><h2>Design<br>concepts.</h2></div><p>Independent design studies, not client launches.</p></div><div class="work-records">'
     for case in concepts:
         result += f'<a href="/case-studies/{case["slug"]}/" data-reader-link><span><strong>{text(case["name"])}</strong><small>{text(case.get("publicType", "Design concept"))}</small></span><span aria-hidden="true">+</span></a>'

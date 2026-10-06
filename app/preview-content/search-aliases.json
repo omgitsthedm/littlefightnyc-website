@@ -1,104 +1,243 @@
 {
   "version": 1,
-  "archivedPathPrefixes": ["/myspace-demo/"],
+  "archivedPathPrefixes": [
+    "/myspace-demo/"
+  ],
   "aliases": [
     {
       "path": "/answers/help/printer/",
       "title": "Why will one computer print but another cannot?",
       "description": "If one computer can print, compare the two computers’ Wi-Fi networks, selected printer, and error messages first.",
       "family": "Tech support",
-      "aliases": ["printer", "printing", "print", "can't print", "cannot print", "won't print", "printer not working", "printer in tucson"]
+      "aliases": [
+        "printer",
+        "printing",
+        "print",
+        "can't print",
+        "cannot print",
+        "won't print",
+        "printer not working",
+        "printer in tucson"
+      ]
     },
     {
       "path": "/answers/help/email/",
       "title": "What is going wrong with my business email?",
       "description": "Start with whether messages will not send, do not arrive, or land in spam. Keep passwords and private messages out of a request.",
       "family": "Tech support",
-      "aliases": ["email", "my email is not working", "email not working", "email won't work", "emails not working", "cannot send email", "email not sending", "email not receiving"]
+      "aliases": [
+        "email",
+        "my email is not working",
+        "email not working",
+        "email won't work",
+        "emails not working",
+        "cannot send email",
+        "email not sending",
+        "email not receiving"
+      ]
     },
     {
       "path": "/answers/help/email/#answer-email",
       "title": "Why are my business emails going to spam?",
       "description": "Spam can point to domain authentication, account security, sending history, or message content that needs a careful check.",
       "family": "Tech support",
-      "aliases": ["emails going to spam", "email going to spam", "business email spam", "email in spam"]
+      "aliases": [
+        "emails going to spam",
+        "email going to spam",
+        "business email spam",
+        "email in spam"
+      ]
     },
     {
       "path": "/answers/help/email/",
       "title": "What is going wrong with our Outlook or Microsoft 365 email?",
       "description": "Start with whether messages will not send, do not arrive, or land in spam. Check shared-mailbox permissions and keep passwords out of the request.",
       "family": "Tech support",
-      "aliases": ["outlook not working", "outlook shared mailbox", "microsoft 365 email", "office 365 email"]
+      "aliases": [
+        "outlook not working",
+        "outlook shared mailbox",
+        "microsoft 365 email",
+        "office 365 email"
+      ]
     },
     {
       "path": "/answers/help/wifi/",
       "title": "Why does my Wi-Fi keep dropping?",
       "description": "Check whether one device, one room, or the whole business loses its connection before changing settings.",
       "family": "Tech support",
-      "aliases": ["wifi", "wi fi", "wi-fi", "wifi keeps dropping", "wi fi keeps dropping", "internet keeps dropping", "wireless not working"]
+      "aliases": [
+        "wifi",
+        "wi fi",
+        "wi-fi",
+        "wifi keeps dropping",
+        "wi fi keeps dropping",
+        "internet keeps dropping",
+        "wireless not working"
+      ]
     },
     {
       "path": "/answers/help/it-password-ownership/#answer-it-password-ownership",
       "title": "I forgot a business login. What now?",
       "description": "Use the provider’s recovery option and make sure the business has a durable account owner. Never send a password or sign-in code.",
       "family": "Tech support",
-      "aliases": ["forgot login", "forgot password", "can't sign in", "cannot sign in", "cant sign in", "locked out", "business account access"]
+      "aliases": [
+        "forgot login",
+        "forgot password",
+        "can't sign in",
+        "cannot sign in",
+        "cant sign in",
+        "locked out",
+        "business account access"
+      ]
     },
     {
       "path": "/answers/help/it-password-ownership/",
       "title": "Who controls our Microsoft 365 and business device accounts?",
       "description": "Keep business ownership, recovery routes, and administrator access clear before a staff or device change.",
       "family": "Tech support",
-      "aliases": ["microsoft 365 admin", "m365 admin", "office 365 admin", "business apple account", "apple account for business device"]
+      "aliases": [
+        "microsoft 365 admin",
+        "m365 admin",
+        "office 365 admin",
+        "business apple account",
+        "apple account for business device"
+      ]
     },
     {
       "path": "/answers/help/computer/",
       "title": "How do we move to a new Mac or Windows computer?",
       "description": "Prepare the new device, then test email, files, printing, calls, and the customer tools that work cannot pause.",
       "family": "Tech support",
-      "aliases": ["new mac setup", "macbook setup", "new windows computer", "windows laptop setup", "iphone for work", "ipad for work"]
+      "aliases": [
+        "new mac setup",
+        "macbook setup",
+        "new windows computer",
+        "windows laptop setup",
+        "iphone for work",
+        "ipad for work"
+      ]
     },
     {
       "path": "/answers/help/maps/",
       "title": "How do I change my business hours?",
       "description": "Keep the website and Google Business Profile current so customers see the right hours before they contact you.",
       "family": "Consulting",
-      "aliases": ["change my hours", "change business hours", "update business hours", "google hours", "hours wrong"]
+      "aliases": [
+        "change my hours",
+        "change business hours",
+        "update business hours",
+        "google hours",
+        "hours wrong"
+      ]
     },
     {
       "path": "/answers/help/web-site-health-check/",
       "title": "How do I update my website without breaking it?",
       "description": "A website update is finished when the customer path still looks right, works on a phone, and reaches the business.",
       "family": "Websites",
-      "aliases": ["website changes", "update my website", "website update", "change my website", "edit my website"]
+      "aliases": [
+        "website changes",
+        "update my website",
+        "website update",
+        "change my website",
+        "edit my website"
+      ]
     },
     {
       "path": "/answers/help/cost/",
       "title": "How much does a small business website cost?",
       "description": "A useful quote reflects the pages, words, photos, and connections a business actually needs—not a guessed package.",
       "family": "Websites",
-      "aliases": ["how much", "website cost", "website price", "cost of a website", "how much is a website"]
+      "aliases": [
+        "how much",
+        "website cost",
+        "website price",
+        "cost of a website",
+        "how much is a website"
+      ]
     },
     {
       "path": "/answers/website-down-emergency-nyc/",
       "title": "Website Down? What a Small Business Should Check First",
       "description": "Check whether the problem is the page, connection, domain, or host before changing anything.",
       "family": "Websites",
-      "aliases": ["website down", "site down", "our website is down", "website not loading"]
+      "aliases": [
+        "website down",
+        "site down",
+        "our website is down",
+        "website not loading"
+      ]
     },
     {
       "path": "/answers/help/it-internet-outage/",
       "title": "Is the internet down, or is our Wi-Fi the problem?",
       "description": "A wired test can separate a provider outage from a problem inside the Wi-Fi network.",
       "family": "Tech support",
-      "aliases": ["internet down", "internet outage", "wifi outage"]
+      "aliases": [
+        "internet down",
+        "internet outage",
+        "wifi outage"
+      ]
     },
     {
       "path": "/answers/help/software-duplicate-entry/",
       "title": "Why are we entering the same information twice?",
       "description": "Repeated data entry creates mistakes and often points to a handoff that needs to be mapped before software is chosen.",
       "family": "Custom software",
-      "aliases": ["stop entering things twice", "entering things twice", "duplicate entry", "duplicate data entry", "enter data twice", "software"]
+      "aliases": [
+        "stop entering things twice",
+        "entering things twice",
+        "duplicate entry",
+        "duplicate data entry",
+        "enter data twice",
+        "software"
+      ]
+    },
+    {
+      "path": "/construction/",
+      "title": "Websites and interactive tools for builders",
+      "description": "A real contractor website and hands-on construction design studies.",
+      "family": "Custom software",
+      "aliases": [
+        "construction",
+        "contractor",
+        "general contractor",
+        "builder",
+        "builders",
+        "remodeler",
+        "renovation",
+        "construction website",
+        "construction labs"
+      ]
+    },
+    {
+      "path": "/labs/cabinet-concept/",
+      "title": "Cabinet Lab",
+      "description": "Try cabinet styles, finishes and room layouts.",
+      "family": "Custom software",
+      "aliases": [
+        "cabinet",
+        "cabinets",
+        "kitchen",
+        "cabinet design",
+        "cabinet configurator",
+        "3d desk",
+        "millwork"
+      ]
+    },
+    {
+      "path": "/labs/house-explorer/",
+      "title": "House Explorer",
+      "description": "Explore a house in three dimensions and change the light.",
+      "family": "Custom software",
+      "aliases": [
+        "house explorer",
+        "house model",
+        "farm house",
+        "farmhouse",
+        "3d home",
+        "home design"
+      ]
     }
   ]
 }

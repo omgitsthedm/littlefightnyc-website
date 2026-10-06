@@ -63,6 +63,15 @@ Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, bui
 
 The current marketing direction is the owner-approved Soft Mineral + Edge Light tile mosaic. Its source contract is `app/preview-content/import-provenance.json`; implemented styles and physical tile motion live in `app/preview-ui/**`. Preserve all 110 original tile destinations and the original desktop/mobile square-unit geometry. Older React styles support the retained intake islands only; they are not the marketing design authority.
 
+The construction showcase at `/construction/` uses dedicated, shareable readers at
+`/labs/<slug>/`. Working experiences remain at `/examples/lab/concepts/<slug>/` and
+load only when their reader opens. The Cabinet Lab and anonymized House Explorer
+are isolated presentation derivatives of existing test projects, authorized for
+this showcase on 2026-10-06. Their upstream projects remain separate and unchanged;
+private import provenance belongs under `.lifi/evidence/construction-labs/`, never
+in the public showroom. Inclusion does not turn a design study into a client result,
+measured plan, estimate, or connected business system.
+
 The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 
 The former AI phone agent is retired. Public phone actions are ordinary `tel:` and `sms:` paths.

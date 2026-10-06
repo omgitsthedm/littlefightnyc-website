@@ -16,11 +16,12 @@ const productionHeaders={
   vera:{csp:headerFor('/vera/*','Content-Security-Policy'),xfo:headerFor('/vera/*','X-Frame-Options')},
   labs:{csp:headerFor('/examples/lab/*','Content-Security-Policy'),xfo:headerFor('/examples/lab/*','X-Frame-Options')},
   poolRoom:{csp:headerFor('/examples/lab/concepts/pool-room/*','Content-Security-Policy'),xfo:headerFor('/examples/lab/concepts/pool-room/*','X-Frame-Options')},
+  house:{csp:headerFor('/examples/lab/concepts/house-explorer/*','Content-Security-Policy'),xfo:headerFor('/examples/lab/concepts/house-explorer/*','X-Frame-Options')},
 };
 const securityHeadersFor=requestPath=>{
   if(process.env.TILE_DIST!=='production')return {};
   const route=requestPath.endsWith('/')?requestPath:requestPath+'/';
-  const selected=route.startsWith('/examples/lab/concepts/pool-room/')?productionHeaders.poolRoom:route.startsWith('/examples/lab/')?productionHeaders.labs:route.startsWith('/vera/')?productionHeaders.vera:productionHeaders.site;
+  const selected=route.startsWith('/examples/lab/concepts/house-explorer/')?productionHeaders.house:route.startsWith('/examples/lab/concepts/pool-room/')?productionHeaders.poolRoom:route.startsWith('/examples/lab/')?productionHeaders.labs:route.startsWith('/vera/')?productionHeaders.vera:productionHeaders.site;
   return Object.fromEntries([['Content-Security-Policy',selected.csp],['X-Frame-Options',selected.xfo]].filter(([,value])=>value));
 };
 const mime={'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json; charset=utf-8','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.webm':'video/webm','.vtt':'text/vtt; charset=utf-8','.woff2':'font/woff2','.ttf':'font/ttf','.txt':'text/plain; charset=utf-8'};

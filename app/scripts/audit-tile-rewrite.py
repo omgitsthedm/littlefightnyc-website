@@ -31,7 +31,7 @@ CATEGORY_ROUTES = {
     "software": "/services/business-systems/",
 }
 EXPECTED_ANSWER_COUNTS = {"web": 18, "it": 32, "consulting": 11, "software": 8}
-EXPECTED_HOOK_COUNTS = {"cases": 15, "labs": 9, "albums": 8, "markets": 6}
+EXPECTED_HOOK_COUNTS = {"cases": 15, "albums": 8, "markets": 6}
 FORBIDDEN_COPY = (
     "solutions",
     "streamline",
@@ -317,7 +317,9 @@ def audit_source_catalog(failures: list[str]) -> tuple[dict[str, dict[str, Any]]
             if phrase in copy:
                 failures.append(f"rewrite answer {identity} contains prohibited copy: {phrase!r}")
 
-    for family, expected in EXPECTED_HOOK_COUNTS.items():
+    catalog_labs = json.loads((CONTENT / "labs.json").read_text())
+    hook_counts = {**EXPECTED_HOOK_COUNTS, "labs": len(catalog_labs) if isinstance(catalog_labs, list) else 0}
+    for family, expected in hook_counts.items():
         values = hooks.get(family)
         if not isinstance(values, dict) or len(values) != expected:
             failures.append(f"rewrite hooks must have exactly {expected} {family}, found {len(values) if isinstance(values, dict) else 0}")
@@ -481,12 +483,16 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
         return
     visible = inventory.get("visibleTiles")
     retained = inventory.get("retainedRoutes")
-    if inventory.get("sourceTileCount") != 106 or inventory.get("totalTileInventory") != 129:
-        failures.append("homepage inventory must preserve 106 original tiles within 129 retained routes")
-    if not isinstance(visible, list) or len(visible) != 77:
-        failures.append("homepage inventory must expose exactly 77 tiles")
-    if not isinstance(retained, list) or len(retained) != 129:
-        failures.append("homepage inventory must retain exactly 129 tile routes")
+    catalog_labs = json.loads((CONTENT / "labs.json").read_text())
+    added_labs = max(0, len(catalog_labs) - 9) if isinstance(catalog_labs, list) else 0
+    expected_total = 129 + added_labs + 1
+    if inventory.get("sourceTileCount") != 106 or inventory.get("totalTileInventory") != expected_total:
+        failures.append(f"homepage inventory must preserve 106 original tiles within {expected_total} retained routes")
+    expected_visible = 77 + added_labs + 1
+    if not isinstance(visible, list) or len(visible) != expected_visible:
+        failures.append(f"homepage inventory must expose exactly {expected_visible} tiles")
+    if not isinstance(retained, list) or len(retained) != expected_total:
+        failures.append(f"homepage inventory must retain exactly {expected_total} tile routes")
     if not isinstance(inventory.get("groups"), list) or len(inventory["groups"]) != 19:
         failures.append("homepage inventory must retain exactly 19 consolidated groups")
     if isinstance(visible, list):
@@ -552,7 +558,7 @@ def main() -> int:
         return 1
     print("TILE REWRITE AUDIT PASSED")
     print("- 69 rewritten answers: web 18, IT 32, consulting 11, software 8")
-    print("- category Q&A, FAQPage parity, service backlinks, hooks, Lab bytes, and 77-tile hub verified")
+    print("- category Q&A, FAQPage parity, service backlinks, hooks, Lab bytes, and full hub inventory verified")
     return 0
 
 

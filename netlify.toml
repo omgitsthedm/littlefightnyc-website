@@ -156,6 +156,15 @@ for = "/examples/lab/*"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "SAMEORIGIN"
 
+# The House Explorer decodes embedded GLB textures into local blob images.
+# Keep that permission scoped to this model viewer, with same-origin code.
+[[headers]]
+for = "/examples/lab/concepts/house-explorer/*"
+
+  [headers.values]
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' blob:; media-src 'self'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  X-Frame-Options = "SAMEORIGIN"
+
 # Unlike the preserved interactive Lab builds, the Pool Room uses no inline
 # executable code and no third-party runtime. Keep its film page on a
 # same-origin-only policy while retaining inline CSS for the authored layout.

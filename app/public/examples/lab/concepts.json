@@ -2,6 +2,25 @@
   "version": 3,
   "suites": [
     {
+      "slug": "construction",
+      "shortTitle": "Construction",
+      "title": "Construction Labs",
+      "label": "Explore a design before the build",
+      "headline": "Help them see what’s possible.",
+      "description": "Cabinet choices and a house you can explore. Interactive visual studies, not construction plans or estimates.",
+      "featuredConcept": "cabinet-concept",
+      "concepts": [
+        "cabinet-concept",
+        "house-explorer"
+      ],
+      "capabilities": [
+        "Interactive cabinet selections",
+        "Three-dimensional house exploration",
+        "Phone and tablet controls",
+        "Shareable design studies"
+      ]
+    },
+    {
       "slug": "cinema",
       "shortTitle": "Cinema",
       "title": "Cinema Lab",
@@ -97,6 +116,21 @@
     }
   ],
   "concepts": [
+    {
+      "slug": "cabinet-concept",
+      "title": "Cabinet Lab",
+      "type": "Interactive design study",
+      "description": "Try cabinet styles, finishes and hardware before choosing a direction.",
+      "suite": "construction",
+      "featured": true
+    },
+    {
+      "slug": "house-explorer",
+      "title": "House Explorer",
+      "type": "Architectural design study",
+      "description": "Turn a house in three dimensions and explore how daylight changes it. An anonymized visual study.",
+      "suite": "construction"
+    },
     {
       "slug": "pool-room",
       "title": "The Pool Room",

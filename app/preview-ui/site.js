@@ -23,6 +23,29 @@
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
   if (!detail || !panel || !detailBody) return;
+
+  // A Lab's share URL opens its complete Little Fight reader on a new device.
+  // Keep a normal link available when clipboard access is disabled or denied.
+  document.addEventListener('click', async event => {
+    const button = event.target.closest('button[data-copy-lab-link]');
+    if (!button) return;
+    const group = button.closest('.lab-share');
+    const status = group?.querySelector('[data-copy-status]');
+    const path = button.dataset.copyLabLink;
+    if (!path || !/^\/(?:labs\/[a-z0-9-]+|construction)\/$/.test(path)) return;
+    const url = new URL(path, location.origin).href;
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+      await navigator.clipboard.writeText(url);
+      if (status) status.textContent = 'Link copied.';
+      const fallback = group?.querySelector('[data-share-fallback]');
+      if (fallback) fallback.hidden = true;
+    } catch {
+      if (status) status.textContent = 'Use the link beside this button to open or copy this page.';
+      const fallback = group?.querySelector('[data-share-fallback]');
+      if (fallback) { fallback.hidden = false; fallback.focus(); }
+    }
+  });
   // The modal rail is a separate landmark from the page content it displays.
   // Keep its accessible name distinct after each progressive reader injection.
   const readerRail = detail.querySelector('.reader-rail');
@@ -183,9 +206,19 @@
   function mountDemos(root = detailBody) {
     root.querySelectorAll('iframe[data-demo-src]').forEach(frame => {
       if (frame.hasAttribute('src')) return;
-      const source = sameOriginPath(frame.dataset.demoSrc);
+      let source = sameOriginPath(frame.dataset.demoSrc);
       if (!source) return;
       const block = frame.closest('[data-reader-demo]');
+      // Only the Cabinet Lab accepts a saved design. Never forward arbitrary
+      // outer-page query strings, contact fields or attribution into a demo.
+      if (block?.dataset.demo === 'cabinet-concept') {
+        const study = new URLSearchParams(location.search).get('study');
+        if (study && study.length <= 20000 && /^(?:[zu]\.)?[A-Za-z0-9_-]+$/.test(study)) {
+          const embedded = new URL(source, location.origin);
+          embedded.searchParams.set('study', study);
+          source = embedded.pathname + embedded.search;
+        }
+      }
       const status = block?.querySelector('.reader-demo-status');
       if (block) block.dataset.demoState = 'loading';
       frame.inert = true;

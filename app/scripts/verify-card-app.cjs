@@ -2,7 +2,7 @@
  * Browser contract for working applications inside Little Fight reader cards.
  *
  * This never submits a form or follows an external source. It proves that the
- * nine Labs and VERA remain functional, same-origin reader experiences rather
+ * every catalog Lab and VERA remain functional, same-origin reader experiences rather
  * than hard navigations away from the mosaic.
  *
  * CARD_APP_URL=http://127.0.0.1:4396 node scripts/verify-card-app.cjs
@@ -236,34 +236,38 @@ async function runRepresentativeInteraction(frame, slug) {
 
 async function run() {
   fs.mkdirSync(evidence, { recursive: true });
-  assert.equal(labs.length, 9, 'Expected the nine approved Lab demos.');
+  assert.ok(labs.length >= 9, 'Expected the original nine Labs plus any approved additions.');
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
     const desktop = { width: 1440, height: 940 };
     const { context, page } = await makePage(browser, desktop);
     try {
-      await check('all nine Labs open inside reader cards and keep the parent document alive', async () => {
+      await check('all Labs open inside reader cards and keep the parent document alive', async () => {
         for (const lab of labs) {
-          const route = `/examples/lab/concepts/${lab.slug}/`;
+          const route = lab.sharePath || `/labs/${lab.slug}/`;
           const { frame, frameElement } = await openCard(page, route, lab.slug);
           const src = await frameElement.getAttribute('src');
-          assert.match(src || '', new RegExp(`/examples/lab/concepts/${lab.slug}/\\?embed=1$`), `${lab.slug}: iframe uses its canonical same-origin embed route`);
+          assert.equal(new URL(src || '', base).pathname, lab.embedPath || `/examples/lab/concepts/${lab.slug}/`, `${lab.slug}: iframe uses its canonical same-origin embed route`);
+          const share = page.locator('#detail[open] .lab-share').last();
+          assert.equal(await share.locator('button[data-copy-lab-link]').getAttribute('data-copy-lab-link'), route,
+            `${lab.slug}: reader offers the canonical copyable Lab link`);
+          assert.equal(await share.locator('a').getAttribute('href'), route, `${lab.slug}: reader keeps a normal share link`);
           const interaction = await runRepresentativeInteraction(frame, lab.slug);
           report.labs.push({ slug: lab.slug, route, src, interaction });
           await closeCard(page);
         }
-        return '9 same-origin Lab iframes loaded, with video, interaction, and WebGL coverage';
+        return `${labs.length} same-origin Lab iframes loaded, with video, interaction, and WebGL coverage`;
       });
 
       await check('reader navigation persists and returns Previous, All tiles, and Next behavior', async () => {
-        const route = '/examples/lab/concepts/micro-animations/';
+        const route = '/labs/micro-animations/';
         await openCard(page, route, 'micro-animations');
         const navigation = await assertReaderNavigation(page, route);
         return JSON.stringify(navigation);
       });
 
       await check('Escape from a focused Lab iframe closes the reader and unmounts its frame', async () => {
-        const route = '/examples/lab/concepts/micro-animations/';
+        const route = '/labs/micro-animations/';
         const { frame } = await openCard(page, route, 'micro-animations');
         await frame.locator('body').click({ position: { x: 8, y: 8 } });
         await page.keyboard.press('Escape');
@@ -274,7 +278,7 @@ async function run() {
       });
 
       await check('Lab exit messages require the active frame and the same origin', async () => {
-        await openCard(page, '/examples/lab/concepts/micro-animations/', 'micro-animations');
+        await openCard(page, '/labs/micro-animations/', 'micro-animations');
         await page.evaluate(() => {
           const source = document.querySelector('#detail iframe').contentWindow;
           const data = { type: 'lf:lab-exit', version: 1 };
@@ -301,7 +305,7 @@ async function run() {
           await route.fulfill({ response, body });
         });
         try {
-          const { frame } = await openCard(page, '/examples/lab/concepts/micro-animations/', 'micro-animations');
+          const { frame } = await openCard(page, '/labs/micro-animations/', 'micro-animations');
           assert.equal(await frame.evaluate(() => document.readyState), 'interactive', 'fixture must keep window.load pending');
           await frame.locator('button[data-theme-btn]').click();
           await page.keyboard.press('Escape');
@@ -316,7 +320,7 @@ async function run() {
       });
 
       await check('retained Lab agency links route through the top-level reader and preserve its Back trail', async () => {
-        const labRoute = '/examples/lab/concepts/micro-animations/';
+        const labRoute = '/labs/micro-animations/';
         const { frame } = await openCard(page, labRoute, 'micro-animations');
         const marker = `micro-cta-${Date.now()}`;
         await page.evaluate(value => { window.__cardAppCtaMarker = value; }, marker);
@@ -372,11 +376,11 @@ async function run() {
     } finally { await context.close(); }
 
     for (const viewport of [{ width:320, height:740 }, { width:390, height:844 }, { width:568, height:320 }, { width:844, height:390 }]) {
-      await check(`all nine Labs fit ${viewport.width}×${viewport.height} and exit back to their originating tile`, async () => {
+      await check(`all Labs fit ${viewport.width}×${viewport.height} and exit back to their originating tile`, async () => {
         const { context, page } = await makePage(browser, viewport);
         try {
           for (const lab of labs) {
-            const route = `/examples/lab/concepts/${lab.slug}/`;
+            const route = lab.sharePath || `/labs/${lab.slug}/`;
             const { frame, frameElement } = await openCard(page, route, lab.slug);
             await frameElement.scrollIntoViewIfNeeded();
             const box = await frameElement.boundingBox();
@@ -404,7 +408,7 @@ async function run() {
             report.mobileLabs.push({ slug:lab.slug, viewport, box, target, interaction });
           }
         } finally { await context.close(); }
-        return '9 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus';
+        return `${labs.length} compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus`;
       });
     }
 

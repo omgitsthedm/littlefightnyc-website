@@ -3,6 +3,20 @@
 
   var concepts = [
     {
+      slug: 'cabinet-concept',
+      title: 'Cabinet Lab',
+      type: 'Interactive design study',
+      suite: 'construction',
+      hint: 'Try a finish, change a layout and compare your choices.'
+    },
+    {
+      slug: 'house-explorer',
+      title: 'House Explorer',
+      type: 'Architectural design study',
+      suite: 'construction',
+      hint: 'Turn the house, change the light and explore another view.'
+    },
+    {
       slug: 'walkup-3d',
       title: 'Six-Story Walk-Up',
       type: 'Capability build',
@@ -135,7 +149,8 @@
 
     if (window.self !== window.top || new URLSearchParams(location.search).has('embed')) {
       document.documentElement.classList.add('lab-concept-embed');
-      var exit = makeButton('lab-embed-exit', 'Back to cards ×');
+      var compactExit = ['cabinet-concept', 'house-explorer'].includes(current.item.slug);
+      var exit = makeButton('lab-embed-exit', compactExit ? '×' : 'Back to cards ×');
       exit.setAttribute('aria-label', 'Close this experience and return to all cards');
       exit.addEventListener('click', function () {
         if (window.self === window.top) {

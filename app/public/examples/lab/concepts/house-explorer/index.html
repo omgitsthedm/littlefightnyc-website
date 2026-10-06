@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#fbf3e4" />
+  <meta name="color-scheme" content="light" />
+  <title>House Explorer | The Lab · Little Fight NYC</title>
+  <meta name="description" content="An anonymous interactive exterior design study. Rotate the model, change the light, and look at a home from different angles." />
+  <meta name="littlefight:content-status" content="Little Fight Lab showroom. An anonymized design study; shapes and dimensions are illustrative, not a construction drawing." />
+  <link rel="icon" type="image/svg+xml" href="/examples/lab/assets/favicon.svg" />
+  <link rel="stylesheet" href="house-explorer.css" />
+  <script type="importmap">
+    {"imports":{"three":"/examples/lab/concepts/house-explorer/vendor/three/three.module.js?house-explorer=1"}}
+  </script>
+</head>
+<body>
+  <main class="house-explorer">
+    <div class="house-explorer__sky" aria-hidden="true"></div>
+    <canvas class="house-explorer__canvas" data-canvas tabindex="0" aria-label="Interactive 3D exterior design study. Drag to look around, use the view buttons for a set angle, or use the reset button to return to the first view."></canvas>
+
+    <section class="house-explorer__intro" aria-labelledby="house-explorer-title">
+      <p class="house-explorer__eyebrow">The Lab · spatial study</p>
+      <h1 id="house-explorer-title">House Explorer</h1>
+      <p class="house-explorer__lede">Look around a home before the conversation gets technical.</p>
+    </section>
+
+    <div class="house-explorer__toolbox" aria-label="House Explorer controls">
+      <div class="house-explorer__control-group" role="group" aria-label="Choose a view">
+        <button type="button" data-house-view="overview" aria-pressed="true">View</button>
+        <button type="button" data-house-view="front" aria-pressed="false">Front</button>
+        <button type="button" data-house-view="side" aria-pressed="false">Side</button>
+      </div>
+      <div class="house-explorer__control-group" role="group" aria-label="Choose the light">
+        <button type="button" data-house-light="day" aria-pressed="true">Day</button>
+        <button type="button" data-house-light="dusk" aria-pressed="false">Dusk</button>
+      </div>
+      <button type="button" class="house-explorer__reset" data-house-reset>Reset view</button>
+    </div>
+
+    <p class="house-explorer__hint" data-house-hint>Drag to look around · pinch or scroll to zoom</p>
+    <p class="house-explorer__disclosure lab-build-disclosure" role="note">An anonymized design study. Shapes and dimensions are illustrative; this is not a construction drawing.</p>
+    <p class="sr-only" data-house-status aria-live="polite">Loading House Explorer.</p>
+
+    <div class="house-explorer__loading" data-house-loading aria-live="polite">
+      <span class="house-explorer__loading-mark" aria-hidden="true"></span>
+      <p>Opening the design study</p>
+    </div>
+
+    <section class="house-explorer__fallback" data-house-fallback hidden aria-labelledby="fallback-title">
+      <div class="house-explorer__fallback-card">
+        <p class="house-explorer__eyebrow">The Lab · spatial study</p>
+        <h2 id="fallback-title">A home, from every useful angle.</h2>
+        <img src="/images/lab-showcase/house-explorer-800.webp" alt="A light exterior model of an anonymized house design study" width="800" height="560" />
+        <p>This interactive study needs 3D graphics. You can still return to the Lab and explore the rest of the work.</p>
+        <a href="/examples/lab/">Back to The Lab</a>
+      </div>
+    </section>
+  </main>
+
+  <noscript>
+    <p class="no-script"><img src="/images/lab-showcase/house-explorer-800.webp" alt="A light exterior model of an anonymized house design study" width="800" height="560" />This design study needs JavaScript to open. <a href="/examples/lab/">Back to The Lab</a>.</p>
+  </noscript>
+  <script type="module" src="house-explorer.js?house-explorer=1"></script>
+  <script defer src="/examples/lab/assets/lab-return.js"></script>
+</body>
+</html>

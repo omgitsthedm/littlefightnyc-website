@@ -9,10 +9,10 @@ const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
 const failures = [];
-const expectedTotalTileInventory = 129;
+const expectedTotalTileInventory = 132;
 const expectedOriginalTileCount = 106;
 const expectedConsolidatedGroups = 19;
-const expectedRouteCount = 402;
+const expectedRouteCount = 414;
 
 function git(args, fallback = "") {
   try {

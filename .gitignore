@@ -32,6 +32,7 @@ node_modules/
 package-lock.json
 !/package-lock.json
 !app/package-lock.json
+!app/scripts/cabinet-lab/package-lock.json
 dist/
 dist-*/
 
@@ -61,5 +62,6 @@ __pycache__/
 .lifi/evidence/reader-audit/
 .lifi/evidence/topic-mosaic/
 .lifi/evidence/card-app/
+.lifi/evidence/construction-labs/
 .lifi/evidence/research-improvements/
 .review-dist/

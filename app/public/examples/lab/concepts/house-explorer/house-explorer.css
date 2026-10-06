@@ -1,0 +1,105 @@
+:root {
+  color-scheme: light;
+  --ink: #1d281f;
+  --muted: #526255;
+  --paper: #fffaf0;
+  --paper-solid: rgba(255, 250, 240, .9);
+  --leaf: #39533c;
+  --sun: #f49b43;
+  --outline: rgba(29, 40, 31, .13);
+  font-family: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+html, body { width: 100%; min-height: 100%; margin: 0; overflow: hidden; background: #b8dbef; }
+body { color: var(--ink); }
+button, a { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+button { font: inherit; }
+button:focus-visible, a:focus-visible, canvas:focus-visible { outline: 3px solid #f26d2b; outline-offset: 3px; }
+button:active, a:active { transform: scale(.96); }
+
+.house-explorer { min-height: 100svh; position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(180deg, #b8dbef 0%, #e7f0e5 48%, #f8e1ba 100%); }
+.house-explorer__sky { position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at 73% 15%, rgba(255, 250, 209, .95) 0 4%, rgba(255, 250, 209, 0) 22%), linear-gradient(145deg, rgba(255,255,255,.2), rgba(62, 116, 138, .13)); pointer-events: none; }
+.house-explorer__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; }
+.house-explorer__canvas:active { cursor: grabbing; }
+
+.house-explorer__intro { position: absolute; z-index: 2; inset: calc(18px + env(safe-area-inset-top)) auto auto calc(18px + env(safe-area-inset-left)); max-width: min(29rem, calc(100% - 36px)); padding: 14px 16px 15px; border-radius: 22px; background: var(--paper-solid); box-shadow: 0 8px 28px rgba(43, 54, 39, .12), 0 1px 1px rgba(43, 54, 39, .08); backdrop-filter: blur(10px); }
+.house-explorer__eyebrow { margin: 0 0 7px; color: var(--leaf); font-size: .76rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.house-explorer h1, .house-explorer h2 { margin: 0; font-family: Manrope, "Atkinson Hyperlegible Next", sans-serif; text-wrap: balance; letter-spacing: -.055em; }
+.house-explorer h1 { font-size: clamp(1.55rem, 3.9vw, 2.45rem); line-height: .96; }
+.house-explorer__lede { max-width: 23rem; margin: 9px 0 0; color: var(--muted); font-size: clamp(.94rem, 1.7vw, 1.06rem); line-height: 1.25; text-wrap: pretty; }
+
+.house-explorer__toolbox { position: absolute; z-index: 2; inset: auto calc(18px + env(safe-area-inset-right)) calc(58px + env(safe-area-inset-bottom)) auto; display: grid; gap: 6px; max-width: calc(100% - 36px); padding: 6px; border-radius: 24px; background: var(--paper-solid); box-shadow: 0 12px 34px rgba(43, 54, 39, .15), 0 1px 1px rgba(43, 54, 39, .08); backdrop-filter: blur(12px); }
+.house-explorer__control-group { display: flex; gap: 4px; }
+.house-explorer__toolbox button { min-height: 42px; min-width: 42px; border: 0; border-radius: 16px; padding: 0 12px; color: var(--ink); background: transparent; font-size: .88rem; font-weight: 800; letter-spacing: -.01em; transition-property: background-color, color, box-shadow, transform; transition-duration: 160ms; transition-timing-function: cubic-bezier(.2, 0, 0, 1); }
+.house-explorer__toolbox button[aria-pressed="true"] { color: var(--paper); background: var(--ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.house-explorer__toolbox button:hover { background-color: rgba(57, 83, 60, .11); }
+.house-explorer__toolbox button[aria-pressed="true"]:hover { background-color: #2b4030; }
+.house-explorer__toolbox .house-explorer__reset { display: block; width: 100%; color: var(--leaf); background: rgba(57, 83, 60, .09); }
+
+.house-explorer__hint { position: absolute; z-index: 2; bottom: calc(16px + env(safe-area-inset-bottom)); left: calc(18px + env(safe-area-inset-left)); right: auto; max-width: min(36rem, calc(100% - 36px)); margin: 0; padding: 7px 11px; border-radius: 999px; color: #314236; background: rgba(255, 250, 240, .76); font-size: .77rem; font-weight: 700; line-height: 1.25; box-shadow: 0 5px 20px rgba(43,54,39,.08); backdrop-filter: blur(8px); }
+.house-explorer__disclosure { position: absolute; z-index: 2; right: calc(18px + env(safe-area-inset-right)); bottom: calc(16px + env(safe-area-inset-bottom)); max-width: min(25rem, calc(100% - 23rem)); margin: 0; color: rgba(29, 40, 31, .77); font-size: .69rem; line-height: 1.3; text-align: right; }
+
+.house-explorer__loading { position: absolute; z-index: 4; inset: 0; display: grid; place-content: center; gap: 14px; color: var(--ink); background: linear-gradient(165deg, #b8dbef, #f5ddba); text-align: center; transition: opacity 280ms ease, visibility 280ms ease; }
+.house-explorer__loading[hidden] { opacity: 0; visibility: hidden; pointer-events: none; }
+.house-explorer__loading p { margin: 0; font-weight: 800; }
+.house-explorer__loading-mark { width: 44px; height: 44px; margin: auto; border: 3px solid rgba(29,40,31,.15); border-top-color: var(--leaf); border-radius: 50%; animation: house-spin 1.1s linear infinite; }
+@keyframes house-spin { to { rotate: 360deg; } }
+
+.house-explorer__fallback { position: absolute; z-index: 5; inset: 0; display: grid; place-items: center; padding: 24px; background: linear-gradient(165deg, #b8dbef, #f5ddba); }
+.house-explorer__fallback[hidden] { display: none !important; }
+.house-explorer__fallback-card { width: min(29rem, 100%); padding: clamp(22px, 5vw, 42px); border-radius: 30px; background: var(--paper); box-shadow: 0 16px 46px rgba(43,54,39,.17); }
+.house-explorer__fallback h2 { font-size: clamp(1.8rem, 6vw, 2.7rem); line-height: .98; }
+.house-explorer__fallback img { display: block; width: 100%; height: auto; margin: 20px 0 4px; border-radius: 18px; outline: 1px solid rgba(0, 0, 0, .1); }
+.house-explorer__fallback p:not(.house-explorer__eyebrow) { color: var(--muted); line-height: 1.48; text-wrap: pretty; }
+.house-explorer__fallback a { display: inline-flex; min-height: 44px; align-items: center; border-radius: 14px; padding: 0 15px; color: var(--paper); background: var(--leaf); font-weight: 800; text-decoration: none; }
+.no-script { margin: 0; padding: 22px; background: var(--paper); }
+.no-script img { display: block; width: min(800px, 100%); height: auto; margin: 0 auto 18px; border-radius: 18px; outline: 1px solid rgba(0, 0, 0, .1); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
+/* The shared Lab shell requires this class for its archive audit. Direct visitors
+   still need the study's lighter, non-blocking disclosure placement. */
+html:not(.lab-concept-embed) body > .house-explorer__disclosure.lab-build-disclosure,
+html:not(.lab-concept-embed) .house-explorer .house-explorer__disclosure.lab-build-disclosure {
+  position: absolute !important;
+  z-index: 2 !important;
+  top: auto !important;
+  left: auto !important;
+  right: calc(18px + env(safe-area-inset-right)) !important;
+  bottom: calc(16px + env(safe-area-inset-bottom)) !important;
+  max-width: min(25rem, calc(100% - 23rem)) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(29, 40, 31, .77) !important;
+  font: 700 .69rem/1.3 "Atkinson Hyperlegible Next", system-ui, sans-serif !important;
+  text-align: right !important;
+  box-shadow: none !important;
+}
+
+html.lab-concept-embed .house-explorer__disclosure.lab-build-disclosure { display: none !important; }
+
+@media (max-width: 660px) {
+  .house-explorer__intro { top: calc(14px + env(safe-area-inset-top)); left: calc(14px + env(safe-area-inset-left)); padding: 12px 14px; border-radius: 19px; }
+  .house-explorer__lede { max-width: 16rem; font-size: .9rem; }
+  .house-explorer__toolbox { inset: auto calc(14px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) auto; border-radius: 20px; }
+  .house-explorer__toolbox button { min-height: 40px; padding: 0 10px; font-size: .82rem; }
+  .house-explorer__hint { left: calc(14px + env(safe-area-inset-left)); bottom: calc(14px + env(safe-area-inset-bottom)); max-width: calc(100% - 190px); padding: 6px 9px; font-size: .7rem; }
+  .house-explorer__disclosure { display: none; }
+  html.lab-concept-embed .house-explorer__intro { top: calc(58px + env(safe-area-inset-top)); }
+}
+
+@media (max-width: 380px) {
+  .house-explorer__intro { max-width: calc(100% - 28px); }
+  .house-explorer__lede { max-width: 14rem; }
+  .house-explorer__toolbox { grid-template-columns: 1fr; width: min(184px, calc(100% - 28px)); }
+  .house-explorer__control-group button { flex: 1; }
+  .house-explorer__hint { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

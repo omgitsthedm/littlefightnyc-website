@@ -24,7 +24,9 @@ REPO = APP.parent
 CONTENT = APP / "preview-content"
 PUBLIC = APP / "public"
 ORIGIN = "https://littlefightnyc.com"
-EXPECTED_TOTAL_TILE_INVENTORY = 129
+LAB_CATALOG = json.loads((CONTENT / 'labs.json').read_text())
+ADDED_LAB_COUNT = len(LAB_CATALOG) - 9
+EXPECTED_TOTAL_TILE_INVENTORY = 129 + ADDED_LAB_COUNT + 1  # construction discovery tile
 EXPECTED_ORIGINAL_TILE_COUNT = 106
 EXPECTED_REVIEW_TILE_COUNT = 7
 EXPECTED_REVIEW_DISTRIBUTION = {
@@ -33,7 +35,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 402
+EXPECTED_ROUTE_COUNT = 402 + len(LAB_CATALOG) + 1
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -65,7 +67,6 @@ FORBIDDEN_PUBLISHED_MARKERS = (
     "public-house-creative",
     "case-public-house-creative",
     "cockpit",
-    "cabinetry",
 )
 INTERNAL_PROJECT_MARKERS = (
     "project notes",
@@ -222,6 +223,9 @@ def source_pages() -> dict[str, dict]:
         pages[route] = {"path": route, "id": tile["id"], "category": tile["family"]}
     for route in ("/reviews/", "/websites-for-your-business/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
+    for lab in LAB_CATALOG:
+        pages[lab['sharePath']] = {'path': lab['sharePath'], 'id': 'lab-' + lab['slug']}
+    pages['/construction/'] = {'path': '/construction/', 'id': 'construction-showcase'}
     return pages
 
 
@@ -431,7 +435,7 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
-    return route == "/" or route in ("/reviews/", "/websites-for-your-business/", "/how-we-help/") or route.startswith("/industries/")
+    return route == "/" or route in ("/reviews/", "/websites-for-your-business/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
 
 
 def redirect_patterns() -> list[re.Pattern[str]]:
@@ -662,6 +666,15 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
                 failures.append(f"anchor {tile.get('data-answer')} needs a full static story and matching answer schema")
         checked += 1
         identity = tile.get("data-answer") or route
+        if "construction-showcase" in anatomy.classes:
+            required = {'construction-opening', 'construction-lead', 'construction-proof',
+                        'construction-study-grid', 'construction-next', 'story-contact', 'lab-share'}
+            missing = sorted(required - anatomy.classes)
+            if (missing or not anatomy.direct_contact or anatomy.tag_counts.get('h1', 0) != 1
+                    or anatomy.tag_counts.get('img', 0) < 5
+                    or '/case-studies/chromatic-painting-design/' not in anatomy.working_actions):
+                failures.append(f"construction showcase is missing contact, context, real proof, or working studies: {missing}")
+            continue
         if "review-collection" in anatomy.classes:
             if not anatomy.direct_contact or anatomy.tag_counts.get('h1',0) != 1 or anatomy.tag_counts.get('blockquote',0) < 6 or 'rw-review-tile' not in anatomy.classes or 'story-contact' not in anatomy.classes:
                 failures.append(f"tile {identity} review collection is missing its source-linked review tiles or contact")
@@ -831,7 +844,12 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
         if isinstance(item, dict) and isinstance(item.get("path"), str)
     }
     for href in normalized_original:
-        if href not in retained_paths:
+        migrated_lab = next((lab for lab in LAB_CATALOG if lab['embedPath'] == href), None)
+        if migrated_lab:
+            if (migrated_lab['sharePath'] not in retained_paths or not output_file(dist, href).is_file()
+                    or not output_file(dist, '/_readers' + href).is_file()):
+                failures.append(f"original Lab engine, companion or share route was lost: {href}")
+        elif href not in retained_paths:
             failures.append(f"original tile destination was not retained: {href}")
     stats["tiles"] = len(parser.tiles)
 

@@ -19,7 +19,14 @@ for (const tile of await read('topic-tiles.json')) {
   paths.add(path);
 }
 for (const album of await read('albums.json')) paths.add(`/photos/${album.id.replace(/^album-/, '')}/`);
-for (const pathname of ['/', '/reviews/', '/websites-for-your-business/', '/thanks/']) paths.add(pathname);
+for (const lab of await read('labs.json')) {
+  if (!/^[a-z0-9-]+$/.test(lab.slug) || lab.sharePath !== `/labs/${lab.slug}/` || lab.embedPath !== `/examples/lab/concepts/${lab.slug}/`) {
+    throw new Error('Lab measurement paths must match their public catalog identity.');
+  }
+  paths.add(lab.sharePath);
+  paths.add(lab.embedPath);
+}
+for (const pathname of ['/', '/reviews/', '/websites-for-your-business/', '/thanks/', '/construction/']) paths.add(pathname);
 const safe = [...paths].filter(path => /^\/[a-z0-9/-]*$/.test(path) && !path.startsWith('/_readers/')).sort();
 for (const path of topicPaths) {
   if (!safe.includes(path)) throw new Error(`Topic reader is missing from measurement allowlist: ${path}`);

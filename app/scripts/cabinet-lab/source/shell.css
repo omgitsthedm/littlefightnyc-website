@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "LF Atkinson";
+  src: url('/assets/mineral/atkinson-hyperlegible-next-latin.woff2') format('woff2');
+  font-display: swap;
+}
+
+:root { color-scheme: dark; }
+html.cabinet-lab-page { background:#11110f; }
+html.cabinet-lab-page body { min-height:100vh; margin:0; background:#11110f; color:#f6f3ec; font-family:"LF Atkinson",ui-sans-serif,system-ui,sans-serif; }
+.cabinet-lab > div { max-width:1480px; margin:0 auto; padding:clamp(76px,11vw,120px) clamp(16px,3vw,42px) 128px; }
+.cabinet-lab,
+.cabinet-lab *,
+.cabinet-lab *::before,
+.cabinet-lab *::after { box-sizing:border-box; }
+.cabinet-lab [data-ux-task-entry] > div > p { color:#ff7839; }
+.cabinet-lab [data-ux-task-entry] h1 { letter-spacing:-.055em; }
+.cabinet-lab button:focus-visible { outline:3px solid #ff7839; outline-offset:3px; }
+@media (max-width:640px) {
+  .cabinet-lab > div { padding:70px 12px 102px; }
+}
+
+/* The opened card already supplies its own Little Fight header and close control.
+   In that compact context, keep the actual 3D study at the top of the phone. */
+html.lab-concept-embed .cabinet-lab > div { padding-top:12px; }
+html.lab-concept-embed .cabinet-lab [data-ux-task-entry] { display:none; }
+html.lab-concept-embed .cabinet-lab [data-cabinet-stage-head] { padding-right:52px; }
+@media (prefers-reduced-motion: reduce) {
+  html.cabinet-lab-page *, html.cabinet-lab-page *::before, html.cabinet-lab-page *::after { animation-duration:.001ms!important; transition-duration:.001ms!important; scroll-behavior:auto!important; }
+}

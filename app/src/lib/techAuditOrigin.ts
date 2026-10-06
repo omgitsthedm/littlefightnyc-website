@@ -24,6 +24,7 @@ const LEGACY_ENTRY_SOURCES = new Set([
   "lab_brand_campaign",
   "lab_business_systems",
   "lab_cinema",
+  "lab_construction",
   "lab_motion_playground",
   "lab_pool-room",
   "lab_spatial_nyc",
