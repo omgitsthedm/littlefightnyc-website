@@ -966,6 +966,21 @@ async function assertReaderContextFigures(browser) {
           await summary.click();
           await page.waitForFunction(() => document.querySelector('details.reader-demo-context')?.open === true);
         }
+        if (label === 'IT answer') {
+          const visual = page.locator('.answer-visual .reader-context-visual');
+          await visual.waitFor({ state: 'visible' });
+          assert.equal(await visual.locator('.reader-context-image').count(), 0,
+            'payment-device help must not reuse the unrelated workshop photograph');
+          const bounds = await visual.evaluate(node => ({
+            figureWidth: node.getBoundingClientRect().width,
+            overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+            iconLoaded: [...node.querySelectorAll('img')].every(img => img.complete && img.naturalWidth > 0),
+          }));
+          assert.ok(bounds.figureWidth > 150 && bounds.overflow <= 1 && bounds.iconLoaded,
+            `${viewport.width}px IT illustration must remain visible, loaded, and contained`);
+          measurements.push({ viewport: viewport.width, label, ...bounds });
+          continue;
+        }
         const figure = page.locator('.story-art .reader-context-figure, .answer-visual .reader-context-figure');
         const caption = figure.locator('figcaption');
         await figure.waitFor({ state: 'visible' });
