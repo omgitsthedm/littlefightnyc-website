@@ -459,5 +459,73 @@
       }
     ],
     "contactPrompt": "Tell us what needs to work better."
+  },
+  {
+    "id": "page-original-home",
+    "path": "/about/how-we-work/",
+    "family": "brand",
+    "category": "company",
+    "title": "How Little Fight NYC Works",
+    "heading": "Start with what you need.",
+    "description": "How Little Fight NYC plans websites, support, consulting, and custom software with independent businesses. A free first look comes before paid work.",
+    "summary": "Tell us what is getting in the way. We take a free first look, explain the next useful step, and agree the scope before paid work begins.",
+    "sections": [
+      {
+        "heading": "Bring the problem in your own words.",
+        "paragraphs": [
+          "A new website, a computer that stopped working, or hours spent entering the same details twice. You do not need to know which service to ask for.",
+          "Call, text, email, or write a short note. Share the public website or the symptom. Keep passwords, sign-in codes, and private customer information out of the message."
+        ],
+        "links": [
+          {
+            "label": "Tell us what you need +",
+            "href": "/tech-audit/"
+          }
+        ]
+      },
+      {
+        "heading": "See what is worth doing.",
+        "paragraphs": [
+          "We look at what you already use and explain what to keep, fix, or replace. The first conversation and first look are free. Any paid work starts with an agreed scope."
+        ],
+        "links": [
+          {
+            "label": "Websites",
+            "href": "/services/custom-local-websites/"
+          },
+          {
+            "label": "Tech support",
+            "href": "/services/it-support/"
+          },
+          {
+            "label": "Consulting",
+            "href": "/services/tech-consulting/"
+          },
+          {
+            "label": "Custom software",
+            "href": "/services/business-systems/"
+          }
+        ]
+      },
+      {
+        "heading": "Know what happens next.",
+        "paragraphs": [
+          "The written plan names the work, cost, timing, and care included. You supply the business facts, access, and approvals; we handle the agreed technical work.",
+          "Website projects can run remotely across the United States. A site can be ready in six weeks or less once the scope and materials are agreed. On-site support timing is confirmed after we know the issue and location.",
+          "Your custom website code, domain, and content stay with your business under the agreement. Licensed assets and third-party tools keep their own terms."
+        ],
+        "links": [
+          {
+            "label": "See our work +",
+            "href": "/examples/"
+          },
+          {
+            "label": "Keep control of your accounts +",
+            "href": "/answers/help/ownership/"
+          }
+        ]
+      }
+    ],
+    "contactPrompt": "Tell us what you need to get back to work."
   }
 ]

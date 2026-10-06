@@ -24,6 +24,13 @@
       "aliases": ["emails going to spam", "email going to spam", "business email spam", "email in spam"]
     },
     {
+      "path": "/answers/help/email/",
+      "title": "What is going wrong with our Outlook or Microsoft 365 email?",
+      "description": "Start with whether messages will not send, do not arrive, or land in spam. Check shared-mailbox permissions and keep passwords out of the request.",
+      "family": "Tech support",
+      "aliases": ["outlook not working", "outlook shared mailbox", "microsoft 365 email", "office 365 email"]
+    },
+    {
       "path": "/answers/help/wifi/",
       "title": "Why does my Wi-Fi keep dropping?",
       "description": "Check whether one device, one room, or the whole business loses its connection before changing settings.",
@@ -36,6 +43,20 @@
       "description": "Use the provider’s recovery option and make sure the business has a durable account owner. Never send a password or sign-in code.",
       "family": "Tech support",
       "aliases": ["forgot login", "forgot password", "can't sign in", "cannot sign in", "cant sign in", "locked out", "business account access"]
+    },
+    {
+      "path": "/answers/help/it-password-ownership/",
+      "title": "Who controls our Microsoft 365 and business device accounts?",
+      "description": "Keep business ownership, recovery routes, and administrator access clear before a staff or device change.",
+      "family": "Tech support",
+      "aliases": ["microsoft 365 admin", "m365 admin", "office 365 admin", "business apple account", "apple account for business device"]
+    },
+    {
+      "path": "/answers/help/computer/",
+      "title": "How do we move to a new Mac or Windows computer?",
+      "description": "Prepare the new device, then test email, files, printing, calls, and the customer tools that work cannot pause.",
+      "family": "Tech support",
+      "aliases": ["new mac setup", "macbook setup", "new windows computer", "windows laptop setup", "iphone for work", "ipad for work"]
     },
     {
       "path": "/answers/help/maps/",

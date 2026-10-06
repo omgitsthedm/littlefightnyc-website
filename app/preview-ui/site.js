@@ -266,6 +266,7 @@
     // Once someone starts an inquiry, keep the return path without suggesting
     // unrelated cards or leaving two disabled controls beside the form.
     const isInquiry = ['/tech-audit/', '/contact/', '/thanks/'].includes(path.split(/[?#]/)[0]);
+    const isSupportAnswer = panel.dataset.readerFamily === 'it' && path.startsWith('/answers/');
     const write = panel.querySelector('.reader-rail .contact-plan');
     if (write) {
       write.hidden = isInquiry;
@@ -283,7 +284,7 @@
     const next = index >= 0 ? cards[index + 1] || null : null;
     for (const [button, tile, name] of [[readerPrevious, previous, 'Previous'], [readerNext, next, 'Next']]) {
       if (!button) continue;
-      button.hidden = isInquiry;
+      button.hidden = isInquiry || isSupportAnswer;
       button.disabled = !tile;
       button.dataset.readerTarget = tile ? sameOriginPath(tile.href) : '';
       button.setAttribute('aria-label', tile ? `${name} card: ${tile.dataset.cellTitle || tile.textContent.trim()}` : `${name} card`);
@@ -724,8 +725,8 @@
       link.href = sameOriginPath(row.path);
       link.className = 'search-result';
       const family = document.createElement('span'); family.textContent = safeText(row.family || 'Little Fight NYC');
-      const title = document.createElement('strong'); title.textContent = safeText(row.title);
-      const description = document.createElement('small'); description.textContent = safeText(row.description);
+      const title = document.createElement('strong'); title.textContent = draftText(row.title, 320);
+      const description = document.createElement('small'); description.textContent = draftText(row.description, 320);
       link.append(family, title, description);
       searchResults.append(link);
     });

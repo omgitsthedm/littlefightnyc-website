@@ -121,6 +121,7 @@ def prepare_groups(groups, rewrite):
                 'We build around the way your customers choose, using the booking and payment tools you already rely on.'
             ], 'links': [{'label': 'See the work +', 'href': '/examples/'}]})
         chapters.extend(answer_section(by_id[key]) for key in members if key in by_id)
+        chapters.extend(intro.get('supplementalSections', []))
         if chapters:
             group['sections'] = chapters
             group['faqs'] = []

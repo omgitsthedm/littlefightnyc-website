@@ -4,9 +4,9 @@
       "id": "it",
       "path": "/services/it-support/",
       "title": "Keep work moving.",
-      "summary": "When Wi-Fi, email, a computer, or a payment device interrupts the day, start with what stopped. We confirm New York visit availability after we know the issue and location.",
+      "summary": "When Wi-Fi, email, a Mac, iPhone, iPad, Windows computer, or payment device interrupts the day, start with what stopped. We confirm New York visit availability after we know the issue and location.",
       "metaTitle": "Small Business IT Support NYC | Little Fight NYC",
-      "metaDescription": "New York tech support for Wi-Fi, email, computers and payment devices. Clear explanations, account ownership and visits subject to confirmed availability."
+      "metaDescription": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. Clear explanations and account ownership. New York visits subject to confirmed availability."
     },
     {
       "id": "consulting",
@@ -39,15 +39,15 @@
       "category": "it",
       "question": "Why are my business emails going to spam?",
       "answer": "Email can be flagged because of its content, how it was sent, or settings on either account. Check whether it affects everyone or only some people.",
-      "detail": "Check Junk or Spam and note any error. We can review sender checks, mailbox rules, and account access. Leave domain settings alone until the cause is clear.",
+      "detail": "Check Junk or Spam and note any error. We can review sender checks, mailbox rules, account access, and Microsoft 365 shared-mailbox permissions. Leave domain settings alone until the cause is clear.",
       "nextStep": "Tell us what happened and the sending address. Never include passwords, sign-in codes, or private customer messages."
     },
     {
       "id": "computer",
       "category": "it",
       "question": "What should happen before a new work computer replaces the old one?",
-      "answer": "Set up the new computer before the old one is retired, then test the work that cannot pause.",
-      "detail": "List the approved apps, accounts, files, printers, and shared folders. Plan the handover around real work and keep the old device available until the important tasks have been checked.",
+      "answer": "Set up the new Mac or Windows computer before the old one is retired, then test the work that cannot pause.",
+      "detail": "List the approved apps, accounts, files, printers, and shared folders. For a Mac, iPhone, iPad, or Windows device, record its work account and recovery route. Test the real work, then keep the old device until important tasks are checked.",
       "nextStep": "List the programs and files the new computer must have on day one."
     },
     {
@@ -127,7 +127,7 @@
       "category": "it",
       "question": "What should we do when someone leaves the team?",
       "answer": "Before removing access, protect the business records and transfer ownership of accounts, files, and subscriptions.",
-      "detail": "List the services the person used, preserve the work the business needs, move ownership to an authorized business account, then revoke access. Handle a device only after needed files and approvals are accounted for.",
+      "detail": "List the services the person used, including Microsoft 365 mailboxes, licenses, and files where relevant. Preserve the work the business needs, move ownership to an authorized business account, then revoke access. Handle a device only after needed files and approvals are accounted for.",
       "nextStep": "Start with the accounts and files the person owns."
     },
     {
@@ -143,7 +143,7 @@
       "category": "it",
       "question": "Who should own our business passwords and recovery methods?",
       "answer": "Business accounts should have named business owners, current recovery methods, and a safe record of who can administer them.",
-      "detail": "Personal accounts can strand a business when a staff member leaves. Review the registrar, email, payment tools, cloud storage, and recovery contacts before a change forces the issue.",
+      "detail": "Personal accounts can strand a business when a staff member leaves. Review the registrar, Microsoft 365, email, payment tools, cloud storage, recovery contacts, and device records before a change forces the issue. For an Apple device, record the approved Apple Account or management route without copying a password.",
       "nextStep": "Start with the account that controls your business email or domain."
     },
     {
@@ -370,15 +370,79 @@
     },
     "email": {
       "heading": "What is going wrong with my business email?",
-      "summary": "First, note whether messages will not send, do not arrive, or land in spam. Tell us who is affected and any error you see; keep passwords and private messages out of your request."
+      "summary": "First, note whether messages will not send, do not arrive, or land in spam. Tell us who is affected and any error you see; keep passwords and private messages out of your request.",
+      "supplementalSections": [
+        {
+          "heading": "Give Microsoft 365 a named owner",
+          "paragraphs": [
+            "Microsoft 365 separates user accounts, shared-mailbox permissions, licenses, and administrator roles. Before adding, removing, or changing access, record the business administrator, the mailbox that customers use, the shared mailboxes involved, and the license that keeps the work running.",
+            "Use the smallest administrator role that can do the job. Before a staff change, preserve the mail and files the business needs, then test the new owner’s access before removing the old one."
+          ],
+          "bullets": [
+            "Name the business administrator and a recovery route.",
+            "Keep shared-mailbox ownership separate from a person’s private inbox.",
+            "Check mail, files, and customer replies after an access change."
+          ],
+          "links": [
+            {
+              "label": "Microsoft 365 administrator roles",
+              "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/about-admin-roles?view=o365-worldwide"
+            },
+            {
+              "label": "Microsoft’s former employee handoff guidance",
+              "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee-step-5?view=o365-worldwide"
+            }
+          ]
+        }
+      ]
     },
     "it-password-ownership": {
       "heading": "Who controls our business accounts?",
-      "summary": "The business should control its accounts and have a working way to recover them. If you cannot sign in, start with the provider’s recovery option; never send anyone your password or sign-in codes."
+      "summary": "The business should control its accounts and have a working way to recover them. If you cannot sign in, start with the provider’s recovery option; never send anyone your password or sign-in codes.",
+      "supplementalSections": [
+        {
+          "heading": "Keep device accounts easy to identify",
+          "paragraphs": [
+            "A Mac, iPhone, iPad, or Windows computer can hold a business mailbox, cloud files, saved sign-ins, and the only copy of an important setting. Keep a private device record with the device, its work account, its approved recovery route, and the person responsible for it.",
+            "Before wiping, replacing, or handing over a device, confirm that the business can open the records it needs from another approved account or device. Do not put account passwords or sign-in codes into the record."
+          ],
+          "bullets": [
+            "Check the signed-in devices before removing one.",
+            "Keep business recovery details under business control.",
+            "Test access before an old device leaves the business."
+          ],
+          "links": [
+            {
+              "label": "Apple Account device list",
+              "href": "https://support.apple.com/en-us/102649"
+            }
+          ]
+        }
+      ]
     },
     "computer": {
       "heading": "A new computer should feel familiar.",
-      "summary": "The goal is a working handover: the approved apps, files, and accounts are ready, and the work that matters has been checked before the old device leaves."
+      "summary": "The goal is a working handover: the approved apps, files, accounts, and recovery route are ready on a Mac or Windows computer before the old device leaves.",
+      "supplementalSections": [
+        {
+          "heading": "Move Mac and Windows work without surprises",
+          "paragraphs": [
+            "Before replacing a Mac, iPhone, iPad, or Windows computer, test the work email, files, Wi-Fi, printer, calls, and any customer tool on the new device. A new device is ready when the job works, not when the desktop looks familiar.",
+            "Backups and recovery work differently across devices and accounts. Check what is actually recoverable before resetting an old computer. A Windows recovery drive does not include personal files, and business records need their own tested backup plan."
+          ],
+          "bullets": [
+            "Test one normal work task from start to finish.",
+            "Confirm where the important files can be restored from.",
+            "Keep the old device until the handover is checked."
+          ],
+          "links": [
+            {
+              "label": "Windows backup and recovery guidance",
+              "href": "https://support.microsoft.com/en-us/windows/experience/backup-recovery/backup-restore-and-recovery-in-windows"
+            }
+          ]
+        }
+      ]
     },
     "page-services-it-support": {
       "heading": "Start with what stopped working.",

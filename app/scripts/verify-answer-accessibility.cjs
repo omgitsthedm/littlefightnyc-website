@@ -41,6 +41,10 @@ const check = text => report.checks.push(text);
   await page.locator('#detail[open] .story-title').waitFor();
   assert.match(await page.locator('#detail .story-title').innerText(), /print/i);
   assert.equal(await page.locator('#detail .story-hero .story-art').count(), 0, 'the answer precedes ornamental art');
+  assert.equal(await page.locator('#reader-previous').isVisible(), false, 'support answers do not divert into unrelated previous cards');
+  assert.equal(await page.locator('#reader-next').isVisible(), false, 'support answers do not divert into unrelated next cards');
+  assert.equal(await page.locator('#reader-hub').innerText(), 'Back to home +', 'return control names its actual destination');
+  assert.equal(await page.locator('#detail .reader-context-image').count(), 0, 'printer help must not use an unrelated trades photograph');
   await axe('printer reader', '#detail');
   await page.locator('#detail .reader-rail .contact-plan').click();
   const form = page.locator('#detail .lf-audit__form');
@@ -72,6 +76,16 @@ const check = text => report.checks.push(text);
    await axe(route, '[data-page-content]');
   }
   check('Six representative answers lead with the question and answer, preserve direct URLs, and keep human contact available');
+  for (const [route, heading, source] of [
+   ['/answers/help/email/', 'Give Microsoft 365 a named owner', 'learn.microsoft.com'],
+   ['/answers/help/computer/', 'Move Mac and Windows work without surprises', 'support.microsoft.com'],
+   ['/answers/help/it-password-ownership/', 'Keep device accounts easy to identify', 'support.apple.com'],
+  ]) {
+   await page.goto(base + route, { waitUntil: 'networkidle' });
+   assert.equal(await page.getByRole('heading', { name: heading, exact: true }).count(), 1, 'platform guidance survives the grouped-reader compiler');
+   assert.ok(await page.locator('[data-page-content] a[href*="' + source + '"]').count(), 'platform guidance retains its primary source');
+  }
+  check('Apple, Windows, and Microsoft 365 guidance and official sources reach the generated readers');
   await page.goto(base + '/library/', { waitUntil: 'networkidle' });
   await axe('library', '[data-page-content]');
   for (const viewport of [{ width: 568, height: 320 }, { width: 320, height: 480 }]) {

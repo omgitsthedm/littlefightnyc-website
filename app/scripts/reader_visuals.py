@@ -295,11 +295,6 @@ def _story_figure(story_id):
     )
 
 
-def _it_photo_is_relevant(p, q):
-    text = " ".join(str(v or "") for v in (_tile_id(p, q), (q or {}).get("heading"), (p or {}).get("path"))).lower()
-    return any(term in text for term in ("on-site", "onsite", "computer", "printer", "device", "payment", "home office", "care"))
-
-
 def reader_visual(p, q, cases, albums):
     """Return a small reader hero visual for generic marketing/answer pages.
 
@@ -327,8 +322,6 @@ def reader_visual(p, q, cases, albums):
         figure = _web_figure(p, q, cases)
     elif family == "software":
         figure = _software_figure(cases)
-    elif family == "it" and _it_photo_is_relevant(p, q):
-        figure = _photo_figure(albums, "album-trades", "trades-15")
     elif family == "brand" and path in {"/about/", "/about/how-we-work/"}:
         figure = _photo_figure(albums, "album-nyc", "nyc-01")
 
