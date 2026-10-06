@@ -11,10 +11,10 @@
     },
     {
       slug: 'house-explorer',
-      title: 'House Explorer',
-      type: 'Architectural design study',
+      title: 'Property Explorer',
+      type: 'Illustrative spatial build',
       suite: 'construction',
-      hint: 'Turn the house, change the light and explore another view.'
+      hint: 'Explore the property, reveal the frame, or find a system behind the walls.'
     },
     {
       slug: 'walkup-3d',

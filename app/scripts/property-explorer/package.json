@@ -1,0 +1,1 @@
+{"name":"little-fight-property-explorer","private":true,"type":"module","scripts":{"build":"node build.mjs","check":"node build.mjs --check"},"dependencies":{"three":"0.180.0"},"devDependencies":{"esbuild":"0.25.9"}}

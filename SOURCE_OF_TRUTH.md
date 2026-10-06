@@ -65,12 +65,15 @@ The current marketing direction is the owner-approved Soft Mineral + Edge Light 
 
 The construction showcase at `/construction/` uses dedicated, shareable readers at
 `/labs/<slug>/`. Working experiences remain at `/examples/lab/concepts/<slug>/` and
-load only when their reader opens. The Cabinet Lab and anonymized House Explorer
-are isolated presentation derivatives of existing test projects, authorized for
-this showcase on 2026-10-06. Their upstream projects remain separate and unchanged;
-private import provenance belongs under `.lifi/evidence/construction-labs/`, never
-in the public showroom. Inclusion does not turn a design study into a client result,
-measured plan, estimate, or connected business system.
+load only when their reader opens. The Cabinet Lab is an isolated presentation
+derivative of an existing test project.
+Property Explorer retains the `/labs/house-explorer/` route and uses an entirely
+fictional procedural property, floor plan, and example service routes. Its editable
+source and reproducible build live under `app/scripts/property-explorer/`; no original
+property geometry, plans, photographs, or location data belong in that experience.
+Both studies are authorized for this showcase on 2026-10-06. Upstream private projects
+remain separate and unchanged. Inclusion does not turn a design study into a client
+result, measured plan, estimate, or connected business system.
 
 The Website Audit has live function, storage, email, and optional provider surfaces. Routine tests must not create external side effects. Local environment files and secrets are never source.
 

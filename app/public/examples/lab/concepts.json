@@ -126,9 +126,9 @@
     },
     {
       "slug": "house-explorer",
-      "title": "House Explorer",
-      "type": "Architectural design study",
-      "description": "Turn a house in three dimensions and explore how daylight changes it. An anonymized visual study.",
+      "title": "Property Explorer",
+      "type": "Illustrative spatial build",
+      "description": "Explore a fictional property, reveal its structure, and find the systems behind the walls.",
       "suite": "construction"
     },
     {

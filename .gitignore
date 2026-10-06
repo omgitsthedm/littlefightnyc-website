@@ -33,6 +33,7 @@ package-lock.json
 !/package-lock.json
 !app/package-lock.json
 !app/scripts/cabinet-lab/package-lock.json
+!app/scripts/property-explorer/package-lock.json
 dist/
 dist-*/
 

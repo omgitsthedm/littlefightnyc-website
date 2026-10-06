@@ -22,6 +22,48 @@ async function overflow(page) {
   assert.ok(delta <= 1, `Horizontal overflow: ${delta}px`);
 }
 
+async function verifyPropertyExplorer(frame, label) {
+  await frame.waitForSelector('canvas', { timeout: 45000 });
+  await frame.waitForFunction(() => window.propertyExplorer && typeof window.propertyExplorer.getState === 'function');
+  assert.equal(await frame.locator('canvas').count(), 1, `${label}: one interactive canvas`);
+
+  const initial = await frame.evaluate(() => window.propertyExplorer.getState());
+  assert.equal(initial.mode, 'property', `${label}: starts in the Property collection`);
+  assert.equal(initial.webgl, true, `${label}: public explorer has a working WebGL scene`);
+  assert.ok(initial.components > 0, `${label}: explorer exposes its fictional components`);
+
+  const modes = await frame.locator('.collections [data-mode]').evaluateAll(buttons => buttons.map(button => button.dataset.mode));
+  assert.deepEqual(modes, ['property', 'inside', 'find'], `${label}: Property, Inside, and Find collections are present`);
+
+  const priorGate = initial.gateOpen;
+  await frame.locator('#gate').click();
+  await frame.waitForFunction(previous => window.propertyExplorer.getState().gateOpen !== previous, priorGate);
+  assert.equal(await frame.locator('#gate').getAttribute('aria-pressed'), 'true', `${label}: gate control updates its accessible state`);
+
+  const priorEvening = await frame.evaluate(() => window.propertyExplorer.getState().evening);
+  await frame.locator('#light-mode').click();
+  await frame.waitForFunction(previous => window.propertyExplorer.getState().evening !== previous, priorEvening);
+  assert.equal(await frame.locator('#light-mode').getAttribute('aria-pressed'), 'true', `${label}: light control updates its accessible state`);
+
+  await frame.locator('[data-mode="inside"]').click();
+  await frame.waitForFunction(() => window.propertyExplorer.getState().mode === 'inside');
+  await frame.locator('[data-mode="find"]').click();
+  await frame.waitForFunction(() => window.propertyExplorer.getState().mode === 'find');
+  await frame.locator('#search').fill('toilet');
+  const results = frame.locator('#results [data-item]');
+  await results.first().waitFor();
+  assert.ok(await results.count() > 0, `${label}: Find returns a fictional system result`);
+  await results.first().click();
+  await frame.waitForFunction(() => Boolean(window.propertyExplorer.getState().selected));
+
+  await frame.locator('#source-plan').click();
+  const plan = frame.locator('dialog[open]');
+  await plan.waitFor();
+  assert.equal(await plan.evaluate(node => node instanceof HTMLDialogElement && node.open), true, `${label}: source-plan opens a native demonstration-plan dialog`);
+  await frame.getByRole('button', { name: 'Close demonstration plan' }).click();
+  await frame.locator('#plan-dialog').waitFor({ state: 'hidden' });
+}
+
 (async () => {
   browser = await chromium.launch({ channel: 'chrome', headless: true });
   const context = await browser.newContext({ reducedMotion: 'reduce' });
@@ -76,7 +118,7 @@ async function overflow(page) {
   }
   pass(`All ${labs.length} Labs have directly loadable, indexable, static reader pages`);
 
-  await page.setViewportSize({ width: 390, height: 844 });
+  await page.setViewportSize({ width: 393, height: 844 });
   await page.goto(base + '/construction/');
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async value => { window.__copiedLabLink = value; } } }));
   await page.getByRole('button', { name: 'Copy showcase link' }).click();
@@ -128,6 +170,12 @@ async function overflow(page) {
       assert.equal(new URL(sharedStudy).pathname, '/labs/cabinet-concept/');
       assert.match(new URL(sharedStudy).searchParams.get('study'), /^[zu]\./);
     }
+    if (slug === 'house-explorer') {
+      await verifyPropertyExplorer(frame, 'House Explorer in-card embed');
+      const shot = path.join(output, 'house-explorer-embed-393.png');
+      await frameElement.screenshot({ path: shot });
+      report.screenshots.push(shot);
+    }
     await frameElement.evaluate(node => node.scrollIntoView({ block: 'end', behavior: 'instant' }));
     await frame.locator('.lab-embed-exit').click();
     await dialog.waitFor({ state: 'hidden' });
@@ -135,6 +183,32 @@ async function overflow(page) {
     assert.equal(await tile.evaluate(node => node === document.activeElement), true, 'Focus returns to the originating tile');
     pass(`${slug}: phone card, working canvas, same-origin close, focus restoration and engine disposal`);
   }
+
+  const directHouse = await context.newPage();
+  directHouse.on('pageerror', error => report.errors.push(error.message));
+  for (const width of [393, 320]) {
+    await directHouse.setViewportSize({ width, height: 844 });
+    await directHouse.goto(base + '/examples/lab/concepts/house-explorer/', { waitUntil: 'networkidle' });
+    await verifyPropertyExplorer(directHouse, `House Explorer direct route at ${width}px`);
+    await overflow(directHouse);
+    const shot = path.join(output, `house-explorer-direct-${width}.png`);
+    await directHouse.screenshot({ path: shot, fullPage: true });
+    report.screenshots.push(shot);
+    pass(`House Explorer direct route: ${width}px collections, controls, Find, plan dialog, no overflow`);
+  }
+  await directHouse.close();
+
+  const readerHouse = await context.newPage();
+  readerHouse.on('pageerror', error => report.errors.push(error.message));
+  await readerHouse.setViewportSize({ width: 393, height: 844 });
+  await readerHouse.goto(base + '/labs/house-explorer/', { waitUntil: 'networkidle' });
+  const readerFrameElement = readerHouse.locator('main[data-page-content] iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]');
+  await readerFrameElement.waitFor();
+  const readerFrame = await (await readerFrameElement.elementHandle()).contentFrame();
+  await verifyPropertyExplorer(readerFrame, 'House Explorer share reader');
+  await overflow(readerHouse);
+  pass('House Explorer share reader loads the same fictional Property, Inside, and Find experience');
+  await readerHouse.close();
   const freshContext = await browser.newContext({ reducedMotion: 'reduce' });
   const sharedPage = await freshContext.newPage();
   await sharedPage.goto(sharedStudy);

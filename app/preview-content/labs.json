@@ -452,40 +452,40 @@
   },
   {
     "slug": "house-explorer",
-    "name": "House Explorer",
+    "name": "Property Explorer",
     "type": "Interactive design study",
-    "summary": "Explore a house in three dimensions and watch the light change. An anonymized design study, not a measured building plan.",
+    "summary": "Explore a fictional property, reveal its structure, and find the systems behind the walls.",
     "sourceUrl": "https://littlefightnyc.com/labs/house-explorer/",
-    "tagline": "Walk around the idea before it is built.",
-    "lead": "Explore an anonymized house study in three dimensions and compare the scene through changing light.",
-    "tileDescription": "Explore a house as the light changes.",
-    "tileAction": "Open the house study",
+    "tagline": "Understand a place, inside and out.",
+    "lead": "Move around a fictional property, reveal the frame, and locate example plumbing, electrical, and air systems.",
+    "tileDescription": "Explore outside. Find the systems inside.",
+    "tileAction": "Open Property Explorer",
     "sections": [
       {
-        "heading": "Explore the study",
+        "heading": "Explore. Reveal. Find.",
         "paragraphs": [
-          "Move around an anonymized house study to compare its shape and light from more than one point of view.",
-          "This is an illustrative design study, not a measured building plan, property record, construction drawing, or listing."
+          "Start with the finished exterior, then reveal the framing or search for a system behind the walls.",
+          "The property, floor plan, dimensions, and service routes were created for this demonstration. They are not a client location or construction record."
         ],
         "bullets": [
-          "Interactive 3D view",
-          "Changing light",
-          "Anonymized design study"
+          "Finished property with day and evening light",
+          "Exposed framing and a section view",
+          "Searchable systems and a demonstration plan"
         ]
       }
     ],
     "features": [
-      "Interactive 3D house",
-      "Orbit and zoom",
-      "Light changes"
+      "Property, Inside, and Find collections",
+      "Framing and roof trusses",
+      "Plumbing, electrical, and HVAC examples"
     ],
-    "disclaimer": "An anonymized Little Fight design study, not a measured building plan.",
+    "disclaimer": "Fictional property and illustrative systems. Not a construction drawing or client location.",
     "interactionNotes": [
-      "Drag to orbit, pinch or scroll to zoom, and use the controls to change the light."
+      "Drag to orbit or use the view controls. Open Inside to reveal the frame, or Find a system to inspect a component."
     ],
     "sourceAssets": [],
     "tileImage": "/images/lab-showcase/house-explorer-800.webp",
-    "tileImageAlt": "An anonymized house study rendered in three dimensions under changing daylight.",
+    "tileImageAlt": "Fictional property model with a pitched-roof house, landscaping, and a connected driveway.",
     "tileImageWidth": 800,
     "tileImageHeight": 560,
     "embedPath": "/examples/lab/concepts/house-explorer/",

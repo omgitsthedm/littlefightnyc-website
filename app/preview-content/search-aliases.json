@@ -227,16 +227,18 @@
     },
     {
       "path": "/labs/house-explorer/",
-      "title": "House Explorer",
-      "description": "Explore a house in three dimensions and change the light.",
+      "title": "Property Explorer",
+      "description": "Explore a fictional property, reveal its structure, and find the systems behind the walls.",
       "family": "Custom software",
       "aliases": [
+        "property explorer",
         "house explorer",
-        "house model",
-        "farm house",
-        "farmhouse",
         "3d home",
-        "home design"
+        "home design",
+        "framing",
+        "plumbing",
+        "electrical",
+        "find a system"
       ]
     }
   ]

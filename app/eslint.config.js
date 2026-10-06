@@ -8,7 +8,7 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   // The imported Cabinet Lab has its own pinned React/Three build and strict
   // TypeScript check. It is checked before the site, not as Vite app source.
-  globalIgnores(['dist', 'scripts/cabinet-lab/source/**', 'public/examples/lab/concepts/house-explorer/vendor/**']),
+  globalIgnores(['dist', 'scripts/cabinet-lab/source/**']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [

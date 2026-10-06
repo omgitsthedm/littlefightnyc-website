@@ -156,8 +156,8 @@ for = "/examples/lab/*"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "SAMEORIGIN"
 
-# The House Explorer decodes embedded GLB textures into local blob images.
-# Keep that permission scoped to this model viewer, with same-origin code.
+# Property Explorer runs a fictional procedural model with same-origin assets.
+# Allow its shared Lab shell and same-origin embedded presentation.
 [[headers]]
 for = "/examples/lab/concepts/house-explorer/*"
 
