@@ -206,6 +206,12 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums):
             width, height = mobile_width, mobile_height = 3, 2
         if kind == 'photo-album':
             width, height = mobile_width, mobile_height = 4, 4
+        if kind == 'lab':
+            # A Lab has enough room to make its actual captured experience the
+            # composition.  Phone keeps a three-column bento tile and earns
+            # its fourth row with the readable invitation below the picture.
+            width, height = 3, 3
+            mobile_width, mobile_height = 3, 4
         if kind == 'review':
             width, height = int(attrs.get('data-columns', 3)), 2
             mobile_width, mobile_height = 3, max(3, mobile_height)

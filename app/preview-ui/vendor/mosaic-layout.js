@@ -99,6 +99,29 @@
     return rows;
   }
 
+  function labRowsForContent(card, height, unit) {
+    const face = card.querySelector('.lab-tile-face');
+    const copy = card.querySelector('.lab-tile-copy');
+    const media = card.querySelector('.lab-tile-media');
+    if (!face || !copy || !media) return height;
+    const faceStyle = getComputedStyle(face);
+    const copyChildren = [...copy.children].flatMap(child => {
+      const range = document.createRange();
+      range.selectNodeContents(child);
+      return [child.getBoundingClientRect(), ...range.getClientRects()];
+    }).filter(box => box.width > 0 && box.height > 0);
+    if (!copyChildren.length) return height;
+    // The image is the reason the Lab tile gets this footprint. At enlarged
+    // text sizes its lower invitation receives complete new rows instead of
+    // crushing the capture or clipping the last action line.
+    const copyHeight = Math.max(...copyChildren.map(box => box.bottom)) - Math.min(...copyChildren.map(box => box.top));
+    const mediaMin = parseFloat(getComputedStyle(media).minHeight) || 0;
+    const needed = mediaMin + copyHeight + parseFloat(faceStyle.rowGap)
+      + parseFloat(faceStyle.paddingTop) + parseFloat(faceStyle.paddingBottom) + 2;
+    const gap = parseFloat(getComputedStyle(card.parentElement).rowGap) || 0;
+    return Math.max(height, Math.ceil((needed + gap) / (unit + gap)));
+  }
+
   function dimensions(card, cols, mobile, unit) {
     // Layout writes the actual occupied span back to data-columns/rows. Keep
     // the authored span separately so a temporary hole repair at one viewport
@@ -137,6 +160,9 @@
     }
     if (card.dataset.editorialFront) {
       height = editorialRowsForContent(card, height, unit);
+    }
+    if (card.dataset.kind === 'lab') {
+      height = labRowsForContent(card, height, unit);
     }
     // A single label can fill a true desktop unit with 18–24px type. Around
     // 1024px the unit falls below that physical threshold, so return it to a
@@ -555,5 +581,12 @@
   }));
   grids().forEach(grid => grid.querySelectorAll('.home-group-tile .cell-title').forEach(title => contentObserver.observe(title)));
   grids().forEach(grid => grid.querySelectorAll('.review-tile > .review-stars,.review-tile > .review-quote,.review-tile > .review-credit').forEach(node => contentObserver.observe(node)));
+  // Lab fronts have a native image above a written invitation. Observing the
+  // copy lets accessibility text enlargement add whole square rows before it
+  // can cover the image or fall below the tile.
+  grids().forEach(grid => grid.querySelectorAll('.lab-tile-copy').forEach(copy => {
+    contentObserver.observe(copy);
+    [...copy.children].forEach(child => contentObserver.observe(child));
+  }));
   phone.addEventListener('change', layout);
 })();

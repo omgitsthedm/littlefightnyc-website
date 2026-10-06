@@ -83,6 +83,7 @@ async function browserLanes() {
     run("node", ["scripts/verify-tile-preview.cjs"], env);
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });
     run("node", ["scripts/verify-topic-mosaic.cjs"], env);
+    run("node", ["scripts/verify-lab-fronts.cjs"], { ...env, LAB_FRONTS_URL: url });
     run("node", ["scripts/verify-tile-production.cjs"], env);
     run("node", ["scripts/verify-vera-freshness.cjs"], env);
     run("node", ["scripts/verify-case-editorial.cjs"], env);

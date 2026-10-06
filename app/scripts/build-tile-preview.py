@@ -110,6 +110,20 @@ for name in LAB_IMAGES.values():
             target=OUT/'images/lab-showcase'/source.name
             target.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(source,target)
+
+def copy_lab_tile_asset(url):
+    """Keep record-selected local Lab art available in the no-Vite preview."""
+    parts=urlsplit(str(url or ''))
+    if parts.scheme or parts.netloc or not parts.path.startswith('/'):
+        return
+    source=APP/'public'/parts.path.lstrip('/')
+    if source.is_file():
+        target=OUT/parts.path.lstrip('/')
+        target.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copy2(source,target)
+
+for lab in labs:
+    copy_lab_tile_asset(lab.get('tileImage'))
 reviews = load('reviews.json')
 summaries = load('reader-summaries.json')
 authored = {p['path']:p for p in load('pages.json')}
@@ -310,8 +324,11 @@ def article(p):
             art=f'<figure><img src="{E(photo["localUrl"])}" width="{photo["width"]}" height="{photo["height"]}" alt="{E(photo["title"])}" fetchpriority="high"><figcaption>{E(photo["photographer"])}</figcaption></figure>'
     if path in lab_by_path:
         lab=lab_by_path[path]
-        candidate='/images/lab-showcase/'+LAB_IMAGES[lab['slug']]+'-800.webp'
-        if candidate:art=f'<figure><img src="{E(candidate)}" width="1440" height="900" alt="{E(lab["name"])} — original Lab artwork" loading="eager"><figcaption>{E(lab["disclaimer"])}</figcaption></figure>'
+        candidate=lab.get('tileImage') or '/images/lab-showcase/'+LAB_IMAGES[lab['slug']]+'-800.webp'
+        image_alt=lab.get('tileImageAlt') or f'{lab["name"]} — original Lab artwork'
+        image_width=lab.get('tileImageWidth') or 1440
+        image_height=lab.get('tileImageHeight') or 900
+        if candidate:art=f'<figure><img src="{E(candidate)}" width="{E(image_width)}" height="{E(image_height)}" alt="{E(image_alt)}" loading="eager"><figcaption>{E(lab["disclaimer"])}</figcaption></figure>'
     if path=='/vera/':
         # This visual belongs only to VERA's agency reader. The working app,
         # its records and its existing brand assets remain untouched.
@@ -558,9 +575,24 @@ for tile in original.tiles:
     found=re.search(pattern,mosaic,re.S)
     if not found:continue
     old=found.group(0);start=old[:old.index('>')+1].replace('class="','class="has-real-proof ',1)
-    label='LABS' if route in lab_by_path else record.get('publicType','OUR WORK')
-    label_html=f'<span class="proof-tile-label">{E(label)}</span>' if label!='Website design' else ''
-    front=f'<span class="proof-tile-face">{label_html}<strong>{E(display(record["name"]))}</strong><img src="{E(photo)}" width="480" height="330" alt="" loading="lazy" decoding="async"><span class="proof-tile-plus" aria-hidden="true">+</span></span>'
+    if route in lab_by_path:
+        # A Lab front is an invitation into the real working experience.  The
+        # optional tile fields let each Lab keep an authored image, plain hook,
+        # and action without ever covering lettering inside the capture.
+        photo=record.get('tileImage') or photo
+        image_alt=record.get('tileImageAlt') or ''
+        hook=record.get('tileDescription') or record.get('lead') or record.get('tagline') or record['summary']
+        action=record.get('tileAction') or 'Open the working demo'
+        image_width=record.get('tileImageWidth') or 480
+        image_height=record.get('tileImageHeight') or 330
+        front=f'''<span class="lab-tile-face" data-lab-scene="{E(record['slug'])}">
+<span class="lab-tile-media"><img src="{E(photo)}" width="{E(image_width)}" height="{E(image_height)}" alt="{E(image_alt)}" loading="lazy" decoding="async"></span>
+<span class="lab-tile-copy"><strong class="lab-tile-title">{E(display(record['name']))}</strong><span class="lab-tile-hook">{E(hook)}</span><span class="lab-tile-action">{E(action)}</span></span>
+<span class="lab-tile-plus" aria-hidden="true">+</span></span>'''
+    else:
+        label=record.get('publicType','OUR WORK')
+        label_html=f'<span class="proof-tile-label">{E(label)}</span>' if label!='Website design' else ''
+        front=f'<span class="proof-tile-face">{label_html}<strong>{E(display(record["name"]))}</strong><img src="{E(photo)}" width="480" height="330" alt="" loading="lazy" decoding="async"><span class="proof-tile-plus" aria-hidden="true">+</span></span>'
     mosaic=mosaic.replace(old,start+front+'</a>',1)
 if PRODUCTION:
     for tile in original.tiles:
