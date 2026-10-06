@@ -478,7 +478,7 @@
         ],
         "links": [
           {
-            "label": "Tell us what you need +",
+            "label": "Tell us what you need",
             "href": "/tech-audit/"
           }
         ]
@@ -516,11 +516,11 @@
         ],
         "links": [
           {
-            "label": "See our work +",
+            "label": "See our work",
             "href": "/examples/"
           },
           {
-            "label": "Keep control of your accounts +",
+            "label": "Keep control of your accounts",
             "href": "/answers/help/ownership/"
           }
         ]
