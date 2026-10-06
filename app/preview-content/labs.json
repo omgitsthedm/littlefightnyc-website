@@ -458,8 +458,8 @@
     "sourceUrl": "https://littlefightnyc.com/labs/house-explorer/",
     "tagline": "Understand a place, inside and out.",
     "lead": "Move around a fictional property, reveal the frame, and locate example plumbing, electrical, and air systems.",
-    "tileDescription": "Explore outside. Find the systems inside.",
-    "tileAction": "Open Property Explorer",
+    "tileDescription": "Explore space and systems.",
+    "tileAction": "Explore the model",
     "sections": [
       {
         "heading": "Explore. Reveal. Find.",
