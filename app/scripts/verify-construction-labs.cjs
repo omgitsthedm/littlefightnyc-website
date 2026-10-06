@@ -184,6 +184,29 @@ async function verifyPropertyExplorer(frame, label) {
     pass(`${slug}: phone card, working canvas, same-origin close, focus restoration and engine disposal`);
   }
 
+  const desktopHouse = await context.newPage();
+  desktopHouse.on('pageerror', error => report.errors.push(error.message));
+  await desktopHouse.setViewportSize({ width: 1440, height: 900 });
+  await desktopHouse.goto(base + '/');
+  const desktopTile = desktopHouse.locator('a.tile[href="/labs/house-explorer/"]');
+  await desktopTile.click();
+  const desktopDialog = desktopHouse.locator('#detail');
+  await desktopDialog.waitFor({ state: 'visible' });
+  const desktopFrameElement = desktopDialog.locator('iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]');
+  await desktopFrameElement.waitFor();
+  const desktopFrame = await (await desktopFrameElement.elementHandle()).contentFrame();
+  await verifyPropertyExplorer(desktopFrame, 'House Explorer desktop in-card embed');
+  await desktopFrame.locator('.lab-embed-exit').click();
+  await desktopDialog.waitFor({ state: 'hidden' });
+  assert.equal(await desktopHouse.locator('#detail iframe').count(), 0, 'Desktop close releases the 3D engine');
+  assert.equal(await desktopTile.evaluate(node => node === document.activeElement), true, 'Desktop close restores tile focus');
+  await overflow(desktopHouse);
+  const desktopShot = path.join(output, 'house-explorer-embed-1440.png');
+  await desktopHouse.screenshot({ path: desktopShot, fullPage: false });
+  report.screenshots.push(desktopShot);
+  pass('House Explorer desktop in-card: native plan close is clickable, embed exit restores focus, and no overflow');
+  await desktopHouse.close();
+
   const directHouse = await context.newPage();
   directHouse.on('pageerror', error => report.errors.push(error.message));
   for (const width of [393, 320]) {
