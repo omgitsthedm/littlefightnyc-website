@@ -380,7 +380,7 @@ async function run() {
         await context.close();
       }
     }
-    for (const width of [320, 390]) {
+    for (const width of [320, 360, 361, 375, 390, 414, 768, 1024, 1440]) {
       const { context, page } = await makePage(browser, { width, height: 844 }, false);
       try {
         await waitForHome(page);
