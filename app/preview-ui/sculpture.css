@@ -22,7 +22,13 @@
 .hero-storefront,.hero-boat,.hero-cursor{pointer-events:none}
 .sculpture-hero-stage img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 9px #0005)}
 .sculpture-hero-stage a:focus-visible{outline:3px solid #ff7839;outline-offset:4px;border-radius:12px}
-.hero-main{left:9%;top:0;width:63%;height:94%;z-index:1}
+/* Keep the rear screen's primary touch target in its unobscured upper half.
+   The image retains its exact original size and remains clickable in overflow. */
+.hero-main{left:9%;top:0;width:63%;height:44%;z-index:1}
+.hero-main img{height:213.636364%;max-height:none}
+.hero-project img{pointer-events:auto}
+.sculpture-hero-stage .hero-main:focus-visible{outline:none}
+.hero-main:focus-visible img{outline:3px solid #ff7839;outline-offset:4px;border-radius:12px}
 .hero-storefront{right:0;top:-9%;width:26%;height:105%;z-index:0}
 .hero-secondary{left:44%;bottom:-2%;width:39%;height:70%;z-index:3}
 .sculpture-hero-stage .hero-boat{left:0;bottom:0;width:27%;height:48%;z-index:4}
@@ -82,7 +88,7 @@
  .sculpture-hero{padding:16px 0 22px}.sculpture-hero-copy{text-align:left}.sculpture-hero h1{font-size:clamp(38px,11.2vw,52px);line-height:1.01;letter-spacing:-.052em}
  .sculpture-hero-copy>p{font-size:17px;line-height:1.3;max-width:38ch;margin:12px 0 0}.hero-desktop-break{display:none}
  .sculpture-hero-actions{justify-content:flex-start;gap:22px;margin-top:14px}.sculpture-hero-actions a{font-size:16px;min-height:44px}.sculpture-help{padding:8px 18px}.sculpture-work{gap:6px}
- .sculpture-hero-stage{margin-top:10px;aspect-ratio:1.85}.hero-main{left:0;top:0;width:75%;height:91%}.hero-storefront{right:0;top:0;width:30%;height:97%}.hero-secondary{left:38%;bottom:-2%;width:47%;height:64%}.sculpture-hero-stage .hero-boat{left:-2%;bottom:1%;width:32%;height:44%}.hero-cursor{right:8%;bottom:0;width:15%;height:32%}
+ .sculpture-hero-stage{margin-top:10px;aspect-ratio:1.85}.hero-main{left:0;top:0;width:75%;height:43%}.hero-main img{height:211.627907%}.hero-storefront{right:0;top:0;width:30%;height:97%}.hero-secondary{left:38%;bottom:-2%;width:47%;height:64%}.sculpture-hero-stage .hero-boat{left:-2%;bottom:1%;width:32%;height:44%}.hero-cursor{right:8%;bottom:0;width:15%;height:32%}
  .mosaic-home #canvas{gap:37px}.mosaic-home .topic-section{gap:10px}.mosaic-home .topic-heading h2,.sculpture-services .topic-heading h2{font-size:30px}
  .mosaic-home [data-topic-grid]{gap:10px;grid-auto-rows:calc((100cqw - 50px)/6)}
  .sculpture-tile.tile{border-radius:12px}.sculpture-copy{padding:13px 28px 0 12px;gap:7px}.sculpture-title{font-size:20px;line-height:1.16}
