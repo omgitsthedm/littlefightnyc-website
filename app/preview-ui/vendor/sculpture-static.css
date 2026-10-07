@@ -1,0 +1,14 @@
+/* Natural content sizing when the mosaic packing enhancement is unavailable. */
+.mosaic-home [data-topic-grid]{grid-auto-rows:auto}
+.mosaic-home #canvas .sculpture-tile{display:flex;flex-direction:column;grid-row:auto;min-height:240px}
+.mosaic-home #canvas .sculpture-tile .sculpture-copy{flex:none;width:100%;height:auto}
+.mosaic-home #canvas .sculpture-tile .sculpture-art{position:relative!important;inset:auto!important;width:calc(100% - 16px)!important;height:144px!important;min-height:144px!important;flex:1 0 144px!important;margin:8px!important}
+#canvas .sculpture-tile .lab-tile-face{position:relative;height:100%;min-height:0}
+.mosaic-home #canvas .sculpture-tile[data-sculpture-kind=brand]{min-height:200px}
+@media(max-width:600px){
+ .mosaic-home #canvas .sculpture-tile .sculpture-title{overflow-wrap:anywhere}
+ .mosaic-home #canvas .sculpture-tile[data-sculpture-kind=service]{min-height:220px}
+}
+@media(max-width:360px){
+ .mosaic-home #canvas .sculpture-tile[data-fallback-wide=true]{grid-column:span 6}
+}

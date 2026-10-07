@@ -2,10 +2,10 @@
 
 /**
  * Quality lanes for the static tile marketing artifact. Functional checks use
- * a short-lived, isolated local server and installed Google Chrome only.
+ * a short-lived, isolated local server, installed Google Chrome and WebKit.
  */
 import { execFileSync, spawn } from "node:child_process";
-import { access } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -78,11 +78,20 @@ async function requireArtifact(relative) {
 
 async function browserLanes() {
   await requireArtifact("dist/index.html");
+  const presentation = JSON.parse(await readFile("preview-content/import-provenance.json", "utf8")).presentation;
+  if (presentation === "sculpture-clay-2026-10-07") run("python3", ["scripts/approved_screens.py"]);
   await withProductionServer(async (url) => {
     const env = { ...process.env, TILE_DIST: "production", PREVIEW_URL: url, TILE_PRODUCTION_URL: url, VERA_PREVIEW_URL: url, CASE_EDITORIAL_URL: url, INQUIRY_ENHANCEMENT_URL: url, TOPIC_MOSAIC_URL: url };
     run("node", ["scripts/verify-tile-preview.cjs"], env);
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });
-    run("node", ["scripts/verify-topic-mosaic.cjs"], env);
+    // The selected sculpture composition has a shared four-service opening,
+    // physical screenshot frames, and 80 sculptural fronts. Its new visual
+    // contract replaces the previous 6x3-anchor/editorial-collage snapshots.
+    run("node", [presentation === "sculpture-clay-2026-10-07" ? "scripts/verify-sculpture.cjs" : "scripts/verify-topic-mosaic.cjs"], env);
+    if (presentation === "sculpture-clay-2026-10-07") {
+      run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
+      run("node", ["scripts/verify-responsive-sculpture.cjs"], env);
+    }
     run("node", ["scripts/verify-lab-fronts.cjs"], { ...env, LAB_FRONTS_URL: url });
     run("node", ["scripts/verify-construction-labs.cjs"], { ...env, CONSTRUCTION_URL: url });
     run("node", ["scripts/verify-tile-production.cjs"], env);

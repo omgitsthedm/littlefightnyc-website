@@ -19,6 +19,8 @@ from construction_showcase import construction_tile, render_construction
 from topic_mosaic import build_topic_mosaic, plus_navigation
 from editorial_tiles import enrich_editorial_tiles
 from reader_visuals import reader_visual, reader_family
+from sculpture_tiles import sculptural_mosaic, sculptural_hero
+from portfolio_media import apply_portfolio_media, rewrite_portfolio_media
 from consolidated_tiles import load_groups, home_contexts, source_routes, apply_readers, apply_homepage_groups, render_group_sections, group_hero
 from retained_answers import render_retained_answers
 from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
@@ -86,13 +88,14 @@ def link(label, href, cls=''):
 def write(path, value):
     target = OUT / path.lstrip('/')
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(plus_navigation(value) if path.endswith('.html') else value)
+    target.write_text(plus_navigation(rewrite_portfolio_media(value)) if path.endswith('.html') else value)
 
 cases = {c['slug']:c for c in load('cases.json')}
 case_visuals = load('case-visuals.json')['cases']
 case_headlines = load('case-headlines.json')
 albums = load('albums.json')
 labs = load('labs.json')
+apply_portfolio_media(cases, case_visuals, labs)
 # A Lab has two stable addresses.  Its embedded engine keeps the protected
 # original path, while its public story lives at a short, shareable route.
 # Keep the defaults here while the catalog is being migrated so old records
@@ -569,7 +572,7 @@ def head(q, home=False):
     elif path == '/construction/':
         cabinet = next(lab for lab in labs if lab['slug'] == 'cabinet-concept')
         share = {'src': lab_tile_image(cabinet), 'alt': cabinet.get('tileImageAlt') or 'Interactive cabinet design study'}
-    share_image=E(ORIGIN+share.get('src','/assets/social/og-tiles.jpg'))
+    share_image=E(ORIGIN+share.get('src','/assets/portfolio-20261007/share-little-fight-nyc.jpg'))
     share_alt=E(share.get('alt','Little Fight NYC — custom websites for independent businesses'))
     graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
@@ -586,7 +589,7 @@ def head(q, home=False):
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css"><script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
@@ -671,9 +674,11 @@ new_lab_tiles = [lab_mosaic_tile(lab) for lab in labs if lab['embedPath'] not in
 mosaic=build_topic_mosaic(''.join(additions)+mosaic,reviews,topic_tiles,albums,[construction_tile(), *new_lab_tiles])
 mosaic=enrich_editorial_tiles(mosaic)
 mosaic,homepage_inventory=apply_homepage_groups(mosaic,home_groups,hidden_home_ids)
+mosaic,sculpture_inventory=sculptural_mosaic(mosaic)
+write('sculpture-inventory.json',json.dumps(sculpture_inventory,ensure_ascii=False,indent=2)+'\n')
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
 q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
-home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
+home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
@@ -699,7 +704,7 @@ css_files = load('import-provenance.json')['activeCssOrder']
 css='\n'.join((UI/name).read_text() for name in css_files)
 minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
 write('site.css',minified_css)
-for name in ['tile-motion.js','mosaic-layout.js']:shutil.copy2(UI/'vendor'/name,OUT/name)
+for name in ['tile-motion.js','mosaic-layout.js','sculpture-static.css']:shutil.copy2(UI/'vendor'/name,OUT/name)
 for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js']:shutil.copy2(UI/name,OUT/name)
 shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)

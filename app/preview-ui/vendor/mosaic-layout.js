@@ -131,6 +131,38 @@
     let width = token(card, mobile ? 'mobileColumns' : 'preferredColumns', defaultColumns);
     let height = token(card, mobile ? 'mobileRows' : 'preferredRows', defaultRows);
 
+    if (card.dataset.sculpture === 'true') {
+      const copy = card.querySelector('.sculpture-copy');
+      const title = card.querySelector('.sculpture-title');
+      if (!copy || !title) return [Math.min(width, cols), Math.max(1, height)];
+      const gap = parseFloat(getComputedStyle(card.parentElement).rowGap) || 0;
+      const styles = getComputedStyle(copy);
+      const context = document.createElement('canvas').getContext('2d');
+      context.font = getComputedStyle(title).font;
+      const longest = Math.max(...[...copy.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')].flatMap(node => {
+        context.font = getComputedStyle(node).font;
+        return node.textContent.trim().split(/\s+/).map(word => context.measureText(word).width);
+      }));
+      const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      width = Math.min(cols, Math.max(width, Math.ceil((longest + padding + gap + 2) / (unit + gap))));
+      // Measure at the requested width, before the packer expands a card to
+      // fill a gap. Reading last pass's expanded width can alternate between
+      // short/wide and tall/narrow forever after text enlargement.
+      const previousWidth = card.style.width;
+      card.style.width = `${unit * width + gap * (width - 1)}px`;
+      const boxes = [...copy.children].map(node => node.getBoundingClientRect()).filter(box => box.height);
+      const copyHeight = boxes.length ? Math.max(...boxes.map(box => box.bottom)) - Math.min(...boxes.map(box => box.top)) + parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom) : 0;
+      const kind = card.dataset.sculptureKind;
+      if (kind === 'service' && mobile && window.innerWidth > 600) height = 2;
+      const sideBySide = kind === 'brand' || (kind === 'service' && window.innerWidth > 600);
+      const artMinimum = kind === 'review' || kind === 'service' ? 0 : Math.max(100, (unit * width + gap * (width - 1)) * .57);
+      const needed = sideBySide ? Math.max(copyHeight + 4, 144) : copyHeight + artMinimum + 16;
+      height = Math.max(height, Math.ceil((needed + gap) / (unit + gap)));
+      if (!sideBySide && kind !== 'service') card.style.setProperty('--sculpture-art-top', `${copy.offsetHeight + 8}px`);
+      card.style.width = previousWidth;
+      return [Math.min(width, cols), Math.max(1, height)];
+    }
+
     // Six columns continue through tablets, but their physical units are much
     // wider than a phone's. Ordinary strips can use their desktop geometry as
     // soon as a unit has enough real space; this avoids turning a simple
@@ -486,8 +518,18 @@
     };
 
     const cardOrder = sourceOrderForPacking(cards.map(card => ({ card })));
+    const measured = new Map(cards.map(card => [card, dimensions(card, cols, mobile, unit)]));
+    // The four services share one opening grid. Keep the cells equal,
+    // growing all of them when any real label needs another row. Enlarged
+    // text may take a full row rather than forcing a word outside its card.
+    if (grid.dataset.topicGrid === 'services') {
+      const neededWidth = Math.max(...[...measured.values()].map(size => size[0]));
+      const serviceWidth = !mobile && neededWidth <= cols / 4 ? cols / 4 : neededWidth <= cols / 2 ? cols / 2 : cols;
+      const serviceHeight = Math.max(...[...measured.values()].map(size => size[1]));
+      cards.forEach(card => measured.set(card, [serviceWidth, serviceHeight]));
+    }
     for (const { card } of cardOrder) {
-      const [width, height] = dimensions(card, cols, mobile, unit);
+      const [width, height] = measured.get(card);
       // Problems? Solved. is the visual first tile. The Websites anchor begins
       // on a later grid row so the relationship remains vertical at every
       // breakpoint rather than merely appearing to its right on desktop.
@@ -562,7 +604,9 @@
   new ResizeObserver(() => {
     if (Math.abs(canvas.clientWidth - width) > 0.5) {
       width = canvas.clientWidth;
-      layout();
+      // Packing changes observed child sizes. Defer those writes to the
+      // next frame so WebKit can finish delivering this resize batch.
+      queueContentLayout();
     }
   }).observe(canvas);
   let contentLayoutQueued = false;
@@ -575,6 +619,7 @@
     });
   };
   const contentObserver = new ResizeObserver(queueContentLayout);
+  grids().forEach(grid => grid.querySelectorAll('.sculpture-copy > *').forEach(node => contentObserver.observe(node)));
   grids().forEach(grid => grid.querySelectorAll('.tile[data-editorial-front] :is(.topic-anchor-copy,.brand-anchor-copy)').forEach(copy => {
     contentObserver.observe(copy);
     [...copy.children].forEach(child => contentObserver.observe(child));
@@ -588,5 +633,5 @@
     contentObserver.observe(copy);
     [...copy.children].forEach(child => contentObserver.observe(child));
   }));
-  phone.addEventListener('change', layout);
+  phone.addEventListener('change', queueContentLayout);
 })();

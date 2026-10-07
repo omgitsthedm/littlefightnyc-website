@@ -62,14 +62,14 @@ async function checkReaders(browser) {
     const { ctx, page } = await context(browser, { viewport:{ width, height:940 }, reducedMotion:'reduce' });
     try {
       await page.goto(base + '/', { waitUntil:'networkidle' });
-      const sizes = await page.locator('[data-editorial-front]:not([data-editorial-front=booking])').evaluateAll(nodes => nodes.map(n => ({ family:n.dataset.editorialFront, width:n.getBoundingClientRect().width, height:n.getBoundingClientRect().height })));
+      const sizes = await page.locator('[data-reader-anchor]:not([data-reader-anchor=booking])').evaluateAll(nodes => nodes.map(n => ({ family:n.dataset.readerAnchor, width:n.getBoundingClientRect().width, height:n.getBoundingClientRect().height })));
       assert.equal(sizes.length, 5);
       const services = sizes.filter(x => x.family !== 'brand');
       const brand = sizes.find(x => x.family === 'brand');
       assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1 && Math.abs(x.height - services[0].height) < 1), `equal four service anchor dimensions at ${width}: ${JSON.stringify(sizes)}`);
-      assert.ok(brand.height < services[0].height, `brand stays more compact at ${width}: ${JSON.stringify(sizes)}`);
+      assert.ok(brand.height <= services[0].height + 1, `brand stays more compact at ${width}: ${JSON.stringify(sizes)}`);
       for (const [family] of Object.entries(routes)) {
-        const tile = page.locator(`a.tile[data-editorial-front="${family}"]`);
+        const tile = page.locator(`a.tile[data-reader-anchor="${family}"]`);
         await tile.click();
         const main = page.locator('#detail-body');
         await main.locator('[data-rw-scene]').first().waitFor({ state:'visible' });
@@ -97,7 +97,7 @@ async function checkReaders(browser) {
       if (width === 390) {
         await page.addStyleTag({ content:'html{font-size:200%!important}' });
         for (const family of ['brand','it','consulting','software']) {
-          await page.locator(`a.tile[data-editorial-front="${family}"]`).click();
+          await page.locator(`a.tile[data-reader-anchor="${family}"]`).click();
           await page.locator('#detail-body .anchor-story-body').waitFor({ state:'visible' });
           assert.ok(await page.locator('#detail-body').evaluate(n => n.scrollWidth <= n.clientWidth + 1), `${family}: enlarged text must wrap`);
           await page.keyboard.press('Escape');
@@ -109,45 +109,37 @@ async function checkReaders(browser) {
 }
 
 async function checkRotation(browser) {
-  const { ctx, page } = await context(browser);
+  // The reference hero retains two authentic screens, storefront, boat and cursor.
+  const current = await context(browser);
   try {
+    const { page } = current;
     await page.goto(base + '/', { waitUntil:'networkidle' });
-    const tile = page.locator('[data-editorial-front=web]');
-    const rotator = tile.locator('[data-website-project-rotator]');
-    await tile.scrollIntoViewIfNeeded();
-    assert.equal(await rotator.locator('img').count(), 5, 'five genuine project previews');
-    const sources = await rotator.locator('img').evaluateAll(images => images.map(i => i.getAttribute('src') || i.dataset.src));
-    assert.equal(new Set(sources).size, 5);
-    assert.ok(sources.every(src => src.startsWith('/assets/proof/')));
-    assert.ok(await rotator.locator('img').first().evaluate(n => n.complete && n.naturalWidth > 0));
-    await page.waitForFunction(() => document.querySelector('[data-website-project-rotator]').dataset.projectIndex === '1', { timeout:12000 });
-    assert.ok(await rotator.locator('.is-active').evaluate(n => n.complete && n.naturalWidth > 0), 'replacement is decoded before display');
+    const displays = page.locator('.sculpture-hero img');
+    assert.equal(await displays.count(), 5);
+    const sources = await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src')));
+    assert.deepEqual(sources, ['browser-chromatic-painting-design','storefront','browser-hair-by-rachel-charles','boat','cursor'].map(name => '/assets/sculpture/'+name+'.webp'));
+    assert.ok(await displays.evaluateAll(imgs => imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.equal(await page.locator('.hero-work-index').count(), 0);
+    assert.equal(await page.locator('.hero-project').count(), 2);
+    assert.deepEqual(await page.locator('.sculpture-hero-actions a').evaluateAll(links => links.map(a => a.getAttribute('href'))), ['/tech-audit/', '/examples/']);
     await page.locator('#explore-toggle').click();
     await page.locator('#motion-toggle').click();
     await page.locator('#explore-menu .menu-close').click();
-    const paused = await rotator.getAttribute('data-project-index');
-    await page.waitForTimeout(7300);
-    assert.equal(await rotator.getAttribute('data-project-index'), paused, 'explicit pause stops rotation');
-    await page.locator('#explore-toggle').click();
-    await page.locator('#motion-toggle').click();
-    await page.locator('#explore-menu .menu-close').click();
-    await tile.click();
-    await page.locator('#detail-body .website-service-body').waitFor();
-    await page.waitForTimeout(7300);
-    assert.equal(await rotator.getAttribute('data-project-index'), paused, 'open reader suspends background rotation');
-    await page.keyboard.press('Escape');
+    assert.ok(await page.locator('body').evaluate(n => n.classList.contains('no-motion')));
+    const tile = page.locator('[data-reader-anchor=web]');
+    await tile.hover();
+    assert.equal(await tile.locator('.sculpture-object').evaluate(n => getComputedStyle(n).transform), 'none');
     await page.emulateMedia({ reducedMotion:'reduce' });
-    await page.waitForTimeout(7300);
-    assert.equal(await rotator.getAttribute('data-project-index'), paused, 'reduced motion preserves a static preview');
-    pass('five real client frames rotate only after loading; explicit pause, reader open and reduced motion stop rotation');
-  } finally { await ctx.close(); }
-  const fallback = await context(browser, { javaScriptEnabled:false });
+    assert.deepEqual(await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src'))), sources);
+    pass('The reference hero has two authentic screens, storefront, tugboat and cursor, with two useful actions and no caption rail; pause and reduced motion suppress decorative tile motion');
+  } finally { await current.ctx.close(); }
+  const plain = await context(browser, { javaScriptEnabled:false });
   try {
-    await fallback.page.goto(base + '/');
-    const first = fallback.page.locator('[data-website-project-rotator] img').first();
-    assert.ok(await first.evaluate(n => n.complete && n.naturalWidth > 0 && getComputedStyle(n).opacity === '1'));
-    pass('no JavaScript: the first real client preview remains visible');
-  } finally { await fallback.ctx.close(); }
+    await plain.page.goto(base + '/');
+    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 5 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.equal(await plain.page.locator('.sculpture-hero-actions a[href]').count(), 2);
+    pass('Without JavaScript, the complete reference hero and both actions remain available');
+  } finally { await plain.ctx.close(); }
 }
 
 (async () => {

@@ -1,5 +1,7 @@
 {
   "source": "Approved revision 8 tile mosaic and shared reader review, October 2 2026",
+  "presentation": "sculpture-clay-2026-10-07",
+  "presentationReference": "ChatGPT Image Oct 7, 2026, 03_43_45 AM.png and Little-Fight-NYC-Codex-Master-Handoff.md",
   "sourceRevision": "297f0d4806d79becbb0122657a5d8c5bfd8afcb1",
   "originalImportTiles": 110,
   "preservedTiles": 106,
@@ -22,6 +24,12 @@
     "review-tiles.css",
     "anchor-stories.css",
     "answer-hub.css",
-    "construction.css"
-  ]
+    "construction.css",
+    "sculpture.css"
+  ],
+  "presentationScope": [
+    "Homepage hero",
+    "Homepage tile artwork and material motion"
+  ],
+  "readerPresentation": "Original reader layouts and styles retained; screenshot sources resolve to the verified library."
 }

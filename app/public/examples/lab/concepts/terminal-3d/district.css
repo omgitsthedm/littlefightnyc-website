@@ -340,6 +340,21 @@ html, body {
 }
 
 .rail__chip--menu { display: none; }
+html[data-lab-concept="terminal-3d"]:not(.lab-concept-embed) .rail {
+  bottom: calc(var(--lab-shell-clearance, 96px) + 24px);
+}
+html[data-lab-concept="terminal-3d"]:not(.lab-concept-embed) .ticker {
+  bottom: var(--lab-shell-clearance, 96px);
+}
+html[data-lab-concept="terminal-3d"]:not(.lab-concept-embed) .lab-concept-hint {
+  bottom: calc(var(--lab-shell-clearance, 96px) + 100px);
+}
+html[data-lab-concept="terminal-3d"]:not(.lab-concept-embed) .plate {
+  top: var(--lab-disclosure-clearance, 100px);
+}
+html[data-lab-concept="terminal-3d"]:not(.lab-concept-embed):has(.rail.is-expanded) :is(.lab-concept-hint, .hint) {
+  opacity: 0;
+}
 .rail__options { display: contents; }
 
 .rail__chip {

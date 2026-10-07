@@ -1,0 +1,1224 @@
+{
+  "schema": 1,
+  "library": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07",
+  "libraryManifestSha256": "c3dae2ef8e0aa1f05449d34802bcf4cd1a8081ee8f9465ccf6837ffd2db6cd0a",
+  "kind": "owner-authorized-replacement-library",
+  "media": {
+    "after-hours-agenda": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "After Hours Agenda storefront homepage on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/after-hours-agenda-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "After Hours Agenda storefront on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-after-hours-agenda.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "After Hours Agenda storefront homepage on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "After Hours Agenda storefront homepage on desktop."
+      }
+    },
+    "army-navy-bags": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Army & Navy Bags concept artwork published by Little Fight NYC."
+      },
+      "mobile": null,
+      "social": {
+        "src": "/assets/portfolio-20261007/share-army-navy-bags.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Army & Navy Bags concept artwork published by Little Fight NYC."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Army & Navy Bags concept artwork published by Little Fight NYC."
+      }
+    },
+    "brothers-pizzeria": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Brothers Pizzeria concept artwork published by Little Fight NYC."
+      },
+      "mobile": null,
+      "social": {
+        "src": "/assets/portfolio-20261007/share-brothers-pizzeria.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Brothers Pizzeria concept artwork published by Little Fight NYC."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Brothers Pizzeria concept artwork published by Little Fight NYC."
+      }
+    },
+    "cc-films": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/cc-films-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "CC Films official film website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/cc-films-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "CC Films official film website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-cc-films.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "CC Films official film website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/cc-films-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "CC Films official film website on desktop."
+      }
+    },
+    "chromatic-painting-design": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Chromatic Painting and Design project website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Chromatic Painting and Design project website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-chromatic-painting-design.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Chromatic Painting and Design project website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Chromatic Painting and Design project website on desktop."
+      }
+    },
+    "clearhelp": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "ClearHelp resource-search website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/clearhelp-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "ClearHelp resource-search website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-clearhelp.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "ClearHelp resource-search website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "ClearHelp resource-search website on desktop."
+      }
+    },
+    "easy-tiger": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Easy Tiger Bar website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/easy-tiger-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Easy Tiger Bar website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-easy-tiger.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Easy Tiger Bar website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Easy Tiger Bar website on desktop."
+      }
+    },
+    "grand-funding-llc": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Grand Funding information website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Grand Funding information website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-grand-funding-llc.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Grand Funding information website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Grand Funding information website on desktop."
+      }
+    },
+    "hair-by-rachel-charles": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Hair By Rachel salon website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Hair By Rachel salon website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-hair-by-rachel-charles.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Hair By Rachel salon website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Hair By Rachel salon website on desktop."
+      }
+    },
+    "legacy-music-group": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Legacy Music Group design concept artwork published by Little Fight NYC."
+      },
+      "mobile": null,
+      "social": {
+        "src": "/assets/portfolio-20261007/share-legacy-music-group.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Legacy Music Group design concept artwork published by Little Fight NYC."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+        "width": 1200,
+        "height": 835,
+        "alt": "Legacy Music Group design concept artwork published by Little Fight NYC."
+      }
+    },
+    "logan-loans": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Logan Loans information website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/logan-loans-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Logan Loans information website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-logan-loans.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Logan Loans information website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Logan Loans information website on desktop."
+      }
+    },
+    "the-break-room": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "The Break Room pool-hall website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/the-break-room-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "The Break Room pool-hall website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-the-break-room.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "The Break Room pool-hall website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "The Break Room pool-hall website on desktop."
+      }
+    },
+    "the-tarot-hotline": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "The Tarot Hotline website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/the-tarot-hotline-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "The Tarot Hotline website on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-the-tarot-hotline.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "The Tarot Hotline website on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "The Tarot Hotline website on desktop."
+      }
+    },
+    "venuecircuit": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "VenueCircuit venue closeout product on desktop."
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/venuecircuit-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "VenueCircuit venue closeout product on a phone."
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-venuecircuit.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "VenueCircuit venue closeout product on desktop."
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "VenueCircuit venue closeout product on desktop."
+      }
+    },
+    "deckspace": {
+      "desktop": {
+        "src": "/assets/portfolio-20261007/deckspace-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "DeckSpace design concept"
+      },
+      "mobile": {
+        "src": "/assets/portfolio-20261007/deckspace-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "DeckSpace on a phone"
+      },
+      "social": {
+        "src": "/assets/portfolio-20261007/share-deckspace.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "DeckSpace design concept"
+      },
+      "screen": {
+        "src": "/assets/portfolio-20261007/deckspace-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "DeckSpace design concept"
+      }
+    },
+    "lab-pool-room": {
+      "src": "/assets/portfolio-20261007/lab-pool-room.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-walkup-3d": {
+      "src": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-terminal-3d": {
+      "src": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-pill-scroll": {
+      "src": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-micro-animations": {
+      "src": "/assets/portfolio-20261007/lab-micro-animations.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-aha-laser": {
+      "src": "/assets/portfolio-20261007/lab-aha-laser.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-studio-engine": {
+      "src": "/assets/portfolio-20261007/lab-studio-engine.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-growth-street": {
+      "src": "/assets/portfolio-20261007/lab-growth-street.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-goliath": {
+      "src": "/assets/portfolio-20261007/lab-goliath.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-cabinet-concept": {
+      "src": "/assets/portfolio-20261007/lab-cabinet-concept.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "lab-house-explorer": {
+      "src": "/assets/portfolio-20261007/lab-house-explorer.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "rachel-services": {
+      "src": "/assets/portfolio-20261007/rachel-services-desktop.webp",
+      "width": 1600,
+      "height": 1111
+    },
+    "agency-home": {
+      "src": "/assets/portfolio-20261007/share-little-fight-nyc.jpg",
+      "width": 1200,
+      "height": 630
+    }
+  },
+  "replacements": {
+    "/assets/proof/editorial/case-after-hours-agenda-desktop-960.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/proof/editorial/case-after-hours-agenda-mobile-390.webp": "/assets/portfolio-20261007/after-hours-agenda-phone.webp",
+    "/assets/proof/case-after-hours-agenda.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/proof/case-army-navy-bags.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-army-navy-bags.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/proof/case-brothers-pizzeria.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-brothers-pizzeria.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/proof/editorial/case-cc-films-desktop-960.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/proof/editorial/case-cc-films-mobile-480.webp": "/assets/portfolio-20261007/cc-films-phone.webp",
+    "/assets/social/og-case-cc-films.jpg": "/assets/portfolio-20261007/share-cc-films.jpg",
+    "/assets/proof/case-cc-films.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/cases/2026-09-29/case-cc-films-desktop-1440.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/proof/editorial/case-chromatic-painting-design-desktop-960.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/proof/editorial/case-chromatic-painting-design-mobile-480.webp": "/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+    "/assets/social/og-case-chromatic-painting-design.jpg": "/assets/portfolio-20261007/share-chromatic-painting-design.jpg",
+    "/assets/proof/case-chromatic-painting-design.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/proof/editorial/case-clearhelp-desktop-960.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/proof/editorial/case-clearhelp-mobile-480.webp": "/assets/portfolio-20261007/clearhelp-phone.webp",
+    "/assets/social/og-case-clearhelp.jpg": "/assets/portfolio-20261007/share-clearhelp.jpg",
+    "/assets/proof/case-clearhelp.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/cases/2026-09-29/case-clearhelp-desktop-1440.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/proof/editorial/case-easy-tiger-desktop-960.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/proof/editorial/case-easy-tiger-mobile-480.webp": "/assets/portfolio-20261007/easy-tiger-phone.webp",
+    "/assets/social/og-case-easy-tiger.jpg": "/assets/portfolio-20261007/share-easy-tiger.jpg",
+    "/assets/proof/case-easy-tiger.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/cases/2026-09-29/case-easy-tiger-desktop-1440.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/proof/editorial/case-grand-funding-llc-desktop-960.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/proof/editorial/case-grand-funding-llc-mobile-480.webp": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
+    "/assets/social/og-case-grand-funding-llc.jpg": "/assets/portfolio-20261007/share-grand-funding-llc.jpg",
+    "/assets/proof/case-grand-funding-llc.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/cases/2026-09-29/case-grand-funding-llc-desktop-1440.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/proof/editorial/case-hair-by-rachel-charles-desktop-960.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/proof/editorial/case-hair-by-rachel-charles-mobile-480.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+    "/assets/proof/case-hair-by-rachel-charles.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/proof/case-legacy-music-group.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-legacy-music-group.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/proof/editorial/case-logan-loans-desktop-960.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/proof/editorial/case-logan-loans-mobile-480.webp": "/assets/portfolio-20261007/logan-loans-phone.webp",
+    "/assets/social/og-case-logan-loans.jpg": "/assets/portfolio-20261007/share-logan-loans.jpg",
+    "/assets/proof/case-logan-loans.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/cases/2026-09-29/case-logan-loans-desktop-1440.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/proof/editorial/case-the-break-room-desktop-960.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/proof/editorial/case-the-break-room-mobile-480.webp": "/assets/portfolio-20261007/the-break-room-phone.webp",
+    "/assets/social/og-case-the-break-room.jpg": "/assets/portfolio-20261007/share-the-break-room.jpg",
+    "/assets/proof/case-the-break-room.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/cases/2026-09-29/case-the-break-room-desktop-1440.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/proof/editorial/case-the-tarot-hotline-desktop-960.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/proof/editorial/case-the-tarot-hotline-mobile-480.webp": "/assets/portfolio-20261007/the-tarot-hotline-phone.webp",
+    "/assets/social/og-case-the-tarot-hotline.jpg": "/assets/portfolio-20261007/share-the-tarot-hotline.jpg",
+    "/assets/proof/case-the-tarot-hotline.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/cases/2026-09-29/case-the-tarot-hotline-desktop-1440.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/proof/editorial/case-venuecircuit-desktop-960.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/proof/editorial/case-venuecircuit-mobile-390.webp": "/assets/portfolio-20261007/venuecircuit-phone.webp",
+    "/assets/proof/case-venuecircuit.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/case-venuecircuit.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/examples/lab/concepts/pool-room/img/opening/04-bar-reveal.webp": "/assets/portfolio-20261007/lab-pool-room.webp",
+    "/images/lab-showcase/pool-room-480.webp": "/assets/portfolio-20261007/lab-pool-room.webp",
+    "/images/lab-showcase/pool-room-800.webp": "/assets/portfolio-20261007/lab-pool-room.webp",
+    "/images/lab-showcase/pool-room-1200.webp": "/assets/portfolio-20261007/lab-pool-room.webp",
+    "/images/lab-covers/walkup.jpg": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+    "/images/lab-showcase/brownstone-walkup-480.webp": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+    "/images/lab-showcase/brownstone-walkup-800.webp": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+    "/images/lab-showcase/brownstone-walkup-1200.webp": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+    "/images/lab-covers/neon-district.jpg": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+    "/images/lab-showcase/cinematic-3d-480.webp": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+    "/images/lab-showcase/cinematic-3d-800.webp": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+    "/images/lab-showcase/cinematic-3d-1200.webp": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+    "/examples/lab/concepts/pill-scroll/assets/nyc-grand-central-busy-2.webp": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+    "/images/lab-showcase/scroll-motion-480.webp": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+    "/images/lab-showcase/scroll-motion-800.webp": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+    "/images/lab-showcase/scroll-motion-1200.webp": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+    "/images/lab-covers/micro-animations.jpg": "/assets/portfolio-20261007/lab-micro-animations.webp",
+    "/images/lab-showcase/micro-animations-480.webp": "/assets/portfolio-20261007/lab-micro-animations.webp",
+    "/images/lab-showcase/micro-animations-800.webp": "/assets/portfolio-20261007/lab-micro-animations.webp",
+    "/images/lab-showcase/micro-animations-1200.webp": "/assets/portfolio-20261007/lab-micro-animations.webp",
+    "/images/lab-showcase/aha-laser-800.webp": "/assets/portfolio-20261007/lab-aha-laser.webp",
+    "/images/lab-showcase/aha-laser-480.webp": "/assets/portfolio-20261007/lab-aha-laser.webp",
+    "/images/lab-showcase/aha-laser-1200.webp": "/assets/portfolio-20261007/lab-aha-laser.webp",
+    "/images/lab-covers/studio-engine.jpg": "/assets/portfolio-20261007/lab-studio-engine.webp",
+    "/images/lab-showcase/studio-engine-480.webp": "/assets/portfolio-20261007/lab-studio-engine.webp",
+    "/images/lab-showcase/studio-engine-800.webp": "/assets/portfolio-20261007/lab-studio-engine.webp",
+    "/images/lab-showcase/studio-engine-1200.webp": "/assets/portfolio-20261007/lab-studio-engine.webp",
+    "/images/lab-covers/growth-street.jpg": "/assets/portfolio-20261007/lab-growth-street.webp",
+    "/images/lab-showcase/growth-street-480.webp": "/assets/portfolio-20261007/lab-growth-street.webp",
+    "/images/lab-showcase/growth-street-800.webp": "/assets/portfolio-20261007/lab-growth-street.webp",
+    "/images/lab-showcase/growth-street-1200.webp": "/assets/portfolio-20261007/lab-growth-street.webp",
+    "/images/lab-showcase/goliath-800.webp": "/assets/portfolio-20261007/lab-goliath.webp",
+    "/images/lab-showcase/goliath-480.webp": "/assets/portfolio-20261007/lab-goliath.webp",
+    "/images/lab-showcase/goliath-1200.webp": "/assets/portfolio-20261007/lab-goliath.webp",
+    "/images/lab-showcase/cabinet-concept-800.webp": "/assets/portfolio-20261007/lab-cabinet-concept.webp",
+    "/images/lab-showcase/cabinet-concept-480.webp": "/assets/portfolio-20261007/lab-cabinet-concept.webp",
+    "/images/lab-showcase/cabinet-concept-1200.webp": "/assets/portfolio-20261007/lab-cabinet-concept.webp",
+    "/images/lab-showcase/house-explorer-800.webp": "/assets/portfolio-20261007/lab-house-explorer.webp",
+    "/images/lab-showcase/house-explorer-480.webp": "/assets/portfolio-20261007/lab-house-explorer.webp",
+    "/images/lab-showcase/house-explorer-1200.webp": "/assets/portfolio-20261007/lab-house-explorer.webp",
+    "/assets/proof/optimized/tile-brothers-pizzeria-480.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/proof/optimized/case-chromatic-painting-design-640.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/proof/optimized/case-cc-films-640.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/proof/optimized/tile-the-break-room-480.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/proof/optimized/tile-cc-films-480.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/proof/optimized/tile-army-navy-bags-480.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/proof/optimized/tile-after-hours-agenda-480.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/proof/optimized/tile-logan-loans-480.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/proof/optimized/website-rachel-services-960.webp": "/assets/portfolio-20261007/rachel-services-desktop.webp",
+    "/assets/proof/optimized/case-easy-tiger-960.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/proof/optimized/case-hair-by-rachel-charles-640.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/proof/optimized/tile-hair-by-rachel-charles-480.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/proof/optimized/tile-the-tarot-hotline-480.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/proof/optimized/tile-chromatic-painting-design-480.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/proof/optimized/website-rachel-services-640.webp": "/assets/portfolio-20261007/rachel-services-desktop.webp",
+    "/assets/proof/optimized/case-easy-tiger-640.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/proof/optimized/case-cc-films-960.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/proof/optimized/tile-easy-tiger-480.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/proof/optimized/tile-legacy-music-group-480.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/proof/optimized/case-chromatic-painting-design-960.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/proof/optimized/tile-clearhelp-480.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/proof/optimized/tile-venuecircuit-480.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/proof/optimized/tile-grand-funding-llc-480.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/proof/optimized/case-hair-by-rachel-charles-960.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-brothers-pizzeria-480.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-grand-funding-llc-mobile-390.webp": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
+    "/assets/case-the-break-room-explore-mobile.webp": "/assets/portfolio-20261007/the-break-room-phone.webp",
+    "/assets/case-chromatic-painting-design.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-after-hours-agenda-explore.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/case-grand-funding-llc.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-deckspace.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
+    "/assets/case-easy-tiger-900.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-the-break-room.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-cc-films-explore-tablet.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-explore-mobile.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+    "/assets/case-chromatic-painting-design-640.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-grand-funding-llc-explore-mobile.webp": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
+    "/assets/case-legacy-music-group-explore-mobile.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-cc-films-640.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-logan-loans-mobile-390.webp": "/assets/portfolio-20261007/logan-loans-phone.webp",
+    "/assets/case-after-hours-agenda-900.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/case-venuecircuit-640.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/case-legacy-music-group-640.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-cc-films-desktop-1440.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-clearhelp-900.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-logan-loans-640.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-after-hours-agenda-explore-mobile.webp": "/assets/portfolio-20261007/after-hours-agenda-phone.webp",
+    "/assets/case-grand-funding-llc-640.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-the-break-room-desktop-1440.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-cc-films-mobile-390.webp": "/assets/portfolio-20261007/cc-films-phone.webp",
+    "/assets/case-the-tarot-hotline-900.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-deckspace-900.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
+    "/assets/case-cc-films-explore.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-logan-loans-tablet-1024.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-army-navy-bags-640.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-easy-tiger-mobile-390.webp": "/assets/portfolio-20261007/easy-tiger-phone.webp",
+    "/assets/case-hair-by-rachel-charles-explore.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-640.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-the-break-room-640.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-easy-tiger-480.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-cc-films-tablet-1024.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-brothers-pizzeria-900.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-grand-funding-llc-explore.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-explore-tablet.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-the-tarot-hotline-480.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-chromatic-painting-design-mobile-390.webp": "/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+    "/assets/case-cc-films-explore-mobile.webp": "/assets/portfolio-20261007/cc-films-phone.webp",
+    "/assets/case-deckspace-480.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
+    "/assets/case-easy-tiger-tablet-1024.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-clearhelp-480.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-the-break-room-explore-tablet.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-brothers-pizzeria-explore.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-clearhelp-desktop-1440.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-after-hours-agenda-480.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/case-the-break-room-explore.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-grand-funding-llc-tablet-1024.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-venuecircuit-explore.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/case-venuecircuit-explore-mobile.webp": "/assets/portfolio-20261007/venuecircuit-phone.webp",
+    "/assets/case-the-tarot-hotline.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-legacy-music-group-explore-tablet.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-grand-funding-llc-explore-tablet.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-army-navy-bags-explore-mobile.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-logan-loans-desktop-1440.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-army-navy-bags-480.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-the-break-room-mobile-390.webp": "/assets/portfolio-20261007/the-break-room-phone.webp",
+    "/assets/case-hair-by-rachel-charles-480.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-the-break-room-480.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-cc-films-900.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-chromatic-painting-design-explore-tablet.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-the-break-room-tablet-1024.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-the-tarot-hotline-explore.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-clearhelp-explore-tablet.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-easy-tiger-640.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-chromatic-painting-design-900.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-clearhelp-640.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-logan-loans-900.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-the-tarot-hotline-tablet-1024.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-grand-funding-llc-900.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-clearhelp-tablet-1024.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-chromatic-painting-design-desktop-1440.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-logan-loans-explore-tablet.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-tablet-1024.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-the-tarot-hotline-640.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-deckspace-640.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
+    "/assets/case-clearhelp.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-easy-tiger-explore.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-deckspace-explore-mobile.webp": "/assets/portfolio-20261007/deckspace-phone.webp",
+    "/assets/case-easy-tiger-explore-mobile.webp": "/assets/portfolio-20261007/easy-tiger-phone.webp",
+    "/assets/case-cc-films.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-after-hours-agenda-640.webp": "/assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+    "/assets/case-venuecircuit-900.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/case-legacy-music-group-900.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-chromatic-painting-design-tablet-1024.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-the-tarot-hotline-explore-tablet.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-brothers-pizzeria-explore-tablet.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-logan-loans-explore-mobile.webp": "/assets/portfolio-20261007/logan-loans-phone.webp",
+    "/assets/case-chromatic-painting-design-480.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-the-tarot-hotline-mobile-390.webp": "/assets/portfolio-20261007/the-tarot-hotline-phone.webp",
+    "/assets/case-brothers-pizzeria-640.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-easy-tiger-desktop-1440.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-brothers-pizzeria-explore-mobile.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+    "/assets/case-the-tarot-hotline-explore-mobile.webp": "/assets/portfolio-20261007/the-tarot-hotline-phone.webp",
+    "/assets/case-clearhelp-explore.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+    "/assets/case-clearhelp-mobile-390.webp": "/assets/portfolio-20261007/clearhelp-phone.webp",
+    "/assets/case-hair-by-rachel-charles.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-desktop-1440.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-easy-tiger-explore-tablet.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-army-navy-bags-900.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-cc-films-480.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
+    "/assets/case-the-tarot-hotline-desktop-1440.webp": "/assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+    "/assets/case-easy-tiger.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-900.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+    "/assets/case-the-break-room-900.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+    "/assets/case-army-navy-bags-explore.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-venuecircuit-480.webp": "/assets/portfolio-20261007/venuecircuit-desktop.webp",
+    "/assets/case-legacy-music-group-480.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-grand-funding-llc-desktop-1440.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/case-chromatic-painting-design-explore-mobile.webp": "/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+    "/assets/case-logan-loans.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-army-navy-bags-explore-tablet.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+    "/assets/case-chromatic-painting-design-explore.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+    "/assets/case-logan-loans-explore.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-deckspace-explore.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
+    "/assets/case-logan-loans-480.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+    "/assets/case-hair-by-rachel-charles-mobile-390.webp": "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+    "/assets/case-legacy-music-group-explore.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+    "/assets/case-clearhelp-explore-mobile.webp": "/assets/portfolio-20261007/clearhelp-phone.webp",
+    "/assets/case-grand-funding-llc-480.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+    "/assets/social/og-tiles.jpg": "/assets/portfolio-20261007/share-little-fight-nyc.jpg"
+  },
+  "outputs": [
+    {
+      "file": "assets/portfolio-20261007/after-hours-agenda-desktop.webp",
+      "sha256": "7d933c0bd12da1d1454507489f523fe52b735abb3af06999c09b56eaad8d70fc",
+      "sourceKey": "after-hours-agenda-desktop",
+      "sourceSha256": "bb2e599129146c936daf124496fb14e40f457364e4e63957a8f1dfdca323d1d4",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/after-hours-agenda/after-hours-agenda-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/after-hours-agenda-phone.webp",
+      "sha256": "ef482d70c51ae73a7c9955579659de6d705607a189c4385dcfa92c5306dfec0d",
+      "sourceKey": "after-hours-agenda-phone",
+      "sourceSha256": "f0b30469914b4f8f66b3e92aa579ae4ea480bf7afe588dbbb88aa8084e8dadd4",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/after-hours-agenda/after-hours-agenda-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-after-hours-agenda.jpg",
+      "sha256": "757c38d281e11cc2f4cfda31b5bdf07a93e068050eae1e939a20993830eaaad2",
+      "sourceKey": "after-hours-agenda-desktop",
+      "sourceSha256": "bb2e599129146c936daf124496fb14e40f457364e4e63957a8f1dfdca323d1d4",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/after-hours-agenda/after-hours-agenda-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/army-navy-bags-desktop.webp",
+      "sha256": "21273d4caee3c610fccab4e2c27a9f08afab4393d99288972c26da9095d48261",
+      "sourceKey": "army-navy-bags-desktop",
+      "sourceSha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/army-navy-bags/army-navy-bags-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-army-navy-bags.jpg",
+      "sha256": "c409f3bdc63ad53c2a022f71cefb3e2b3501062d9ef01c07c909eefaef718f01",
+      "sourceKey": "army-navy-bags-desktop",
+      "sourceSha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/army-navy-bags/army-navy-bags-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+      "sha256": "8b5d7c1a4aa38c3d4adacc8c47cb1ba51ac371cd23646fd670e05fc13aa2c850",
+      "sourceKey": "brothers-pizzeria-desktop",
+      "sourceSha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/brothers-pizzeria/brothers-pizzeria-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-brothers-pizzeria.jpg",
+      "sha256": "dc1b87c922c0212ecc961c0397dda607c9808f5524367004a04ad83bbdc29e7c",
+      "sourceKey": "brothers-pizzeria-desktop",
+      "sourceSha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/brothers-pizzeria/brothers-pizzeria-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/cc-films-desktop.webp",
+      "sha256": "ab167fdd57ae1a9031d686532180d747eb879d2fc30e3d21a486d366dd116021",
+      "sourceKey": "cc-films-desktop",
+      "sourceSha256": "9491b74f88421c91577af445b04e2c199f41a23bbd9f91ad09667584dd86e8c0",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/cc-films-phone.webp",
+      "sha256": "f55c151db578c4b80aeb3be84b079a09e651ecf181c1f851146a2f7549950b30",
+      "sourceKey": "cc-films-phone",
+      "sourceSha256": "2f25c7daa98810967e11427c6f031f85b12a475fdae013470599a61ac1d2c566",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-cc-films.jpg",
+      "sha256": "4cb61e0da7a648c3482ccb0c9d12af265a51bf388f1b58135be85acd8e32b467",
+      "sourceKey": "cc-films-desktop",
+      "sourceSha256": "9491b74f88421c91577af445b04e2c199f41a23bbd9f91ad09667584dd86e8c0",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+      "sha256": "7d2556c07bfeb3840010eea657962c6c00e473552270a4cd68255fedb80dc7af",
+      "sourceKey": "chromatic-painting-design-desktop",
+      "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+      "sha256": "b2e04b71def1b91ac340812fc7a4d7e8a7b9d9bb65fce08c9dd14458e4680c08",
+      "sourceKey": "chromatic-painting-design-phone",
+      "sourceSha256": "1aac6932e8689b5aa78eadabb0163dfadc63ac8c4ca7f9c937baeea71b2f350c",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-chromatic-painting-design.jpg",
+      "sha256": "8058be24a59210f4b13bfad02e6ced06f3c04bde61032b544af1afe9a4969e8f",
+      "sourceKey": "chromatic-painting-design-desktop",
+      "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/clearhelp-desktop.webp",
+      "sha256": "bf62f0f398fe0fcc233605a8497f70d758b6533cfda24a2c481efbf99182a271",
+      "sourceKey": "clearhelp-desktop",
+      "sourceSha256": "aa94af46cc967987c4ae2d919e492476361cd88807259e3d6f64df7d5a4caf98",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/clearhelp-phone.webp",
+      "sha256": "37aa36b277a0a8e65a9cb274c4eef460a38344f2da14ca69eb5a8e317d463206",
+      "sourceKey": "clearhelp-phone",
+      "sourceSha256": "b36d7ff3ffc00e26c03786ba74ab683cadbfef0d7cab6b25bd8eebbc67fd3f36",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-clearhelp.jpg",
+      "sha256": "80c7a70f49a533086dd52d7311d9f226a50edc9731b37ede73e5bf4c48b474e9",
+      "sourceKey": "clearhelp-desktop",
+      "sourceSha256": "aa94af46cc967987c4ae2d919e492476361cd88807259e3d6f64df7d5a4caf98",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/easy-tiger-desktop.webp",
+      "sha256": "f1bbc14fb1ba50265323761ec18e57b37c232795488727ce649cefca11367df6",
+      "sourceKey": "easy-tiger-desktop",
+      "sourceSha256": "3c629a13d49adea896b0e14d60e71c6eedf8c33e544a0733c6e92e92af0cb979",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/easy-tiger-phone.webp",
+      "sha256": "91902fe40b694543e53483be49f53ee0ec5d360b28bea3c47b719c98699d9c4f",
+      "sourceKey": "easy-tiger-phone",
+      "sourceSha256": "d86cd14a46d8c23732b72c1390a3d8215c0f1ac5daf9dab2a8c59b09132904d1",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-easy-tiger.jpg",
+      "sha256": "17773f5b0c0d42a05b6b6f082f8a099d9024678a7a3c1802af74f079a2523fde",
+      "sourceKey": "easy-tiger-desktop",
+      "sourceSha256": "3c629a13d49adea896b0e14d60e71c6eedf8c33e544a0733c6e92e92af0cb979",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+      "sha256": "e7c195db910fc5909495f48dea8b840196bfee95f037da4fe457d438458d32d1",
+      "sourceKey": "grand-funding-llc-desktop",
+      "sourceSha256": "0f62429cf7e710d3b1f07511efffc901b425b8d6935b19329e70d746496672ce",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/grand-funding-llc-phone.webp",
+      "sha256": "6613149e0dd797a768399833cb0b1ce31dbcc18bcfe173637956c56847b2fa22",
+      "sourceKey": "grand-funding-llc-phone",
+      "sourceSha256": "0daa97d22e68b2b5a9706b7d3ac86f76cb64b0247b9b41ed6030b8c1b863d187",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-grand-funding-llc.jpg",
+      "sha256": "4ed39ce851639272c7c18494d655c849cac2b8fe54149602771251640b1dab38",
+      "sourceKey": "grand-funding-llc-desktop",
+      "sourceSha256": "0f62429cf7e710d3b1f07511efffc901b425b8d6935b19329e70d746496672ce",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+      "sha256": "c3e8e3564e0a82befa76b7fcb25db9334124d657c9eac1b2d7aefa31116f341b",
+      "sourceKey": "hair-by-rachel-charles-desktop",
+      "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+      "sha256": "12ad08ed6e2d9cf6d936352d6d9fed8943635c4b535f65730b25c078e5883a74",
+      "sourceKey": "hair-by-rachel-charles-phone",
+      "sourceSha256": "af224398a8f374d7fdb262cd28fd3371af9eea06159af31f1f72fd04ee4c2d03",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-hair-by-rachel-charles.jpg",
+      "sha256": "66376d357b44c1f329bb6d01dc16ce95bca24bc0e2e2427c446a4555298dc9ae",
+      "sourceKey": "hair-by-rachel-charles-desktop",
+      "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/legacy-music-group-desktop.webp",
+      "sha256": "e56636b169af0ce6162984c85dcbe7f01a30cd1acba565694f580ae988508f2a",
+      "sourceKey": "legacy-music-group-desktop",
+      "sourceSha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/legacy-music-group/legacy-music-group-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-legacy-music-group.jpg",
+      "sha256": "e252387d8f8fbc7dfa74fd38869ead38c611f38ef4aedd43b2db925e5e7f29cd",
+      "sourceKey": "legacy-music-group-desktop",
+      "sourceSha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/legacy-music-group/legacy-music-group-desktop.webp",
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/logan-loans-desktop.webp",
+      "sha256": "3af6e8af099737ab0d131cee5f40656dcbf8d9a856fb9fe41e845516fd49bc50",
+      "sourceKey": "logan-loans-desktop",
+      "sourceSha256": "e4a6d728948a43192b8d5743a7a751930e261cc687ec47b907fdc58d34915bf1",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/logan-loans-phone.webp",
+      "sha256": "1525779c3c0012ccd26e9a83651c7f5448aa5745b4bb8597126ebd207eb4c343",
+      "sourceKey": "logan-loans-phone",
+      "sourceSha256": "464b6daf3ceb7647846968fb052403d9fe0b5dca45d021e9b449df7c437745c3",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-logan-loans.jpg",
+      "sha256": "f5255cb9359c4e1c7f8101f3c8475bc44098c2366e76c52def120925bb0891c0",
+      "sourceKey": "logan-loans-desktop",
+      "sourceSha256": "e4a6d728948a43192b8d5743a7a751930e261cc687ec47b907fdc58d34915bf1",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/the-break-room-desktop.webp",
+      "sha256": "d05c4535b77ad1458ec6456fee60af0fe1353cb728e0dd24eec5f39dad9c3266",
+      "sourceKey": "the-break-room-desktop",
+      "sourceSha256": "7d0a604477c9e9edb925d88a5da27eebb38e05cc3856f15af5e8045724f49d87",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/the-break-room-phone.webp",
+      "sha256": "ed466f8f1cf48c112ed971f3a0ee84694ab8fbf024b38600f8991a387d9a9c02",
+      "sourceKey": "the-break-room-phone",
+      "sourceSha256": "f0566941c788400a46c758d3c885172960d24bbc454e8b8a880a523600062f3b",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-the-break-room.jpg",
+      "sha256": "5fb500563a71736894136b9c68f1e73c000217629ee08f4271b6ff7b42b5efb5",
+      "sourceKey": "the-break-room-desktop",
+      "sourceSha256": "7d0a604477c9e9edb925d88a5da27eebb38e05cc3856f15af5e8045724f49d87",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/the-tarot-hotline-desktop.webp",
+      "sha256": "c69e945df3f48995fd1d401529e64fa0f5d0d71b27ef0f4c192e902db2acf4b3",
+      "sourceKey": "the-tarot-hotline-desktop",
+      "sourceSha256": "26f1975bb26f223737d0ecc8cc586ed830e960ad7ba5e8a50cdde5e916faef32",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-tarot-hotline/the-tarot-hotline-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/the-tarot-hotline-phone.webp",
+      "sha256": "3f973c047543a486fc996e26923fb6a70ad5e3f6882234b44e1e99f1a20791cd",
+      "sourceKey": "the-tarot-hotline-phone",
+      "sourceSha256": "7720b77bad3ec60acbf5e408ef36423dbc4adc063af62d5632122992743e8e18",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-tarot-hotline/the-tarot-hotline-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-the-tarot-hotline.jpg",
+      "sha256": "b9a8a21254a0655043c3b402b13ceae6549565a3ac81b80d279ac45a462bc374",
+      "sourceKey": "the-tarot-hotline-desktop",
+      "sourceSha256": "26f1975bb26f223737d0ecc8cc586ed830e960ad7ba5e8a50cdde5e916faef32",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-tarot-hotline/the-tarot-hotline-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/venuecircuit-desktop.webp",
+      "sha256": "11ecbd4312a4ab00777d0b78b495e3c6377383b48725449f80912d774867ee55",
+      "sourceKey": "venuecircuit-desktop",
+      "sourceSha256": "513aae1261e0efbe251b1c994994108fab946d9aa80d33e0293bc8aef5f0f7be",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/venuecircuit/venuecircuit-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/venuecircuit-phone.webp",
+      "sha256": "150eafe32e36333e19caae3bc3f234b0226134c7b51ff567b8815d0759965fea",
+      "sourceKey": "venuecircuit-phone",
+      "sourceSha256": "2eae2462a9a865deb4356df507f6b70163901d3de9a82422139d204dec324dbb",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/venuecircuit/venuecircuit-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-venuecircuit.jpg",
+      "sha256": "10b068a68a239a4464d6ff9697edebbb7edd96e55a9fb1393d4217a7a36c6862",
+      "sourceKey": "venuecircuit-desktop",
+      "sourceSha256": "513aae1261e0efbe251b1c994994108fab946d9aa80d33e0293bc8aef5f0f7be",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/venuecircuit/venuecircuit-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/deckspace-desktop.webp",
+      "sha256": "cbc8f6dfded02a5c06f2ab9a425e954eb4bf6a847fb8f02bee0aba15f14d7f2d",
+      "sourceKey": "deckspace-desktop",
+      "sourceSha256": "16de4b0cec368f1efb2f76f042f76a04cb066da8937b4b2693da0e1d960934bb",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/deckspace/deckspace-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/deckspace-phone.webp",
+      "sha256": "8c5752685df438a0f2449243b84ddf4cbdb2127cd05fb9c54d0f4f79c937cedf",
+      "sourceKey": "deckspace-phone",
+      "sourceSha256": "1db177fb3bd9efafa7a64c477d1297448084d432a59e08a9a4f76e4dc5dfd5d5",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/deckspace/deckspace-phone.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-deckspace.jpg",
+      "sha256": "6dfacc7adaa5b29404cf922bc28d19222c4f4ab1514c43a6e1ac0f5fb0a20454",
+      "sourceKey": "deckspace-desktop",
+      "sourceSha256": "16de4b0cec368f1efb2f76f042f76a04cb066da8937b4b2693da0e1d960934bb",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/deckspace/deckspace-desktop.png",
+      "crop": null,
+      "method": "The verified physical display, scaled onto an opaque charcoal social canvas"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-pool-room.webp",
+      "sha256": "d521b7aadada05831bde26680c40ce14a747e173d0eaef9cfa1853bfdfb1d5ce",
+      "sourceKey": "lab-pool-room",
+      "sourceSha256": "4c1b43c9cb23ed77f71bc1699c8ba44d2a51e7629ba8ca78ba2f356b777f6cd1",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/pool-room/lab-pool-room.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-walkup-3d.webp",
+      "sha256": "d109a4376cd9cafe318f85e97bf5045386712964c324affda714278ba4d53429",
+      "sourceKey": "lab-walkup-3d",
+      "sourceSha256": "99656ec4b8e1f51ec9828869420bf24417c371285cb5e018e52329e098d002b2",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/walkup-3d/lab-walkup-3d.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-terminal-3d.webp",
+      "sha256": "3089d67c2fb0e949910547308a533fc6965b513dc3b5ad7974b615f7a8d57b6f",
+      "sourceKey": "lab-terminal-3d",
+      "sourceSha256": "dcb3c8efdc2ec53d88a05fa4f5f3f37bfdb99109e16130993fb53e4cb4c7d798",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/terminal-3d/lab-terminal-3d.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-pill-scroll.webp",
+      "sha256": "420140fa1a097bd8d7fbff6511376ca8dfd9f700e7cf327ec62f5b6c649b7ed0",
+      "sourceKey": "lab-pill-scroll",
+      "sourceSha256": "3e9de93cc1bff5fc7b43a8d7720a03119b287916721156e28e4872f69e159d22",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/pill-scroll/lab-pill-scroll.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-micro-animations.webp",
+      "sha256": "a913eb2be501feb70bb2f377eafcda880d6a1c2c3e3d8288a97d1df0c68a9056",
+      "sourceKey": "lab-micro-animations",
+      "sourceSha256": "22d4459f7dccd51b11f68116ff9ee1f9759819f90b82dd9fb7fa19e0568338e4",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/micro-animations/lab-micro-animations.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-aha-laser.webp",
+      "sha256": "41092ef36b3a99d7690dba4505713d8186fff2d898d75445138bf67371bc7518",
+      "sourceKey": "lab-aha-laser",
+      "sourceSha256": "cee4193ed927fa05b3db0304e8c5de768a6de48d6a7f22976045cb1f538a1bc8",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/aha-laser/lab-aha-laser.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-studio-engine.webp",
+      "sha256": "1bf71c30c32c0c1999080848f5f5839072ed0572aa615dfe5b385c406c8b520f",
+      "sourceKey": "lab-studio-engine",
+      "sourceSha256": "e5947c2ba05cd07f0fc51a72be05dc452806761e58e4e0a4c30bc2a101f744a7",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/studio-engine/lab-studio-engine.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-growth-street.webp",
+      "sha256": "d2ce49c53cb77322011f173dca92e850c400a7b1110b453361482317d64a0c91",
+      "sourceKey": "lab-growth-street",
+      "sourceSha256": "d11790fd84ded519775876c3708acde34f0c8e4dbe4f2457dbbf2d545a8877ed",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/growth-street/lab-growth-street.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-goliath.webp",
+      "sha256": "065467dd831ebaa151111b97293129aa922d47ed054c233a6ea3f9a1d01f3a4b",
+      "sourceKey": "lab-goliath",
+      "sourceSha256": "4d5a6a36b45fbcbbc7e80e2ee903be90c7088ae64b649922c6a351e80fbaacfa",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/goliath/lab-goliath.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-cabinet-concept.webp",
+      "sha256": "c297cf1d377a69ce8e219cfca88d47b13431e44cf733b5ea0c97e082e776fca4",
+      "sourceKey": "lab-cabinet-concept",
+      "sourceSha256": "094e638fefd7e519a983f4a71e1de66f039e568194dfa42fea5ecf610673bea3",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cabinet-concept/lab-cabinet-concept.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/lab-house-explorer.webp",
+      "sha256": "0cd74670fc5aae0627c33e51ee4f6de0c8aa08825ff06ebf0b0d5f5d5087d4bb",
+      "sourceKey": "lab-house-explorer",
+      "sourceSha256": "44bbc55f0ada041d638992c57a435841f7ef3fd5d3491ed254b4d2aaa4221844",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/house-explorer/lab-house-explorer.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/rachel-services-desktop.webp",
+      "sha256": "53873518650a66998e528bfaa3d11e238ead78f41fe07d9effea9b5c2d5dec21",
+      "sourceKey": "rachel-services-desktop",
+      "sourceSha256": "0c6735a28bddfbe5f264866f25ff92d9ec2d856ad5581ee4fe4715c540e3faff",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/rachel-services-desktop.png",
+      "crop": null,
+      "method": "Aspect-preserving resize and WebP encoding of real source pixels"
+    },
+    {
+      "file": "assets/portfolio-20261007/share-little-fight-nyc.jpg",
+      "sha256": "d160ba01bdcfd319f0e09238bf30a4355ab17be7b3300b6a3ea5dac7f7cd9cf3",
+      "sourceKey": "little-fight-nyc-reference-hero",
+      "sourceSha256": "954f8ac497e48e05fd1b9724a5951dd3581734c69393b19ce872879fc00bee89",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/little-fight-nyc/little-fight-nyc-reference-hero.png",
+      "crop": null,
+      "method": "Aspect-preserving real browser capture of the completed sculpture hero on an opaque social canvas"
+    }
+  ]
+}

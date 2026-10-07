@@ -174,7 +174,7 @@ async function verifyPublicCaseShareCards(page) {
     await go(page, `/case-studies/${caseStudy.slug}/`);
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
     assert.ok(ogImage, `${caseStudy.slug}: missing og:image`);
-    assert.match(ogImage, new RegExp(`case-${caseStudy.slug.replace(/[.*+?^${}()|[\\]\\]/g, '\\$&')}`), `${caseStudy.slug}: og:image must name its case, not the homepage card`);
+    assert.equal(new URL(ogImage).pathname, `/assets/portfolio-20261007/share-${caseStudy.slug}.jpg`, `${caseStudy.slug}: og:image uses its verified case-specific screenshot card`);
     const parsed = new URL(ogImage, base);
     const localAsset = new URL(parsed.pathname + parsed.search, base);
     const response = await fetch(localAsset, { headers: { accept: 'image/avif,image/webp,image/*,*/*;q=0.8' } });

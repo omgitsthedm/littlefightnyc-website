@@ -365,13 +365,18 @@
     // its return-focus/history cleanup settles. Finish that finite close first.
     if (closingPromise) await closingPromise;
     const isInReader = dialogIsOpen();
+    // The hero is an entry point of its own. Return to the work link the
+    // visitor actually used, including after following links in the reader.
+    const heroSource = isInReader
+      ? (activeSource?.closest('.sculpture-hero') ? activeSource : null)
+      : (source?.closest('.sculpture-hero') ? source : null);
     // Tiles for standalone public apps keep their canonical href. They can opt into a
     // small static reader document without changing the URL, browser history, or event payload.
     activeController?.abort();
     const controller = new AbortController();
     activeController = controller;
     const version = ++requestVersion;
-    activeSource = findTile(readerPath) || source || activeSource;
+    activeSource = heroSource || findTile(readerPath) || source || activeSource;
     loadingVersion = version;
     mosaic?.classList.add('is-loading-reader');
     if (menu?.open) setMenu(false, { returnFocus: false });
@@ -384,7 +389,7 @@
       releaseDemos();
       window.LFWebsiteStory?.release(panel);
       detailBody.innerHTML = reader.html;
-      activeSource = findTile(reader.homePath) || activeSource;
+      activeSource = heroSource || findTile(reader.homePath) || activeSource;
       detail.dataset.readerLayout = reader.layout;
       panel.dataset.readerLayout = reader.layout;
       detail.dataset.readerFamily = reader.family;
@@ -808,7 +813,7 @@
     if (!path) return;
     event.preventDefault();
     setMenu(false, { returnFocus: false });
-    openReader(path, findTile(path) || trigger);
+    openReader(path, trigger.closest('.sculpture-hero') ? trigger : findTile(path) || trigger);
   });
 
   document.addEventListener('submit', event => {

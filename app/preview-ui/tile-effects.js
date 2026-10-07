@@ -49,15 +49,16 @@
     active.add(tile);
     tile.classList.add('is-performing');
     tile.dataset.scenePhase = '0';
-    if (tile.matches('.service-anchor')) tile.setAttribute('data-trace-visible', '');
+    const sculpture = tile.dataset.sculpture === 'true';
+    if (!sculpture && tile.matches('.service-anchor')) tile.setAttribute('data-trace-visible', '');
     state.timers.push(setTimeout(() => {
       if (active.has(tile) && motionEnabled()) tile.dataset.scenePhase = '1';
-    }, 130));
+    }, sculpture ? 100 : 130));
     state.timers.push(setTimeout(() => {
       if (active.has(tile) && motionEnabled()) tile.dataset.scenePhase = '2';
-    }, 590));
+    }, sculpture ? 240 : 590));
     // The finite anchor perimeter needs its complete 1.65 second pass before reset.
-    state.timers.push(setTimeout(() => settle(tile), 1680));
+    state.timers.push(setTimeout(() => settle(tile), sculpture ? 400 : 1680));
   };
   const request = tile => {
     const state = stateFor(tile);

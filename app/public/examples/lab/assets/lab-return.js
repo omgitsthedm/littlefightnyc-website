@@ -249,6 +249,19 @@
 
     document.body.append(shell, status, hint);
 
+    // Direct demos share the viewport with this fixed footer. Publish its real
+    // occupied height so a responsive scene can keep its own controls above it.
+    function measureShell() {
+      document.documentElement.style.setProperty('--lab-shell-clearance',
+        Math.ceil(window.innerHeight - shell.getBoundingClientRect().top + 8) + 'px');
+      document.documentElement.style.setProperty('--lab-disclosure-clearance',
+        Math.ceil(status.getBoundingClientRect().bottom + 14) + 'px');
+    }
+    new ResizeObserver(measureShell).observe(shell);
+    new ResizeObserver(measureShell).observe(status);
+    window.addEventListener('resize', measureShell, { passive: true });
+    measureShell();
+
     window.setTimeout(function () {
       hint.classList.add('is-visible');
     }, 600);

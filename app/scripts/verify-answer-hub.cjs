@@ -33,15 +33,15 @@ async function layout(page) {
     const rect = n => { const r = n.getBoundingClientRect(); return { left: r.left, top: r.top, right: r.right, bottom: r.bottom, width: r.width, height: r.height }; };
     const boxes = tiles.map(n => ({ id: n.dataset.answer, ...rect(n) }));
     const overlaps = boxes.flatMap((a, i) => boxes.slice(i + 1).filter(b => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 1 && Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > 1).map(b => [a.id, b.id]));
-    const anchors = [...document.querySelectorAll('[data-editorial-front]')].map(n => ({ family: n.dataset.editorialFront, ...rect(n) }));
-    return { width: innerWidth, documentWidth: document.documentElement.scrollWidth, anchors, overlaps };
+    const anchors = [...document.querySelectorAll('[data-reader-anchor]')].map(n => ({ family: n.dataset.readerAnchor, ...rect(n) }));
+    return { width: innerWidth, documentWidth: document.documentElement.scrollWidth, anchors, overlaps, hero: rect(document.querySelector('.sculpture-hero')) };
   });
 }
 
 async function editorialAnchorHeightsWhileIdle(page) {
   const sample = () => page.evaluate(() => Object.fromEntries(
-    [...document.querySelectorAll('[data-editorial-front]:not([data-editorial-front="brand"])')]
-      .map(node => [node.dataset.editorialFront, node.getBoundingClientRect().height])
+    [...document.querySelectorAll('[data-reader-anchor]:not([data-reader-anchor="brand"])')]
+      .map(node => [node.dataset.readerAnchor, node.getBoundingClientRect().height])
   ));
   const samples = [await sample()];
   // A stretched editorial copy must not promote its allocated grid height
@@ -57,7 +57,7 @@ async function editorialAnchorHeightsWhileIdle(page) {
 
 async function enlargeEditorialAnchorText(page) {
   const baseline = await page.evaluate(() => {
-    const targets = [...document.querySelectorAll('[data-editorial-front] :is(.topic-anchor-label,strong,h1,.anchor-supporting-line)')]
+    const targets = [...document.querySelectorAll('[data-reader-anchor] :is(.sculpture-title,.sculpture-description)')]
       .filter(node => node.textContent.trim());
     return targets.map((node, index) => {
       const id = `answer-hub-font-stress-${index}`;
@@ -65,7 +65,7 @@ async function enlargeEditorialAnchorText(page) {
       return {
         id,
         text: node.textContent.trim(),
-        family: node.closest('[data-editorial-front]')?.dataset.editorialFront,
+        family: node.closest('[data-reader-anchor]')?.dataset.readerAnchor,
         fontSize: parseFloat(getComputedStyle(node).fontSize),
       };
     });
@@ -82,7 +82,7 @@ async function enlargeEditorialAnchorText(page) {
     return [...document.querySelectorAll('[data-answer-hub-font-stress]')].map(node => {
       const range = document.createRange();
       range.selectNodeContents(node);
-      const card = node.closest('[data-editorial-front]');
+      const card = node.closest('[data-reader-anchor]');
       return {
         id: node.dataset.answerHubFontStress,
         text: node.textContent.trim(),
@@ -105,9 +105,9 @@ async function enlargeEditorialAnchorText(page) {
       assert.deepEqual(measured.overlaps, [], `${width}: tiles must never cover one another`);
       const brand = measured.anchors.find(a => a.family === 'brand');
       const web = measured.anchors.find(a => a.family === 'web');
-      assert.ok(brand && web && brand.bottom <= web.top + 1, `${width}: compact brand introduction precedes Websites`);
+      assert.ok(brand && web && measured.hero.bottom <= web.top + 1, `${width}: complete illustrated brand hero precedes the four services`);
       if (width >= 601 && width <= 1000) {
-        assert.ok(brand.height <= 210, `${width}: brand must not balloon (${brand.height}px)`);
+        assert.ok(brand.height <= web.height + 1, `${width}: brand stays no taller than a service card (${brand.height}px)`);
         assert.ok(web.height <= 400, `${width}: website anchor must not balloon (${web.height}px)`);
       }
       if (width === 924) {

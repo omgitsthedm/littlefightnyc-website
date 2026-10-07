@@ -36,11 +36,11 @@ async function run() {
     for (const width of [320, 390, 768, 1440]) {
       const { ctx, page } = await context(browser, { viewport: { width, height: width > 600 ? 1000 : 844 } });
       await page.goto(base, { waitUntil: 'networkidle' });
-      await noOverflow(page, 'html,.topbar,.tile[data-editorial-front="web"]', `${width}: homepage fits`);
-      assert.match(await page.locator('#explore-toggle').innerText(), /Search answers/);
-      assert.equal(await page.locator('.tile[data-editorial-front="web"] .website-project-shot').count(), 5);
-      const imageWidth = await page.locator('.tile[data-editorial-front="web"] .website-project-shot').first().evaluate(el => el.getBoundingClientRect().width);
-      assert.ok(imageWidth >= (width === 320 ? 120 : 155), `${width}: project preview remains meaningful (${imageWidth})`);
+      await noOverflow(page, 'html,.topbar,.tile[data-reader-anchor="web"]', `${width}: homepage fits`);
+      assert.match(await page.locator('#explore-toggle').getAttribute('aria-label'), /Search answers/);
+      assert.equal(await page.locator('.tile[data-reader-anchor="web"] .sculpture-object').count(), 1);
+      const imageWidth = await page.locator('.tile[data-reader-anchor="web"] .sculpture-object').first().evaluate(el => el.getBoundingClientRect().width);
+      assert.ok(imageWidth >= 44, `${width}: project preview remains meaningful (${imageWidth})`);
       await shot(page, `home-${width}.png`);
       await page.locator('#explore-toggle').click();
       await page.waitForFunction(() => document.activeElement?.id === 'preview-search');
@@ -53,7 +53,7 @@ async function run() {
       await page.locator('[data-filter="software"]').click();
       await page.waitForFunction(() => document.activeElement?.closest('#topic-software'));
       pass(`${width}: named Services menu reaches Software with keyboard focus`);
-      await page.locator('.primary-nav a[href="/services/custom-local-websites/"]').click();
+      await page.locator('.tile[data-reader-anchor="web"]').click();
       await page.locator('#detail[open] .website-service-body').waitFor();
       const stories = page.locator('#detail [data-business-story]');
       assert.equal(await stories.count(), 3);
@@ -98,7 +98,7 @@ async function run() {
       const { ctx, page } = await context(browser);
       await page.goto(base, { waitUntil: 'networkidle' });
       await page.addStyleTag({ content: 'html{font-size:200%!important}' });
-      await page.locator('.tile[data-editorial-front="web"]').click();
+      await page.locator('.tile[data-reader-anchor="web"]').click();
       await page.locator('#detail .website-service-body').waitFor();
       await noOverflow(page, 'html,#detail-body,.rw-proof-story,.rw-proof-story-copy', '200%: text reflows');
       assert.ok(await page.locator('#close-detail').isVisible());
@@ -141,7 +141,7 @@ async function run() {
       assert.equal(await page.locator('#detail').evaluate(el => el.scrollTop), 0);
       await page.locator('#close-detail').click();
       await page.waitForURL(new URL('/', base).href);
-      assert.ok(await page.locator('.tile[data-editorial-front="web"]').isVisible());
+      assert.ok(await page.locator('.tile[data-reader-anchor="web"]').isVisible());
       pass('Standalone inquiry → reader → inquiry keeps labels and fields separate, then exits to the hub');
       await ctx.close();
     }
