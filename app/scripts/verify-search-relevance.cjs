@@ -33,7 +33,9 @@ const fixtures = [
   ['stop entering things twice', '/answers/help/software-duplicate-entry/'],
   ['printer in Tucson', '/answers/help/printer/'],
   ['roofing', '/industries/roofing/'],
-  ['roofer', '/industries/roofing/']
+  ['roofer', '/industries/roofing/'],
+  ['farm house', '/labs/house-explorer/'],
+  ['truss profiles', '/labs/house-explorer/']
 ];
 for (const [query, expected] of fixtures) {
   const got = rank(rows, query, aliases)[0]?.path;
