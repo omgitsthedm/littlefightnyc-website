@@ -7,7 +7,7 @@
  */
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
+import { dirname } from 'node:path';
 
 const source = process.argv[2];
 const output = process.argv[3];

@@ -24,7 +24,7 @@ const cleanScriptWhitespace = (value) => value.replace(/[ \t]+$/gm, '').replace(
 function assertSafe(text, label) {
   if (forbidden.test(text)) throw new Error(`${label} retained a private/source-only reference`);
 }
-function replaceAllRequired(value, from, to, label) {
+function replaceAllRequired(value, from, to) {
   const count = value.split(from).length - 1;
   return { value: value.split(from).join(to), count };
 }
@@ -107,7 +107,7 @@ function safeViewer(source, modelFileName, privateTerms) {
     ['Farm-House-Materials/', 'assets/materials/', 'material directory'],
   ];
   const applied = new Map();
-  for (const [from, to, label] of substitutions) { const result = replaceAllRequired(viewer, from, to, label); viewer = result.value; applied.set(label, result.count); }
+  for (const [from, to, label] of substitutions) { const result = replaceAllRequired(viewer, from, to); viewer = result.value; applied.set(label, result.count); }
   for (const label of ['model URL', 'material directory']) if (!applied.get(label)) throw new Error(`Pinned Farm House viewer changed: expected ${label}.`);
   const nestedRoute = /[A-Za-z-]+\/\?embed=1&collection=/g;
   const nestedRouteCount = (viewer.match(nestedRoute) || []).length;
@@ -144,7 +144,7 @@ function safeViewer(source, modelFileName, privateTerms) {
   viewer = viewer.replace(/(label:"(?:\\.|[^"\\])*?)(?:\\xB7|·)\s*(?=(?:\\.|[^"\\])*(?:estimated|inferred|traced|aerial|source|owner|accepted|original|design-directed|photo|street)(?:\\.|[^"\\])*")(?:\\.|[^"\\])*"/gi, '$1"');
   const privateNarrative = /(?:aerial(?:[-\s]+(?:imagery|boundary|alignment|traced))|street\s+view|reported\s+by\s+family|owner(?:[-\s]+(?:update|direction|correction))|accepted(?:\s+original)?|source\s+(?:geometry|barn|shoulder)|design-directed|supplied\s+drone|entrance\s+photo|field\s+survey|right-of-way|clear-zone|no\s+verified\s+flow|original-house-gooseneck)/i;
   if (privateNarrative.test(viewer)) throw new Error('Pinned Farm House viewer retained a private provenance note.');
-  const guideBinding = /document\.getElementById\(\"house-info\"\)\.addEventListener\(\"click\",\(\)=>\{try\{.*?\}catch\{\}\}\);function Vr/s;
+  const guideBinding = /document\.getElementById\("house-info"\)\.addEventListener\("click",\(\)=>\{try\{.*?\}catch\{\}\}\);function Vr/s;
   if (!guideBinding.test(viewer)) throw new Error('Pinned Farm House viewer did not contain the guide binding.');
   viewer = viewer.replace(guideBinding, 'function Vr');
   const collectionMessage = /window\.addEventListener\("message",s=>\{s\.origin!==location\.origin\|\|s\.source!==K4\?\.contentWindow\|\|s\.data\?\.type==="farm-house-property"&&Wr\("property"\)\}\);/;
@@ -170,7 +170,7 @@ function safeHtml(source) {
   html = html.replace(/<nav class="collections" aria-label="Property collections">.*?<\/nav>/s, '<nav class="collections" aria-label="Farm House sections"><button data-collection="property" aria-pressed="true">Property</button><button data-collection="inside" aria-pressed="false">Inside</button><button data-collection="find" aria-pressed="false">Find</button></nav>');
   html = html.replace('<section id="construction-panel" hidden aria-label="Construction collections"></section>', '<section id="construction-panel" hidden aria-label="Farm House Inside and Find"></section>');
   html = html.replace(/(<\/select>)(<button class="reset" id="gate-toggle")/, '$1<button class="reset" id="yard-toggle" aria-pressed="true" disabled>Garden</button>$2');
-  html = html.replace(/<script src="Farm-House-Viewer\.js[^\"]*"><\/script>/, '<script defer src="./lab-bootstrap.js"></script><script defer src="/examples/lab/assets/lab-return.js"></script><script src="./farm-house-viewer.js?v=authentic-exterior-v2"></script><script src="./farm-house-adapter.js"></script>');
+  html = html.replace(/<script src="Farm-House-Viewer\.js[^"]*"><\/script>/, '<script defer src="./lab-bootstrap.js"></script><script defer src="/examples/lab/assets/lab-return.js"></script><script src="./farm-house-viewer.js?v=authentic-exterior-v2"></script><script src="./farm-house-adapter.js"></script>');
   html = html.replace(/<noscript>.*?<\/noscript>/s, '<noscript><div class="loading"><h2>Farm House</h2><p>This interactive property study needs JavaScript enabled.</p></div></noscript>');
   html = html.replace('</style>', 'html.lab-concept-page:not(.lab-concept-embed) .lab-concept-shell,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-hint,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-status{display:none!important}html.lab-concept-embed #lab-return-link{display:none}html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}\n</style>');
   assertSafe(html, 'index.html');
