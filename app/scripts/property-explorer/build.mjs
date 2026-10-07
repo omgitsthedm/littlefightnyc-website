@@ -166,9 +166,10 @@ function safeHtml(source) {
   html = html.replace('<title>Farm House · Explore the property</title>', '<title>Farm House · Little Fight NYC</title>');
   html = html.replace('Explore the property</p>', 'Interactive property study of the house, barn, and grounds.</p>');
   html = html.replace(/<a class="action" href="[^"]+" id="house-info">.*?<\/a>/s, '');
-  html = html.replace('<div class="top-actions"><button class="action holiday-toggle"', '<div class="top-actions"><a class="action" id="lab-return-link" href="/examples/lab/#showroom">The Lab</a><button class="action holiday-toggle"');
+  html = html.replace('<div class="top-actions"><button class="action holiday-toggle"', '<div class="top-actions"><a class="action" id="lab-return-link" aria-label="Return to all Labs" href="/examples/lab/#showroom">The Lab</a><button class="action holiday-toggle"');
   html = html.replace(/<nav class="collections" aria-label="Property collections">.*?<\/nav>/s, '<nav class="collections" aria-label="Farm House sections"><button data-collection="property" aria-pressed="true">Property</button><button data-collection="inside" aria-pressed="false">Inside</button><button data-collection="find" aria-pressed="false">Find</button></nav>');
   html = html.replace('<section id="construction-panel" hidden aria-label="Construction collections"></section>', '<section id="construction-panel" hidden aria-label="Farm House Inside and Find"></section>');
+  html = html.replace('id="christmas-toggle"', 'id="christmas-toggle" aria-label="Christmas decorations"');
   html = html.replace(/(<\/select>)(<button class="reset" id="gate-toggle")/, '$1<button class="reset" id="yard-toggle" aria-pressed="true" disabled>Garden</button>$2');
   html = html.replace(/<script src="Farm-House-Viewer\.js[^"]*"><\/script>/, '<script defer src="./lab-bootstrap.js"></script><script defer src="/examples/lab/assets/lab-return.js"></script><script src="./farm-house-viewer.js?v=authentic-exterior-v2"></script><script src="./farm-house-adapter.js"></script>');
   html = html.replace(/<noscript>.*?<\/noscript>/s, '<noscript><div class="loading"><h2>Farm House</h2><p>This interactive property study needs JavaScript enabled.</p></div></noscript>');
@@ -179,14 +180,17 @@ html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}
 html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}
 /* The viewport here is the card's inner frame, which can be narrower than a phone. */
 @media(max-width:480px){
-  .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(64px + var(--safe-right));display:flex;flex-direction:column;gap:8px}
-  html:not(.lab-concept-embed) .topbar{right:calc(12px + var(--safe-right))}
-  .brand{padding:8px 12px;width:max-content;max-width:100%}
+  .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(8px + var(--safe-left));right:calc(60px + var(--safe-right));display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:6px}
+  .brand{padding:10px 6px;width:max-content;max-width:100%;min-height:44px}
   .brand h1{font-size:20px;line-height:1.2;margin:0;white-space:normal}
   .brand p{display:none}
   .top-actions{display:flex;flex-wrap:wrap;justify-content:flex-start;max-width:100%}
-  .top-actions .holiday-toggle{font-size:14px;min-height:44px;padding:0 8px}
-  .collections{top:calc(116px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+  .top-actions .holiday-toggle{width:44px;min-height:44px;padding:0;gap:0;font-size:0}
+  .holiday-toggle span{display:none}
+  .holiday-toggle svg{width:24px;height:24px}
+  html:not(.lab-concept-embed) #lab-return-link{position:fixed;top:calc(12px + var(--safe-top));right:calc(8px + var(--safe-right));display:inline-flex;width:44px;min-height:44px;padding:0;font-size:0}
+  html:not(.lab-concept-embed) #lab-return-link::after{content:'×';font-size:28px;line-height:1}
+  .collections{top:calc(68px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
   .collections button{min-width:0;min-height:44px;padding:0 2px;font-size:16px}
   .view-footer{left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));bottom:calc(8px + var(--safe-bottom));gap:6px}
   .lights button{min-height:48px;padding:4px 2px;font-size:14px}

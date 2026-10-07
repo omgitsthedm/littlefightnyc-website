@@ -34,14 +34,17 @@ html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}
 html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}
 /* The viewport here is the card's inner frame, which can be narrower than a phone. */
 @media(max-width:480px){
-  .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(64px + var(--safe-right));display:flex;flex-direction:column;gap:8px}
-  html:not(.lab-concept-embed) .topbar{right:calc(12px + var(--safe-right))}
-  .brand{padding:8px 12px;width:max-content;max-width:100%}
+  .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(8px + var(--safe-left));right:calc(60px + var(--safe-right));display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:6px}
+  .brand{padding:10px 6px;width:max-content;max-width:100%;min-height:44px}
   .brand h1{font-size:20px;line-height:1.2;margin:0;white-space:normal}
   .brand p{display:none}
   .top-actions{display:flex;flex-wrap:wrap;justify-content:flex-start;max-width:100%}
-  .top-actions .holiday-toggle{font-size:14px;min-height:44px;padding:0 8px}
-  .collections{top:calc(116px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+  .top-actions .holiday-toggle{width:44px;min-height:44px;padding:0;gap:0;font-size:0}
+  .holiday-toggle span{display:none}
+  .holiday-toggle svg{width:24px;height:24px}
+  html:not(.lab-concept-embed) #lab-return-link{position:fixed;top:calc(12px + var(--safe-top));right:calc(8px + var(--safe-right));display:inline-flex;width:44px;min-height:44px;padding:0;font-size:0}
+  html:not(.lab-concept-embed) #lab-return-link::after{content:'×';font-size:28px;line-height:1}
+  .collections{top:calc(68px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
   .collections button{min-width:0;min-height:44px;padding:0 2px;font-size:16px}
   .view-footer{left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));bottom:calc(8px + var(--safe-bottom));gap:6px}
   .lights button{min-height:48px;padding:4px 2px;font-size:14px}
@@ -54,7 +57,7 @@ html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find
 </head>
 <body>
 <main id="scene" aria-label="3D view of the house and property"></main>
-<div id="property-controls"><header class="topbar"><div class="brand"><h1>Farm House</h1><p id="yard-description">Interactive property study of the house, barn, and grounds.</p></div><div class="top-actions"><a class="action" id="lab-return-link" href="/examples/lab/#showroom">The Lab</a><button class="action holiday-toggle" id="christmas-toggle" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 3 6h-2l5 6h-3l5 5H4l5-5H6l5-6H9l3-6Z M12 19v3"/></svg>Christmas <span id="christmas-state" aria-hidden="true">Off</span></button></div></header><nav class="collections" aria-label="Farm House sections"><button data-collection="property" aria-pressed="true">Property</button><button data-collection="inside" aria-pressed="false">Inside</button><button data-collection="find" aria-pressed="false">Find</button></nav>
+<div id="property-controls"><header class="topbar"><div class="brand"><h1>Farm House</h1><p id="yard-description">Interactive property study of the house, barn, and grounds.</p></div><div class="top-actions"><a class="action" id="lab-return-link" aria-label="Return to all Labs" href="/examples/lab/#showroom">The Lab</a><button class="action holiday-toggle" id="christmas-toggle" aria-label="Christmas decorations" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 3 6h-2l5 6h-3l5 5H4l5-5H6l5-6H9l3-6Z M12 19v3"/></svg>Christmas <span id="christmas-state" aria-hidden="true">Off</span></button></div></header><nav class="collections" aria-label="Farm House sections"><button data-collection="property" aria-pressed="true">Property</button><button data-collection="inside" aria-pressed="false">Inside</button><button data-collection="find" aria-pressed="false">Find</button></nav>
 <div class="view-footer"><nav class="dock lights" aria-label="Time of day">
 <button data-lighting="dawn" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 17h20M4 21h16M7 17a5 5 0 0 1 10 0M12 4v4M4 10l3 3m13-3-3 3"/></svg>Dawn</button>
 <button data-lighting="noon" aria-pressed="true" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></svg>Day</button>
