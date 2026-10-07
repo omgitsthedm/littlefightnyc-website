@@ -458,6 +458,15 @@
         delete detail.dataset.readerLayout;
         delete panel.dataset.readerLayout;
         source?.focus?.({ preventScroll: true });
+        // WebKit can defer returning focus when a native dialog closes.
+        // Retry only if focus was lost, never over a new task.
+        const closedVersion = requestVersion;
+        requestAnimationFrame(() => {
+          if (requestVersion === closedVersion && !dialogIsOpen() && !menu?.open &&
+              document.activeElement === document.body && source?.isConnected) {
+            source.focus({ preventScroll: true });
+          }
+        });
         interaction('reader_close', contentId(detailBody.dataset.readerPath), 'reader');
       } finally {
         isClosing = false;

@@ -42,7 +42,24 @@ async function main(){
  for(const [engine,type] of [['chrome',chromium],['webkit',webkit]]){
   const browser=await type.launch(engine==='chrome'?{channel:'chrome',headless:true}:{headless:true});
   report.engines[engine]=browser.version();
-  try{for(const profile of profiles){
+  try{
+  // Exercise rapid first-visit closes without incidental geometry reads.
+  for(let visit=0;visit<3;visit++){
+   const context=await browser.newContext({viewport:{width:393,height:1000},hasTouch:true,isMobile:true,deviceScaleFactor:2,reducedMotion:'reduce'});
+   await context.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin&&['GET','HEAD'].includes(route.request().method())?route.continue():route.abort());
+   const page=await context.newPage();
+   try{
+    await page.goto(base+'/?qa=1');await settle(page);
+    for(const action of ['.hero-main','.hero-secondary','.sculpture-help']){
+     const link=page.locator(action),href=await link.getAttribute('href');await link.scrollIntoViewIfNeeded();await link.tap();
+     await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
+     await page.locator('#close-detail').click();
+     await page.waitForFunction(action=>!document.querySelector('#detail').open&&document.activeElement===document.querySelector(action),action,{timeout:1500});
+     check(engine+' cold visit '+visit+' immediately closing '+href+' returns focus',true);
+    }
+   }finally{await context.close()}
+  }
+  for(const profile of profiles){
    const context=await browser.newContext({viewport:{width:profile.width,height:profile.height},hasTouch:profile.touch,isMobile:profile.touch,deviceScaleFactor:profile.touch?2:1,reducedMotion:'reduce'});
    await context.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin&&['GET','HEAD'].includes(route.request().method())?route.continue():route.abort());
    const page=await context.newPage();
@@ -68,6 +85,7 @@ async function main(){
       check(label+' inquiry accepts input without mobile auto-zoom sizing',await field.evaluate(el=>el.value==='Local layout check'&&parseFloat(getComputedStyle(el).fontSize)>=16));
      }
      await close.click();await page.waitForFunction(()=>!document.querySelector('#detail').open);
+     await page.waitForFunction(action=>document.activeElement===document.querySelector(action),action,{timeout:1500});
      check(label+' '+href+' closes to the original hero action',await link.evaluate((el,y)=>el===document.activeElement&&Math.abs(scrollY-y)<3,scroll));
     }
     await page.locator('#explore-toggle').click();
