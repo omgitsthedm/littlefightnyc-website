@@ -1,62 +1,47 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="description" content="Explore an illustrative 3D property, reveal its structure, and trace the systems behind the walls. A Little Fight NYC interactive demonstration.">
-  <meta name="referrer" content="no-referrer">
-  <meta name="littlefight:content-status" content="illustrative-build">
-  <title>Property Explorer · Little Fight NYC</title>
-  <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./house-explorer.css">
-</head>
-<body data-mode="property">
-  <header class="masthead">
-    <div class="wordmark"><span class="mark" aria-hidden="true">LF</span><div><span class="eyebrow">Little Fight NYC · Interactive Lab</span><h1>Property Explorer</h1></div></div>
-    <a class="exit" href="/lab/" id="exit" aria-label="Close Property Explorer and return to the Lab">Close <span aria-hidden="true">×</span></a>
-  </header>
-  <main class="workspace">
-    <section class="stage" aria-label="Interactive property model">
-      <div id="viewport"><p id="fallback" role="status" hidden>The interactive view needs WebGL. The demonstration plan and system descriptions remain available below.</p></div>
-      <nav class="collections" aria-label="Explore collections">
-        <button data-mode="property" aria-pressed="true">Property</button><button data-mode="inside" aria-pressed="false">Inside</button><button data-mode="find" aria-pressed="false">Find</button>
-      </nav>
-      <div class="scene-caption"><span class="eyebrow" id="scene-kicker">01 / The whole picture</span><h2 id="scene-title">A place, understood.</h2></div>
-      <div class="view-tools" aria-label="Model controls">
-        <button id="home-view" title="Reset camera">Reset view</button><button id="plan-view" aria-pressed="false">Top view</button><button id="light-mode" aria-pressed="false">Evening</button>
-      </div>
-      <div class="scene-bottom"><span id="scene-hint">Drag to orbit · scroll to zoom</span><span class="demo-label lab-build-disclosure">Illustrative build · fictional property</span></div>
-    </section>
-    <aside class="panel" aria-label="Collection tools">
-      <section id="property-panel">
-        <span class="eyebrow">Start outside</span><h2>See how it all fits.</h2><p>Move around the grounds. Follow the paths. Open the gate. Then look beneath the surface.</p>
-        <button class="action full" id="gate" aria-pressed="false">Open the gate <span aria-hidden="true">↗</span></button>
-        <div class="divider"></div>
-        <button class="next-card" data-go="inside"><span class="step">02</span><span><strong>Reveal the structure</strong><small>Framing, trusses &amp; a cutaway.</small></span><span aria-hidden="true">→</span></button>
-        <button class="next-card" data-go="find"><span class="step">03</span><span><strong>Find what’s hidden</strong><small>A toilet line. An outlet. A duct.</small></span><span aria-hidden="true">→</span></button>
-        <div class="panel-note">One property. Three ways to understand it.</div>
-      </section>
-      <section id="inside-panel" hidden>
-        <span class="eyebrow">Beneath the finish</span><h2>Understand the build.</h2><p>Reveal the frame, inspect a truss, or slice through the house.</p>
-        <label class="range-label" for="section">Section height <output id="section-value">Full frame</output></label><input id="section" type="range" min="0" max="100" value="100">
-        <div class="toggle-list"><label><input id="structure-layer" type="checkbox" checked> Framing &amp; trusses</label><label><input id="services-layer" type="checkbox"> Plumbing, power &amp; air</label></div>
-        <button class="action full" id="show-plan">Open demonstration plan <span aria-hidden="true">↗</span></button>
-        <div class="divider"></div><div id="structure-items" class="results"></div>
-        <p class="panel-note">All dimensions and assemblies describe this fictional example.</p>
-      </section>
-      <section id="find-panel" hidden>
-        <span class="eyebrow">Less searching. More knowing.</span><h2>Follow the system.</h2><label class="sr-only" for="search">Find a system or component</label><input id="search" type="search" placeholder="Try “toilet” or “outlet”…" autocomplete="off">
-        <div class="quick-search" aria-label="Suggested searches"><button data-search="toilet">Toilet</button><button data-search="outlet">Outlet</button><button data-search="truss">Truss</button></div>
-        <div id="result-status" class="result-status" aria-live="polite"></div><div id="results" class="results"></div>
-        <p class="panel-note">Illustrative routes demonstrate the tool; they are not construction records.</p>
-      </section>
-      <section id="selection" hidden aria-live="polite"><div class="divider"></div><span class="eyebrow" id="selected-category"></span><h3 id="selected-title"></h3><p id="selected-description"></p><dl><div><dt>Location</dt><dd id="selected-room"></dd></div><div><dt>Example specification</dt><dd id="selected-dimensions"></dd></div></dl><button id="source-plan" class="action full">See on demonstration plan <span aria-hidden="true">↗</span></button><button id="clear-selection" class="text-button">Clear selection</button></section>
-    </aside>
-  </main>
-  <footer><span>Designed, Hosted and Cared For by LittleFightNYC.com</span><button class="text-button" id="about">About this demo</button></footer>
-  <dialog id="plan-dialog"><div class="dialog-head"><div><span class="eyebrow">Illustrative reference</span><h2>Demonstration plan</h2></div><button class="dialog-close" aria-label="Close demonstration plan">×</button></div><p id="plan-description">A fictional floor plan with schematic system routes.</p><div id="plan-drawing"></div><div class="legend"><span><i style="--key:#d7773d"></i> Drain</span><span><i style="--key:#dc881c"></i> Power</span><span><i style="--key:#79a184"></i> Air</span></div><p class="panel-note">Local model dimensions only. This is an illustrative example, not a real site or an as-built drawing.</p></dialog>
-  <dialog id="about-dialog"><div class="dialog-head"><h2>A tool for understanding space.</h2><button class="dialog-close" aria-label="Close about this demo">×</button></div><p>This fictional property demonstrates an interactive digital model: explore the exterior, reveal the frame, and find the systems behind the walls.</p><p>The building, grounds, dimensions, routes, and plan were created for this demonstration. They do not describe a client property.</p><p>No maps, tracking, location services, or external data feeds are used.</p></dialog>
-  <script defer src="./lab-bootstrap.js"></script>
-  <script defer src="/examples/lab/assets/lab-return.js"></script>
-  <script type="module" src="./house-explorer.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="data:,"><meta name="theme-color" content="#f7f5ee"><meta name="color-scheme" content="light"><title>Farm House · Little Fight NYC</title>
+<style>
+*{box-sizing:border-box}:root{color-scheme:light;--paper:#faf8f2;--ink:#233d32;--muted:#526359;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);font-size:112.5%}
+html,body{height:100%;margin:0;overflow:hidden;overscroll-behavior:none}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:#6cbaeb;-webkit-font-smoothing:antialiased}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}button{font:inherit;cursor:pointer;color:inherit;border:0}button:active,a.action:active{transform:scale(.96)}button,a.action{transition:transform .15s,background-color .18s,color .18s}button:focus-visible,a:focus-visible,canvas:focus-visible{outline:3px solid #246946;outline-offset:4px}button:disabled{cursor:wait;opacity:.6}
+#scene{position:fixed;inset:0;height:100%;height:100dvh}#scene canvas{display:block;width:100%;height:100%;touch-action:none}
+.topbar{position:fixed;top:calc(16px + var(--safe-top));left:calc(16px + var(--safe-left));right:calc(16px + var(--safe-right));display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;pointer-events:none}.brand{padding:10px 14px;background:var(--paper);box-shadow:0 4px 24px #142a2512;border-radius:18px;max-width:100%}.brand h1{font:500 1.4rem/1.12 Georgia,serif;letter-spacing:-.025em;margin:0 0 5px}.brand p{font-size:.83rem;line-height:1.35;margin:0;color:var(--muted)}.action{min-height:50px;display:inline-flex;justify-content:center;align-items:center;gap:7px;border-radius:15px;background:var(--paper);box-shadow:0 4px 24px #142a2512;padding:0 16px;text-decoration:none;font-size:.94rem;font-weight:600;color:var(--ink);pointer-events:auto;white-space:nowrap}.action svg{width:18px;height:18px}.top-actions{display:grid;justify-items:end;gap:8px;pointer-events:auto}.holiday-toggle{gap:10px;min-height:48px;font-size:.94rem}.holiday-toggle[aria-pressed=true]{background:#733345;color:#fff}.holiday-toggle span{font-size:.78rem;font-weight:600;opacity:.95}.holiday-toggle svg{width:18px;height:18px}
+.view-footer{position:fixed;bottom:calc(14px + var(--safe-bottom));left:calc(14px + var(--safe-left));right:calc(14px + var(--safe-right));max-width:440px;margin:0 auto;display:grid;gap:10px;container-type:inline-size}.dock{border-radius:22px;padding:6px;background:var(--paper);box-shadow:0 5px 18px #10291e0e,0 18px 50px #10291e14}.lights{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}.lights button{border-radius:16px;background:transparent;min-height:66px;min-width:0;font-size:.94rem;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:7px 3px;line-height:1.1}.lights button svg{width:23px;height:23px;stroke-width:1.65}.lights button[aria-pressed=true]{background:var(--ink);color:#fff}.below-dock{display:flex;justify-content:space-between;align-items:center;gap:8px;border-radius:17px;background:var(--paper);padding:0 6px 0 14px;min-height:48px;box-shadow:0 4px 24px #142a2512}.hint{font-size:.83rem;line-height:1.35;margin:0;max-width:235px}.reset{background:transparent;min-height:48px;min-width:62px;padding:0 10px;font-size:.89rem;font-weight:600;border-radius:12px}
+.loading{position:fixed;inset:0;display:grid;place-content:center;text-align:center;padding:24px;background:var(--paper);z-index:10}.loading h2{font:500 2rem Georgia,serif;margin:0 0 12px}.loading p{font-size:1rem;line-height:1.55;margin:0;color:var(--muted)}.loading a{display:inline-flex;min-height:50px;align-items:center;justify-content:center;color:var(--ink)}.loading img{max-width:100%}.loading[hidden],[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+@container(max-width:18rem){.lights{grid-template-columns:repeat(2,minmax(0,1fr))}.hint{max-width:70%}}
+@media(min-width:700px){.topbar{top:calc(24px + var(--safe-top));left:calc(24px + var(--safe-left));right:calc(24px + var(--safe-right))}.brand{padding:14px 20px}.brand h1{font-size:1.7rem}.view-footer{bottom:calc(22px + var(--safe-bottom));max-width:460px}.lights button{min-height:70px;font-size:1rem}}
+@media(max-width:350px){.topbar{gap:8px}.brand{padding:10px 12px}.brand h1{font-size:1.24rem}.action{padding:0 12px;font-size:.89rem}.hint{font-size:.78rem}.lights button{font-size:.89rem}}
+@media(max-height:500px) and (min-width:600px){.topbar{top:calc(10px + var(--safe-top));left:calc(14px + var(--safe-left));right:calc(14px + var(--safe-right))}.brand{padding:9px 14px}.brand h1{font-size:1.3rem;margin-bottom:2px}.view-footer{bottom:calc(10px + var(--safe-bottom));max-width:450px;gap:6px}.lights button{min-height:48px;flex-direction:row;gap:6px;font-size:.89rem}.lights button svg{width:20px;height:20px}.dock{border-radius:19px;padding:4px}.lights button{border-radius:15px}.below-dock{min-height:48px}.reset{min-height:48px}}
+@media(hover:hover){.action:hover,.reset:hover{background:#e8ece2}.holiday-toggle[aria-pressed=true]:hover{background:#63283a;color:#fff}.lights button:not([aria-pressed=true]):hover{background:#e8ece2}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
 
-</body></html>
+.collections{position:fixed;left:50%;top:calc(24px + var(--safe-top));transform:translateX(-50%);display:flex;gap:4px;background:var(--paper);border-radius:18px;padding:5px;box-shadow:0 4px 24px #142a2512;pointer-events:auto}
+.collections button{min-height:46px;padding:0 19px;border-radius:13px;background:transparent;font-weight:600;font-size:.94rem}.collections button[aria-pressed=true]{background:var(--ink);color:white}
+#construction-panel{position:fixed;inset:0;z-index:30;background:var(--paper)}#construction-panel iframe{width:100%;height:100%;border:0;display:block}
+#view-select{min-width:0;max-width:55%;border:0;background:transparent;color:var(--ink);font:600 .86rem/1.2 -apple-system,BlinkMacSystemFont,sans-serif;height:48px;cursor:pointer;padding-right:5px}#gate-toggle{font-size:.81rem;white-space:nowrap;padding:0 8px}.below-dock{gap:2px;padding-left:10px}
+@media(max-width:699px){.collections{top:calc(124px + var(--safe-top));padding:4px;white-space:nowrap}.collections button{min-height:44px;padding:0 20px}.brand p{font-size:.76rem}.top-actions{gap:6px}.action{min-height:44px}.holiday-toggle{min-height:44px}}
+@media(max-height:500px) and (min-width:600px){.collections{top:calc(10px + var(--safe-top))}.collections button{min-height:44px;padding:0 12px}.top-actions .holiday-toggle{display:none}}
+
+.view-footer>*{min-width:0}.below-dock #view-select{flex:1;width:0;max-width:none}.below-dock .reset{flex-shrink:0}#gate-toggle{min-width:0}
+@media(max-width:699px){.topbar{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}.brand{padding:10px;min-width:0}.brand h1{font-size:1.13rem;white-space:nowrap}.brand p{font-size:.64rem;white-space:nowrap}.top-actions .action{font-size:.75rem;padding:0 9px;min-height:44px}.top-actions .holiday-toggle{gap:5px}.holiday-toggle span{font-size:.66rem}.holiday-toggle svg{width:16px;height:16px}.collections{top:calc(116px + var(--safe-top));max-width:calc(100vw - 28px)}.collections button{padding:0 18px}.lights{grid-template-columns:repeat(4,minmax(0,1fr))}.lights button{min-height:60px;font-size:.82rem}.below-dock #view-select{font-size:.75rem}.below-dock #gate-toggle,.below-dock #reset{font-size:.74rem;padding:0 6px}.below-dock #reset{min-width:48px}}
+html.lab-concept-page:not(.lab-concept-embed) .lab-concept-shell,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-hint,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-status{display:none!important}html.lab-concept-embed #lab-return-link{display:none}html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}
+</style>
+</head>
+<body>
+<main id="scene" aria-label="3D view of the house and property"></main>
+<div id="property-controls"><header class="topbar"><div class="brand"><h1>Farm House</h1><p id="yard-description">Interactive property study of the house, barn, and grounds.</p></div><div class="top-actions"><a class="action" id="lab-return-link" href="/examples/lab/#showroom">The Lab</a><button class="action holiday-toggle" id="christmas-toggle" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 2 3 6h-2l5 6h-3l5 5H4l5-5H6l5-6H9l3-6Z M12 19v3"/></svg>Christmas <span id="christmas-state" aria-hidden="true">Off</span></button></div></header><nav class="collections" aria-label="Farm House sections"><button data-collection="property" aria-pressed="true">Property</button><button data-collection="inside" aria-pressed="false">Inside</button><button data-collection="find" aria-pressed="false">Find</button></nav>
+<div class="view-footer"><nav class="dock lights" aria-label="Time of day">
+<button data-lighting="dawn" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 17h20M4 21h16M7 17a5 5 0 0 1 10 0M12 4v4M4 10l3 3m13-3-3 3"/></svg>Dawn</button>
+<button data-lighting="noon" aria-pressed="true" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="4"/><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></svg>Day</button>
+<button data-lighting="dusk" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 17h20M4 21h16M7 17a5 5 0 0 1 10 0M4 10l3 3m13-3-3 3M12 2v7m-3-3 3 3 3-3"/></svg>Dusk</button>
+<button data-lighting="night" aria-pressed="false" disabled><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19.5 15A8 8 0 0 1 9 4.5 8 8 0 1 0 19.5 15ZM18 2v6m-3-3h6"/></svg>Night</button>
+</nav><div class="below-dock"><label for="view-select" class="sr-only">View</label><select id="view-select" aria-label="View"><option value="aerial">Whole property</option><option value="west">West · Front</option><option value="east">East · Patio</option><option value="south">South</option><option value="north">North · Driveway</option><option value="plan">From above</option><option value="gates">Gate & entry</option><option value="porch">Front porch</option><option value="paths">Walkways</option><option value="barnEast">Barn</option></select><button class="reset" id="yard-toggle" aria-pressed="true" disabled>Garden</button><button class="reset" id="gate-toggle" aria-pressed="true" disabled>Gate open</button><button class="reset" id="reset" aria-label="Reset view" disabled>Reset</button></div></div>
+</div><section id="construction-panel" hidden aria-label="Farm House Inside and Find"></section><div class="sr-only" id="status" role="status" aria-live="polite">Opening the house…</div>
+<div class="loading" id="loading" role="status"><h2>Farm House</h2><p>Opening your view…</p></div>
+<script defer src="./lab-bootstrap.js"></script><script defer src="/examples/lab/assets/lab-return.js"></script><script src="./farm-house-viewer.js?v=authentic-exterior-v2"></script><script src="./farm-house-adapter.js"></script>
+<noscript><div class="loading"><h2>Farm House</h2><p>This interactive property study needs JavaScript enabled.</p></div></noscript>
+</body>
+</html>

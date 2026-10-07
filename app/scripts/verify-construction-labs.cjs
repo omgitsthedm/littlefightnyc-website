@@ -22,46 +22,199 @@ async function overflow(page) {
   assert.ok(delta <= 1, `Horizontal overflow: ${delta}px`);
 }
 
-async function verifyPropertyExplorer(frame, label) {
-  await frame.waitForSelector('canvas', { timeout: 45000 });
-  await frame.waitForFunction(() => window.propertyExplorer && typeof window.propertyExplorer.getState === 'function');
-  assert.equal(await frame.locator('canvas').count(), 1, `${label}: one interactive canvas`);
+const FARM_VIEWS = ['aerial', 'west', 'east', 'south', 'north', 'plan', 'gates', 'porch', 'paths', 'barnEast'];
+const FARM_LIGHTING = ['dawn', 'noon', 'dusk', 'night'];
 
-  const initial = await frame.evaluate(() => window.propertyExplorer.getState());
-  assert.equal(initial.mode, 'property', `${label}: starts in the Property collection`);
-  assert.equal(initial.webgl, true, `${label}: public explorer has a working WebGL scene`);
-  assert.ok(initial.components > 0, `${label}: explorer exposes its fictional components`);
+async function farmState(frame) {
+  return frame.evaluate(() => window.farmHouseViewer?.getState?.() || null);
+}
 
-  const modes = await frame.locator('.collections [data-mode]').evaluateAll(buttons => buttons.map(button => button.dataset.mode));
-  assert.deepEqual(modes, ['property', 'inside', 'find'], `${label}: Property, Inside, and Find collections are present`);
+async function farmGardenState(frame) {
+  return frame.evaluate(() => ({
+    garden: window.farmHouseViewer?.getState?.().garden,
+    yard: document.body.dataset.yard,
+    landscapeVisible: window.farmExterior?.landscape?.visible,
+  }));
+}
 
-  const priorGate = initial.gateOpen;
-  await frame.locator('#gate').click();
-  await frame.waitForFunction(previous => window.propertyExplorer.getState().gateOpen !== previous, priorGate);
-  assert.equal(await frame.locator('#gate').getAttribute('aria-pressed'), 'true', `${label}: gate control updates its accessible state`);
+async function verifyFarmHouse(frame, label) {
+  await frame.locator('#scene canvas').waitFor({ timeout: 45000 });
+  await frame.locator('body[data-model-ready="true"]').waitFor({ timeout: 45000 });
+  assert.equal(await frame.locator('#scene canvas').count(), 1, `${label}: one interactive Farm House canvas`);
 
-  const priorEvening = await frame.evaluate(() => window.propertyExplorer.getState().evening);
-  await frame.locator('#light-mode').click();
-  await frame.waitForFunction(previous => window.propertyExplorer.getState().evening !== previous, priorEvening);
-  assert.equal(await frame.locator('#light-mode').getAttribute('aria-pressed'), 'true', `${label}: light control updates its accessible state`);
+  const viewSelect = frame.locator('select#view-select');
+  await viewSelect.waitFor({ state: 'visible' });
+  assert.deepEqual(
+    await viewSelect.locator('option').evaluateAll(options => options.map(option => option.value)),
+    FARM_VIEWS,
+    `${label}: exposes the complete ten-view Farm House camera set`,
+  );
 
-  await frame.locator('[data-mode="inside"]').click();
-  await frame.waitForFunction(() => window.propertyExplorer.getState().mode === 'inside');
-  await frame.locator('[data-mode="find"]').click();
-  await frame.waitForFunction(() => window.propertyExplorer.getState().mode === 'find');
-  await frame.locator('#search').fill('toilet');
-  const results = frame.locator('#results [data-item]');
-  await results.first().waitFor();
-  assert.ok(await results.count() > 0, `${label}: Find returns a fictional system result`);
-  await results.first().click();
-  await frame.waitForFunction(() => Boolean(window.propertyExplorer.getState().selected));
+  const lightButtons = frame.locator('button[data-lighting]');
+  assert.deepEqual(
+    await lightButtons.evaluateAll(buttons => buttons.map(button => button.dataset.lighting)),
+    FARM_LIGHTING,
+    `${label}: exposes dawn, day, dusk, and night`,
+  );
 
-  await frame.locator('#source-plan').click();
-  const plan = frame.locator('dialog[open]');
-  await plan.waitFor();
-  assert.equal(await plan.evaluate(node => node instanceof HTMLDialogElement && node.open), true, `${label}: source-plan opens a native demonstration-plan dialog`);
-  await frame.getByRole('button', { name: 'Close demonstration plan' }).click();
-  await frame.locator('#plan-dialog').waitFor({ state: 'hidden' });
+  await viewSelect.selectOption('barnEast');
+  await frame.waitForFunction(() => document.querySelector('#view-select')?.value === 'barnEast');
+  const night = frame.locator('button[data-lighting="night"]');
+  await night.click();
+  await frame.waitForFunction(() => document.querySelector('button[data-lighting="night"]')?.getAttribute('aria-pressed') === 'true');
+  assert.equal(await night.getAttribute('aria-pressed'), 'true', `${label}: active lighting reports its state`);
+
+  for (const selector of ['#gate-toggle', '#christmas-toggle']) {
+    const control = frame.locator(selector);
+    await control.waitFor({ state: 'visible' });
+    const before = await control.getAttribute('aria-pressed');
+    await control.click();
+    await frame.waitForFunction(({ selector, before }) => document.querySelector(selector)?.getAttribute('aria-pressed') !== before, { selector, before });
+    assert.equal(await control.getAttribute('aria-pressed'), before === 'true' ? 'false' : 'true', `${label}: ${selector} updates its accessible state`);
+  }
+
+  // Garden is a real scene mode, not a label that only toggles in the dock.
+  const yard = frame.locator('#yard-toggle');
+  await yard.click();
+  await frame.waitForFunction(() => document.body.dataset.yard === 'existing');
+  assert.deepEqual(await farmGardenState(frame), {
+    garden: false,
+    yard: 'existing',
+    landscapeVisible: false,
+  }, `${label}: Existing mode updates the rendered property scene`);
+  await yard.click();
+  await frame.waitForFunction(() => document.body.dataset.yard === 'proposed');
+  assert.deepEqual(await farmGardenState(frame), {
+    garden: true,
+    yard: 'proposed',
+    landscapeVisible: true,
+  }, `${label}: Garden mode restores the rendered property scene`);
+
+  const afterInteraction = await farmState(frame);
+  if (afterInteraction) {
+    assert.equal(afterInteraction.ready, true, `${label}: public viewer reports readiness`);
+    assert.equal(afterInteraction.view, 'barnEast', `${label}: state follows the selected camera`);
+    assert.equal(afterInteraction.lighting, 'night', `${label}: state follows lighting choice`);
+  }
+
+  await frame.locator('#reset').click();
+  await frame.waitForFunction(() => document.querySelector('#view-select')?.value === 'aerial');
+  const reset = await farmState(frame);
+  if (reset) assert.equal(reset.view, 'aerial', `${label}: reset restores the whole-property view`);
+  await frame.locator('button[data-lighting="noon"]').click();
+  await frame.waitForFunction(() => document.querySelector('button[data-lighting="noon"]')?.getAttribute('aria-pressed') === 'true');
+  assert.equal((await farmState(frame))?.lighting, 'noon', `${label}: whole-property reset evidence returns to daytime`);
+}
+
+async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
+  const inside = frame.locator('button[data-collection="inside"]');
+  await inside.click();
+  const panel = frame.locator('#construction-panel iframe');
+  await panel.waitFor();
+  const insideFrame = await (await panel.elementHandle()).contentFrame();
+  await insideFrame.locator('#view canvas').waitFor({ timeout: 45000 });
+  await insideFrame.waitForFunction(() => Boolean(window.farmHouseInside?.getState?.().safeData));
+  const modelStats = await insideFrame.evaluate(() => ({
+    layers: Object.keys(window.farmHouseInside.model.layers).length,
+    objects: window.farmHouseInside.model.objects.length,
+    entries: window.farmHouseInside.getState().entries,
+    barnMembers: window.farmHouseInside.model.objects.filter((object) => object.userData.layer === 'barn' && /column|rafter|purlin|girt/i.test(object.name)).length,
+    roofVisible: window.farmHouseInside.model.layers.roof.visible,
+    framingVisible: window.farmHouseInside.model.layers.walls.visible || window.farmHouseInside.model.layers.trusses.visible,
+    emptyControlNames: [...document.querySelectorAll('#layers .layer')].map((label) => label.textContent.trim()).filter((name) => {
+      const layer = Object.values(window.farmHouseInside.model.layers).find((group) => group.name === name);
+      return layer && layer.children.length === 0;
+    }),
+  }));
+  assert.equal(modelStats.layers, 25, `${label}: safe Inside model preserves its layer system`);
+  assert.ok(modelStats.objects > 4800 && modelStats.entries >= 400 && modelStats.barnMembers > 0,
+    `${label}: safe Inside model retains substantial searchable house and barn geometry`);
+  assert.equal(modelStats.roofVisible, false, `${label}: default Inside view keeps the roof out of the framing study`);
+  assert.equal(modelStats.framingVisible, true, `${label}: default Inside view exposes real framing`);
+  assert.deepEqual(modelStats.emptyControlNames, [], `${label}: default Inside controls omit empty model layers`);
+  const defaultShot = path.join(output, 'house-inside-default-393.png');
+  await panel.screenshot({ path: defaultShot });
+  report.screenshots.push(defaultShot);
+
+  const phoneBounds = await insideFrame.evaluate(() => {
+    const view = document.querySelector('#view').getBoundingClientRect();
+    const canvas = document.querySelector('#view canvas').getBoundingClientRect();
+    return { canvasWidth: canvas.width, canvasHeight: canvas.height, viewWidth: view.width, viewHeight: view.height, overflow: document.documentElement.scrollWidth - innerWidth };
+  });
+  assert.ok(phoneBounds.canvasWidth > 0 && phoneBounds.canvasHeight > 0 && phoneBounds.canvasWidth <= phoneBounds.viewWidth + 1 && phoneBounds.canvasHeight <= phoneBounds.viewHeight + 1 && phoneBounds.overflow <= 1,
+    `${label}: canvas stays bounded while phone controls can scroll`);
+
+  await insideFrame.locator('#cut').evaluate((input) => {
+    input.value = '60';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await insideFrame.waitForFunction(() => window.farmHouseInside.renderer.clippingPlanes.length === 1);
+  await insideFrame.locator('#cut').evaluate((input) => {
+    input.value = '100';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await insideFrame.waitForFunction(() => window.farmHouseInside.renderer.clippingPlanes.length === 0);
+
+  await insideFrame.locator('#show-barn').click();
+  await insideFrame.waitForFunction(() => window.farmHouseInside.model.layers.barn.visible);
+  assert.equal(await insideFrame.locator('#barn-toggle').isChecked(), true, `${label}: barn inspection exposes the barn layer`);
+  const barnShot = path.join(output, 'house-inside-barn-393.png');
+  await panel.screenshot({ path: barnShot });
+  report.screenshots.push(barnShot);
+
+  assert.equal(await insideFrame.locator('#truss option').count(), 60, `${label}: every safe truss profile is available`);
+  await insideFrame.locator('#show-truss').click();
+  await insideFrame.waitForFunction(() => window.farmHouseInside.getState().galleryOpen);
+  assert.deepEqual(await insideFrame.evaluate(() => ({
+    gallery: window.farmHouseInside.model.trussGallery.visible,
+    root: window.farmHouseInside.model.root.visible,
+    children: window.farmHouseInside.model.trussGallery.children.length,
+  })), { gallery: true, root: false, children: 1 }, `${label}: truss gallery swaps to a bounded single-profile scene`);
+  const trussShot = path.join(output, 'house-inside-truss-393.png');
+  await panel.screenshot({ path: trussShot });
+  report.screenshots.push(trussShot);
+  await insideFrame.locator('#reset').click();
+  await insideFrame.waitForFunction(() => !window.farmHouseInside.getState().galleryOpen && window.farmHouseInside.model.root.visible);
+
+  await insideFrame.locator('#search').fill('toilet');
+  const firstResult = insideFrame.locator('#results .result').first();
+  await firstResult.waitFor();
+  await firstResult.click();
+  await insideFrame.waitForFunction(() => Boolean(window.farmHouseInside.getState().selected));
+  const selected = await insideFrame.evaluate(() => {
+    const id = window.farmHouseInside.getState().selected;
+    const object = window.farmHouseInside.model.registry[id];
+    const layer = window.farmHouseInside.model.layers[object.userData.layer];
+    return { id, layerVisible: layer.visible, objectVisible: object.visible };
+  });
+  assert.ok(selected.id && selected.layerVisible && selected.objectVisible, `${label}: search selects a visible, usable construction object`);
+  const restoredLayer = await insideFrame.evaluate(() => {
+    const api = window.farmHouseInside;
+    api.model.layers.electrical.visible = false;
+    api.select('panel-A');
+    const object = api.model.registry['panel-A'];
+    return { layerVisible: api.model.layers.electrical.visible, objectVisible: object.visible };
+  });
+  assert.deepEqual(restoredLayer, { layerVisible: true, objectVisible: true },
+    `${label}: selecting a Find result re-enables its real model layer`);
+  const selectedShot = path.join(output, 'house-inside-selected-393.png');
+  await panel.screenshot({ path: selectedShot });
+  report.screenshots.push(selectedShot);
+  await insideFrame.locator('#clear').click();
+  await insideFrame.waitForFunction(() => !window.farmHouseInside.getState().selected);
+  assert.equal(await insideFrame.evaluate(() => window.farmHouseInside.model.registry['panel-A'].visible), true,
+    `${label}: clearing a Find result restores its model object`);
+
+  await insideFrame.locator('#property').click();
+  await panel.waitFor({ state: 'detached' });
+  assert.equal(await frame.locator('button[data-collection="property"]').getAttribute('aria-pressed'), 'true', `${label}: Property returns to the exterior and releases the nested engine`);
+
+  if (!exitToHub) return;
+  await frame.locator('button[data-collection="find"]').click();
+  const exitPanel = frame.locator('#construction-panel iframe');
+  await exitPanel.waitFor();
+  const exitFrame = await (await exitPanel.elementHandle()).contentFrame();
+  await exitFrame.locator('#exit').click();
 }
 
 (async () => {
@@ -74,6 +227,28 @@ async function verifyPropertyExplorer(frame, label) {
   });
   const page = await context.newPage();
   page.on('pageerror', error => report.errors.push(error.message));
+  for (const width of [320, 390, 768, 1440]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto(base + '/', { waitUntil: 'networkidle' });
+    const constructionHub = page.locator('.construction-hub-tile');
+    await constructionHub.waitFor();
+    const headingBounds = await constructionHub.evaluate((tile) => {
+      const heading = tile.querySelector('.construction-tile-copy strong');
+      if (!heading) return null;
+      const parent = tile.getBoundingClientRect();
+      const child = heading.getBoundingClientRect();
+      return {
+        left: child.left - parent.left,
+        top: child.top - parent.top,
+        right: parent.right - child.right,
+        bottom: parent.bottom - child.bottom,
+      };
+    });
+    assert.ok(headingBounds, `${width}px construction hub has a visible heading`);
+    assert.ok(Object.values(headingBounds).every(value => value >= -1),
+      `${width}px construction hub heading stays inside its tile: ${JSON.stringify(headingBounds)}`);
+    pass(`${width}px construction hub heading stays within its responsive tile bounds`);
+  }
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(base + '/construction/', { waitUntil: 'networkidle' });
@@ -171,10 +346,16 @@ async function verifyPropertyExplorer(frame, label) {
       assert.match(new URL(sharedStudy).searchParams.get('study'), /^[zu]\./);
     }
     if (slug === 'house-explorer') {
-      await verifyPropertyExplorer(frame, 'House Explorer in-card embed');
+      await verifyFarmHouse(frame, 'Farm House in-card embed');
       const shot = path.join(output, 'house-explorer-embed-393.png');
       await frameElement.screenshot({ path: shot });
       report.screenshots.push(shot);
+      await verifyFarmInside(frame, 'Farm House Inside and Find on phone', { exitToHub: true });
+      await dialog.waitFor({ state: 'hidden' });
+      assert.equal(await page.locator('#detail iframe').count(), 0, 'Inside exit releases both nested and exterior engines');
+      assert.equal(await tile.evaluate(node => node === document.activeElement), true, 'Inside exit restores focus to the originating tile');
+      pass('Farm House Inside and Find: safe model, cutaway, barn, truss, search, Property return, and hub exit');
+      continue;
     }
     await frameElement.evaluate(node => node.scrollIntoView({ block: 'end', behavior: 'instant' }));
     await frame.locator('.lab-embed-exit').click();
@@ -194,8 +375,12 @@ async function verifyPropertyExplorer(frame, label) {
   await desktopDialog.waitFor({ state: 'visible' });
   const desktopFrameElement = desktopDialog.locator('iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]');
   await desktopFrameElement.waitFor();
+  await desktopFrameElement.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const desktopFrame = await (await desktopFrameElement.elementHandle()).contentFrame();
-  await verifyPropertyExplorer(desktopFrame, 'House Explorer desktop in-card embed');
+  await verifyFarmHouse(desktopFrame, 'Farm House desktop in-card embed');
+  const desktopOpenShot = path.join(output, 'house-explorer-embed-open-1440.png');
+  await desktopFrameElement.screenshot({ path: desktopOpenShot });
+  report.screenshots.push(desktopOpenShot);
   await desktopFrame.locator('.lab-embed-exit').click();
   await desktopDialog.waitFor({ state: 'hidden' });
   assert.equal(await desktopHouse.locator('#detail iframe').count(), 0, 'Desktop close releases the 3D engine');
@@ -204,7 +389,7 @@ async function verifyPropertyExplorer(frame, label) {
   const desktopShot = path.join(output, 'house-explorer-embed-1440.png');
   await desktopHouse.screenshot({ path: desktopShot, fullPage: false });
   report.screenshots.push(desktopShot);
-  pass('House Explorer desktop in-card: native plan close is clickable, embed exit restores focus, and no overflow');
+  pass('Farm House desktop in-card: full viewer controls, embed exit restoration, and no overflow');
   await desktopHouse.close();
 
   const directHouse = await context.newPage();
@@ -212,12 +397,12 @@ async function verifyPropertyExplorer(frame, label) {
   for (const width of [393, 320]) {
     await directHouse.setViewportSize({ width, height: 844 });
     await directHouse.goto(base + '/examples/lab/concepts/house-explorer/', { waitUntil: 'networkidle' });
-    await verifyPropertyExplorer(directHouse, `House Explorer direct route at ${width}px`);
+    await verifyFarmHouse(directHouse, `Farm House direct route at ${width}px`);
     await overflow(directHouse);
     const shot = path.join(output, `house-explorer-direct-${width}.png`);
     await directHouse.screenshot({ path: shot, fullPage: true });
     report.screenshots.push(shot);
-    pass(`House Explorer direct route: ${width}px collections, controls, Find, plan dialog, no overflow`);
+    pass(`Farm House direct route: ${width}px camera views, lighting, controls, and no overflow`);
   }
   await directHouse.close();
 
@@ -227,10 +412,22 @@ async function verifyPropertyExplorer(frame, label) {
   await readerHouse.goto(base + '/labs/house-explorer/', { waitUntil: 'networkidle' });
   const readerFrameElement = readerHouse.locator('main[data-page-content] iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]');
   await readerFrameElement.waitFor();
+  await readerHouse.getByRole('link', { name: 'Try the working demo +' }).click();
+  await readerHouse.waitForFunction(() => {
+    const demo = document.querySelector('main[data-page-content] iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]')?.getBoundingClientRect();
+    const rail = document.querySelector('.direct-contact-rail')?.getBoundingClientRect();
+    return demo && rail && demo.top >= rail.bottom - 1;
+  });
+  assert.equal(await readerHouse.evaluate(() => {
+    const demo = document.querySelector('main[data-page-content] iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]')?.getBoundingClientRect();
+    const rail = document.querySelector('.direct-contact-rail')?.getBoundingClientRect();
+    return Boolean(demo && rail && demo.top >= rail.bottom - 1);
+  }), true, 'Farm House share reader anchor keeps the working demo clear of the fixed contact rail');
+  await readerFrameElement.evaluate(node => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const readerFrame = await (await readerFrameElement.elementHandle()).contentFrame();
-  await verifyPropertyExplorer(readerFrame, 'House Explorer share reader');
+  await verifyFarmHouse(readerFrame, 'Farm House share reader');
   await overflow(readerHouse);
-  pass('House Explorer share reader loads the same fictional Property, Inside, and Find experience');
+  pass('Farm House share reader loads the same full property viewer');
   await readerHouse.close();
   const freshContext = await browser.newContext({ reducedMotion: 'reduce' });
   const sharedPage = await freshContext.newPage();

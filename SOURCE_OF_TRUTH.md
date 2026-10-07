@@ -67,10 +67,13 @@ The construction showcase at `/construction/` uses dedicated, shareable readers 
 `/labs/<slug>/`. Working experiences remain at `/examples/lab/concepts/<slug>/` and
 load only when their reader opens. The Cabinet Lab is an isolated presentation
 derivative of an existing test project.
-Property Explorer retains the `/labs/house-explorer/` route and uses an entirely
-fictional procedural property, floor plan, and example service routes. Its editable
-source and reproducible build live under `app/scripts/property-explorer/`; no original
-property geometry, plans, photographs, or location data belong in that experience.
+Farm House retains the `/labs/house-explorer/` route and presents the original
+Farm House geometry, materials, grounds, camera views, and lighting. Its sanitized
+Inside and Find tools present construction geometry and illustrative service routes.
+The presentation source and pinned import/check tools live under
+`app/scripts/property-explorer/`. Public output excludes addresses, source drawings,
+records, maps, and private project references. The original Farm House project and
+standalone deployment remain unchanged.
 Both studies are authorized for this showcase on 2026-10-06. Upstream private projects
 remain separate and unchanged. Inclusion does not turn a design study into a client
 result, measured plan, estimate, or connected business system.

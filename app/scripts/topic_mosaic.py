@@ -234,7 +234,7 @@ def build_topic_mosaic(mosaic, reviews, topic_tiles, albums, extra_tiles=()):
         # recognizable object, and a complete accessible name. Every other
         # ordinary front is a short message plus its diagram or symbol, so it
         # earns a compact horizontal strip instead of a mostly empty square.
-        if kind not in ('service-anchor', 'case-study', 'photo-album', 'review', 'lab'):
+        if kind not in ('service-anchor', 'case-study', 'photo-album', 'review', 'lab', 'construction-hub'):
             if face == 'icon':
                 width, height = mobile_width, mobile_height = 1, 1
             elif identity not in ('brand-brief', 'google-reviews', 'page-vera', 'booking', 'it-payment-device-check', *COMPACT_LABELS):

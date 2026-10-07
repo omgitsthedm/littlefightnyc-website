@@ -156,13 +156,13 @@ for = "/examples/lab/*"
   X-Content-Type-Options = "nosniff"
   X-Frame-Options = "SAMEORIGIN"
 
-# Property Explorer runs a fictional procedural model with same-origin assets.
-# Allow its shared Lab shell and same-origin embedded presentation.
+# Farm House preserves the original property in a local presentation build.
+# Keep model assets and the shared in-card return controls on the same origin.
 [[headers]]
 for = "/examples/lab/concepts/house-explorer/*"
 
   [headers.values]
-  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' blob:; media-src 'self'; frame-src 'none'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
+  Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: blob:; connect-src 'self' blob:; media-src 'self'; frame-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'"
   X-Frame-Options = "SAMEORIGIN"
 
 # Unlike the preserved interactive Lab builds, the Pool Room uses no inline

@@ -11,10 +11,10 @@
     },
     {
       slug: 'house-explorer',
-      title: 'Property Explorer',
-      type: 'Illustrative spatial build',
+      title: 'Farm House',
+      type: 'Interactive property study',
       suite: 'construction',
-      hint: 'Explore the property, reveal the frame, or find a system behind the walls.'
+      hint: 'Choose a view, change the light, and explore the house, barn, and grounds.'
     },
     {
       slug: 'walkup-3d',

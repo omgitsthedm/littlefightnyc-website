@@ -227,15 +227,21 @@
     },
     {
       "path": "/labs/house-explorer/",
-      "title": "Property Explorer",
-      "description": "Explore a fictional property, reveal its structure, and find the systems behind the walls.",
+      "title": "Farm House",
+      "description": "Explore the house, barn, and grounds. Then look inside the frame and find the systems behind the walls.",
       "family": "Custom software",
       "aliases": [
+        "farm house",
+        "farmhouse",
         "property explorer",
         "house explorer",
         "3d home",
         "home design",
+        "landscaping",
+        "barn",
+        "construction visualization",
         "framing",
+        "roof trusses",
         "plumbing",
         "electrical",
         "find a system"

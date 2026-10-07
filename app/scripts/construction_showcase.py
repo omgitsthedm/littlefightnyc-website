@@ -5,7 +5,7 @@ E = lambda value: escape(str(value), quote=True)
 
 CONSTRUCTION_LABS = {
     'cabinet-concept': ('A kitchen, before the commitment.', 'Try cabinet styles, finishes and hardware. Compare a few directions while the decision is still easy to change.'),
-    'house-explorer': ('Walk around the idea.', 'Explore a house in three dimensions and see how light changes its shape. A visual study, not a measured building plan.'),
+    'house-explorer': ('Explore the whole property.', 'Move around the Farm House, barn, and grounds. Then look inside the frame, inspect a truss, or find a system.'),
     'walkup-3d': ('See the whole building.', 'Turn a six-story building, move closer and look from another angle. An imagined place you can explore in your browser.'),
     'pool-room': ('Give an interior a feeling.', 'Explore the film and stills of an invented pool room. A set-design study in materials, lighting and atmosphere.'),
     'terminal-3d': ('Pull back to the neighborhood.', 'Explore an imagined district as daylight turns to neon. A playful example of presenting a place at a larger scale.'),
@@ -14,7 +14,7 @@ CONSTRUCTION_LABS = {
 
 
 def construction_tile():
-    return '''<a class="tile construction-hub-tile" href="/construction/" data-answer="construction-showcase" data-family="software" data-material-family="software" data-kind="construction-hub" data-cell-title="For builders &amp; remodelers" data-columns="3" data-rows="2" data-mobile-columns="3" data-mobile-rows="3"><span class="construction-tile-copy"><span class="construction-tile-label">Websites + interactive tools</span><strong>For builders<br>&amp; remodelers.</strong><span>See the work. Try the ideas.</span></span><span class="construction-tile-plus" aria-hidden="true">+</span></a>'''
+    return '''<a class="tile construction-hub-tile" href="/construction/" data-answer="construction-showcase" data-family="software" data-material-family="software" data-kind="construction-hub" data-cell-title="For builders &amp; remodelers" data-columns="3" data-rows="1" data-mobile-columns="3" data-mobile-rows="3"><span class="construction-tile-copy"><strong>For builders<br>&amp; remodelers.</strong></span><span class="construction-tile-plus" aria-hidden="true">+</span></a>'''
 
 
 def render_construction(labs, cases, link):

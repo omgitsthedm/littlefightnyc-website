@@ -126,9 +126,9 @@
     },
     {
       "slug": "house-explorer",
-      "title": "Property Explorer",
-      "type": "Illustrative spatial build",
-      "description": "Explore a fictional property, reveal its structure, and find the systems behind the walls.",
+      "title": "Farm House",
+      "type": "Interactive property study",
+      "description": "Explore the house, barn, and grounds. Then look inside the frame and find the systems behind the walls.",
       "suite": "construction"
     },
     {
