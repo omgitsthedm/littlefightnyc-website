@@ -180,10 +180,11 @@ html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find
 /* The viewport here is the card's inner frame, which can be narrower than a phone. */
 @media(max-width:480px){
   .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(64px + var(--safe-right));display:flex;flex-direction:column;gap:8px}
+  html:not(.lab-concept-embed) .topbar{right:calc(12px + var(--safe-right))}
   .brand{padding:8px 12px;width:max-content;max-width:100%}
   .brand h1{font-size:20px;line-height:1.2;margin:0;white-space:normal}
   .brand p{display:none}
-  .top-actions{display:flex;flex-wrap:wrap;justify-content:flex-start}
+  .top-actions{display:flex;flex-wrap:wrap;justify-content:flex-start;max-width:100%}
   .top-actions .holiday-toggle{font-size:14px;min-height:44px;padding:0 8px}
   .collections{top:calc(116px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
   .collections button{min-width:0;min-height:44px;padding:0 2px;font-size:16px}
