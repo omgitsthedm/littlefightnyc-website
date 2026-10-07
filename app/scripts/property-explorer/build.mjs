@@ -172,7 +172,29 @@ function safeHtml(source) {
   html = html.replace(/(<\/select>)(<button class="reset" id="gate-toggle")/, '$1<button class="reset" id="yard-toggle" aria-pressed="true" disabled>Garden</button>$2');
   html = html.replace(/<script src="Farm-House-Viewer\.js[^"]*"><\/script>/, '<script defer src="./lab-bootstrap.js"></script><script defer src="/examples/lab/assets/lab-return.js"></script><script src="./farm-house-viewer.js?v=authentic-exterior-v2"></script><script src="./farm-house-adapter.js"></script>');
   html = html.replace(/<noscript>.*?<\/noscript>/s, '<noscript><div class="loading"><h2>Farm House</h2><p>This interactive property study needs JavaScript enabled.</p></div></noscript>');
-  html = html.replace('</style>', 'html.lab-concept-page:not(.lab-concept-embed) .lab-concept-shell,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-hint,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-status{display:none!important}html.lab-concept-embed #lab-return-link{display:none}html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}\n</style>');
+  html = html.replace('</style>', `
+html.lab-concept-page:not(.lab-concept-embed) .lab-concept-shell,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-hint,html.lab-concept-page:not(.lab-concept-embed) .lab-concept-status{display:none!important}
+html.lab-concept-embed #lab-return-link{display:none}
+html.lab-concept-embed .topbar{right:calc(78px + var(--safe-right))}
+html.lab-concept-embed body:is([data-collection="inside"],[data-collection="find"]) .lab-embed-exit{display:none}
+/* The viewport here is the card's inner frame, which can be narrower than a phone. */
+@media(max-width:480px){
+  .topbar,html.lab-concept-embed .topbar{top:calc(12px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(64px + var(--safe-right));display:flex;flex-direction:column;gap:8px}
+  .brand{padding:8px 12px;width:max-content;max-width:100%}
+  .brand h1{font-size:20px;line-height:1.2;margin:0;white-space:normal}
+  .brand p{display:none}
+  .top-actions{display:flex;flex-wrap:wrap;justify-content:flex-start}
+  .top-actions .holiday-toggle{font-size:14px;min-height:44px;padding:0 8px}
+  .collections{top:calc(116px + var(--safe-top));left:calc(12px + var(--safe-left));right:calc(12px + var(--safe-right));max-width:none;transform:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px}
+  .collections button{min-width:0;min-height:44px;padding:0 2px;font-size:16px}
+  .view-footer{left:calc(8px + var(--safe-left));right:calc(8px + var(--safe-right));bottom:calc(8px + var(--safe-bottom));gap:6px}
+  .lights button{min-height:48px;padding:4px 2px;font-size:14px}
+  .lights button svg{width:18px;height:18px}
+  .below-dock{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:4px;gap:2px;min-height:0}
+  .below-dock #view-select{grid-column:1/-1;width:100%;height:44px;font-size:15px;padding:0 8px}
+  .below-dock #yard-toggle,.below-dock #gate-toggle,.below-dock #reset{min-width:0;min-height:44px;padding:0 2px;font-size:14px}
+}
+</style>`);
   assertSafe(html, 'index.html');
   return html;
 }

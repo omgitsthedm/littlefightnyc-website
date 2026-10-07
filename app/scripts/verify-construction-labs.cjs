@@ -37,6 +37,83 @@ async function farmGardenState(frame) {
   }));
 }
 
+function rectanglesOverlap(first, second) {
+  return first.left < second.right && first.right > second.left && first.top < second.bottom && first.bottom > second.top;
+}
+
+// The share reader reserves horizontal room for its own close affordance. On a
+// 320px phone that leaves the Farm House frame narrower than the direct route.
+// Keep each real control reachable inside that effective viewport rather than
+// proving only that the frame loads.
+async function verifyFarmCompactControls(frame, label, { page = null, frameElement = null } = {}) {
+  const layout = await frame.evaluate(() => {
+    const rect = (selector) => {
+      const element = document.querySelector(selector);
+      if (!element) return null;
+      const box = element.getBoundingClientRect();
+      return { left: box.left, right: box.right, top: box.top, bottom: box.bottom, width: box.width, height: box.height };
+    };
+    return {
+      viewport: { width: innerWidth, height: innerHeight },
+      brand: rect('.brand'),
+      christmas: rect('#christmas-toggle'),
+      exit: rect('.lab-embed-exit'),
+      collections: [...document.querySelectorAll('.collections button')].map((button) => ({
+        name: button.textContent.trim(),
+        rect: (() => {
+          const box = button.getBoundingClientRect();
+          return { left: box.left, right: box.right, top: box.top, bottom: box.bottom, width: box.width, height: box.height };
+        })(),
+      })),
+    };
+  });
+  assert.deepEqual(layout.collections.map(({ name }) => name), ['Property', 'Inside', 'Find'], `${label}: compact navigation keeps all three Farm House sections`);
+  for (const { name, rect } of layout.collections) {
+    assert.ok(rect.width > 0 && rect.height >= 44 && rect.left >= 0 && rect.right <= layout.viewport.width && rect.top >= 0 && rect.bottom <= layout.viewport.height,
+      `${label}: ${name} stays fully tappable in the visible Farm House viewport: ${JSON.stringify(rect)}`);
+  }
+  for (let index = 1; index < layout.collections.length; index += 1) {
+    assert.equal(rectanglesOverlap(layout.collections[index - 1].rect, layout.collections[index].rect), false,
+      `${label}: compact section controls do not overlap`);
+  }
+  for (const [name, rect] of Object.entries({ brand: layout.brand, christmas: layout.christmas, exit: layout.exit })) {
+    if (!rect) continue;
+    assert.ok(rect.width > 0 && rect.height > 0 && rect.left >= 0 && rect.right <= layout.viewport.width && rect.top >= 0 && rect.bottom <= layout.viewport.height,
+      `${label}: ${name} stays within the visible Farm House viewport: ${JSON.stringify(rect)}`);
+  }
+  if (layout.brand && layout.christmas) {
+    assert.equal(rectanglesOverlap(layout.brand, layout.christmas), false, `${label}: Farm House title and Christmas control do not overlap`);
+  }
+  if (layout.exit && layout.christmas) {
+    assert.equal(rectanglesOverlap(layout.exit, layout.christmas), false, `${label}: Farm House exit and Christmas control do not overlap`);
+  }
+
+  if (!page || !frameElement) return;
+  const outer = await frameElement.boundingBox();
+  assert.ok(outer, `${label}: compact Farm House frame has a rendered outer box`);
+  for (const { name, rect } of layout.collections) {
+    const target = await page.evaluate(({ x, y }) => {
+      const element = document.elementFromPoint(x, y);
+      return element?.tagName === 'IFRAME';
+    }, { x: outer.x + rect.left + rect.width / 2, y: outer.y + rect.top + rect.height / 2 });
+    assert.equal(target, true, `${label}: ${name} receives pointer input through the reader, not an overlaid page section`);
+  }
+}
+
+async function verifyFarmCollectionSwitches(frame, label) {
+  for (const collection of ['inside', 'find']) {
+    await frame.locator(`button[data-collection="${collection}"]`).click();
+    const panel = frame.locator('#construction-panel iframe');
+    await panel.waitFor();
+    const nested = await (await panel.elementHandle()).contentFrame();
+    await nested.locator('#view canvas').waitFor({ timeout: 45000 });
+    if (collection === 'find') await nested.locator('#search').waitFor({ state: 'visible' });
+    await nested.locator('#property').click();
+    await panel.waitFor({ state: 'detached' });
+    assert.equal(await frame.locator('button[data-collection="property"]').getAttribute('aria-pressed'), 'true', `${label}: ${collection} returns to Property cleanly`);
+  }
+}
+
 async function verifyFarmHouse(frame, label) {
   await frame.locator('#scene canvas').waitFor({ timeout: 45000 });
   await frame.locator('body[data-model-ready="true"]').waitFor({ timeout: 45000 });
@@ -398,6 +475,10 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
     await directHouse.setViewportSize({ width, height: 844 });
     await directHouse.goto(base + '/examples/lab/concepts/house-explorer/', { waitUntil: 'networkidle' });
     await verifyFarmHouse(directHouse, `Farm House direct route at ${width}px`);
+    if (width === 320) {
+      await verifyFarmCompactControls(directHouse, 'Farm House direct route at 320px');
+      await verifyFarmCollectionSwitches(directHouse, 'Farm House direct route at 320px');
+    }
     await overflow(directHouse);
     const shot = path.join(output, `house-explorer-direct-${width}.png`);
     await directHouse.screenshot({ path: shot, fullPage: true });
@@ -429,6 +510,36 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
   await overflow(readerHouse);
   pass('Farm House share reader loads the same full property viewer');
   await readerHouse.close();
+
+  const compactContext = await browser.newContext({
+    viewport: { width: 320, height: 700 },
+    isMobile: true,
+    hasTouch: true,
+    reducedMotion: 'reduce',
+  });
+  await compactContext.route('**/*', route => {
+    const request = route.request();
+    return ['GET', 'HEAD'].includes(request.method()) ? route.continue() : route.abort();
+  });
+  const compactReader = await compactContext.newPage();
+  compactReader.on('pageerror', error => report.errors.push(error.message));
+  await compactReader.goto(base + '/labs/house-explorer/', { waitUntil: 'networkidle' });
+  const compactFrameElement = compactReader.locator('main[data-page-content] iframe[data-demo-src^="/examples/lab/concepts/house-explorer/"]');
+  await compactFrameElement.waitFor();
+  await compactReader.getByRole('link', { name: 'Try the working demo +' }).click();
+  await compactFrameElement.scrollIntoViewIfNeeded();
+  const compactFrame = await (await compactFrameElement.elementHandle()).contentFrame();
+  await compactFrame.locator('body[data-model-ready="true"]').waitFor({ timeout: 45000 });
+  assert.ok((await compactFrame.evaluate(() => innerWidth)) <= 280, '320px share reader exercises the reduced embedded Farm House viewport');
+  await verifyFarmCompactControls(compactFrame, 'Farm House 320px share reader', { page: compactReader, frameElement: compactFrameElement });
+  await verifyFarmCollectionSwitches(compactFrame, 'Farm House 320px share reader');
+  await overflow(compactReader);
+  const compactShot = path.join(output, 'house-explorer-reader-320.png');
+  await compactFrameElement.screenshot({ path: compactShot });
+  report.screenshots.push(compactShot);
+  await compactContext.close();
+  pass('Farm House 320px direct and embedded routes keep every header and Property, Inside, Find control visible, separate, and tappable');
+
   const freshContext = await browser.newContext({ reducedMotion: 'reduce' });
   const sharedPage = await freshContext.newPage();
   await sharedPage.goto(sharedStudy);
