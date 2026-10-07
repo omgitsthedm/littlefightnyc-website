@@ -384,7 +384,12 @@ async function run() {
             const { frame, frameElement } = await openCard(page, route, lab.slug);
             await frameElement.scrollIntoViewIfNeeded();
             const box = await frameElement.boundingBox();
-            assert.ok(box.width <= viewport.width && box.height <= (viewport.height < 500 ? 340 : 440), `${lab.slug}: working surface fits the compact phone card`);
+            // Farm House needs space for its model, camera controls, and nested
+            // search. Bound it to the usable phone viewport while preserving
+            // the compact limit for other Labs and the existing exit hit tests.
+            const maxHeight = viewport.height < 500 ? 340
+              : lab.slug === 'house-explorer' ? Math.min(640, viewport.height - 96) : 440;
+            assert.ok(box.width <= viewport.width && box.height <= maxHeight, `${lab.slug}: working surface fits the phone with room for reader controls`);
             const layout = await frame.evaluate(() => ({ width:innerWidth, scroll:document.documentElement.scrollWidth }));
             assert.ok(layout.scroll <= layout.width + 1, `${lab.slug}: no sideways page overflow: ${JSON.stringify(layout)}`);
             const interaction = await runRepresentativeInteraction(frame, lab.slug);
