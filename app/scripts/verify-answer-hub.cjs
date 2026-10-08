@@ -107,7 +107,7 @@ async function enlargeEditorialAnchorText(page) {
       const web = measured.anchors.find(a => a.family === 'web');
       assert.ok(brand && web && measured.hero.bottom <= web.top + 1, `${width}: complete illustrated brand hero precedes the four services`);
       if (width >= 601 && width <= 1000) {
-        assert.ok(brand.height <= web.height + 1, `${width}: brand stays no taller than a service card (${brand.height}px)`);
+        assert.ok(brand.width >= web.width, `${width}: brand context card remains wider than a service card`);
         assert.ok(web.height <= 400, `${width}: website anchor must not balloon (${web.height}px)`);
       }
       if (width === 924) {

@@ -74,7 +74,7 @@ async function run() {
       await shot(page, `reader-${width}.png`);
       await page.locator('#detail .rw-full-gallery > summary').click();
       assert.ok(await page.locator('#detail .rw-client-gallery').isVisible());
-      await page.locator('#detail a[href*="/tech-audit/?intent=website"]').first().click();
+      await page.locator('#detail-body a[href*="/tech-audit/?intent=website"]').first().click();
       await page.locator('#detail .lf-audit__form').waitFor();
       assert.equal(await page.locator('#detail .lf-audit-intro h1').innerText(), copies.website.title);
       assert.equal(await page.locator('#detail').getAttribute('aria-label'), copies.website.title);
@@ -129,8 +129,8 @@ async function run() {
       await page.locator('#explore-toggle').click();
       await page.locator('#explore-menu .menu-links a[href="/services/custom-local-websites/"]').click();
       await page.locator('#detail .website-service-body').waitFor();
-      assert.ok(await page.getByRole('dialog', { name: copies.website.title, exact: true }).isVisible());
-      await page.locator('#detail a[href*="/tech-audit/?intent=website"]').first().click();
+      assert.ok(await page.getByRole('dialog', { name: 'A website that feels like your business.', exact: true }).isVisible());
+      await page.locator('#detail-body a[href*="/tech-audit/?intent=website"]').first().click();
       await page.locator('#detail .lf-audit__form').waitFor();
       const name = page.locator('#detail').getByLabel('Your name', { exact: true });
       await name.fill('Updated in card');

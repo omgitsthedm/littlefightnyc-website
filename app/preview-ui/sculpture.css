@@ -50,7 +50,7 @@
 #canvas .sculpture-tile :is(.sculpture-object,.sculpture-symbol){transition:none}
 #canvas .sculpture-tile:is(:hover,:focus-visible) .sculpture-art img{transform:none}
 .sculpture-symbol{width:32px;height:32px;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--tile-pop) 16%,transparent));transform-origin:50% 80%}
-.mosaic-home #canvas [data-sculpture-layout=compact]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto;gap:12px}
+.mosaic-home #canvas [data-sculpture-layout=compact]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;gap:12px}
 .mosaic-home #canvas [data-sculpture-layout=compact]>.tile{grid-area:auto!important;min-width:0;min-height:clamp(148px,15.6vw,208px)}
 .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{width:47%;height:auto;min-height:100%;justify-content:center;gap:5px;padding:14px 4px 14px 20px}
 .sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:clamp(20px,5.8cqw,38px);color:var(--tile-pop);line-height:1.05}
@@ -125,7 +125,7 @@
  .hero-main{left:6%;top:10%;width:68%;height:42%}.hero-main img{height:183%}.hero-secondary{left:31%;bottom:9%;width:46%;height:43%}.sculpture-hero-stage .hero-boat{left:0;bottom:17%;width:30%;height:31%}
  .mosaic-home #canvas{gap:32px}.mosaic-home .topic-section{gap:10px}.mosaic-home .topic-heading h2,.sculpture-services .topic-heading h2{font-size:clamp(28px,7.5vw,39px)}
  .mosaic-home [data-topic-grid]{gap:10px;grid-auto-rows:calc((100cqw - 50px)/6)}
- .mosaic-home #canvas [data-sculpture-layout=compact]{gap:9px}.mosaic-home #canvas [data-sculpture-layout=compact]>.tile{min-height:clamp(136px,36vw,195px)}
+ .mosaic-home #canvas [data-sculpture-layout=compact]{gap:9px;grid-auto-rows:auto}.mosaic-home #canvas [data-sculpture-layout=compact]>.tile{min-height:clamp(136px,36vw,195px)}
  .sculpture-tile.tile{border-radius:12px}.sculpture-copy{padding:13px 28px 0 12px;gap:7px}.sculpture-title{font-size:20px;line-height:1.16}
  .sculpture-plus{right:6px;top:7px;font-size:26px;width:20px}.sculpture-description{font-size:16px;line-height:1.3}.sculpture-art{height:57%;inset-inline:3px;bottom:0}
  .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{display:flex;width:100%;padding:10px 12px;min-height:0;height:auto;gap:4px}

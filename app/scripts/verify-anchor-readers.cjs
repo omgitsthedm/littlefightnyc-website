@@ -66,8 +66,13 @@ async function checkReaders(browser) {
       assert.equal(sizes.length, 5);
       const services = sizes.filter(x => x.family !== 'brand');
       const brand = sizes.find(x => x.family === 'brand');
-      assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1 && Math.abs(x.height - services[0].height) < 1), `equal four service anchor dimensions at ${width}: ${JSON.stringify(sizes)}`);
-      assert.ok(brand.height <= services[0].height + 1, `brand stays more compact at ${width}: ${JSON.stringify(sizes)}`);
+      assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1), `equal four service anchor widths at ${width}: ${JSON.stringify(sizes)}`);
+      for (const row of [services.slice(0, 2), services.slice(2)]) {
+        assert.ok(row.every(x => Math.abs(x.height - row[0].height) < 1), `service pairs share a row height at ${width}: ${JSON.stringify(sizes)}`);
+      }
+      if (width > 600) assert.ok(services.every(x => Math.abs(x.height - services[0].height) < 1), `desktop service rows match at ${width}: ${JSON.stringify(sizes)}`);
+      else assert.ok(services[2].height >= services[0].height, `phone second row makes room for copy and artwork at ${width}`);
+      assert.ok(brand.width >= services[0].width, `the brand context card stays wider than a service anchor at ${width}: ${JSON.stringify(sizes)}`);
       for (const [family] of Object.entries(routes)) {
         const tile = page.locator(`a.tile[data-reader-anchor="${family}"]`);
         await tile.click();
@@ -93,7 +98,7 @@ async function checkReaders(browser) {
         await page.locator('#detail').waitFor({ state:'hidden' });
         assert.equal(await tile.evaluate(n => n === document.activeElement), true, 'closing restores focus');
       }
-      pass(`${width}px: four service anchors match and brand is compact, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
+      pass(`${width}px: service widths and paired row heights match, brand remains a wide context card, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
       if (width === 390) {
         await page.addStyleTag({ content:'html{font-size:200%!important}' });
         for (const family of ['brand','it','consulting','software']) {
@@ -109,15 +114,16 @@ async function checkReaders(browser) {
 }
 
 async function checkRotation(browser) {
-  // The reference hero retains two authentic screens, storefront, boat and cursor.
+  // The owner removed the cursor; a shared ground contains the storefront.
   const current = await context(browser);
   try {
     const { page } = current;
     await page.goto(base + '/', { waitUntil:'networkidle' });
     const displays = page.locator('.sculpture-hero img');
-    assert.equal(await displays.count(), 5);
+    assert.equal(await displays.count(), 4);
     const sources = await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src')));
-    assert.deepEqual(sources, ['browser-chromatic-painting-design','storefront','browser-hair-by-rachel-charles','boat','cursor'].map(name => '/assets/sculpture/'+name+'.webp'));
+    assert.deepEqual(sources, ['hero-stage','browser-chromatic-painting-design','browser-hair-by-rachel-charles','boat'].map(name => '/assets/sculpture/'+name+'.webp'));
+    assert.equal(await page.locator('.hero-cursor').count(), 0);
     assert.ok(await displays.evaluateAll(imgs => imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await page.locator('.hero-work-index').count(), 0);
     assert.equal(await page.locator('.hero-project').count(), 2);
@@ -131,12 +137,12 @@ async function checkRotation(browser) {
     assert.equal(await tile.locator('.sculpture-object').evaluate(n => getComputedStyle(n).transform), 'none');
     await page.emulateMedia({ reducedMotion:'reduce' });
     assert.deepEqual(await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src'))), sources);
-    pass('The reference hero has two authentic screens, storefront, tugboat and cursor, with two useful actions and no caption rail; pause and reduced motion suppress decorative tile motion');
+    pass('The reference hero has two authentic screens, a shared storefront ground and tugboat, with two useful actions and no pointer or caption rail; pause and reduced motion suppress decorative tile motion');
   } finally { await current.ctx.close(); }
   const plain = await context(browser, { javaScriptEnabled:false });
   try {
     await plain.page.goto(base + '/');
-    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 5 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 4 && imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await plain.page.locator('.sculpture-hero-actions a[href]').count(), 2);
     pass('Without JavaScript, the complete reference hero and both actions remain available');
   } finally { await plain.ctx.close(); }

@@ -39,8 +39,9 @@
  #detail .lf-reader[data-reader-template=website-service] .reader-rail a{font-size:16px;gap:6px}
  .lf-reader[data-reader-template=website-service] .story-hero{padding-top:18px}
  .lf-reader[data-reader-template=website-service] .story-title{font-size:clamp(29px,8.6vw,46px);line-height:1.04}
+ .lf-reader[data-reader-template=website-service] .rw-benefits{grid-template-columns:1fr}
  .lf-reader[data-reader-template=website-service] .rw-benefits a{font-size:16px;gap:10px}
- .reference-benefit-icon{width:28px;height:28px}
+ .lf-reader[data-reader-template=website-service] .reference-benefit-icon{width:28px;height:28px}
  .reference-work{gap:6px;padding-bottom:22px}
  .reference-story{gap:10px;padding:20px 0;min-height:170px}
  .lf-reader .reference-story h2{font-size:24px}.lf-reader .reference-story p{font-size:16px;line-height:1.35}
