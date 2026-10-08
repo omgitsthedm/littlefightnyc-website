@@ -3,14 +3,20 @@
     {
       "file": "boat-480.webp",
       "width": 480,
-      "bytes": 19330,
-      "sha256": "d95b2a49a2734bee1eed3c1c93b25c60994bcb93522599ce32529a3350221736"
+      "bytes": 21848,
+      "sha256": "8c7978da8722f24bc3bcbff6f8a55e80930f27af11cce95b44746f1c0c1a4aa4"
+    },
+    {
+      "file": "boat-800.webp",
+      "width": 800,
+      "bytes": 45808,
+      "sha256": "8bac6d163439788bf3a2df54ab7bfe8b064c19c06fd861664496ea42d8120e35"
     },
     {
       "file": "boat.webp",
-      "width": 968,
-      "bytes": 32382,
-      "sha256": "5bb46258481fa149565e51df4774365114541c8b901efad5e3e561599a206fe8"
+      "width": 1600,
+      "bytes": 187452,
+      "sha256": "c434c75f41a9f49aa032cbad8f9d5e5a377b4c6102b8c00836bc86a5be04cc44"
     }
   ],
   "browser-after-hours-agenda": [
@@ -807,20 +813,20 @@
     {
       "file": "router-480.webp",
       "width": 480,
-      "bytes": 19476,
-      "sha256": "19f8d753a89e8c4fb809712955bb16dc51eb2633a7b105c3d0fe90e72ef06aa5"
+      "bytes": 20394,
+      "sha256": "0577e75e743cf6ad02a68f851e6d1a256bd0a18bc6c53b599b6cef1033b03f01"
     },
     {
       "file": "router-800.webp",
       "width": 800,
-      "bytes": 37358,
-      "sha256": "392be70928c28ef6b9ccaf43ff5098071731b2b5a954737f3a7da0704be95cc1"
+      "bytes": 40244,
+      "sha256": "03150cd3034b0d54c538417dc2f604624295629691d677e2073fb981f0fbd0e1"
     },
     {
       "file": "router.webp",
-      "width": 1402,
-      "bytes": 84954,
-      "sha256": "6c3aebd4c88ab507569f125c8dd11e59db56535b3d917b18e1d6d406ce64352e"
+      "width": 1600,
+      "bytes": 159148,
+      "sha256": "b26852971b2bbce887041a1bb5da27dc6414fc0d17408a58fa6e77be6e9d6157"
     }
   ],
   "security": [
@@ -847,20 +853,20 @@
     {
       "file": "software-480.webp",
       "width": 480,
-      "bytes": 22898,
-      "sha256": "ac4b3364b6cf2bcce01e25d5a5427e85c01a83a82b35e2bab301be4e43b137d2"
+      "bytes": 22266,
+      "sha256": "df954fe7e2307ac14cba134ccba414c82ddf198faf22209a4aca29073bcd7e04"
     },
     {
       "file": "software-800.webp",
       "width": 800,
-      "bytes": 45524,
-      "sha256": "7b79fedd43f1e8aa43888ca12e11f884b821f7657703e6eeede92bfb01390ffb"
+      "bytes": 57060,
+      "sha256": "188d79308650ee750596cee5c36ebc54576a821e5b071b5a266ae63696a30176"
     },
     {
       "file": "software.webp",
-      "width": 1402,
-      "bytes": 112698,
-      "sha256": "6197dfd1f2717132ca40e462e5e1a7e10ed2e89c007dfac9ddf3b794d55b6d02"
+      "width": 1600,
+      "bytes": 236178,
+      "sha256": "2b3c4158476ce3e67ff3d0257ed2b622eabde59f5b639fc6f56801b0dd31750f"
     }
   ],
   "storefront": [
@@ -1475,6 +1481,66 @@
       "width": 1536,
       "bytes": 130956,
       "sha256": "7559e99ff3ee0cede5ceca85ed4d380f1b6576af1233a5d2149e8993a09a7e6f"
+    }
+  ],
+  "hero-stage": [
+    {
+      "file": "hero-stage-480.webp",
+      "width": 480,
+      "bytes": 10620,
+      "sha256": "d52a53419d5842efc2d8fd2fdcbb8b7aaabaaa35c4a416f0160b5d68c2ba2b50"
+    },
+    {
+      "file": "hero-stage-800.webp",
+      "width": 800,
+      "bytes": 23316,
+      "sha256": "00702dffd5676ca2e0330380fc8edf92f1bea663ae4f198daa3f463800b853fe"
+    },
+    {
+      "file": "hero-stage.webp",
+      "width": 1600,
+      "bytes": 89000,
+      "sha256": "07c2807dc336c2d83b1d518a800d0abc69e6373ebb84debdf0cc57667c8cbc0e"
+    }
+  ],
+  "notebook-open": [
+    {
+      "file": "notebook-open-480.webp",
+      "width": 480,
+      "bytes": 27360,
+      "sha256": "c26e737c7c83aa71edd5bb46216b385a3d3cfbd51b7e670c0db5fe11a61785d4"
+    },
+    {
+      "file": "notebook-open-800.webp",
+      "width": 800,
+      "bytes": 59696,
+      "sha256": "f7924cdbaf2c26d8040c88d1197f71de7e750d4dbc30f500873c258b8c2f2e23"
+    },
+    {
+      "file": "notebook-open.webp",
+      "width": 1200,
+      "bytes": 125784,
+      "sha256": "93484baece09174d0c68876c0803068cc30970341d14b661fcf62ef7831d13f1"
+    }
+  ],
+  "work-chromatic": [
+    {
+      "file": "work-chromatic-480.webp",
+      "width": 480,
+      "bytes": 22000,
+      "sha256": "0fea1036064452e57d9847a6f4da4c579ed88ce988a030ae6b769f6cd3e5301c"
+    },
+    {
+      "file": "work-chromatic-800.webp",
+      "width": 800,
+      "bytes": 45548,
+      "sha256": "bf2d65b8767b066146d6366e20cd24ba99d3457ee39b85698b8eb7b28ae29dd8"
+    },
+    {
+      "file": "work-chromatic.webp",
+      "width": 1600,
+      "bytes": 145550,
+      "sha256": "7d2556c07bfeb3840010eea657962c6c00e473552270a4cd68255fedb80dc7af"
     }
   ]
 }

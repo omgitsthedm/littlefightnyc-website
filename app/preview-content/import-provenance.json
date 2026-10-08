@@ -25,11 +25,13 @@
     "anchor-stories.css",
     "answer-hub.css",
     "construction.css",
-    "sculpture.css"
+    "sculpture.css",
+    "master-reader.css"
   ],
   "presentationScope": [
     "Homepage hero",
-    "Homepage tile artwork and material motion"
+    "Homepage tile artwork and material motion",
+    "Website reader opening and card frame"
   ],
-  "readerPresentation": "Original reader layouts and styles retained; screenshot sources resolve to the verified library."
+  "readerPresentation": "Reference-led Website reader opening; full service detail, other reader content and destinations retained. Screenshots resolve to the verified library."
 }

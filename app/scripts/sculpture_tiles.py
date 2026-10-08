@@ -15,10 +15,10 @@ DELIVERY_PATH=Path(__file__).resolve().parents[2]/'.lifi/design-source/sculpture
 DELIVERY=json.loads(DELIVERY_PATH.read_text()) if DELIVERY_PATH.is_file() else {}
 TILES = re.compile(r'<a\b[^>]*class="[^"]*\btile\b[^>]*>.*?</a>', re.S)
 SERVICES = {
-    'web': ('Websites', 'Help customers choose you.', 'browser-rachel-services', 'browser-duotone'),
-    'it': ('Tech support', 'Get back to work.', 'router', 'desktop-tower-duotone'),
+    'web': ('Websites', 'Help customers choose you.', 'browser-chromatic-painting-design', 'browser-duotone'),
+    'it': ('Tech support', 'Get back to work.', 'router', 'laptop-duotone'),
     'consulting': ('Consulting', 'Make the next move clear.', 'notebook', 'chats-circle-duotone'),
-    'software': ('Custom software', 'Turn repeat work into a tool.', 'software', 'app-window-duotone'),
+    'software': ('Custom software', 'Turn repeat work into a tool.', 'software', 'cube-duotone'),
 }
 # Deliberate, topic-specific symbols. A missing topic is a build error rather
 # than a generic icon silently standing in for an unfinished tile.
@@ -34,7 +34,7 @@ TOPIC_ICONS = {
     'it-software-updates':'arrows-clockwise', 'it-payment-device-check':'credit-card',
     'it-vendor-handoff':'handshake', 'page-areas':'map-pin', 'maps':'map-trifold',
     'web-redesign-decision':'wrench', 'consulting-first-priority':'list-numbers',
-    'consulting-tool-choice':'sliders-horizontal', 'consulting-second-opinion':'chats-circle',
+    'consulting-tool-choice':'sliders-horizontal', 'consulting-second-opinion':'chat-circle-dots',
     'page-vera':'blueprint', 'software-repeat-work':'repeat',
     'software-approval-path':'check-square', 'construction-showcase':'hard-hat',
     'software-connect-existing-tools':'plugs-connected',
@@ -74,7 +74,7 @@ PHOTO_ICONS = {
     'trades':'pipe-wrench', 'makers':'needle',
 }
 CASE_ICONS = {
-    'chromatic-painting-design':'paint-brush', 'hair-by-rachel-charles':'scissors',
+    'chromatic-painting-design':'images', 'hair-by-rachel-charles':'scissors',
     'cc-films':'film-slate', 'easy-tiger':'fork-knife', 'the-break-room':'martini',
     'clearhelp':'lifebuoy', 'army-navy-bags':'backpack', 'brothers-pizzeria':'pizza',
     'grand-funding-llc':'bank', 'legacy-music-group':'music-notes',
@@ -85,7 +85,7 @@ CASE_ICONS = {
 LAB_ICONS = {
     'pool-room':'film-reel', 'pill-scroll':'mouse-scroll', 'walkup-3d':'buildings',
     'terminal-3d':'city', 'micro-animations':'sparkle', 'aha-laser':'waveform',
-    'goliath':'planet', 'studio-engine':'cube', 'growth-street':'plant',
+    'goliath':'planet', 'studio-engine':'shapes', 'growth-street':'plant',
     'cabinet-concept':'armchair', 'house-explorer':'house-line',
 }
 
@@ -121,7 +121,7 @@ def image(name, cls='', eager=False, alt=''):
     variants=DELIVERY.get(name,[])
     sizes='(max-width: 600px) 48vw, 380px'
     if cls.startswith('hero-image-'):
-        sizes={'hero-image-main':'(max-width: 600px) 75vw, 740px', 'hero-image-secondary':'(max-width: 600px) 47vw, 460px', 'hero-image-storefront':'(max-width: 600px) 30vw, 310px', 'hero-image-boat':'(max-width: 600px) 32vw, 320px', 'hero-image-cursor':'(max-width: 600px) 15vw, 142px'}[cls]
+        sizes={'hero-image-main':'(max-width: 600px) 73vw, 790px', 'hero-image-secondary':'(max-width: 600px) 45vw, 490px', 'hero-image-stage':'(max-width: 600px) 100vw, 1320px', 'hero-image-boat':'(max-width: 600px) 30vw, 330px'}[cls]
     elif eager:sizes='(max-width: 600px) 80vw, (max-width: 1000px) 71vw, 770px'
     responsive=' srcset="'+', '.join(ASSET+E(v['file'])+' '+str(v['width'])+'w' for v in variants)+'" sizes="'+sizes+'"' if variants else ''
     return f'<img class="sculpture-object {E(cls)}" src="{ASSET}{E(name)}.webp"{responsive} width="1200" height="960" alt="{E(alt)}" loading="{"eager" if eager else "lazy"}" decoding="async"'+(' fetchpriority="high"' if eager and cls=='hero-image-main' else '')+'>'
@@ -134,7 +134,7 @@ def _span(markup, cls):
     return _text(found[1]) if found else ''
 
 def sculptural_mosaic(markup):
-    services=[]; records=[]
+    services=[]; records=[]; featured={}
     def tile(match):
         original=match[0]; end=original.index('>')+1
         attrs=Attributes(original[:end]).attrs
@@ -162,6 +162,8 @@ def sculptural_mosaic(markup):
             art='browser-'+slug
             modifier='proof'; cols,rows,mrows=4,3,4
             copy=_span(inner,'proof-tile-label')
+            if identity=='case-chromatic-painting-design':
+                title='Our work'; copy=''; art='work-chromatic'; attrs['data-featured']='work'
         elif kind=='lab':
             art='lab-'+attrs.get('href','').strip('/').split('/')[-1]
             modifier='lab'; cols,rows,mrows=3,4,5
@@ -179,6 +181,8 @@ def sculptural_mosaic(markup):
             modifier='question'; cols=6
         assert art or kind=='review', f'Missing unique artwork: {identity}'
         attrs['data-sculpture-kind']=modifier
+        if identity=='google-review-1': attrs['data-featured']='review'
+        if identity=='speed': attrs['data-featured']='phone'
         if art: attrs['data-sculpture-art']=art
         icon=icon_for(identity,kind,family)
         motion=motion_for(art)
@@ -212,9 +216,12 @@ def sculptural_mosaic(markup):
         result='<a '+ ' '.join(f'{key}="{E(value)}"' if value is not None else key for key,value in attrs.items())+'>'+front+'</a>'
         records.append({'id':identity,'href':attrs.get('href'),'art':art,'icon':icon,'motion':motion,'kind':modifier,'family':family})
         if is_service: services.append(result); return ''
+        if attrs.get('data-featured'):
+            featured[attrs['data-featured']]=result
+            return ''
         return result
     markup=TILES.sub(tile,markup)
-    intro='<section class="topic-section sculpture-services" aria-labelledby="sculpture-services-heading"><header class="topic-heading"><h2 id="sculpture-services-heading">Problems? Solved.</h2></header><div data-topic-grid="services">'+''.join(services)+'</div></section>'
+    intro='<section id="sculpture-services" class="topic-section sculpture-services" aria-labelledby="sculpture-services-heading"><header class="topic-heading"><h2 id="sculpture-services-heading">Problems? Solved.</h2></header><div data-topic-grid="services" data-sculpture-layout="compact">'+''.join(services)+'</div><div class="sculpture-featured" data-topic-grid="featured" data-sculpture-layout="compact" aria-label="Our work and what clients say">'+''.join(featured[key] for key in ('work','review','phone'))+'</div></section>'
     assert len(services)==4, 'All four service anchors must remain visible'
     assert len(records)==80, 'All 80 tiles remain in the design system'
     art_names=[record['art'] for record in records if record['art']]
@@ -225,9 +232,8 @@ def sculptural_hero():
     return '''<section class="sculpture-hero" data-hero="reference" aria-labelledby="home-title">
 <div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1><p>You get thoughtful websites and dependable tech,<br class="hero-desktop-break"> with real people in your corner.</p><div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link>Get help <span aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link>Explore our work <span aria-hidden="true">+</span></a></div></div>
 <div class="sculpture-hero-stage">
+<div class="hero-ground" aria-hidden="true">'''+image('hero-stage','hero-image-stage',True)+'''</div>
 <a class="hero-project hero-main" href="/case-studies/chromatic-painting-design/" data-reader-link aria-label="Explore the Chromatic Painting and Design website">'''+image('browser-chromatic-painting-design','hero-image-main',True)+'''</a>
-<div class="hero-storefront" aria-hidden="true">'''+image('storefront','hero-image-storefront',True)+'''</div>
 <a class="hero-project hero-secondary" href="/case-studies/hair-by-rachel-charles/" data-reader-link aria-label="Explore the Hair By Rachel website">'''+image('browser-hair-by-rachel-charles','hero-image-secondary',True)+'''</a>
 <div class="hero-boat" aria-hidden="true">'''+image('boat','hero-image-boat',True)+'''</div>
-<div class="hero-cursor" aria-hidden="true">'''+image('cursor','hero-image-cursor',True)+'''</div>
 </div></section>'''

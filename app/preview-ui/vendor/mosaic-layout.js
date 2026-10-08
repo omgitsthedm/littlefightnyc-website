@@ -144,6 +144,9 @@
         return node.textContent.trim().split(/\s+/).map(word => context.measureText(word).width);
       }));
       const padding = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+      // At 200% text on a narrow phone, even a full-width card can meet a
+      // word wider than the viewport. Wrap that word only in this case.
+      card.toggleAttribute('data-wrap-word', longest + padding + 2 > card.parentElement.clientWidth);
       width = Math.min(cols, Math.max(width, Math.ceil((longest + padding + gap + 2) / (unit + gap))));
       // Measure at the requested width, before the packer expands a card to
       // fill a gap. Reading last pass's expanded width can alternate between
@@ -494,6 +497,23 @@
   }
 
   function pack(grid) {
+    // The reference's opening uses natural rectangular rows, independent of
+    // the square-unit packing used by the larger answer collections.
+    if (grid.dataset.sculptureLayout === 'compact') {
+      grid.classList.remove('is-large-text');
+      const columns = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+      const cardWidth = (grid.clientWidth - 12 * (columns - 1)) / columns;
+      const context = document.createElement('canvas').getContext('2d');
+      const tooWide = [...grid.querySelectorAll('.sculpture-title,.sculpture-description')].some(node => {
+        context.font = getComputedStyle(node).font;
+        return node.textContent.trim().split(/\s+/).some(word => context.measureText(word).width > cardWidth - 32);
+      });
+      grid.classList.toggle('is-large-text', tooWide);
+      grid.dataset.tileCount = String(grid.querySelectorAll(':scope > .tile').length);
+      grid.dataset.packVacancies = 'false';
+      grid.dataset.gridRevision = '5';
+      return;
+    }
     const mobile = phone.matches;
     const cols = mobile ? 6 : 12;
     const cards = [...grid.querySelectorAll(':scope > .tile')];

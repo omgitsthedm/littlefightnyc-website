@@ -138,9 +138,13 @@ async function assertControls(page, viewport) {
   assert.ok(closeBox.x >= 0 && closeBox.y >= 0 && closeBox.x + closeBox.width <= viewport.width && closeBox.y + closeBox.height <= viewport.height,
     'close must remain inside the viewport');
 
-  const contacts = page.locator('#detail[open] .reader-rail a');
+  const contacts = page.locator('#detail[open] .reader-rail a:visible');
   const count = await contacts.count();
   assert.ok(count >= 3, 'reader must expose Call, Text, and Email');
+  if (await page.locator('#detail[open] [data-reader-template="website-service"]').count()) {
+    assert.equal(count, 3, 'the reference Website header keeps exactly Call, Text, and Email');
+    assert.ok(await page.locator('#detail-body a.contact-plan').count() > 0, 'Website inquiry remains available in the complete service body');
+  }
   const controls = [];
   for (let index = 0; index < count; index += 1) {
     const control = contacts.nth(index);

@@ -1,117 +1,96 @@
-/* October 7 reference: black stage, exact work, cast objects, readable HTML. */
-#canvas{--sculpture-ground:#08090b;--sculpture-edge:#30343b;--tile-radius:16px}
-.mosaic-home .app-shell{max-width:1240px;padding:18px 28px 48px}
-.mosaic-home .topbar{margin-bottom:8px;gap:24px}
-.mosaic-home .wordmark{font-size:19px}.mosaic-home .primary-nav{flex:1;gap:12px}
-.mosaic-home .primary-nav .start-button{margin-left:auto;order:5;padding-inline:22px}
-.mosaic-home .topbar #explore-toggle{font-weight:400}
-.search-symbol{flex:none}.menu-symbol{font-size:22px;line-height:1}
-@media(min-width:1001px){.mosaic-home #explore-toggle .menu-symbol{display:none}}
-/* Reference composition: native copy above two real screens and tactile objects. */
-.sculpture-hero{position:relative;display:block;padding:20px 0 22px;isolation:isolate}
-.sculpture-hero-copy{position:relative;z-index:2;min-width:0;text-align:center}
-.sculpture-hero h1{margin:0;color:var(--lf-paper);font:700 clamp(44px,4.2vw,56px)/.99 'Atkinson Hyperlegible Next',Arial,sans-serif;letter-spacing:-.055em;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
-.sculpture-hero-copy>p{font-size:19px;line-height:1.4;margin:14px auto 0;max-width:46ch;color:#e3e3e6}
-.sculpture-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:18px;justify-content:center}
-.sculpture-hero-actions a{display:inline-flex;align-items:center;gap:12px;min-height:48px;max-width:100%;font-size:17px;text-decoration:none;white-space:nowrap}
-.sculpture-help{padding:10px 23px;border:1px solid #ff9e61;border-radius:999px;color:#170b05;background:#ff7839;box-shadow:inset 0 1px #ffb18a;font-weight:700}
+/* Master reference: one dark stage, warm miniature objects, colored edge light. */
+.mosaic-home{background:#07090b}
+#canvas{--sculpture-ground:#080b0e;--tile-radius:16px}
+.mosaic-home .app-shell{width:calc(100% - 32px);max-width:1380px;padding:12px 36px 54px;margin:16px auto;border:1px solid #30373c;border-radius:22px;box-shadow:inset 0 1px 0 #ffffff25;background:#07090b}
+.mosaic-home .topbar{display:flex;flex-wrap:nowrap;gap:28px;margin-bottom:0;min-height:58px}
+.mosaic-home .wordmark{font-size:clamp(18px,1.7vw,24px);gap:8px}.mosaic-home .wordmark .boat{width:62px;height:54px}.mosaic-home .primary-nav>a{font-size:clamp(16px,1.55vw,22px);font-weight:400}
+.mosaic-home .primary-nav{display:contents}
+.mosaic-home .topbar #explore-toggle{margin-left:auto;order:3;font-size:clamp(16px,1.4vw,20px);font-weight:400;gap:10px}
+.mosaic-home .primary-nav .start-button{order:4;margin:0;padding:12px 32px;min-height:60px;color:#fff;background:linear-gradient(#ff883f,#ff5e22);border:1px solid #ffaf75;box-shadow:inset 0 1px 2px #ffd2a966,0 0 22px #ff74251a}
+.nav-symbol{display:block;width:24px;height:24px;background:currentColor;mask:var(--nav-asset) center/contain no-repeat;-webkit-mask:var(--nav-asset) center/contain no-repeat}
+.mobile-menu-toggle{display:none}
+.sculpture-hero{position:relative;display:block;padding:16px 0 18px;isolation:isolate}
+.sculpture-hero-copy{position:relative;z-index:2;text-align:center;min-width:0}
+.sculpture-hero h1{margin:0;color:#f7f7f5;font:700 clamp(48px,6.5vw,86px)/.96 'Atkinson Hyperlegible Next',Arial,sans-serif;letter-spacing:-.055em;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
+.sculpture-hero-copy>p{font-size:clamp(18px,1.85vw,26px);line-height:1.25;margin:14px auto 0;max-width:44ch;color:#eeeded}
+.sculpture-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:16px;justify-content:center}
+.sculpture-hero-actions a{display:inline-flex;align-items:center;gap:10px;min-height:58px;max-width:100%;font-size:22px;text-decoration:none;white-space:nowrap}
+.sculpture-help{padding:8px 23px;border:1px solid #ffb080;border-radius:999px;color:#fff;background:linear-gradient(#ff893f,#ff6026);box-shadow:inset 0 1px 2px #ffc59d66,0 0 18px #ff742519;font-weight:700}
 .sculpture-help:hover{background:#ff9257}.sculpture-help span{font-size:24px;line-height:1}
-.sculpture-work{border-bottom:1px solid #8b8d90;line-height:1.2}.sculpture-work:hover{color:#ff9b62}
-.sculpture-hero-stage{position:relative;min-width:0;width:100%;aspect-ratio:2.6;margin-top:2px}
+.sculpture-work{border-bottom:1px solid #b3b5b7;line-height:1.2}.sculpture-work:hover{color:#ffa874}
+.sculpture-hero-stage{overflow:clip;position:relative;width:calc(100% + 42px);margin-left:-21px;aspect-ratio:2;margin-top:-158px;pointer-events:none}
 .sculpture-hero-stage>div,.sculpture-hero-stage>a{position:absolute;display:block}
-.hero-storefront,.hero-boat,.hero-cursor{pointer-events:none}
-.sculpture-hero-stage img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 9px #0005)}
-.sculpture-hero-stage a:focus-visible{outline:3px solid #ff7839;outline-offset:4px;border-radius:12px}
-/* Keep the rear screen's primary touch target in its unobscured upper half.
-   The image retains its exact original size and remains clickable in overflow. */
-.hero-main{left:9%;top:0;width:63%;height:44%;z-index:1}
-.hero-main img{height:213.636364%;max-height:none}
-.hero-project img{pointer-events:auto}
-.sculpture-hero-stage .hero-main:focus-visible{outline:none}
-.hero-main:focus-visible img{outline:3px solid #ff7839;outline-offset:4px;border-radius:12px}
-.hero-storefront{right:0;top:-9%;width:26%;height:105%;z-index:0}
-.hero-secondary{left:44%;bottom:-2%;width:39%;height:70%;z-index:3}
-.sculpture-hero-stage .hero-boat{left:0;bottom:0;width:27%;height:48%;z-index:4}
-.hero-cursor{right:10%;bottom:0;width:12%;height:30%;z-index:4}
+.sculpture-hero-stage img{display:block;width:100%;height:100%;object-fit:contain}
+.sculpture-hero-stage .hero-ground{inset:0;z-index:0;mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 86%,transparent);mask-composite:intersect;-webkit-mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 86%,transparent);-webkit-mask-composite:source-in}
+.sculpture-hero-stage .hero-ground img{object-fit:fill}
+.hero-main{left:12%;top:19%;width:57%;height:40.4%;z-index:1;pointer-events:auto}
+.hero-main img{object-fit:fill;height:183%;max-height:none;transform:rotate(2deg);filter:drop-shadow(0 16px 9px #0009)}
+.hero-secondary{left:43%;bottom:8%;width:37%;height:44%;z-index:3;pointer-events:auto}
+.hero-secondary img{object-fit:fill;filter:drop-shadow(0 12px 8px #000a);transform:rotate(-1deg)}
+.sculpture-hero-stage .hero-boat{left:0;bottom:10%;width:27%;height:34.4%;z-index:4}
+.sculpture-hero-stage a:focus-visible{outline:none}.hero-project:focus-visible img{outline:3px solid #ff9a61;outline-offset:5px;border-radius:12px}
 .sculpture-object{display:block;max-width:100%;height:auto;object-fit:contain;pointer-events:none}
-
-.mosaic-home #canvas{gap:54px}.mosaic-home .topic-section{gap:14px}.mosaic-home .topic-heading h2{font-size:clamp(29px,3vw,42px);letter-spacing:-.035em}
-.sculpture-services .topic-heading h2{font-size:clamp(32px,3.4vw,44px)}
+.mosaic-home #canvas{gap:48px}.mosaic-home .topic-section{gap:14px}
+.mosaic-home .topic-heading h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.05em;line-height:1.1}
+.mosaic-home .sculpture-services{gap:12px}
+.sculpture-services .topic-heading{margin-bottom:2px}
+.sculpture-services .topic-heading h2{font-size:clamp(32px,4.2vw,60px)}
 .mosaic-home [data-topic-grid]{gap:12px;grid-auto-rows:calc((100cqw - 132px)/12)}
-.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 62%,#25272e);border-radius:15px;background:linear-gradient(135deg,color-mix(in srgb,var(--tile-pop) 4%,#080a0d),#08090b 70%);box-shadow:inset 0 1px #ffffff0c,0 4px 9px #0006;overflow:hidden;container-type:inline-size}
+.sculpture-tile[data-family=web]{--tile-pop:#77cdff}.sculpture-tile[data-family=it]{--tile-pop:#ffe64c}.sculpture-tile[data-family=consulting]{--tile-pop:#a0e482}.sculpture-tile[data-family=software]{--tile-pop:#efa0e7}.sculpture-tile[data-family=brand]{--tile-pop:#ff8b43}
+.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 88%,#252c32);border-radius:15px;background:radial-gradient(ellipse at 70% 105%,color-mix(in srgb,var(--tile-pop) 12%,transparent),transparent 72%),linear-gradient(145deg,#0d1115,#07090c 66%);box-shadow:inset 0 0 0 1px #ffffff09,inset 0 0 20px color-mix(in srgb,var(--tile-pop) 6%,transparent),0 0 3px color-mix(in srgb,var(--tile-pop) 23%,transparent),0 5px 10px #0008;overflow:hidden;container-type:inline-size;grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
 .sculpture-tile.tile::after{background:none}.sculpture-tile.tile::before{background:none;border:1px solid var(--tile-pop);padding:0}
 .sculpture-copy{position:relative;display:flex;flex:none;flex-direction:column;align-items:flex-start;gap:7px;padding:19px 38px 0 18px;z-index:2;min-width:0}
-.sculpture-copy>*{flex-shrink:0}
-/* Reserve the authored spans before enhancement as well as after packing. */
-.sculpture-tile.tile{grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
-@media(max-width:1000px){.sculpture-tile.tile{grid-column:span var(--mobile-columns);grid-row:span var(--mobile-rows)}}
-.sculpture-tile .construction-tile-copy{height:auto;align-content:normal}
-.sculpture-tile .construction-tile-copy strong{font-size:clamp(19px,7.5cqw,24px);line-height:1.13;color:var(--lf-paper)}
-.sculpture-title{display:block;margin:0;font-size:clamp(19px,7.5cqw,24px);line-height:1.13;font-weight:700;letter-spacing:-.025em;text-wrap:pretty;color:var(--lf-paper);overflow-wrap:normal}
-.sculpture-description{display:block;font-size:16px;line-height:1.3;color:#e0e0e5}
+.sculpture-copy>*{flex-shrink:0}.sculpture-tile .construction-tile-copy{height:auto;align-content:normal}
+.sculpture-title,.sculpture-tile .construction-tile-copy strong{display:block;margin:0;font-size:clamp(19px,7.5cqw,24px);line-height:1.13;font-weight:700;letter-spacing:-.03em;text-wrap:pretty;color:var(--lf-paper);overflow-wrap:normal}
+.sculpture-description{display:block;font-size:16px;line-height:1.3;color:#ededee}
 .sculpture-plus{position:absolute;right:12px;top:10px;display:grid;place-items:center;width:25px;height:28px;color:var(--tile-pop);font-size:30px;line-height:1;z-index:4}
 .sculpture-art{position:absolute;inset:auto 8px 5px;height:66%;display:grid;place-items:center;z-index:1;pointer-events:none}
-.sculpture-art .sculpture-object{max-height:100%;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 8px #0005);transform-origin:50% 82%}
+.sculpture-art .sculpture-object{max-height:100%;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 10px 7px #0008);transform-origin:50% 82%}
 #canvas .sculpture-tile .sculpture-art img{position:absolute;inset:0;display:block;width:100%;height:100%;max-height:100%;object-fit:contain;aspect-ratio:auto}
 #canvas .sculpture-tile :is(.sculpture-object,.sculpture-symbol){transition:none}
 #canvas .sculpture-tile:is(:hover,:focus-visible) .sculpture-art img{transform:none}
-.sculpture-symbol{width:32px;height:32px;filter:drop-shadow(0 2px 0 #0008);transform-origin:50% 80%}
-.sculpture-tile[data-sculpture-kind=service] .sculpture-copy{width:48%;height:100%;justify-content:center;gap:7px;padding:14px 5px 14px 20px}
-.sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:clamp(24px,5.5cqw,32px);color:var(--tile-pop)}
-.sculpture-service-icon{width:40px;height:40px}
-.sculpture-tile[data-sculpture-kind=service] .sculpture-art{inset:5px 10px 3px auto;width:54%;height:auto}
-.sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art{width:54%;right:4px;bottom:4px}
-.sculpture-tile[data-sculpture-kind=service] .sculpture-description{max-width:15ch;font-size:20px}
+.sculpture-symbol{width:32px;height:32px;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--tile-pop) 16%,transparent));transform-origin:50% 80%}
+.mosaic-home #canvas [data-sculpture-layout=compact]{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:auto;gap:12px}
+.mosaic-home #canvas [data-sculpture-layout=compact]>.tile{grid-area:auto!important;min-width:0;min-height:clamp(148px,15.6vw,208px)}
+.sculpture-tile[data-sculpture-kind=service] .sculpture-copy{width:47%;height:auto;min-height:100%;justify-content:center;gap:5px;padding:14px 4px 14px 20px}
+.sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:clamp(20px,5.8cqw,38px);color:var(--tile-pop);line-height:1.05}
+.sculpture-service-icon{width:clamp(32px,8cqw,54px);height:clamp(32px,8cqw,54px)}
+.sculpture-tile[data-sculpture-kind=service] .sculpture-art{inset:5px 10px 3px auto;width:56%;height:auto}
+.sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art{width:59%;right:4px;bottom:0}
+.sculpture-tile[data-sculpture-kind=service][data-family=consulting] .sculpture-art{width:62%;right:0}
+#canvas .sculpture-tile[data-sculpture-kind=service][data-family=consulting] .sculpture-art img{object-fit:cover}
+#canvas .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art img{object-fit:cover;object-position:center top}
+.sculpture-tile[data-sculpture-kind=service][data-family=it] .sculpture-description{max-width:11ch}
+.sculpture-tile[data-sculpture-kind=service] .sculpture-description{max-width:15ch;font-size:clamp(16px,4.2cqw,26px);line-height:1.18}
 .sculpture-tile[data-sculpture-kind=brand] .sculpture-copy{justify-content:center;height:100%;width:62%;padding:18px}
 .sculpture-tile[data-sculpture-kind=brand] .sculpture-art{width:42%;right:0;left:auto;bottom:0;height:100%}
 .sculpture-tile[data-sculpture-kind=brand] .sculpture-title{color:var(--lf-orange)}
-.sculpture-tile[data-sculpture-kind=proof] .sculpture-art,.sculpture-tile[data-sculpture-kind=photo] .sculpture-art{height:76%;bottom:-4%;left:0;right:0}
 .sculpture-tile[data-sculpture-kind=proof] .sculpture-title,.sculpture-tile[data-sculpture-kind=photo] .sculpture-title{font-size:clamp(18px,6.8cqw,24px)}
 .sculpture-tile[data-sculpture-kind=review] .sculpture-copy{gap:12px;padding-bottom:20px;height:100%;justify-content:center}
 .sculpture-tile[data-sculpture-kind=review] .sculpture-title{font-size:clamp(19px,7.8cqw,25px)}
-.sculpture-rating{font-size:22px;letter-spacing:2px;color:#ff7839;line-height:1}
 .sculpture-tile[data-sculpture-kind=review] .sculpture-description{color:#ffb47e}
-.sculpture-tile[data-sculpture-kind=lab] .sculpture-copy{padding-top:16px;gap:9px}
-.sculpture-tile[data-sculpture-kind=lab] .sculpture-art{bottom:0;height:52%;inset-inline:0}
 .sculpture-lab-action{font-size:16px;color:var(--tile-pop);line-height:1.25}
-.sculpture-tile[data-sculpture-art=storefront] .sculpture-art{height:66%;left:22%;bottom:-3%}
-@media(min-width:1001px){.mosaic-home .topbar #explore-toggle{order:3}.mosaic-home .primary-nav{display:contents}.mosaic-home .primary-nav .start-button{order:4;margin-left:0}.mosaic-home .topbar #explore-toggle{margin-left:auto}}
-@media(max-width:1000px){
- .mosaic-home .app-shell{padding:12px 22px 36px}.mosaic-home [data-topic-grid]{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:calc((100cqw - 60px)/6)}
- .sculpture-hero{padding:20px 0 26px}.sculpture-hero h1{font-size:clamp(38px,5.8vw,54px)}
- .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{width:54%}.sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:47%}
-}
-@media(max-width:600px){
- .mosaic-home .app-shell{padding:10px 14px 30px}.mosaic-home .topbar{flex-wrap:nowrap;gap:8px;min-height:50px;margin:0}
- .mosaic-home .wordmark{font-size:17px}.mosaic-home .wordmark .boat{width:40px;height:34px}.mosaic-home .primary-nav{display:none}
- .mosaic-home .topbar #explore-toggle{margin-left:auto;padding:8px;min-width:44px}.mosaic-home .topbar #explore-toggle .explore-label{display:none}
- .sculpture-hero{padding:16px 0 22px}.sculpture-hero-copy{text-align:left}.sculpture-hero h1{font-size:clamp(38px,11.2vw,52px);line-height:1.01;letter-spacing:-.052em}
- .sculpture-hero-copy>p{font-size:17px;line-height:1.3;max-width:38ch;margin:12px 0 0}.hero-desktop-break{display:none}
- .sculpture-hero-actions{justify-content:flex-start;gap:22px;margin-top:14px}.sculpture-hero-actions a{font-size:16px;min-height:44px}.sculpture-help{padding:8px 18px}.sculpture-work{gap:6px}
- .sculpture-hero-stage{margin-top:10px;aspect-ratio:1.85}.hero-main{left:0;top:0;width:75%;height:43%}.hero-main img{height:211.627907%}.hero-storefront{right:0;top:0;width:30%;height:97%}.hero-secondary{left:38%;bottom:-2%;width:47%;height:64%}.sculpture-hero-stage .hero-boat{left:-2%;bottom:1%;width:32%;height:44%}.hero-cursor{right:8%;bottom:0;width:15%;height:32%}
- .mosaic-home #canvas{gap:37px}.mosaic-home .topic-section{gap:10px}.mosaic-home .topic-heading h2,.sculpture-services .topic-heading h2{font-size:30px}
- .mosaic-home [data-topic-grid]{gap:10px;grid-auto-rows:calc((100cqw - 50px)/6)}
- .sculpture-tile.tile{border-radius:12px}.sculpture-copy{padding:13px 28px 0 12px;gap:7px}.sculpture-title{font-size:20px;line-height:1.16}
- .sculpture-plus{right:6px;top:7px;font-size:26px;width:20px}.sculpture-description{font-size:16px;line-height:1.3}
- .sculpture-art{height:57%;inset-inline:3px;bottom:0}
- .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{display:block;width:100%;padding:11px 12px;height:auto}
- .sculpture-service-icon{width:30px;height:30px;margin-bottom:6px}.sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:20px;line-height:1.05;white-space:normal;max-width:12ch}
- .sculpture-tile[data-sculpture-kind=service] .sculpture-description{max-width:10ch;font-size:16px;line-height:1.2;margin-top:7px}
- .sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:50%;height:43%;top:auto;right:-2px;bottom:-1px}
- .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art{width:40%;height:40%;right:4px;bottom:4px}
- .sculpture-tile[data-sculpture-kind=service][data-family=software] .sculpture-description{max-width:9ch}
- .sculpture-tile[data-sculpture-kind=proof] .sculpture-art,.sculpture-tile[data-sculpture-kind=photo] .sculpture-art{height:65%;bottom:0}
- .sculpture-tile[data-sculpture-kind=proof] .sculpture-title,.sculpture-tile[data-sculpture-kind=photo] .sculpture-title{font-size:20px;line-height:1.15}
- .sculpture-tile[data-sculpture-kind=review] .sculpture-title{font-size:20px}.sculpture-rating{font-size:18px;letter-spacing:0}
- .sculpture-tile[data-sculpture-kind=lab] .sculpture-art{height:38%}.sculpture-tile[data-sculpture-kind=lab] .sculpture-copy{padding-top:13px}
- .sculpture-tile[data-sculpture-kind=brand] .sculpture-copy{padding:12px;width:65%}.sculpture-tile[data-sculpture-kind=brand] .sculpture-title{font-size:24px}
-}
-@media(prefers-reduced-motion:reduce){.sculpture-tile .sculpture-object{transition:none}.sculpture-tile:hover .sculpture-object{transform:none}}
-body.no-motion .sculpture-tile .sculpture-object{transition:none}
-body.no-motion .sculpture-tile:hover .sculpture-object{transform:none}
+.mosaic-home #canvas .sculpture-featured[data-topic-grid]{grid-template-columns:1.5fr .85fr 1fr}
+.mosaic-home #canvas .sculpture-featured>.tile{min-height:clamp(132px,12.4vw,168px)}
+#canvas .sculpture-featured .sculpture-copy{height:100%;justify-content:center;padding:13px 16px;gap:5px}
+#canvas .sculpture-featured [data-featured=work] .sculpture-copy{width:40%}
+#canvas .sculpture-featured [data-featured=work] .sculpture-title{color:#ff8b43;font-size:clamp(24px,5.8cqw,34px)}
+#canvas .sculpture-featured .sculpture-symbol{width:clamp(32px,10cqw,50px);height:clamp(32px,10cqw,50px)}
+#canvas .sculpture-featured [data-featured=phone] .sculpture-copy{width:60%}
+#canvas .sculpture-featured [data-featured=phone] .sculpture-title{font-size:clamp(18px,6.4cqw,26px);font-weight:400}
+#canvas .sculpture-featured [data-featured=review] .sculpture-symbol{position:absolute;right:9px;bottom:8px;top:auto;width:20px;height:20px;opacity:.2}
+#canvas .sculpture-featured [data-featured=review] .review-source{display:none}
+#canvas .sculpture-featured [data-featured=review] .sculpture-title{font-size:clamp(16px,6.9cqw,23px);line-height:1.15}
+#canvas .sculpture-featured [data-featured=review] .review-star{width:clamp(19px,9cqw,30px);height:clamp(19px,9cqw,30px)}
+#canvas .sculpture-featured [data-featured=review] .review-credit{font-size:20px}
+#canvas .sculpture-featured [data-featured=review] .sculpture-plus{display:none}
+#canvas .sculpture-featured [data-featured=work] .sculpture-plus{display:none}
+#canvas .sculpture-featured .sculpture-art{position:absolute!important;inset:0 0 0 auto!important;width:64%!important;height:100%!important;margin:0!important}
+#canvas .sculpture-featured [data-featured=work] .sculpture-art img{object-fit:cover;object-position:center;filter:none}
+#canvas .sculpture-featured [data-featured=phone] .sculpture-art{width:42%!important;inset:5px 5px 4px auto!important;height:auto!important}
 .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{top:var(--sculpture-art-top,40%);height:auto;bottom:5px}
 .mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]){display:flex;flex-direction:column}
-.mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{position:relative;inset:auto;flex:1;min-height:0;height:auto;width:calc(100% - 16px);margin:8px 8px 6px}
+.mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{position:relative;inset:auto;flex:1;min-height:0;height:auto;width:calc(100% - 12px);margin:5px 6px 4px}
 #canvas .sculpture-tile .lab-tile-face{position:absolute;inset:0;display:flex;flex-direction:column;padding:0;gap:0;min-height:0}
 #canvas .sculpture-tile .lab-tile-copy{flex:none;position:relative;display:flex;gap:9px;padding:16px 38px 0 18px;min-height:0}
 #canvas .sculpture-tile .lab-tile-copy :is(strong,span){position:static;max-width:none;text-align:left}
@@ -121,6 +100,75 @@ body.no-motion .sculpture-tile:hover .sculpture-object{transform:none}
 #canvas .sculpture-tile .review-stars{gap:2px;justify-content:flex-start;width:100%;height:24px}
 #canvas .sculpture-tile .review-star{width:23px;height:23px;flex:none;color:#ff7839}
 #canvas .sculpture-tile .review-source>span[aria-hidden=true]{display:none}
+@media(max-width:1000px){
+ .mosaic-home .app-shell{padding:14px 24px 40px}.mosaic-home .topbar{gap:20px}
+ .mosaic-home [data-topic-grid]{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:calc((100cqw - 60px)/6)}
+ .sculpture-tile.tile{grid-column:span var(--mobile-columns);grid-row:span var(--mobile-rows)}
+ .sculpture-hero-stage{margin-top:-58px}.mosaic-home .wordmark .boat{width:44px;height:38px}.sculpture-hero-actions a{font-size:18px;min-height:46px}.mosaic-home .primary-nav .start-button{min-height:48px;padding:10px 22px}.sculpture-hero h1{font-size:clamp(46px,6.5vw,68px)}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{padding-left:15px;width:54%}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:53%}
+}
+@media(max-width:1000px){
+ .mosaic-home .primary-nav{display:none}.mosaic-home .topbar{gap:8px}
+ .mosaic-home .topbar #explore-toggle{padding:8px;min-width:44px;order:initial}.mosaic-home .topbar #explore-toggle .explore-label{display:none}
+ .mobile-menu-toggle{display:grid;place-items:center;border:0;background:transparent;color:#f6f3ec;min-width:44px;min-height:44px;padding:8px}
+}
+@media(max-width:600px){
+ .mosaic-home .app-shell{width:calc(100% - 16px);padding:4px 12px 32px;margin:8px auto;border-radius:17px}.mosaic-home .topbar{min-height:50px}.mosaic-home .wordmark{font-size:16px;gap:7px}.mosaic-home .wordmark .boat{width:38px;height:33px}
+ .sculpture-hero{padding:18px 0 8px}.sculpture-hero-copy{text-align:left}.sculpture-hero h1{font-size:clamp(37px,12.5vw,62px);line-height:1;letter-spacing:-.055em}
+ .sculpture-hero-copy>p{font-size:clamp(16px,4.8vw,22px);line-height:1.25;max-width:29ch;margin:12px 0 0}.hero-desktop-break{display:none}
+ .sculpture-hero-actions{justify-content:flex-start;gap:18px;margin-top:14px}.sculpture-hero-actions a{font-size:16px;min-height:44px}.sculpture-help{padding:8px 18px}.sculpture-work{gap:5px}
+ #canvas .sculpture-featured .sculpture-symbol{width:32px;height:32px}
+ #canvas .sculpture-featured [data-featured=review] .review-star{width:19px;height:19px}#canvas .sculpture-featured [data-featured=review] .review-credit{font-size:16px}
+ .sculpture-hero-stage{width:calc(100% + 16px);margin-left:-8px;margin-top:5px;aspect-ratio:1.5}
+ .sculpture-hero-stage .hero-ground{left:-41%;width:143%;height:100%}.sculpture-hero-stage .hero-ground img{object-fit:fill}
+ .hero-main{left:6%;top:10%;width:68%;height:42%}.hero-main img{height:183%}.hero-secondary{left:31%;bottom:9%;width:46%;height:43%}.sculpture-hero-stage .hero-boat{left:0;bottom:17%;width:30%;height:31%}
+ .mosaic-home #canvas{gap:32px}.mosaic-home .topic-section{gap:10px}.mosaic-home .topic-heading h2,.sculpture-services .topic-heading h2{font-size:clamp(28px,7.5vw,39px)}
+ .mosaic-home [data-topic-grid]{gap:10px;grid-auto-rows:calc((100cqw - 50px)/6)}
+ .mosaic-home #canvas [data-sculpture-layout=compact]{gap:9px}.mosaic-home #canvas [data-sculpture-layout=compact]>.tile{min-height:clamp(136px,36vw,195px)}
+ .sculpture-tile.tile{border-radius:12px}.sculpture-copy{padding:13px 28px 0 12px;gap:7px}.sculpture-title{font-size:20px;line-height:1.16}
+ .sculpture-plus{right:6px;top:7px;font-size:26px;width:20px}.sculpture-description{font-size:16px;line-height:1.3}.sculpture-art{height:57%;inset-inline:3px;bottom:0}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{display:flex;width:100%;padding:10px 12px;min-height:0;height:auto;gap:4px}
+ .sculpture-service-icon{width:29px;height:29px}.sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:clamp(18px,5.2vw,28px);line-height:1.05;white-space:normal;letter-spacing:-.035em}
+ .sculpture-tile[data-sculpture-kind=service][data-family=software] .sculpture-title{font-size:clamp(16px,4.5vw,25px)}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-description{font-size:clamp(14px,4.07vw,16px);line-height:1.16;max-width:100%}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:62%;height:40%;top:auto;right:2px;bottom:2px}
+ .sculpture-tile[data-sculpture-kind=service][data-family=consulting] .sculpture-art{width:62%;right:2px}
+ .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art{width:44px;height:44px;top:4px;right:27px;bottom:auto}
+ .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-description{max-width:15ch}
+ .sculpture-tile[data-sculpture-kind=service][data-family=consulting],.sculpture-tile[data-sculpture-kind=service][data-family=software]{min-height:clamp(158px,41vw,224px)!important}
+ .sculpture-tile[data-sculpture-kind=proof] .sculpture-title,.sculpture-tile[data-sculpture-kind=photo] .sculpture-title{font-size:20px;line-height:1.15}
+ .sculpture-tile[data-sculpture-kind=review] .sculpture-title{font-size:20px}
+ .sculpture-tile[data-sculpture-kind=brand] .sculpture-copy{padding:12px;width:65%}.sculpture-tile[data-sculpture-kind=brand] .sculpture-title{font-size:24px}
+ #canvas .sculpture-tile .lab-tile-copy{padding:13px 28px 0 12px}#canvas .sculpture-tile .review-star{width:19px;height:19px}
+ .mosaic-home #canvas .sculpture-featured[data-topic-grid]{grid-template-columns:1.1fr 1fr}.mosaic-home #canvas .sculpture-featured>.tile{min-height:116px}
+ #canvas .sculpture-featured .sculpture-copy{padding:10px 12px}
+ #canvas .sculpture-featured [data-featured=work] .sculpture-art{width:48%!important}
+ #canvas .sculpture-featured [data-featured=work] .sculpture-title{font-size:18px}.sculpture-featured [data-featured=work] .sculpture-copy{width:57%!important}
+ #canvas .sculpture-featured [data-featured=review] .sculpture-copy{padding:10px;gap:5px}
+ #canvas .sculpture-featured [data-featured=review] .sculpture-title{font-size:16px}
+ .mosaic-home #canvas .sculpture-featured>[data-featured=phone]{grid-column:1/-1!important;min-height:104px}
+ #canvas .sculpture-featured [data-featured=phone] .sculpture-copy{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;width:76%}
+ #canvas .sculpture-featured [data-featured=phone] .sculpture-title{font-size:16px}
+ #canvas .sculpture-featured [data-featured=phone] .sculpture-art{width:26%!important}
+}
+.sculpture-tile[data-wrap-word] :is(.sculpture-title,.sculpture-description){overflow-wrap:anywhere;hyphens:auto}
+/* Wide answers retain a deliberate two-part composition after packing. */
+@container (min-width:600px){
+ #canvas .sculpture-tile[data-sculpture-kind=question] .sculpture-copy{width:50%;padding:24px 30px 20px 24px;gap:10px}
+ #canvas .sculpture-tile[data-sculpture-kind=question] .sculpture-title{font-size:clamp(26px,3cqw,40px)}
+ #canvas .sculpture-tile[data-sculpture-kind=question] .sculpture-symbol{width:44px;height:44px}
+ .mosaic-home #canvas .sculpture-tile.tile[data-sculpture-kind=question] .sculpture-art{position:absolute;inset:14px 18px 14px auto;width:47%;height:auto;margin:0}
+ #canvas .sculpture-tile[data-sculpture-kind=brand] .sculpture-title{font-size:clamp(28px,4.1cqw,54px)}
+ #canvas .sculpture-tile[data-sculpture-kind=brand] .sculpture-description{font-size:20px}
+ #canvas .sculpture-tile[data-sculpture-kind=brand] .sculpture-symbol{width:44px;height:44px}
+}
+/* Text enlargement can use a full row without crushing the art or words. */
+.mosaic-home #canvas [data-sculpture-layout=compact].is-large-text{grid-template-columns:1fr}
+#canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-copy{width:100%;min-height:0;height:auto;padding-right:38px}
+#canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-art{position:relative!important;inset:auto!important;width:calc(100% - 24px)!important;height:120px!important;min-height:120px!important;flex:0 0 120px!important;margin:4px 12px 12px!important}
+#canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-description{max-width:none}
+#canvas .sculpture-featured [data-featured=phone] .sculpture-title{flex:1;min-width:0}
 /* One small, finite movement gives each material weight. No screen pixels
    animate independently, and copy is already readable at the first paint. */
 .sculpture-tile[data-sculpture-motion=frame]{--sculpture-settle:sculpture-frame-settle}

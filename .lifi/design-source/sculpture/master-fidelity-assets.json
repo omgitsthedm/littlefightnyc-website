@@ -1,0 +1,37 @@
+{
+  "hero-stage": {
+    "source": ".lifi/asset-work/master-stage/master-stage-brownstone-ground-v2.png",
+    "sourceSha256": "d14b760b7e73bfea5098273d184487c0edbf23bf2a55f853e4b95f0a4f5c8cbd",
+    "file": "app/public/assets/sculpture/hero-stage.webp",
+    "sha256": "07c2807dc336c2d83b1d518a800d0abc69e6373ebb84debdf0cc57667c8cbc0e",
+    "purpose": "Master reference fidelity; owner requested tactile artwork"
+  },
+  "boat": {
+    "source": ".lifi/asset-work/master-router/hero-tugboat-v2-padded.png",
+    "sourceSha256": "cd6ea8abb75a340bd3a3ba257744df5582349b813ddbd67c392118c25dc0303c",
+    "file": "app/public/assets/sculpture/boat.webp",
+    "sha256": "c434c75f41a9f49aa032cbad8f9d5e5a377b4c6102b8c00836bc86a5be04cc44",
+    "purpose": "Master reference fidelity; owner requested tactile artwork"
+  },
+  "router": {
+    "source": ".lifi/asset-work/master-router/tech-router-plant-v1-padded.png",
+    "sourceSha256": "d40d7eb85c02fb2c5b8500aa90c242db99d6b59e6640fd58adf1771c0aa5a1e9",
+    "file": "app/public/assets/sculpture/router.webp",
+    "sha256": "b26852971b2bbce887041a1bb5da27dc6414fc0d17408a58fa6e77be6e9d6157",
+    "purpose": "Master reference fidelity; owner requested tactile artwork"
+  },
+  "software": {
+    "source": ".lifi/asset-work/master-blocks/custom-software-v2.png",
+    "sourceSha256": "fa6e798f5a0ec4f66151d3ba54370bde2700950fa98a248b8d7c274500d70d59",
+    "file": "app/public/assets/sculpture/software.webp",
+    "sha256": "2b3c4158476ce3e67ff3d0257ed2b622eabde59f5b639fc6f56801b0dd31750f",
+    "purpose": "Master reference fidelity; owner requested tactile artwork"
+  },
+  "notebook-open": {
+    "source": ".lifi/asset-work/master-router/start-story-notebook-v1-padded.png",
+    "sourceSha256": "9151e03e4d54d264dfbdb409a79256058846e27b2a7569ec40a2bea8e8a0fac8",
+    "file": "app/public/assets/sculpture/notebook-open.webp",
+    "sha256": "93484baece09174d0c68876c0803068cc30970341d14b661fcf62ef7831d13f1",
+    "purpose": "Reference Website reader notebook vignette"
+  }
+}

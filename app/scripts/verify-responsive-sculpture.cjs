@@ -27,14 +27,14 @@ async function heroGeometry(page,label){
   const issues=[];
   const inside=r=>r.left>=-1&&r.right<=innerWidth+1;
   for(const el of hero.querySelectorAll('h1,p,a,img')){
-   if(!inside(el.getBoundingClientRect()))issues.push('element outside viewport: '+el.tagName);
+   if(!el.closest('.hero-ground')&&!inside(el.getBoundingClientRect()))issues.push('element outside viewport: '+el.tagName);
    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;
    while((n=walker.nextNode())){const range=document.createRange();range.selectNodeContents(n);if([...range.getClientRects()].some(r=>!inside(r)))issues.push('text outside viewport: '+n.textContent)}
   }
   for(const link of hero.querySelectorAll('a')){const r=link.getBoundingClientRect();if(r.height<44||r.width<44)issues.push('small action: '+link.textContent)}
-  const art=hero.querySelector('img').getBoundingClientRect(),copy=hero.querySelector('.sculpture-hero-copy').getBoundingClientRect();
+  const art=hero.querySelector('.hero-boat img').getBoundingClientRect(),copy=hero.querySelector('.sculpture-hero-copy').getBoundingClientRect();
   if(Math.min(art.right,copy.right)>Math.max(art.left,copy.left)+1&&Math.min(art.bottom,copy.bottom)>Math.max(art.top,copy.top)+1)issues.push('boat overlaps words');
-  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:hero.querySelector('img').complete&&hero.querySelector('img').naturalWidth>0};
+  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:hero.querySelector('.hero-boat img').complete&&hero.querySelector('.hero-boat img').naturalWidth>0};
  });
  check(label+' readable hero, 44px actions, loaded boat and no overflow',!result.overflow&&result.imageLoaded&&!result.issues.length,result);
 }

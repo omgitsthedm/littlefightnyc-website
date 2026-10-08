@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "library": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07",
-  "libraryManifestSha256": "c3dae2ef8e0aa1f05449d34802bcf4cd1a8081ee8f9465ccf6837ffd2db6cd0a",
+  "libraryManifestSha256": "f3f27fb660e1f10bda06570f1c6c4291caddade9560e3b4308217f3c51a9589f",
   "kind": "owner-authorized-replacement-library",
   "media": {
     "after-hours-agenda": {
@@ -440,7 +440,7 @@
       "height": 1111
     },
     "agency-home": {
-      "src": "/assets/portfolio-20261007/share-little-fight-nyc.jpg",
+      "src": "/assets/portfolio-20261007/share-little-fight-nyc-master-20261007.jpg",
       "width": 1200,
       "height": 630
     }
@@ -692,7 +692,7 @@
     "/assets/case-legacy-music-group-explore.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
     "/assets/case-clearhelp-explore-mobile.webp": "/assets/portfolio-20261007/clearhelp-phone.webp",
     "/assets/case-grand-funding-llc-480.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
-    "/assets/social/og-tiles.jpg": "/assets/portfolio-20261007/share-little-fight-nyc.jpg"
+    "/assets/social/og-tiles.jpg": "/assets/portfolio-20261007/share-little-fight-nyc-master-20261007.jpg"
   },
   "outputs": [
     {
@@ -1212,11 +1212,20 @@
       "method": "Aspect-preserving resize and WebP encoding of real source pixels"
     },
     {
-      "file": "assets/portfolio-20261007/share-little-fight-nyc.jpg",
-      "sha256": "d160ba01bdcfd319f0e09238bf30a4355ab17be7b3300b6a3ea5dac7f7cd9cf3",
-      "sourceKey": "little-fight-nyc-reference-hero",
-      "sourceSha256": "954f8ac497e48e05fd1b9724a5951dd3581734c69393b19ce872879fc00bee89",
-      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/little-fight-nyc/little-fight-nyc-reference-hero.png",
+      "file": "assets/sculpture/work-chromatic.webp",
+      "sha256": "7d2556c07bfeb3840010eea657962c6c00e473552270a4cd68255fedb80dc7af",
+      "sourceKey": "chromatic-painting-design-desktop",
+      "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+      "crop": null,
+      "method": "Byte-exact copy of an approved aspect-preserving website capture derivative."
+    },
+    {
+      "file": "assets/portfolio-20261007/share-little-fight-nyc-master-20261007.jpg",
+      "sha256": "a28de6153fa390ee05c94a8563c388a7bb21482b34e6f8d760b0fc2faed70e47",
+      "sourceKey": "little-fight-nyc-master-hero",
+      "sourceSha256": "b680ac7d192230ec7200b93aca66e925993cb6b738a7649eacca8e3c4c7d5540",
+      "source": "/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07/little-fight-nyc/little-fight-nyc-master-hero.png",
       "crop": null,
       "method": "Aspect-preserving real browser capture of the completed sculpture hero on an opaque social canvas"
     }

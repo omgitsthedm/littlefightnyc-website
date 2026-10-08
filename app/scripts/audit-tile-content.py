@@ -30,7 +30,8 @@ EXPECTED_TOTAL_TILE_INVENTORY = 129 + ADDED_LAB_COUNT + 1  # construction discov
 EXPECTED_ORIGINAL_TILE_COUNT = 106
 EXPECTED_REVIEW_TILE_COUNT = 7
 EXPECTED_REVIEW_DISTRIBUTION = {
-    "topic-web": 2,
+    "topic-web": 1,
+    "sculpture-services": 1,
     "topic-it": 2,
     "topic-consulting": 2,
     "topic-software": 1,
@@ -148,7 +149,7 @@ class References(HTMLParser):
 
 
 class TopicReviewDistribution(HTMLParser):
-    """Locate sourced review tiles inside the four semantic hub sections."""
+    """Locate sourced review tiles inside the opening proof row and four semantic hub sections."""
 
     def __init__(self) -> None:
         super().__init__()
@@ -569,7 +570,7 @@ class ReaderAnatomy(HTMLParser):
         classes = set((values.get("class") or "").split())
         # Keep the visual requirement while allowing task answers to place
         # their illustration after the practical guidance instead of in the hero.
-        if "rw-hero-intro" in classes or "answer-visual" in classes:
+        if "rw-hero-intro" in classes or "answer-visual" in classes or "reference-work" in classes:
             classes.add("story-art")
         self.classes.update(classes)
         if "direct-contact-rail" in classes:
@@ -895,7 +896,7 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     if review_total != EXPECTED_REVIEW_TILE_COUNT:
         failures.append(f"homepage has {review_total} individual review tiles, expected {EXPECTED_REVIEW_TILE_COUNT}")
     if review_distribution.outside_topic:
-        failures.append("homepage has review tiles outside the four semantic topic sections")
+        failures.append("homepage has review tiles outside the opening and semantic topic sections")
     for topic_id, expected in EXPECTED_REVIEW_DISTRIBUTION.items():
         found = len(review_distribution.reviews[topic_id])
         if found != expected:

@@ -1206,5 +1206,18 @@
     ],
     "outputSha256": "df8dcfb57fe946cb54466498af4f990e6020d810ed9dfabe63b4de372655623f",
     "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "work-chromatic",
+    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+    "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
+    "crop": null,
+    "frame": "viewport",
+    "outputSize": [
+      1600,
+      1111
+    ],
+    "outputSha256": "7d2556c07bfeb3840010eea657962c6c00e473552270a4cd68255fedb80dc7af",
+    "method": "Byte-exact copy of an approved aspect-preserving website capture derivative."
   }
 ]

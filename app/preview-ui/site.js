@@ -9,6 +9,7 @@
   const mosaic = document.querySelector('.mosaic-home');
   const menu = document.querySelector('#explore-menu');
   const menuToggle = document.querySelector('#explore-toggle');
+  let menuReturnFocus = menuToggle;
   const menuClose = menu?.querySelector('.menu-close');
   const search = document.querySelector('#preview-search');
   const searchResults = document.querySelector('#search-results');
@@ -302,7 +303,7 @@
     const isSupportAnswer = panel.dataset.readerFamily === 'it' && path.startsWith('/answers/');
     const write = panel.querySelector('.reader-rail .contact-plan');
     if (write) {
-      write.hidden = isInquiry;
+      write.hidden = isInquiry || panel.dataset.readerTemplate === 'website-service';
       const intent = { web: 'website', it: 'support', consulting: 'consulting', software: 'systems' }[panel.dataset.readerFamily] || 'general';
       write.href = '/tech-audit/?' + new URLSearchParams({ intent, source: path.split(/[?#]/)[0] });
     }
@@ -624,13 +625,15 @@
     }
     document.body.classList.toggle('explore-open', open);
     menuToggle?.setAttribute('aria-expanded', String(open));
+    document.querySelector('#menu-toggle')?.setAttribute('aria-expanded', String(open));
     if (open) {
       loadSearchIndex();
       focusExploreEntry();
-    } else if (returnFocus) menuToggle?.focus({ preventScroll: true });
+    } else if (returnFocus) (menuReturnFocus?.getClientRects().length ? menuReturnFocus : menuToggle)?.focus({ preventScroll: true });
     interaction(open ? 'explore_open' : 'explore_close', 'mosaic', 'explore');
   }
-  menuToggle?.addEventListener('click', () => setMenu(!menu?.open));
+  menuToggle?.addEventListener('click', event => { menuReturnFocus = event.currentTarget; setMenu(!menu?.open); });
+  document.querySelector('#menu-toggle')?.addEventListener('click', event => { menuReturnFocus = event.currentTarget; setMenu(!menu?.open); });
   menuClose?.addEventListener('click', () => setMenu(false));
   menu?.addEventListener('cancel', event => { event.preventDefault(); setMenu(false); });
   menu?.addEventListener('keydown', keepExploreFocus);

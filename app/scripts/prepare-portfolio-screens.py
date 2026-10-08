@@ -90,12 +90,17 @@ for source in list((APP/'preview-ui/assets/proof').rglob('*')) + list((PUBLIC/'a
             replacements[url] = media[slug]['mobile' if mobile and media[slug]['mobile'] else 'desktop']['src']
             break
 
-source = selected['little-fight-nyc-reference-hero']
+# The opening work card uses the same verified viewport without a second frame.
+work = PUBLIC/'assets/sculpture/work-chromatic.webp'
+work.write_bytes((OUT/'chromatic-painting-design-desktop.webp').read_bytes())
+record(work, selected['chromatic-painting-design-desktop'], 'Byte-exact copy of an approved aspect-preserving website capture derivative.')
+
+source = selected['little-fight-nyc-master-hero']
 home = Image.open(source['path']).convert('RGBA')
 home.thumbnail((1176, 606), Image.Resampling.LANCZOS)
 canvas = Image.new('RGBA', (1200, 630), (5, 5, 6, 255))
 canvas.alpha_composite(home, ((1200-home.width)//2, (630-home.height)//2))
-target = OUT/'share-little-fight-nyc.jpg'
+target = OUT/'share-little-fight-nyc-master-20261007.jpg'
 canvas.convert('RGB').save(target, 'JPEG', quality=92, optimize=True)
 media['agency-home'] = record(target, source, 'Aspect-preserving real browser capture of the completed sculpture hero on an opaque social canvas')
 replacements['/assets/social/og-tiles.jpg'] = media['agency-home']['src']

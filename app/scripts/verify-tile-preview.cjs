@@ -150,11 +150,11 @@ async function inspectWebsiteBody(page, label) {
   const reader = page.locator('.lf-reader[data-reader-template="website-service"]').filter({ has: body }).last();
   const hero = reader.locator('.rw-scene--hero[data-rw-scene="opening"]');
   assert.equal(await hero.count(), 1, label + ': one Website opening scene');
-  assert.equal((await hero.locator('#detail-title').innerText()).replace(/\s+/g, ' ').trim(), 'Make your business easy to choose.', label + ': Website opening uses the rewritten customer promise');
-  assert.equal(await hero.locator('.rw-kinetic-phrase').count(), 1, label + ': rewritten headline retains its restrained motion hook');
+  assert.equal((await hero.locator('#detail-title').innerText()).replace(/\s+/g, ' ').trim(), 'A website that feels like your business.', label + ': Website opening follows the approved master');
+  assert.equal(await hero.locator('.rw-kinetic-phrase').count(), 0, label + ': reference headline remains still and readable');
 
   const benefitLinks = hero.locator('.rw-benefits a');
-  assert.equal(await benefitLinks.count(), 6, label + ': six hero benefits link into the reader');
+  assert.equal(await benefitLinks.count(), 3, label + ': three reference benefits link into the complete reader');
   const benefitTargets = await benefitLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
   for (const href of benefitTargets) {
     assert.match(href || '', /^#reader-[a-z-]+$/, label + ': benefit must use a local reader section');
@@ -228,7 +228,7 @@ async function inspectWebsiteBody(page, label) {
   assert.equal(color, 'rgb(146, 191, 255)', label + ': Websites story headings use service blue');
   const contact = page.locator('#detail[open] .reader-rail a').first();
   if (await contact.count()) {
-    assert.equal(await contact.evaluate(node => getComputedStyle(node).backgroundColor), 'rgb(255, 120, 57)', label + ': reader contact actions keep Little Fight orange');
+    assert.equal(await contact.evaluate(node => getComputedStyle(node).color), 'rgb(255, 132, 63)', label + ': reference reader contact icons and labels keep Little Fight orange');
   }
   const ownership = body.locator('#reader-ownership.rw-scene--ownership');
   assert.equal(await ownership.count(), 1, label + ': ownership section');
