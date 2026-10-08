@@ -951,8 +951,8 @@ function foundationSchemas(page) {
     });
   }
 
-  // Must be the FAQ the page renders, not page.faq — see resolvedFaqFor().
-  const emittedFaq = resolvedFaqFor(page);
+  // Must be the FAQ the page renders, not page.faq — see emittableFaqFor().
+  const emittedFaq = emittableFaqFor(page);
   if (Array.isArray(emittedFaq) && emittedFaq.length > 0) {
     graph.push({
       "@type": "FAQPage",
@@ -1570,6 +1570,21 @@ function resolvedFaqFor(page) {
     [];
   if (Array.isArray(rendered) && rendered.length > 0) return rendered;
   return Array.isArray(page.faq) ? page.faq : [];
+}
+
+/**
+ * The FAQ the schema may describe: resolvedFaqFor, capped to what the page
+ * visibly renders. Pages without authored content show only the first three
+ * Q&As (see snapshotParagraphs), so FAQPage markup must stop there too —
+ * Google treats markup describing invisible Q&A as spam. Authored pages
+ * render their full FAQ via faqHtml and keep it all. Recursion-safe:
+ * foundationSchemas (the only caller) is never reached from
+ * authoredContentHtml, which only calls resolvedFaqFor.
+ */
+function emittableFaqFor(page) {
+  const faq = resolvedFaqFor(page);
+  if (!authoredContentHtml(page)) return faq.slice(0, 3);
+  return faq;
 }
 
 function faqHtml(faq, title = "Common questions") {
