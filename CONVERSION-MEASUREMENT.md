@@ -248,3 +248,26 @@ This is a low-volume local-services funnel. Run one meaningful change at a time,
 | Next | Test `Plan my website` against one shorter benefit-led label | A clearer outcome may improve CTA starts | `website_plan_intent` by placement | CTA wrapping, accidental clicks, lead quality |
 
 Record the release date, production commit, observation window, raw event counts, and decision. Keep a losing result; it prevents the same idea from being recycled later.
+
+## Advertising activation (ready, deliberately off)
+
+The ads plumbing is built and waiting behind `ADVERTISING_MEASUREMENT_AVAILABLE`
+in `app/src/lib/consent.ts` (currently `false`): a separate advertising
+consent channel (`lf_advertising_consent_v1`), a TikTok pixel loader keyed
+on `VITE_TIKTOK_PIXEL_ID`, a queued event bridge, and `generate_lead` as
+the conversion. Nothing loads and no choice renders while the flag is off.
+
+The flag stays off until the owner completes the TikTok Business handoff:
+verify the destination account, confirm reporting access, and deliberately
+reopen the integration. Then:
+
+1. Set `VITE_TIKTOK_PIXEL_ID` in the production Netlify environment.
+2. Set `ADVERTISING_MEASUREMENT_AVAILABLE = true` and redeploy.
+3. In TikTok Events Manager, allow advertising measurement on the live
+   site, submit the tech-audit form, and confirm the lead event arrives.
+4. Update the Privacy boundary section above: advertising vendors are no
+   longer unconditionally off.
+
+A Meta pixel was not added: this property standardized on TikTok for paid
+measurement, and the privacy boundary above promises advertising stays off
+until the handoff completes. Revisit only with an explicit owner decision.
