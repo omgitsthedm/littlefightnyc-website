@@ -78,7 +78,7 @@
 #canvas .sculpture-featured .sculpture-symbol{width:clamp(32px,10cqw,50px);height:clamp(32px,10cqw,50px)}
 #canvas .sculpture-featured [data-featured=phone] .sculpture-copy{width:60%}
 #canvas .sculpture-featured [data-featured=phone] .sculpture-title{font-size:clamp(18px,6.4cqw,26px);font-weight:400}
-#canvas .sculpture-featured [data-featured=review] .sculpture-symbol{position:absolute;right:9px;bottom:8px;top:auto;width:20px;height:20px;opacity:.2}
+#canvas .sculpture-featured [data-featured=review] .sculpture-symbol{position:absolute;right:9px;bottom:8px;top:auto;width:28px;height:28px;opacity:.2}
 #canvas .sculpture-featured [data-featured=review] .review-source{display:none}
 #canvas .sculpture-featured [data-featured=review] .sculpture-title{font-size:clamp(16px,6.9cqw,23px);line-height:1.15}
 #canvas .sculpture-featured [data-featured=review] .review-star{width:clamp(19px,9cqw,30px);height:clamp(19px,9cqw,30px)}
@@ -131,12 +131,14 @@
  .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{display:flex;width:100%;padding:10px 12px;min-height:0;height:auto;gap:4px}
  .sculpture-service-icon{width:29px;height:29px}.sculpture-tile[data-sculpture-kind=service] .sculpture-title{font-size:clamp(18px,5.2vw,28px);line-height:1.05;white-space:normal;letter-spacing:-.035em}
  .sculpture-tile[data-sculpture-kind=service][data-family=software] .sculpture-title{font-size:clamp(16px,4.5vw,25px)}
- .sculpture-tile[data-sculpture-kind=service] .sculpture-description{font-size:clamp(14px,4.07vw,16px);line-height:1.16;max-width:100%}
+ .sculpture-tile[data-sculpture-kind=service] .sculpture-description{font-size:16px;line-height:1.16;max-width:100%}
  .sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:62%;height:40%;top:auto;right:2px;bottom:2px}
  .sculpture-tile[data-sculpture-kind=service][data-family=consulting] .sculpture-art{width:62%;right:2px}
  .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-art{width:44px;height:44px;top:4px;right:27px;bottom:auto}
  .sculpture-tile[data-sculpture-kind=service][data-family=web] .sculpture-description{max-width:15ch}
  .sculpture-tile[data-sculpture-kind=service][data-family=consulting],.sculpture-tile[data-sculpture-kind=service][data-family=software]{min-height:clamp(158px,41vw,224px)!important}
+ .sculpture-tile[data-sculpture-kind=service][data-family=software]{min-height:clamp(184px,46vw,244px)!important}
+ #canvas .sculpture-tile[data-sculpture-kind=service][data-family=software] .sculpture-art img{object-position:right bottom}
  .sculpture-tile[data-sculpture-kind=proof] .sculpture-title,.sculpture-tile[data-sculpture-kind=photo] .sculpture-title{font-size:20px;line-height:1.15}
  .sculpture-tile[data-sculpture-kind=review] .sculpture-title{font-size:20px}
  .sculpture-tile[data-sculpture-kind=brand] .sculpture-copy{padding:12px;width:65%}.sculpture-tile[data-sculpture-kind=brand] .sculpture-title{font-size:24px}
