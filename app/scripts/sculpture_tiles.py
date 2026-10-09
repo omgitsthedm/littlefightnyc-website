@@ -10,7 +10,6 @@ import re
 import json
 from pathlib import Path
 from functools import lru_cache
-from PIL import Image
 
 E = lambda value: escape(str(value or ''), quote=True)
 ASSET = '/assets/sculpture/'
@@ -135,8 +134,36 @@ class Attributes(HTMLParser):
 
 @lru_cache(maxsize=None)
 def image_dimensions(name):
-    with Image.open(Path(__file__).resolve().parents[1]/'public/assets/sculpture'/(name+'.webp')) as artwork:
-        return artwork.size
+    # Build hosts need only Python's standard library. Read the WebP canvas
+    # header instead of importing an image-editing dependency just for its size.
+    # https://developers.google.com/speed/webp/docs/riff_container
+    artwork = Path(__file__).resolve().parents[1]/'public/assets/sculpture'/(name+'.webp')
+    data = artwork.read_bytes()
+    if data[:4] != b'RIFF' or data[8:12] != b'WEBP' or len(data) < 20:
+        raise ValueError(f'Invalid WebP artwork: {artwork}')
+    end = int.from_bytes(data[4:8], 'little') + 8
+    if end > len(data):
+        raise ValueError(f'Truncated WebP artwork: {artwork}')
+    offset = 12
+    while offset + 8 <= end:
+        kind = data[offset:offset+4]
+        size = int.from_bytes(data[offset+4:offset+8], 'little')
+        start = offset + 8
+        if start + size > end:
+            raise ValueError(f'Truncated WebP chunk: {artwork}')
+        payload = data[start:start+size]
+        if kind == b'VP8X' and size >= 10:
+            return 1 + int.from_bytes(payload[4:7], 'little'), 1 + int.from_bytes(payload[7:10], 'little')
+        if kind == b'VP8L' and size >= 5 and payload[0] == 0x2f:
+            bits = int.from_bytes(payload[1:5], 'little')
+            return 1 + (bits & 0x3fff), 1 + ((bits >> 14) & 0x3fff)
+        if kind == b'VP8 ' and size >= 10 and payload[3:6] == b'\x9d\x01\x2a':
+            width = int.from_bytes(payload[6:8], 'little') & 0x3fff
+            height = int.from_bytes(payload[8:10], 'little') & 0x3fff
+            if width and height:
+                return width, height
+        offset = start + size + (size % 2)
+    raise ValueError(f'WebP canvas dimensions unavailable: {artwork}')
 
 def image(name, cls='', eager=False, alt=''):
     variants=DELIVERY.get(name,[])
