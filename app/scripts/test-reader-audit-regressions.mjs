@@ -58,6 +58,9 @@ assert.equal(safeTechAuditLeadOrigin("/construction/"), "/construction/");
 assert.equal(safeTechAuditLeadOrigin("/labs/cabinet-concept/"), "/labs/cabinet-concept/");
 assert.equal(safeTechAuditLeadOrigin("/labs/cabinet-concept/?study=z.private"), "");
 assert.equal(safeTechAuditLeadOrigin("/labs/not-a-published-lab/"), "");
+assert.equal(safeTechAuditLeadOrigin("/reviews/google-review-1/"), "/reviews/google-review-1/");
+assert.equal(safeTechAuditLeadOrigin("/reviews/google-review-99/"), "");
+assert.equal(safeTechAuditLeadOrigin("/reviews/google-review-1/?email=private@example.test"), "");
 
 // Test the built public handoffs too: a source-only allowlist check can miss
 // newly generated answer cards added by the tile content library.

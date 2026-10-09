@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 import re
 
 from service_taxonomy import override_family
+from review_readers import review_path
 
 E = lambda value: escape(str(value or ''), quote=True)
 TOPICS = {
@@ -83,7 +84,7 @@ def review_tile(review):
     flourish = ''
     columns = 3
     mobile_rows = 4 if len(review.get('excerpt') or '') > 40 else 3
-    return f'''<a class="tile review-tile{' review-rating-only' if not quote else ''}" href="{E(review['sourceUrl'])}" target="_blank" rel="noopener noreferrer" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-review-style="{style}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="{columns}" data-rows="2" data-mobile-columns="3" data-mobile-rows="{mobile_rows}" data-cell-title="{E(review['displayName'])}’s Google review" aria-label="Read {E(review['displayName'])}’s five-star Google review (opens in a new tab)">{flourish}<span class="review-stars" role="img" aria-label="5 out of 5 stars">{stars}</span>{quote}<span class="review-credit"><span class="review-attribution">{E(review['displayName'])}</span><span class="review-source"><span class="sr-only">Google review</span><span aria-hidden="true">+</span></span></span></a>'''
+    return f'''<a class="tile review-tile{' review-rating-only' if not quote else ''}" href="{E(review_path(review['id']))}" data-answer="{E(review['id'])}" data-review-tile="true" data-review-id="{E(review['id'])}" data-review-source-url="{E(review['sourceUrl'])}" data-review-source-type="{E(review.get('sourceLinkType', ''))}" data-review-style="{style}" data-family="brand" data-accent="orange" data-material="mineral" data-material-family="brand" data-kind="review" data-columns="{columns}" data-rows="2" data-mobile-columns="3" data-mobile-rows="{mobile_rows}" data-cell-title="{E(review['displayName'])}’s Google review" aria-label="Open {E(review['displayName'])}’s five-star Google review">{flourish}<span class="review-stars" role="img" aria-label="5 out of 5 stars">{stars}</span>{quote}<span class="review-credit"><span class="review-attribution">{E(review['displayName'])}</span><span class="review-source"><span class="sr-only">Google review</span><span aria-hidden="true">+</span></span></span></a>'''
 
 
 def anchor_front(markup, family):

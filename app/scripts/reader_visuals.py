@@ -280,6 +280,24 @@ def _software_figure(cases):
     return _case_figure(cases, "venuecircuit", "/assets/proof/optimized/tile-venuecircuit-480.webp", "VenueCircuit product interface")
 
 
+def _it_figure(path):
+    """Use the approved physical support illustrations for the two practical guides."""
+    visuals = {
+        "/answers/help/printer/": ("/assets/sculpture/printer.webp", 1402, 1122, "Printer ready for a practical troubleshooting check."),
+        "/answers/help/wifi/": ("/assets/sculpture/router.webp", 1600, 640, "Router and connection equipment for a Wi-Fi troubleshooting check."),
+    }
+    visual = visuals.get(path)
+    if not visual:
+        return ""
+    src, width, height, alt = visual
+    return (
+        '<figure class="reader-context-figure reader-support-figure">'
+        f'<img class="reader-context-image" src="{src}" width="{width}" height="{height}" '
+        f'loading="eager" decoding="async" alt="{_text(alt)}">'
+        '</figure>'
+    )
+
+
 def _story_figure(story_id):
     alt, caption = STORY_ART[story_id]
     image = f"/assets/illustrations/story-{story_id}-640.webp"
@@ -310,6 +328,16 @@ def reader_visual(p, q, cases, albums):
 
     family = reader_family(p, q)
     icon = _icon(p, q, family)
+    # The printer and Wi-Fi tile groups need the approved physical subject in
+    # the opening rail. A generic story illustration is useful elsewhere, but
+    # it should not displace the practical hardware cue on these readers.
+    support_figure = _it_figure(path) if family == "it" else ""
+    if support_figure:
+        return (
+            f'<div class="reader-context-visual" data-reader-family="{_text(family)}">'
+            f'{_icon_img(icon)}{support_figure}'
+            '</div>'
+        )
     story_id = _story_id(p, q)
     if story_id:
         return (

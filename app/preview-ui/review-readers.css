@@ -1,0 +1,33 @@
+/* Sourced review backs: one clear quote, one person, one source action. */
+.review-reader{display:block;padding:clamp(22px,5vw,58px);background:transparent;color:#f6f3ec}
+.review-reader-kicker{margin:0 0 16px;color:var(--workbench-accent,#ff7839);font:700 clamp(12px,1.1vw,15px)/1.2 LFMono,monospace;letter-spacing:.12em;text-transform:uppercase}
+.review-reader-stars{margin:0 0 22px;color:var(--workbench-accent,#ff7839);font-size:clamp(25px,3vw,38px);letter-spacing:.075em;line-height:1}
+.review-reader-quote blockquote,.review-reader-rating-only{max-inline-size:min(12ch,100%);margin:0;color:var(--workbench-accent,#ff7839);overflow-wrap:anywhere;word-break:normal;font:700 clamp(42px,7.5vw,92px)/.97 LFAtkinson,Arial,sans-serif;letter-spacing:-.055em;text-wrap:balance}
+.review-reader-attribution{margin:22px 0 0;color:#f6f3ec;font:700 clamp(19px,2vw,27px)/1.2 LFAtkinson,Arial,sans-serif}
+.review-reader-source{margin:10px 0 0}.review-reader-source a,.review-reader-next a{color:var(--workbench-accent,#ff7839);font-weight:700}
+.review-reader-next{display:grid;gap:10px;margin-top:clamp(30px,5vw,56px);padding-top:18px;border-top:1px solid color-mix(in srgb,var(--workbench-accent,#ff7839) 45%,transparent)}
+.review-reader-next a:last-child{color:#f6f3ec}
+@media(max-width:600px){.review-reader{padding:26px 22px 34px}.review-reader-kicker{margin-bottom:13px}.review-reader-stars{margin-bottom:18px}.review-reader-quote blockquote,.review-reader-rating-only{max-inline-size:min(10ch,100%);font-size:clamp(44px,13vw,60px)}.review-reader-attribution{margin-top:18px}.review-reader-next{margin-top:30px}}
+/* Workbench imports after this sheet; keep this reader's actions intentional. */
+#detail .lf-reader .workbench-reader-layout.review-reader-layout{padding:24px 0 44px}
+#detail .lf-reader .workbench-reader-layout.review-reader-layout .workbench-reading-column{margin-top:0}
+#detail .lf-reader .review-reader .review-reader-source a{display:inline-flex;align-items:center;min-height:44px;color:var(--workbench-accent);font-weight:750;text-decoration:underline;text-underline-offset:3px}
+#detail .lf-reader .review-reader .review-reader-next{gap:8px;margin-top:30px;padding-top:16px}
+#detail .lf-reader .review-reader .review-reader-next a{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;color:var(--workbench-accent);font-weight:750;text-decoration:none}
+#detail .lf-reader .review-reader .review-reader-next a:first-child{justify-content:center;border-radius:999px;background:var(--workbench-accent);color:#131416}
+#detail .lf-reader .review-reader .review-reader-next a:last-child{padding-inline:0;color:var(--workbench-accent);text-decoration:underline;text-underline-offset:3px}
+#detail .lf-reader .review-reader .review-reader-next a:hover{background:color-mix(in srgb,var(--workbench-accent) 16%,transparent)}
+#detail .lf-reader .review-reader .review-reader-next a:first-child:hover{background:color-mix(in srgb,var(--workbench-accent) 86%,#fff)}
+@media(max-width:600px){#detail .lf-reader .workbench-reader-layout.review-reader-layout{padding-top:24px}}
+/* Direct reader routes use the same generated body as the dialog. */
+:is(#detail,.workbench-page) .lf-reader .workbench-reader-layout.review-reader-layout{padding:24px 0 44px}
+:is(#detail,.workbench-page) .lf-reader .workbench-reader-layout.review-reader-layout .workbench-reading-column{margin-top:0}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-source a{display:inline-flex;align-items:center;min-height:44px;color:var(--workbench-accent);font-weight:750;text-decoration:underline;text-underline-offset:3px}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next{gap:8px;margin-top:30px;padding-top:16px}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next a{display:inline-flex;align-items:center;min-height:44px;padding:10px 14px;color:var(--workbench-accent);font-weight:750;text-decoration:none}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next a:first-child{justify-content:center;border-radius:999px;background:var(--workbench-accent);color:#131416}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next a:last-child{padding-inline:0;color:var(--workbench-accent);text-decoration:underline;text-underline-offset:3px}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next a:hover{background:color-mix(in srgb,var(--workbench-accent) 16%,transparent)}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-next a:first-child:hover{background:color-mix(in srgb,var(--workbench-accent) 86%,#fff)}
+
+@media(max-width:360px){:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--long blockquote{max-inline-size:100%;overflow-wrap:normal;word-break:normal;font-size:clamp(34px,11vw,38px)}}

@@ -1,1 +1,604 @@
-[{"id":"after-hours-agenda","slug":"after-hours-agenda","name":"After Hours Agenda","type":"Little Fight product — live storefront","statusLabel":"OUR PRODUCT","location":"Online","summary":"A brand-led streetwear storefront that keeps product, payment, and made-to-order fulfillment connected.","challenge":["The brand needed a storefront that did not flatten its point of view into a generic template.","Product drops needed a practical path without a pile of disconnected tools."],"approach":["Built a custom storefront around the brand and product details.","Connected Square payments to APLIIQ made-to-order printing and shipping."],"delivered":["A live storefront for Little Fight’s own streetwear label.","One product, payment, and fulfillment path for a new drop."],"outcome":["A Little Fight storefront that keeps product, payment, and fulfillment in one path."],"scope":["Custom storefront","Ecommerce handoffs","Square payments","APLIIQ fulfillment"],"url":"https://littlefightnyc.com/case-studies/after-hours-agenda/","publicUrl":"https://afterhoursagenda.com/","image":"assets/proof/case-after-hours-agenda.webp","imageWidth":1440,"imageHeight":1080,"imageAlt":"After Hours Agenda storefront artwork published by Little Fight NYC.","sourceImage":"https://littlefightnyc.com/assets/case-after-hours-agenda.webp","narrative":["After Hours Agenda is Little Fight’s own streetwear experiment. The project replaces a template-led storefront with one that holds the brand, product details, payment, and shipping together.","Square handles payment and APLIIQ handles made-to-order printing and shipping. The storefront keeps those steps connected."],"publicType":"Little Fight product"},{"id":"army-navy-bags","slug":"army-navy-bags","name":"Army & Navy Bags","type":"Design concept","statusLabel":"DESIGN CONCEPT","location":"Lower East Side, New York","summary":"A phone-first design concept for a neighborhood shop, with product groups, hours, and directions close at hand.","challenge":["The old website acted mostly like a listing and did not explain why a new neighbor or traveler should visit.","The concept needed to retain the shop’s real Lower East Side character without turning it into a generic retail template."],"approach":["Built a phone-first path from store character to product groups, hours, call, and directions.","Used a neighborhood map to situate the shop near familiar nearby stops."],"delivered":["A design concept with shop imagery, product groups, local facts, and one-tap directions.","Desktop, tablet, and phone layouts."],"outcome":["A design concept for an easier shop visit, from first look to directions."],"scope":["Retail concept","Mobile path","Neighborhood information design"],"url":"https://littlefightnyc.com/case-studies/army-navy-bags/","image":"assets/proof/case-army-navy-bags.webp","imageWidth":1600,"imageHeight":1200,"imageAlt":"Army & Navy Bags concept artwork published by Little Fight NYC.","sourceImage":"https://littlefightnyc.com/assets/case-army-navy-bags.webp","narrative":["The concept treats the store as part of a Lower East Side walk. It begins by showing the place and what it carries, then keeps practical visit details close.","It shows an approach to a phone-first neighborhood guide."],"publicType":"Design concept"},{"id":"brothers-pizzeria","slug":"brothers-pizzeria","name":"Brothers Pizzeria","type":"Design concept","statusLabel":"DESIGN CONCEPT","location":"Peoria, Arizona","summary":"A neighborhood-pizzeria design concept that brings heritage, a readable menu, and phone ordering together.","challenge":["The initial digital menu buried the family story and compressed the price grid on smaller screens.","The design needed to bring the shop’s history forward while preserving all menu details and prices."],"approach":["Reframed the page as a printed neighborhood handbill with the family story before ordering.","Designed menu lines to stack cleanly on phones and kept the call action close."],"delivered":["A design concept with a complete menu, phone-first ordering, and a matching brand kit.","Desktop, tablet, and phone layouts."],"outcome":["A design concept for a menu and ordering path that stays clear on a phone."],"scope":["Restaurant concept","Menu information design","Mobile accessibility","Brand kit"],"url":"https://littlefightnyc.com/case-studies/brothers-pizzeria/","image":"assets/proof/case-brothers-pizzeria.webp","imageWidth":1600,"imageHeight":1200,"imageAlt":"Brothers Pizzeria concept artwork published by Little Fight NYC.","sourceImage":"https://littlefightnyc.com/assets/case-brothers-pizzeria.webp","narrative":["The concept centers the family history and keeps it connected to practical menu and ordering tasks. It is built as a readable neighborhood handbill rather than a generic restaurant page.","It shows an approach to a restaurant website where the menu and first call are easy to find."],"publicType":"Design concept"},{"id":"cc-films","slug":"cc-films","name":"CC Films","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Dallas, Texas","summary":"An official film home that gives fans, press, and premiere guests direct paths to what each needs.","challenge":["Marrow needed one official online home without losing the film’s mood.","Fans, press, and premiere guests each needed different material."],"approach":["Built responsive film pages around the client’s poster, material, and credits.","Gave the trailer, press sources, credits, contact choices, and premiere archive distinct routes."],"delivered":["Film website and responsive layouts.","Premiere photo archive with event context and photographer credit.","Connected press and contact paths."],"outcome":["Live at ccfilms.net with separate routes for viewers, press, and premiere guests."],"scope":["Website design","Film website","Photo archive","Press paths"],"url":"https://littlefightnyc.com/case-studies/cc-films/","image":"assets/proof/case-cc-films.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"CC Films website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-cc-films-desktop-1440.webp","narrative":["CC Films needed atmosphere and clear facts at the same time. The site makes the trailer, press sources, credits, and archive legible without asking each audience to navigate through another audience’s task.","The client supplied the film material. Film credits and premiere photography remain with their original creators; Little Fight built the website, gallery, and connected paths."],"publicType":"Website design"},{"id":"chromatic-painting-design","slug":"chromatic-painting-design","name":"Chromatic Painting & Design","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Greater Phoenix, Arizona","summary":"One studio identity with distinct paths for painting projects and mural commissions.","challenge":["Painting and mural work share craft but begin with different customer questions.","The site had to show both without splitting the studio into two brands."],"approach":["Built work pages and layouts around client project images.","Separated painting and mural routes and placed relevant inquiry choices beside each."],"delivered":["Website and project portfolio.","Distinct painting and mural service paths.","Project-specific inquiry links."],"outcome":["Live at chromaticaz.com with distinct customer paths for painting and murals."],"scope":["Website design","Painting contractor","Project portfolio","Tech consulting"],"url":"https://littlefightnyc.com/case-studies/chromatic-painting-design/","image":"assets/proof/case-chromatic-painting-design.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"Chromatic Painting & Design website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp","narrative":["The design puts project work ahead of a generic service list. Painting and mural pages retain one studio identity while giving visitors the right question and inquiry route for the job they have.","The studio supplies its work and business facts; Little Fight gives that information a clear home."],"publicType":"Website design"},{"id":"clearhelp","slug":"clearhelp","name":"ClearHelp","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"United States","summary":"A resource-finding site that starts with people’s situations and locations, with a separate route for offering help.","challenge":["People seeking food, housing, or other resources may have little time, energy, or privacy.","Finding help and offering help needed distinct starting points."],"approach":["Organized public paths around needs, ZIP search, plain-language navigation, and resource information.","Kept quick-exit guidance visible and separated public use from private staff work."],"delivered":["Public website and need-based paths.","ZIP search, resource information, and nearby guidance.","Separate public paths for people seeking and offering help."],"outcome":["Live at clearhelp.org with separate first steps for finding help and offering it."],"scope":["Website design","Resource search","Plain-language navigation","Software you own"],"url":"https://littlefightnyc.com/case-studies/clearhelp/","image":"assets/proof/case-clearhelp.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"ClearHelp website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-clearhelp-desktop-1440.webp","narrative":["ClearHelp begins with a situation or place, instead of assuming someone knows an agency name. Familiar language and category paths lead into the resource directory.","Quick Exit stays visible, along with its limit: leaving the page does not erase browser history."],"publicType":"Website design"},{"id":"easy-tiger","slug":"easy-tiger","name":"Easy Tiger Bar","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Glendale, Arizona","summary":"A neighborhood-bar site with a readable menu, event paths, visit details, and a separate editing flow for upkeep.","challenge":["Guests needed current menu, events, and directions.","The bar also needed a practical way to prepare updates without exposing drafts to guests."],"approach":["Built menu, events, gallery, and visit pages around supplied bar photography.","Created a focused menu-and-event-poster editing flow and one maintained QR menu destination."],"delivered":["Guest website, readable text menu, gallery, events, and visit paths.","Menu QR page and a separate draft-to-publication editing flow."],"outcome":["Live at easytigerglendale.com with one maintained menu address and a draft-to-publication editing flow."],"scope":["Website design","Bar website","Menu and events","Content workflow"],"url":"https://littlefightnyc.com/case-studies/easy-tiger/","image":"assets/proof/case-easy-tiger.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"Easy Tiger Bar website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-easy-tiger-desktop-1440.webp","narrative":["The guest-facing experience lets people see the room, read the menu as text, check events, and choose a map route. The same maintained menu page supports navigation and QR use.","On the owner side, the flow separates saved menu drafts from publication so a change can be prepared before guests see it."],"publicType":"Website design"},{"id":"grand-funding-llc","slug":"grand-funding-llc","name":"Grand Funding LLC","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Arizona and California","summary":"A real-estate funding site that separates project education and planning examples from a transaction-specific review.","challenge":["Home purchase, repair, and new-build projects each raise different questions.","The site needed useful planning paths without implying an automatic loan decision."],"approach":["Created separate project and loan-topic pages.","Connected planning inputs, an explained example, and a deal-review contact route."],"delivered":["Responsive website and project-type paths.","Funding-information pages and a planning panel.","Contact choices for transaction-specific review."],"outcome":["Live at grandfundingllc.com. Planning figures are examples, not offers or approvals."],"scope":["Website design","Funding website","Information design"],"url":"https://littlefightnyc.com/case-studies/grand-funding-llc/","image":"assets/proof/case-grand-funding-llc.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"Grand Funding LLC website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-grand-funding-llc-desktop-1440.webp","narrative":["Each project type gets a clear starting route, then gives a visitor room to understand the relevant topic and prepare basic facts for a conversation.","The planning panel can explain inputs, but Grand Funding reviews the deal and sets loan terms."],"publicType":"Website design"},{"id":"hair-by-rachel-charles","slug":"hair-by-rachel-charles","name":"Hair By Rachel","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Phoenix, Arizona","summary":"A salon site that helps a visitor understand services before booking, while keeping Square in the booking path.","challenge":["A new client needs to know what to choose, what it may cost, and how to book.","Not every visitor is ready to select a service immediately."],"approach":["Built service paths and phone views around Rachel’s work and portrait.","Connected prices, first-visit guidance, and the Hair Brief before the Square booking handoff."],"delivered":["Website design, service pages, and Hair Brief experience.","Public booking path that retains Square."],"outcome":["Live at hairbyrachelcharles.com with service guidance, the Hair Brief, and a Square booking path."],"scope":["Website design","Salon website","Service guidance","Square booking","Tech consulting"],"url":"https://littlefightnyc.com/case-studies/hair-by-rachel-charles/","image":"assets/proof/case-hair-by-rachel-charles.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"Hair By Rachel website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp","narrative":["The site makes room for two kinds of visitor: someone ready to book and someone who only knows their hair goal. The Hair Brief offers the second visitor a separate place to start.","Square was retained instead of replaced. Service details, pricing, and first-visit context precede the booking calendar."],"publicType":"Website design"},{"id":"legacy-music-group","slug":"legacy-music-group","name":"Legacy Music Group","type":"Design concept","statusLabel":"DESIGN CONCEPT","location":"Online","summary":"A music-company design concept with paths for artists, services, booking, company context, and reference material.","challenge":["The label needed an official source for artists, services, booking, company context, and search systems without losing its independent character."],"approach":["Built a control-room visual system with readable paths for essential information.","Designed responsive layouts for desktop, tablet, and phone."],"delivered":["A design concept with 22 routes for artists, services, booking, and company context.","Responsive layouts across three screen sizes."],"outcome":["A design concept for organizing independent music-company information."],"scope":["Music company website","Information architecture","Responsive design"],"url":"https://littlefightnyc.com/case-studies/legacy-music-group/","image":"assets/proof/case-legacy-music-group.webp","imageWidth":1600,"imageHeight":1200,"imageAlt":"Legacy Music Group design concept artwork published by Little Fight NYC.","sourceImage":"https://littlefightnyc.com/assets/case-legacy-music-group.webp","narrative":["The experience uses atmosphere to frame the label, then keeps artists, services, booking, and company information readable.","It shows an approach to making an independent music company easier to explore."],"publicType":"Design concept"},{"id":"logan-loans","slug":"logan-loans","name":"Logan Loans","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Arizona and Southern California","summary":"A mortgage-information site that gives buyers, homeowners, investors, and realtors distinct routes to learn before contacting the lender.","challenge":["Different audiences arrive with different questions, which a single generic sales page cannot explain well."],"approach":["Built responsive layouts and routes for buyers, homeowners, investors, and realtors.","Connected public guides, planning tools, and contact paths while keeping planning separate from loan offers."],"delivered":["Website design, audience paths, public guides, planning tools, and contact options."],"outcome":["Live at logan.loans. Planning figures help people prepare questions; loan terms remain with the lender."],"scope":["Website design","Mortgage information","Planning tools","Tech consulting"],"url":"https://littlefightnyc.com/case-studies/logan-loans/","image":"assets/proof/case-logan-loans.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"Logan Loans website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-logan-loans-desktop-1440.webp","narrative":["The site sorts a broad mortgage topic by visitor situation. Readers can browse guides and planning tools before choosing a contact path.","A calculator result is not a loan offer; the lender confirms terms after reviewing the person, property, and loan."],"publicType":"Website design"},{"id":"the-break-room","slug":"the-break-room","name":"The Break Room","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Glendale, Arizona","summary":"A pool-hall site that pairs venue character with readable games, menu, directions, and contact details.","challenge":["Visitors need the feeling of the venue alongside practical choices about games, food, and a visit.","The site needed to distinguish campaign artwork from photographs of the actual room."],"approach":["Built a responsive venue site with named activity sections, text menu content, and map/contact paths.","Kept real room photography distinct and labelled separately from campaign artwork."],"delivered":["Venue website, game and menu sections, and paths to visit information."],"outcome":["Live at thebreakroompoolhall.com with games, menu, directions, and contact paths in one public home."],"scope":["Website design","Pool hall","Venue information","Menu content"],"url":"https://littlefightnyc.com/case-studies/the-break-room/","image":"assets/proof/case-the-break-room.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"The Break Room website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-the-break-room-desktop-1440.webp","narrative":["The site helps a visitor explore the room, activities, menu, and visit details from one public home. Its opening visual sets a campaign tone, while labeled room photography supplies factual venue context.","When event or visit information needs current confirmation, the site gives a direct contact route rather than making up an answer."],"publicType":"Website design"},{"id":"the-tarot-hotline","slug":"the-tarot-hotline","name":"The Tarot Hotline","type":"Client work — public work, live","statusLabel":"CLIENT WORK","location":"Online and by appointment","summary":"A personal-service site that explains voice notes, live talks, and a question-first path before a visitor chooses a paid next step.","challenge":["Visitors may know their question but not which reading format fits.","The site needed to explain each format before its related form, time choice, or Square payment step."],"approach":["Built a visual system around the hotline identity and clear service cards.","Created service-choice pages, first-reading guidance, and a separate Ask Rachel option."],"delivered":["Website, reading-format pages, first-reading guidance, and connected inquiry and payment paths."],"outcome":["Live at thetarothotline.com with clear reading-format choices, question-first guidance, and connected payment paths."],"scope":["Website design","Personal services","Service choice","Square payments"],"url":"https://littlefightnyc.com/case-studies/the-tarot-hotline/","image":"assets/proof/case-the-tarot-hotline.webp","imageWidth":2880,"imageHeight":2000,"imageAlt":"The Tarot Hotline website capture published in the Little Fight NYC case study.","sourceImage":"https://littlefightnyc.com/assets/cases/2026-09-29/case-the-tarot-hotline-desktop-1440.webp","narrative":["A visitor sees the difference between a voice note and a live talk before choosing a next step. The free Ask Rachel option gives an unsure person a way to begin without treating a paid reading as the only route.","Service format, scope, price, and next step stay clear before checkout."],"publicType":"Website design"},{"id":"venuecircuit","slug":"venuecircuit","name":"VenueCircuit","type":"Little Fight product","statusLabel":"OUR PRODUCT","location":"Online","summary":"A Little Fight venue closeout tool that keeps bar, door, staff, and promoter splits in one traceable flow.","challenge":["Independent venues often close nights across spreadsheets and separate systems, blurring venue and promoter money."],"approach":["Built the full public product around a nightly close, split tracking, drill-down reports, and the way venue teams run a night."],"delivered":["Venue financial software with nightly close, split tracking, and receipt-level drill-down."],"outcome":["A Little Fight product for keeping venue and promoter money distinct during a nightly close."],"scope":["Financial software","Independent venues","Nightly close","Split tracking","Reports"],"url":"https://littlefightnyc.com/case-studies/venuecircuit/","publicUrl":"https://venuecircuit.app/","image":"assets/proof/case-venuecircuit.webp","imageWidth":1440,"imageHeight":1080,"imageAlt":"VenueCircuit product artwork published by Little Fight NYC.","sourceImage":"https://littlefightnyc.com/assets/case-venuecircuit.webp","narrative":["VenueCircuit brings the pieces of a venue night—bar, door, staff, and promoter splits—into one product while keeping the venue’s money and promoter money distinct.","It is a Little Fight product designed around the way venue teams close a night.","VenueCircuit is available as a public beta."],"publicType":"Little Fight product"},{"id":"deckspace","slug":"deckspace","name":"DeckSpace","type":"Design concept","statusLabel":"DESIGN CONCEPT","location":"Cruise guest experience","summary":"A product design concept that brings an onboard guide, guest network, and memory layer into one cruise experience.","challenge":["Guests need events, venue hours, and each other without digging through a dashboard."],"approach":["Keep the nostalgic heart of cruising and organize discovery around the voyage."],"delivered":["A product design concept covering onboard discovery, profiles, events, and shared photos."],"outcome":["A design concept for helping guests find the moments and people around a voyage."],"scope":["Product design","Onboard discovery","Guest network"],"url":"https://littlefightnyc.com/case-studies/deckspace/","family":"software","publicType":"Design concept"}]
+[
+  {
+    "id": "after-hours-agenda",
+    "slug": "after-hours-agenda",
+    "name": "After Hours Agenda",
+    "type": "Little Fight product — live website",
+    "statusLabel": "OUR PRODUCT",
+    "location": "Online",
+    "summary": "A brand-led streetwear website that keeps the story, lookbook, and contact path together while new orders are paused.",
+    "challenge": [
+      "The brand needed a public home that kept its point of view intact without flattening it into a generic storefront.",
+      "Its current site needed to make the story, lookbook, and contact path clear while new orders remain paused."
+    ],
+    "approach": [
+      "Built the live site around the brand story, lookbook, and a clear contact path.",
+      "Preserved the historical Square and APLIIQ commerce context without presenting it as current ordering."
+    ],
+    "delivered": [
+      "Live website with 16 editorial and support pages.",
+      "Responsive story, lookbook, and contact paths."
+    ],
+    "outcome": [
+      "Live at afterhoursagenda.com. New orders remain paused."
+    ],
+    "scope": [
+      "Website design",
+      "Editorial storefront",
+      "Lookbook",
+      "Contact path"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/after-hours-agenda/",
+    "publicUrl": "https://afterhoursagenda.com/",
+    "image": "assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "imageWidth": 1440,
+    "imageHeight": 1000,
+    "imageAlt": "After Hours Agenda production homepage on desktop.",
+    "sourceImage": "https://afterhoursagenda.com/",
+    "narrative": [
+      "After Hours Agenda keeps its black-sheep mark, paper-white surfaces, and rose accent while putting the story and lookbook first.",
+      "The story and lookbook remain available while new orders are paused. Visitors can contact the brand from the site."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "army-navy-bags",
+    "slug": "army-navy-bags",
+    "name": "Army & Navy Bags",
+    "type": "Design concept",
+    "statusLabel": "DESIGN CONCEPT",
+    "location": "Lower East Side, New York",
+    "summary": "A phone-first design concept for a neighborhood shop, with product groups, hours, and directions close at hand.",
+    "challenge": [
+      "The old website acted mostly like a listing and did not explain why a new neighbor or traveler should visit.",
+      "The concept needed to retain the shop’s real Lower East Side character without turning it into a generic retail template."
+    ],
+    "approach": [
+      "Built a phone-first path from store character to product groups, hours, call, and directions.",
+      "Used a neighborhood map to situate the shop near familiar nearby stops."
+    ],
+    "delivered": [
+      "A design concept with shop imagery, product groups, local facts, and one-tap directions.",
+      "Desktop, tablet, and phone layouts."
+    ],
+    "outcome": [
+      "A design concept for an easier shop visit, from first look to directions."
+    ],
+    "scope": [
+      "Retail concept",
+      "Mobile path",
+      "Neighborhood information design"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/army-navy-bags/",
+    "image": "assets/proof/case-army-navy-bags.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "imageAlt": "Army & Navy Bags concept artwork published by Little Fight NYC.",
+    "sourceImage": "https://littlefightnyc.com/assets/case-army-navy-bags.webp",
+    "narrative": [
+      "The concept treats the store as part of a Lower East Side walk. It begins by showing the place and what it carries, then keeps practical visit details close.",
+      "It shows an approach to a phone-first neighborhood guide."
+    ],
+    "publicType": "Design concept"
+  },
+  {
+    "id": "brothers-pizzeria",
+    "slug": "brothers-pizzeria",
+    "name": "Brothers Pizzeria",
+    "type": "Design concept",
+    "statusLabel": "DESIGN CONCEPT",
+    "location": "Peoria, Arizona",
+    "summary": "A neighborhood-pizzeria design concept that brings heritage, a readable menu, and phone ordering together.",
+    "challenge": [
+      "The initial digital menu buried the family story and compressed the price grid on smaller screens.",
+      "The design needed to bring the shop’s history forward while preserving all menu details and prices."
+    ],
+    "approach": [
+      "Reframed the page as a printed neighborhood handbill with the family story before ordering.",
+      "Designed menu lines to stack cleanly on phones and kept the call action close."
+    ],
+    "delivered": [
+      "A design concept with a complete menu, phone-first ordering, and a matching brand kit.",
+      "Desktop, tablet, and phone layouts."
+    ],
+    "outcome": [
+      "A design concept for a menu and ordering path that stays clear on a phone."
+    ],
+    "scope": [
+      "Restaurant concept",
+      "Menu information design",
+      "Mobile accessibility",
+      "Brand kit"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/brothers-pizzeria/",
+    "image": "assets/proof/case-brothers-pizzeria.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "imageAlt": "Brothers Pizzeria concept artwork published by Little Fight NYC.",
+    "sourceImage": "https://littlefightnyc.com/assets/case-brothers-pizzeria.webp",
+    "narrative": [
+      "The concept centers the family history and keeps it connected to practical menu and ordering tasks. It is built as a readable neighborhood handbill rather than a generic restaurant page.",
+      "It shows an approach to a restaurant website where the menu and first call are easy to find."
+    ],
+    "publicType": "Design concept"
+  },
+  {
+    "id": "cc-films",
+    "slug": "cc-films",
+    "name": "CC Films",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Dallas, Texas",
+    "summary": "An official film home that gives fans, press, and premiere guests direct paths to what each needs.",
+    "challenge": [
+      "Marrow needed one official online home without losing the film’s mood.",
+      "Fans, press, and premiere guests each needed different material."
+    ],
+    "approach": [
+      "Built responsive film pages around the client’s poster, material, and credits.",
+      "Gave the trailer, press sources, credits, contact choices, and premiere archive distinct routes."
+    ],
+    "delivered": [
+      "Film website and responsive layouts.",
+      "Premiere photo archive with event context and photographer credit.",
+      "Connected press and contact paths."
+    ],
+    "outcome": [
+      "Live at ccfilms.net with separate routes for viewers, press, and premiere guests."
+    ],
+    "scope": [
+      "Website design",
+      "Film website",
+      "Photo archive",
+      "Press paths"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/cc-films/",
+    "image": "assets/proof/case-cc-films.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "CC Films website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-cc-films-desktop-1440.webp",
+    "narrative": [
+      "CC Films needed atmosphere and clear facts at the same time. The site makes the trailer, press sources, credits, and archive legible without asking each audience to navigate through another audience’s task.",
+      "The client supplied the film material. Film credits and premiere photography remain with their original creators; Little Fight built the website, gallery, and connected paths."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "chromatic-painting-design",
+    "slug": "chromatic-painting-design",
+    "name": "Chromatic Painting & Design",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Greater Phoenix, Arizona",
+    "summary": "One studio identity with distinct paths for painting projects and mural commissions.",
+    "challenge": [
+      "Painting and mural work share craft but begin with different customer questions.",
+      "The site had to show both without splitting the studio into two brands."
+    ],
+    "approach": [
+      "Built work pages and layouts around client project images.",
+      "Separated painting and mural routes and placed relevant inquiry choices beside each."
+    ],
+    "delivered": [
+      "Website and project portfolio.",
+      "Distinct painting and mural service paths.",
+      "Project-specific inquiry links."
+    ],
+    "outcome": [
+      "Live at chromaticaz.com with distinct customer paths for painting and murals."
+    ],
+    "scope": [
+      "Website design",
+      "Painting contractor",
+      "Project portfolio",
+      "Tech consulting"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/chromatic-painting-design/",
+    "image": "assets/proof/case-chromatic-painting-design.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "Chromatic Painting & Design website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp",
+    "narrative": [
+      "The design puts project work ahead of a generic service list. Painting and mural pages retain one studio identity while giving visitors the right question and inquiry route for the job they have.",
+      "The studio supplies its work and business facts; Little Fight gives that information a clear home."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "clearhelp",
+    "slug": "clearhelp",
+    "name": "ClearHelp",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "United States",
+    "summary": "A production resource-finding site that starts with people’s situations and locations, with a separate route for offering help.",
+    "challenge": [
+      "People seeking food, housing, or other resources may have little time, energy, or privacy.",
+      "Finding help and offering help needed distinct starting points."
+    ],
+    "approach": [
+      "Organized public paths around needs, ZIP search, plain-language navigation, and resource information.",
+      "Kept quick-exit guidance visible and separated public use from private staff work."
+    ],
+    "delivered": [
+      "Public website and need-based paths.",
+      "ZIP search, resource information, and nearby guidance.",
+      "Separate public paths for people seeking and offering help."
+    ],
+    "outcome": [
+      "Live at clearhelp.org with separate first steps for finding help and offering it."
+    ],
+    "scope": [
+      "Website design",
+      "Resource search",
+      "Plain-language navigation",
+      "Software you own"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/clearhelp/",
+    "image": "assets/proof/case-clearhelp.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "ClearHelp website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://clearhelp.org/",
+    "narrative": [
+      "ClearHelp begins with a situation or place, instead of assuming someone knows an agency name. Familiar language and category paths lead into the resource directory.",
+      "Separate routes support people looking for resources and people offering help, with location-based information and clear next steps."
+    ],
+    "publicType": "Website design",
+    "publicUrl": "https://clearhelp.org/"
+  },
+  {
+    "id": "easy-tiger",
+    "slug": "easy-tiger",
+    "name": "Easy Tiger Bar",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Glendale, Arizona",
+    "summary": "A neighborhood-bar site with a readable menu, event paths, visit details, and a separate editing flow for upkeep.",
+    "challenge": [
+      "Guests needed current menu, events, and directions.",
+      "The bar also needed a practical way to prepare updates without exposing drafts to guests."
+    ],
+    "approach": [
+      "Built menu, events, gallery, and visit pages around supplied bar photography.",
+      "Created a focused menu-and-event-poster editing flow and one maintained QR menu destination."
+    ],
+    "delivered": [
+      "Guest website, readable text menu, gallery, events, and visit paths.",
+      "Menu QR page and a separate draft-to-publication editing flow."
+    ],
+    "outcome": [
+      "Live at easytigerglendale.com with one maintained menu address and a draft-to-publication editing flow."
+    ],
+    "scope": [
+      "Website design",
+      "Bar website",
+      "Menu and events",
+      "Content workflow"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/easy-tiger/",
+    "image": "assets/proof/case-easy-tiger.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "Easy Tiger Bar website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-easy-tiger-desktop-1440.webp",
+    "narrative": [
+      "The guest-facing experience lets people see the room, read the menu as text, check events, and choose a map route. The same maintained menu page supports navigation and QR use.",
+      "On the owner side, the flow separates saved menu drafts from publication so a change can be prepared before guests see it."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "grand-funding-llc",
+    "slug": "grand-funding-llc",
+    "name": "Grand Funding LLC",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Arizona and California",
+    "summary": "A real-estate funding site that separates project education and planning examples from a transaction-specific review.",
+    "challenge": [
+      "Home purchase, repair, and new-build projects each raise different questions.",
+      "The site needed useful planning paths without implying an automatic loan decision."
+    ],
+    "approach": [
+      "Created separate project and loan-topic pages.",
+      "Connected planning inputs, an explained example, and a deal-review contact route."
+    ],
+    "delivered": [
+      "Responsive website and project-type paths.",
+      "Funding-information pages and a planning panel.",
+      "Contact choices for transaction-specific review."
+    ],
+    "outcome": [
+      "Live at grandfundingllc.com. Planning figures are examples, not offers or approvals."
+    ],
+    "scope": [
+      "Website design",
+      "Funding website",
+      "Information design"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/grand-funding-llc/",
+    "image": "assets/proof/case-grand-funding-llc.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "Grand Funding LLC website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-grand-funding-llc-desktop-1440.webp",
+    "narrative": [
+      "Each project type gets a clear starting route, then gives a visitor room to understand the relevant topic and prepare basic facts for a conversation.",
+      "The planning panel can explain inputs, but Grand Funding reviews the deal and sets loan terms."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "hair-by-rachel-charles",
+    "slug": "hair-by-rachel-charles",
+    "name": "Hair By Rachel",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Phoenix, Arizona",
+    "summary": "A salon site that helps a visitor understand services before booking, while keeping Square in the booking path.",
+    "challenge": [
+      "A new client needs to know what to choose, what it may cost, and how to book.",
+      "Not every visitor is ready to select a service immediately."
+    ],
+    "approach": [
+      "Built service paths and phone views around Rachel’s work and portrait.",
+      "Connected prices, first-visit guidance, and the Hair Brief before the Square booking handoff."
+    ],
+    "delivered": [
+      "Website design, service pages, and Hair Brief experience.",
+      "Public booking path that retains Square."
+    ],
+    "outcome": [
+      "Live at hairbyrachelcharles.com with service guidance, the Hair Brief, and a Square booking path."
+    ],
+    "scope": [
+      "Website design",
+      "Salon website",
+      "Service guidance",
+      "Square booking",
+      "Tech consulting"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/hair-by-rachel-charles/",
+    "image": "assets/proof/case-hair-by-rachel-charles.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "Hair By Rachel website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp",
+    "narrative": [
+      "The site makes room for two kinds of visitor: someone ready to book and someone who only knows their hair goal. The Hair Brief offers the second visitor a separate place to start.",
+      "Square was retained instead of replaced. Service details, pricing, and first-visit context precede the booking calendar."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "legacy-music-group",
+    "slug": "legacy-music-group",
+    "name": "Legacy Music Group",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Online",
+    "summary": "A music-company website restored to its original dark, motion-led design.",
+    "challenge": [
+      "Restore the original 35-route music-company website without turning the recovery into a redesign."
+    ],
+    "approach": [
+      "Restored the original control-room visual system and responsive paths for artists, services, booking, and company context."
+    ],
+    "delivered": [
+      "Restored live website with 35 routes, responsive layouts, and original motion treatment."
+    ],
+    "outcome": [
+      "The restored website is available at legacy-music-group.netlify.app, with booking through the existing destination."
+    ],
+    "scope": [
+      "Website restoration",
+      "Music company website",
+      "Information architecture",
+      "Responsive design"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/legacy-music-group/",
+    "image": "assets/proof/case-legacy-music-group.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1200,
+    "imageAlt": "Legacy Music Group restored website on desktop.",
+    "sourceImage": "https://legacy-music-group.netlify.app/",
+    "narrative": [
+      "The original dark, motion-led experience frames the label while keeping artists, services, booking, and company information readable.",
+      "Visitors can explore the artists, understand the services, and continue to the established booking destination."
+    ],
+    "publicType": "Website design",
+    "publicUrl": "https://legacy-music-group.netlify.app/"
+  },
+  {
+    "id": "logan-loans",
+    "slug": "logan-loans",
+    "name": "Logan Loans",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Arizona and Southern California",
+    "summary": "A mortgage-information site that gives buyers, homeowners, investors, and realtors distinct routes to learn before contacting the lender.",
+    "challenge": [
+      "Different audiences arrive with different questions, which a single generic sales page cannot explain well."
+    ],
+    "approach": [
+      "Built responsive layouts and routes for buyers, homeowners, investors, and realtors.",
+      "Connected public guides, planning tools, and contact paths while keeping planning separate from loan offers."
+    ],
+    "delivered": [
+      "Website design, audience paths, public guides, planning tools, and contact options."
+    ],
+    "outcome": [
+      "Live at logan.loans. Planning figures help people prepare questions; loan terms remain with the lender."
+    ],
+    "scope": [
+      "Website design",
+      "Mortgage information",
+      "Planning tools",
+      "Tech consulting"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/logan-loans/",
+    "image": "assets/proof/case-logan-loans.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "Logan Loans website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-logan-loans-desktop-1440.webp",
+    "narrative": [
+      "The site sorts a broad mortgage topic by visitor situation. Readers can browse guides and planning tools before choosing a contact path.",
+      "A calculator result is not a loan offer; the lender confirms terms after reviewing the person, property, and loan."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "the-break-room",
+    "slug": "the-break-room",
+    "name": "The Break Room",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Glendale, Arizona",
+    "summary": "A pool-hall site that pairs venue character with readable games, menu, directions, and contact details.",
+    "challenge": [
+      "Visitors need the feeling of the venue alongside practical choices about games, food, and a visit.",
+      "The site needed to distinguish campaign artwork from photographs of the actual room."
+    ],
+    "approach": [
+      "Built a responsive venue site with named activity sections, text menu content, and map/contact paths.",
+      "Kept real room photography distinct and labelled separately from campaign artwork."
+    ],
+    "delivered": [
+      "Venue website, game and menu sections, and paths to visit information."
+    ],
+    "outcome": [
+      "Live at thebreakroompoolhall.com with games, menu, directions, and contact paths in one public home."
+    ],
+    "scope": [
+      "Website design",
+      "Pool hall",
+      "Venue information",
+      "Menu content"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/the-break-room/",
+    "image": "assets/proof/case-the-break-room.webp",
+    "imageWidth": 2880,
+    "imageHeight": 2000,
+    "imageAlt": "The Break Room website capture published in the Little Fight NYC case study.",
+    "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-the-break-room-desktop-1440.webp",
+    "narrative": [
+      "The site helps a visitor explore the room, activities, menu, and visit details from one public home. Its opening visual sets a campaign tone, while labeled room photography supplies factual venue context.",
+      "When event or visit information needs current confirmation, the site gives a direct contact route rather than making up an answer."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "the-tarot-hotline",
+    "slug": "the-tarot-hotline",
+    "name": "The Tarot Hotline",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Online and by appointment",
+    "summary": "A personal-service website that explains reading choices before a visitor books.",
+    "challenge": [
+      "Visitors may know their question but not which reading format fits.",
+      "The site needed to explain each format clearly before its booking step."
+    ],
+    "approach": [
+      "Built the visual system around the established hotline identity and clear service-choice pages.",
+      "Kept first-reading guidance and the Square booking path easy to find."
+    ],
+    "delivered": [
+      "Website, reading-format pages, first-reading guidance, and a native Square booking path."
+    ],
+    "outcome": [
+      "Live at thetarothotline.com with clear reading-format choices and a Square booking path."
+    ],
+    "scope": [
+      "Website design",
+      "Personal services",
+      "Service choice",
+      "Booking path"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/the-tarot-hotline/",
+    "image": "assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.webp",
+    "imageWidth": 1440,
+    "imageHeight": 900,
+    "imageAlt": "The Tarot Hotline production homepage on desktop.",
+    "sourceImage": "https://thetarothotline.com/",
+    "narrative": [
+      "The Tarot Hotline makes the reading format and next step clear before a visitor books.",
+      "Reading-format pages and first-reading guidance lead into the existing Square booking experience."
+    ],
+    "publicType": "Website design"
+  },
+  {
+    "id": "venuecircuit",
+    "slug": "venuecircuit",
+    "name": "VenueCircuit",
+    "type": "Public platform — live",
+    "statusLabel": "PUBLIC PLATFORM",
+    "location": "Online",
+    "summary": "A live venue-operations demo with a shared show record, role-specific workspaces, and nightly close-out tools.",
+    "challenge": [
+      "A venue night spans events, people, inventory, and money. The product needed one shared demo record that makes each role legible."
+    ],
+    "approach": [
+      "Built public demo paths around command and show search, recent workspaces, role-specific controls, and the nightly close-out.",
+      "Kept production demo data explicitly fictional."
+    ],
+    "delivered": [
+      "Public platform with 56 product paths, 14 demo seats, and nine investor chapters.",
+      "Scoped command and show search, recent workspaces, role artwork, responsive controls, and motion."
+    ],
+    "outcome": [
+      "Live at venuecircuit.app with a public demo. The demo uses sourced listings and fictional operations."
+    ],
+    "scope": [
+      "Venue operations",
+      "Nightly close",
+      "Role-specific workspaces",
+      "Financial reporting"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/venuecircuit/",
+    "publicUrl": "https://venuecircuit.app/",
+    "image": "assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
+    "imageWidth": 1440,
+    "imageHeight": 900,
+    "imageAlt": "VenueCircuit public owner-demo workspace on desktop.",
+    "sourceImage": "https://venuecircuit.app/demo?persona=owner",
+    "narrative": [
+      "A public owner-demo workspace shows a shared show record alongside search, workspaces, controls, and the nightly close-out.",
+      "The demo uses sourced listings and fictional operations. It does not represent a deployed venue account."
+    ],
+    "publicType": "Public platform"
+  },
+  {
+    "id": "deckspace",
+    "slug": "deckspace",
+    "name": "DeckSpace",
+    "type": "Design concept",
+    "statusLabel": "DESIGN CONCEPT",
+    "location": "Cruise guest experience",
+    "summary": "A product design concept that brings an onboard guide, guest network, and memory layer into one cruise experience.",
+    "challenge": [
+      "Guests need events, venue hours, and each other without digging through a dashboard."
+    ],
+    "approach": [
+      "Keep the nostalgic heart of cruising and organize discovery around the voyage."
+    ],
+    "delivered": [
+      "A product design concept covering onboard discovery, profiles, events, and shared photos."
+    ],
+    "outcome": [
+      "A design concept for helping guests find the moments and people around a voyage."
+    ],
+    "scope": [
+      "Product design",
+      "Onboard discovery",
+      "Guest network"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/deckspace/",
+    "family": "software",
+    "publicType": "Design concept"
+  }
+]

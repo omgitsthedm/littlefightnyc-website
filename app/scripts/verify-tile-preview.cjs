@@ -22,7 +22,8 @@ const base = (process.env.PREVIEW_URL || 'http://127.0.0.1:4393').replace(/\/$/,
 const productionMode = process.env.TILE_DIST === 'production' || new URL(base).port === '4394';
 const artifactDir = productionMode ? 'dist' : 'preview-dist';
 const releaseFilename = productionMode ? 'tile-release.json' : 'preview-release.json';
-const verifiedReviewSources = new Set(JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews.map(review => review.sourceUrl));
+const reviewRecords = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews;
+const verifiedReviewSources = new Set(reviewRecords.map(review => review.sourceUrl));
 const catalogLabs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
 const expectedInventory = { total: 129 + catalogLabs.length - 9 + 1, originals: 106, groups: 19, reviews: 7 };
 const report = {
@@ -175,7 +176,8 @@ async function inspectWebsiteBody(page, label) {
   const scenes = reader.locator('[data-rw-scene]');
   assert.deepEqual(await scenes.evaluateAll(items => items.map(item => item.dataset.rwScene)), [
     'opening',
-    'different-worlds',
+    'opening-essay',
+    'selected-work',
     'your-business-not-template',
     'a-question-needs-an-answer',
     'six-weeks-from-brief',
@@ -184,27 +186,19 @@ async function inspectWebsiteBody(page, label) {
 
   assert.equal(await hero.locator('.rw-opening-work, .rw-opening-project').count(), 0, label + ': opening keeps its icon and does not duplicate client project screens');
 
-  const fullGallery = body.locator('.rw-full-gallery');
-  if (await fullGallery.count() && !await fullGallery.evaluate(node => node.open)) {
-    await fullGallery.locator('summary').click();
-  }
-  const gallery = body.locator('#reader-work .rw-client-gallery');
-  assert.equal(await gallery.count(), 1, label + ': one real-client Website gallery');
-  const projects = gallery.locator('figure.rw-client-project');
-  assert.equal(await projects.count(), 9, label + ': nine real client website examples');
-  assert.equal(await gallery.locator('figure.rw-client-project[data-rw-item]').count(), 9, label + ': every client example participates in native-scroll enhancement');
-  const expectedCases = [
-    'easy-tiger', 'hair-by-rachel-charles', 'the-tarot-hotline', 'grand-funding-llc', 'the-break-room',
-    'clearhelp', 'logan-loans', 'cc-films', 'chromatic-painting-design',
-  ];
-  const galleryProof = [];
+  const selectedWork = body.locator('#reader-work.rw-scene--selected-work');
+  assert.equal(await selectedWork.count(), 1, label + ': one deliberate selected-work strip');
+  const projects = selectedWork.locator('.rw-selected-work > article');
+  assert.equal(await projects.count(), 2, label + ': selected work keeps two useful proof stories');
+  const expectedCases = ['chromatic-painting-design', 'hair-by-rachel-charles'];
+  const selectedProof = [];
   for (let index = 0; index < expectedCases.length; index += 1) {
     const project = projects.nth(index);
-    const media = project.locator('a.rw-client-project-media[data-reader-link]');
-    assert.equal(await media.count(), 1, label + ': gallery item has an in-reader case link for ' + expectedCases[index]);
-    assert.equal(await media.getAttribute('href'), '/case-studies/' + expectedCases[index] + '/', label + ': gallery item leads to the matching case');
+    const media = project.locator(':scope > a[data-reader-link]');
+    assert.equal(await media.count(), 1, label + ': selected work has an in-reader case link for ' + expectedCases[index]);
+    assert.equal(await media.getAttribute('href'), '/case-studies/' + expectedCases[index] + '/', label + ': selected work leads to the matching case');
     const image = media.locator('img');
-    assert.equal(await image.count(), 1, label + ': gallery item has one proof image for ' + expectedCases[index]);
+    assert.equal(await image.count(), 1, label + ': selected work has one proof image for ' + expectedCases[index]);
     await image.scrollIntoViewIfNeeded();
     await image.evaluate(node => node.decode());
     const proof = await image.evaluate(node => ({
@@ -212,9 +206,13 @@ async function inspectWebsiteBody(page, label) {
       naturalWidth: node.naturalWidth, naturalHeight: node.naturalHeight,
     }));
     assert.ok(proof.complete && proof.naturalWidth > 0 && proof.naturalHeight > 0, label + ': gallery proof image loads for ' + expectedCases[index]);
-    galleryProof.push({ case: expectedCases[index], ...proof });
+    selectedProof.push({ case: expectedCases[index], ...proof });
   }
-  assert.equal(new Set(galleryProof.map(project => project.src)).size, 9, label + ': the single nine-client gallery uses a distinct screen for every project');
+  assert.equal(new Set(selectedProof.map(project => project.src)).size, 2, label + ': selected work uses a distinct screen for each case');
+  const fullPortfolio = selectedWork.locator('.rw-selected-work-all a[data-reader-link]');
+  assert.equal(await fullPortfolio.count(), 1, label + ': full portfolio stays available as one clear next step');
+  assert.equal(await fullPortfolio.getAttribute('href'), '/examples/', label + ': full portfolio route');
+  assert.equal(await body.locator('.rw-full-gallery,.rw-client-gallery,.rw-proof-stories').count(), 0, label + ': service reader does not repeat a portfolio matrix');
 
   const details = body.locator('details');
   assert.ok(await details.count() >= 7, label + ': detailed Website story uses native disclosures');
@@ -228,7 +226,7 @@ async function inspectWebsiteBody(page, label) {
   assert.equal(color, 'rgb(146, 191, 255)', label + ': Websites story headings use service blue');
   const contact = page.locator('#detail[open] .reader-rail a').first();
   if (await contact.count()) {
-    assert.equal(await contact.evaluate(node => getComputedStyle(node).color), 'rgb(255, 132, 63)', label + ': reference reader contact icons and labels keep Little Fight orange');
+    assert.equal(await contact.evaluate(node => getComputedStyle(node).color), 'rgb(255, 120, 57)', label + ': reference reader contact icons and labels keep Little Fight orange');
   }
   const ownership = body.locator('#reader-ownership.rw-scene--ownership');
   assert.equal(await ownership.count(), 1, label + ': ownership section');
@@ -264,12 +262,12 @@ async function inspectWebsiteBody(page, label) {
   });
   assert.ok(scrollProof.maxScroll > 0 && scrollProof.scrollTop > 0, label + ': complete Website story is reachable by native scrolling');
   const overflow = await expectNoOverflow(page, label);
-  report.routeAudit.push({ label, route: new URL(page.url()).pathname, scenes: await scenes.count(), galleryProjects: galleryProof, ownership: true, scrollProof, overflow: JSON.parse(overflow) });
+  report.routeAudit.push({ label, route: new URL(page.url()).pathname, scenes: await scenes.count(), selectedWork: selectedProof, ownership: true, scrollProof, overflow: JSON.parse(overflow) });
   return 'linear Website story + ownership; ' + JSON.stringify(scrollProof) + '; ' + overflow;
 }
 
 async function inspectDirectContactRail(page, label) {
-  const rail = page.locator('.direct-contact-rail');
+  const rail = page.locator('.workbench-page > .workbench-chrome > .workbench-chrome-top > .direct-contact-rail');
   await rail.waitFor({ state: 'visible' });
   assert.equal(await rail.evaluate(node => getComputedStyle(node).position), 'sticky', `${label}: contact rail must use sticky positioning`);
   const before = await rail.boundingBox();
@@ -289,9 +287,9 @@ async function inspectDirectContactRail(page, label) {
         reachable: hit === link || link.contains(hit) };
     });
   });
-  assert.equal(controls.length, 4, `${label}: Call, Text, Email and an in-page Write route`);
-  assert.deepEqual(controls.map(control => control.label.trim()), ['Call', 'Text', 'Email', 'Write'], `${label}: consistent help order`);
-  for (const control of controls) {
+  const visibleControls = controls.filter(control => control.width > 0 && control.height > 0);
+  assert.deepEqual(visibleControls.map(control => control.label.trim()), ['Call', 'Text', 'Email'], `${label}: three direct contact methods remain in a consistent order`);
+  for (const control of visibleControls) {
     assert.ok(control.width >= 44 && control.height >= 44, `${label}: ${control.label} is at least 44px`);
     assert.equal(control.overlapped, false, `${label}: close button must not overlap ${control.label}`);
     assert.equal(control.reachable, true, `${label}: ${control.label} remains reachable after scrolling`);
@@ -407,18 +405,27 @@ async function run() {
       const ids = await page.locator('a.tile[href]').evaluateAll(tiles => tiles.map(tile => tile.dataset.answer));
       assert.deepEqual(new Set(ids), new Set(manifest.visibleIds), 'home must exactly match the visible inventory');
       for (const group of manifest.inventory.groups) {
-        assert.equal(ids.filter(id => id === group.id).length, 1, `${group.id} lead must appear once`);
+        const expected = manifest.inventory.hiddenHomeIds.includes(group.id) ? 0 : 1;
+        assert.equal(ids.filter(id => id === group.id).length, expected, `${group.id} lead must honor the approved homepage curation`);
+        assert.ok(manifest.inventory.retainedRoutes.some(route => route.id === group.id), `${group.id} reader must remain available`);
         for (const member of group.members) assert.equal(ids.filter(id => id === member).length, 0, `${member} must be absorbed`);
       }
       for (const hiddenId of manifest.inventory.hiddenHomeIds) assert.equal(ids.filter(id => id === hiddenId).length, 0, `${hiddenId} must not consume homepage space`);
-      assert.equal(await page.locator('a.tile[href^="/"]').count(), manifest.inventory.visibleTiles.length - expectedInventory.reviews);
-      const external = await page.locator('a.tile[href^="https://"]').evaluateAll(tiles => tiles.map(tile => ({ href: tile.getAttribute('href'), target: tile.getAttribute('target'), rel: tile.getAttribute('rel') || '' })));
-      assert.equal(external.length, expectedInventory.reviews, 'seven review cards must keep their direct Google sources');
-      for (const link of external) {
-        assert.match(link.href || '', /^https:\/\//, 'review tile needs an external source');
-        assert.equal(link.target, '_blank', 'review source must intentionally open externally');
-        assert.match(link.rel, /\bnoopener\b/i, 'review source needs noopener');
-        assert.match(link.rel, /\bnoreferrer\b/i, 'review source needs noreferrer');
+      assert.equal(await page.locator('a.tile[href^="/"]').count(), manifest.inventory.visibleTiles.length, 'every homepage tile now resolves to a local route');
+      const reviewTiles = await page.locator('a.tile[data-review-tile="true"]').evaluateAll(tiles => tiles.map(tile => ({
+        id: tile.dataset.reviewId || '',
+        href: tile.getAttribute('href') || '',
+        source: tile.dataset.reviewSourceUrl || '',
+        target: tile.getAttribute('target'),
+      })));
+      assert.equal(reviewTiles.length, expectedInventory.reviews, 'homepage retains seven local review fronts');
+      const expectedReviews = new Map(reviewRecords.map(review => [review.id, review]));
+      assert.deepEqual(new Set(reviewTiles.map(tile => tile.id)), new Set(expectedReviews.keys()), 'homepage has every canonical review front exactly once');
+      for (const tile of reviewTiles) {
+        const review = expectedReviews.get(tile.id);
+        assert.equal(tile.href, `/reviews/${review.id}/`, `${review.id}: homepage review opens its local reader`);
+        assert.equal(tile.source, review.sourceUrl, `${review.id}: homepage review preserves its exact Google source`);
+        assert.equal(tile.target, null, `${review.id}: homepage review remains inside the physical reader journey`);
       }
     });
     await check('homepage passes full Axe including color contrast', () => auditAxe(page, '/ homepage'));
@@ -549,15 +556,17 @@ async function run() {
     await check('direct roofing landing keeps shared controls and leads to the native inquiry form', async () => {
       await page.goto(`${base}/industries/roofing/`, { waitUntil: 'networkidle' });
       assert.equal(await page.locator('#detail').evaluate(node => node.open), false);
-      const contactPath = page.locator('a[data-reader-link][href^="/tech-audit/?intent=website&source="]').first();
+      const contactPath = page.locator('.workbench-page .story-contact a[data-reader-link][href^="/tech-audit/?intent=website&source="]').first();
       await contactPath.waitFor({ state: 'visible' });
       const inquiryUrl = new URL(await contactPath.getAttribute('href'), base);
       assert.equal(inquiryUrl.pathname, '/tech-audit/');
       assert.equal(inquiryUrl.searchParams.get('intent'), 'website');
       assert.equal(inquiryUrl.searchParams.get('source'), '/industries/roofing/');
-      await page.locator('#explore-toggle').click();
-      await page.locator('#explore-menu[open]').waitFor();
-      await page.keyboard.press('Escape');
+      const categoryTabs = page.locator('.workbench-page .workbench-tabs a.workbench-tab');
+      assert.equal(await categoryTabs.count(), 4, 'direct Workbench route keeps all four category controls');
+      assert.deepEqual(await categoryTabs.evaluateAll(tabs => tabs.map(tab => tab.getAttribute('href'))), [
+        '/services/custom-local-websites/', '/services/it-support/', '/services/tech-consulting/', '/services/business-systems/',
+      ], 'direct Workbench category controls retain their canonical routes');
       await page.goto(`${base}/tech-audit/?intent=website`, { waitUntil: 'networkidle' });
       const form = page.locator('form[data-netlify="true"]').first();
       await form.waitFor({ state: 'visible' });

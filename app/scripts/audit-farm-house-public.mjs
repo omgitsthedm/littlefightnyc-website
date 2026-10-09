@@ -86,11 +86,15 @@ for (const file of textFiles) {
 const html = await readFile(path.join(conceptRoot, "index.html"), "utf8");
 assert.match(html, /\/examples\/lab\/assets\/lab-return\.js/, "Farm House must retain the shared in-card return bridge");
 assert.match(html, /(?:<canvas|id=["'](?:scene|viewport)["'])/i, "Farm House direct route must expose a real viewer surface");
+assert.match(html, /id="farm-house-load"/, "Farm House keeps the approved explicit load control");
+assert.match(html, /id="farm-house-poster"/, "Farm House keeps the approved exterior poster before 3D begins");
+assert.doesNotMatch(html, /<script src="\.\/farm-house-viewer\.js/, "Farm House must not eagerly request the heavy 3D viewer");
 for (const collection of ["property", "inside", "find"]) {
   assert.match(html, new RegExp(`data-collection=["']${collection}["']`),
     `Farm House keeps its ${collection} collection entry`);
 }
 const insideRoot = path.join(conceptRoot, "inside");
+await stat(path.join(conceptRoot, "farm-house-loader.js"));
 for (const asset of ["index.html", "farm-house-inside.js", "farm-house-inside.css", "farm-house-inside-data.json"]) {
   await stat(path.join(insideRoot, asset));
 }
@@ -166,7 +170,7 @@ assert.equal(manifest.publicArtifactSha256, sha256(await readFile(modelPath)), "
 assert.match(manifest.sourceSha256 ?? "", /^[a-f0-9]{64}$/i, "Farm House source fingerprint is a non-reversible digest");
 assert.match(manifest.sourceViewerSha256 ?? "", /^[a-f0-9]{64}$/i, "Farm House source viewer fingerprint is a non-reversible digest");
 assert.match(manifest.sourceHtmlSha256 ?? "", /^[a-f0-9]{64}$/i, "Farm House source HTML fingerprint is a non-reversible digest");
-for (const name of ["index.html", "farm-house-viewer.js", "farm-house-adapter.js", "CREDITS.txt"]) {
+for (const name of ["index.html", "farm-house-viewer.js", "farm-house-adapter.js", "farm-house-loader.js", "CREDITS.txt"]) {
   assert.equal(manifest.artifactHashes?.[name], sha256(await readFile(path.join(conceptRoot, name))),
     `Farm House generated ${name} fingerprint`);
 }

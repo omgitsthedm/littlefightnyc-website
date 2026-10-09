@@ -1,5 +1,5 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
-import measurementPaths from "@/data/measurement-paths.json";
+import measurementPaths from "@/data/measurement-paths.json" with { type: "json" };
 import { publicCampaignParameters } from "./socialCampaign";
 import {
   isInternalTechAuditTest,

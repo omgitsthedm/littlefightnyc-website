@@ -1,7 +1,7 @@
 /* Master reference: one dark stage, warm miniature objects, colored edge light. */
 .mosaic-home{background:#07090b}
 #canvas{--sculpture-ground:#080b0e;--tile-radius:16px}
-.mosaic-home .app-shell{width:calc(100% - 32px);max-width:1380px;padding:12px 36px 54px;margin:16px auto;border:1px solid #30373c;border-radius:22px;box-shadow:inset 0 1px 0 #ffffff25;background:#07090b}
+.mosaic-home .app-shell{width:calc(100% - 32px);max-width:1380px;padding:12px 36px 54px;margin:16px auto;border:0;border-radius:0;box-shadow:none;background:#07090b}
 .mosaic-home .topbar{display:flex;flex-wrap:nowrap;gap:28px;margin-bottom:0;min-height:58px}
 .mosaic-home .wordmark{font-size:clamp(18px,1.7vw,24px);gap:8px}.mosaic-home .wordmark .boat{width:62px;height:54px}.mosaic-home .primary-nav>a{font-size:clamp(16px,1.55vw,22px);font-weight:400}
 .mosaic-home .primary-nav{display:contents}
@@ -9,26 +9,25 @@
 .mosaic-home .primary-nav .start-button{order:4;margin:0;padding:12px 32px;min-height:60px;color:#fff;background:linear-gradient(#ff883f,#ff5e22);border:1px solid #ffaf75;box-shadow:inset 0 1px 2px #ffd2a966,0 0 22px #ff74251a}
 .nav-symbol{display:block;width:24px;height:24px;background:currentColor;mask:var(--nav-asset) center/contain no-repeat;-webkit-mask:var(--nav-asset) center/contain no-repeat}
 .mobile-menu-toggle{display:none}
-.sculpture-hero{position:relative;display:block;padding:16px 0 18px;isolation:isolate}
-.sculpture-hero-copy{position:relative;z-index:2;text-align:center;min-width:0}
-.sculpture-hero h1{margin:0;color:#f7f7f5;font:700 clamp(48px,6.5vw,86px)/.96 'Atkinson Hyperlegible Next',Arial,sans-serif;letter-spacing:-.055em;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
-.sculpture-hero-copy>p{font-size:clamp(18px,1.85vw,26px);line-height:1.25;margin:14px auto 0;max-width:44ch;color:#eeeded}
-.sculpture-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:16px;justify-content:center}
-.sculpture-hero-actions a{display:inline-flex;align-items:center;gap:10px;min-height:58px;max-width:100%;font-size:22px;text-decoration:none;white-space:nowrap}
+/* The supplied master is the fixed visual source for this hero. */
+.sculpture-hero{position:relative;display:block;padding:16px 0 0;margin-bottom:-8px;isolation:isolate;--hero-gutter:36px}
+.sculpture-hero-copy{position:relative;left:-2%;z-index:2;text-align:center;min-width:0;pointer-events:none}
+.sculpture-hero-copy a{pointer-events:auto}
+.sculpture-hero h1{margin:0;color:#f7f7f5;font:800 clamp(46px,6.5vw,88px)/.86 'Atkinson Hyperlegible Next',Arial,sans-serif;letter-spacing:-.052em;text-wrap:balance;overflow-wrap:anywhere;hyphens:auto}
+.sculpture-hero-copy>p{font-size:clamp(18px,1.85vw,26px);line-height:1.1;margin:14px auto 0;max-width:44ch;color:#eeeded}
+.sculpture-hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-top:12px;justify-content:center}
+.sculpture-hero-actions a{display:inline-flex;align-items:center;gap:10px;min-height:62px;max-width:100%;font-size:24px;text-decoration:none;white-space:nowrap}
 .sculpture-help{padding:8px 23px;border:1px solid #ffb080;border-radius:999px;color:#fff;background:linear-gradient(#ff893f,#ff6026);box-shadow:inset 0 1px 2px #ffc59d66,0 0 18px #ff742519;font-weight:700}
 .sculpture-help:hover{background:#ff9257}.sculpture-help span{font-size:24px;line-height:1}
-.sculpture-work{border-bottom:1px solid #b3b5b7;line-height:1.2}.sculpture-work:hover{color:#ffa874}
-.sculpture-hero-stage{overflow:clip;position:relative;width:calc(100% + 42px);margin-left:-21px;aspect-ratio:2;margin-top:-158px;pointer-events:none}
-.sculpture-hero-stage>div,.sculpture-hero-stage>a{position:absolute;display:block}
-.sculpture-hero-stage img{display:block;width:100%;height:100%;object-fit:contain}
-.sculpture-hero-stage .hero-ground{inset:0;z-index:0;mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 86%,transparent);mask-composite:intersect;-webkit-mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent),linear-gradient(to bottom,transparent,#000 12%,#000 86%,transparent);-webkit-mask-composite:source-in}
-.sculpture-hero-stage .hero-ground img{object-fit:fill}
-.hero-main{left:12%;top:19%;width:57%;height:40.4%;z-index:1;pointer-events:auto}
-.hero-main img{object-fit:fill;height:183%;max-height:none;transform:rotate(2deg);filter:drop-shadow(0 16px 9px #0009)}
-.hero-secondary{left:43%;bottom:8%;width:37%;height:44%;z-index:3;pointer-events:auto}
-.hero-secondary img{object-fit:fill;filter:drop-shadow(0 12px 8px #000a);transform:rotate(-1deg)}
-.sculpture-hero-stage .hero-boat{left:0;bottom:10%;width:27%;height:34.4%;z-index:4}
-.sculpture-hero-stage a:focus-visible{outline:none}.hero-project:focus-visible img{outline:3px solid #ff9a61;outline-offset:5px;border-radius:12px}
+.sculpture-hero-actions .sculpture-work{line-height:1.2;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;text-decoration-color:#b3b5b7}.sculpture-work:hover{color:#ffa874}
+.sculpture-hero-stage{position:relative;width:calc(100% + 2 * var(--hero-gutter) - 4px);margin-left:calc(2px - var(--hero-gutter));margin-top:calc(-7.743% - 6px);isolation:isolate}
+.hero-reference-art,.hero-reference-art img{display:block;width:100%;height:auto}
+.hero-reference-art{pointer-events:none}
+.hero-project{position:absolute;display:block;min-width:44px;min-height:44px;border-radius:8px;outline-offset:4px}
+.hero-main{left:15.6%;top:16%;width:50%;height:65%;z-index:1;clip-path:polygon(0 0,100% 11%,100% 100%,0 100%)}
+.hero-secondary{left:42.6%;top:48.4%;width:32.4%;height:43%;z-index:2}
+.hero-project:focus-visible{outline:3px solid #ff9a61;clip-path:none;background:#ff9a6108}
+.mosaic-home .topbar{min-height:65px;padding-inline:8px 16px;gap:12px}
 .sculpture-object{display:block;max-width:100%;height:auto;object-fit:contain;pointer-events:none}
 .mosaic-home #canvas{gap:48px}.mosaic-home .topic-section{gap:14px}
 .mosaic-home .topic-heading h2{font-size:clamp(29px,3.4vw,46px);letter-spacing:-.05em;line-height:1.1}
@@ -36,8 +35,8 @@
 .sculpture-services .topic-heading{margin-bottom:2px}
 .sculpture-services .topic-heading h2{font-size:clamp(32px,4.2vw,60px)}
 .mosaic-home [data-topic-grid]{gap:12px;grid-auto-rows:calc((100cqw - 132px)/12)}
-.sculpture-tile[data-family=web]{--tile-pop:#77cdff}.sculpture-tile[data-family=it]{--tile-pop:#ffe64c}.sculpture-tile[data-family=consulting]{--tile-pop:#a0e482}.sculpture-tile[data-family=software]{--tile-pop:#efa0e7}.sculpture-tile[data-family=brand]{--tile-pop:#ff8b43}
-.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 88%,#252c32);border-radius:15px;background:radial-gradient(ellipse at 70% 105%,color-mix(in srgb,var(--tile-pop) 12%,transparent),transparent 72%),linear-gradient(145deg,#0d1115,#07090c 66%);box-shadow:inset 0 0 0 1px #ffffff09,inset 0 0 20px color-mix(in srgb,var(--tile-pop) 6%,transparent),0 0 3px color-mix(in srgb,var(--tile-pop) 23%,transparent),0 5px 10px #0008;overflow:hidden;container-type:inline-size;grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
+.sculpture-tile[data-family=web]{--tile-pop:#92bfff}.sculpture-tile[data-family=it]{--tile-pop:#f5d95b}.sculpture-tile[data-family=consulting]{--tile-pop:#a0df85}.sculpture-tile[data-family=software]{--tile-pop:#f09bdd}.sculpture-tile[data-family=brand]{--tile-pop:#ff7839}
+.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 78%,#252c32);border-radius:15px;background:radial-gradient(ellipse at 70% 105%,color-mix(in srgb,var(--tile-pop) 5%,transparent),transparent 72%),linear-gradient(145deg,#0d1115,#07090c 66%);box-shadow:inset 0 0 0 1px #ffffff06,inset 0 0 20px color-mix(in srgb,var(--tile-pop) 2.4%,transparent),0 0 3px color-mix(in srgb,var(--tile-pop) 9%,transparent),0 5px 10px #0008;overflow:hidden;container-type:inline-size;grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
 .sculpture-tile.tile::after{background:none}.sculpture-tile.tile::before{background:none;border:1px solid var(--tile-pop);padding:0}
 .sculpture-copy{position:relative;display:flex;flex:none;flex-direction:column;align-items:flex-start;gap:7px;padding:19px 38px 0 18px;z-index:2;min-width:0}
 .sculpture-copy>*{flex-shrink:0}.sculpture-tile .construction-tile-copy{height:auto;align-content:normal}
@@ -91,6 +90,19 @@
 .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{top:var(--sculpture-art-top,40%);height:auto;bottom:5px}
 .mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]){display:flex;flex-direction:column}
 .mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{position:relative;inset:auto;flex:1;min-height:0;height:auto;width:calc(100% - 12px);margin:5px 6px 4px}
+/* One scale for the four collections; the hero and service opening keep
+   their established hierarchy. Artwork stays proportional within the row. */
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile:not([data-sculpture-kind=review]) .sculpture-copy{display:grid;grid-template-columns:28px minmax(0,1fr);align-items:center;gap:6px 8px;padding:14px 44px 4px 14px;width:100%}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile .sculpture-symbol{width:28px;height:28px}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) :is(.sculpture-description,.sculpture-lab-action){grid-column:2;font-size:16px}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile .sculpture-title{font-size:clamp(18px,6.5cqw,20px);line-height:1.16}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile[data-collection-narrow]:not([data-sculpture-kind=review]) .sculpture-copy{display:flex;align-items:flex-start;gap:6px;padding:12px 28px 0 12px}
+@media(max-width:600px){#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile[data-collection-narrow]:not([data-sculpture-kind=review]) .sculpture-copy{padding-right:12px}}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) [data-sculpture-kind=review] .sculpture-copy{gap:9px;padding:14px}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .review-credit{font-size:16px}
+.mosaic-home #canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile.tile[data-sculpture] .sculpture-art{position:relative;inset:auto;flex:1;min-height:0;width:calc(100% - 12px);height:auto;margin:5px 6px 4px}
+#canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile[data-collection-wide]:not([data-sculpture-kind=review]) .sculpture-copy{display:flex;justify-content:center;width:46%;height:100%;padding:16px;gap:8px}
+.mosaic-home #canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile.tile[data-collection-wide] .sculpture-art{position:absolute;inset:10px 8px 10px auto;width:52%;height:auto;margin:0}
 #canvas .sculpture-tile .lab-tile-face{position:absolute;inset:0;display:flex;flex-direction:column;padding:0;gap:0;min-height:0}
 #canvas .sculpture-tile .lab-tile-copy{flex:none;position:relative;display:flex;gap:9px;padding:16px 38px 0 18px;min-height:0}
 #canvas .sculpture-tile .lab-tile-copy :is(strong,span){position:static;max-width:none;text-align:left}
@@ -104,7 +116,7 @@
  .mosaic-home .app-shell{padding:14px 24px 40px}.mosaic-home .topbar{gap:20px}
  .mosaic-home [data-topic-grid]{grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:calc((100cqw - 60px)/6)}
  .sculpture-tile.tile{grid-column:span var(--mobile-columns);grid-row:span var(--mobile-rows)}
- .sculpture-hero-stage{margin-top:-58px}.mosaic-home .wordmark .boat{width:44px;height:38px}.sculpture-hero-actions a{font-size:18px;min-height:46px}.mosaic-home .primary-nav .start-button{min-height:48px;padding:10px 22px}.sculpture-hero h1{font-size:clamp(46px,6.5vw,68px)}
+ .sculpture-hero{--hero-gutter:24px}.sculpture-hero-stage{margin-top:calc(-7.743% - 3.4px)}.mosaic-home .wordmark .boat{width:44px;height:38px}.sculpture-hero-actions{gap:18px}.sculpture-hero-actions a{font-size:16px;min-height:46px}.sculpture-help{padding-inline:18px}.mosaic-home .primary-nav .start-button{min-height:48px;padding:10px 22px}.sculpture-hero h1{font-size:clamp(46px,6.1vw,68px)}
  .sculpture-tile[data-sculpture-kind=service] .sculpture-copy{padding-left:15px;width:54%}
  .sculpture-tile[data-sculpture-kind=service] .sculpture-art{width:53%}
 }
@@ -114,15 +126,14 @@
  .mobile-menu-toggle{display:grid;place-items:center;border:0;background:transparent;color:#f6f3ec;min-width:44px;min-height:44px;padding:8px}
 }
 @media(max-width:600px){
- .mosaic-home .app-shell{width:calc(100% - 16px);padding:4px 12px 32px;margin:8px auto;border-radius:17px}.mosaic-home .topbar{min-height:50px}.mosaic-home .wordmark{font-size:16px;gap:7px}.mosaic-home .wordmark .boat{width:38px;height:33px}
- .sculpture-hero{padding:18px 0 8px}.sculpture-hero-copy{text-align:left}.sculpture-hero h1{font-size:clamp(37px,12.5vw,62px);line-height:1;letter-spacing:-.055em}
- .sculpture-hero-copy>p{font-size:clamp(16px,4.8vw,22px);line-height:1.25;max-width:29ch;margin:12px 0 0}.hero-desktop-break{display:none}
+ .mosaic-home .app-shell{width:calc(100% - 16px);padding:4px 12px 32px;margin:8px auto;border-radius:17px}.mosaic-home .topbar{min-height:60px;padding-inline:0;gap:clamp(8px,calc(16.4vw - 44px),20px)}.mosaic-home .wordmark{font-size:clamp(15px,4.6vw,18px);gap:7px;white-space:nowrap;flex-shrink:0}.mosaic-home .wordmark .boat{width:clamp(36px,11.2vw,44px);height:38px}
+ .sculpture-hero{padding:22px 0 8px;margin-bottom:-4px;--hero-gutter:12px}.sculpture-hero-copy{left:0;text-align:left;padding-inline:13px;container-type:inline-size}.sculpture-hero h1{font-size:clamp(32px,14.7cqw,62px);line-height:.96;letter-spacing:-.06em}
+ .sculpture-hero-copy>p{font-size:clamp(16px,4.8vw,22px);line-height:1.28;max-width:29ch;margin:12px 0 0}.hero-desktop-break{display:none}
  .sculpture-hero-actions{justify-content:flex-start;gap:18px;margin-top:14px}.sculpture-hero-actions a{font-size:16px;min-height:44px}.sculpture-help{padding:8px 18px}.sculpture-work{gap:5px}
  #canvas .sculpture-featured .sculpture-symbol{width:32px;height:32px}
  #canvas .sculpture-featured [data-featured=review] .review-star{width:19px;height:19px}#canvas .sculpture-featured [data-featured=review] .review-credit{font-size:16px}
- .sculpture-hero-stage{width:calc(100% + 16px);margin-left:-8px;margin-top:5px;aspect-ratio:1.5}
- .sculpture-hero-stage .hero-ground{left:-41%;width:143%;height:100%}.sculpture-hero-stage .hero-ground img{object-fit:fill}
- .hero-main{left:6%;top:10%;width:68%;height:42%}.hero-main img{height:183%}.hero-secondary{left:31%;bottom:9%;width:46%;height:43%}.sculpture-hero-stage .hero-boat{left:0;bottom:17%;width:30%;height:31%}
+ .sculpture-hero-stage{margin-top:18px}
+ .hero-main{left:8.5%;top:3%;width:56%;height:71%}.hero-secondary{left:29%;top:44%;width:43%;height:44%}
  .mosaic-home #canvas{gap:32px}.mosaic-home .topic-section{gap:10px}.mosaic-home .topic-heading h2,.sculpture-services .topic-heading h2{font-size:clamp(28px,7.5vw,39px)}
  .mosaic-home [data-topic-grid]{gap:10px;grid-auto-rows:calc((100cqw - 50px)/6)}
  .mosaic-home #canvas [data-sculpture-layout=compact]{gap:9px;grid-auto-rows:auto}.mosaic-home #canvas [data-sculpture-layout=compact]>.tile{min-height:clamp(136px,36vw,195px)}
@@ -196,4 +207,10 @@
 body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animation:none!important;transition:none!important;transform:none!important}
 @media(prefers-reduced-motion:reduce){.sculpture-tile :is(.sculpture-symbol,.sculpture-object){animation:none!important;transition:none!important;transform:none!important}}
 @media(max-width:600px){#canvas .sculpture-tile .lab-tile-copy{padding:13px 28px 0 12px}#canvas .sculpture-tile .review-star{width:19px;height:19px}}
+@media(max-width:600px){
+ #canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile:not([data-sculpture-kind=review]) .sculpture-copy{display:flex;align-items:flex-start;gap:6px;padding:12px 28px 0 12px}
+}
 @media(forced-colors:active){.sculpture-tile.tile{border:1px solid ButtonText}.sculpture-help{border:1px solid ButtonText}}
+
+.hero-ending{white-space:nowrap}
+@media(max-width:360px){.sculpture-hero-actions{gap:8px}.sculpture-help{padding-inline:10px}}

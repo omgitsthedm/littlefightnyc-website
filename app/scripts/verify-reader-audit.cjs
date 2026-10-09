@@ -211,7 +211,7 @@ async function run() {
         const channels = session.page.locator('.lf-audit-intro__channels');
         await channels.waitFor({ state: 'visible' });
         for (const href of ['tel:', 'sms:', 'mailto:']) {
-          await session.page.locator('.direct-contact-rail a[href^="' + href + '"]').waitFor({ state: 'visible' });
+          await session.page.locator('.workbench-page .direct-contact-rail a[href^="' + href + '"]').waitFor({ state: 'visible' });
           assert.equal(await channels.locator('a[href^="' + href + '"]').isVisible(), false,
             'the intro must not repeat a channel already present in the persistent rail');
         }
@@ -272,32 +272,36 @@ async function run() {
       { width: 320, textScale: 1 },
       { width: 390, textScale: 1 },
       { width: 390, textScale: 2 },
-    ]) await check('gallery labels and contact controls remain whole at ' + mobile.width + 'px / ' + (mobile.textScale * 100) + '% text', async () => {
+    ]) await check('selected-work labels, full-portfolio route, and contact controls remain whole at ' + mobile.width + 'px / ' + (mobile.textScale * 100) + '% text', async () => {
       const session = await makePage(browser, { width: mobile.width, height: 844 });
       try {
         await openWebsiteReader(session.page);
         if (mobile.textScale !== 1) {
           await session.page.addStyleTag({ content: 'html { font-size: ' + mobile.textScale + 'em !important; }' });
         }
-        await session.page.locator('#detail .rw-full-gallery > summary').click();
-        const plus = session.page.locator('#detail-body .rw-client-project__plus').first();
+        const selected = session.page.locator('#detail-body .rw-selected-work > article');
+        assert.equal(await selected.count(), 2, 'Website reader keeps exactly two selected work panels');
+        const fullPortfolio = session.page.locator('#detail-body .rw-selected-work-all a[data-reader-link]');
+        assert.equal(await fullPortfolio.count(), 1, 'Website reader keeps one full-portfolio route');
+        assert.equal(await fullPortfolio.getAttribute('href'), '/examples/', 'selected work full-portfolio route');
+        const plus = selected.locator('h3 span[aria-hidden="true"]').first();
         await plus.scrollIntoViewIfNeeded();
         await plus.waitFor({ state: 'visible' });
-        const gallery = await plus.evaluate((node) => {
+        const selectedWork = await plus.evaluate((node) => {
           const link = node.closest('a');
           const plusRect = node.getBoundingClientRect();
           const linkRect = link?.getBoundingClientRect();
           return {
-            whiteSpace: getComputedStyle(node).whiteSpace,
             linkText: link?.textContent ?? '',
             plus: { left: plusRect.left, right: plusRect.right },
-            link: linkRect && { left: linkRect.left, right: linkRect.right },
+            link: linkRect && { left: linkRect.left, right: linkRect.right, scrollWidth: link.scrollWidth, clientWidth: link.clientWidth },
           };
         });
-        assert.equal(gallery.whiteSpace, 'nowrap', 'gallery plus must stay as one non-wrapping unit');
-        assert.ok(gallery.linkText.includes('\u00a0+'), 'gallery label binds the plus with a non-breaking space');
-        assert.ok(gallery.link && gallery.plus.left >= gallery.link.left - 1 && gallery.plus.right <= gallery.link.right + 1,
-          'gallery plus stays inside its project link');
+        assert.ok(selectedWork.linkText.endsWith('+'), 'selected-work label keeps its visible plus');
+        assert.ok(selectedWork.link && selectedWork.plus.left >= selectedWork.link.left - 1 && selectedWork.plus.right <= selectedWork.link.right + 1,
+          'selected-work plus stays inside its project link');
+        assert.ok(selectedWork.link.scrollWidth <= selectedWork.link.clientWidth + 1,
+          'selected-work label does not overflow its project link');
 
         const contact = session.page.locator('#detail-body .story-contact .contact-actions');
         await contact.scrollIntoViewIfNeeded();
@@ -326,7 +330,7 @@ async function run() {
           'the Write action remains inside the reader width');
         assert.ok(layout.controls.every((control) => control.scrollWidth <= control.clientWidth + 1),
           'contact labels do not overflow their controls');
-        return 'gallery plus and four contact actions remain bounded at ' + mobile.width + 'px / ' + (mobile.textScale * 100) + '% text';
+        return 'selected-work plus, full-portfolio route, and four contact actions remain bounded at ' + mobile.width + 'px / ' + (mobile.textScale * 100) + '% text';
       } finally {
         await session.context.close();
       }

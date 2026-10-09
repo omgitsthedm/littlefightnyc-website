@@ -18,6 +18,14 @@ for (const tile of await read('topic-tiles.json')) {
   topicPaths.add(path);
   paths.add(path);
 }
+// Review backs are explicit public pages derived from the verified records.
+// Do not accept arbitrary review identifiers or any visitor-supplied URL.
+const reviews = (await read('reviews.json')).reviews;
+const reviewIds = new Set(reviews.map(review => review.id));
+if (reviews.length !== 7 || reviewIds.size !== 7 || [...reviewIds].some(id => !/^google-review-[1-7]$/.test(id))) {
+  throw new Error('Review measurement paths require the seven verified public review identities.');
+}
+for (const id of reviewIds) paths.add(`/reviews/${id}/`);
 for (const album of await read('albums.json')) paths.add(`/photos/${album.id.replace(/^album-/, '')}/`);
 for (const lab of await read('labs.json')) {
   if (!/^[a-z0-9-]+$/.test(lab.slug) || lab.sharePath !== `/labs/${lab.slug}/` || lab.embedPath !== `/examples/lab/concepts/${lab.slug}/`) {

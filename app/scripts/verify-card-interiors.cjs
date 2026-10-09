@@ -19,6 +19,27 @@ const app = path.resolve(__dirname, '..');
 const base = (process.env.CARD_INTERIORS_URL || process.env.PREVIEW_URL || '').replace(/\/$/, '');
 assert.ok(base, 'CARD_INTERIORS_URL must point to the isolated local candidate');
 assert.ok(['localhost', '127.0.0.1'].includes(new URL(base).hostname), 'Card interior sweep is local only');
+const approvedReviewIds = [
+  'google-review-1',
+  'google-review-2',
+  'google-review-3',
+  'google-review-4',
+  'google-review-5',
+  'google-review-6',
+  'google-review-7',
+];
+const approvedReviewRecords = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews;
+assert.deepEqual(
+  approvedReviewRecords.map(record => record.id).sort(),
+  [...approvedReviewIds].sort(),
+  'the visual-support exception is limited to the seven approved Google review readers',
+);
+const approvedReviewsByPath = new Map(approvedReviewRecords.map(record => {
+  assert.equal(record.rating, 5, `${record.id}: approved review must retain its verified five-star rating`);
+  assert.ok(record.displayName && record.sourceUrl, `${record.id}: approved review needs a person and an exact source URL`);
+  assert.equal(Boolean(record.excerpt), Boolean(record.showAsQuote), `${record.id}: quote policy must agree with the verified excerpt`);
+  return [`/reviews/${record.id}/`, record];
+}));
 
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'reader-audit', 'card-interiors');
 const screenshots = path.join(evidence, 'screenshots');
@@ -166,7 +187,41 @@ async function assertControls(page, viewport) {
   return { close: { x: Math.round(closeBox.x), y: Math.round(closeBox.y), width: Math.round(closeBox.width), height: Math.round(closeBox.height) }, controls };
 }
 
-async function inspectReader(page) {
+async function assertApprovedReviewReader(page, record, controls) {
+  const reader = page.locator('#detail[open] [data-review-reader="true"]');
+  assert.equal(await reader.count(), 1, `${record.id}: the card reader must render one source-faithful review record`);
+  assert.equal(await reader.getAttribute('data-review-id'), record.id, `${record.id}: reader identity must match its approved review path`);
+  assert.equal(await reader.getAttribute('data-review-source-url'), record.sourceUrl, `${record.id}: reader must retain the exact verified source URL`);
+  assert.equal((await reader.locator('.review-reader-kicker').textContent()).trim(), 'Google review', `${record.id}: reader must identify the source as Google`);
+  assert.equal(await reader.locator('.review-reader-stars').getAttribute('aria-label'), `${record.rating} out of 5 stars`, `${record.id}: reader must expose its verified rating`);
+  assert.equal((await reader.locator('.review-reader-attribution').textContent()).trim(), record.displayName, `${record.id}: reader must retain the reviewer name`);
+
+  const quote = reader.locator('.review-reader-quote');
+  if (record.showAsQuote) {
+    assert.equal(await quote.locator('blockquote').count(), 1, `${record.id}: source excerpt must remain a quote`);
+    assert.equal((await quote.locator('blockquote').textContent()).trim(), `“${record.excerpt}”`, `${record.id}: reader quote must exactly match the verified excerpt`);
+  } else {
+    assert.equal(await quote.locator('blockquote').count(), 0, `${record.id}: source-linked rating must not invent a quote`);
+    assert.equal((await quote.locator('.review-reader-rating-only').textContent()).trim(), 'Five stars.', `${record.id}: source-linked rating must remain explicit`);
+  }
+
+  const source = reader.locator(`.review-reader-source a[href=${JSON.stringify(record.sourceUrl)}]`);
+  assert.equal(await source.count(), 1, `${record.id}: reader must expose one exact Google source link`);
+  assert.equal((await source.textContent()).trim(), 'Read the original on Google +', `${record.id}: source action must name Google`);
+  assert.equal(await source.getAttribute('target'), '_blank', `${record.id}: source action must open separately`);
+  assert.match(await source.getAttribute('rel') || '', /noopener/, `${record.id}: source action must isolate the external page`);
+  assert.ok(controls.controls.length >= 3 && controls.controls.every(control => control.width >= 44 && control.height >= 44),
+    `${record.id}: Call, Text, and Email must remain reachable 44px actions`);
+  return {
+    id: record.id,
+    reviewer: record.displayName,
+    rating: record.rating,
+    quote: record.excerpt || null,
+    sourceUrl: record.sourceUrl,
+  };
+}
+
+async function inspectReader(page, approvedReview) {
   const body = page.locator('#detail[open] #detail-body');
   const text = (await body.innerText()).replace(/\s+/gu, ' ').trim();
   const headings = await body.locator('h1, h2, h3').allTextContents();
@@ -246,7 +301,9 @@ async function inspectReader(page) {
     icons: node.querySelectorAll('.mineral-icon, [data-icon]').length,
   }));
   const loadedVisibleImages = imageResults.filter(image => image.src && image.complete && image.naturalWidth > 0).length;
-  assert.ok(loadedVisibleImages + visualSupport.svg + visualSupport.icons > 0, 'reader needs visual support, not a copy wall');
+  if (!approvedReview) {
+    assert.ok(loadedVisibleImages + visualSupport.svg + visualSupport.icons > 0, 'reader needs visual support, not a copy wall');
+  }
   return {
     headline: headings.find(heading => heading.trim().length >= 3)?.replace(/\s+/gu, ' ').trim() || '',
     textLength: text.length,
@@ -260,6 +317,7 @@ async function inspectReader(page) {
       sources: imageResults.filter(image => image.src).map(image => image.src),
     },
     visualSupport,
+    presentation: approvedReview ? 'approved-source-review' : 'visual-support-required',
   };
 }
 
@@ -279,7 +337,9 @@ async function inspectTarget(page, target, viewport, capture) {
   await opener.click();
   await waitForReader(page, target.href);
   const controls = await assertControls(page, viewport);
-  const interior = await inspectReader(page);
+  const approvedReview = approvedReviewsByPath.get(target.href);
+  const review = approvedReview ? await assertApprovedReviewReader(page, approvedReview, controls) : null;
+  const interior = await inspectReader(page, approvedReview);
   if (capture) {
     await capturePositions(page, target, viewport, [
       ['top', 0],
@@ -291,7 +351,7 @@ async function inspectTarget(page, target, viewport, capture) {
   await page.waitForFunction(() => !document.querySelector('#detail')?.open, null, { timeout: 8_000 });
   assert.equal(new URL(page.url()).pathname, '/', 'Escape must return to the hub');
   assert.equal(await opener.evaluate(node => document.activeElement === node), true, 'Escape must restore focus to the opening tile');
-  return { controls, interior };
+  return { controls, interior, review };
 }
 
 async function discoverTargets(browser) {

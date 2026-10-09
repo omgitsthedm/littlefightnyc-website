@@ -23,6 +23,7 @@ const profiles=[
  {name:'ultrawide',width:2560,height:1080,touch:false},
 ];
 async function heroGeometry(page,label){
+ await page.locator('.sculpture-hero img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
  const result=await page.locator('.sculpture-hero').evaluate(hero=>{
   const issues=[];
   const inside=r=>r.left>=-1&&r.right<=innerWidth+1;
@@ -32,11 +33,17 @@ async function heroGeometry(page,label){
    while((n=walker.nextNode())){const range=document.createRange();range.selectNodeContents(n);if([...range.getClientRects()].some(r=>!inside(r)))issues.push('text outside viewport: '+n.textContent)}
   }
   for(const link of hero.querySelectorAll('a')){const r=link.getBoundingClientRect();if(r.height<44||r.width<44)issues.push('small action: '+link.textContent)}
-  const art=hero.querySelector('.hero-boat img').getBoundingClientRect(),copy=hero.querySelector('.sculpture-hero-copy').getBoundingClientRect();
-  if(Math.min(art.right,copy.right)>Math.max(art.left,copy.left)+1&&Math.min(art.bottom,copy.bottom)>Math.max(art.top,copy.top)+1)issues.push('boat overlaps words');
-  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:hero.querySelector('.hero-boat img').complete&&hero.querySelector('.hero-boat img').naturalWidth>0};
+  const copy=hero.querySelector('.sculpture-hero-copy>p').getBoundingClientRect();
+  for(const project of hero.querySelectorAll('.hero-project'))if(project.getBoundingClientRect().top<copy.bottom-1)issues.push('project overlaps words');
+  const images=[...hero.querySelectorAll('img')];
+  // naturalWidth/Height are density-corrected integers for width-descriptor
+  // srcsets. At small CSS sizes their rounding can falsely imply stretching.
+  // The HTML dimensions come directly from the encoded full-size asset.
+  const aspectCorrect=images.every(image=>{const s=getComputedStyle(image),source=[...(image.closest('picture')?.querySelectorAll('source')||[])].find(n=>matchMedia(n.media).matches)||image,ratio=Number(source.getAttribute('width'))/Number(source.getAttribute('height'));return Number.isFinite(ratio)&&Math.abs(parseFloat(s.width)/parseFloat(s.height)-ratio)<.005});
+  for(const action of hero.querySelectorAll('.sculpture-hero-actions a')){const r=action.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);if(r.bottom<=innerHeight&&r.top>=0&&hit!==action&&!action.contains(hit))issues.push('hero action is covered');}
+  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:images.length===1&&aspectCorrect&&images.every(image=>image.complete&&image.naturalWidth>0)};
  });
- check(label+' readable hero, 44px actions, loaded boat and no overflow',!result.overflow&&result.imageLoaded&&!result.issues.length,result);
+ check(label+' readable hero, 44px actions, undistorted responsive artwork and no overflow',!result.overflow&&result.imageLoaded&&!result.issues.length,result);
 }
 async function main(){
  for(const [engine,type] of [['chrome',chromium],['webkit',webkit]]){
@@ -98,7 +105,7 @@ async function main(){
     if(profile.touch){
      await page.setViewportSize({width:profile.height,height:profile.width});await settle(page);await heroGeometry(page,label+' landscape');
      const cards=await page.locator('#canvas .tile').evaluateAll(tiles=>({count:tiles.length,overflow:document.documentElement.scrollWidth>innerWidth+1}));
-     check(label+' orientation change retains all 80 tiles without overflow',cards.count===80&&!cards.overflow,cards);
+     check(label+' orientation change retains all 58 curated tiles without overflow',cards.count===58&&!cards.overflow,cards);
     }
     if(['small-phone','tablet','desktop'].includes(profile.name)){
      await page.setViewportSize({width:profile.width,height:profile.height});

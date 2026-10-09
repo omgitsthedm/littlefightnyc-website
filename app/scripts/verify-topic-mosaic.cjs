@@ -668,9 +668,10 @@ async function assertReviewEvidence(page) {
       starsAria: stars?.getAttribute('aria-label') || '',
       stars: stars?.querySelectorAll('svg.review-star').length || 0,
       credit: credit?.textContent?.replace(/\s+/g, ' ').trim() || '',
-      href: tile.matches('a[href^="https://"]') ? tile.getAttribute('href') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('href') || '',
-      target: tile.matches('a') ? tile.getAttribute('target') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('target') || '',
-      rel: tile.matches('a') ? tile.getAttribute('rel') || '' : tile.querySelector('a[href^="https://"]')?.getAttribute('rel') || '',
+      href: tile.getAttribute('href') || '',
+      sourceUrl: tile.getAttribute('data-review-source-url') || '',
+      target: tile.getAttribute('target') || '',
+      rel: tile.getAttribute('rel') || '',
     };
   }));
   const source = sourceReviews();
@@ -682,19 +683,18 @@ async function assertReviewEvidence(page) {
     assert.ok(item, `source review ${record.id} must remain on the homepage`);
     assert.equal(item.name, record.displayName, `${record.id} may display only its source first name/initials`);
     assert.equal(item.quote, record.showAsQuote ? record.excerpt : '', `${record.id} must preserve its exact sourced excerpt or remain quote-free`);
-    assert.equal(item.href, record.sourceUrl, `${record.id} must preserve its source path`);
+    assert.equal(item.href, `/reviews/${record.id}/`, `${record.id} must open its canonical local reader`);
+    assert.equal(item.sourceUrl, record.sourceUrl, `${record.id} front must retain its verified Google source attribution`);
     assert.equal(item.stars, 5, `${record.id} must show five SVG stars`);
     assert.match(item.starsAria, /^5(?:\.0)?\s*out of\s*5\s*stars?$/i, `${record.id} needs a precise five-star accessible label`);
     assert.ok(item.credit.includes(record.displayName) && /Google/i.test(item.credit),
       `${record.id} review credit must repeat the same attribution and source: ${item.credit}`);
-    assert.match(item.href, /^https:\/\//, `review ${item.id} has no attributable external source link`);
-    assert.equal(item.target, '_blank', `review ${item.id} must open its external source intentionally`);
-    assert.match(item.rel, /\bnoopener\b/i, `review ${item.id} external link needs noopener`);
-    assert.match(item.rel, /\bnoreferrer\b/i, `review ${item.id} external link needs noreferrer`);
+    assert.equal(item.target, '', `review ${item.id} front must use the physical reader`);
+    assert.equal(item.rel, '', `review ${item.id} front must not bypass its local reader`);
   }
   assert.equal(details.filter(item => item.quote).length, 6, 'only six review cards may show sourced quotes');
   assert.equal(details.find(item => item.id === 'google-review-7')?.name, 'Emilee', 'Emilee must stay the source-linked rating-only review');
-  return 'six exact first-name-only source quotes plus Emilee’s quote-free rating card, each with five SVG stars and matching credit';
+  return 'seven local review fronts preserve their exact first-name-only source attribution, quotes, and five-star cards';
 }
 
 async function assertReducedReviewMotion(page, label) {

@@ -4,22 +4,29 @@
   "cases": {
     "after-hours-agenda": {
       "desktop": {
-        "src": "/assets/proof/editorial/case-after-hours-agenda-desktop-960.webp",
-        "width": 960,
-        "height": 720,
-        "alt": "After Hours Agenda storefront homepage on desktop."
+        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+        "width": 1440,
+        "height": 1000,
+        "alt": "After Hours Agenda production homepage on desktop."
       },
       "mobile": {
-        "src": "/assets/proof/editorial/case-after-hours-agenda-mobile-390.webp",
+        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
         "width": 390,
-        "height": 2400,
-        "alt": "After Hours Agenda storefront on a phone."
+        "height": 844,
+        "alt": "After Hours Agenda production homepage on a phone."
       },
-      "caption": "Public storefront, shown on desktop and phone.",
+      "caption": "Production website, shown on desktop and phone. New orders remain paused.",
       "source": {
-        "kind": "Little Fight public product capture",
-        "sourceAsset": "app/public/assets/case-after-hours-agenda.webp",
-        "mobileSourceAsset": "app/public/assets/case-after-hours-agenda-explore-mobile.webp"
+        "kind": "Verified production capture",
+        "publicUrl": "https://afterhoursagenda.com/",
+        "captureDate": "2026-10-09",
+        "status": "Production live; new orders remain paused."
+      },
+      "social": {
+        "src": "/assets/portfolio-upgrade-20261009/share-after-hours-agenda.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "After Hours Agenda production homepage on desktop."
       }
     },
     "cc-films": {
@@ -93,11 +100,11 @@
         "height": 630,
         "alt": "ClearHelp resource-finding website shown on desktop and phone."
       },
-      "caption": "Public resource-finding website, shown on desktop and phone.",
+      "caption": "Production resource-finding website. An audit preview is saved separately and unpromoted.",
       "source": {
-        "kind": "Public client website capture",
-        "sourceAsset": "app/public/assets/cases/2026-09-29/case-clearhelp-desktop-1440.webp",
-        "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-clearhelp-mobile-390.webp"
+        "kind": "Production website capture",
+        "publicUrl": "https://clearhelp.org/",
+        "status": "Production unchanged; audit preview is unpromoted."
       }
     },
     "easy-tiger": {
@@ -226,48 +233,56 @@
     },
     "the-tarot-hotline": {
       "desktop": {
-        "src": "/assets/proof/editorial/case-the-tarot-hotline-desktop-960.webp",
-        "width": 960,
-        "height": 667,
-        "alt": "The Tarot Hotline website on desktop."
+        "src": "/assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "The Tarot Hotline production homepage on desktop."
       },
       "mobile": {
-        "src": "/assets/proof/editorial/case-the-tarot-hotline-mobile-480.webp",
-        "width": 480,
-        "height": 1039,
-        "alt": "The Tarot Hotline website on a phone."
+        "src": "/assets/portfolio-upgrade-20261009/the-tarot-hotline-phone.webp",
+        "width": 390,
+        "height": 900,
+        "alt": "The Tarot Hotline production homepage on a phone."
       },
       "social": {
-        "src": "/assets/social/og-case-the-tarot-hotline.jpg",
+        "src": "/assets/portfolio-upgrade-20261009/share-the-tarot-hotline.jpg",
         "width": 1200,
         "height": 630,
-        "alt": "The Tarot Hotline website shown on desktop and phone."
+        "alt": "The Tarot Hotline production homepage on desktop."
       },
-      "caption": "Public client service website, shown on desktop and phone.",
+      "caption": "Production client website; current booking readiness was verified.",
       "source": {
-        "kind": "Public client website capture",
-        "sourceAsset": "app/public/assets/cases/2026-09-29/case-the-tarot-hotline-desktop-1440.webp",
-        "mobileSourceAsset": "app/public/assets/cases/2026-09-29/case-the-tarot-hotline-mobile-390.webp"
+        "kind": "Verified production capture",
+        "publicUrl": "https://thetarothotline.com/",
+        "captureDate": "2026-10-09",
+        "status": "Production live; native Square booking readiness verified."
       }
     },
     "venuecircuit": {
       "desktop": {
-        "src": "/assets/proof/editorial/case-venuecircuit-desktop-960.webp",
-        "width": 960,
-        "height": 720,
-        "alt": "VenueCircuit venue closeout product on desktop."
+        "src": "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
+        "width": 1440,
+        "height": 900,
+        "alt": "VenueCircuit public owner-demo workspace on desktop."
       },
       "mobile": {
-        "src": "/assets/proof/editorial/case-venuecircuit-mobile-390.webp",
+        "src": "/assets/portfolio-upgrade-20261009/venuecircuit-phone-top.webp",
         "width": 390,
-        "height": 2400,
-        "alt": "VenueCircuit venue closeout product on a phone."
+        "height": 844,
+        "alt": "VenueCircuit public owner-demo workspace on a phone."
       },
-      "caption": "Little Fight public product, shown on desktop and phone.",
+      "caption": "Public owner demo, shown on desktop and phone. Operations are fictional.",
       "source": {
-        "kind": "Little Fight public product capture",
-        "sourceAsset": "app/public/assets/case-venuecircuit.webp",
-        "mobileSourceAsset": "app/public/assets/case-venuecircuit-explore-mobile.webp"
+        "kind": "Verified public demo capture",
+        "publicUrl": "https://venuecircuit.app/demo?persona=owner",
+        "captureDate": "2026-10-09",
+        "status": "Production live; demo operations are fictional."
+      },
+      "social": {
+        "src": "/assets/portfolio-upgrade-20261009/share-venuecircuit.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "VenueCircuit public owner-demo workspace on desktop."
       }
     }
   }

@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "purpose": "Authentic production captures selected for the October 9 Little Fight NYC portfolio refresh.",
+  "captures": [
+    {
+      "key": "after-hours-agenda-desktop",
+      "file": "after-hours-agenda-desktop.png",
+      "sha256": "ad6996690bf87e56685410cbe68501a25eaefafd2ce8361955d4125b29befc05",
+      "publicUrl": "https://afterhoursagenda.com/",
+      "captureDate": "2026-10-09",
+      "status": "Production live; new orders remain paused."
+    },
+    {
+      "key": "after-hours-agenda-phone",
+      "file": "after-hours-agenda-phone.png",
+      "sha256": "ccedd3f0c2238c7f79695a42b51eeda4f7a1ec6e5c9e10789be25dfff39e30f7",
+      "publicUrl": "https://afterhoursagenda.com/",
+      "captureDate": "2026-10-09",
+      "status": "Production live; new orders remain paused."
+    },
+    {
+      "key": "the-tarot-hotline-desktop",
+      "file": "the-tarot-hotline-desktop.png",
+      "sha256": "c76c63b737101cc4eff17080fc190e58c392f2938eb5e8ca7306b044a2e2cdd4",
+      "publicUrl": "https://thetarothotline.com/",
+      "captureDate": "2026-10-09",
+      "status": "Production live; current native booking flow was verified."
+    },
+    {
+      "key": "the-tarot-hotline-phone",
+      "file": "the-tarot-hotline-phone.png",
+      "sha256": "8fd86e5fc701915d305da9126d180180200a91161d2f27a16dca7b6adc978cc7",
+      "publicUrl": "https://thetarothotline.com/",
+      "captureDate": "2026-10-09",
+      "status": "Production live; current native booking flow was verified."
+    },
+    {
+      "key": "venuecircuit-desktop",
+      "file": "venuecircuit-desktop.png",
+      "sha256": "7e06d483757ebfb73aa7213cdbfcec7ba58f71a5d394f1e3a48d7657460722f4",
+      "publicUrl": "https://venuecircuit.app/demo?persona=owner",
+      "captureDate": "2026-10-09",
+      "status": "Production live; shown in its public owner-demo state."
+    },
+    {
+      "key": "venuecircuit-phone",
+      "file": "venuecircuit-phone.png",
+      "sha256": "c502ae1ae9459f6eea91db1708b63f12d2e1f97b87892201bd7d695f2e8289d4",
+      "publicUrl": "https://venuecircuit.app/demo?persona=owner",
+      "captureDate": "2026-10-09",
+      "status": "Production live; shown in its public owner-demo state."
+    }
+  ],
+  "derivatives": [
+    {
+      "key": "after-hours-agenda-desktop-display",
+      "file": "after-hours-agenda-desktop.webp",
+      "sha256": "81860377d2e774945d872315904a1d6c7635ac1abb4d430d8d285ad4fe2a231a",
+      "sourceKey": "after-hours-agenda-desktop",
+      "sourceSha256": "ad6996690bf87e56685410cbe68501a25eaefafd2ce8361955d4125b29befc05",
+      "crop": null,
+      "method": "Lossy WebP encoding of an authenticated current-production capture."
+    },
+    {
+      "key": "after-hours-agenda-phone-display",
+      "file": "after-hours-agenda-phone.webp",
+      "sha256": "1a5e9f439cd8ef891658fa6440bb88648649ae2871ac5d57ddb2646ed76b27a1",
+      "sourceKey": "after-hours-agenda-phone",
+      "sourceSha256": "ccedd3f0c2238c7f79695a42b51eeda4f7a1ec6e5c9e10789be25dfff39e30f7",
+      "crop": null,
+      "method": "Lossy WebP encoding of an authenticated current-production capture."
+    },
+    {
+      "key": "the-tarot-hotline-desktop-display",
+      "file": "the-tarot-hotline-desktop.webp",
+      "sha256": "7dc20938729aea14d2f5a23e8124b07cb960de88c6159169ef4a91f633f159f7",
+      "sourceKey": "the-tarot-hotline-desktop",
+      "sourceSha256": "c76c63b737101cc4eff17080fc190e58c392f2938eb5e8ca7306b044a2e2cdd4",
+      "crop": null,
+      "method": "Lossy WebP encoding of an authenticated current-production capture."
+    },
+    {
+      "key": "the-tarot-hotline-phone-display",
+      "file": "the-tarot-hotline-phone.webp",
+      "sha256": "8e0010897802496fce857b1377cfe355fbeb3a57847f364f39e6eac5f114d65e",
+      "sourceKey": "the-tarot-hotline-phone",
+      "sourceSha256": "8fd86e5fc701915d305da9126d180180200a91161d2f27a16dca7b6adc978cc7",
+      "crop": null,
+      "method": "Lossy WebP encoding of an authenticated current-production capture."
+    },
+    {
+      "key": "venuecircuit-desktop-display",
+      "file": "venuecircuit-desktop-top.webp",
+      "sha256": "4068fa39480967ac7e07dd767be783540a7428fc39a85dc5861e8dde3b4bb123",
+      "sourceKey": "venuecircuit-desktop",
+      "sourceSha256": "7e06d483757ebfb73aa7213cdbfcec7ba58f71a5d394f1e3a48d7657460722f4",
+      "crop": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "method": "Lossy WebP encoding of an authenticated current-production capture after the declared top-of-page crop."
+    },
+    {
+      "key": "venuecircuit-phone-display",
+      "file": "venuecircuit-phone-top.webp",
+      "sha256": "21387379fc50a3a8339595b4b877d49db08e4ce864c6544e95617c42734c0b78",
+      "sourceKey": "venuecircuit-phone",
+      "sourceSha256": "c502ae1ae9459f6eea91db1708b63f12d2e1f97b87892201bd7d695f2e8289d4",
+      "crop": [
+        0,
+        0,
+        390,
+        844
+      ],
+      "method": "Lossy WebP encoding of an authenticated current-production capture after the declared top-of-page crop."
+    },
+    {
+      "key": "after-hours-agenda-share",
+      "file": "share-after-hours-agenda.jpg",
+      "sha256": "5443ed1e77163b47156a558bcfeb044e50ee07bbba0f1392291271f694666968",
+      "sourceKey": "after-hours-agenda-desktop",
+      "sourceSha256": "ad6996690bf87e56685410cbe68501a25eaefafd2ce8361955d4125b29befc05",
+      "composition": "assets/sculpture/browser-after-hours-agenda.webp",
+      "compositionSha256": "2add7b8cec21952660849bcf16e4921b3f5c8faf31dbb3b40c6d44e644453d85",
+      "method": "Authenticated current-production capture in the existing physical display, centered on the established opaque charcoal social canvas."
+    },
+    {
+      "key": "the-tarot-hotline-share",
+      "file": "share-the-tarot-hotline.jpg",
+      "sha256": "3b3835aa2fd1e0b51f6975c529d0f0a5420687468e0f1e9965392a61b88390d4",
+      "sourceKey": "the-tarot-hotline-desktop",
+      "sourceSha256": "c76c63b737101cc4eff17080fc190e58c392f2938eb5e8ca7306b044a2e2cdd4",
+      "composition": "assets/sculpture/website-the-tarot-hotline.webp",
+      "compositionSha256": "a88651174f94f74293805284afb9da8d493d68f9460b99a1ae412738559d51ff",
+      "method": "Authenticated current-production capture in the existing physical display, centered on the established opaque charcoal social canvas."
+    },
+    {
+      "key": "venuecircuit-share",
+      "file": "share-venuecircuit.jpg",
+      "sha256": "7b2ce9dd1da80188730c6db347e228d6ac0dd78441e46837eb1d1898e27c1ac2",
+      "sourceKey": "venuecircuit-desktop",
+      "sourceSha256": "7e06d483757ebfb73aa7213cdbfcec7ba58f71a5d394f1e3a48d7657460722f4",
+      "composition": "assets/sculpture/browser-venuecircuit.webp",
+      "compositionSha256": "0b0bb6cb4f43c7861c9cbc4d5d8cb3ec805157926130ef3419b4ea1b1db2ec8f",
+      "method": "Authenticated current-production capture in the existing physical display, centered on the established opaque charcoal social canvas."
+    }
+  ]
+}

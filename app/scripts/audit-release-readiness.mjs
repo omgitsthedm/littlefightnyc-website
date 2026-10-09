@@ -12,7 +12,8 @@ const failures = [];
 const expectedTotalTileInventory = 132;
 const expectedOriginalTileCount = 106;
 const expectedConsolidatedGroups = 19;
-const expectedRouteCount = 414;
+// The seven source-faithful review backs each retain their own static URL.
+const expectedRouteCount = 421;
 
 function git(args, fallback = "") {
   try {

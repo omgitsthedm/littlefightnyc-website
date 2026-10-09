@@ -453,42 +453,42 @@
   {
     "slug": "house-explorer",
     "name": "Farm House",
-    "type": "Interactive property study",
-    "summary": "Explore the house, barn, and grounds. Then look inside the frame and find the systems behind the walls.",
+    "type": "Interactive exterior study",
+    "summary": "Explore a fictional house, barn, garden, and grounds through an interactive exterior model.",
     "sourceUrl": "https://littlefightnyc.com/labs/house-explorer/",
     "tagline": "See the whole picture.",
-    "lead": "Move around the Farm House, change the light, and open the construction model to inspect framing, roof trusses, and illustrative service routes.",
+    "lead": "Load the fictional Farm House exterior, move around the property model, change the light, and choose a view.",
     "tileDescription": "A whole property to explore.",
     "tileAction": "Explore the model",
     "sections": [
       {
-        "heading": "More than a floor plan.",
+        "heading": "A fictional exterior, made explorable.",
         "paragraphs": [
-          "Explore the house, barn, gates, paths, and landscaping together. Then open Inside to reveal the frame, inspect a roof truss, or search for a detail behind the walls.",
-          "This is an interactive visualization. It helps people discuss ideas and understand a place; it does not replace a survey or construction drawings."
+          "Explore the house, barn, gates, paths, garden, and landscaping together from ten viewpoints and four lighting states.",
+          "Farm House is a fictional interactive visualization with no real-world location. It is not a survey, construction drawing, or property record."
         ],
         "bullets": [
-          "Ten views and four lighting states",
+          "Ten exterior views and four lighting states",
           "Working gates, garden choices, and seasonal details",
-          "House and barn structure, cutaway views, and truss profiles",
-          "Searchable plumbing, electrical, and air-system illustrations"
+          "Orbit, zoom, and reset controls",
+          "A static exterior preview before the optional 3D load"
         ]
       }
     ],
     "features": [
-      "Property, Inside, and Find collections",
+      "Fictional exterior model",
       "Ten camera views and four lighting states",
-      "Framing, truss profiles, and searchable systems"
+      "Garden, gate, and seasonal details"
     ],
-    "disclaimer": "Interactive visualization. Not a survey or construction document.",
+    "disclaimer": "A fictional interactive exterior study. Not a survey, construction document, or property record.",
     "interactionNotes": [
-      "Drag to orbit or pinch to zoom. Choose Inside to inspect the structure, or Find to search for a detail. Close the experience to return to the hub."
+      "Choose Load experience, then drag to orbit or pinch to zoom. Change the view or time of day, then close the experience to return to the hub."
     ],
     "sourceAssets": [],
-    "tileImage": "/images/lab-showcase/house-explorer-800.webp?v=7cca44f53c",
-    "tileImageAlt": "The Farm House project with its dark-roofed house, separate barn, gardens, paths, and fenced grounds.",
-    "tileImageWidth": 800,
-    "tileImageHeight": 560,
+    "tileImage": "/examples/lab/concepts/house-explorer/assets/farm-house-load-experience.jpg",
+    "tileImageAlt": "A fictional Farm House exterior model with a house, barn, gardens, and paths.",
+    "tileImageWidth": 1904,
+    "tileImageHeight": 1246,
     "embedPath": "/examples/lab/concepts/house-explorer/",
     "sharePath": "/labs/house-explorer/"
   }

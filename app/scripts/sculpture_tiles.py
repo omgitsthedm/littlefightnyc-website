@@ -1,18 +1,24 @@
 """The October sculpture direction: real media, physical objects, live HTML copy.
 
 This presentation pass runs after the content inventory has been consolidated.
-It retains every tile identity, destination, source attribution and reader.
+It retains destinations, source attribution and readers. The redundant brand
+front was removed at the owner's request on October 8; its reader remains.
 """
 from html import escape, unescape
 from html.parser import HTMLParser
 import re
 import json
 from pathlib import Path
+from functools import lru_cache
+from PIL import Image
 
 E = lambda value: escape(str(value or ''), quote=True)
 ASSET = '/assets/sculpture/'
 DELIVERY_PATH=Path(__file__).resolve().parents[2]/'.lifi/design-source/sculpture/delivery.json'
 DELIVERY=json.loads(DELIVERY_PATH.read_text()) if DELIVERY_PATH.is_file() else {}
+CURATION_PATH=Path(__file__).resolve().parents[1]/'preview-content/homepage-curation.json'
+HOMEPAGE_CURATION=json.loads(CURATION_PATH.read_text())
+EXPECTED_VISIBLE_COUNT=HOMEPAGE_CURATION['expectedVisibleCount']
 TILES = re.compile(r'<a\b[^>]*class="[^"]*\btile\b[^>]*>.*?</a>', re.S)
 SERVICES = {
     'web': ('Websites', 'Help customers choose you.', 'browser-chromatic-painting-design', 'browser-duotone'),
@@ -82,6 +88,16 @@ CASE_ICONS = {
     'venuecircuit':'calendar-check', 'deckspace':'calendar-dots',
     'after-hours-agenda':'coat-hanger',
 }
+# Website proof uses the device suited to the work. These are presentation
+# choices only; each card still opens its existing case-study reader.
+WEBSITE_DEVICES = {
+    'hair-by-rachel-charles': 'iphone', 'cc-films': 'desktop',
+    'easy-tiger': 'iphone', 'the-break-room': 'duo',
+    'clearhelp': 'tablet', 'army-navy-bags': 'desktop',
+    'brothers-pizzeria': 'desktop', 'grand-funding-llc': 'tablet',
+    'legacy-music-group': 'desktop', 'logan-loans': 'iphone',
+    'the-tarot-hotline': 'duo',
+}
 LAB_ICONS = {
     'pool-room':'film-reel', 'pill-scroll':'mouse-scroll', 'walkup-3d':'buildings',
     'terminal-3d':'city', 'micro-animations':'sparkle', 'aha-laser':'waveform',
@@ -102,7 +118,7 @@ def icon_for(identity, kind, family):
 def motion_for(art):
     if art is None: return 'stamp'
     if art.startswith('cast-'): return 'cast'
-    if art.startswith(('browser-', 'phone-', 'lab-', 'photo-')): return 'frame'
+    if art.startswith(('browser-', 'phone-', 'lab-', 'photo-', 'website-')): return 'frame'
     return {'boat':'cast', 'storefront':'cast', 'security':'cast',
             'router':'clay', 'printer':'clay', 'mail':'paper', 'notebook':'paper',
             'software':'stack', 'review':'stamp', 'yellow-taxi-v1':'clay',
@@ -117,14 +133,28 @@ class Attributes(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if not self.attrs: self.attrs = dict(attrs)
 
+@lru_cache(maxsize=None)
+def image_dimensions(name):
+    with Image.open(Path(__file__).resolve().parents[1]/'public/assets/sculpture'/(name+'.webp')) as artwork:
+        return artwork.size
+
 def image(name, cls='', eager=False, alt=''):
     variants=DELIVERY.get(name,[])
     sizes='(max-width: 600px) 48vw, 380px'
+    if name.startswith('website-'):
+        device=WEBSITE_DEVICES[name.removeprefix('website-')]
+        sizes={
+            'desktop':'(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px',
+            'duo':'(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px',
+            'tablet':'(max-width: 1100px) 48vw, 420px',
+            'iphone':'(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px',
+        }[device]
     if cls.startswith('hero-image-'):
         sizes={'hero-image-main':'(max-width: 600px) 73vw, 790px', 'hero-image-secondary':'(max-width: 600px) 45vw, 490px', 'hero-image-stage':'(max-width: 600px) 100vw, 1320px', 'hero-image-boat':'(max-width: 600px) 30vw, 330px'}[cls]
     elif eager:sizes='(max-width: 600px) 80vw, (max-width: 1000px) 71vw, 770px'
     responsive=' srcset="'+', '.join(ASSET+E(v['file'])+' '+str(v['width'])+'w' for v in variants)+'" sizes="'+sizes+'"' if variants else ''
-    return f'<img class="sculpture-object {E(cls)}" src="{ASSET}{E(name)}.webp"{responsive} width="1200" height="960" alt="{E(alt)}" loading="{"eager" if eager else "lazy"}" decoding="async"'+(' fetchpriority="high"' if eager and cls=='hero-image-main' else '')+'>'
+    width,height=image_dimensions(name)
+    return f'<img class="sculpture-object {E(cls)}" src="{ASSET}{E(name)}.webp"{responsive} width="{width}" height="{height}" alt="{E(alt)}" loading="{"eager" if eager else "lazy"}" decoding="async"'+(' fetchpriority="high"' if eager and cls=='hero-image-main' else '')+'>'
 
 def _text(markup):
     return unescape(re.sub(r'<[^>]+>', ' ', markup)).strip()
@@ -139,6 +169,7 @@ def sculptural_mosaic(markup):
         original=match[0]; end=original.index('>')+1
         attrs=Attributes(original[:end]).attrs
         identity=attrs.get('data-answer',''); family=attrs.get('data-family','brand'); kind=attrs.get('data-kind','question')
+        if identity=='brand-brief': return ''
         title=attrs.get('data-cell-title') or 'Little Fight NYC'
         inner=original[end:-4]
         is_service=kind=='service-anchor' and family in SERVICES
@@ -162,6 +193,13 @@ def sculptural_mosaic(markup):
             art='browser-'+slug
             modifier='proof'; cols,rows,mrows=4,3,4
             copy=_span(inner,'proof-tile-label')
+            if slug in WEBSITE_DEVICES:
+                device=WEBSITE_DEVICES[slug]
+                art='website-'+slug
+                attrs['data-device']=device
+                cols={'desktop':6,'tablet':4,'iphone':3,'duo':5}[device]
+                mcols=3 if device in ('iphone','tablet') else 6
+                rows=mrows=1
             if identity=='case-chromatic-painting-design':
                 title='Our work'; copy=''; art='work-chromatic'; attrs['data-featured']='work'
         elif kind=='lab':
@@ -179,11 +217,17 @@ def sculptural_mosaic(markup):
             if len(title)>60:mrows=5
         elif kind=='construction-hub':
             modifier='question'; cols=6
+        if identity=='page-industries':
+            attrs['data-art-fit']='portrait'
+            cols,mcols,rows,mrows=3,3,1,1
         assert art or kind=='review', f'Missing unique artwork: {identity}'
         attrs['data-sculpture-kind']=modifier
         if identity=='google-review-1': attrs['data-featured']='review'
         if identity=='speed': attrs['data-featured']='phone'
-        if art: attrs['data-sculpture-art']=art
+        if art:
+            attrs['data-sculpture-art']=art
+            width,height=image_dimensions(art)
+            attrs['data-art-ratio']=str(width/height)
         icon=icon_for(identity,kind,family)
         motion=motion_for(art)
         assert (Path(__file__).resolve().parents[1]/'preview-ui/assets/mineral'/(icon+'.svg')).is_file(), icon
@@ -223,17 +267,16 @@ def sculptural_mosaic(markup):
     markup=TILES.sub(tile,markup)
     intro='<section id="sculpture-services" class="topic-section sculpture-services" aria-labelledby="sculpture-services-heading"><header class="topic-heading"><h2 id="sculpture-services-heading">Problems? Solved.</h2></header><div data-topic-grid="services" data-sculpture-layout="compact">'+''.join(services)+'</div><div class="sculpture-featured" data-topic-grid="featured" data-sculpture-layout="compact" aria-label="Our work and what clients say">'+''.join(featured[key] for key in ('work','review','phone'))+'</div></section>'
     assert len(services)==4, 'All four service anchors must remain visible'
-    assert len(records)==80, 'All 80 tiles remain in the design system'
+    assert len(records)==EXPECTED_VISIBLE_COUNT, f'{EXPECTED_VISIBLE_COUNT} curated homepage tiles must remain visible'
     art_names=[record['art'] for record in records if record['art']]
     assert len(art_names)==len(set(art_names)), 'Each illustrated tile must use unique artwork'
     return intro+markup,records
 
 def sculptural_hero():
-    return '''<section class="sculpture-hero" data-hero="reference" aria-labelledby="home-title">
-<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1><p>You get thoughtful websites and dependable tech,<br class="hero-desktop-break"> with real people in your corner.</p><div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link>Get help <span aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link>Explore our work <span aria-hidden="true">+</span></a></div></div>
+    return '''<section class="sculpture-hero" data-hero="master-reference" aria-labelledby="home-title">
+<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1><p>You get thoughtful websites and dependable tech,<br class="hero-desktop-break"> with real people <span class="hero-ending">in your corner.</span></p><div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link>Get help <span aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link><span>Explore our work <span aria-hidden="true">+</span></span></a></div></div>
 <div class="sculpture-hero-stage">
-<div class="hero-ground" aria-hidden="true">'''+image('hero-stage','hero-image-stage',True)+'''</div>
-<a class="hero-project hero-main" href="/case-studies/chromatic-painting-design/" data-reader-link aria-label="Explore the Chromatic Painting and Design website">'''+image('browser-chromatic-painting-design','hero-image-main',True)+'''</a>
-<a class="hero-project hero-secondary" href="/case-studies/hair-by-rachel-charles/" data-reader-link aria-label="Explore the Hair By Rachel website">'''+image('browser-hair-by-rachel-charles','hero-image-secondary',True)+'''</a>
-<div class="hero-boat" aria-hidden="true">'''+image('boat','hero-image-boat',True)+'''</div>
+<picture class="hero-reference-art"><source media="(max-width: 600px)" srcset="/assets/sculpture/hero-reference-mobile.webp" width="288" height="194"><img src="/assets/sculpture/hero-reference-desktop.webp" width="762" height="337" alt="" loading="eager" decoding="async" fetchpriority="high"></picture>
+<a class="hero-project hero-main" href="/case-studies/chromatic-painting-design/" data-reader-link aria-label="Explore the Chromatic Painting and Design website"></a>
+<a class="hero-project hero-secondary" href="/case-studies/hair-by-rachel-charles/" data-reader-link aria-label="Explore the Hair By Rachel website"></a>
 </div></section>'''

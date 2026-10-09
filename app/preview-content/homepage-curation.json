@@ -1,0 +1,163 @@
+{
+  "source": "Owner-approved October 8 homepage cuts; preserve the saved master layout and all direct destinations.",
+  "baselineVisibleCount": 79,
+  "expectedVisibleCount": 58,
+  "hiddenTiles": [
+    {
+      "id": "web-homepage-priority",
+      "path": "/answers/help/web-homepage-priority/",
+      "title": "Why aren’t visitors contacting you?",
+      "family": "web",
+      "homepageCategory": "web"
+    },
+    {
+      "id": "web-content-collection",
+      "path": "/answers/help/web-content-collection/",
+      "title": "What we need to get started.",
+      "family": "web",
+      "homepageCategory": "web"
+    },
+    {
+      "id": "case-army-navy-bags",
+      "path": "/case-studies/army-navy-bags/",
+      "title": "Army & Navy Bags",
+      "family": "brand",
+      "homepageCategory": "web"
+    },
+    {
+      "id": "case-legacy-music-group",
+      "path": "/case-studies/legacy-music-group/",
+      "title": "Legacy Music Group",
+      "family": "brand",
+      "homepageCategory": "web"
+    },
+    {
+      "id": "ownership",
+      "path": "/answers/help/ownership/",
+      "title": "Keep your accounts yours.",
+      "family": "it",
+      "homepageCategory": "it"
+    },
+    {
+      "id": "it-license-renewal",
+      "path": "/answers/help/it-license-renewal/",
+      "title": "Too many subscriptions?",
+      "family": "it",
+      "homepageCategory": "it"
+    },
+    {
+      "id": "it-shared-files",
+      "path": "/answers/help/it-shared-files/",
+      "title": "Find the right shared file",
+      "family": "it",
+      "homepageCategory": "it"
+    },
+    {
+      "id": "it-phone-setup",
+      "path": "/answers/help/it-phone-setup/",
+      "title": "New business phone?",
+      "family": "it",
+      "homepageCategory": "it"
+    },
+    {
+      "id": "it-software-updates",
+      "path": "/answers/help/it-software-updates/",
+      "title": "Time for updates?",
+      "family": "it",
+      "homepageCategory": "it"
+    },
+    {
+      "id": "album-marthas-vineyard",
+      "path": "/photos/marthas-vineyard/",
+      "title": "Island time.",
+      "family": "consulting",
+      "homepageCategory": "consulting"
+    },
+    {
+      "id": "album-arizona",
+      "path": "/photos/arizona/",
+      "title": "Room to grow.",
+      "family": "consulting",
+      "homepageCategory": "consulting"
+    },
+    {
+      "id": "album-trades",
+      "path": "/photos/trades/",
+      "title": "Keep it flowing.",
+      "family": "consulting",
+      "homepageCategory": "consulting"
+    },
+    {
+      "id": "album-makers",
+      "path": "/photos/makers/",
+      "title": "Made with care.",
+      "family": "consulting",
+      "homepageCategory": "consulting"
+    },
+    {
+      "id": "lab-pill-scroll",
+      "path": "/labs/pill-scroll/",
+      "title": "Scroll Into Motion",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "lab-terminal-3d",
+      "path": "/labs/terminal-3d/",
+      "title": "Neon District",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "lab-aha-laser",
+      "path": "/labs/aha-laser/",
+      "title": "AHA Laser Poster",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "lab-goliath",
+      "path": "/labs/goliath/",
+      "title": "Goliath",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "lab-studio-engine",
+      "path": "/labs/studio-engine/",
+      "title": "Studio Engine",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "lab-growth-street",
+      "path": "/labs/growth-street/",
+      "title": "Growth Street",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "construction-showcase",
+      "path": "/construction/",
+      "title": "For builders & remodelers",
+      "family": "software",
+      "homepageCategory": "software"
+    },
+    {
+      "id": "software-smallest-useful-change",
+      "path": "/answers/help/software-smallest-useful-change/",
+      "title": "How small can the first change be?",
+      "family": "software",
+      "homepageCategory": "software"
+    }
+  ],
+  "retainedReviewIds": [
+    "google-review-1",
+    "google-review-2",
+    "google-review-3",
+    "google-review-4",
+    "google-review-5",
+    "google-review-6",
+    "google-review-7"
+  ]
+}

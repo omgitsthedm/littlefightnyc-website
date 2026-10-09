@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-10-02 (owner-directed tile website release candidate)
+Last source verification: 2026-10-09 (owner-approved editorial Workbench release candidate)
 
 This file routes agents to the current website source. The marketing site and
 public VERA browser product use one public website repository, one build, and
@@ -61,7 +61,7 @@ Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, bui
 - Quality contract: `.lifi/quality.yml`
 - Generated output: `app/dist/**`, ignored and reproducible
 
-The current marketing direction is the owner-approved Soft Mineral + Edge Light tile mosaic. Its source contract is `app/preview-content/import-provenance.json`; implemented styles and physical tile motion live in `app/preview-ui/**`. Preserve all 110 original tile destinations and the original desktop/mobile square-unit geometry. Older React styles support the retained intake islands only; they are not the marketing design authority.
+The current marketing direction preserves the October 8 master hero, tugboat, physical tile artwork, and card flip. The homepage has 58 curated fronts, including all seven review tiles, while all 132 tile-origin routes remain available. Opened cards use the approved editorial Workbench with service-specific colors and orange global contact controls. Its source contracts are `app/preview-content/import-provenance.json` and `app/preview-content/homepage-curation.json`; implemented styles and physical tile motion live in `app/preview-ui/**`. Older React styles support the retained intake islands only; they are not the marketing design authority.
 
 The construction showcase at `/construction/` uses dedicated, shareable readers at
 `/labs/<slug>/`. Working experiences remain at `/examples/lab/concepts/<slug>/` and

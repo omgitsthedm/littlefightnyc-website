@@ -488,7 +488,8 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
     expected_total = 129 + added_labs + 1
     if inventory.get("sourceTileCount") != 106 or inventory.get("totalTileInventory") != expected_total:
         failures.append(f"homepage inventory must preserve 106 original tiles within {expected_total} retained routes")
-    expected_visible = 77 + added_labs + 1
+    curation = json.loads((CONTENT / "homepage-curation.json").read_text())
+    expected_visible = curation["expectedVisibleCount"]
     if not isinstance(visible, list) or len(visible) != expected_visible:
         failures.append(f"homepage inventory must expose exactly {expected_visible} tiles")
     if not isinstance(retained, list) or len(retained) != expected_total:
@@ -499,6 +500,12 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
         ids = [item.get("id") for item in visible if isinstance(item, dict)]
         if len(ids) != len(set(ids)):
             failures.append("homepage visible tiles must have unique ids")
+        if expected_visible != 58 or len(curation['hiddenTiles']) != 21:
+            failures.append("homepage must honor the approved 21 cuts and 58 remaining fronts")
+        if set(ids).intersection(tile['id'] for tile in curation['hiddenTiles']):
+            failures.append("an approved homepage cut remains visible")
+        if not set(curation['retainedReviewIds']).issubset(ids):
+            failures.append("homepage must retain all seven authentic review fronts")
         if any(str(item.get("family", "")).casefold() == "places" for item in visible if isinstance(item, dict)):
             failures.append("homepage must not expose Places tiles")
     home = parse_html(dist / "index.html", failures)

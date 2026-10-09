@@ -115,6 +115,11 @@ async function verifyFarmCollectionSwitches(frame, label) {
 }
 
 async function verifyFarmHouse(frame, label) {
+  const load = frame.getByRole('button', { name: 'Load experience', exact: true });
+  if (await load.count()) {
+    assert.equal(await frame.locator('#scene canvas').count(), 0, `${label}: keeps the optional 3D renderer cold behind the exterior poster`);
+    await load.click();
+  }
   await frame.locator('#scene canvas').waitFor({ timeout: 45000 });
   await frame.locator('body[data-model-ready="true"]').waitFor({ timeout: 45000 });
   assert.equal(await frame.locator('#scene canvas').count(), 1, `${label}: one interactive Farm House canvas`);
@@ -308,23 +313,9 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto(base + '/', { waitUntil: 'networkidle' });
     const constructionHub = page.locator('.construction-hub-tile');
-    await constructionHub.waitFor();
-    const headingBounds = await constructionHub.evaluate((tile) => {
-      const heading = tile.querySelector('.construction-tile-copy strong');
-      if (!heading) return null;
-      const parent = tile.getBoundingClientRect();
-      const child = heading.getBoundingClientRect();
-      return {
-        left: child.left - parent.left,
-        top: child.top - parent.top,
-        right: parent.right - child.right,
-        bottom: parent.bottom - child.bottom,
-      };
-    });
-    assert.ok(headingBounds, `${width}px construction hub has a visible heading`);
-    assert.ok(Object.values(headingBounds).every(value => value >= -1),
-      `${width}px construction hub heading stays inside its tile: ${JSON.stringify(headingBounds)}`);
-    pass(`${width}px construction hub heading stays within its responsive tile bounds`);
+    assert.equal(await constructionHub.count(), 0,
+      `${width}px homepage keeps the approved construction-showcase cut out of the mosaic`);
+    pass(`${width}px homepage omits the curated construction-showcase front; /construction/ remains the direct canonical route`);
   }
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
@@ -396,6 +387,21 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
     if (slug === 'cabinet-concept') {
       await frame.getByRole('button', { name: 'View in 3D' }).click();
     }
+    if (slug === 'house-explorer') {
+      // Farm House deliberately keeps its renderer cold behind the approved
+      // exterior poster. Its verifier performs the explicit visitor load
+      // before asserting the canvas and every available control.
+      await verifyFarmHouse(frame, 'Farm House in-card embed');
+      const shot = path.join(output, 'house-explorer-embed-393.png');
+      await frameElement.screenshot({ path: shot });
+      report.screenshots.push(shot);
+      await verifyFarmInside(frame, 'Farm House Inside and Find on phone', { exitToHub: true });
+      await dialog.waitFor({ state: 'hidden' });
+      assert.equal(await page.locator('#detail iframe').count(), 0, 'Inside exit releases both nested and exterior engines');
+      assert.equal(await tile.evaluate(node => node === document.activeElement), true, 'Inside exit restores focus to the originating tile');
+      pass('Farm House Inside and Find: safe model, cutaway, barn, truss, search, Property return, and hub exit');
+      continue;
+    }
     await frame.waitForSelector('canvas', { timeout: 45000 });
     await frame.waitForSelector('.lab-embed-exit', { state: 'visible' });
     await overflow(page);
@@ -421,18 +427,6 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
       sharedStudy = await frame.evaluate(() => window.__copiedStudy);
       assert.equal(new URL(sharedStudy).pathname, '/labs/cabinet-concept/');
       assert.match(new URL(sharedStudy).searchParams.get('study'), /^[zu]\./);
-    }
-    if (slug === 'house-explorer') {
-      await verifyFarmHouse(frame, 'Farm House in-card embed');
-      const shot = path.join(output, 'house-explorer-embed-393.png');
-      await frameElement.screenshot({ path: shot });
-      report.screenshots.push(shot);
-      await verifyFarmInside(frame, 'Farm House Inside and Find on phone', { exitToHub: true });
-      await dialog.waitFor({ state: 'hidden' });
-      assert.equal(await page.locator('#detail iframe').count(), 0, 'Inside exit releases both nested and exterior engines');
-      assert.equal(await tile.evaluate(node => node === document.activeElement), true, 'Inside exit restores focus to the originating tile');
-      pass('Farm House Inside and Find: safe model, cutaway, barn, truss, search, Property return, and hub exit');
-      continue;
     }
     await frameElement.evaluate(node => node.scrollIntoView({ block: 'end', behavior: 'instant' }));
     await frame.locator('.lab-embed-exit').click();
@@ -529,6 +523,8 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
   await compactReader.getByRole('link', { name: 'Try the working demo +' }).click();
   await compactFrameElement.scrollIntoViewIfNeeded();
   const compactFrame = await (await compactFrameElement.elementHandle()).contentFrame();
+  const compactLoad = compactFrame.getByRole('button', { name: 'Load experience', exact: true });
+  if (await compactLoad.count()) await compactLoad.click();
   await compactFrame.locator('body[data-model-ready="true"]').waitFor({ timeout: 45000 });
   assert.ok((await compactFrame.evaluate(() => innerWidth)) <= 280, '320px share reader exercises the reduced embedded Farm House viewport');
   await verifyFarmCompactControls(compactFrame, 'Farm House 320px share reader', { page: compactReader, frameElement: compactFrameElement });

@@ -55,25 +55,28 @@ async function run() {
       pass(`${width}: named Services menu reaches Software with keyboard focus`);
       await page.locator('.tile[data-reader-anchor="web"]').click();
       await page.locator('#detail[open] .website-service-body').waitFor();
-      const stories = page.locator('#detail [data-business-story]');
-      assert.equal(await stories.count(), 3);
-      assert.equal(await page.locator('#detail .rw-client-gallery .rw-client-project').count(), 9);
-      assert.equal(await page.locator('#detail .rw-full-gallery').evaluate(el => el.open), false);
-      await noOverflow(page, '#detail-body,.rw-proof-story,.rw-proof-story-copy', `${width}: reader text fits`);
+      const stories = page.locator('#detail .rw-selected-work article');
+      assert.equal(await stories.count(), 2, 'the reader presents two selected projects without a repeated gallery');
+      assert.equal(await page.locator('#detail .rw-selected-work-all a[href="/examples/"]').count(), 1);
+      assert.equal(await page.locator('#detail .rw-client-gallery').count(), 0);
+      await noOverflow(page, '#detail-body,.rw-selected-work article', `${width}: reader text fits`);
       await page.locator('#detail-body').evaluate(el => {
         el.scrollTop += el.querySelector('#reader-work').getBoundingClientRect().top - el.getBoundingClientRect().top - 16;
       });
       await page.waitForFunction(() => {
         const body = document.querySelector('#detail-body').getBoundingClientRect();
-        const visible = [...document.querySelectorAll('#detail [data-business-story] img')].filter(img => {
+        const visible = [...document.querySelectorAll('#detail .rw-selected-work img')].filter(img => {
           const rect = img.getBoundingClientRect();
           return rect.bottom > body.top && rect.top < body.bottom;
         });
         return visible.length > 0 && visible.every(img => img.complete && img.naturalWidth > 0);
       });
       await shot(page, `reader-${width}.png`);
-      await page.locator('#detail .rw-full-gallery > summary').click();
-      assert.ok(await page.locator('#detail .rw-client-gallery').isVisible());
+      await page.locator('#detail .rw-selected-work-all a').click();
+      await page.waitForFunction(()=>document.querySelector('#detail-body')?.dataset.readerPath==='/examples/');
+      assert.ok(await page.locator('#detail-body a.work-project[href^="/case-studies/"]').count()>0, 'full portfolio remains reachable');
+      await page.locator('#reader-back').click();
+      await page.locator('#detail .website-service-body').waitFor();
       await page.locator('#detail-body a[href*="/tech-audit/?intent=website"]').first().click();
       await page.locator('#detail .lf-audit__form').waitFor();
       assert.equal(await page.locator('#detail .lf-audit-intro h1').innerText(), copies.website.title);
@@ -123,11 +126,10 @@ async function run() {
     }
     // A second inquiry in the reader must not steal labels from the page behind it.
     {
-      const { ctx, page } = await context(browser);
+      const { ctx, page } = await context(browser, { viewport: { width: 1440, height: 940 } });
       await page.goto(base + '/tech-audit/?intent=website', { waitUntil: 'networkidle' });
       await page.locator('#fit-name').fill('Original local draft');
-      await page.locator('#explore-toggle').click();
-      await page.locator('#explore-menu .menu-links a[href="/services/custom-local-websites/"]').click();
+      await page.locator('.workbench-page > .workbench-chrome .workbench-tab[data-family="web"]').click();
       await page.locator('#detail .website-service-body').waitFor();
       assert.ok(await page.getByRole('dialog', { name: 'A website that feels like your business.', exact: true }).isVisible());
       await page.locator('#detail-body a[href*="/tech-audit/?intent=website"]').first().click();
@@ -168,7 +170,7 @@ async function run() {
       await page.locator('.lf-audit__form').waitFor();
       assert.equal(await page.locator('.lf-audit-intro h1').innerText(), copies[intent].title);
       assert.ok(await page.getByRole('button', { name: copies[intent].submit, exact: true }).isVisible());
-      assert.ok(await page.locator('.direct-contact-rail a[href^="tel:"]').isVisible());
+      assert.ok(await page.locator('.workbench-page > .workbench-chrome .direct-contact-rail a[href^="tel:"]').isVisible());
       assert.equal(await page.locator('.lf-audit-intro__channels a[href^="tel:"]').isVisible(), false);
       if (intent === 'support') {
         assert.equal(await page.locator('.lf-audit-intro__channels').count(), 0, 'support leads directly to the form without a duplicate contact row');
@@ -181,13 +183,14 @@ async function run() {
     {
       const { ctx, page } = await context(browser, { javaScriptEnabled: false });
       await page.goto(base + '/services/custom-local-websites/');
-      assert.equal(await page.locator('[data-business-story]').count(), 3);
-      assert.equal(await page.locator('.rw-client-project').count(), 9);
-      await page.locator('.rw-full-gallery > summary').click();
-      assert.ok(await page.locator('.rw-client-gallery').isVisible());
+      assert.equal(await page.locator('.rw-selected-work article').count(), 2);
+      assert.equal(await page.locator('.rw-selected-work img').count(), 2);
+      await page.locator('.rw-selected-work-all a[href="/examples/"]').click();
+      await page.waitForURL(base + '/examples/');
+      assert.ok(await page.locator('a.work-project[href^="/case-studies/"]').count() > 0);
       await page.goto(base + '/tech-audit/');
       assert.ok(await page.locator('form.static-inquiry button[type="submit"]').isVisible());
-      pass('Without JavaScript: real project links, native gallery and inquiry form remain available');
+      pass('Without JavaScript: selected project links, full portfolio and inquiry form remain available');
       await ctx.close();
     }
     assert.deepEqual(report.errors, [], 'No uncaught errors');

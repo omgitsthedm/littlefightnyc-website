@@ -18,6 +18,12 @@ const { chromium } = require('@playwright/test');
 const app = path.resolve(__dirname, '..');
 const base = (process.env.LAB_FRONTS_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
 const labs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
+const curation = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'homepage-curation.json'), 'utf8'));
+const hiddenLabSlugs = new Set(curation.hiddenTiles
+  .filter(tile => tile.id.startsWith('lab-'))
+  .map(tile => tile.id.slice(4)));
+const visibleLabs = labs.filter(lab => !hiddenLabSlugs.has(lab.slug));
+const hiddenLabs = labs.filter(lab => hiddenLabSlugs.has(lab.slug));
 const evidence = path.resolve(process.env.LAB_FRONT_EVIDENCE_DIR || '/tmp/lfnyc-lab-fronts');
 const screenshots = path.join(evidence, 'screenshots');
 const viewports = [
@@ -27,7 +33,7 @@ const viewports = [
   { width: 1024, height: 900 },
   { width: 1440, height: 940 },
 ];
-const expectedByHref = new Map(labs.map(lab => [lab.sharePath || `/labs/${lab.slug}/`, lab]));
+const expectedByHref = new Map(visibleLabs.map(lab => [lab.sharePath || `/labs/${lab.slug}/`, lab]));
 const report = {
   kind: 'lab-fronts-browser-verification',
   base,
@@ -110,17 +116,24 @@ function overlapArea(a, b) {
 }
 
 async function assertCatalog(page, label) {
+  assert.equal(visibleLabs.length, 5, 'homepage curation keeps exactly five Lab fronts');
+  assert.equal(hiddenLabs.length, 6, 'homepage curation cuts exactly six Lab fronts');
   const observed = await page.locator('a.tile[data-kind="lab"]').evaluateAll(nodes => nodes.map(node => ({
     href: new URL(node.href).pathname,
     visible: Boolean(node.offsetWidth && node.offsetHeight && getComputedStyle(node).visibility !== 'hidden'),
     active: !node.hidden && getComputedStyle(node).display !== 'none',
   })));
-  assert.equal(observed.length, labs.length, `${label}: every catalog Lab has one tile`);
-  assert.equal(new Set(observed.map(item => item.href)).size, labs.length, `${label}: Lab tile routes must be unique`);
+  assert.equal(observed.length, visibleLabs.length, `${label}: each approved visible Lab has one homepage tile`);
+  assert.equal(new Set(observed.map(item => item.href)).size, visibleLabs.length, `${label}: homepage Lab tile routes must be unique`);
   assert.deepEqual([...new Set(observed.map(item => item.href))].sort(), [...expectedByHref.keys()].sort(),
-    `${label}: each catalog Lab share route remains active on the hub`);
-  assert.ok(observed.every(item => item.visible && item.active), `${label}: every Lab tile must remain active and visible`);
-  return `${observed.length} active Lab links`;
+    `${label}: each approved visible Lab share route remains active on the homepage`);
+  assert.ok(observed.every(item => item.visible && item.active), `${label}: every approved Lab tile must remain active and visible`);
+  for (const lab of hiddenLabs) {
+    const href = lab.sharePath || `/labs/${lab.slug}/`;
+    assert.equal(await page.locator(`a.tile[data-kind="lab"][href="${href}"]`).count(), 0,
+      `${label}/${lab.slug}: approved curation removes this Lab front from the homepage`);
+  }
+  return `${observed.length} visible Lab fronts; ${hiddenLabs.length} named curation cuts absent`;
 }
 
 async function awaitImage(image, label) {
@@ -282,14 +295,14 @@ async function assertPausedMotionKeepsContent(page, label) {
     action: face.querySelector('.lab-tile-action')?.textContent.trim(),
     imageVisible: Boolean(face.querySelector('.lab-tile-media img')?.getBoundingClientRect().width),
   })));
-  assert.equal(content.length, labs.length, `${label}: pause mode retains every Lab front`);
-  const expected = new Map(labs.map(lab => [lab.name, lab]));
+  assert.equal(content.length, visibleLabs.length, `${label}: pause mode retains every visible Lab front`);
+  const expected = new Map(visibleLabs.map(lab => [lab.name, lab]));
   assert.ok(content.every(item => {
     const lab = expected.get(item.title);
     return lab && item.hook === lab.tileDescription && item.action === lab.tileAction && item.imageVisible;
   }), `${label}: pause mode must not hide Lab content`);
   await page.keyboard.press('Escape');
-  return 'paused motion retains every Lab title, hook, action, and cover';
+  return 'paused motion retains every visible Lab title, hook, action, and cover';
 }
 
 async function assertTwoHundredPercentText(page, label) {
@@ -318,7 +331,7 @@ async function assertTwoHundredPercentText(page, label) {
     hook: parseFloat(getComputedStyle(node.querySelector('.lab-tile-hook')).fontSize),
     action: parseFloat(getComputedStyle(node.querySelector('.lab-tile-action')).fontSize),
   })));
-  assert.equal(after.length, before.length, `${label}: 200% test retains every Lab tile`);
+  assert.equal(after.length, before.length, `${label}: 200% test retains every visible Lab tile`);
   for (const initial of before) {
     const current = after.find(item => item.slug === initial.slug);
     assert.ok(current, `${label}/${initial.slug}: 200% text tile remains in the grid`);
@@ -326,16 +339,16 @@ async function assertTwoHundredPercentText(page, label) {
       assert.ok(current[field] >= initial[field] * 1.99, `${label}/${initial.slug}: ${field} is actually doubled (${initial[field]} -> ${current[field]})`);
     }
   }
-  for (const lab of labs) await inspectLab(page, lab, `${label}/200-percent-text`);
+  for (const lab of visibleLabs) await inspectLab(page, lab, `${label}/200-percent-text`);
   await assertGridFits(page, `${label}/200-percent-text`);
   report.textEnlargement.push({ label, before, after });
-  return 'title, hook, and action doubled once for every Lab tile without clipping or collisions';
+  return 'title, hook, and action doubled once for every visible Lab tile without clipping or collisions';
 }
 
 async function captureEvidence(page, viewport) {
   if (![390, 1440].includes(viewport.width)) return;
   await page.evaluate(() => document.activeElement?.blur());
-  for (const lab of labs) {
+  for (const lab of visibleLabs) {
     const href = lab.sharePath || `/labs/${lab.slug}/`;
     const tile = page.locator(`a.tile[data-kind="lab"][href="${href}"]`);
     await tile.scrollIntoViewIfNeeded();
@@ -364,11 +377,11 @@ async function run() {
       const { context, page } = await makePage(browser, viewport);
       try {
         await waitForHome(page);
-        await check(`${label}: all active Lab share routes survive`, () => assertCatalog(page, label));
+        await check(`${label}: visible Lab routes survive and curation cuts remain absent`, () => assertCatalog(page, label));
         await check(`${label}: full mosaic grid fits`, () => assertGridFits(page, label));
         await check(`${label}: each Lab front is readable and its cover decodes`, async () => {
-          for (const lab of labs) await inspectLab(page, lab, label);
-          return `${labs.length} Lab fronts match catalog copy, fit their tiles, and decode their lazy covers`;
+          for (const lab of visibleLabs) await inspectLab(page, lab, label);
+          return `${visibleLabs.length} visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers`;
         });
         await check(`${label}: Lab fronts remain focusable`, () => assertKeyboardFocus(page, label));
         await check(`${label}: paused motion keeps Lab content`, () => assertPausedMotionKeepsContent(page, label));
@@ -387,9 +400,9 @@ async function run() {
         await waitForHome(page);
         await check(`${width}px: Lab fronts work without JavaScript`, async () => {
           await assertCatalog(page, `${width}px/no-js`);
-          for (const lab of labs) await inspectLab(page, lab, `${width}px/no-js`);
+          for (const lab of visibleLabs) await inspectLab(page, lab, `${width}px/no-js`);
           await assertGridFits(page, `${width}px/no-js`);
-          return 'all Lab descriptions, previews, and native links remain readable';
+          return 'all visible Lab descriptions, previews, and native links remain readable';
         });
       } finally { await context.close(); }
     }
@@ -406,7 +419,7 @@ async function run() {
     report.finishedAt = new Date().toISOString();
     fs.writeFileSync(path.join(evidence, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
   }
-  console.log(`PASS Lab fronts: ${labs.length} tiles across ${viewports.length} viewports; evidence in ${evidence}`);
+  console.log(`PASS Lab fronts: ${visibleLabs.length} visible fronts (${hiddenLabs.length} approved cuts absent) across ${viewports.length} viewports; evidence in ${evidence}`);
 }
 
 run().catch(error => {

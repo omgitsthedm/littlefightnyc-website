@@ -103,11 +103,10 @@ async function enlargeEditorialAnchorText(page) {
       const measured = await layout(page);
       assert.ok(measured.documentWidth <= width + 1, `${width}: homepage reflows`);
       assert.deepEqual(measured.overlaps, [], `${width}: tiles must never cover one another`);
-      const brand = measured.anchors.find(a => a.family === 'brand');
       const web = measured.anchors.find(a => a.family === 'web');
-      assert.ok(brand && web && measured.hero.bottom <= web.top + 1, `${width}: complete illustrated brand hero precedes the four services`);
+      assert.deepEqual(measured.anchors.map(a => a.family).sort(), ['consulting','it','software','web'], `${width}: all four service anchors remain`);
+      assert.ok(web && measured.hero.bottom <= web.top + 1, `${width}: approved master hero precedes the service collections`);
       if (width >= 601 && width <= 1000) {
-        assert.ok(brand.width >= web.width, `${width}: brand context card remains wider than a service card`);
         assert.ok(web.height <= 400, `${width}: website anchor must not balloon (${web.height}px)`);
       }
       if (width === 924) {

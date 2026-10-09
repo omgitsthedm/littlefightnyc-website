@@ -1,4 +1,4 @@
-import measurementPaths from "@/data/measurement-paths.json";
+import measurementPaths from "@/data/measurement-paths.json" with { type: "json" };
 import { getMetaConsent, META_CONSENT_EVENT, META_CONSENT_KEY, refreshMetaConsent } from "./consent";
 import { publicCampaignParameters } from "./socialCampaign";
 

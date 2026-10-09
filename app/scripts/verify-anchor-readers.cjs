@@ -38,7 +38,7 @@ async function checkStatic(browser) {
       assert.ok((await main.locator('[data-rw-scene]').count()) >= 6, `${family}: complete native story`);
       assert.ok((await main.locator('img').count()) >= 4, `${family}: visual explanation`);
       assert.ok((await main.locator('details').count()) >= 3, `${family}: useful native details`);
-      for (const method of ['tel:', 'sms:', 'mailto:']) assert.equal(await page.locator(`.direct-contact-rail a[href^="${method}"]`).count(), 1);
+      for (const method of ['tel:', 'sms:', 'mailto:']) assert.equal(await page.locator(`.workbench-page > .workbench-chrome .direct-contact-rail a[href^="${method}"]`).count(), 1);
       const graph = JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
       assert.ok(graph.some(x => x['@type'] === 'Organization'));
       assert.ok(graph.some(x => x['@type'] === 'WebPage'));
@@ -63,30 +63,25 @@ async function checkReaders(browser) {
     try {
       await page.goto(base + '/', { waitUntil:'networkidle' });
       const sizes = await page.locator('[data-reader-anchor]:not([data-reader-anchor=booking])').evaluateAll(nodes => nodes.map(n => ({ family:n.dataset.readerAnchor, width:n.getBoundingClientRect().width, height:n.getBoundingClientRect().height })));
-      assert.equal(sizes.length, 5);
-      const services = sizes.filter(x => x.family !== 'brand');
-      const brand = sizes.find(x => x.family === 'brand');
-      assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1), `equal four service anchor widths at ${width}: ${JSON.stringify(sizes)}`);
-      for (const row of [services.slice(0, 2), services.slice(2)]) {
-        assert.ok(row.every(x => Math.abs(x.height - row[0].height) < 1), `service pairs share a row height at ${width}: ${JSON.stringify(sizes)}`);
-      }
-      if (width > 600) assert.ok(services.every(x => Math.abs(x.height - services[0].height) < 1), `desktop service rows match at ${width}: ${JSON.stringify(sizes)}`);
-      else assert.ok(services[2].height >= services[0].height, `phone second row makes room for copy and artwork at ${width}`);
-      assert.ok(brand.width >= services[0].width, `the brand context card stays wider than a service anchor at ${width}: ${JSON.stringify(sizes)}`);
-      for (const [family] of Object.entries(routes)) {
+      assert.deepEqual(sizes.map(x=>x.family).sort(), ['consulting','it','software','web']);
+      assert.ok(sizes.every(x=>x.width>=44&&x.height>=44), `${width}: the four curated service anchors remain usable`);
+      for (const [family] of Object.entries(routes).filter(([family])=>family!=='brand')) {
         const tile = page.locator(`a.tile[data-reader-anchor="${family}"]`);
         await tile.click();
         const main = page.locator('#detail-body');
         await main.locator('[data-rw-scene]').first().waitFor({ state:'visible' });
         const root = page.locator('#detail .lf-reader');
         assert.equal(await root.getAttribute('data-reader-family'), family);
-        if (family !== 'web') {
-          const headingColor = await main.locator('.anchor-story-body h2').first().evaluate(n => getComputedStyle(n).color);
-          assert.equal(headingColor, colors[family]);
-        }
+        const headingColor = await main.locator('.story-title').first().evaluate(n => getComputedStyle(n).color);
+        assert.equal(headingColor, colors[family], 'the reader title carries its category accent while prose subheads stay warm white');
         const jump = main.locator('.rw-benefits a').first();
+        const target = await jump.getAttribute('href');
         await jump.click();
-        await page.waitForFunction(() => document.querySelector('#detail-body').scrollTop > 100);
+        await page.waitForFunction(selector => {
+          const body = document.querySelector('#detail-body').getBoundingClientRect();
+          const destination = document.querySelector('#detail-body').querySelector(selector)?.getBoundingClientRect();
+          return destination && destination.top >= body.top - 2 && destination.top < body.bottom;
+        }, target);
         assert.ok(await page.locator('#close-detail').isVisible());
         assert.equal(await page.locator('#detail').evaluate(n => n.scrollTop), 0, 'the shell stays fixed while its story scrolls');
         await main.locator('details').first().evaluate(n => { n.open = true; });
@@ -98,10 +93,10 @@ async function checkReaders(browser) {
         await page.locator('#detail').waitFor({ state:'hidden' });
         assert.equal(await tile.evaluate(n => n === document.activeElement), true, 'closing restores focus');
       }
-      pass(`${width}px: service widths and paired row heights match, brand remains a wide context card, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
+      pass(`${width}px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks`);
       if (width === 390) {
         await page.addStyleTag({ content:'html{font-size:200%!important}' });
-        for (const family of ['brand','it','consulting','software']) {
+        for (const family of ['it','consulting','software']) {
           await page.locator(`a.tile[data-reader-anchor="${family}"]`).click();
           await page.locator('#detail-body .anchor-story-body').waitFor({ state:'visible' });
           assert.ok(await page.locator('#detail-body').evaluate(n => n.scrollWidth <= n.clientWidth + 1), `${family}: enlarged text must wrap`);
@@ -120,9 +115,9 @@ async function checkRotation(browser) {
     const { page } = current;
     await page.goto(base + '/', { waitUntil:'networkidle' });
     const displays = page.locator('.sculpture-hero img');
-    assert.equal(await displays.count(), 4);
+    assert.equal(await displays.count(), 1);
     const sources = await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src')));
-    assert.deepEqual(sources, ['hero-stage','browser-chromatic-painting-design','browser-hair-by-rachel-charles','boat'].map(name => '/assets/sculpture/'+name+'.webp'));
+    assert.deepEqual(sources, ['/assets/sculpture/hero-reference-desktop.webp']);
     assert.equal(await page.locator('.hero-cursor').count(), 0);
     assert.ok(await displays.evaluateAll(imgs => imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await page.locator('.hero-work-index').count(), 0);
@@ -142,7 +137,7 @@ async function checkRotation(browser) {
   const plain = await context(browser, { javaScriptEnabled:false });
   try {
     await plain.page.goto(base + '/');
-    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 4 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 1 && imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await plain.page.locator('.sculpture-hero-actions a[href]').count(), 2);
     pass('Without JavaScript, the complete reference hero and both actions remain available');
   } finally { await plain.ctx.close(); }

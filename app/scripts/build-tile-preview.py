@@ -16,7 +16,7 @@ import sys
 from tile_content import render_legacy_sections
 from case_studies import render_case, render_work
 from construction_showcase import construction_tile, render_construction
-from topic_mosaic import build_topic_mosaic, plus_navigation
+from topic_mosaic import build_topic_mosaic, plus_navigation, REVIEW_PLACEMENT
 from editorial_tiles import enrich_editorial_tiles
 from reader_visuals import reader_visual, reader_family
 from sculpture_tiles import sculptural_mosaic, sculptural_hero
@@ -24,6 +24,8 @@ from portfolio_media import apply_portfolio_media, rewrite_portfolio_media
 from consolidated_tiles import load_groups, home_contexts, source_routes, apply_readers, apply_homepage_groups, render_group_sections, group_hero
 from retained_answers import render_retained_answers
 from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
+from editorial_workbench import header as workbench_header
+from review_readers import review_reader_pages, render_review_reader
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -151,9 +153,11 @@ def copy_lab_tile_asset(url):
 for lab in labs:
     copy_lab_tile_asset(lab.get('tileImage'))
 reviews = load('reviews.json')
+review_families = {review_id: family for review_id, (family, _) in REVIEW_PLACEMENT.items()}
 summaries = load('reader-summaries.json')
 authored = {p['path']:p for p in load('pages.json')}
 pages = {}
+pages.update(review_reader_pages(reviews, review_families))
 for filename in ['live-pages.json','answer-pages.json','market-pages.json','qr-pages.json']:
     for p in load(filename): pages[p['path']] = p
 for p in load('pages.json'): pages[p['path']] = p
@@ -330,6 +334,20 @@ def normalize(p):
 
 def article(p):
     q=normalize(p);path=q['path']
+    record = p.get('_reviewReader')
+    if record:
+        q.update(
+            title=f'Google review from {record["displayName"]} | Little Fight NYC',
+            heading=f'Google review from {record["displayName"]}',
+            description=f'Google review from {record["displayName"]} with a direct link to the original source.',
+        )
+        body = (
+            '<div class="workbench-reader-layout review-reader-layout">'
+            '<div class="workbench-reading-column">'
+            + render_review_reader(record)
+            + '</div></div>'
+        )
+        return q, body
     if path == '/construction/':
         q.update(
             title='Websites & Interactive Tools for Builders | Little Fight NYC',
@@ -377,7 +395,10 @@ def article(p):
         # its records and its existing brand assets remain untouched.
         art='<div class="reader-context-visual" data-reader-family="brand"><img class="reader-context-icon" src="/assets/mineral/book-open-text-duotone.svg" width="64" height="64" alt=""><figure class="reader-context-figure"><img class="reader-context-image" src="/vera/assets/icons/vera-icon-512.png" width="512" height="512" alt="VERA’s original cream and green geometric mark" loading="eager"><figcaption><a href="#working-demo">VERA: explore NYC rentals and inspect the linked public records.</a></figcaption></figure></div>'
     if not art: art=reader_visual(p,q,cases,albums)
-    if p.get('_homeGroup'):
+    # The support tiles need their printer/router visible in the opening rail.
+    # Group artwork is useful for the other condensed answers, but would
+    # otherwise replace those approved physical cues with a generic story art.
+    if p.get('_homeGroup') and path not in {'/answers/help/printer/', '/answers/help/wifi/'}:
         art=group_hero(p['_homeGroup']) or art
     answer_first = path.startswith('/answers/')
     demo = embedded_demo(path, q)
@@ -394,13 +415,14 @@ def article(p):
     quiet_labels={'A useful answer','Website help, wherever you work','Real work','Selected work','Little Fight NYC'}
     kicker=f'<p class="story-kicker">{E(q["eyebrow"])}</p>' if q['eyebrow'] not in quiet_labels else ''
     hero_action=f'<nav class="contact-actions" aria-label="Your next step">{primary_action}</nav>' if demo else ''
+    support_opening_art = art if path in {'/answers/help/printer/', '/answers/help/wifi/'} else ''
     hero=f'<header class="story-hero"><div>{kicker}<h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{hero_action}</div><div class="story-art">{art}</div></header>'
     if path in lab_by_path:
         hero += lab_share_controls(lab_by_path[path])
     if p.get('_answerGuide') or path.startswith('/answers/') or path=='/library/':
         # These are an answer and a map, not a second service pitch. Get the
         # visitor to the substance before any project evidence further down.
-        hero=f'<header class="story-hero answer-guide-hero"><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p></header>'
+        hero=f'<header class="story-hero answer-guide-hero"><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{("<div class=\"story-art reader-support-opening\">" + support_opening_art + "</div>") if support_opening_art else ""}</header>'
     if path=='/services/custom-local-websites/':
         headline=E(q['heading']).replace('feels like', 'feels<br> like')
         benefits=''.join(f'<li><a href="{href}"><span class="reference-benefit-icon" aria-hidden="true" style="--benefit-asset:url(/assets/mineral/{icon}-duotone.svg)"></span><strong>{label}</strong></a></li>' for href,icon,label in [('#reader-compare','browser','Designed around your business.'),('#reader-ownership','database','Your site. Your domain. Your code.'),('#reader-plan','tag','No monthly hosting fee.')])
@@ -416,7 +438,11 @@ def article(p):
         # immediately below it in a calm disclosure, never discarded.
         body = demo + '<details class="reader-demo-context"><summary>About VERA +</summary><div class="reader-demo-context-body">' + hero
     else:
-        body = hero + demo
+        # Editorial readers share one reading geometry: a durable orientation
+        # rail at left and the actual answer, evidence, and decisions at right.
+        # The same semantic structure is used by direct routes and the card
+        # dialog, so the physical tile still opens a complete reader.
+        body = '<div class="workbench-reader-layout"><aside class="workbench-reader-sidebar">' + hero + '</aside><div class="workbench-reading-column">' + demo
     if answer_first and p.get('_homeGroup'):
         questions=[section for section in p['_homeGroup']['sections'] if section.get('id') and section.get('heading')]
         if len(questions)>1:
@@ -463,7 +489,7 @@ def article(p):
         body+='<section class="story-faq"><h2>Before we begin.</h2>'+''.join(f'<details><summary>{E(x["question"])}</summary><p>{E(display(x["answer"]))}</p>'+('<nav class="group-references" aria-label="Website service areas">'+''.join(link(item['label'],item['href']) for item in x['links'])+'</nav>' if x.get('links') else '')+'</details>' for x in q['faqs'])+'</section>'
     if q.get('_rewriteCategory'):
         body+=render_category_answers(rewrite,q['_rewriteCategory'])
-    if answer_first and art and not p.get('_answerGuide'):
+    if answer_first and art and not p.get('_answerGuide') and not support_opening_art:
         body+='<aside class="answer-visual" aria-label="Illustration">'+art+'</aside>'
     if simple_answer:
         body+='</div>'
@@ -478,6 +504,8 @@ def article(p):
     body+=contact(path,q.get('contactPrompt') or 'Tell us what is getting in the way. We’ll give you a clear next step.')
     if immersive:
         body += '</div></details>'
+    else:
+        body += '</div></div>'
     if PRODUCTION and path in ISLANDS:
         # The full existing journey replaces only this island. The fallback
         # remains useful if scripts are unavailable and never claims delivery.
@@ -573,7 +601,7 @@ def head(q, home=False):
     elif path == '/construction/':
         cabinet = next(lab for lab in labs if lab['slug'] == 'cabinet-concept')
         share = {'src': lab_tile_image(cabinet), 'alt': cabinet.get('tileImageAlt') or 'Interactive cabinet design study'}
-    share_image=E(ORIGIN+share.get('src','/assets/portfolio-20261007/share-little-fight-nyc-master-20261007.jpg'))
+    share_image=E(ORIGIN+share.get('src','/assets/portfolio-20261007/share-little-fight-nyc-master-reference-20261008.jpg'))
     share_alt=E(share.get('alt','Little Fight NYC — custom websites for independent businesses'))
     graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
@@ -590,31 +618,33 @@ def head(q, home=False):
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#030305"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
-    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
+    services=''  # The current master has Websites and Our work in the header.
+    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
 
 def site_footer():
     return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()
-    return ('' if home else privacy)+ '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close services and search">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Pause animations and image rotation"><span class="motion-label">Pause motion &amp; slideshows</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog><dialog id="detail" aria-labelledby="detail-title"><button type="button" id="close-detail" aria-label="Return to homepage hub">×</button><section class="detail-window lf-reader reader-longform"><header class="detail-top"><button type="button" id="reader-back" aria-label="Back to previous card" hidden>Back</button><a class="reader-brand" href="/"><img src="/assets/boat-orange.svg" width="38" height="38" alt=""><span>little fight NYC</span></a><nav class="contact-actions reader-rail" aria-label="Reader quick contact">'''+channels()+'''</nav></header><div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">Back to home +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'''
+    menu = '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close services and search">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Pause animations and image rotation"><span class="motion-label">Pause motion &amp; slideshows</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog>'''
+    reader = '<dialog id="detail" aria-labelledby="detail-title"><section class="detail-window lf-reader reader-longform"><button type="button" id="close-detail" class="workbench-close" aria-label="Return to homepage hub">×</button>'+workbench_header(family=None, contacts=channels(), dialog=True)+'<button type="button" id="reader-back" class="workbench-reader-back" aria-label="Back to previous card" hidden>Back</button><div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">Back to home +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'
+    return ('' if home else privacy) + menu + reader
 
 for path,p in pages.items():
     if path=='/':continue
     q,body=article(p)
     output_path='/_readers'+path if preserved(path) else path
     if preserved(path):q=dict(q,path=output_path,canonicalPath=path)
-    rail='<nav class="direct-contact-rail contact-actions" aria-label="Quick contact">'+channels(contact_intent(path),path)+'</nav>'
     layout = ' data-reader-layout="immersive"' if path == '/vera/' else ''
     family = reader_family(p)
     page_class = 'page-home answer-page' if path.startswith('/answers/') or p.get('_answerGuide') or path in ('/library/','/tech-audit/') else 'page-home'
     template = ' data-reader-template="website-service"' if path == '/services/custom-local-websites/' else (' data-reader-template="anchor-service"' if path in anchor_paths else (' data-reader-template="combined-story"' if p.get('_homeGroup') else ''))
     template += ' data-home-path="'+E(home_context.get(path,path))+'"'
-    write(output_path+'index.html',head(q)+f'<body class="{page_class}"><a class="skip-to-finder" href="#detail-title">Skip to content</a><nav class="reader-hub-return-nav" aria-label="Return to homepage hub"><a class="reader-hub-return" href="/" aria-label="Return to homepage hub">×</a></nav><div class="page-shell">'+topbar()+rail+f'<main class="lf-reader reader-longform" data-page-content data-reader-family="{E(family)}" data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}{template}>{body}</main></div>'+shell_end())
+    write(output_path+'index.html',head(q)+f'<body class="{page_class}"><a class="skip-to-finder" href="#detail-title">Skip to content</a><div class="workbench-page" data-reader-family="{E(family)}">'+workbench_header(family=family, contacts=channels(contact_intent(path),path))+f'<main class="lf-reader reader-longform" data-page-content data-reader-family="{E(family)}" data-content-id="{E(p.get("id") or path.strip("/"))}"{layout}{template}>{body}</main></div>'+shell_end())
 
 class Links(HTMLParser):
     def __init__(self):super().__init__();self.tiles=[]

@@ -249,9 +249,9 @@ async function run() {
 
       const { context, state } = await makeContext(browser, { analytics: true });
       const page = await openPage(context, state, '/');
-      // The contact reader wraps a long document in one element. Exposure must
-      // still register when its heading is visible, regardless of tile order.
-      await page.locator('a.tile[data-answer="brand-brief"]').click();
+      // A case-study reader must register heading exposure independently of
+      // tile order. The redundant brand front was removed at owner request.
+      await page.locator('a.tile[data-answer="case-hair-by-rachel-charles"]').click();
       await page.locator('#detail[open]').waitFor({ state: 'visible' });
       await page.waitForFunction(() => (window.dataLayer || []).some((row) => Array.from(row)[1] === 'tile_open'));
       await page.waitForFunction(() => (window.dataLayer || []).some((row) => Array.from(row)[1] === 'answer_view'));

@@ -45,6 +45,12 @@ def load_groups(content):
     assert len(set(absorbed)) == len(absorbed), 'A question belongs to more than one combined card'
     assert not set(ids).intersection(absorbed + list(hidden)), 'A combined card cannot be hidden'
     assert not set(absorbed).intersection(hidden), 'Absorbed questions already have their own home context'
+    # Curating a front never removes its authored combined reader or routes.
+    curation = json.loads((content / 'homepage-curation.json').read_text())
+    curated_ids = [tile['id'] for tile in curation['hiddenTiles']]
+    assert len(curated_ids) == len(set(curated_ids)) == 21, 'Preserve the 21 named homepage cuts'
+    assert not set(curated_ids).intersection(absorbed + list(hidden)), 'A curated cut must be a visible baseline tile'
+    hidden.update(curated_ids)
     return groups, hidden
 
 
@@ -56,12 +62,19 @@ def source_routes(content, groups):
             routes[attrs['data-answer']] = attrs.get('href', '')
     for item in json.loads((content / 'topic-tiles.json').read_text()):
         routes[item['id']] = '/answers/help/' + item['id'] + '/'
+    for item in json.loads((content / 'pages.json').read_text()):
+        if item.get('id'):
+            routes[item['id']] = item['path']
     routes.update({
         'buyer-plumbers': '/industries/plumbers/', 'buyer-roofing': '/industries/roofing/',
         'buyer-homes': '/industries/luxury-home-services/', 'buyer-law': '/industries/law-firms/',
         'google-reviews': '/reviews/',
     })
     routes.update({group['id']: group['path'] for group in groups})
+    routes.update({'lab-' + item['slug']: item['sharePath'] for item in json.loads((content / 'labs.json').read_text())})
+    routes.update({item['id']: '/photos/' + item['id'].removeprefix('album-') + '/'
+                   for item in json.loads((content / 'albums.json').read_text())})
+    routes['construction-showcase'] = '/construction/'
     return routes
 
 
@@ -84,6 +97,20 @@ def home_contexts(content, groups, hidden):
     for identity in hidden:
         assert identity in routes, f'Unknown hidden homepage source: {identity}'
         contexts[urlsplit(routes[identity]).path] = specific.get(identity, '/services/custom-local-websites/')
+    service_paths = {'web': '/services/custom-local-websites/', 'it': '/services/it-support/',
+                     'consulting': '/services/tech-consulting/', 'software': '/services/business-systems/'}
+    for tile in json.loads((content / 'homepage-curation.json').read_text())['hiddenTiles']:
+        family = tile['homepageCategory']
+        contexts[tile['path']] = service_paths.get(family, '/services/custom-local-websites/')
+    # An absorbed question can point to a group whose front is now curated out.
+    # Follow that chain back to a visible service, so close/focus still has a home.
+    for path, home in list(contexts.items()):
+        visited = {path}
+        while home in contexts and contexts[home] != home:
+            assert home not in visited, f'Circular homepage context: {path}'
+            visited.add(home)
+            home = contexts[home]
+        contexts[path] = home
     return contexts
 
 
@@ -186,12 +213,12 @@ def apply_homepage_groups(mosaic, groups, hidden):
 
     combined = TILE.sub(combine, mosaic)
     visible = [attributes(match.group()) for match in TILE.finditer(combined)]
-    leads = {member: group['path'] for group in groups for member in group['absorb']}
+    contexts = home_contexts(Path(__file__).resolve().parents[1] / 'preview-content', groups, hidden)
     routes = []
     for item in before:
         identity, path = item['data-answer'], item['href']
         routes.append({'id': identity, 'path': path, 'title': by_id.get(identity, {}).get('title') or item.get('data-cell-title') or fallback_titles.get(identity, identity),
-                       'visible': identity not in removed, 'homePath': leads.get(identity, path if identity not in hidden else '/services/custom-local-websites/')})
+                       'visible': identity not in removed, 'homePath': contexts.get(path, path)})
     manifest = {
         'sourceTileCount': 106, 'totalTileInventory': len(before),
         'visibleTiles': [{'id': item['data-answer'], 'path': item['href'], 'title': item.get('data-cell-title') or fallback_titles.get(item['data-answer'], item['data-answer']), 'family': item.get('data-family', 'brand')} for item in visible],
@@ -199,5 +226,8 @@ def apply_homepage_groups(mosaic, groups, hidden):
         'groups': [{'id': group['id'], 'path': group['path'], 'members': group['absorb']} for group in groups],
         'hiddenHomeIds': sorted(hidden),
     }
+    curation = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/homepage-curation.json').read_text())
+    assert len(visible) == curation['expectedVisibleCount'] == 58, 'The curated homepage must have exactly 58 tiles'
+    assert set(curation['retainedReviewIds']) <= {item['data-answer'] for item in visible}, 'Keep all seven authentic reviews'
     assert len(visible) == len(before) - len(removed)
     return combined, manifest

@@ -1,965 +1,5 @@
 [
   {
-    "name": "browser-after-hours-agenda",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/after-hours-agenda/after-hours-agenda-desktop.png",
-    "sourceSha256": "bb2e599129146c936daf124496fb14e40f457364e4e63957a8f1dfdca323d1d4",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "a5a0664610bea5d74065ab3f9f81fea6286952a6261fb9e8795ea2197fb0f197",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-army-navy-bags",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/army-navy-bags/army-navy-bags-desktop.webp",
-    "sourceSha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
-    "crop": [
-      0,
-      0,
-      1200,
-      835
-    ],
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "4881635aa0243b905b7272ec4973a6f6077cd3abd09ad031fe7efbd16c726798",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-brothers-pizzeria",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/brothers-pizzeria/brothers-pizzeria-desktop.webp",
-    "sourceSha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
-    "crop": [
-      0,
-      0,
-      1200,
-      835
-    ],
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "216af140b65fc157090d5717027ffd81b4aaba501f63bed1a84a8e7174584a5a",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-cc-films",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-desktop.png",
-    "sourceSha256": "9491b74f88421c91577af445b04e2c199f41a23bbd9f91ad09667584dd86e8c0",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "c43c0811b9e32c35c5eef059bf470993265963a3c87434c9eccfad86e41caab4",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-chromatic-painting-design",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
-    "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "1144f01325842197cf883d092024e06502dee83bc5dbaaa67579e3a33de8a1e7",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-clearhelp",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-desktop.png",
-    "sourceSha256": "aa94af46cc967987c4ae2d919e492476361cd88807259e3d6f64df7d5a4caf98",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "2ecbe74a259348ed4b9d2175034cbe272ee2d7fa92cc1396cf9a3b98570274df",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-easy-tiger",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-desktop.png",
-    "sourceSha256": "3c629a13d49adea896b0e14d60e71c6eedf8c33e544a0733c6e92e92af0cb979",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "e0dcf4b51b238dd68155af290642b4c7b91eb06fe4065c0ffabbf12f740499e5",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-grand-funding-llc",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-desktop.png",
-    "sourceSha256": "0f62429cf7e710d3b1f07511efffc901b425b8d6935b19329e70d746496672ce",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "c83f923094b408e37b5f4797dce7360a537e4ecbc68622e27d157078d024fd06",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-hair-by-rachel-charles",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
-    "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "09b791f9a21b8e8d2fc04e9ea11b2c7a981d250b0d8b8ab569811b8d24883109",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-legacy-music-group",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/legacy-music-group/legacy-music-group-desktop.webp",
-    "sourceSha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
-    "crop": [
-      0,
-      0,
-      1200,
-      835
-    ],
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "c1cf51a046c25be9687e22231ed859a60f68909f37239cb50ac3e2bd0a24f3cc",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-logan-loans",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-desktop.png",
-    "sourceSha256": "e4a6d728948a43192b8d5743a7a751930e261cc687ec47b907fdc58d34915bf1",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "33f4eee53146835186aa434c0ac8a782515843a5d5174f21e496d36ff8f241c3",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-the-break-room",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-desktop.png",
-    "sourceSha256": "7d0a604477c9e9edb925d88a5da27eebb38e05cc3856f15af5e8045724f49d87",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "067736d4c75bc17c75ff016262a3d1d135da614bf7ac744c7cc4f319c9848f63",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-the-tarot-hotline",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/the-tarot-hotline/the-tarot-hotline-desktop.png",
-    "sourceSha256": "26f1975bb26f223737d0ecc8cc586ed830e960ad7ba5e8a50cdde5e916faef32",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "7212cd55c6c90c8720949c00380d5c49fe3b437f0b8b0ab4f44e6166be7bd317",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-venuecircuit",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/venuecircuit/venuecircuit-desktop.png",
-    "sourceSha256": "513aae1261e0efbe251b1c994994108fab946d9aa80d33e0293bc8aef5f0f7be",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "1e70becbb1208d7f747de695052eff990dc18a19a165c5b944af5c364d50408a",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-deckspace",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/deckspace/deckspace-desktop.png",
-    "sourceSha256": "16de4b0cec368f1efb2f76f042f76a04cb066da8937b4b2693da0e1d960934bb",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "b19e2c55dc0d0448b32bf1890b823dfdf4bfc8a0d5bec526aec5e6187a9bf947",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "phone-chromatic",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-phone.png",
-    "sourceSha256": "1aac6932e8689b5aa78eadabb0163dfadc63ac8c4ca7f9c937baeea71b2f350c",
-    "crop": null,
-    "frame": "phone",
-    "screenQuadrilateral": [
-      [
-        425.05109310150146,
-        127.89230346679688
-      ],
-      [
-        757.0553541183472,
-        148.68066787719727
-      ],
-      [
-        757.0553541183472,
-        871.5489649772644
-      ],
-      [
-        425.05109310150146,
-        850.7606148719788
-      ]
-    ],
-    "outputSize": [
-      454,
-      874
-    ],
-    "outputSha256": "aac9af239a57194a9a4f80d60929f54d653092853ad8ac1b6fc150bf948fe850",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "browser-rachel-services",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/rachel-services-desktop.png",
-    "sourceSha256": "0c6735a28bddfbe5f264866f25ff92d9ec2d856ad5581ee4fe4715c540e3faff",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "d4a5ec986f8e4aa2a9bbff2253246529601f8d5f754ef26bb37b277941e6826d",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "tablet-chromatic",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-tablet.png",
-    "sourceSha256": "48c07569ccfc26a6f19fb21cdc27486cac32d3bbe8e693e056fcdce5e778de63",
-    "crop": null,
-    "frame": "tablet",
-    "screenQuadrilateral": [
-      [
-        317.2575116157532,
-        56.601104736328125
-      ],
-      [
-        864.8489713668823,
-        90.8884048461914
-      ],
-      [
-        864.8489713668823,
-        878.2984328269958
-      ],
-      [
-        317.2575116157532,
-        844.0111398696899
-      ]
-    ],
-    "outputSize": [
-      669,
-      935
-    ],
-    "outputSha256": "1b72ae614dfd023b538ccc602b675dd8f6ed73a78b6b3efe5094e6598d396849",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "foldable-chromatic",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-foldable.png",
-    "sourceSha256": "f12464e3d8195203ee92e0ffda6e451fc8ce22ebe927e4fc7969d1899a47edc5",
-    "frame": "foldable",
-    "screenQuadrilaterals": [
-      [
-        [
-          231.6530406475067,
-          99.25752639770508
-        ],
-        [
-          592.8516626358032,
-          83.60572814941406
-        ],
-        [
-          592.8516983985901,
-          849.9548435211182
-        ],
-        [
-          231.6530406475067,
-          865.6066417694092
-        ]
-      ],
-      [
-        [
-          592.8516626358032,
-          83.60572814941406
-        ],
-        [
-          882.1481466293335,
-          139.98807907104492
-        ],
-        [
-          882.1481466293335,
-          906.3371980190277
-        ],
-        [
-          592.8516983985901,
-          849.9548435211182
-        ]
-      ]
-    ],
-    "outputSha256": "8d41c9d696eca0c8c25f3f53e9eb5c181a2f8d16277807c248b58ef1e0102562",
-    "method": "One continuous real 690px capture, contain-fit and split across a single partly folded display; illustrative device geometry."
-  },
-  {
-    "name": "lab-pool-room",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/pool-room/lab-pool-room.png",
-    "sourceSha256": "4c1b43c9cb23ed77f71bc1699c8ba44d2a51e7629ba8ca78ba2f356b777f6cd1",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "67c06d760b1aa90930d53efd4214fbb17d2d09d6a93c51795d5c608413ae9cb6",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-walkup-3d",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/walkup-3d/lab-walkup-3d.png",
-    "sourceSha256": "99656ec4b8e1f51ec9828869420bf24417c371285cb5e018e52329e098d002b2",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "0a5f3d4d9fe3686cf9646f17a674ad8f7c97fe53d765bec9cc81caba45a0c355",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-terminal-3d",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/terminal-3d/lab-terminal-3d.png",
-    "sourceSha256": "dcb3c8efdc2ec53d88a05fa4f5f3f37bfdb99109e16130993fb53e4cb4c7d798",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "933149712a9ee5330a611a6f2ddf01abd3a21c1c2ea02582a8c99a523cc682f2",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-pill-scroll",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/pill-scroll/lab-pill-scroll.png",
-    "sourceSha256": "3e9de93cc1bff5fc7b43a8d7720a03119b287916721156e28e4872f69e159d22",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "956e3dbba1ad1935acbbd2827fcbac1c6983ae4abd5fb93314c8c22a3189b11e",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-micro-animations",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/micro-animations/lab-micro-animations.png",
-    "sourceSha256": "22d4459f7dccd51b11f68116ff9ee1f9759819f90b82dd9fb7fa19e0568338e4",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "12e05600c970b19d994c237b5c5e5ed899bca956248b1b332507d6a40032a1cb",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-aha-laser",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/aha-laser/lab-aha-laser.png",
-    "sourceSha256": "cee4193ed927fa05b3db0304e8c5de768a6de48d6a7f22976045cb1f538a1bc8",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "22517ae25bd2eb605a852897aef061e50b4b752451807cf12dd093f0a0f6691f",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-studio-engine",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/studio-engine/lab-studio-engine.png",
-    "sourceSha256": "e5947c2ba05cd07f0fc51a72be05dc452806761e58e4e0a4c30bc2a101f744a7",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "a9336f386f9177a9a9458d3e56838efcacb258cef4821589e4c38a68cf23ce4a",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-growth-street",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/growth-street/lab-growth-street.png",
-    "sourceSha256": "d11790fd84ded519775876c3708acde34f0c8e4dbe4f2457dbbf2d545a8877ed",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "5913ccbce1c958f24514427ca31df80d4d14628f1327a4da72d1aa0ac8b71bd4",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-goliath",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/goliath/lab-goliath.png",
-    "sourceSha256": "4d5a6a36b45fbcbbc7e80e2ee903be90c7088ae64b649922c6a351e80fbaacfa",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "b0600eaa19a9384eb9258d47b3880a0ee645d9733fbd19d7eaa7afbc5592dedb",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-cabinet-concept",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/cabinet-concept/lab-cabinet-concept.png",
-    "sourceSha256": "094e638fefd7e519a983f4a71e1de66f039e568194dfa42fea5ecf610673bea3",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "45fc0bb35106a7febaead2bd722a5dfcb65895e81f7fd2b7cfd76b699f2525c9",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
-    "name": "lab-house-explorer",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/house-explorer/lab-house-explorer.png",
-    "sourceSha256": "44bbc55f0ada041d638992c57a435841f7ef3fd5d3491ed254b4d2aaa4221844",
-    "crop": null,
-    "frame": "browser",
-    "screenQuadrilateral": [
-      [
-        135.2070450782776,
-        217.66084671020508
-      ],
-      [
-        1055.0926208496094,
-        244.58541870117188
-      ],
-      [
-        1055.0926208496094,
-        832.7919244766235
-      ],
-      [
-        135.2070450782776,
-        805.8673667907715
-      ]
-    ],
-    "outputSize": [
-      1028,
-      762
-    ],
-    "outputSha256": "bd3723c1f4a4e386ad6f0eb844a657948ae24978adb26b7fc51743dd33433461",
-    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
-  },
-  {
     "name": "photo-nyc",
     "source": "preview-ui/assets/albums/nyc-01.webp",
     "sourceSha256": "538498ef446706b878b9dbd9136b41b17cf35f94274908c8509196bca9ccb578",
@@ -1209,15 +249,1472 @@
   },
   {
     "name": "work-chromatic",
-    "source": "../../../../../../Desktop/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
-    "sourceSha256": "19fd1672a9fa575c40d613156273a56ddb0493085438597324043aba5f8cd294",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+    "sourceSha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6",
     "crop": null,
     "frame": "viewport",
     "outputSize": [
       1600,
       1111
     ],
-    "outputSha256": "7d2556c07bfeb3840010eea657962c6c00e473552270a4cd68255fedb80dc7af",
+    "outputSha256": "afce0009d5857a3c7a0c7d2eeda6e8bb1e7fea287b7e8ae0441f01c9e7d75c92",
     "method": "Byte-exact copy of an approved aspect-preserving website capture derivative."
+  },
+  {
+    "name": "browser-army-navy-bags",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/army-navy-bags/army-navy-bags-desktop.webp",
+    "sourceSha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
+    "crop": [
+      0,
+      0,
+      1200,
+      835
+    ],
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "4881635aa0243b905b7272ec4973a6f6077cd3abd09ad031fe7efbd16c726798",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-brothers-pizzeria",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/brothers-pizzeria/brothers-pizzeria-desktop.webp",
+    "sourceSha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
+    "crop": [
+      0,
+      0,
+      1200,
+      835
+    ],
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "216af140b65fc157090d5717027ffd81b4aaba501f63bed1a84a8e7174584a5a",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-cc-films",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-desktop.png",
+    "sourceSha256": "e6e0b61a64029eb78db96d7b526795c504215597487c8d7e67bed40143e4099c",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "9758bcdbb1e6c3cf23d09bcedc199e3f85849bb14e464576446afb7286609ae8",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-chromatic-painting-design",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+    "sourceSha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "7e3128d4901e2ad2e8b814fa6bee358cfcddc94e7adee3d447c16f17749f3034",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-clearhelp",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-desktop.png",
+    "sourceSha256": "aa94af46cc967987c4ae2d919e492476361cd88807259e3d6f64df7d5a4caf98",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "2ecbe74a259348ed4b9d2175034cbe272ee2d7fa92cc1396cf9a3b98570274df",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-easy-tiger",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-desktop.png",
+    "sourceSha256": "3c629a13d49adea896b0e14d60e71c6eedf8c33e544a0733c6e92e92af0cb979",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "e0dcf4b51b238dd68155af290642b4c7b91eb06fe4065c0ffabbf12f740499e5",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-grand-funding-llc",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-desktop.png",
+    "sourceSha256": "0f62429cf7e710d3b1f07511efffc901b425b8d6935b19329e70d746496672ce",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "c83f923094b408e37b5f4797dce7360a537e4ecbc68622e27d157078d024fd06",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-hair-by-rachel-charles",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+    "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "09b791f9a21b8e8d2fc04e9ea11b2c7a981d250b0d8b8ab569811b8d24883109",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-legacy-music-group",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/legacy-music-group/legacy-music-group-desktop.webp",
+    "sourceSha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
+    "crop": [
+      0,
+      0,
+      1200,
+      835
+    ],
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "c1cf51a046c25be9687e22231ed859a60f68909f37239cb50ac3e2bd0a24f3cc",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-logan-loans",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-desktop.png",
+    "sourceSha256": "e4a6d728948a43192b8d5743a7a751930e261cc687ec47b907fdc58d34915bf1",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "33f4eee53146835186aa434c0ac8a782515843a5d5174f21e496d36ff8f241c3",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-the-break-room",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-desktop.png",
+    "sourceSha256": "921fa33e6dbb32dceb152506c43223b4a6a6498d2b8e5a3dd255b89ffa82e997",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "fe97b0c3152791e2ccfad7d67c87dd5d0c6a400206b25f224cf23d645c87fbf9",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-the-tarot-hotline",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/the-tarot-hotline/the-tarot-hotline-desktop.png",
+    "sourceSha256": "4c8321e40bb4a4238ec21d96a1b1c81aaf52f99cb4d7a8d8c0103a92eda32047",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "343b3ec1b935006ab78bb1b9def7da62cb1a652ab5e95d68a952f604d8e6f1ac",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-deckspace",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/deckspace/deckspace-desktop.png",
+    "sourceSha256": "bd0f8de40c049249c049b4621854c34dad61892f54ee64d9f9b5455bccb5ae58",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "3883743117d551bc93247e35334f7269ff450b5e63f2b053ae8642c5969d778e",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "phone-chromatic",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-phone.png",
+    "sourceSha256": "49a0ab2f6aa70b6d1071701f08877e3c242c5ad52e6c6f8e4d4a0e1f4ccaee8a",
+    "crop": null,
+    "frame": "phone",
+    "screenQuadrilateral": [
+      [
+        425.05109310150146,
+        127.89230346679688
+      ],
+      [
+        757.0553541183472,
+        148.68066787719727
+      ],
+      [
+        757.0553541183472,
+        871.5489649772644
+      ],
+      [
+        425.05109310150146,
+        850.7606148719788
+      ]
+    ],
+    "outputSize": [
+      454,
+      874
+    ],
+    "outputSha256": "8206158a81fca415946b264af47e4266152dca3d5845fa4c2f851fd495214a71",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "browser-rachel-services",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/rachel-services-desktop.png",
+    "sourceSha256": "0c6735a28bddfbe5f264866f25ff92d9ec2d856ad5581ee4fe4715c540e3faff",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "d4a5ec986f8e4aa2a9bbff2253246529601f8d5f754ef26bb37b277941e6826d",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "tablet-chromatic",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-tablet.png",
+    "sourceSha256": "48c07569ccfc26a6f19fb21cdc27486cac32d3bbe8e693e056fcdce5e778de63",
+    "crop": null,
+    "frame": "tablet",
+    "screenQuadrilateral": [
+      [
+        317.2575116157532,
+        56.601104736328125
+      ],
+      [
+        864.8489713668823,
+        90.8884048461914
+      ],
+      [
+        864.8489713668823,
+        878.2984328269958
+      ],
+      [
+        317.2575116157532,
+        844.0111398696899
+      ]
+    ],
+    "outputSize": [
+      669,
+      935
+    ],
+    "outputSha256": "1b72ae614dfd023b538ccc602b675dd8f6ed73a78b6b3efe5094e6598d396849",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "foldable-chromatic",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-foldable.png",
+    "sourceSha256": "f12464e3d8195203ee92e0ffda6e451fc8ce22ebe927e4fc7969d1899a47edc5",
+    "frame": "foldable",
+    "screenQuadrilaterals": [
+      [
+        [
+          231.6530406475067,
+          99.25752639770508
+        ],
+        [
+          592.8516626358032,
+          83.60572814941406
+        ],
+        [
+          592.8516983985901,
+          849.9548435211182
+        ],
+        [
+          231.6530406475067,
+          865.6066417694092
+        ]
+      ],
+      [
+        [
+          592.8516626358032,
+          83.60572814941406
+        ],
+        [
+          882.1481466293335,
+          139.98807907104492
+        ],
+        [
+          882.1481466293335,
+          906.3371980190277
+        ],
+        [
+          592.8516983985901,
+          849.9548435211182
+        ]
+      ]
+    ],
+    "outputSha256": "8d41c9d696eca0c8c25f3f53e9eb5c181a2f8d16277807c248b58ef1e0102562",
+    "method": "One continuous real 690px capture, contain-fit and split across a single partly folded display; illustrative device geometry."
+  },
+  {
+    "name": "lab-pool-room",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/pool-room/lab-pool-room.png",
+    "sourceSha256": "f8f9f546bed18496b560e3c1cad4389be058d343243ed901a81e0e04179b524b",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "544c32f29f573d25d6a07c6ed4153003c55551ef6dc5b8a36af541efefbff8ae",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-walkup-3d",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/walkup-3d/lab-walkup-3d.png",
+    "sourceSha256": "ebfd9abb626b35f783a56a67f5345276d8fcc7954e0f10f4422ac3bec6da9ac5",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "c090ad74ea99ee37cfc88ff9d44ca60cf69451cc908199ee33c45c29ce505ab2",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-terminal-3d",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/terminal-3d/lab-terminal-3d.png",
+    "sourceSha256": "13584f4720a309b417d6b538a7cbc1e059295eb5342223e6297029d5c1cbf8b5",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "16e35c904f0c8d183f0410288a57fe8ea083a90384e07cdde07debeea7123299",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-pill-scroll",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/pill-scroll/lab-pill-scroll.png",
+    "sourceSha256": "3e9de93cc1bff5fc7b43a8d7720a03119b287916721156e28e4872f69e159d22",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "956e3dbba1ad1935acbbd2827fcbac1c6983ae4abd5fb93314c8c22a3189b11e",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-micro-animations",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/micro-animations/lab-micro-animations.png",
+    "sourceSha256": "68390e0b2628010c6df69aedcce05c14a0f81b29211fa3cc789402a1b1d4e028",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "9f3902a59a8d6cb7b3c1910b2988281b78a82efa4a0e95730fc635857551312d",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-aha-laser",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/aha-laser/lab-aha-laser.png",
+    "sourceSha256": "290669f4757235a02bcaf1c65ab4058e901f1c444490887fdbc86f586f0f8ada",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "5b73b27db16485ca8c18aa729375912766f790de7d68d56f8e084d6bd0ef15f7",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-studio-engine",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/studio-engine/lab-studio-engine.png",
+    "sourceSha256": "e5947c2ba05cd07f0fc51a72be05dc452806761e58e4e0a4c30bc2a101f744a7",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "a9336f386f9177a9a9458d3e56838efcacb258cef4821589e4c38a68cf23ce4a",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-growth-street",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/growth-street/lab-growth-street.png",
+    "sourceSha256": "7767cbaa95018f4137542a778250da6871b9e93367868c9c3e8fcd690f02bb9e",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "5913ccbce1c958f24514427ca31df80d4d14628f1327a4da72d1aa0ac8b71bd4",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-goliath",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/goliath/lab-goliath.png",
+    "sourceSha256": "e5ce204d7db79beda02c9d205015beb42475d1b6160d5aa83910149d571bb9ac",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "6e0c2487caa14d47e95bb251535d07b158f1e17d78dd5197d336401defb1118a",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-cabinet-concept",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/cabinet-concept/lab-cabinet-concept.png",
+    "sourceSha256": "542a873883565eea0530d464e92f2ea7d8a2d6c68d94e56bde3ca6ba9fa61752",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "fc70af4735e39b7421f29196d1db71f99b81e77af8781d0f1740b157983fee9c",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "lab-house-explorer",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/house-explorer/lab-house-explorer.png",
+    "sourceSha256": "809c76c63e5a920541c1687c2a58ca2eae99c16bc7304b79c75af3967154ca3d",
+    "crop": null,
+    "frame": "browser",
+    "screenQuadrilateral": [
+      [
+        135.2070450782776,
+        217.66084671020508
+      ],
+      [
+        1055.0926208496094,
+        244.58541870117188
+      ],
+      [
+        1055.0926208496094,
+        832.7919244766235
+      ],
+      [
+        135.2070450782776,
+        805.8673667907715
+      ]
+    ],
+    "outputSize": [
+      1028,
+      762
+    ],
+    "outputSha256": "30560ee7c5196bf0b99e509563121ec32fbf2da91746cf1a93a9cdebc9692ec0",
+    "method": "Real captured pixels, optional documented viewport crop, contain fit and deterministic perspective projection; original file preserved."
+  },
+  {
+    "name": "website-hair-by-rachel-charles",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-phone.png",
+    "sourceSha256": "af224398a8f374d7fdb262cd28fd3371af9eea06159af31f1f72fd04ee4c2d03",
+    "crop": [
+      0,
+      0,
+      780,
+      1571
+    ],
+    "frame": "iphone",
+    "frameSource": "../.lifi/asset-work/website-devices/iphone-frame.png",
+    "frameSha256": "ebf80075597797acf45ecdfc894d778736f50b7597b947f0d644ffc68debbe1c",
+    "screenQuadrilateral": [
+      [
+        45.813,
+        45.278
+      ],
+      [
+        718.587,
+        46.654
+      ],
+      [
+        718.587,
+        1515.213
+      ],
+      [
+        45.813,
+        1513.837
+      ]
+    ],
+    "screenAspect": 0.45993969,
+    "safeAreaPixels": {
+      "top": 105,
+      "bottom": 20
+    },
+    "outputSize": [
+      756,
+      1543
+    ],
+    "outputSha256": "77d47eb9046a57f9bf8ca772190de06b9bc30246618c3ff2f0967a2ebc868b6b",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-cc-films",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/cc-films/cc-films-desktop.png",
+    "sourceSha256": "e6e0b61a64029eb78db96d7b526795c504215597487c8d7e67bed40143e4099c",
+    "crop": [
+      0,
+      0,
+      2880,
+      1746
+    ],
+    "frame": "desktop",
+    "frameSource": "../.lifi/asset-work/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "ef6b88b38e931aef3973b8ae360593ea633a1c4b547eef39ae4753c9a73dc689",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-easy-tiger",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/easy-tiger/easy-tiger-phone.png",
+    "sourceSha256": "3ebda5d714fd60f46c6e88a4206d4d4da17fcb86c8944c7750f87b5c6c951d15",
+    "crop": [
+      0,
+      0,
+      780,
+      1571
+    ],
+    "frame": "iphone",
+    "frameSource": "../.lifi/asset-work/website-devices/iphone-frame.png",
+    "frameSha256": "ebf80075597797acf45ecdfc894d778736f50b7597b947f0d644ffc68debbe1c",
+    "screenQuadrilateral": [
+      [
+        45.813,
+        45.278
+      ],
+      [
+        718.587,
+        46.654
+      ],
+      [
+        718.587,
+        1515.213
+      ],
+      [
+        45.813,
+        1513.837
+      ]
+    ],
+    "screenAspect": 0.45993969,
+    "safeAreaPixels": {
+      "top": 105,
+      "bottom": 20
+    },
+    "outputSize": [
+      756,
+      1543
+    ],
+    "outputSha256": "b3a90e2c1e712dab18a01aea7e5998520215ba4b1448acc0001fba2c55510a1c",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-the-break-room",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/the-break-room/the-break-room-duo-20261008.png",
+    "sourceSha256": "a458fadf8889a1d492bfa43cc431f1e9beea379b0f332497b6dec99472d36c95",
+    "crop": [
+      2,
+      0,
+      1798,
+      1264
+    ],
+    "frame": "duo",
+    "frameSource": "../.lifi/asset-work/website-devices/duo-frame.png",
+    "frameSha256": "b954ff107ec590fd03f732770c278a12e4a34a78691e5816039c9d573f5187ba",
+    "screenQuadrilateral": [
+      [
+        104.76314797997475,
+        121.8959391117096
+      ],
+      [
+        1661.6656064987183,
+        146.37442231178284
+      ],
+      [
+        1661.6656064987183,
+        1250.8676066994667
+      ],
+      [
+        104.76314797997475,
+        1226.3891134411097
+      ]
+    ],
+    "screenAspect": 1.420627802690583,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1661,
+      1217
+    ],
+    "outputSha256": "cffd82eabba228c752de6301c60841c984949ecad560e7371ff2454b91e97331",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-army-navy-bags",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/army-navy-bags/army-navy-bags-desktop.webp",
+    "sourceSha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
+    "crop": [
+      0,
+      0,
+      1200,
+      728
+    ],
+    "frame": "desktop",
+    "frameSource": "../.lifi/asset-work/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "1643f47b6a4e45c7d26c0ea35a5992f4ea5ffe49944f7609eadce84279093dfb",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-brothers-pizzeria",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/brothers-pizzeria/brothers-pizzeria-desktop.webp",
+    "sourceSha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
+    "crop": [
+      0,
+      0,
+      1200,
+      728
+    ],
+    "frame": "desktop",
+    "frameSource": "../.lifi/asset-work/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "fec18bfb43a09183808e972719f03fd225f7231ce4490aa7ebd45a73bbbadee8",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-legacy-music-group",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/legacy-music-group/legacy-music-group-desktop.webp",
+    "sourceSha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
+    "crop": [
+      0,
+      0,
+      1200,
+      728
+    ],
+    "frame": "desktop",
+    "frameSource": "../.lifi/asset-work/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "cd10df8e875a96908aa405e6ca46d8a02e00d73f33bd976415aac481615359f0",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-logan-loans",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/logan-loans/logan-loans-phone.png",
+    "sourceSha256": "464b6daf3ceb7647846968fb052403d9fe0b5dca45d021e9b449df7c437745c3",
+    "crop": [
+      0,
+      0,
+      780,
+      1571
+    ],
+    "frame": "iphone",
+    "frameSource": "../.lifi/asset-work/website-devices/iphone-frame.png",
+    "frameSha256": "ebf80075597797acf45ecdfc894d778736f50b7597b947f0d644ffc68debbe1c",
+    "screenQuadrilateral": [
+      [
+        45.813,
+        45.278
+      ],
+      [
+        718.587,
+        46.654
+      ],
+      [
+        718.587,
+        1515.213
+      ],
+      [
+        45.813,
+        1513.837
+      ]
+    ],
+    "screenAspect": 0.45993969,
+    "safeAreaPixels": {
+      "top": 105,
+      "bottom": 20
+    },
+    "outputSize": [
+      756,
+      1543
+    ],
+    "outputSha256": "ebf1d809c7795762521b3ff8e723c0029880cc8e808aec2a304c984664846e6a",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-clearhelp",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/clearhelp/clearhelp-tablet-20261008.png",
+    "sourceSha256": "bfa63b6da86e268e559f972e5c9574ad420d246991d72365ad13c14428d887d0",
+    "crop": [
+      0,
+      0,
+      1668,
+      2220
+    ],
+    "frame": "tablet",
+    "frameSource": "../.lifi/asset-work/website-devices/tablet-frame.png",
+    "frameSha256": "1119e5ef950ba1eef2cb4e10e10423e3629586670dc0bb581f76e7435ab709e3",
+    "screenQuadrilateral": [
+      [
+        66.0,
+        67.0
+      ],
+      [
+        1094.0,
+        67.0
+      ],
+      [
+        1094.0,
+        1435.0
+      ],
+      [
+        66.0,
+        1435.0
+      ]
+    ],
+    "screenAspect": 0.75146,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1150,
+      1490
+    ],
+    "outputSha256": "1c9c4306d3de4c4f82292befb8498c2dba8a86ea32e9b4d670ed67820ec0d396",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-grand-funding-llc",
+    "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/grand-funding-llc/grand-funding-llc-tablet-20261008.png",
+    "sourceSha256": "d00f176354f3cf7e24399b93df879f31d07582160fc4e03aaadb43a78fb3b8e2",
+    "crop": [
+      0,
+      0,
+      1668,
+      2220
+    ],
+    "frame": "tablet",
+    "frameSource": "../.lifi/asset-work/website-devices/tablet-frame.png",
+    "frameSha256": "1119e5ef950ba1eef2cb4e10e10423e3629586670dc0bb581f76e7435ab709e3",
+    "screenQuadrilateral": [
+      [
+        66.0,
+        67.0
+      ],
+      [
+        1094.0,
+        67.0
+      ],
+      [
+        1094.0,
+        1435.0
+      ],
+      [
+        66.0,
+        1435.0
+      ]
+    ],
+    "screenAspect": 0.75146,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1150,
+      1490
+    ],
+    "outputSha256": "5fb1d898a92994d6e00e5c2c684841f5dd2375ca0f82eb4b73914a69e770e385",
+    "method": "Reviewed approved original, documented viewport crop, uniform scale and deterministic perspective into a physical device; no reconstructed client pixels."
+  },
+  {
+    "name": "website-the-tarot-hotline",
+    "source": "public/assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.png",
+    "sourceSha256": "c76c63b737101cc4eff17080fc190e58c392f2938eb5e8ca7306b044a2e2cdd4",
+    "crop": [
+      80,
+      0,
+      1359,
+      900
+    ],
+    "frame": "duo",
+    "frameSource": ".lifi/design-source/sculpture/website-devices/duo-frame.png",
+    "frameSha256": "b954ff107ec590fd03f732770c278a12e4a34a78691e5816039c9d573f5187ba",
+    "screenQuadrilateral": [
+      [
+        104.76314797997475,
+        121.8959391117096
+      ],
+      [
+        1661.6656064987183,
+        146.37442231178284
+      ],
+      [
+        1661.6656064987183,
+        1250.8676066994667
+      ],
+      [
+        104.76314797997475,
+        1226.3891134411097
+      ]
+    ],
+    "screenAspect": 1.420627802690583,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1661,
+      1217
+    ],
+    "outputSha256": "a88651174f94f74293805284afb9da8d493d68f9460b99a1ae412738559d51ff",
+    "method": "Authentic current-production capture, explicit viewport crop, uniform scaling and deterministic perspective within the existing physical device frame; no generated client pixels."
+  },
+  {
+    "name": "browser-after-hours-agenda",
+    "source": "public/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.png",
+    "sourceSha256": "ad6996690bf87e56685410cbe68501a25eaefafd2ce8361955d4125b29befc05",
+    "crop": [
+      0,
+      0,
+      1440,
+      873
+    ],
+    "frame": "desktop",
+    "frameSource": ".lifi/design-source/sculpture/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "2add7b8cec21952660849bcf16e4921b3f5c8faf31dbb3b40c6d44e644453d85",
+    "method": "Authentic current-production capture, explicit viewport crop, uniform scaling and deterministic perspective within the existing physical device frame; no generated client pixels."
+  },
+  {
+    "name": "browser-venuecircuit",
+    "source": "public/assets/portfolio-upgrade-20261009/venuecircuit-desktop.png",
+    "sourceSha256": "7e06d483757ebfb73aa7213cdbfcec7ba58f71a5d394f1e3a48d7657460722f4",
+    "crop": [
+      0,
+      0,
+      1440,
+      873
+    ],
+    "frame": "desktop",
+    "frameSource": ".lifi/design-source/sculpture/website-devices/desktop-frame.png",
+    "frameSha256": "950d757c118873c13dc7afc09b83853629310d32a7055048a26a0d7522ac47f0",
+    "screenQuadrilateral": [
+      [
+        101.24876350164413,
+        55.04167824983597
+      ],
+      [
+        1719.3008065223694,
+        88.9350101351738
+      ],
+      [
+        1698.7512230873108,
+        1069.9586402624846
+      ],
+      [
+        80.6992270052433,
+        1036.06531675905
+      ]
+    ],
+    "screenAspect": 1.649351,
+    "safeAreaPixels": {
+      "top": 0,
+      "bottom": 0
+    },
+    "outputSize": [
+      1768,
+      1125
+    ],
+    "outputSha256": "0b0bb6cb4f43c7861c9cbc4d5d8cb3ec805157926130ef3419b4ea1b1db2ec8f",
+    "method": "Authentic current-production capture, explicit viewport crop, uniform scaling and deterministic perspective within the existing physical device frame; no generated client pixels."
   }
 ]

@@ -40,13 +40,17 @@ const check = text => report.checks.push(text);
   await first.click();
   await page.locator('#detail[open] .story-title').waitFor();
   assert.match(await page.locator('#detail .story-title').innerText(), /print/i);
-  assert.equal(await page.locator('#detail .story-hero .story-art').count(), 0, 'the answer precedes ornamental art');
+  assert.equal(await page.locator('#detail .story-hero .story-art').count(), 1, 'printer help has its approved subject illustration');
+  assert.ok(await page.locator('#detail .story-hero').evaluate(hero => hero.querySelector('.story-art').getBoundingClientRect().top >= hero.querySelector('.story-summary').getBoundingClientRect().bottom - 1), 'the substantive diagnosis comes before its supporting illustration');
   assert.equal(await page.locator('#reader-previous').isVisible(), false, 'support answers do not divert into unrelated previous cards');
   assert.equal(await page.locator('#reader-next').isVisible(), false, 'support answers do not divert into unrelated next cards');
   assert.equal(await page.locator('#reader-hub').innerText(), 'Back to home +', 'return control names its actual destination');
-  assert.equal(await page.locator('#detail .reader-context-image').count(), 0, 'printer help must not use an unrelated trades photograph');
+  const printerArt = page.locator('#detail img.reader-context-image');
+  assert.equal(await printerArt.count(), 1, 'printer help has one subject-specific physical illustration');
+  assert.equal(await printerArt.getAttribute('src'), '/assets/sculpture/printer.webp', 'printer help must not use an unrelated trades photograph');
+  assert.ok(await printerArt.getAttribute('alt'), 'the printer illustration has a useful text alternative');
   await axe('printer reader', '#detail');
-  await page.locator('#detail .reader-rail .contact-plan').click();
+  await page.locator('#detail-body a.contact-plan[href^="/tech-audit/?intent=support"]').click();
   const form = page.locator('#detail .lf-audit__form');
   await form.waitFor();
   assert.match(page.url(), /intent=support/);
@@ -70,9 +74,13 @@ const check = text => report.checks.push(text);
    await page.goto(base + route, { waitUntil: 'networkidle' });
    const main = page.locator('[data-page-content]');
    assert.equal(await main.locator('h1').count(), 1);
-   assert.equal(await main.locator('.story-hero .story-art').count(), 0, route + ': answer comes first');
+   assert.equal(await main.locator('.story-hero .story-art').count(), route === '/answers/help/wifi/' ? 1 : 0, route + ': only the approved Wi-Fi subject illustration accompanies this answer');
+   if (route === '/answers/help/wifi/') {
+    assert.equal(await main.locator('.reader-support-opening img.reader-context-image').getAttribute('src'), '/assets/sculpture/router.webp');
+    assert.ok(await main.locator('.story-hero').evaluate(hero => hero.querySelector('.story-art').getBoundingClientRect().top >= hero.querySelector('.story-summary').getBoundingClientRect().bottom - 1), 'Wi-Fi diagnosis precedes its supporting illustration');
+   }
    assert.ok((await main.locator('.story-summary').innerText()).length > 45, route + ': immediate substantive answer');
-   assert.ok(await page.locator('.direct-contact-rail a[href^="tel:"]').isVisible());
+   assert.ok(await page.locator('.workbench-page > .workbench-chrome .direct-contact-rail a[href^="tel:"]').isVisible());
    await axe(route, '[data-page-content]');
   }
   check('Six representative answers lead with the question and answer, preserve direct URLs, and keep human contact available');
@@ -105,8 +113,8 @@ const check = text => report.checks.push(text);
    const closeBox = await page.locator('#close-detail').boundingBox();
    assert.ok(closeBox && closeBox.y >= 0 && closeBox.y + closeBox.height <= viewport.height, 'close remains inside the short viewport');
    const scroll = await page.evaluate(() => {
-    // Under 420px height the entire card deliberately scrolls so fixed rails
-    // cannot consume the answer; its X remains outside that scrolling card.
+    // The Workbench keeps one usable scroller within the dialog at short
+    // heights while its close control stays in the viewport.
     const candidates = [document.querySelector('#detail-body'), document.querySelector('#detail .detail-window')];
     const scroller = candidates.find(n => n.scrollHeight > n.clientHeight && /auto|scroll/.test(getComputedStyle(n).overflowY));
     if (!scroller) return { found: false, candidates: candidates.map(n => ({ class: n.className, client: n.clientHeight, scroll: n.scrollHeight, overflow: getComputedStyle(n).overflowY })) };

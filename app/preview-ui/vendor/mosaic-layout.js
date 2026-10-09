@@ -496,7 +496,310 @@
     return flushed;
   }
 
+  function packSculptureCollection(grid) {
+    const cards = [...grid.querySelectorAll(':scope > .tile')];
+    if (!cards.length || cards.some(card => !card.matches('.sculpture-tile') || !card.querySelector('.sculpture-copy'))) return false;
+    // Enlarged type keeps the measured, single-row fallback. At ordinary
+    // sizes all four collections use the same interlocking card vocabulary.
+    if (cards.some(card => parseFloat(getComputedStyle(card.querySelector('.sculpture-title')).fontSize) > 25)) return packSculptureRows(grid);
+    const available = grid.clientWidth;
+    const handset = innerWidth <= 600;
+    const gap = handset ? 10 : 12;
+    const columns = available >= 1080 ? 16 : available >= 720 ? 12 : available >= 540 ? 8 : 4;
+    const unit = (available - gap * (columns - 1)) / columns;
+    const rowUnit = handset ? 64 : 84;
+    const spanWidth = span => span * (unit + gap) - gap;
+    const spanHeight = span => span * (rowUnit + gap) - gap;
+    const baseSpan = columns === 16 ? 4 : columns === 12 ? 3 : 2;
+    // The curated Websites section is mostly framed screens. Counter its
+    // portrait bias so the typical front keeps pace with the other services.
+    const baseArea = spanWidth(baseSpan) * (handset ? 230 : 200)
+      * (grid.dataset.topicGrid === 'web' ? .86 : 1);
+    const widths = columns === 16 ? [2, 3, 4, 5, 6, 8] : columns === 12 ? [2, 3, 4, 6] : columns === 8 ? [2, 3, 4] : [2, 4];
+    const context = document.createElement('canvas').getContext('2d');
+    const offset = { web: 0, it: 2, consulting: 4, software: 6 }[grid.dataset.topicGrid] || 0;
+    const rhythm = ['portrait', 'wide', 'compact', 'square', 'wide', 'square', 'portrait', 'compact'];
+    const options = cards.map((card, index) => {
+      const image = !!card.querySelector('.sculpture-art img');
+      const ratio = Number(card.dataset.artRatio) || 1.25;
+      const mode = card.dataset.device === 'iphone' || card.dataset.device === 'tablet' ? 'portrait'
+        : card.dataset.device ? 'wide' : rhythm[(index + offset) % rhythm.length];
+      const desiredRatio = card.dataset.device === 'iphone' ? .47 : { portrait: handset ? .5 : .68, wide: handset ? .9 : 1.7, compact: 1.12, square: 1 }[mode];
+      const desiredArea = baseArea * (card.dataset.device === 'iphone' ? .78 : mode === 'compact' ? .8 : mode === 'portrait' ? 1.05 : 1);
+      const result = [];
+      for (const width of widths) {
+        const pixels = spanWidth(width);
+        const narrow = pixels < 225;
+        for (const side of image && pixels >= 300 ? [false, true] : [false]) {
+          card.style.width = `${pixels}px`;
+          card.toggleAttribute('data-collection-narrow', narrow);
+          card.toggleAttribute('data-collection-wide', side);
+          card.removeAttribute('data-wrap-word');
+          const copy = card.querySelector('.sculpture-copy');
+          const copyStyle = getComputedStyle(copy);
+          const textWidth = copy.clientWidth - parseFloat(copyStyle.paddingLeft) - parseFloat(copyStyle.paddingRight)
+            - (copyStyle.display === 'grid' ? 28 + parseFloat(copyStyle.columnGap) : 0);
+          let wordsFit = true;
+          for (const node of copy.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')) {
+            context.font = getComputedStyle(node).font;
+            const text = [];
+            const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+            let part;
+            while ((part = walker.nextNode())) if (!part.parentElement.closest('.sr-only,[aria-hidden=true]')) text.push(part.textContent);
+            const spacing = parseFloat(getComputedStyle(node).letterSpacing) || 0;
+            const longest = Math.max(...text.join(' ').trim().split(/\s+/).map(word => context.measureText(word).width + Math.max(0, word.length - 1) * spacing));
+            if (longest > textWidth + 1) wordsFit = false;
+          }
+          if (!wordsFit && width < columns) continue;
+          card.toggleAttribute('data-wrap-word', !wordsFit);
+          const style = getComputedStyle(copy);
+          const boxes = [...copy.children].map(node => node.getBoundingClientRect()).filter(box => box.height);
+          const copyHeight = Math.max(...boxes.map(box => box.bottom)) - Math.min(...boxes.map(box => box.top))
+            + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+          const minimum = side ? Math.max(copyHeight + 4, 144) : copyHeight + (image ? 98 : 4);
+          const first = Math.max(2, Math.ceil((minimum + gap) / (rowUnit + gap)));
+          const limit = handset ? 5 : card.dataset.device === 'iphone' || card.dataset.device === 'tablet' ? 4 : 3;
+          for (let height = first; height <= Math.max(first, limit); height += 1) {
+            const h = spanHeight(height);
+            if (h > 420) continue;
+            const shape = Math.log(pixels / h / desiredRatio);
+            const area = Math.log(pixels * h / desiredArea);
+            const artHeight = side ? h - 20 : h - copyHeight - 12;
+            const artWidth = side ? pixels * .52 : pixels - 12;
+            const artFit = image ? Math.min(artWidth / ratio, artHeight) : 100;
+            // A wide card gets a genuinely horizontal composition. Do not
+            // spend its extra width on empty space around a small object.
+            // Larger canvases favor a common footprint over a device's
+            // ideal silhouette; narrow layouts need more room for text.
+            const cost = shape * shape * 2 + area * area * (columns >= 12 ? 4 : 2)
+              + (side && pixels / h < 1.5 ? .65 : 0)
+              + (!side && pixels / h > 1.9 && image ? .6 : 0)
+              + (image && artFit < 90 ? .8 : 0);
+            result.push({ width, height, narrow, side, wrap: !wordsFit, cost });
+          }
+        }
+      }
+      return result;
+    });
+    // A bounded skyline search fills the first open position in reading
+    // order. Unlike equal-height shelves, a portrait can sit beside two
+    // compact cards. Every completed plan closes with no empty grid cells.
+    let plans = [{ skyline: Array(columns).fill(0), cost: 0, placed: [] }];
+    const prefixes = [];
+    for (let index = 0; index < cards.length && plans.length; index += 1) {
+      const next = new Map();
+      for (const plan of plans) {
+        const y = Math.min(...plan.skyline);
+        const x = plan.skyline.indexOf(y);
+        let room = 0;
+        while (x + room < columns && plan.skyline[x + room] === y) room += 1;
+        for (const option of options[index]) {
+          if (option.width > room || room - option.width === 1) continue;
+          const skyline = [...plan.skyline];
+          skyline.fill(y + option.height, x, x + option.width);
+          const cost = plan.cost + option.cost;
+          const key = skyline.join(',');
+          if (!next.has(key) || next.get(key).cost > cost) next.set(key, {
+            skyline, cost, placed: [...plan.placed, { ...option, card: cards[index], x, y }]
+          });
+        }
+      }
+      const remaining = cards.length - index - 1;
+      const rank = plan => plan.cost + (Math.max(...plan.skyline) * columns - plan.skyline.reduce((sum, height) => sum + height, 0)) * (.06 + .5 / (remaining + 1));
+      const ranked = [...next.values()].sort((a, b) => rank(a) - rank(b));
+      // Keep a few closed prefixes even when their local image-fit score is
+      // slightly higher. They let the remaining cards finish a clean edge.
+      const closed = ranked.filter(plan => plan.skyline.every(height => height === plan.skyline[0])).slice(0, 12);
+      if (closed.length && cards.length - index - 1 <= 6) prefixes.push(...closed.map(plan => ({ index: index + 1, plan })));
+      plans = [...closed, ...ranked.filter(plan => !closed.includes(plan))].slice(0, 192);
+    }
+    const varied = plan => innerWidth < 744 || (
+      new Set(plan.placed.map(p => p.width + ':' + p.height)).size >= 3
+      && new Set(plan.placed.map(p => p.height)).size >= 2
+      && plan.placed.some(a => plan.placed.some(b => b.y > a.y && b.y < a.y + a.height))
+    );
+    const complete = plans.filter(plan => plan.skyline.every(height => height === plan.skyline[0]) && varied(plan));
+    if (!complete.length) {
+      // Close only the short tail when the best free composition cannot
+      // meet the bottom edge. Never flatten the entire collection to do it.
+      const memo = new Map();
+      const finish = (index, x = 0, rowHeight = 0) => {
+        if (index === cards.length) return x === 0 ? { cost: 0, placed: [], rows: 0 } : null;
+        const key = `${index}:${x}:${rowHeight}`;
+        if (memo.has(key)) return memo.get(key);
+        let best = null;
+        for (const option of options[index]) {
+          if (x + option.width > columns || (rowHeight && rowHeight !== option.height)) continue;
+          const closes = x + option.width === columns;
+          const next = finish(index + 1, closes ? 0 : x + option.width, closes ? 0 : option.height);
+          if (!next) continue;
+          const cost = option.cost + next.cost;
+          if (!best || cost < best.cost) best = {
+            cost,
+            placed: [{ ...option, card: cards[index], x, y: 0 }, ...next.placed.map(p => ({ ...p, y: p.y + (closes ? option.height : 0) }))],
+            rows: next.rows + (closes ? option.height : 0)
+          };
+        }
+        memo.set(key, best);
+        return best;
+      };
+      for (const { index, plan } of prefixes) {
+        if (index === cards.length) continue;
+        const tail = finish(index);
+        if (!tail) continue;
+        const candidate = {
+          cost: plan.cost + tail.cost,
+          skyline: Array(columns).fill(plan.skyline[0] + tail.rows),
+          placed: [...plan.placed, ...tail.placed.map(p => ({ ...p, y: p.y + plan.skyline[0] }))]
+        };
+        if (varied(candidate)) complete.push(candidate);
+      }
+    }
+    if (!complete.length) {
+      cards.forEach(card => { card.style.width = ''; card.removeAttribute('data-collection-narrow'); });
+      return packSculptureRows(grid);
+    }
+    const selected = complete.sort((a, b) => a.cost - b.cost)[0];
+    grid.style.gap = `${gap}px`;
+    grid.style.gridTemplateColumns = `repeat(${columns}, minmax(0, 1fr))`;
+    grid.style.gridTemplateRows = `repeat(${selected.skyline[0]}, ${rowUnit}px)`;
+    for (const position of selected.placed) {
+      const { card, x, y, width, height } = position;
+      card.style.width = '';
+      card.toggleAttribute('data-collection-narrow', position.narrow);
+      card.toggleAttribute('data-collection-wide', position.side);
+      card.toggleAttribute('data-wrap-word', position.wrap);
+      card.style.setProperty('grid-column', `${x + 1} / span ${width}`, 'important');
+      card.style.setProperty('grid-row', `${y + 1} / span ${height}`, 'important');
+      Object.assign(card.dataset, { columns: String(width), rows: String(height), shape: spanWidth(width) < spanHeight(height) ? 'tower' : 'landscape' });
+    }
+    Object.assign(grid.dataset, { tileCount: String(cards.length), packVacancies: 'false', packRepairs: '0', gridRevision: '6', collectionLayout: 'mixed' });
+    return true;
+  }
+
+  function packSculptureRows(grid) {
+    const cards = [...grid.querySelectorAll(':scope > .tile')];
+    if (!cards.length || cards.some(card => !card.matches('.sculpture-tile') || !card.querySelector('.sculpture-copy'))) return false;
+    const handset = innerWidth <= 600;
+    const available = grid.clientWidth;
+    const gap = handset ? 10 : 12;
+    const targetHeight = available > 1100 ? 276 : available > 800 ? 252 : 240;
+    // All four categories share the same compact row rhythm. Image ratios
+    // choose the mix of narrow and wide cards within that common scale.
+    const suggestedCount = Math.max(2, Math.round(available / 250));
+    const context = document.createElement('canvas').getContext('2d');
+    const copyHeight = (card, width) => {
+      card.style.width = `${width}px`;
+      const copy = card.querySelector('.sculpture-copy');
+      const style = getComputedStyle(copy);
+      const boxes = [...copy.children].map(node => node.getBoundingClientRect()).filter(box => box.height);
+      return Math.max(...boxes.map(box => box.bottom)) - Math.min(...boxes.map(box => box.top))
+        + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    };
+    const info = new Map(cards.map(card => {
+      card.removeAttribute('data-collection-wide');
+      card.removeAttribute('data-collection-narrow');
+      const proposed = (available - gap * (suggestedCount - 1)) / suggestedCount;
+      card.style.width = `${proposed}px`;
+      const copy = card.querySelector('.sculpture-copy');
+      const styles = getComputedStyle(copy);
+      const image = card.querySelector('.sculpture-art img');
+      // Interactive Lab previews replace their image node after load. Keep
+      // the authored frame ratio on the card, independent of that lifecycle.
+      const ratio = image ? Number(card.dataset.artRatio) || Number(image.getAttribute('width')) / Number(image.getAttribute('height')) || 1.25 : 1;
+      const longest = Math.max(...[...copy.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')].flatMap(node => {
+        context.font = getComputedStyle(node).font;
+        return node.textContent.trim().split(/\s+/).map(word => context.measureText(word).width);
+      }));
+      const symbol = styles.display === 'grid' ? 28 + parseFloat(styles.columnGap) : 0;
+      const needed = longest + parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight) + symbol + 3;
+      card.toggleAttribute('data-wrap-word', needed > available);
+      const minimumFrame = handset ? Math.max(130, (available - gap) * .44)
+        : card.dataset.device === 'iphone' ? 150 : 224;
+      const minimum = Math.min(available, Math.max(minimumFrame, needed));
+      const header = copyHeight(card, Math.max(minimum, proposed));
+      const preferred = Math.max(minimum, image ? (targetHeight - header - 12) * ratio + 14 : targetHeight);
+      return [card, { ratio, image: !!image, minimum, preferred }];
+    }));
+    // Balance the complete collection, including its final row, instead of
+    // stretching a leftover tile to fill a large empty pocket. Source order
+    // stays intact for both visual scanning and keyboard navigation.
+    const plans = Array(cards.length + 1);
+    plans[cards.length] = { cost: 0, rows: [] };
+    for (let start = cards.length - 1; start >= 0; start -= 1) {
+      let minimum = 0, preferred = 0;
+      for (let end = start; end < Math.min(cards.length, start + (handset ? 2 : 6)); end += 1) {
+        const item = info.get(cards[end]);
+        minimum += item.minimum + (end > start ? gap : 0);
+        preferred += item.preferred + (end > start ? gap : 0);
+        if (minimum > available + .1) break;
+        const mismatch = (preferred - available) / available;
+        const cost = mismatch * mismatch + plans[end + 1].cost;
+        if (!plans[start] || cost < plans[start].cost) plans[start] = { cost, rows: [cards.slice(start, end + 1), ...plans[end + 1].rows] };
+      }
+    }
+    const rows = plans[0].rows;
+    const placed = [];
+    let y = 0;
+    for (const row of rows) {
+      const room = available - gap * (row.length - 1);
+      const totalRatio = row.reduce((sum, card) => sum + info.get(card).ratio, 0);
+      let widths = row.map(card => room * info.get(card).ratio / totalRatio);
+      let headers = [], height = 0;
+      for (let pass = 0; pass < 7; pass += 1) {
+        headers = row.map((card, index) => copyHeight(card, widths[index]));
+        const widthAt = (card, index, h) => {
+          const item = info.get(card);
+          return Math.max(item.minimum, item.image ? (h - headers[index] - 12) * item.ratio + 14 : h * item.ratio);
+        };
+        let low = 0, high = 5000;
+        for (let step = 0; step < 24; step += 1) {
+          const middle = (low + high) / 2;
+          if (row.reduce((sum, card, index) => sum + widthAt(card, index, middle), 0) > room) high = middle;
+          else low = middle;
+        }
+        height = high;
+        widths = row.map((card, index) => widthAt(card, index, height));
+      }
+      // Keep ordinary rows within one shared size range. The actual words
+      // can still demand more room under accessibility text enlargement.
+      height = Math.ceil(Math.max(Math.min(height, targetHeight + 12), ...headers.map((h, index) => h + (info.get(row[index]).image ? 100 : 4))) / 12) * 12;
+      if (row.length === 1 && !info.get(row[0]).image) height = headers[0] + 4;
+      if (row.length === 1 && available > 360 && info.get(row[0]).image && info.get(row[0]).minimum <= available * .46) {
+        const card = row[0];
+        card.setAttribute('data-collection-wide', '');
+        // An odd final card becomes a shallow text-and-object row rather
+        // than a large poster. Text enlargement can opt back into stacking.
+        height = Math.ceil(Math.max(180, copyHeight(card, available), Math.min(300, (available * .51 - 16) / info.get(card).ratio)) / 12) * 12;
+      }
+      let x = 0;
+      row.forEach((card, index) => {
+        const width = index === row.length - 1 ? available - x : widths[index];
+        placed.push({ card, x, y, width, height });
+        card.style.width = '';
+        x += width + gap;
+      });
+      y += height + gap;
+    }
+    // Native grid tracks follow the measured boundaries. Intentional gutters
+    // are separate tracks, so every row closes exactly at the container edge.
+    const fixed = value => Math.round(value * 64) / 64;
+    const xs = [...new Set(placed.flatMap(p => [fixed(p.x), fixed(p.x + p.width)]))].sort((a, b) => a - b);
+    const ys = [...new Set(placed.flatMap(p => [fixed(p.y), fixed(p.y + p.height)]))].sort((a, b) => a - b);
+    grid.style.gap = '0';
+    grid.style.gridTemplateColumns = xs.slice(1).map((x, i) => `${x - xs[i]}px`).join(' ');
+    grid.style.gridTemplateRows = ys.slice(1).map((top, i) => `${top - ys[i]}px`).join(' ');
+    for (const p of placed) {
+      p.card.style.setProperty('grid-column', `${xs.indexOf(fixed(p.x)) + 1} / ${xs.indexOf(fixed(p.x + p.width)) + 1}`, 'important');
+      p.card.style.setProperty('grid-row', `${ys.indexOf(fixed(p.y)) + 1} / ${ys.indexOf(fixed(p.y + p.height)) + 1}`, 'important');
+      Object.assign(p.card.dataset, { columns: String(Math.max(1, Math.round(p.width / available * 12))), rows: String(Math.max(1, Math.round(p.height / available * 12))), shape: p.width < p.height ? 'tower' : 'landscape' });
+    }
+    Object.assign(grid.dataset, { tileCount: String(cards.length), packVacancies: 'false', packRepairs: '0', gridRevision: '6', collectionLayout: 'rows' });
+    return true;
+  }
+
   function pack(grid) {
+    if (grid.dataset.sculptureLayout !== 'compact' && packSculptureCollection(grid)) return;
     // The reference's opening uses natural rectangular rows, independent of
     // the square-unit packing used by the larger answer collections.
     if (grid.dataset.sculptureLayout === 'compact') {

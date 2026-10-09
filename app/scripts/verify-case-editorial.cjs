@@ -20,7 +20,20 @@ const base = (process.env.CASE_EDITORIAL_URL || 'http://127.0.0.1:4396').replace
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'case-editorial');
 const screenshots = path.join(evidence, 'screenshots');
 const cases = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'cases.json'), 'utf8'));
+const portfolioDelivery = JSON.parse(fs.readFileSync(path.join(app, '..', '.lifi', 'design-source', 'sculpture', 'portfolio-delivery.json'), 'utf8'));
 const labs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
+// `case_studies.py` intentionally curates the public work index instead of
+// rendering every catalog record as a project card. Keep this list explicit so
+// the browser contract detects an accidental return of retired or non-indexed
+// case cards without treating their dedicated public routes as missing.
+const workIndexClientSlugs = [
+  'easy-tiger', 'hair-by-rachel-charles', 'the-tarot-hotline', 'grand-funding-llc',
+  'the-break-room', 'clearhelp', 'logan-loans', 'cc-films', 'chromatic-painting-design',
+];
+const workIndexConceptSlugs = ['army-navy-bags', 'brothers-pizzeria', 'deckspace'];
+const workIndexProductSlugs = [];
+const workIndexCasePaths = new Set([...workIndexClientSlugs, ...workIndexConceptSlugs]
+  .map(slug => `/case-studies/${slug}/`));
 
 const report = {
   kind: 'case-editorial-browser-verification',
@@ -169,12 +182,14 @@ async function verifyPublicCaseShareCards(page) {
   const publicClients = cases.filter(caseStudy =>
     caseStudy.type.startsWith('Client work') && caseStudy.type.toLowerCase().includes('public work, live')
   );
-  assert.equal(publicClients.length, 9, 'Expected nine public client cases for dedicated share cards');
+  assert.equal(publicClients.length, 10, 'Expected ten public client cases for dedicated share cards');
   for (const caseStudy of publicClients) {
+    const expectedSocial = portfolioDelivery.media[caseStudy.slug]?.social?.src;
+    assert.ok(expectedSocial, `${caseStudy.slug}: compiled portfolio delivery needs a social share card`);
     await go(page, `/case-studies/${caseStudy.slug}/`);
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
     assert.ok(ogImage, `${caseStudy.slug}: missing og:image`);
-    assert.equal(new URL(ogImage).pathname, `/assets/portfolio-20261007/share-${caseStudy.slug}.jpg`, `${caseStudy.slug}: og:image uses its verified case-specific screenshot card`);
+    assert.equal(new URL(ogImage).pathname, expectedSocial, `${caseStudy.slug}: og:image uses its verified case-specific screenshot card`);
     const parsed = new URL(ogImage, base);
     const localAsset = new URL(parsed.pathname + parsed.search, base);
     const response = await fetch(localAsset, { headers: { accept: 'image/avif,image/webp,image/*,*/*;q=0.8' } });
@@ -182,24 +197,24 @@ async function verifyPublicCaseShareCards(page) {
     assert.match(response.headers.get('content-type') || '', /^image\//, `${caseStudy.slug}: share-card content type`);
     report.shareCards.push({ slug: caseStudy.slug, ogImage, localAsset: localAsset.pathname, contentType: response.headers.get('content-type') });
   }
-  return '9 public client cases have dedicated, locally resolving og:image cards';
+  return '10 public client cases have dedicated, locally resolving og:image cards';
 }
 
-async function assertCaseBriefClearsStickyRail(page, viewport) {
+async function assertCaseBriefClearsStickyChrome(page, viewport) {
   const heading = page.locator('#case-brief h2');
   await heading.evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'start' }));
   await page.waitForFunction(() => {
     const target = document.querySelector('#case-brief h2');
-    const rail = document.querySelector('.direct-contact-rail');
-    if (!target || !rail) return false;
-    return target.getBoundingClientRect().top >= rail.getBoundingClientRect().bottom + 8;
+    const chrome = document.querySelector('.workbench-page .workbench-chrome');
+    if (!target || !chrome) return false;
+    return target.getBoundingClientRect().top >= chrome.getBoundingClientRect().bottom + 8;
   }, null, { timeout: 5_000 });
   const positions = await page.evaluate(() => {
     const target = document.querySelector('#case-brief h2')?.getBoundingClientRect();
-    const rail = document.querySelector('.direct-contact-rail')?.getBoundingClientRect();
-    return { headingTop: target?.top, railBottom: rail?.bottom };
+    const chrome = document.querySelector('.workbench-page .workbench-chrome')?.getBoundingClientRect();
+    return { headingTop: target?.top, chromeBottom: chrome?.bottom };
   });
-  assert.ok(positions.headingTop >= positions.railBottom + 8, `${viewport.width}px case story heading (${positions.headingTop}px) is obscured by sticky contact rail (${positions.railBottom}px)`);
+  assert.ok(positions.headingTop >= positions.chromeBottom + 8, `${viewport.width}px case story heading (${positions.headingTop}px) is obscured by sticky Workbench chrome (${positions.chromeBottom}px)`);
   return positions;
 }
 
@@ -209,7 +224,12 @@ async function verifyStaticFallback(browser) {
     await go(page, '/examples/');
     assert.equal(await page.locator('main[data-page-content]').count(), 1, 'No-JS work index needs static main content');
     assert.match((await page.locator('h1').first().innerText()).trim(), /^Our work\.?$/, 'No-JS work index needs the concise public heading');
-    assert.equal(await page.locator('a.work-project[href^="/case-studies/"]').count(), 11, 'No-JS work index needs its 9 public cards plus 2 products');
+    assert.equal(await page.locator('a.work-project[href^="/case-studies/"]').count(), workIndexClientSlugs.length,
+      'No-JS work index needs its nine curated public client cards');
+    assert.equal(await page.locator('#our-products a.work-project').count(), workIndexProductSlugs.length,
+      'No-JS work index keeps product project cards aligned with the curated catalog');
+    assert.equal(await page.locator('#design-concepts a[href^="/case-studies/"]').count(), workIndexConceptSlugs.length,
+      'No-JS work index keeps its three curated design-concept links');
     assert.equal(await page.locator('a.work-lab[data-reader-link]').count(), labs.length, 'No-JS work index needs all Labs as real links');
     const chromatic = page.locator('a.work-project[href="/case-studies/chromatic-painting-design/"]').first();
     assert.equal(await chromatic.count(), 1, 'No-JS work index must link to Chromatic');
@@ -233,18 +253,18 @@ async function run() {
     const { context, page } = await makePage(browser, { width: 1440, height: 940 });
     try {
       await go(page, '/examples/');
-      await check('work index has nine public client cards, two Little Fight products, all fifteen case destinations, and reader-card VERA', async () => {
+      await check('work index has nine public client cards, three design concepts, its current product route, and VERA reader card', async () => {
         assert.match((await page.locator('h1').first().innerText()).trim(), /^Our work\.?$/, 'Work index keeps a concise public heading');
-        assert.equal(await page.locator('#client-work a.work-project').count(), 9, 'Public client card count');
-        assert.equal(await page.locator('#our-products a.work-project').count(), 2, 'Little Fight product card count');
+        assert.equal(await page.locator('#client-work a.work-project').count(), workIndexClientSlugs.length, 'Public client card count');
+        assert.equal(await page.locator('#our-products a.work-project').count(), workIndexProductSlugs.length, 'Little Fight product card count');
+        assert.equal(await page.locator('#design-concepts a[href^="/case-studies/"]').count(), workIndexConceptSlugs.length, 'Design-concept link count');
         assert.equal(await page.locator('.work-project--featured').count(), 0, 'Client work cards use one equal treatment');
         const destinations = new Set(await page.locator('a[href^="/case-studies/"]').evaluateAll(links => links.map(link => new URL(link.href).pathname)));
-        const expected = new Set(cases.map(caseStudy => `/case-studies/${caseStudy.slug}/`));
-        assert.deepEqual([...destinations].sort(), [...expected].sort(), 'Work index must represent every catalog case destination');
+        assert.deepEqual([...destinations].sort(), [...workIndexCasePaths].sort(), 'Work index must represent exactly its curated public case destinations');
         const vera = page.locator('a.work-vera[href="/vera/"][data-reader-link]');
         assert.equal(await vera.count(), 1, 'VERA needs one reader-card route');
         assert.equal(await vera.getAttribute('data-document-link'), null, 'VERA must not hard-navigate away from the reader');
-        return '9 public cards; 2 products; 15 case routes; VERA reader card';
+        return '9 public client cards; 0 product cards; 3 design concepts; VERA reader card';
       });
       await check('work index loads each project image and every Lab thumbnail', async () => {
         await assertImagesLoaded(page, '.work-project-image img', 'work index project imagery');
@@ -300,7 +320,7 @@ async function run() {
         }
         return '15 public stories use curated facts and plain public labels';
       });
-      await check('nine public client cases have case-specific social cards that resolve locally', () => verifyPublicCaseShareCards(page));
+      await check('ten public client cases have case-specific social cards that resolve locally', () => verifyPublicCaseShareCards(page));
 
       await go(page, '/examples/');
       await check('work index passes full Axe including color contrast', () => auditAxe(page, '/examples/'));
@@ -316,30 +336,45 @@ async function run() {
       await check('Chromatic public case passes full Axe including color contrast', () => auditAxe(page, '/case-studies/chromatic-painting-design/'));
       await screenshotEvidence(page, path.join(screenshots, 'chromatic-1440.png'), 'Chromatic full-page evidence');
 
-      await check('homepage Website gallery opens a client case in the reader, Back restores the Website story, and X returns to its hub tile', async () => {
+      await check('homepage Website reader keeps two selected client proofs, a full-portfolio route, reader Back trails, and X returns to its hub tile', async () => {
         await go(page, '/');
         const tile = page.locator('a.tile[href="/services/custom-local-websites/"]').first();
         await tile.scrollIntoViewIfNeeded();
         await tile.click();
         await ensureReader(page, '/services/custom-local-websites/');
-        await page.locator('#detail-body .rw-full-gallery > summary').click();
-        const proof = page.locator('#detail-body .rw-client-project--easy-tiger a.rw-client-project-media[href="/case-studies/easy-tiger/"][data-reader-link]');
+        const selected = page.locator('#detail-body .rw-selected-work > article');
+        assert.equal(await selected.count(), 2, 'Website reader keeps exactly two selected client proofs');
+        assert.deepEqual(await selected.locator('h3 a[data-reader-link]').evaluateAll(links => links.map(link => link.getAttribute('href'))),
+          ['/case-studies/chromatic-painting-design/', '/case-studies/hair-by-rachel-charles/'],
+          'Website reader keeps the approved Chromatic and Hair By Rachel proof routes');
+        assert.equal(await page.locator('#detail-body .rw-full-gallery,#detail-body .rw-client-gallery,#detail-body .rw-proof-stories').count(), 0,
+          'Website reader does not repeat a full portfolio matrix');
+        const portfolio = page.locator('#detail-body .rw-selected-work-all a[data-reader-link]');
+        assert.equal(await portfolio.count(), 1, 'Website reader keeps one full-portfolio route');
+        assert.equal(await portfolio.getAttribute('href'), '/examples/', 'Website reader full-portfolio route');
+        const proof = selected.first().locator('a[href="/case-studies/chromatic-painting-design/"][data-reader-link]').first();
         await proof.scrollIntoViewIfNeeded();
         await proof.click();
-        await ensureReader(page, '/case-studies/easy-tiger/');
-        assert.equal(await page.locator('#detail[open] .case-story[data-case="easy-tiger"]').count(), 1, 'Client case must stay in reader dialog');
+        await ensureReader(page, '/case-studies/chromatic-painting-design/');
+        assert.equal(await page.locator('#detail[open] .case-story[data-case="chromatic-painting-design"]').count(), 1, 'Client case must stay in reader dialog');
         const back = page.locator('#reader-back');
         await back.waitFor({ state: 'visible' });
         await back.click();
         await ensureReader(page, '/services/custom-local-websites/');
-        assert.equal(await page.locator('#detail-body .rw-client-gallery .rw-client-project[data-rw-item]').count(), 9, 'Back must restore the full Website client gallery');
+        assert.equal(await page.locator('#detail-body .rw-selected-work > article').count(), 2, 'Back restores the two selected Website proofs');
         assert.equal(await back.isHidden(), true, 'Back is hidden after returning to the opening Website card');
+        await portfolio.click();
+        await ensureReader(page, '/examples/');
+        assert.ok(await page.locator('#detail-body a.work-project[href^="/case-studies/"]').count() > 0, 'Full portfolio route keeps project cards in the reader');
+        await back.waitFor({ state: 'visible' });
+        await back.click();
+        await ensureReader(page, '/services/custom-local-websites/');
         await page.locator('#close-detail').click();
         await page.waitForFunction(() => !document.querySelector('#detail')?.open);
         await page.waitForURL(base + '/');
         await tile.waitFor({ state: 'visible' });
         assert.equal(await page.evaluate(() => document.activeElement === document.querySelector('a.tile[href="/services/custom-local-websites/"]')), true, 'X returns focus to the opening Website card in the hub');
-        return 'tile → Website gallery → client case reader → Back → Website story → X → Website hub tile focus';
+        return 'tile → two selected proofs → client case → Back → full portfolio → Back → Website story → X → Website hub tile focus';
       });
     } finally { await context.close(); }
 
@@ -357,16 +392,16 @@ async function run() {
           await go(page, '/case-studies/chromatic-painting-design/');
           assert.match(await page.locator('h1').first().innerText(), /Chromatic Painting/i, `${viewport.width}px case heading`);
           let caseBrief;
-          if (viewport.width <= 390) caseBrief = await assertCaseBriefClearsStickyRail(page, viewport);
+          if (viewport.width <= 390) caseBrief = await assertCaseBriefClearsStickyChrome(page, viewport);
           const caseOverflow = await assertNoOverflow(page, `${viewport.width}px Chromatic case`);
           let enlargedCaseBrief;
           if (viewport.width <= 390) {
-            await page.locator('.direct-contact-rail a').evaluateAll(links => {
+            await page.locator('.workbench-page .direct-contact-rail a').evaluateAll(links => {
               const sizes = links.map(link => parseFloat(getComputedStyle(link).fontSize));
               links.forEach((link, index) => { link.style.fontSize = `${sizes[index] * 2}px`; });
             });
             await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
-            enlargedCaseBrief = await assertCaseBriefClearsStickyRail(page, viewport);
+            enlargedCaseBrief = await assertCaseBriefClearsStickyChrome(page, viewport);
             await assertNoOverflow(page, `${viewport.width}px enlarged contact rail`);
           }
           report.viewports.push({ ...viewport, workOverflow, caseOverflow, caseBrief, enlargedCaseBrief });

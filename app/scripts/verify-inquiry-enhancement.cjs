@@ -167,7 +167,7 @@ async function run() {
       try {
         const business = fixture.form.locator('[name="business"]');
         await business.evaluate((node, value) => { node.value = value; }, 'Autofilled Trade Co.');
-        await fixture.page.locator('.topbar .wordmark').focus();
+        await fixture.page.locator('.workbench-page > .workbench-chrome .workbench-brand').focus();
         assert.equal(await fixture.page.evaluate(() => document.activeElement?.closest('form.static-inquiry')), null, 'fixture focus must be outside the inquiry');
         await fixture.release();
         await fixture.page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'native-inquiry');
@@ -207,7 +207,7 @@ async function run() {
       const fixture = await heldTechAuditPage(browser);
       try {
         await fixture.form.locator('[name="intent"]').selectOption('support');
-        await fixture.page.locator('.topbar .wordmark').focus();
+        await fixture.page.locator('.workbench-page > .workbench-chrome .workbench-brand').focus();
         await fixture.release();
         await fixture.page.waitForFunction(() => document.querySelector('[data-production-island="tech-audit"]')?.dataset.productionIslandMode === 'native-inquiry');
         assert.equal(await fixture.form.locator('[name="intent"]').inputValue(), 'support');

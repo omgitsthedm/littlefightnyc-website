@@ -1,0 +1,440 @@
+/*
+ * Editorial Workbench
+ *
+ * The physical tile brings a reader here.  Once open, the page reads like a
+ * calm document: stable global contact in orange, service context in the
+ * category color, and enough quiet space for the actual writing to lead.
+ */
+
+.workbench-page,
+#detail .detail-window.lf-reader{
+  --workbench-ink:#090c0e;
+  --workbench-paper:#f6f3ec;
+  --workbench-prose:#d9d8d4;
+  --workbench-dim:#aaa9ab;
+  --workbench-rule:rgb(246 243 236 / .24);
+  --workbench-accent:#ff7839;
+  background:
+    radial-gradient(ellipse 58% 34% at 8% 100%,color-mix(in srgb,var(--workbench-accent) 9%,transparent),transparent 74%),
+    var(--workbench-ink);
+  color:var(--workbench-paper);
+}
+.workbench-page[data-reader-family=web],
+#detail[data-reader-family=web] .detail-window{--workbench-accent:#92bfff}
+.workbench-page[data-reader-family=it],
+#detail[data-reader-family=it] .detail-window{--workbench-accent:#f5d95b}
+.workbench-page[data-reader-family=consulting],
+#detail[data-reader-family=consulting] .detail-window{--workbench-accent:#a0df85}
+.workbench-page[data-reader-family=software],
+#detail[data-reader-family=software] .detail-window{--workbench-accent:#f09bdd}
+
+.workbench-page{min-height:100dvh;padding:0 clamp(22px,4vw,56px) clamp(40px,8vw,112px)}
+.workbench-chrome{position:relative;z-index:5;width:min(1380px,100%);margin:0 auto;padding:18px 0 0;color:var(--workbench-paper)}
+.workbench-page .workbench-chrome{position:sticky;top:0;background:var(--workbench-ink)}
+.workbench-chrome-top{display:flex;align-items:center;gap:24px;min-height:48px}
+.workbench-brand{display:inline-flex;align-items:center;gap:9px;min-height:44px;color:var(--workbench-paper);font:700 clamp(18px,1.6vw,22px)/1 LFAtkinson,Arial,sans-serif;letter-spacing:-.035em;text-decoration:none;white-space:nowrap}
+.workbench-brand img{display:block;flex:none;width:43px;height:38px;object-fit:contain}
+.workbench-contacts{position:sticky;top:12px;z-index:2;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:clamp(12px,1.8vw,26px);margin:0 0 0 auto}
+.workbench-contacts a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:4px 0;color:#ff7839;background:transparent;border:0;border-radius:0;font:700 16px/1 LFAtkinson,Arial,sans-serif;text-decoration:none;transition-property:color,transform;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.workbench-chrome-top>.workbench-contacts{display:flex!important;justify-content:flex-end!important;margin-left:auto!important}
+.workbench-page .workbench-contacts a,
+#detail .workbench-contacts a{color:#ff7839!important}
+.workbench-contacts a:hover{color:#ffac85}.workbench-contacts a:active{transform:scale(.96)}
+.workbench-contacts .contact-plan{display:none}
+/* The legacy reader contact treatment is a filled chip. Workbench contacts
+   are global navigation: retain their readable orange words and omit Write,
+   even when the source reader is an immersive app such as VERA. */
+#detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail a{background:transparent!important;color:#ff7839!important}
+#detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail .contact-plan{display:none!important}
+.workbench-tabs{display:flex;align-items:stretch;gap:clamp(18px,4vw,62px);min-height:58px;margin-top:12px;padding:0 0 0 max(0px,clamp(0px,4vw,64px));border-bottom:1px solid var(--workbench-rule)}
+.workbench-tab{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:9px 0;color:var(--workbench-paper);font-size:clamp(15px,1.4vw,18px);line-height:1.1;text-decoration:none;white-space:nowrap;opacity:.9;transition-property:color,opacity;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.workbench-tab::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;background:var(--workbench-accent);content:"";opacity:0;transform:scaleX(.4);transform-origin:center;transition-property:opacity,transform;transition-duration:180ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.workbench-tab:hover{color:var(--workbench-accent);opacity:1}.workbench-tab:focus-visible{outline-color:var(--workbench-accent)}
+.workbench-tab-icon{display:block;width:25px;height:25px;background:currentColor;mask:var(--workbench-icon) center/contain no-repeat;-webkit-mask:var(--workbench-icon) center/contain no-repeat}
+.workbench-page[data-reader-family=web] .workbench-tab[data-family=web],
+.workbench-page[data-reader-family=it] .workbench-tab[data-family=it],
+.workbench-page[data-reader-family=consulting] .workbench-tab[data-family=consulting],
+.workbench-page[data-reader-family=software] .workbench-tab[data-family=software],
+#detail[data-reader-family=web] .workbench-tab[data-family=web],
+#detail[data-reader-family=it] .workbench-tab[data-family=it],
+#detail[data-reader-family=consulting] .workbench-tab[data-family=consulting],
+#detail[data-reader-family=software] .workbench-tab[data-family=software]{color:var(--workbench-accent);opacity:1}
+.workbench-page[data-reader-family=web] .workbench-tab[data-family=web]::after,
+.workbench-page[data-reader-family=it] .workbench-tab[data-family=it]::after,
+.workbench-page[data-reader-family=consulting] .workbench-tab[data-family=consulting]::after,
+.workbench-page[data-reader-family=software] .workbench-tab[data-family=software]::after,
+#detail[data-reader-family=web] .workbench-tab[data-family=web]::after,
+#detail[data-reader-family=it] .workbench-tab[data-family=it]::after,
+#detail[data-reader-family=consulting] .workbench-tab[data-family=consulting]::after,
+#detail[data-reader-family=software] .workbench-tab[data-family=software]::after{opacity:1;transform:scaleX(1)}
+.workbench-backlinks{display:none}
+.workbench-backlink>span{font-size:0}
+.workbench-backlink>span::before{content:'←';font-size:1.35rem;line-height:1}
+
+/* The enhanced reader is a full editorial surface, not a second small modal. */
+#detail{padding:0;background:var(--workbench-ink)}
+#detail::backdrop{background:rgb(3 3 5 / .94);backdrop-filter:blur(5px)}
+#detail .detail-window.lf-reader{width:100%;height:100%;max-width:none;max-height:none;margin:0;border:0;border-radius:0;box-shadow:none;overflow:hidden}
+#detail .workbench-chrome{flex:none;padding:18px clamp(22px,4vw,56px) 0;background:color-mix(in srgb,var(--workbench-ink) 96%,transparent)}
+#detail .detail-body{padding-inline:clamp(22px,4vw,56px);background:var(--workbench-ink);scrollbar-color:var(--workbench-accent) var(--workbench-ink)}
+#detail:has(.workbench-chrome) #close-detail.workbench-close{position:absolute;z-index:7;top:20px;right:clamp(22px,4vw,56px);display:grid;place-items:center;width:46px;height:46px;padding:0;border:1px solid rgb(246 243 236 / .32);border-radius:999px;background:rgb(9 12 14 / .84);color:var(--workbench-paper);font-size:32px;line-height:1;transition-property:background-color,transform,border-color;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+#detail:has(.workbench-chrome) #close-detail.workbench-close:hover{border-color:var(--workbench-accent);background:#171b1d}#detail:has(.workbench-chrome) #close-detail.workbench-close:active{transform:scale(.96)}
+#detail .workbench-reader-back{position:absolute;z-index:7;right:clamp(82px,9vw,142px);top:21px;min-height:44px;padding:9px 14px;border:0;border-radius:999px;background:transparent;color:var(--workbench-accent);font:700 16px/1 LFAtkinson,Arial,sans-serif}
+#detail .workbench-reader-back:hover{background:color-mix(in srgb,var(--workbench-accent) 13%,transparent)}
+
+/* Shared article geometry.  The full paragraph is the main visual, while art
+   remains an authentic supporting proof of the tile's subject. */
+.workbench-page .lf-reader,
+#detail .lf-reader{--reader-accent:var(--workbench-accent);width:min(1380px,100%);margin:0 auto;background:transparent;color:var(--workbench-paper);font-family:LFAtkinson,Arial,sans-serif}
+.workbench-page .lf-reader :is(h1,h2,h3),
+#detail .lf-reader :is(h1,h2,h3){font-family:LFReader,LFAtkinson,Arial,sans-serif;color:var(--workbench-paper);font-weight:600;letter-spacing:-.045em;line-height:1.07;text-wrap:balance}
+
+/* Case studies intentionally turn from the dark editorial canvas onto a light mobile story.
+   Keep their local ink treatment above the shared reader heading rule. */
+.workbench-page .lf-reader .case-mobile-story h2,
+#detail .lf-reader .case-mobile-story h2{color:#171719}
+
+/* The case action remains a dark-ink global-contact control on orange. */
+.workbench-page .lf-reader .case-primary,
+#detail .lf-reader .case-primary{color:#1b100a;background:#ff7839}
+
+/* Construction's magenta primary remains a dark-ink action after the shared
+   Workbench link color applies to reader content. */
+.workbench-page .lf-reader .construction-primary,
+#detail .lf-reader .construction-primary{color:#1b100a!important}
+
+.workbench-page .lf-reader :is(p,li),
+#detail .lf-reader :is(p,li){font-size:clamp(18px,1rem + .27vw,20px);line-height:1.52;text-wrap:pretty}
+.workbench-page .lf-reader a,
+#detail .lf-reader a{color:inherit}
+/* Inquiry proof links remain an explicit orange next step after the shared
+   Workbench reader link reset. */
+#detail .lf-reader .lf-audit-intro__proof-links a{color:#ff7839!important}
+.workbench-page .lf-reader :is(a,button,input,textarea):focus-visible,
+#detail .lf-reader :is(a,button,input,textarea):focus-visible{outline-color:var(--workbench-accent)}
+.workbench-page .lf-reader .story-hero,
+#detail .lf-reader .story-hero{display:grid;grid-template-columns:minmax(0,.88fr) minmax(280px,.54fr);gap:clamp(30px,6vw,112px);align-items:end;min-height:0;padding:clamp(46px,5vw,72px) 0 clamp(34px,4vw,56px);background:transparent;overflow:visible}
+.workbench-page .lf-reader .story-kicker,
+#detail .lf-reader .story-kicker{margin:0 0 18px;color:var(--workbench-accent);font-size:14px;font-weight:750;letter-spacing:.17em;line-height:1.2;text-transform:uppercase}
+.workbench-page .lf-reader .story-title,
+#detail .lf-reader .story-title{max-width:16ch;margin:0;color:var(--workbench-accent);font-size:clamp(36px,3.2vw,44px);line-height:1.02}
+.workbench-page .lf-reader .story-summary,
+#detail .lf-reader .story-summary{max-width:31ch;margin:22px 0 0;color:var(--workbench-paper);font-size:clamp(20px,1.1rem + .35vw,24px);line-height:1.4}
+.workbench-page .lf-reader .story-art,
+#detail .lf-reader .story-art{display:block;justify-self:end;width:min(100%,420px);margin:0;padding:0;background:transparent;box-shadow:none}
+.workbench-page .lf-reader .story-art :is(figure,div),
+#detail .lf-reader .story-art :is(figure,div){width:100%;margin:0;background:transparent;border-radius:0;outline:0;box-shadow:none;overflow:visible}
+.workbench-page .lf-reader .story-art :first-child,
+#detail .lf-reader .story-art :first-child{width:100%;grid-column:auto;justify-self:auto}
+.workbench-page .lf-reader .story-art img,
+#detail .lf-reader .story-art img{width:100%;height:auto;max-height:330px;aspect-ratio:auto;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 18px rgb(0 0 0 / .34))}
+.workbench-page .lf-reader .story-art figcaption,
+#detail .lf-reader .story-art figcaption{padding:10px 0 0;color:var(--workbench-dim);font-size:13px;line-height:1.4}
+
+.workbench-page .lf-reader .story-section,
+#detail .lf-reader .story-section{grid-template-columns:minmax(180px,.39fr) minmax(0,.61fr);gap:clamp(34px,7vw,132px);padding:clamp(36px,5vw,80px) 0;border-top:1px solid var(--workbench-rule);background:transparent}
+.workbench-page .lf-reader .story-section:nth-of-type(odd),
+#detail .lf-reader .story-section:nth-of-type(odd){background:transparent}
+.workbench-page .lf-reader .story-section>h2,
+#detail .lf-reader .story-section>h2{top:24px;max-width:15ch;margin:0;color:var(--workbench-paper);font-size:clamp(24px,1.8vw,28px);line-height:1.12}
+.workbench-page .lf-reader .story-section>div,
+#detail .lf-reader .story-section>div{max-width:68ch}
+.workbench-page .lf-reader .story-section p,
+#detail .lf-reader .story-section p{margin:0 0 22px;color:var(--workbench-prose)}
+.workbench-page .lf-reader .story-section li,
+#detail .lf-reader .story-section li{color:var(--workbench-paper);border-color:var(--workbench-rule)}
+.workbench-page .lf-reader .story-section--plain,
+#detail .lf-reader .story-section--plain{display:block;padding-left:calc((100% - min(100%,68ch)) / 2);padding-right:calc((100% - min(100%,68ch)) / 2)}
+
+.workbench-page .lf-reader .story-faq,
+#detail .lf-reader .story-faq{margin:0;padding:clamp(38px,6vw,88px) 0;border-top:1px solid var(--workbench-rule);background:transparent}
+.workbench-page .lf-reader .story-faq>h2,
+#detail .lf-reader .story-faq>h2{margin:0 0 30px;color:var(--workbench-paper);font-size:clamp(30px,3.1vw,45px)}
+.workbench-page .lf-reader .story-faq details,
+#detail .lf-reader .story-faq details{max-width:860px;padding:18px 0;border-color:var(--workbench-rule)}
+.workbench-page .lf-reader .story-faq summary,
+#detail .lf-reader .story-faq summary{position:relative;color:var(--workbench-paper);font-family:LFReader,LFAtkinson,Arial,sans-serif;font-size:clamp(19px,1.7vw,24px);font-weight:600}
+.workbench-page .lf-reader .story-faq summary::after,
+#detail .lf-reader .story-faq summary::after{position:absolute;right:0;color:var(--workbench-accent);content:'+';font:400 34px/1 LFAtkinson,Arial,sans-serif}
+.workbench-page .lf-reader .story-faq details[open] summary::after,
+#detail .lf-reader .story-faq details[open] summary::after{content:'−'}
+.workbench-page .lf-reader .story-faq p,
+#detail .lf-reader .story-faq p{color:var(--workbench-prose)}
+
+.workbench-page .lf-reader :is(.proof-grid,.review-grid),
+#detail .lf-reader :is(.proof-grid,.review-grid){gap:clamp(14px,2vw,24px)}
+.workbench-page .lf-reader .proof-card,
+#detail .lf-reader .proof-card{border-radius:0;background:#111416;outline:1px solid rgb(246 243 236 / .16);box-shadow:0 16px 28px rgb(0 0 0 / .24)}
+.workbench-page .lf-reader .proof-card span,
+#detail .lf-reader .proof-card span{color:var(--workbench-paper)}
+.workbench-page .lf-reader a.rw-review-tile,
+#detail .lf-reader a.rw-review-tile{border-color:color-mix(in srgb,var(--workbench-accent) 45%,transparent);border-radius:0;background:transparent;box-shadow:none}
+.workbench-page .lf-reader a.rw-review-tile .review-stars,
+#detail .lf-reader a.rw-review-tile .review-stars{color:var(--workbench-accent)}
+.workbench-page .lf-reader a.rw-review-tile:hover,
+#detail .lf-reader a.rw-review-tile:hover{border-color:var(--workbench-accent);background:color-mix(in srgb,var(--workbench-accent) 8%,transparent)}
+
+.workbench-page .lf-reader .story-contact,
+#detail .lf-reader .story-contact{grid-template-columns:minmax(0,1fr) minmax(250px,.52fr);gap:clamp(28px,8vw,140px);padding:clamp(46px,7vw,110px) 0;border-top:1px solid var(--workbench-rule);background:transparent}
+.workbench-page .lf-reader .story-contact h2,
+#detail .lf-reader .story-contact h2{color:var(--workbench-paper);font-size:clamp(34px,4vw,58px)}
+.workbench-page .lf-reader .story-contact p,
+#detail .lf-reader .story-contact p{color:var(--workbench-prose)}
+.workbench-page .lf-reader .story-contact .contact-actions,
+#detail .lf-reader .story-contact .contact-actions{justify-content:flex-start}
+.workbench-page .lf-reader .story-contact .contact-actions a,
+#detail .lf-reader .story-contact .contact-actions a{background:var(--workbench-accent);color:#131416}
+
+#detail .reader-navigation{display:flex;flex:none;gap:8px;padding:10px clamp(22px,4vw,56px) 16px;border-top:1px solid var(--workbench-rule);background:var(--workbench-ink)}
+#detail .reader-navigation button{min-height:44px;border:0;border-radius:999px;background:transparent;color:var(--workbench-paper);font:700 14px/1 LFAtkinson,Arial,sans-serif}
+#detail .reader-navigation #reader-hub{background:color-mix(in srgb,var(--workbench-accent) 20%,transparent);color:var(--workbench-paper)}
+
+/* The selected system is one reader family, including the older dedicated
+   Website reference template. */
+.workbench-page .lf-reader[data-reader-template=website-service],
+#detail .detail-window.lf-reader[data-reader-template=website-service]{--rw-gutter:0;width:min(1380px,100%);border:0;border-radius:0;background:radial-gradient(ellipse 58% 34% at 8% 100%,color-mix(in srgb,var(--workbench-accent) 9%,transparent),transparent 74%),var(--workbench-ink);box-shadow:none}
+#detail .lf-reader[data-reader-template=website-service] .story-hero,
+.workbench-page .lf-reader[data-reader-template=website-service] .story-hero{display:grid;padding:clamp(34px,4vw,64px) 0 clamp(30px,4vw,58px);background:transparent}
+#detail .lf-reader[data-reader-template=website-service] .story-title,
+.workbench-page .lf-reader[data-reader-template=website-service] .story-title{font-family:LFReader,LFAtkinson,Arial,sans-serif;font-size:clamp(36px,3.2vw,44px);color:var(--workbench-accent)}
+#detail .lf-reader[data-reader-template=website-service] .story-summary,
+.workbench-page .lf-reader[data-reader-template=website-service] .story-summary{color:var(--workbench-paper)}
+#detail .lf-reader[data-reader-template=website-service] .story-kicker,
+.workbench-page .lf-reader[data-reader-template=website-service] .story-kicker{color:var(--workbench-accent)}
+#detail .lf-reader[data-reader-template=website-service] .rw-benefits,
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-benefits{margin-top:18px}
+#detail .lf-reader[data-reader-template=website-service] .rw-benefits a,
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-benefits a{color:var(--workbench-paper);font-size:clamp(17px,1.4vw,21px)}
+#detail .lf-reader[data-reader-template=website-service] .reference-benefit-icon,
+.workbench-page .lf-reader[data-reader-template=website-service] .reference-benefit-icon{background:var(--workbench-accent)}
+#detail .lf-reader[data-reader-template=website-service] .website-reference,
+.workbench-page .lf-reader[data-reader-template=website-service] .website-reference{padding:0;background:transparent}
+#detail .lf-reader[data-reader-template=website-service] .reference-story,
+.workbench-page .lf-reader[data-reader-template=website-service] .reference-story{grid-template-columns:minmax(0,.55fr) minmax(220px,.45fr);padding:clamp(30px,5vw,64px) 0;border-color:var(--workbench-rule)}
+#detail .lf-reader[data-reader-template=website-service] .reference-story h2,
+.workbench-page .lf-reader[data-reader-template=website-service] .reference-story h2{color:var(--workbench-paper)}
+
+@media (max-width:600px), (max-width:1100px) and (max-height:800px){
+  .workbench-page{padding-inline:clamp(18px,5vw,28px)}
+  .workbench-chrome{padding-top:14px}
+  .workbench-chrome-top{min-height:48px;padding-right:54px;flex-wrap:wrap;row-gap:0}
+  .workbench-brand{font-size:clamp(17px,5vw,21px)}
+  .workbench-brand img{width:40px;height:35px}
+  .workbench-contacts{display:flex;justify-content:flex-start;gap:18px;width:100%;margin:0;padding:5px 0 0}
+  .workbench-contacts a{min-height:44px;font-size:15px}
+  .workbench-tabs{display:none}
+  .workbench-backlinks{display:flex;min-height:44px;margin-top:12px;border-top:1px solid var(--workbench-rule)}
+  .workbench-backlink{display:none;align-items:center;min-height:44px;color:var(--workbench-accent);font-size:17px;text-decoration:none}
+  .workbench-page .workbench-backlink{display:inline-flex}
+  #detail[data-reader-family=web] .workbench-backlink[data-family=web],
+  #detail[data-reader-family=it] .workbench-backlink[data-family=it],
+  #detail[data-reader-family=consulting] .workbench-backlink[data-family=consulting],
+  #detail[data-reader-family=software] .workbench-backlink[data-family=software]{display:inline-flex}
+  #detail .workbench-chrome{padding-inline:clamp(18px,5vw,28px)}
+  #detail:has(.workbench-chrome) #close-detail.workbench-close{top:15px;right:clamp(18px,5vw,28px);width:44px;height:44px}
+  #detail .workbench-reader-back{right:70px;top:15px;padding-inline:8px;font-size:14px}
+  /* The Workbench already supplies the mobile gutter.  A direct Lab needs
+     its app surface, rather than a second card gutter, at compact widths. */
+  .workbench-page .lf-reader .reader-demo:not([data-demo='vera']),
+  #detail .lf-reader .reader-demo:not([data-demo='vera']){margin-inline:0;padding:4px}
+  .workbench-page .lf-reader .story-hero,
+  #detail .lf-reader .story-hero{grid-template-columns:1fr;gap:32px;min-height:0;padding:clamp(40px,10vw,58px) 0 34px}
+  .workbench-page .lf-reader .story-title,
+  #detail .lf-reader .story-title{font-size:clamp(36px,10vw,44px)}
+  .workbench-page .lf-reader .story-summary,
+  #detail .lf-reader .story-summary{max-width:30ch;font-size:clamp(20px,5.2vw,24px)}
+  .workbench-page .lf-reader .story-art,
+  #detail .lf-reader .story-art{justify-self:start;width:min(86%,360px)}
+  .workbench-page .lf-reader .story-art img,
+  #detail .lf-reader .story-art img{max-height:280px}
+  .workbench-page .lf-reader .story-section,
+  #detail .lf-reader .story-section{grid-template-columns:1fr;gap:20px;padding:36px 0}
+  .workbench-page .lf-reader .story-section>h2,
+  #detail .lf-reader .story-section>h2{position:static;font-size:clamp(24px,7vw,28px)}
+  .workbench-page .lf-reader .story-section--plain,
+  #detail .lf-reader .story-section--plain{padding-inline:0}
+  .workbench-page .lf-reader .story-contact,
+  #detail .lf-reader .story-contact{grid-template-columns:1fr;gap:26px;padding:48px 0}
+  .workbench-page .lf-reader .story-contact .contact-actions,
+  #detail .lf-reader .story-contact .contact-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .workbench-page .lf-reader .story-contact .contact-actions a,
+  #detail .lf-reader .story-contact .contact-actions a{justify-content:center;min-width:0}
+  .workbench-page .lf-reader :is(.proof-grid,.review-grid),
+  #detail .lf-reader :is(.proof-grid,.review-grid){grid-template-columns:1fr}
+  #detail .reader-navigation{padding-inline:clamp(18px,5vw,28px)}
+  #detail .reader-navigation button{flex:1;min-width:0}
+  #detail .lf-reader[data-reader-template=website-service] .story-hero,
+  .workbench-page .lf-reader[data-reader-template=website-service] .story-hero{display:grid;gap:24px;padding-top:clamp(32px,8vw,48px)}
+  #detail .lf-reader[data-reader-template=website-service] .reference-story,
+  .workbench-page .lf-reader[data-reader-template=website-service] .reference-story{grid-template-columns:1fr;gap:22px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .workbench-page *,#detail .detail-window *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+
+/* The workbench is a reading surface.  Orientation stays in a restrained
+   sidebar while the reader gets one generous, uninterrupted article column. */
+.workbench-page .lf-reader .workbench-reader-layout,
+#detail .lf-reader .workbench-reader-layout{display:grid;grid-template-columns:minmax(260px,.35fr) minmax(0,.65fr);column-gap:clamp(32px,5vw,76px);align-items:start;padding:clamp(34px,5vw,72px) 0 clamp(62px,8vw,128px)}
+.workbench-page .lf-reader .workbench-reader-layout.review-reader-layout,
+#detail .lf-reader .workbench-reader-layout.review-reader-layout{grid-template-columns:minmax(0,1fr)}
+.workbench-page .lf-reader .workbench-reader-sidebar,
+#detail .lf-reader .workbench-reader-sidebar{position:sticky;top:156px;min-width:0}
+#detail .lf-reader .workbench-reader-sidebar{top:28px}
+.workbench-page .lf-reader .workbench-reader-sidebar .story-hero,
+#detail .lf-reader .workbench-reader-sidebar .story-hero{display:block;min-height:0;padding:0;background:transparent}
+.workbench-page .lf-reader .workbench-reader-sidebar .story-summary,
+#detail .lf-reader .workbench-reader-sidebar .story-summary{margin-top:18px}
+.workbench-page .lf-reader .workbench-reader-sidebar .story-art,
+#detail .lf-reader .workbench-reader-sidebar .story-art{justify-self:start;width:min(100%,280px);margin-top:30px}
+.workbench-page .lf-reader .workbench-reader-sidebar .story-art img,
+#detail .lf-reader .workbench-reader-sidebar .story-art img{max-height:220px}
+.workbench-page .lf-reader .answer-guide-hero .reader-support-opening,
+#detail .lf-reader .answer-guide-hero .reader-support-opening{width:min(100%,280px);margin:24px 0 0}
+.workbench-page .lf-reader .answer-guide-hero .reader-support-opening img,
+#detail .lf-reader .answer-guide-hero .reader-support-opening img{max-height:220px}
+.workbench-page .lf-reader .workbench-reading-column,
+#detail .lf-reader .workbench-reading-column{min-width:0}
+.workbench-page .lf-reader .workbench-reading-column> :first-child,
+#detail .lf-reader .workbench-reading-column> :first-child{margin-top:0}
+
+/* A direct Lab lives below the sticky Workbench header. Its own compact exit
+   is fixed to the frame's top edge, so an anchor jump must leave that edge
+   below the header instead of pinning it behind the global controls. */
+.workbench-page main[data-page-content] :is(.reader-demo,.reader-demo-frame){scroll-margin-block-start:calc(180px + env(safe-area-inset-top))}
+
+/* Direct case anchors must land below the compact Workbench header on phones.
+   The dialog has its own scroll container, so this only affects the sticky
+   direct-route chrome that otherwise covers the case brief heading. */
+.workbench-page .lf-reader .case-workbench-layout #case-brief h2{scroll-margin-block-start:calc(180px + env(safe-area-inset-top))}
+
+/* Keep the service story editorial: one selected-work strip supports the
+   offer; the complete portfolio lives at its own destination. */
+.workbench-page .lf-reader[data-reader-template=website-service] .website-reference,
+#detail .lf-reader[data-reader-template=website-service] .website-reference{display:none}
+.workbench-page .lf-reader[data-reader-template=website-service] .website-service-body,
+#detail .lf-reader[data-reader-template=website-service] .website-service-body{background:transparent;color:var(--workbench-prose)}
+.workbench-page .lf-reader[data-reader-template=website-service] .website-service-body .rw-scene,
+#detail .lf-reader[data-reader-template=website-service] .website-service-body .rw-scene{padding:clamp(34px,5vw,68px) 0;background:transparent;border-top:1px solid var(--workbench-rule)}
+.workbench-page .lf-reader[data-reader-template=website-service] .website-service-body .rw-scene-heading,
+#detail .lf-reader[data-reader-template=website-service] .website-service-body .rw-scene-heading{color:var(--workbench-accent);font-size:clamp(28px,2.5vw,36px);line-height:1.1}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-custom-copy>p,
+#detail .lf-reader[data-reader-template=website-service] .rw-custom-copy>p{color:var(--workbench-prose)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-custom-copy :is(p,summary,a),
+#detail .lf-reader[data-reader-template=website-service] .rw-custom-copy :is(p,summary,a){color:var(--workbench-prose)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-custom-copy a,
+#detail .lf-reader[data-reader-template=website-service] .rw-custom-copy a{color:var(--workbench-accent)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-opening-essay-copy,
+#detail .lf-reader[data-reader-template=website-service] .rw-opening-essay-copy{max-width:58ch}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-opening-essay-copy p,
+#detail .lf-reader[data-reader-template=website-service] .rw-opening-essay-copy p{color:var(--workbench-prose)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work-intro,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work-intro{max-width:48ch;margin-bottom:28px}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work-intro>p:last-child,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work-intro>p:last-child{color:var(--workbench-prose)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2.4vw,28px)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work article,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work article{min-width:0}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work>a,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work article>a{display:block;overflow:hidden;background:#111416;outline:1px solid rgb(246 243 236 / .16)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work img,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work h3,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work h3{margin:16px 0 7px;color:var(--workbench-paper);font:600 clamp(19px,1.5vw,24px)/1.15 LFReader,LFAtkinson,Arial,sans-serif;letter-spacing:-.035em}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work h3 a,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work h3 a{color:var(--workbench-paper)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work h3 span,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work h3 span{color:var(--workbench-accent)}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work p,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work p{margin:0;color:var(--workbench-prose);font-size:17px}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work-all,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work-all{margin:28px 0 0}
+.workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work-all a,
+#detail .lf-reader[data-reader-template=website-service] .rw-selected-work-all a{color:var(--workbench-accent);font-weight:700}
+
+/* A case opens with the business problem in view.  The screen is one piece of
+   evidence beside the writing, never a landing-page takeover. */
+.workbench-page .lf-reader .case-workbench-layout,
+#detail .lf-reader .case-workbench-layout{display:grid;grid-template-columns:minmax(260px,.35fr) minmax(0,.65fr);column-gap:clamp(32px,5vw,76px);align-items:start;padding:clamp(34px,5vw,72px) 0 clamp(62px,8vw,128px)}
+.workbench-page .lf-reader .case-workbench-layout>.case-opening,
+#detail .lf-reader .case-workbench-layout>.case-opening{position:sticky;top:156px;grid-column:1;align-self:start;padding:0;background:transparent}
+#detail .lf-reader .case-workbench-layout>.case-opening{top:28px}
+.workbench-page .lf-reader .case-workbench-layout>.case-opening h1,
+#detail .lf-reader .case-workbench-layout>.case-opening h1{margin-bottom:22px;font-size:clamp(36px,3.2vw,44px)}
+.workbench-page .lf-reader .case-workbench-layout>.case-opening-bottom,
+#detail .lf-reader .case-workbench-layout>.case-opening-bottom{display:block}
+.workbench-page .lf-reader .case-workbench-layout>.case-opening .case-deck,
+#detail .lf-reader .case-workbench-layout>.case-opening .case-deck{font-size:clamp(18px,1rem + .25vw,20px)}
+.workbench-page .lf-reader .case-workbench-layout>.case-opening .case-facts,
+#detail .lf-reader .case-workbench-layout>.case-opening .case-facts{margin-top:26px}
+.workbench-page .lf-reader .case-workbench-layout>.case-reading-column,
+#detail .lf-reader .case-workbench-layout>.case-reading-column{grid-column:2;min-width:0}
+.workbench-page .lf-reader .case-workbench-layout .case-chapter,
+#detail .lf-reader .case-workbench-layout .case-chapter{grid-template-columns:1fr;gap:16px;padding:clamp(34px,5vw,64px) 0}
+.workbench-page .lf-reader .case-workbench-layout .case-chapter h2,
+#detail .lf-reader .case-workbench-layout .case-chapter h2{font-size:clamp(24px,2vw,30px)}
+.workbench-page .lf-reader .case-workbench-layout .case-stage,
+#detail .lf-reader .case-workbench-layout .case-stage{padding:clamp(20px,3vw,36px) 0 24px;background:transparent}
+.workbench-page .lf-reader .case-workbench-layout .case-stage-desktop img,
+#detail .lf-reader .case-workbench-layout .case-stage-desktop img{aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:0}
+.workbench-page .lf-reader .case-workbench-layout .case-mobile-story,
+#detail .lf-reader .case-workbench-layout .case-mobile-story{padding:clamp(34px,5vw,64px) 0;background:transparent;color:var(--workbench-paper)}
+.workbench-page .lf-reader .case-workbench-layout .case-mobile-story :is(h2,p,a),
+#detail .lf-reader .case-workbench-layout .case-mobile-story :is(h2,p,a){color:var(--workbench-paper)}
+.workbench-page .lf-reader .case-workbench-layout .case-mobile-story h2,
+#detail .lf-reader .case-workbench-layout .case-mobile-story h2{font-size:clamp(24px,2vw,30px)}
+.workbench-page .lf-reader .case-workbench-layout .case-mobile-story figcaption,
+#detail .lf-reader .case-workbench-layout .case-mobile-story figcaption{color:var(--workbench-dim)}
+.workbench-page .lf-reader .case-workbench-layout .case-next,
+#detail .lf-reader .case-workbench-layout .case-next{padding:clamp(34px,5vw,64px) 0}
+
+@media (max-width:980px){
+  .workbench-page .lf-reader .workbench-reader-layout,
+  #detail .lf-reader .workbench-reader-layout,
+  .workbench-page .lf-reader .case-workbench-layout,
+  #detail .lf-reader .case-workbench-layout{display:block}
+  .workbench-page .lf-reader .workbench-reader-sidebar,
+  #detail .lf-reader .workbench-reader-sidebar,
+  .workbench-page .lf-reader .case-workbench-layout>.case-opening,
+  #detail .lf-reader .case-workbench-layout>.case-opening{position:static}
+  .workbench-page .lf-reader .workbench-reading-column,
+  #detail .lf-reader .workbench-reading-column,
+  .workbench-page .lf-reader .case-reading-column,
+  #detail .lf-reader .case-reading-column{margin-top:34px}
+}
+
+@media (max-width:760px){
+  .workbench-page .lf-reader .workbench-reader-layout,
+  #detail .lf-reader .workbench-reader-layout,
+  .workbench-page .lf-reader .case-workbench-layout,
+  #detail .lf-reader .case-workbench-layout{display:block;padding:32px 0 58px}
+  .workbench-page .lf-reader .workbench-reader-sidebar,
+  #detail .lf-reader .workbench-reader-sidebar,
+  .workbench-page .lf-reader .case-workbench-layout>.case-opening,
+  #detail .lf-reader .case-workbench-layout>.case-opening{position:static}
+  .workbench-page .lf-reader .workbench-reader-sidebar .story-art,
+  #detail .lf-reader .workbench-reader-sidebar .story-art{display:block;width:min(48vw,200px);margin-top:20px}
+  .workbench-page .lf-reader .workbench-reading-column,
+  #detail .lf-reader .workbench-reading-column{margin-top:34px}
+  .workbench-page .lf-reader[data-reader-template=website-service] .rw-selected-work,
+  #detail .lf-reader[data-reader-template=website-service] .rw-selected-work{grid-template-columns:1fr}
+  .workbench-page .lf-reader .case-workbench-layout>.case-opening,
+  #detail .lf-reader .case-workbench-layout>.case-opening{padding-bottom:34px}
+  .workbench-page .lf-reader .case-workbench-layout .case-chapter,
+  #detail .lf-reader .case-workbench-layout .case-chapter{padding-block:36px}
+  .workbench-page .lf-reader .case-workbench-layout .case-stage,
+  #detail .lf-reader .case-workbench-layout .case-stage{padding:0 0 24px}
+}
+
+/* A short landscape reader needs its entire card to scroll.  A body-only
+   scroller leaves too little room to bring an embedded Lab's fixed exit below
+   the chrome.  Keep the two escape controls in the viewport while the reader
+   itself moves as one surface. */
+@media (max-height:420px){
+  #detail .detail-window.lf-reader{overflow-y:auto;overscroll-behavior:contain}
+  #detail .detail-body{flex:none;min-height:auto;overflow:visible}
+  #detail:has(.workbench-chrome) #close-detail.workbench-close{position:fixed}
+  #detail .workbench-reader-back{position:fixed}
+}

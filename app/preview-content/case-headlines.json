@@ -18,10 +18,10 @@
     "handoff": "Fans, press, guests.\nA path for each."
   },
   "after-hours-agenda": {
-    "question": "A drop should feel\nlike the brand.",
-    "approach": "Keep the attitude.\nConnect the details.",
-    "mobile": "Same attitude.\nSmaller screen.",
-    "handoff": "From a new drop\nto the doorstep."
+    "question": "The story stays\nin the foreground.",
+    "approach": "The lookbook.\nThen a clear next step.",
+    "mobile": "Still After Hours.\nNew orders paused.",
+    "handoff": "Read the story.\nStay close."
   },
   "clearhelp": {
     "question": "Start with the person\nlooking for help.",
@@ -54,15 +54,21 @@
     "handoff": "Games, food, directions.\nOne place to begin."
   },
   "the-tarot-hotline": {
-    "question": "The question comes\nbefore the format.",
-    "approach": "A voice note? A talk?\nMake the choice clear.",
-    "mobile": "A personal service.\nA personal first step.",
-    "handoff": "Understand the reading\nbefore choosing one."
+    "question": "A reading starts\nwith the question.",
+    "approach": "Make the format\nclear before booking.",
+    "mobile": "A real voice.\nA clear next step.",
+    "handoff": "Choose a format.\nThen book."
   },
   "venuecircuit": {
-    "question": "One night.\nToo many spreadsheets.",
-    "approach": "Bring the night together.\nKeep the money distinct.",
-    "mobile": "The numbers,\nclose at hand.",
-    "handoff": "A working closeout.\nMoney in view."
+    "question": "One shared show.\nEvery side in view.",
+    "approach": "Command, search,\nand close-out.",
+    "mobile": "A role-aware demo.\nOn any screen.",
+    "handoff": "Explore the demo.\nClose with clarity."
+  },
+  "legacy-music-group": {
+    "question": "The original site.\nRestored intact.",
+    "approach": "Dark motion.\nReadable paths.",
+    "mobile": "The same signal.\nAny screen.",
+    "handoff": "Artists, services,\nand booking."
   }
 }

@@ -61,7 +61,8 @@ body.reader-open{overflow:hidden}
 /* A persistent contact rail already supplies Call, Text and Email. Keep the
    inquiry intro focused on its form jump wherever that rail is present. */
 #detail[data-reader-rail=true] .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]),
-.page-shell>.direct-contact-rail~main .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]){display:none}
+.page-shell>.direct-contact-rail~main .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]),
+.workbench-page .lf-audit-intro__channels :is(a[href^="tel:"],a[href^="sms:"],a[href^="mailto:"]){display:none}
 
 /* Four short contact labels keep a balanced two-by-two phone layout. */
 @media (max-width:760px){

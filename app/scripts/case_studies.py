@@ -76,16 +76,17 @@ def render_case(case, page, cases, visuals, link, headlines=None):
     scope = ''.join(f'<span>{text(item)}</span>' for item in case.get('scope', []))
     location = case.get('location', '')
     location_html = f'<div><dt>Based in</dt><dd>{text(location)}</dd></div>' if location and location != 'Not published' else ''
-    result = f'''<div class="case-story" data-case="{text(case['slug'])}">
+    result = f'''<div class="case-story" data-case="{text(case['slug'])}"><div class="case-workbench-layout">
       <header class="case-opening"><a class="case-back" href="/examples/" data-reader-link>All work</a><p class="case-label">{text(case.get('publicType', 'Selected work'))}</p>
       <h1 id="detail-title" tabindex="-1">{text(case['name'])}</h1><div class="case-opening-bottom"><div><p class="case-deck">{text(case['summary'])}</p><nav class="case-actions" aria-label="Explore this project">{action}</nav></div>
-      <dl class="case-facts">{location_html}<div><dt>Our part</dt><dd class="case-scope">{scope}</dd></div></dl></div></header>'''
+      <dl class="case-facts">{location_html}<div><dt>Our part</dt><dd class="case-scope">{scope}</dd></div></dl></div></header><div class="case-reading-column">'''
+    stage = ''
     if desktop:
         mobile_html = f'<figure class="case-stage-phone">{asset_image(mobile)}<figcaption>Phone view</figcaption></figure>' if mobile else ''
         caption = visual.get('caption') or ('Published project artwork.' if not url else 'The actual website, designed and built by Little Fight NYC.')
-        result += f'<section class="case-stage{" case-stage--paired" if mobile else ""}" aria-label="Project screens"><figure class="case-stage-desktop">{asset_image(desktop, eager=True)}<figcaption>{text(caption)}</figcaption></figure>{mobile_html}</section>'
+        stage = f'<section class="case-stage{" case-stage--paired" if mobile else ""}" aria-label="Project screens"><figure class="case-stage-desktop">{asset_image(desktop, eager=True)}<figcaption>{text(caption)}</figcaption></figure>{mobile_html}</section>'
     result += f'''<section class="case-chapter" id="case-brief"><div class="case-chapter-heading"><h2>{headline('question','What needed to work better.')}</h2></div><div class="case-chapter-copy">{paragraphs(case.get('challenge', []))}</div></section>
-      <section class="case-chapter case-chapter--approach"><div class="case-chapter-heading"><h2>{headline('approach','Built around the real task.')}</h2></div><div class="case-chapter-copy">{paragraphs(case.get('narrative') or case.get('approach', []))}<ul class="case-decisions">{''.join(f'<li>{text(item)}</li>' for item in case.get('approach', []))}</ul></div></section>'''
+      {stage}<section class="case-chapter case-chapter--approach"><div class="case-chapter-heading"><h2>{headline('approach','Built around the real task.')}</h2></div><div class="case-chapter-copy">{paragraphs(case.get('narrative') or case.get('approach', []))}<ul class="case-decisions">{''.join(f'<li>{text(item)}</li>' for item in case.get('approach', []))}</ul></div></section>'''
     if mobile:
         result += f'''<section class="case-mobile-story"><div><h2>{headline('mobile','The details come with you.')}</h2><p>{text(case.get('delivered', [case['summary']])[0])}</p><a class="case-text-link" href="{text(url)}" target="_blank" rel="noopener noreferrer">Explore it yourself +</a></div><figure><a class="case-mobile-capture" href="{text(mobile['src'])}" target="_blank" rel="noopener noreferrer" aria-label="View the full phone capture of {text(case['name'])}">{asset_image(mobile)}</a><figcaption>Actual mobile view · {text(case['name'])}</figcaption></figure></section>'''
     result += f'''<section class="case-chapter case-chapter--result"><div class="case-chapter-heading"><h2>{headline('handoff','What’s there today.')}</h2></div><div class="case-chapter-copy">{paragraphs(case.get('outcome', []))}<ul class="case-delivered">{''.join(f'<li>{text(item)}</li>' for item in case.get('delivered', []))}</ul></div></section>'''
@@ -93,7 +94,7 @@ def render_case(case, page, cases, visuals, link, headlines=None):
     offset=(client_order.index(case['slug'])+1) if case['slug'] in client_order else 0
     ordered=client_order[offset:]+client_order[:offset]
     recommended=[slug for slug in ordered if slug!=case['slug'] and slug in cases][:2]
-    result += '<section class="case-next" aria-label="More client work"><div class="work-grid">' + ''.join(project_card(cases[slug], visuals) for slug in recommended) + '</div></section></div>'
+    result += '<section class="case-next" aria-label="More client work"><div class="work-grid">' + ''.join(project_card(cases[slug], visuals) for slug in recommended) + '</div></section></div></div></div>'
     return result
 
 

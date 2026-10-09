@@ -1,0 +1,56 @@
+{
+  "kind": "owner-supplied-master-artwork",
+  "authorization": "Owner instruction October 8, 2026: make this exact Master Design Mockup.png. The artwork is extracted from that supplied file without generation or substitution.",
+  "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Master Design Mockup.png",
+  "sourceSha256": "c64745aef55ea754f4b980701bafadd523b270c7307240e754ebdb0bb6253e38",
+  "method": "Native-resolution lossless illustration crops. Desktop copy and CTA regions are made transparent for semantic HTML. Visible illustration RGB is unchanged. This is the supplied design artwork, not a newly captured client website.",
+  "outputs": [
+    {
+      "name": "hero-reference-desktop",
+      "file": "app/public/assets/sculpture/hero-reference-desktop.webp",
+      "crop": [
+        31,
+        193,
+        793,
+        530
+      ],
+      "transparentUiRegions": [
+        [
+          0,
+          0,
+          521,
+          21
+        ],
+        [
+          258,
+          21,
+          362,
+          61
+        ],
+        [
+          369,
+          28,
+          477,
+          52
+        ]
+      ],
+      "width": 762,
+      "height": 337,
+      "sha256": "9c854bcce61bce5c317cb2a4b81cef8bd5e243d4176186062844acb68018dbc9"
+    },
+    {
+      "name": "hero-reference-mobile",
+      "file": "app/public/assets/sculpture/hero-reference-mobile.webp",
+      "crop": [
+        820,
+        296,
+        1108,
+        490
+      ],
+      "transparentUiRegions": [],
+      "width": 288,
+      "height": 194,
+      "sha256": "a907f133585c40b0fa0ed9385dcf850eb02d2c80262b9c75287ad95468c4f0db"
+    }
+  ]
+}

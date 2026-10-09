@@ -36,7 +36,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 402 + len(LAB_CATALOG) + 1
+EXPECTED_ROUTE_COUNT = 402 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -224,6 +224,11 @@ def source_pages() -> dict[str, dict]:
         pages[route] = {"path": route, "id": tile["id"], "category": tile["family"]}
     for route in ("/reviews/", "/websites-for-your-business/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
+    # These seven readers are derived directly from the verified review source,
+    # not from route-meta or unsourced authored copy.
+    for review in json.loads((CONTENT / "reviews.json").read_text())["reviews"]:
+        identity = review["id"]
+        pages[f"/reviews/{identity}/"] = {"path": f"/reviews/{identity}/", "id": identity}
     for lab in LAB_CATALOG:
         pages[lab['sharePath']] = {'path': lab['sharePath'], 'id': 'lab-' + lab['slug']}
     pages['/construction/'] = {'path': '/construction/', 'id': 'construction-showcase'}
@@ -631,21 +636,66 @@ def protected_reader_contract(dist: Path, tile: dict[str, str], failures: list[s
     return True
 
 
-def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> None:
-    """Prove each marketing tile has a full static reader, not a bare route.
+def review_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]) -> bool:
+    """Review fronts must flip locally; the only outbound link belongs inside."""
+    identity = tile.get("data-review-id") or tile.get("data-answer") or ""
+    source = {item["id"]: item for item in json.loads((CONTENT / "reviews.json").read_text())["reviews"]}.get(identity)
+    if source is None:
+        failures.append(f"review tile has an unknown verified identity: {identity or '?'}")
+        return False
+    expected_route = f"/reviews/{identity}/"
+    if tile.get("href") != expected_route:
+        failures.append(f"review {identity} must open its canonical local reader: {expected_route}")
+    if tile.get("target") or tile.get("rel"):
+        failures.append(f"review {identity} front must not bypass its physical reader")
+    if tile.get("data-review-source-url") != source["sourceUrl"]:
+        failures.append(f"review {identity} front lost its verified Google source attribution")
+    target = output_file(dist, expected_route)
+    if not target.is_file():
+        failures.append(f"review {identity} reader document is missing: {expected_route}")
+        return False
+    document = target.read_text(errors="replace")
+    required = (f'data-review-id="{identity}"', 'class="review-reader"', 'class="review-reader-stars"', source["displayName"])
+    missing = [item for item in required if item not in document]
+    quote = source.get("excerpt")
+    if quote and f"“{quote}”" not in document:
+        missing.append("exact sourced excerpt")
+    if not quote and '<blockquote>' in document:
+        missing.append("quote-free rating-only review")
+    google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', document, re.I)
+    if len(google_links) != 1:
+        missing.append("exactly one direct Google source link")
+    elif not re.search(r'\btarget=["\']_blank["\']', google_links[0], re.I) or not re.search(r'\brel=["\'][^"\']*\bnoopener\b', google_links[0], re.I):
+        missing.append("isolated external Google source action")
+    if '<script type="application/ld+json">' in document:
+        for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', document, re.I | re.S):
+            if re.search(r'"@type"\s*:\s*"(?:Review|AggregateRating)"', block):
+                missing.append("Review or AggregateRating structured data")
+                break
+    if 'story-contact' in document or 'story-section' in document:
+        missing.append("generic long-story/contact treatment")
+    family = {'google-review-1':'web','google-review-4':'web','google-review-3':'it','google-review-2':'it','google-review-5':'consulting','google-review-7':'consulting','google-review-6':'software'}[identity]
+    if f'data-reader-family="{family}"' not in document:
+        missing.append(f"retained {family} reader family")
+    if missing:
+        failures.append(f"review {identity} reader contract missing {', '.join(missing)}")
+        return False
+    return True
 
-    External Google-review cards are attribution links. Protected Labs and VERA
-    retain their working applications, while their generated companions must
-    still carry context, a visual, an explanation, and a route back into that
-    working experience.
-    """
+
+def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> None:
+    """Prove each marketing tile has a static reader; reviews use concise sourced readers."""
     checked = 0
-    exempt_external = 0
+    review_checked = 0
     exempt_apps = 0
     for tile in home.tile_records:
         href = tile.get("href", "")
+        if tile.get("data-review-tile") == "true":
+            review_checked += 1
+            review_reader_contract(dist, tile, failures)
+            continue
         if href.startswith(("https://", "http://")):
-            exempt_external += 1
+            failures.append(f"tile {tile.get('data-answer') or href} must not use an unexplained external reader destination")
             continue
         if tile.get("data-reader-src"):
             exempt_apps += 1
@@ -668,12 +718,9 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         checked += 1
         identity = tile.get("data-answer") or route
         if "construction-showcase" in anatomy.classes:
-            required = {'construction-opening', 'construction-lead', 'construction-proof',
-                        'construction-study-grid', 'construction-next', 'story-contact', 'lab-share'}
+            required = {'construction-opening', 'construction-lead', 'construction-proof', 'construction-study-grid', 'construction-next', 'story-contact', 'lab-share'}
             missing = sorted(required - anatomy.classes)
-            if (missing or not anatomy.direct_contact or anatomy.tag_counts.get('h1', 0) != 1
-                    or anatomy.tag_counts.get('img', 0) < 5
-                    or '/case-studies/chromatic-painting-design/' not in anatomy.working_actions):
+            if (missing or not anatomy.direct_contact or anatomy.tag_counts.get('h1', 0) != 1 or anatomy.tag_counts.get('img', 0) < 5 or '/case-studies/chromatic-painting-design/' not in anatomy.working_actions):
                 failures.append(f"construction showcase is missing contact, context, real proof, or working studies: {missing}")
             continue
         if "review-collection" in anatomy.classes:
@@ -683,29 +730,21 @@ def tile_reader_contract(dist: Path, home: References, failures: list[str]) -> N
         if "case-opening" in anatomy.classes:
             required_classes = {"case-opening", "case-chapter", "story-contact"}
             missing = sorted(required_classes - anatomy.classes)
-            if not anatomy.direct_contact:
-                missing.append("direct contact rail")
+            if not anatomy.direct_contact: missing.append("direct contact rail")
             if missing or anatomy.tag_counts.get("h1", 0) < 1 or anatomy.tag_counts.get("img", 0) < 1:
                 failures.append(f"tile {identity} case reader is missing context, explanation, image, or contact: {', '.join(missing) or 'h1/image'}")
             continue
         required_classes = {"story-hero", "story-title", "story-summary", "story-art", "story-contact"}
         missing = sorted(required_classes - anatomy.classes)
-        if not anatomy.direct_contact:
-            missing.append("direct contact rail")
-        if anatomy.hero_visuals < 1:
-            missing.append("contextual visual/icon")
-        # A sourced review collection is a complete explanatory body in its
-        # own right: it holds the rating context, excerpts, attribution, and
-        # direct source links instead of a generic prose section.
+        if not anatomy.direct_contact: missing.append("direct contact rail")
+        if anatomy.hero_visuals < 1: missing.append("contextual visual/icon")
         if not ({"story-section", "group-story", "story-reviews", "anchor-story-body"} & anatomy.classes):
             missing.append("story-section, combined group story, or sourced story-reviews")
         if missing or anatomy.tag_counts.get("h1", 0) < 1:
             failures.append(f"tile {identity} reader is missing full context, explanation, image/icon, or next step: {', '.join(missing) or 'h1/image'}")
-    if exempt_external != EXPECTED_REVIEW_TILE_COUNT:
-        failures.append(f"homepage has {exempt_external} external attribution tiles, expected {EXPECTED_REVIEW_TILE_COUNT} Google reviews")
-    # The hub intentionally shows only the consolidated set. Every retained
-    # route is checked separately from the complete static route inventory.
-    if checked + exempt_external + exempt_apps < 1:
+    if review_checked != EXPECTED_REVIEW_TILE_COUNT:
+        failures.append(f"homepage has {review_checked} local review-reader tiles, expected {EXPECTED_REVIEW_TILE_COUNT}")
+    if checked + review_checked + exempt_apps < 1:
         failures.append("tile reader audit did not find any homepage tiles")
         failures.append("tile reader audit did not account for every homepage tile")
 

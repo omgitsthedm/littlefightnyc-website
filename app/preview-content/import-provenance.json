@@ -22,11 +22,13 @@
     "lab-tiles.css",
     "consolidated.css",
     "review-tiles.css",
+    "review-readers.css",
     "anchor-stories.css",
     "answer-hub.css",
     "construction.css",
     "sculpture.css",
-    "master-reader.css"
+    "master-reader.css",
+    "workbench.css"
   ],
   "presentationScope": [
     "Homepage hero",

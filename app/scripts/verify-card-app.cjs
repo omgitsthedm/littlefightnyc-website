@@ -17,6 +17,9 @@ const { chromium } = require('@playwright/test');
 const app = path.resolve(__dirname, '..');
 const base = (process.env.CARD_APP_URL || process.env.PREVIEW_URL || 'http://127.0.0.1:4396').replace(/\/$/, '');
 const labs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
+const curation = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'homepage-curation.json'), 'utf8'));
+const hiddenLabSlugs = new Set(curation.hiddenTiles.filter(tile => tile.id.startsWith('lab-')).map(tile => tile.id.slice(4)));
+const visibleLabs = labs.filter(lab => !hiddenLabSlugs.has(lab.slug));
 const evidence = path.resolve(app, '..', '.lifi', 'evidence', 'card-app');
 const report = {
   kind: 'card-app-browser-verification', base, startedAt: new Date().toISOString(),
@@ -79,12 +82,19 @@ async function frameFor(page, demo) {
   throw new Error(`${demo}: iframe never received a browsing context`);
 }
 
-async function openCard(page, route, demo) {
-  await page.goto(base + '/', { waitUntil: 'networkidle', timeout: 45_000 });
+function labEntry(lab) {
+  const route = lab.sharePath || `/labs/${lab.slug}/`;
+  return hiddenLabSlugs.has(lab.slug)
+    ? { path: '/examples/', selector: `a.work-lab[href="${route}"]` }
+    : { path: '/', selector: `a.tile[href="${route}"]` };
+}
+
+async function openCard(page, route, demo, entry = { path: '/', selector: `a.tile[href="${route}"]` }) {
+  await page.goto(base + entry.path, { waitUntil: 'networkidle', timeout: 45_000 });
   await page.evaluate(() => { window.__cardAppParentMarker = `reader-${Date.now()}`; });
-  const tile = page.locator(`a.tile[href="${route}"]`).first();
-  await tile.scrollIntoViewIfNeeded();
-  await tile.click();
+  const opener = page.locator(entry.selector).first();
+  await opener.scrollIntoViewIfNeeded();
+  await opener.click();
   await page.locator('#detail[open]').waitFor({ state: 'visible', timeout: 15_000 });
   await page.waitForFunction(expected => document.querySelector('#detail-body')?.dataset.readerPath === expected, route);
   assert.equal(new URL(page.url()).pathname, route, `${demo}: reader updates history without leaving the parent document`);
@@ -131,7 +141,11 @@ async function assertReaderNavigation(page, route) {
   await page.waitForFunction(previous => document.querySelector('#detail-body')?.dataset.readerPath !== previous, before);
   const next = await page.locator('#detail-body').getAttribute('data-reader-path');
   assert.ok(next && next !== before, 'Next must open a different card without leaving the reader');
-  await page.locator('#detail[open] #reader-back').click();
+  const back = page.locator('#detail[open] #reader-back');
+  await back.waitFor({ state: 'visible' });
+  const backBox = await back.boundingBox();
+  assert.ok(backBox && backBox.height >= 44, 'reader-back: visible 44px navigation target after Next');
+  await back.click();
   await page.waitForFunction(expected => document.querySelector('#detail-body')?.dataset.readerPath === expected, before);
   await page.locator('#detail[open] #reader-hub').click();
   await page.waitForFunction(() => !document.querySelector('#detail')?.open);
@@ -245,7 +259,8 @@ async function run() {
       await check('all Labs open inside reader cards and keep the parent document alive', async () => {
         for (const lab of labs) {
           const route = lab.sharePath || `/labs/${lab.slug}/`;
-          const { frame, frameElement } = await openCard(page, route, lab.slug);
+          const entry = labEntry(lab);
+          const { frame, frameElement } = await openCard(page, route, lab.slug, entry);
           const src = await frameElement.getAttribute('src');
           assert.equal(new URL(src || '', base).pathname, lab.embedPath || `/examples/lab/concepts/${lab.slug}/`, `${lab.slug}: iframe uses its canonical same-origin embed route`);
           const share = page.locator('#detail[open] .lab-share').last();
@@ -253,10 +268,10 @@ async function run() {
             `${lab.slug}: reader offers the canonical copyable Lab link`);
           assert.equal(await share.locator('a').getAttribute('href'), route, `${lab.slug}: reader keeps a normal share link`);
           const interaction = await runRepresentativeInteraction(frame, lab.slug);
-          report.labs.push({ slug: lab.slug, route, src, interaction });
+          report.labs.push({ slug: lab.slug, route, entry: entry.path, src, interaction });
           await closeCard(page);
         }
-        return `${labs.length} same-origin Lab iframes loaded, with video, interaction, and WebGL coverage`;
+        return `${visibleLabs.length} homepage and ${hiddenLabSlugs.size} Work-index Labs loaded with video, interaction, and WebGL coverage`;
       });
 
       await check('reader navigation persists and returns Previous, All tiles, and Next behavior', async () => {
@@ -381,7 +396,8 @@ async function run() {
         try {
           for (const lab of labs) {
             const route = lab.sharePath || `/labs/${lab.slug}/`;
-            const { frame, frameElement } = await openCard(page, route, lab.slug);
+            const entry = labEntry(lab);
+            const { frame, frameElement } = await openCard(page, route, lab.slug, entry);
             await frameElement.scrollIntoViewIfNeeded();
             const box = await frameElement.boundingBox();
             assert.ok(box.width <= viewport.width && box.height <= (viewport.height < 500 ? 340 : 440), `${lab.slug}: working surface fits the compact phone card`);
@@ -403,9 +419,17 @@ async function run() {
             }
             await exit.tap();
             await page.waitForFunction(() => !document.querySelector('#detail')?.open && !document.querySelector('#detail-body iframe.reader-demo-frame'));
-            assert.equal(new URL(page.url()).pathname, '/', `${lab.slug}: in-app exit returns to hub`);
-            assert.equal(await page.locator(`a.tile[href="${route}"]`).evaluate(node => node === document.activeElement), true, `${lab.slug}: exit restores tile focus`);
-            report.mobileLabs.push({ slug:lab.slug, viewport, box, target, interaction });
+            // The embedded Lab posts its exit message first; the outer reader
+            // finishes its close transition and then commits the hub history
+            // state. Do not inspect the transient reader URL as the outcome.
+            await page.waitForURL(base + '/', { timeout: 8_000 });
+            assert.equal(new URL(page.url()).pathname, '/', `${lab.slug}: in-app exit returns to the homepage hub`);
+            if (hiddenLabSlugs.has(lab.slug)) {
+              assert.equal(await page.locator('#detail[open]').count(), 0, `${lab.slug}: Work-index entry closes its reader before returning home`);
+            } else {
+              assert.equal(await page.locator(entry.selector).evaluate(node => node === document.activeElement), true, `${lab.slug}: exit restores homepage tile focus`);
+            }
+            report.mobileLabs.push({ slug:lab.slug, entry:entry.path, viewport, box, target, interaction });
           }
         } finally { await context.close(); }
         return `${labs.length} compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus`;

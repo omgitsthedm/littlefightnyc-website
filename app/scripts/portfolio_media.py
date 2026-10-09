@@ -29,9 +29,17 @@ def apply_portfolio_media(cases, visuals, labs):
 
 def rewrite_portfolio_media(markup):
     """Catch authored secondary proofs and image links without altering copy."""
+    reader = 'data-page-content' in markup
     def mapped(value):
         parts = urlsplit(value)
-        return REPLACEMENTS.get(parts.path, value)
+        target = REPLACEMENTS.get(parts.path, value)
+        # Physical devices belong to the tile fronts. Inside the Workbench,
+        # actual screenshots are evidence: one crisp, square-on reading plane.
+        if reader:
+            match = re.fullmatch(r'/assets/sculpture/browser-(.+?)(?:-(?:480|800))?\.webp', urlsplit(target).path)
+            if match and match[1] in MEDIA:
+                return MEDIA[match[1]]['desktop']['src']
+        return target
     def img(match):
         tag = match[0]
         source = re.search(r'\bsrc="([^"]+)"', tag)

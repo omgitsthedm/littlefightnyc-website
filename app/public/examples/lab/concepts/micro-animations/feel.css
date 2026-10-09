@@ -897,6 +897,7 @@ html.lab-concept-embed .row {
   grid-template-columns: 36px minmax(0, 1fr) 44px 58px;
   align-items: center;
   gap: 4px;
+  flex: 0 0 auto;
   min-height: 56px;
   padding: 6px;
 }

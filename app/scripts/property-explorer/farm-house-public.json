@@ -2270,11 +2270,19 @@
   ],
   "publicBoundary": "Exterior model and rendered landscape only. No address, records, guide, research, source ledger, maps, construction documents, or source drawing files are included.",
   "sourceViewerSha256": "0da0ca8d126e78ff62593d9a8343a916a65a8da5df0836e98b77f5ecf8d86ec0",
-  "sourceHtmlSha256": "34f7f0910a2f04783f0cea124f3cd4b0883afb35d9805152262c0a9cf64ce951",
+  "sourceHtmlSha256": "050aaccd39b88a248218143c46b5d220fb5746481c4392d8c5f3aae76f201cf8",
+  "publicFixture": {
+    "version": "farm-house-public-v1",
+    "root": ".lifi/design-source/farm-house-public-v1",
+    "htmlSha256": "050aaccd39b88a248218143c46b5d220fb5746481c4392d8c5f3aae76f201cf8",
+    "viewerSha256": "ce7fce1ea5cc4414043cec0e672dd0fec8c2be6fd986d8c71b45315a735125c0",
+    "modelSha256": "8fabd0a509b643b172c2de14459262bd9d5dcf44c8fe4715e7d36f12a43c58ce"
+  },
   "artifactHashes": {
-    "index.html": "cbedd889e6b7c00db8698cae50e93943cfb878a20643054296295cbcc6b614b3",
+    "index.html": "050aaccd39b88a248218143c46b5d220fb5746481c4392d8c5f3aae76f201cf8",
     "farm-house-viewer.js": "ce7fce1ea5cc4414043cec0e672dd0fec8c2be6fd986d8c71b45315a735125c0",
     "farm-house-adapter.js": "a53666047efd9820255ca153333095921d7cea2532ff6130de3436c4492be4d9",
+    "farm-house-loader.js": "350aa3657f0cab9fb22c99b8bf49c17d2d48ec3afe0136bbf60177ef13b30a1b",
     "CREDITS.txt": "700732023750870228170df7db4710c9566efb394589a2ed4f77fcda6b6da788",
     "inside/index.html": "3ebc2f4be75b2b4ab9683674d3b79a69eb4d5944f0b741ceb21c4fd0de4c812a",
     "inside/farm-house-inside.css": "80bd33930ec21753e5ec723aefd2e2aad09d56bf574b19c35ac1e7edb925e797",
