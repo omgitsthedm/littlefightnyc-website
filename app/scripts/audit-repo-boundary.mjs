@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { existsSync, readdirSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -15,7 +16,17 @@ const tracked = execFileSync("git", ["ls-files"], {
   .filter(Boolean)
   .filter((file) => existsSync(join(repoRoot, file)));
 
-const legacyHtml = tracked.filter((file) => file.endsWith(".html") && !file.startsWith("app/"));
+// The public Farm House presentation has one reviewed, reproducible HTML
+// fixture outside the published tree. Keep this allowance exact and verify
+// its manifest fingerprint; no other HTML tree is permitted here.
+const farmFixtureHtml = ".lifi/design-source/farm-house-public-v1/index.html";
+const farmFixture = JSON.parse(readFileSync(join(appRoot, "scripts/property-explorer/farm-house-public.json"), "utf8")).publicFixture;
+assert.equal(farmFixture?.root, ".lifi/design-source/farm-house-public-v1");
+assert.equal(farmFixture?.version, "farm-house-public-v1");
+assert.equal(tracked.includes(farmFixtureHtml), true, "The reviewed public Farm House fixture must be committed");
+assert.equal(createHash("sha256").update(readFileSync(join(repoRoot, farmFixtureHtml))).digest("hex"),
+  farmFixture.htmlSha256, "The reviewed public Farm House fixture changed without its provenance");
+const legacyHtml = tracked.filter((file) => file.endsWith(".html") && !file.startsWith("app/") && file !== farmFixtureHtml);
 const legacyGenerators = tracked.filter((file) => file.startsWith("scripts/"));
 const legacyRuntime = tracked.filter((file) =>
   ["css/", "js/", "vendor/"].some((prefix) => file.startsWith(prefix)) ||
@@ -142,5 +153,5 @@ for (const stray of ["_qa/probe.png", "probe-at-root.png"]) {
 }
 
 console.log(
-  "repo boundary ratchet OK — app/ is the only website tree; only the requested private copywriting context is allowed.",
+  "repo boundary ratchet OK — app/ is the only published website tree; the exact reviewed Farm House fixture and requested authoring context remain outside it.",
 );
