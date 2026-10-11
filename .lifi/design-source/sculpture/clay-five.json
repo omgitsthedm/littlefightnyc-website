@@ -1,0 +1,117 @@
+{
+  "source": "Reviewed first-five clay study, October 11 2026",
+  "artDirection": "Hand-sculpted clay; visible fingerprints, uneven joins and cuts; fixed workshop lighting and camera.",
+  "mode": "Built-in imagegen, with supplied Clay Animation Template reference sheets.",
+  "motion": {
+    "fps": 12,
+    "poses": 14,
+    "loop": false
+  },
+  "assets": [
+    {
+      "file": "clay-browser-v1-480.webp",
+      "width": 480,
+      "bytes": 13570,
+      "sha256": "95d4fd893dd1ea7d77ba20bab3bcd419e7b69b9875b477def130bc356306d370",
+      "sourceSha256": "6e08f239d5f96713fe0dbc9744baa73fd244faea9e8d73b8ff3e409ea25881bb"
+    },
+    {
+      "file": "clay-browser-v1.webp",
+      "width": 960,
+      "bytes": 43700,
+      "sha256": "0dbbe4b32ea395a4f5904a34b63b7a4214497c8503335f4921dcc012cfe74952",
+      "sourceSha256": "6e08f239d5f96713fe0dbc9744baa73fd244faea9e8d73b8ff3e409ea25881bb"
+    },
+    {
+      "file": "clay-browser-v1-clean.webp",
+      "width": 960,
+      "bytes": 44854,
+      "sha256": "a97854f1bf7a9567a116af90a7bf8c6465a5b82bb4bc7fd5f289376c19f3299b",
+      "sourceSha256": "3f8f9866e24ac5571dd92d14357e66bd116688140c2adfafb01501dc2a092e3d"
+    },
+    {
+      "file": "clay-storefront-v1-480.webp",
+      "width": 480,
+      "bytes": 21692,
+      "sha256": "262dd76c7d6d3e5c5083daa09097efca658851785f497e119d9e0251ca7551e1",
+      "sourceSha256": "2894632b7dc1552a459b9e435ae7fa7ce8fbf5a196328673aca0ce827db0d477"
+    },
+    {
+      "file": "clay-storefront-v1.webp",
+      "width": 960,
+      "bytes": 65198,
+      "sha256": "7e8907099720b7e9aefd2b2d7b74851b0fdfadc38111938bde439887d275dc88",
+      "sourceSha256": "2894632b7dc1552a459b9e435ae7fa7ce8fbf5a196328673aca0ce827db0d477"
+    },
+    {
+      "file": "clay-storefront-v1-clean.webp",
+      "width": 960,
+      "bytes": 63144,
+      "sha256": "c82eb21d7fcd01e0afb9a378ee0352a933089293a28f83a14ff3a6b1cf6b176e",
+      "sourceSha256": "06ea41abfa867336cbdfeb01b26692a1326e8543e825de38b229206455a7f1cb"
+    },
+    {
+      "file": "clay-router-v1-480.webp",
+      "width": 480,
+      "bytes": 17482,
+      "sha256": "da7a4b03d3e903ea1706d68b6c5873b03474575e76fe147df1f39312cae2ce16",
+      "sourceSha256": "1be0e5b601987547056a6e5d2f366fa85f1ec3d0c3309a741bfd58569cf71c85"
+    },
+    {
+      "file": "clay-router-v1.webp",
+      "width": 960,
+      "bytes": 51046,
+      "sha256": "28a106b0bac7593c2e8e7da6c68d5a12d6f01a2bd8aaee3ae5c16acabe31b070",
+      "sourceSha256": "1be0e5b601987547056a6e5d2f366fa85f1ec3d0c3309a741bfd58569cf71c85"
+    },
+    {
+      "file": "clay-router-v1-clean.webp",
+      "width": 960,
+      "bytes": 49076,
+      "sha256": "da5d7bbd3ed848669b56973888d90d6119ca2e44be3569c2735484dc06f7fa80",
+      "sourceSha256": "54ea7f7489811d8c4ebce7de48218fc45f281be530710baba210287633625546"
+    },
+    {
+      "file": "clay-notebook-v1-480.webp",
+      "width": 480,
+      "bytes": 15504,
+      "sha256": "c459b1bdc2f8b23dad763a746ec9ab2780e512503229958fc2cdf1835ca9a318",
+      "sourceSha256": "cce3ad952c5787bb4c1c86ae81d7f674db741fedb1b38e4dcdc78749bbe1eaea"
+    },
+    {
+      "file": "clay-notebook-v1.webp",
+      "width": 960,
+      "bytes": 47086,
+      "sha256": "29aeb806afffab65ebdbdd2dc9d75d62c0fa2fbf60b1c8a24aeb9661f8ee8461",
+      "sourceSha256": "cce3ad952c5787bb4c1c86ae81d7f674db741fedb1b38e4dcdc78749bbe1eaea"
+    },
+    {
+      "file": "clay-notebook-v1-clean.webp",
+      "width": 960,
+      "bytes": 40514,
+      "sha256": "722fca50a2ff4492551c6922ec4b8c277cf80af96b0c27c4fb74ce18f4b42b9c",
+      "sourceSha256": "3ff3c358033ebe5f803d3a440e07c7aaf40d71ac7869199b9ea2d77006f8c893"
+    },
+    {
+      "file": "clay-software-v1-480.webp",
+      "width": 480,
+      "bytes": 16200,
+      "sha256": "779304a4ecbe43905f9bd6a6821c04a300440e14041c60d371d2191bcc8e6f40",
+      "sourceSha256": "16b39a1ca76e0ae3b2419732a6918777d013a6fb9680c6bcd48a477210240551"
+    },
+    {
+      "file": "clay-software-v1.webp",
+      "width": 960,
+      "bytes": 53784,
+      "sha256": "28ce2d521ac927370046fed4770714fcf59ac26bfb69f5d61e43076aa0bd911b",
+      "sourceSha256": "16b39a1ca76e0ae3b2419732a6918777d013a6fb9680c6bcd48a477210240551"
+    },
+    {
+      "file": "clay-software-v1-clean.webp",
+      "width": 960,
+      "bytes": 48388,
+      "sha256": "c9864e2707b417eb82ece281b86e6d12efb2ad16dcf66b909d57bf5ca494c228",
+      "sourceSha256": "2443d9ddbc28f3d05448fb21a6a466e2f819a2f4f1191a345756e4a4b7a9c757"
+    }
+  ]
+}

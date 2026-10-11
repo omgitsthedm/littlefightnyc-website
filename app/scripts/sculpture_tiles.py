@@ -10,6 +10,7 @@ import re
 import json
 from pathlib import Path
 from functools import lru_cache
+from clay_icons import clay_scene
 
 E = lambda value: escape(str(value or ''), quote=True)
 ASSET = '/assets/sculpture/'
@@ -20,10 +21,10 @@ HOMEPAGE_CURATION=json.loads(CURATION_PATH.read_text())
 EXPECTED_VISIBLE_COUNT=HOMEPAGE_CURATION['expectedVisibleCount']
 TILES = re.compile(r'<a\b[^>]*class="[^"]*\btile\b[^>]*>.*?</a>', re.S)
 SERVICES = {
-    'web': ('Websites', 'Help customers choose you.', 'browser-chromatic-painting-design', 'browser-duotone'),
-    'it': ('Tech support', 'Get back to work.', 'router', 'laptop-duotone'),
-    'consulting': ('Consulting', 'Make the next move clear.', 'notebook', 'chats-circle-duotone'),
-    'software': ('Custom software', 'Turn repeat work into a tool.', 'software', 'cube-duotone'),
+    'web': ('Websites', 'Help customers choose you.', 'clay-browser-v1', 'browser-duotone'),
+    'it': ('Tech support', 'Get back to work.', 'clay-router-v1', 'laptop-duotone'),
+    'consulting': ('Consulting', 'Make the next move clear.', 'clay-notebook-v1', 'chats-circle-duotone'),
+    'software': ('Custom software', 'Turn repeat work into a tool.', 'clay-software-v1', 'cube-duotone'),
 }
 # Deliberate, topic-specific symbols. A missing topic is a build error rather
 # than a generic icon silently standing in for an unfinished tile.
@@ -62,7 +63,7 @@ TOPIC_ART = {
     'construction-showcase':'construction-plans',
     'software-connect-existing-tools':'connected-cables',
     'printer':'printer', 'it-security-basics':'security',
-    'page-industries':'storefront',
+    'page-industries':'clay-storefront-v1',
     'page-areas':'yellow-taxi-v1', 'maps':'map-red-pin',
     'page-vera':'vera-brownstone',
     'consulting-second-opinion':'rubber-duck',
@@ -166,6 +167,8 @@ def image_dimensions(name):
     raise ValueError(f'WebP canvas dimensions unavailable: {artwork}')
 
 def image(name, cls='', eager=False, alt=''):
+    if name.startswith('clay-'):
+        return clay_scene(name, eager=eager)
     variants=DELIVERY.get(name,[])
     sizes='(max-width: 600px) 48vw, 380px'
     if name.startswith('website-'):

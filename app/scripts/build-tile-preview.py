@@ -20,6 +20,7 @@ from topic_mosaic import build_topic_mosaic, plus_navigation, REVIEW_PLACEMENT
 from editorial_tiles import enrich_editorial_tiles
 from reader_visuals import reader_visual, reader_family
 from sculpture_tiles import sculptural_mosaic, sculptural_hero
+from clay_icons import ROUTES as CLAY_ROUTES, clay_figure
 from portfolio_media import apply_portfolio_media, rewrite_portfolio_media
 from consolidated_tiles import load_groups, home_contexts, source_routes, apply_readers, apply_homepage_groups, render_group_sections, group_hero
 from retained_answers import render_retained_answers
@@ -400,6 +401,7 @@ def article(p):
     # otherwise replace those approved physical cues with a generic story art.
     if p.get('_homeGroup') and path not in {'/answers/help/printer/', '/answers/help/wifi/'}:
         art=group_hero(p['_homeGroup']) or art
+    if path == '/industries/': art = clay_figure(CLAY_ROUTES[path])
     answer_first = path.startswith('/answers/')
     demo = embedded_demo(path, q)
     primary_action='<a href="#contact">Tell us what you need +</a>'
@@ -432,6 +434,8 @@ def article(p):
         anchor = anchor_bodies[family]
         benefits = ''.join(f'<li><a href="{E(item["href"])}">{E(item["label"])}</a></li>' for item in anchor['benefits'])
         hero = f'<header class="story-hero rw-scene anchor-service-hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker"><img src="{anchor_icons[family]}" width="32" height="32" alt="">{anchor_labels[family]}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1></div><div class="rw-hero-promise"><p class="story-summary">{E(q["summary"])}</p><ul class="rw-benefits" aria-label="In this story">{benefits}</ul></div></header>'
+    if path in CLAY_ROUTES and path != '/industries/':
+        hero = hero.replace('</header>', clay_figure(CLAY_ROUTES[path]) + '</header>')
     immersive = path == '/vera/'
     if immersive:
         # VERA opens as the working workspace. The complete agency context is
@@ -618,7 +622,7 @@ def head(q, home=False):
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
@@ -736,7 +740,7 @@ css='\n'.join((UI/name).read_text() for name in css_files)
 minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
 write('site.css',minified_css)
 for name in ['tile-motion.js','mosaic-layout.js','sculpture-static.css']:shutil.copy2(UI/'vendor'/name,OUT/name)
-for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js']:shutil.copy2(UI/name,OUT/name)
+for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js']:shutil.copy2(UI/name,OUT/name)
 shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)
 for relative in RETIRED_PUBLISHED_ASSETS:

@@ -1,0 +1,20 @@
+/* The photograph keeps its bench, contact shadows and handworked surface. */
+.clay-scene{position:relative;display:block;width:100%;height:100%;isolation:isolate;overflow:hidden;border-radius:10px}
+.clay-scene .clay-animation{display:none;position:absolute;inset:0;pointer-events:none}
+.clay-scene.is-articulated .clay-animation{display:block}
+.clay-scene.is-articulated>.clay-rest{visibility:hidden}
+.clay-scene .clay-rig{display:block;width:100%;height:100%;overflow:hidden}
+#canvas .clay-scene>.clay-rest,.reader-clay-figure .clay-rest{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:none!important;transform:none!important;animation:none!important}
+#canvas .sculpture-art:has(.clay-scene){filter:none;overflow:visible}
+#canvas .sculpture-art .clay-scene{mask-image:linear-gradient(to right,transparent,#000 12%,#000 92%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 92%,transparent)}
+#canvas [data-sculpture-kind=service] .clay-scene{border-radius:0}
+#canvas [data-answer=page-industries] .clay-scene{mask-image:none;-webkit-mask-image:none}
+.reader-clay-figure{width:100%;max-width:440px;margin:26px 0 0}
+.clay-illustration{position:relative;display:block;width:100%;aspect-ratio:3/2;padding:0;border:0;border-radius:12px;background:#28251e;color:#f6f3ec;cursor:pointer;overflow:hidden;box-shadow:0 0 0 1px rgb(255 255 255 / .1)}
+.clay-illustration>.clay-scene{position:absolute;inset:0;border-radius:inherit}
+.clay-illustration:focus-visible{outline:2px solid var(--workbench-accent,#ff7839);outline-offset:5px}
+.clay-play-mark{position:absolute;bottom:10px;right:10px;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#111a;font-size:10px;pointer-events:none}
+.reader-clay-figure figcaption{margin-top:7px;font-size:16px;line-height:1.4;color:var(--workbench-dim,#aaa9ab)}
+.reader-clay-figure:has([data-clay-running=true]) .clay-play-mark{background:var(--workbench-accent,#ff7839);color:#17110c}
+@media(prefers-reduced-motion:reduce){.clay-play-mark{display:none}}
+.no-motion .clay-play-mark{display:none}

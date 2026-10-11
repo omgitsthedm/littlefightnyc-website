@@ -87,6 +87,8 @@ async function collectionRhythm(page, width) {
 async function materialMotion(browser,inventory){
  const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'no-preference'});
  const page=await context.newPage();
+ page.on('pageerror',e=>report.errors.push(e.message));
+ page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)report.resources.push([r.status(),r.url()]);});
  await page.goto(base+'/?qa=1');await settled(page);
  const rows=[];
  for(const tile of inventory){
@@ -97,10 +99,18 @@ async function materialMotion(browser,inventory){
   await card.focus();await delay(50);
   const animation=await card.evaluate(card=>{
    const inspect=selector=>{const node=card.querySelector(selector);const style=getComputedStyle(node);const active=node.getAnimations().find(a=>a.playState==='running');return {name:style.animationName,transform:style.transform,duration:active?.effect.getTiming().duration,iterations:active?.effect.getTiming().iterations}};
-   return {...(card.dataset.sculptureKind==='review'?{}:{art:inspect('.sculpture-art img')}),icon:inspect('.sculpture-symbol')};
+   return {...(card.dataset.sculptureKind==='review'||card.querySelector('[data-clay-icon]')?{}:{art:inspect('.sculpture-art img')}),icon:inspect('.sculpture-symbol')};
   });
   rows.push({id:tile.id,...animation});
   check(tile.id+' has visible finite material and icon motion',Object.values(animation).every(a=>a.name.startsWith('sculpture-')&&a.transform!=='none'&&a.duration>=250&&a.duration<=400&&a.iterations===1),animation);
+  if(await card.locator('[data-clay-icon]').count()){
+   await page.waitForFunction(id=>{const s=document.querySelector(`[data-answer="${id}"] [data-clay-icon]`);return s?.dataset.clayRunning==='true'&&Number(s.dataset.clayPose)>0;},tile.id,{timeout:5000});
+   const clay=await card.locator('[data-clay-icon]').evaluate(s=>({pose:Number(s.dataset.clayPose),poster:s.querySelector('.clay-rest').currentSrc,articulated:s.classList.contains('is-articulated'),transforms:[...s.querySelectorAll('[data-layer],[data-mesh]')].map(n=>n.getAttribute('transform'))}));
+   check(tile.id+' moves articulated clay parts while retaining a static photograph',clay.articulated&&clay.pose<13&&clay.transforms.some(Boolean),clay);
+   await page.waitForFunction(id=>document.querySelector(`[data-answer="${id}"] [data-clay-icon]`)?.dataset.clayPose==='13',tile.id,{timeout:3000});
+   const rest=await card.locator('[data-clay-icon]').evaluate(s=>({running:s.dataset.clayRunning,poster:s.querySelector('.clay-rest').currentSrc,visible:getComputedStyle(s.querySelector('.clay-rest')).visibility,articulated:s.classList.contains('is-articulated')}));
+   check(tile.id+' ends on the identical original photograph without a loop',rest.running==='false'&&!rest.articulated&&rest.visible==='visible'&&rest.poster===clay.poster,rest);
+  }
  }
  await delay(500);
  check('Material animation settles without an idle loop',await page.locator('.sculpture-tile').evaluateAll(tiles=>tiles.every(tile=>tile.getAnimations({subtree:true}).every(a=>a.playState!=='running'))));
@@ -109,9 +119,11 @@ async function materialMotion(browser,inventory){
  await page.locator('[data-answer="software-business-ownership"]').focus();
  await delay(60);
  check('Pause control stops all sculpture motion',await page.locator('.sculpture-tile').evaluateAll(tiles=>document.body.classList.contains('no-motion')&&tiles.every(t=>t.getAnimations({subtree:true}).every(a=>a.playState!=='running'))));
+ check('Pause control returns every clay scene to its static photograph',await page.locator('[data-clay-icon]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await settled(page);
  await page.locator(`[data-answer="${inventory[0].id}"]`).focus();
  check('OS reduced motion keeps every icon and sculpture static',await page.locator('.sculpture-tile').evaluateAll(tiles=>tiles.every(t=>[...t.querySelectorAll('.sculpture-symbol,.sculpture-art img')].every(n=>getComputedStyle(n).animationName==='none'&&getComputedStyle(n).transform==='none'))));
+ check('OS reduced motion keeps every clay scene at rest',await page.locator('[data-clay-icon]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
  fs.writeFileSync(path.join(evidence,`all-curated-motion-${engineName}.json`),JSON.stringify(rows,null,2));await context.close();
 }
 async function main(){
@@ -126,7 +138,8 @@ async function main(){
  check('No large extruded symbol illustrations remain',illustrated.every(t=>!t.art.startsWith('cast-')));
  check('Unique artwork names resolve to 51 different image files',new Set(illustrated.map(t=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'dist/assets/sculpture',t.art+'.webp'))).digest('hex'))).size===expectedIllustrated);
  check('Seven review tiles have no 3D star illustration',inventory.filter(t=>t.kind==='review').length===7&&inventory.filter(t=>t.kind==='review').every(t=>t.art===null));
- for(const art of ['printer','security','software'])check(art+' appears exactly once among all tiles',inventory.filter(t=>t.art===art).length===1);
+ for(const art of ['printer','security','clay-software-v1'])check(art+' appears exactly once among all tiles',inventory.filter(t=>t.art===art).length===1);
+ check('Exactly the reviewed five clay designs are installed',inventory.filter(t=>t.art?.startsWith('clay-')).length===5&&['browser','storefront','router','notebook','software'].every(name=>inventory.some(t=>t.art===`clay-${name}-v1`)));
  const routes=JSON.parse(fs.readFileSync(path.join(app,'dist/reader-routes.json')));
  check('All '+Object.keys(baseline.routes).length+' prior reader mappings retained with exactly seven new review backs',Object.entries(baseline.routes).every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===Object.keys(baseline.routes).length+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));

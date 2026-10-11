@@ -28,12 +28,25 @@
     "construction.css",
     "sculpture.css",
     "master-reader.css",
-    "workbench.css"
+    "workbench.css",
+    "clay-icons.css"
   ],
   "presentationScope": [
     "Homepage hero",
     "Homepage tile artwork and material motion",
     "Website reader opening and card frame"
   ],
-  "readerPresentation": "Reference-led Website reader opening; full service detail, other reader content and destinations retained. Screenshots resolve to the verified library."
+  "readerPresentation": "Reference-led Website reader opening; full service detail, other reader content and destinations retained. Screenshots resolve to the verified library.",
+  "clayIllustrations": {
+    "reviewedAt": "2026-10-11",
+    "scope": [
+      "browser",
+      "storefront",
+      "router",
+      "notebook",
+      "software"
+    ],
+    "source": "Reviewed first-five clay workshop study",
+    "motion": "Fourteen held poses at twelve frames per second; one shot on intent; original first and last frame."
+  }
 }
