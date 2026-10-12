@@ -95,6 +95,10 @@ async function materialMotion(browser,inventory){
   const card=page.locator(`[data-answer="${tile.id}"]`);
   await card.scrollIntoViewIfNeeded();await delay(120);
   await page.waitForFunction(()=>!document.querySelector('.sculpture-tile.is-performing'),null,{timeout:5000});
+  // The clay arrival lasts longer than the icon's CSS settle. A focus request
+  // during that arrival intentionally does not restart it; wait for rest before
+  // checking a fresh, user-triggered move (especially across WebKit round trips).
+  await page.waitForFunction(id=>!document.querySelector(`[data-answer="${id}"] [data-clay-running="true"]`),tile.id,{timeout:5000});
   await page.evaluate(()=>document.activeElement?.blur());
   await card.focus();await delay(50);
   const animation=await card.evaluate(card=>{
