@@ -34,7 +34,7 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
     const browser = await type.launch(engine === 'chrome' ? { channel: 'chrome', headless: true } : { headless: true });
     try {
       for (const width of [320, 393, 768, 1440, 2560]) {
-        const page = await browser.newPage({ viewport: { width, height: 1100 }, reducedMotion: 'reduce' });
+        const page = await browser.newPage({ viewport: { width, height: 1100 }, deviceScaleFactor: width === 2560 ? 2 : 1, reducedMotion: 'reduce' });
         const errors = [];
         page.on('pageerror', error => errors.push(error.message));
         await page.goto(base + '/?qa=1');
@@ -42,17 +42,20 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
         const state = await page.locator('.sculpture-hero').evaluate(hero => ({
           design: hero.dataset.hero, overflow: document.documentElement.scrollWidth > innerWidth + 1,
           rooms: hero.querySelectorAll('.clay-room-link').length,
+          building: (() => { const image = hero.querySelector('.clay-building img'); return { visible: image.getBoundingClientRect().width > 100 && image.complete && image.naturalWidth > 0, source: image.currentSrc }; })(),
           projects: hero.querySelectorAll('.clay-hero-project').length,
-          rachel: !!hero.querySelector('.hero-secondary image[href$="rachel-clay-portrait-yellow.webp"]'),
+          rachel: !!hero.querySelector('.hero-secondary img[src$="rachel-clay-portrait-yellow.webp"]'),
           motion: hero.dataset.motion,
           buttons: [...document.querySelectorAll('.primary-nav .start-button,.sculpture-help')].filter(a => a.getClientRects().length).map(a => {
             const r = a.getBoundingClientRect();
             return { width: r.width, height: r.height, text: a.textContent, href: a.getAttribute('href'), surface: getComputedStyle(a, '::before').backgroundImage };
           }),
         }));
-        pass(engine + ' ' + width + ' approved scene fits', state.design === 'clay-neighborhood' && !state.overflow && state.rooms === 4 && state.projects === 2 && state.rachel);
+        pass(engine + ' ' + width + ' approved scene fits', state.design === 'clay-neighborhood' && !state.overflow && state.rooms === 4 && state.projects === 2 && state.rachel && state.building.visible);
         pass(engine + ' ' + width + ' accessible handmade Get help buttons', state.buttons.length >= 1 && state.buttons.every(b => b.width >= 44 && b.height >= 44 && b.text.includes('Get help') && b.href === '/tech-audit/' && b.surface.includes('help-button-orange.webp')));
         pass(engine + ' ' + width + ' respects reduced motion', state.motion === 'paused');
+        if (width === 2560) pass(engine + ' Retina desktop receives the native diorama', state.building.source.endsWith('/hero-diorama-clean.webp'));
+        else if (width <= 393) pass(engine + ' phones receive responsive diorama artwork', state.building.source.endsWith('/hero-diorama-clean-384.webp'));
         for (const selector of ['.sculpture-help', '.hero-main', '.hero-secondary', '.clay-room-home', '.clay-room-studio', '.clay-room-meeting', '.clay-room-shop']) {
           const link = page.locator(selector), href = await link.getAttribute('href');
           await link.click();
@@ -84,7 +87,7 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
       await page.close();
       const nojs = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 393, height: 852 } });
       await nojs.goto(base + '/');
-      pass(engine + ' native links and artwork survive without JavaScript', await nojs.locator('.sculpture-hero a[href]').count() === 10 && await nojs.locator('.clay-building image').count() > 0);
+      pass(engine + ' native links and artwork survive without JavaScript', await nojs.locator('.sculpture-hero a[href]').count() === 10 && await nojs.locator('.clay-building img').count() > 0);
       await nojs.close();
     } finally { await browser.close(); }
   }

@@ -232,7 +232,7 @@ async function inspectWebsiteBody(page, label) {
   assert.equal(await ownership.count(), 1, label + ': ownership section');
   assert.equal(await ownership.locator('.rw-ownership-passport dl > div').count(), 3, label + ': ownership covers code, domain, and content');
   assert.deepEqual(await ownership.locator('.rw-ownership-passport dt').allTextContents(), ['Code', 'Domain', 'Content'], label + ': ownership passport keeps the three business assets');
-  assert.match(await ownership.innerText(), /finished website files belong to your business[\s\S]*web address stays in an account you control[\s\S]*business information remain yours/i, label + ': ownership copy');
+  assert.match(await ownership.innerText(), /finished website files belong to your business[\s\S]*web address stays in an account you control[\s\S]*business keeps its words, photos, and information[\s\S]*Licensed material keeps its own terms/i, label + ': ownership copy and licensed-material distinction');
   assert.match(await body.locator('#reader-launch').innerText(), /six weeks or less/i, label + ': launch promise is six weeks or less with an agreed brief');
   assert.match(await ownership.innerText(), /No monthly hosting fee/i, label + ': offer keeps the no-monthly-hosting-fee term');
   assert.equal(await reader.locator('.story-faq details').count(), 2, label + ': only the two service-specific FAQs remain outside the full answer collection');
