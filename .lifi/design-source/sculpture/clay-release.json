@@ -6,7 +6,8 @@
     "vera/brand/index.html": "ffe6165ad99ce5f30ab2f058db47eaee1f8c2452b7c42b7dfc84703d8cd2c9aa",
     "vera/assets/js/vera-core.js": "e9e5c15b823e3f7a570be46d35b9c56b55e1d3a18a5c1a57ec6a92e263176bd7",
     "vera/assets/js/vera-app.js": "d4b955771586f3537cd6c4fee0ce2d56dfdf7e378ee111ddc81fb7d288688a96",
-    "vera/assets/js/vera-ledger.js": "5bdcbf42e7b6e569894374b6335329cce925657641a6972d649d1b057a4eecb9"
+    "vera/assets/js/vera-ledger.js": "5bdcbf42e7b6e569894374b6335329cce925657641a6972d649d1b057a4eecb9",
+    "vera/corrections/index.html": "abc326d137d5d4d344f896a07c79fd31a41a4b4850686a1fec80dd4a5f26f00b"
   },
   "assets": {
     "app/public/assets/clay-library/environment-cloud-cumulus.webp": "3f5f0dfbc0abf5d99fff8cd0dd7dbba9128c299aaf5abef10e9709f698a4b15d",

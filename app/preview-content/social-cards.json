@@ -156,21 +156,21 @@
     "/services/custom-local-websites/": {
       "path": "/services/custom-local-websites/",
       "title": "Custom Websites for Independent Businesses | Little Fight NYC",
-      "description": "Custom websites for independent businesses. Clear copy, real proof, business-owned accounts, and a practical path for customers to get in touch.",
+      "description": "Custom websites for independent businesses. Clear copy, real proof, business-owned accounts, and a clear way for customers to call, book, or ask.",
       "headline": "A website that feels like your business.",
       "label": "Websites",
       "color": "#92bfff",
       "mode": "browser",
-      "image": "/assets/social/clay/services-custom-local-websites-1e53da727e13.jpg",
+      "image": "/assets/social/clay/services-custom-local-websites-6e42924d51f1.jpg",
       "artAlt": "A handmade clay browser frame displaying the Chromatic Painting and Design website.",
       "artSource": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 276466,
+      "bytes": 276145,
       "alt": "A handmade clay browser frame displaying the Chromatic Painting and Design website. Text: A website that feels like your business. Little Fight NYC.",
-      "sha256": "4f22f46a0a7147c38c3a70d2d182758486873393084674385ed7537447ccf2fc",
-      "signature": "1e53da727e130bb3d4ed1668249f5d4c80576a9b0631732a5557b9c591ca36eb"
+      "sha256": "d2f7906fc03a8a5f149b309f5b7ec3c33a523ba238e14d37ff15c211d0d4eeb9",
+      "signature": "6e42924d51f1626cdafcc7b010c9600c5d1d9af55ae18fbc36ad20d3257e0387"
     },
     "/nationwide/": {
       "path": "/nationwide/",
@@ -2835,10 +2835,10 @@
     "/vera/corrections/": {
       "path": "/vera/corrections/",
       "title": "Corrections — VERA",
-      "description": "How VERA’s steward grades are computed, and how an owner or agent can report an error for correction.",
+      "description": "How VERA uses public records to grade buildings, and how to report a wrong record or a mistake in the way VERA reads it.",
       "headline": "Corrections",
       "mode": "clay",
-      "image": "/assets/social/clay/vera-corrections-e1d63d99fee4.jpg",
+      "image": "/assets/social/clay/vera-corrections-2381f84c454b.jpg",
       "artAlt": "A handmade clay New York brownstone.",
       "label": "VERA · NYC rental intelligence",
       "color": "#a0df85",
@@ -2846,10 +2846,10 @@
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 174010,
+      "bytes": 180019,
       "alt": "A handmade clay New York brownstone. Text: Corrections Little Fight NYC.",
-      "sha256": "a9452bb33733fcef26cc826df29d3cd9bef34d2962ded6fe6585c36e4280f49b",
-      "signature": "e1d63d99fee4aff2049862d194747d23a7bf86edb76b550ee5fc48aa1853a95a"
+      "sha256": "7cc8535b0dc6081124c0f00eac98ad2f399a9403a6119ac7ffdf66f43233f6b1",
+      "signature": "2381f84c454bc6716de3881d293f1ff23feb069a59a587c912333ba307c4d3c6"
     },
     "/examples/audit/": {
       "path": "/examples/audit/",
@@ -8332,9 +8332,9 @@
       "sha256": "c3cb069d6b2a647398ab48bb328d725dc4b21e0d3c6487551792670bdec1bf90"
     },
     "vera/corrections/index.html": {
-      "baselineSha256": "436e1ab616726bd1b5422a0095ca755154fe192a3f9396fe88b3211b13a363e0",
-      "bodySha256": "46b62a61aacbf7611bd844643c45f1a38cf354b42492de962336ccb4462d6c64",
-      "sha256": "12187f70c632b54f7dbe3d543292bc5e6f2a9e98d98d2bd0cecb1969c0a16616"
+      "baselineSha256": "abc326d137d5d4d344f896a07c79fd31a41a4b4850686a1fec80dd4a5f26f00b",
+      "bodySha256": "46242dce6bfbce08026ec5a8507279e1f66d76bb7c6025cd9d5e02dc2f09c6e3",
+      "sha256": "abc326d137d5d4d344f896a07c79fd31a41a4b4850686a1fec80dd4a5f26f00b"
     },
     "vera/index.html": {
       "baselineSha256": "e9a21fcff910977bf685c437a852526a406464b477cc4298d99a64c5bac1c290",
