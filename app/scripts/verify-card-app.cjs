@@ -266,7 +266,7 @@ async function run() {
           const share = page.locator('#detail[open] .lab-share').last();
           assert.equal(await share.locator('button[data-copy-lab-link]').getAttribute('data-copy-lab-link'), route,
             `${lab.slug}: reader offers the canonical copyable Lab link`);
-          assert.equal(await share.locator('a').getAttribute('href'), route, `${lab.slug}: reader keeps a normal share link`);
+          assert.equal(await share.locator('a').getAttribute('href'), 'https://littlefightnyc.com' + route, `${lab.slug}: reader keeps the public canonical share link`);
           const interaction = await runRepresentativeInteraction(frame, lab.slug);
           report.labs.push({ slug: lab.slug, route, entry: entry.path, src, interaction });
           await closeCard(page);

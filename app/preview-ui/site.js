@@ -23,30 +23,44 @@
   const motionToggle = document.querySelector('#motion-toggle');
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (!detail || !panel || !detailBody) return;
-
-  // A Lab's share URL opens its complete Little Fight reader on a new device.
-  // Keep a normal link available when clipboard access is disabled or denied.
+  // Share the public canonical destination, including from a local preview or
+  // a reader opened over the homepage. Cancellation is never a copy request.
   document.addEventListener('click', async event => {
-    const button = event.target.closest('button[data-copy-lab-link]');
+    const button = event.target.closest('button[data-native-share], button[data-copy-page-link], button[data-copy-lab-link]');
     if (!button) return;
-    const group = button.closest('.lab-share');
+    const group = button.closest('.reader-share, .lab-share');
     const status = group?.querySelector('[data-copy-status]');
-    const path = button.dataset.copyLabLink;
-    if (!path || !/^\/(?:labs\/[a-z0-9-]+|construction)\/$/.test(path)) return;
-    const url = new URL(path, location.origin).href;
+    const fallback = group?.querySelector('[data-share-fallback]');
+    const path = group?.dataset.shareUrl || button.dataset.copyLabLink;
+    if (!path) return;
+    const destination = new URL(path, 'https://littlefightnyc.com');
+    if (destination.origin !== 'https://littlefightnyc.com') return;
+    destination.search = '';
+    destination.hash = '';
+    const url = destination.href;
+    const data = { title: group?.dataset.shareTitle || document.title, url };
+    if (button.hasAttribute('data-native-share') && typeof navigator.share === 'function' &&
+        (typeof navigator.canShare !== 'function' || navigator.canShare(data))) {
+      try {
+        await navigator.share(data);
+        if (status) status.textContent = 'Share options opened.';
+        return;
+      } catch (error) {
+        if (error?.name === 'AbortError') return;
+      }
+    }
     try {
       if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
       await navigator.clipboard.writeText(url);
       if (status) status.textContent = 'Link copied.';
-      const fallback = group?.querySelector('[data-share-fallback]');
       if (fallback) fallback.hidden = true;
     } catch {
-      if (status) status.textContent = 'Use the link beside this button to open or copy this page.';
-      const fallback = group?.querySelector('[data-share-fallback]');
-      if (fallback) { fallback.hidden = false; fallback.focus(); }
+      if (status) status.textContent = 'Use the page link to open or copy this page.';
+      if (fallback) { fallback.href = url; fallback.hidden = false; fallback.focus(); }
     }
   });
+
+  if (!detail || !panel || !detailBody) return;
   // The modal rail is a separate landmark from the page content it displays.
   // Keep its accessible name distinct after each progressive reader injection.
   const readerRail = detail.querySelector('.reader-rail');
@@ -81,6 +95,13 @@
   let isClosing = false;
   let closingPromise = null;
   const shellTitle = document.title;
+  const shareSelector = 'link[rel="canonical"], meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]';
+  const captureShareHead = source => [...source.querySelectorAll(shareSelector)].map(node => node.cloneNode(true));
+  const shellShareHead = captureShareHead(document);
+  const applyShareHead = nodes => {
+    document.querySelectorAll(shareSelector).forEach(node => node.remove());
+    nodes.forEach(node => document.head.appendChild(node.cloneNode(true)));
+  };
 
   const safeText = value => String(value || '').replace(/[\u0000-\u001f<>]/g, '').slice(0, 96);
   const draftText = (value, limit) => String(value || '').replace(/\u0000/g, '').slice(0, limit);
@@ -332,7 +353,7 @@
     const parsed = new DOMParser().parseFromString(markup, 'text/html');
     const reader = parsed.querySelector('main[data-page-content]');
     if (!reader) throw new Error('Reader markup was not found.');
-    return { html: reader.innerHTML, layout: reader.dataset.readerLayout || '', family: reader.dataset.readerFamily || 'brand', template: reader.dataset.readerTemplate || '', homePath: reader.dataset.homePath || path, title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
+    return { shareHead: captureShareHead(parsed), html: reader.innerHTML, layout: reader.dataset.readerLayout || '', family: reader.dataset.readerFamily || 'brand', template: reader.dataset.readerTemplate || '', homePath: reader.dataset.homePath || path, title: parsed.title || reader.querySelector('h1')?.textContent || document.title };
   }
 
   function focusReader() {
@@ -402,6 +423,7 @@
       detail.dataset.readerPath = readerPath;
       panel.dataset.readerPath = readerPath;
       document.title = reader.title;
+      applyShareHead(reader.shareHead);
       // The bridge receives reader-ready on document and mounts against this URL.
       // Commit the state before that event, while the fetched reader is already in place.
       if (options.fromHistory) readerTrail = history.state?.trail || [readerPath];
@@ -455,6 +477,7 @@
         else detail.removeAttribute('open');
         document.body.classList.remove('reader-open');
         document.title = shellTitle;
+        applyShareHead(shellShareHead);
         releaseDemos();
         delete detail.dataset.readerLayout;
         delete panel.dataset.readerLayout;

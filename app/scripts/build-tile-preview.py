@@ -29,6 +29,7 @@ from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, appl
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
 from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library
+from social_cards import register as social_card, tags as social_tags, write_plan as write_social_plan
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -298,9 +299,14 @@ def lab_controls_section(lab):
     notes = [note for note in lab.get('interactionNotes', []) if 'direct html' not in note.lower()]
     return f'<section class="story-section story-section--plain reader-demo-notes"><div><p>{E(first_sentence(notes[0]))}</p></div></section>' if notes else ''
 
+def page_share_controls(page, lab=False):
+    path = page.get('canonicalPath') or page.get('sharePath') or page['path']
+    title = page.get('title') or page.get('name') or 'Little Fight NYC'
+    legacy = f' data-copy-lab-link="{E(path)}"' if lab else ''
+    return f'''<div class="lab-share reader-share" data-share-url="{E(ORIGIN+path)}" data-share-title="{E(title)}"><button type="button" data-native-share>Share this page</button><button type="button" data-copy-page-link{legacy}>Copy link</button><a href="{E(ORIGIN+path)}" data-share-fallback hidden>Open page link</a><span role="status" aria-live="polite" data-copy-status></span></div>'''
+
 def lab_share_controls(lab):
-    share_path = lab['sharePath']
-    return f'''<div class="lab-share"><button type="button" data-copy-lab-link="{E(share_path)}">Copy link</button><a href="{E(share_path)}" data-share-fallback hidden>Link to this Lab</a><span role="status" data-copy-status></span></div>'''
+    return page_share_controls(lab, lab=True)
 
 def normalize(p):
     q=dict(p);q['title']=display(p.get('title','Little Fight NYC'));q['heading']=display(p.get('heading') or q['title'].split(' | ')[0]);q['description']=display(p.get('description') or p.get('metaDescription') or 'Practical help for your business from Little Fight NYC.')
@@ -605,16 +611,11 @@ for path, family in anchor_paths.items():
 def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
     visual=case_visuals.get(path.strip('/').split('/')[-1],{}) if path.startswith('/case-studies/') else {}
-    share=visual.get('social') or visual.get('desktop') or {}
-    lab = lab_by_path.get(path)
-    if lab:
-        share = {'src': lab_tile_image(lab), 'alt': lab.get('tileImageAlt') or lab['name']+' — Little Fight Lab'}
-    elif path == '/construction/':
-        cabinet = next(lab for lab in labs if lab['slug'] == 'cabinet-concept')
-        share = {'src': lab_tile_image(cabinet), 'alt': cabinet.get('tileImageAlt') or 'Interactive cabinet design study'}
-    share_image=E(ORIGIN+share.get('src','/assets/portfolio-20261007/share-little-fight-nyc-master-reference-20261008.jpg'))
-    share_alt=E(share.get('alt','Little Fight NYC — custom websites for independent businesses'))
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    lab = lab_by_path.get(q.get('canonicalPath', path))
+    card = social_card(q, reader_family(q), visual.get('desktop'),
+                       {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
+    share_meta = social_tags(q, card)
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
     if q.get('_rewriteCategory'):
         family=q['_rewriteCategory']
@@ -628,16 +629,18 @@ def head(q, home=False):
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     graph[2]['inLanguage'] = q.get('language', 'en')
+    graph[2]['primaryImageOfPage'] = {'@type':'ImageObject', 'url':ORIGIN+card['image'], 'width':card['width'], 'height':card['height'], 'caption':card['alt']}
     if path.startswith('/journal/') and path != '/journal/':
         graph.append({'@type':'Article', '@id':ORIGIN+path+'#article',
                       'headline':q.get('heading') or q.get('title'), 'description':q.get('description'),
+                      'image':ORIGIN+card['image'],
                       'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
                       'author':{'@id':ORIGIN+'/#organization'},
                       'publisher':{'@id':ORIGIN+'/#organization'},
                       'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<link rel="preload" as="image" href="/assets/clay-library/hero-diorama-clean.webp" imagesrcset="/assets/clay-library/hero-diorama-clean-384.webp 384w, /assets/clay-library/hero-diorama-clean-768.webp 768w, /assets/clay-library/hero-diorama-clean.webp 1448w" imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">' if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if home and CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<link rel="preload" as="image" href="/assets/clay-library/hero-diorama-clean.webp" imagesrcset="/assets/clay-library/hero-diorama-clean-384.webp 384w, /assets/clay-library/hero-diorama-clean-768.webp 768w, /assets/clay-library/hero-diorama-clean.webp 1448w" imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">' if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if home and CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a>'
@@ -658,6 +661,8 @@ for path,p in pages.items():
     q,body=article(p)
     output_path='/_readers'+path if preserved(path) else path
     if preserved(path):q=dict(q,path=output_path,canonicalPath=path)
+    if path not in lab_by_path and path not in ISLANDS and path != '/construction/':
+        body += page_share_controls(q)
     layout = ' data-reader-layout="immersive"' if path == '/vera/' else ''
     family = reader_family(p)
     page_class = 'page-home answer-page' if path.startswith('/answers/') or p.get('_answerGuide') or path in ('/library/','/tech-audit/') else 'page-home'
@@ -786,4 +791,5 @@ files=sorted(p for p in OUT.rglob('*') if p.is_file() and p.name not in ('previe
 for p in files:digest.update(str(p.relative_to(OUT)).encode()+b'\0'+p.read_bytes())
 release={'kind':'static-production-candidate' if PRODUCTION else 'design-review-preview','artifactSha256':digest.hexdigest(),'routes':len(pages),'tiles':len(total_tiles.tiles),'totalTileInventory':homepage_inventory['totalTileInventory'],'consolidatedGroups':len(home_groups),'originalTilesPreserved':106,'reviews':7,'analyticsDelivery':PRODUCTION,'formDelivery':'native Netlify Forms' if PRODUCTION else 'editable email draft or explicit link to existing secure contact form','sourceBase':'05d6f5a425bffb548213545131a89f9c53e5a297','productionChanged':False}
 write('tile-release.json' if PRODUCTION else 'preview-release.json',json.dumps(release,indent=2)+'\n')
+write_social_plan()
 print(json.dumps(release,indent=2))

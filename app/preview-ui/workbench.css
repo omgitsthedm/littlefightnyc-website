@@ -438,3 +438,11 @@
   #detail:has(.workbench-chrome) #close-detail.workbench-close{position:fixed}
   #detail .workbench-reader-back{position:fixed}
 }
+
+/* Quiet sharing controls use the reader's existing service color. */
+.reader-share{margin:28px 0 36px;padding-top:18px;border-top:1px solid var(--workbench-rule,#ffffff30)}
+.reader-share button{font-family:LFAtkinson,Arial,sans-serif;transition:transform 160ms ease,background-color 160ms ease}
+.reader-share button:active{transform:scale(.96)}
+.reader-share button:focus-visible,.reader-share a:focus-visible{outline:3px solid var(--workbench-accent,#ff7839);outline-offset:4px}
+.reader-share [role=status]{flex-basis:100%;color:var(--workbench-prose,#d9d8d4)}
+@media(prefers-reduced-motion:reduce){.reader-share button{transition:none}.reader-share button:active{transform:none}}

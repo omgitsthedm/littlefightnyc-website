@@ -69,3 +69,6 @@ __pycache__/
 .lifi/evidence/master-fidelity/
 .lifi/evidence/clay-release/
 .review-dist/
+
+# Reproducible social-card plans, galleries and browser evidence.
+.lifi/evidence/social-cards/

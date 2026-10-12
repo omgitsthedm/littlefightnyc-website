@@ -365,11 +365,12 @@ async function verifyFarmInside(frame, label, { exitToHub = false } = {}) {
   await page.goto(base + '/construction/');
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async value => { window.__copiedLabLink = value; } } }));
   await page.getByRole('button', { name: 'Copy showcase link' }).click();
-  assert.equal(await page.evaluate(() => window.__copiedLabLink), base + '/construction/');
+  assert.equal(await page.evaluate(() => window.__copiedLabLink), 'https://littlefightnyc.com/construction/');
   await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async () => { throw new Error('Denied'); } } }));
   await page.getByRole('button', { name: 'Copy showcase link' }).click();
   assert.ok(await page.locator('[data-copy-status]').textContent());
   assert.equal(await page.evaluate(() => document.activeElement.textContent), 'Link to this showcase');
+  assert.equal(await page.locator('[data-share-fallback]').getAttribute('href'), 'https://littlefightnyc.com/construction/');
   pass('Copy link and denied-clipboard fallback both work');
 
   let sharedStudy;

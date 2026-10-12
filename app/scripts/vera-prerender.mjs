@@ -11,6 +11,7 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 const APP = join(here, '..');
 const DIST_VERA = join(APP, 'dist', 'vera');
+const socialCards = JSON.parse(readFileSync(join(APP, 'preview-content', 'social-cards.json'), 'utf8')).cards;
 const VERA_ENGINE_REPOSITORY = 'omgitsthedm/vera-apartment-search';
 // Pin the public archive to this release; runtime freshness stays first-party/live.
 const publicFeedPin = JSON.parse(readFileSync(join(APP, 'preview-content', 'vera-feed.json'), 'utf8'));
@@ -51,6 +52,8 @@ function esc(s) {
 function page(title, lede, body) {
   const slug = title === 'Field manual' ? 'manual' : 'archive';
   const canonical = `https://littlefightnyc.com/vera/${slug}/`;
+  const share = socialCards[`/vera/${slug}/`] || socialCards['/vera/'];
+  const shareImage = 'https://littlefightnyc.com' + share.image;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -67,15 +70,18 @@ function page(title, lede, body) {
 <meta property="og:type" content="website">
 <meta property="og:url" content="${canonical}">
 <meta property="og:site_name" content="Little Fight NYC">
-<meta property="og:image" content="https://littlefightnyc.com/assets/social/og-vera-34d78811.jpg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="VERA rental-intelligence card highlighting public-record checks and honest uncertainty.">
+<meta property="og:image" content="${esc(shareImage)}">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:secure_url" content="${esc(shareImage)}">
+<meta property="og:locale" content="en_US">
+<meta property="og:image:width" content="${share.width}">
+<meta property="og:image:height" content="${share.height}">
+<meta property="og:image:alt" content="${esc(share.alt)}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)} — VERA">
 <meta name="twitter:description" content="${esc(lede)}">
-<meta name="twitter:image" content="https://littlefightnyc.com/assets/social/og-vera-34d78811.jpg">
-<meta name="twitter:image:alt" content="VERA rental-intelligence card highlighting public-record checks and honest uncertainty.">
+<meta name="twitter:image" content="${esc(shareImage)}">
+<meta name="twitter:image:alt" content="${esc(share.alt)}">
 <link rel="icon" href="../assets/icons/vera-icon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="../assets/icons/vera-icon-180.png" sizes="180x180">
 <link rel="stylesheet" href="../assets/css/doc.css?v=2">

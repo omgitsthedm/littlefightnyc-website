@@ -7,6 +7,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "..", "..");
 const baseUrl = (process.env.LIVE_URL || "https://littlefightnyc.com").replace(/\/$/, "");
 const canonicalBaseUrl = (process.env.CANONICAL_URL || baseUrl).replace(/\/$/, "");
+const socialCards = JSON.parse(readFileSync(path.join(repoRoot, "app/preview-content/social-cards.json"), "utf8")).cards;
 const failures = [];
 
 function gitHead() {
@@ -246,7 +247,7 @@ for (const [attribute, name, expected] of [
   [
     "property",
     "og:image",
-    `${canonicalBaseUrl}${poolPath}img/opening/12-room-hero.webp`,
+    `${canonicalBaseUrl}${socialCards[poolPath].image}`,
   ],
   ["name", "twitter:card", "summary_large_image"],
 ]) {

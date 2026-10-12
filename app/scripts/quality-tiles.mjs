@@ -83,6 +83,7 @@ async function browserLanes() {
   await withProductionServer(async (url) => {
     const env = { ...process.env, TILE_DIST: "production", PREVIEW_URL: url, TILE_PRODUCTION_URL: url, VERA_PREVIEW_URL: url, CASE_EDITORIAL_URL: url, INQUIRY_ENHANCEMENT_URL: url, TOPIC_MOSAIC_URL: url };
     run("node", ["scripts/verify-tile-preview.cjs"], env);
+    run("node", ["scripts/verify-social-sharing.cjs"], env);
     run("node", ["scripts/verify-review-readers.cjs"], { ...env, REVIEW_READERS_URL: url });
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });
     // The selected sculpture composition has a shared four-service opening,
@@ -114,6 +115,7 @@ async function browserLanes() {
 
 run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? ["--release"] : [])]);
 run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
+run("python3", ["scripts/audit-social-cards.py", dist]);
 
 if (functional) {
   // Preserve real contracts: native inquiry delivery, consent/privacy,

@@ -157,7 +157,14 @@ async function main(){
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
  check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
  const approved=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/clay-release.json')));
- check('VERA retains protected assets and the reviewed copy corrections',Object.entries({...baseline.protectedVera,...approved.protectedVeraCopyOverrides}).every(([f,hash])=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'public',f))).digest('hex')===hash));
+ const socialPins=JSON.parse(fs.readFileSync(path.join(app,'preview-content/social-cards.json'))).protectedDocuments;
+ const sha=value=>crypto.createHash('sha256').update(value).digest('hex');
+ check('VERA retains protected assets, reviewed copy and verified share metadata',Object.entries({...baseline.protectedVera,...approved.protectedVeraCopyOverrides}).every(([f,hash])=>{
+  const bytes=fs.readFileSync(path.join(app,'public',f)),pin=socialPins[f];
+  if(!pin)return sha(bytes)===hash;
+  const html=bytes.toString('utf8');
+  return f.endsWith('/index.html')&&pin.baselineSha256===hash&&sha(bytes)===pin.sha256&&sha(html.slice(html.indexOf('<body')))===pin.bodySha256;
+ }));
  const browser=isWebKit?await webkit.launch({headless:true}):await chromium.launch({channel:'chrome',headless:true});
  report.version=browser.version();
  try{

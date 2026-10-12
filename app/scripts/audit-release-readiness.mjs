@@ -8,6 +8,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const appRoot = path.resolve(here, "..");
 const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
+const socialCards = JSON.parse(await readFile(path.join(appRoot, "preview-content/social-cards.json"), "utf8")).cards;
 const failures = [];
 const expectedTotalTileInventory = 132;
 const expectedOriginalTileCount = 106;
@@ -225,7 +226,7 @@ for (const relative of [
   "favicon.svg",
   "favicon.ico",
   "apple-touch-icon.png",
-  "assets/social/og-tiles.jpg",
+  socialCards["/"].image.replace(/^\//, ""),
 ]) {
   if (!(await exists(path.join(distRoot, relative)))) failures.push(`dist/${relative} is missing`);
 }

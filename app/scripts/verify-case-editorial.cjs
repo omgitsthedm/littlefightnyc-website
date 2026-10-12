@@ -184,7 +184,9 @@ async function verifyPublicCaseShareCards(page) {
   );
   assert.equal(publicClients.length, 10, 'Expected ten public client cases for dedicated share cards');
   for (const caseStudy of publicClients) {
-    const expectedSocial = portfolioDelivery.media[caseStudy.slug]?.social?.src;
+    const social = JSON.parse(fs.readFileSync(path.join(__dirname, '../preview-content/social-cards.json'), 'utf8')).cards[`/case-studies/${caseStudy.slug}/`];
+    assert.equal(social.artSource, portfolioDelivery.media[caseStudy.slug]?.desktop?.src, `${caseStudy.slug}: share card must use the verified client screenshot`);
+    const expectedSocial = social.image;
     assert.ok(expectedSocial, `${caseStudy.slug}: compiled portfolio delivery needs a social share card`);
     await go(page, `/case-studies/${caseStudy.slug}/`);
     const ogImage = await page.locator('meta[property="og:image"]').getAttribute('content');
