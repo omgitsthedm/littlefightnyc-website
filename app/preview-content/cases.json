@@ -379,25 +379,25 @@
     "name": "Legacy Music Group",
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
-    "location": "Online",
-    "summary": "A music-company website restored to its original dark, motion-led design.",
+    "location": "Deep Ellum, Dallas",
+    "summary": "A Dallas recording studio’s original website, restored with its look and motion intact.",
     "challenge": [
-      "Restore the original 35-route music-company website without turning the recovery into a redesign."
+      "Restore the studio’s website. Keep the look, movement, and pages its visitors know."
     ],
     "approach": [
-      "Restored the original control-room visual system and responsive paths for artists, services, booking, and company context."
+      "Kept the original design and made the paths to studio services, engineers, and booking work across screen sizes."
     ],
     "delivered": [
-      "Restored live website with 35 routes, responsive layouts, and original motion treatment."
+      "35 restored pages with the original design, motion, and booking links."
     ],
     "outcome": [
-      "The restored website is available at legacy-music-group.netlify.app, with booking through the existing destination."
+      "Visitors can explore the studio website, then open Legacy’s existing booking page to choose a session."
     ],
     "scope": [
       "Website restoration",
-      "Music company website",
-      "Information architecture",
-      "Responsive design"
+      "Recording studio website",
+      "Services and booking paths",
+      "Phone and desktop layouts"
     ],
     "url": "https://littlefightnyc.com/case-studies/legacy-music-group/",
     "image": "assets/proof/case-legacy-music-group.webp",
@@ -406,8 +406,8 @@
     "imageAlt": "Legacy Music Group restored website on desktop.",
     "sourceImage": "https://legacy-music-group.netlify.app/",
     "narrative": [
-      "The original dark, motion-led experience frames the label while keeping artists, services, booking, and company information readable.",
-      "Visitors can explore the artists, understand the services, and continue to the established booking destination."
+      "The dark design and moving gallery set the mood. Clear pages explain the studio, its team, and the work you can book.",
+      "Visitors can read about a service, meet the engineers, and open the studio’s booking page."
     ],
     "publicType": "Website design",
     "publicUrl": "https://legacy-music-group.netlify.app/"
