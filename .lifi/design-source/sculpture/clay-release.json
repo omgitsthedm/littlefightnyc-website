@@ -1,0 +1,40 @@
+{
+  "direction": "Owner-approved October 12 clay neighborhood, transparent tile artwork, handmade buttons and public copy pass.",
+  "protectedVeraCopyOverrides": {
+    "vera/index.html": "e9a21fcff910977bf685c437a852526a406464b477cc4298d99a64c5bac1c290",
+    "vera/sw.js": "248615ecc7ebdffb317a61b34e8a91a0e5d412df31664accc9fe8578c91effbc",
+    "vera/brand/index.html": "ffe6165ad99ce5f30ab2f058db47eaee1f8c2452b7c42b7dfc84703d8cd2c9aa",
+    "vera/assets/js/vera-core.js": "e9e5c15b823e3f7a570be46d35b9c56b55e1d3a18a5c1a57ec6a92e263176bd7",
+    "vera/assets/js/vera-app.js": "d4b955771586f3537cd6c4fee0ce2d56dfdf7e378ee111ddc81fb7d288688a96",
+    "vera/assets/js/vera-ledger.js": "5bdcbf42e7b6e569894374b6335329cce925657641a6972d649d1b057a4eecb9"
+  },
+  "assets": {
+    "app/public/assets/clay-library/environment-cloud-cumulus.webp": "3f5f0dfbc0abf5d99fff8cd0dd7dbba9128c299aaf5abef10e9709f698a4b15d",
+    "app/public/assets/clay-library/environment-cloud-wisp.webp": "29cdc4e284309c85e1250cb95e95b5c9489f7be4556fd3bb6b89486e91675280",
+    "app/public/assets/clay-library/environment-desk-plant.webp": "6afef4eba6926b7a87557ad317feb07f7611859fcf2f0a9e167708808ae63d49",
+    "app/public/assets/clay-library/environment-street-lamp.webp": "0a6ec670b37fde379aa156355ea479496f946a2452a92e0e9c3b8e00f7c064bb",
+    "app/public/assets/clay-library/environment-street-tree.webp": "3c997f1624ced9c6c340326a2be297c7fc0d37533829f5543e6c2997ebe8e6fa",
+    "app/public/assets/clay-library/hero-browser-wide.webp": "a0a3d046700ccc75940513e489874871fa735654471aca79b180b4d5e14ba00e",
+    "app/public/assets/clay-library/hero-cat-poses.webp": "428624f43bfbaba97a0efcc7a93adb577e818fbb78a1e49b6e512bcb6985d6f0",
+    "app/public/assets/clay-library/hero-diorama-clean.webp": "23e288cd1747553171dd0c1ff2d4efd2131fd2c22eb1bd3bd55764dfa9671439",
+    "app/public/assets/clay-library/hero-mixed-use-diorama.webp": "e51e5bb00fd6c35048bc9daef8cf05a3b1de67e9a7dc2742570fd4ee78f29325",
+    "app/public/assets/clay-library/hero-neighborhood-open.webp": "66222fa391f6e784393ced1155f387c51779d4051282e612a1d407a80b4c7ede",
+    "app/public/assets/clay-library/hero-neighborhood-shop.webp": "a809c91705a7bba2453a4c2a0acf49916235a52e47f5526fd753627d700d41ee",
+    "app/public/assets/clay-library/hero-pigeon-poses.webp": "1e11d3505156fdb6b3d710d84c7ee2460df9530fe3233acf09cbbb9af422a5e1",
+    "app/public/assets/clay-library/hero-printer-front.png": "bf275fa48e57e2f4f68e673a221b5f2eff62a7c21964ebd71ef7e79be054803c",
+    "app/public/assets/clay-library/hero-printer-front.webp": "a2a78e488d4e70384ba22583f198c830ab8dc20302a165219a3d330fed00b7ab",
+    "app/public/assets/clay-library/hero-printer.webp": "310d5cab2b1488bdc906c3ea9460f67c4a4dea08f2cb0fcabb32451aecadc644",
+    "app/public/assets/clay-library/hero-router-front.png": "957f09e7cbaa04a026714d1baee8bdb3de1fb964fe0449cea307aa26cdebd3f4",
+    "app/public/assets/clay-library/hero-router-front.webp": "c4fd9acb7b7d4585dfd454cdf155dcca16cd0d133da6b4d10775addf2c866ef4",
+    "app/public/assets/clay-library/hero-router.webp": "b0bf8ef2dd334ae9ac02406cd99005cbac4e67989e3d0e07d24ad83f58e6cb17",
+    "app/public/assets/clay-library/hero-small-props.webp": "852a0a466bc12851fd24b982b045f1bb2afd8eecfb50da0b2e2b3573e4174363",
+    "app/public/assets/clay-library/hero-tugboat-tow.webp": "ec5367c952f917d6e42b69a404e0e4096c169c836f958489ccbbed872647bed4",
+    "app/public/assets/clay-library/object-storefront.webp": "38f52ebeac36fb47543a0b67e659a74668b751d3053a6e019c8080c881de03be",
+    "app/public/assets/clay-library/rachel-clay-portrait-yellow.webp": "5b2be5e6bf6b3cf9897698875009ce6cc5747363404fd6be54e2fd8ff1ffc55c",
+    "app/public/assets/clay-library/rachel-clay-portrait.webp": "aaedcac6eabd7d7af70e7a5b1522383665b19df4e0a7650f5552cda01d4ae53f",
+    "app/public/assets/clay-library/symbol-browser.webp": "49d9b796a2e0c05fb8a23c11f0c779904548e1a8b54edcb8518c92b8c9c04bd7",
+    "app/public/assets/clay-library/symbol-tugboat.webp": "acb8b31940708ecae954c1a435156dd83caafa888fdc0f8416a108fd49cc6784",
+    "app/preview-ui/assets/clay-ui/help-button-orange.png": "91d23c4d08c52c5a2a2cb72aceb51b431c0357fa58239274aea90ba3b3fe094c",
+    "app/preview-ui/assets/clay-ui/help-button-orange.webp": "287922e2c5a868c97985bcfa4cf593240513f8150a71923682269db6652c48e5"
+  }
+}

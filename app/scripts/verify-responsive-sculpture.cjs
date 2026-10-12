@@ -34,14 +34,14 @@ async function heroGeometry(page,label){
   }
   for(const link of hero.querySelectorAll('a')){const r=link.getBoundingClientRect();if(r.height<44||r.width<44)issues.push('small action: '+link.textContent)}
   const copy=hero.querySelector('.sculpture-hero-copy>p').getBoundingClientRect();
-  for(const project of hero.querySelectorAll('.hero-project'))if(project.getBoundingClientRect().top<copy.bottom-1)issues.push('project overlaps words');
+  for(const project of hero.querySelectorAll('.clay-hero-project'))if(project.getBoundingClientRect().top<copy.bottom-1)issues.push('project overlaps words');
   const images=[...hero.querySelectorAll('img')];
   // naturalWidth/Height are density-corrected integers for width-descriptor
   // srcsets. At small CSS sizes their rounding can falsely imply stretching.
   // The HTML dimensions come directly from the encoded full-size asset.
   const aspectCorrect=images.every(image=>{const s=getComputedStyle(image),source=[...(image.closest('picture')?.querySelectorAll('source')||[])].find(n=>matchMedia(n.media).matches)||image,ratio=Number(source.getAttribute('width'))/Number(source.getAttribute('height'));return Number.isFinite(ratio)&&Math.abs(parseFloat(s.width)/parseFloat(s.height)-ratio)<.005});
   for(const action of hero.querySelectorAll('.sculpture-hero-actions a')){const r=action.getBoundingClientRect(),hit=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);if(r.bottom<=innerHeight&&r.top>=0&&hit!==action&&!action.contains(hit))issues.push('hero action is covered');}
-  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:images.length===1&&aspectCorrect&&images.every(image=>image.complete&&image.naturalWidth>0)};
+  return {issues,overflow:document.documentElement.scrollWidth>innerWidth+1,viewport:[innerWidth,innerHeight],imageLoaded:images.length===4&&aspectCorrect&&images.every(image=>image.complete&&image.naturalWidth>0)};
  });
  check(label+' readable hero, 44px actions, undistorted responsive artwork and no overflow',!result.overflow&&result.imageLoaded&&!result.issues.length,result);
 }

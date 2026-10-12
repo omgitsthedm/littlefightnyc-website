@@ -497,31 +497,31 @@
      ================================================================ */
 
   var CHECKS = [
-    { id: 'water', group: 'Systems', label: 'Run the shower AND the sink together', why: 'Pressure dies in old buildings when two fixtures compete.' },
-    { id: 'hotwater', group: 'Systems', label: 'Time the hot water', why: 'Over a minute to warm up is a boiler that will fail you in February.' },
-    { id: 'heat', group: 'Systems', label: 'Find the radiator valve', why: 'Steam heat with no working valve means a 85° apartment all winter with the windows open.' },
+    { id: 'water', group: 'Systems', label: 'Run the shower AND the sink together', why: 'Check whether pressure drops when both taps run. Ask about any problem you notice.' },
+    { id: 'hotwater', group: 'Systems', label: 'Time the hot water', why: 'Note how long it takes to warm up. Ask about recent hot-water problems and any repairs.' },
+    { id: 'heat', group: 'Systems', label: 'Find the radiator valve', why: 'Ask how heat is controlled and who handles a repair. Do not adjust unfamiliar valves during a viewing.' },
     { id: 'ac', group: 'Systems', label: 'Check for an AC sleeve or window that fits a unit', why: 'Some leases and some windows make a summer unit impossible.' },
-    { id: 'outlets', group: 'Systems', label: 'Count outlets in every room', why: 'Two outlets per room means extension cords forever.' },
-    { id: 'ceiling', group: 'Damage', label: 'Look up — ceiling stains or fresh paint patches', why: 'A fresh white square on an old ceiling is a leak someone painted over.' },
+    { id: 'outlets', group: 'Systems', label: 'Count outlets in every room', why: 'Check whether the outlets fit your needs. Ask about safe options before relying on extension cords.' },
+    { id: 'ceiling', group: 'Damage', label: 'Look up — ceiling stains or fresh paint patches', why: 'Ask what caused any stain or paint patch, when it was repaired, and whether a leak is still active.' },
     { id: 'undersink', group: 'Damage', label: 'Open the cabinet under the sink', why: 'Roach traps, droppings, and water damage all live under there.' },
     { id: 'corners', group: 'Damage', label: 'Check corners and baseboards for gaps', why: 'Gaps are mouse highways. Steel wool is a tell someone already fought this.' },
-    { id: 'floor', group: 'Damage', label: 'Set a pen on the floor', why: 'If it rolls, the building has settled — check the walls for cracks too.' },
-    { id: 'windowview', group: 'Light + air', label: 'What is actually outside each window', why: 'Airshaft and brick-wall views are legal and soul-crushing.' },
-    { id: 'direction', group: 'Light + air', label: 'Which way do the windows face', why: 'North-facing means no direct sun, ever.' },
+    { id: 'floor', group: 'Damage', label: 'Set a pen on the floor', why: 'An uneven floor is worth asking about. It does not tell you the cause or whether the building is safe.' },
+    { id: 'windowview', group: 'Light + air', label: 'What is actually outside each window', why: 'Check the view, daylight, and ventilation yourself. A listing photo may leave those details out.' },
+    { id: 'direction', group: 'Light + air', label: 'Which way do the windows face', why: 'Light changes with the time of day, season, and nearby buildings. Visit at a time that matters to you.' },
     { id: 'windowop', group: 'Light + air', label: 'Open and lock every window', why: 'Painted-shut windows are both a comfort and a fire-safety problem.' },
     { id: 'noise', group: 'Life', label: 'Stand still and listen for 60 seconds', why: 'Bar, bus line, elevated train, upstairs dog — all invisible at 2pm on a Tuesday.' },
-    { id: 'cell', group: 'Life', label: 'Check phone bars in the back room', why: 'Thick pre-war walls kill signal. Ask if the wifi provider is a monopoly here.' },
-    { id: 'packages', group: 'Life', label: 'Ask where packages land', why: 'No mailroom and a street-level door means porch piracy every week.' },
+    { id: 'cell', group: 'Life', label: 'Check phone bars in the back room', why: 'Test a call where you would work or sleep. Ask which internet providers serve the building.' },
+    { id: 'packages', group: 'Life', label: 'Ask where packages land', why: 'Ask where deliveries are left, who can enter, and how missing packages are handled.' },
     { id: 'laundry', group: 'Life', label: 'Laundry in the building? Where is the nearest one?', why: 'A five-block laundromat walk is a real weekly tax.' },
     { id: 'trash', group: 'Life', label: 'Find the trash area and smell it', why: 'You will be walking past it every day.' },
     { id: 'neighbor', group: 'People', label: 'Knock on a neighbor door and ask about the landlord', why: 'Thirty seconds with a neighbor beats any listing description.' },
-    { id: 'super', group: 'People', label: 'Ask if there is a super and how fast they answer', why: 'The difference between a same-day fix and a three-week outage.' },
+    { id: 'super', group: 'People', label: 'Ask if there is a super and how fast they answer', why: 'Ask who handles repairs, how to report them, and what happens after hours.' },
     { id: 'unit', group: 'Paper', label: 'Confirm this is THE unit, not "a similar one"', why: 'Bait-and-switch is the oldest move in the book.' },
-    { id: 'legal', group: 'Paper', label: 'Is it a legal unit? (basement/cellar especially)', why: 'Illegal conversions have no protection and can be vacated by the city.' },
+    { id: 'legal', group: 'Paper', label: 'Is it a legal unit? (basement/cellar especially)', why: 'Check the permitted use with DOB. An illegal conversion may be unsafe and can face a vacate order; get qualified advice about your rights.' },
     { id: 'rider', group: 'Paper', label: 'If it may be stabilized, ask for the rent-stabilization rider', why: 'A stabilized vacancy or renewal lease must include the state rider. Missing it is a reason to verify the unit — not proof that the unit is unregulated.' },
     { id: 'stab', group: 'Paper', label: 'Ask the outgoing tenant for the rent history', why: 'HCR treats rent histories as confidential: it releases them to the legal tenant, owner, or an authorized representative. The history is mailed to the apartment, so an outgoing tenant can share theirs; once you are the legal tenant, request your own.' },
-    { id: 'oddrent', group: 'Paper', label: 'Notice if the rent is an odd number', why: 'A rent like $1,187.59 rather than a round $1,200 is a classic sign of a regulated increase calculated off a legal rent.' },
-    { id: 'lease', group: 'Paper', label: 'Read who pays the broker, in writing', why: 'Under the FARE Act, a landlord-hired broker cannot bill you a fee. Keep the fee conversation in text or email — a sudden insistence on a phone call is about the paper trail.' },
+    { id: 'oddrent', group: 'Paper', label: 'Ask how the rent was set', why: 'An exact dollar-and-cent amount does not establish rent regulation. Ask about the unit’s status and check the lease, rider, and available rent history.' },
+    { id: 'lease', group: 'Paper', label: 'Read who pays the broker, in writing', why: 'Under the FARE Act, a landlord-hired broker cannot bill you a fee. Ask who hired the broker, get the fee terms in writing, and keep them with the lease.' },
   ];
 
   function checkGroups() {
@@ -535,22 +535,22 @@
      ================================================================ */
 
   var TELLS = [
-    { t: 'The price is good but not absurd', d: 'The professional version never uses a $1,400 West Village one-bedroom. It shaves 15% off market — cheap enough to move fast, plausible enough to survive a gut check. Compare against the building’s own last-rented price, not your hopes.', k: 'price' },
-    { t: 'Nobody has proven they own it', d: 'The most expensive scams in this city all collapse to one unanswered question: is this person the owner, the managing agent, or a stranger with a set of keys? A real tour and a real-looking lease prove neither. Look the owner up before you look at the apartment.', k: 'who' },
-    { t: 'One phone number, thirty listings', d: 'Search the phone number and the email. Scaled operations reuse contact details across dozens of listings under different names in different neighborhoods. One search ends it.', k: 'who' },
-    { t: 'A lease that looks completely legitimate', d: 'A DocuSign lease requires no verification of the sender. Renters have signed real-looking leases, wired real money, and arrived to find twenty other people with the same lease for the same unit.', k: 'paper' },
-    { t: '"I am out of the country"', d: 'Missionary, oil rig, deployment, sick relative abroad. Same script for a decade, usually paired with "view it through the windows and we will mail the keys."', k: 'story' },
+    { t: 'The price is good but not absurd', d: 'A believable price can still appear in a false listing. Compare similar units, check the listing history, and verify who has authority to rent the apartment.', k: 'price' },
+    { t: 'Nobody has proven they own it', d: 'A tour and a polished lease do not prove that someone can rent you the unit. Check the owner in public records and confirm the agent’s authority through a separate, trusted contact.', k: 'who' },
+    { t: 'One phone number, thirty listings', d: 'Search the phone number and email for other listings. Conflicting names or details are reasons to check further, not proof of fraud on their own.', k: 'who' },
+    { t: 'A lease that looks completely legitimate', d: 'An electronic signature service does not prove ownership of an apartment. Confirm the unit, the person offering it, and their authority before signing or paying.', k: 'paper' },
+    { t: '"I am out of the country"', d: 'If the owner is away, ask who can show the exact unit and prove they are allowed to rent it. Verify that person through a separate contact before sending money.', k: 'story' },
     { t: 'Extra money before the tenancy', d: 'For a standard residential rental, the landlord cannot demand an extra holding, good-faith, reservation, or key fee before or at the beginning of the tenancy. Lawful rent and up to one month of security may still be due under the lease. Get every amount itemized and reject off-the-books extras.', k: 'law' },
-    { t: 'Zelle, Venmo, wire, gift cards', d: 'Irreversible by design — that is the entire reason they were requested. A real landlord takes a check or an ACH transfer against a signed lease.', k: 'money' },
-    { t: '"You hired me by emailing me"', d: 'The most common FARE Act dodge. It does not work: publishing a listing creates a legal presumption the landlord authorised the broker, and conditioning a rental on engaging an agent is barred outright.', k: 'law' },
-    { t: 'A cheaper rent with a bigger fee', d: 'Offered a choice between $4,250 rent with a $3,600 fee, or $3,800 rent with a $6,840 fee? That is not a favour, it is fee laundering — and the owner often has no idea their rent is being quoted high.', k: 'law' },
-    { t: 'An application fee over $20', d: 'Credit and background checks cost the actual cost or $20, whichever is less. Bring a qualifying credit or background report from the last 30 days and the fee must be waived. A "$500 processing fee" is not a red flag, it is illegal.', k: 'law' },
-    { t: 'A tip for the super', d: 'Key money by another name. A demand for a few hundred dollars "for the super" before move-in is illegal, and brokers who ask for it know exactly what they are doing.', k: 'law' },
-    { t: '"Let us just talk on the phone"', d: 'Insisting on a call after you asked in writing is a paper-trail problem, not a friendliness problem. Keep every fee conversation in text or email.', k: 'paper' },
-    { t: 'Days on market reset to three', d: 'The same tired unit gets relisted — sometimes with the unit number flipped from #A1 to #1A — to wipe the counter. Four months of sitting reappears as brand new inventory.', k: 'dupe' },
-    { t: 'The listing is already rented', d: 'Plenty of live listings are pure lead bait. "Oh, that one is gone, but I have something similar" is a sales funnel, not an accident.', k: 'dupe' },
-    { t: 'A virtual doorman is not a doorman', d: 'Neither is a shared courtyard a "private outdoor space." Amenity checkboxes are filled in to win filters, not to describe the apartment.', k: 'photos' },
-    { t: 'Net effective rent', d: 'The advertised number is often after a free month. Judge the lease on gross rent — the net figure is mostly a promise to raise your rent at renewal.', k: 'money' },
+    { t: 'Zelle, Venmo, wire, gift cards', d: 'Verify the recipient and rental before sending money. Check the payment service’s recovery rules. Pressure to pay by gift card or another hard-to-recover method is a reason to stop and investigate.', k: 'money' },
+    { t: '"You hired me by emailing me"', d: 'The FARE Act bars making a rental depend on hiring a broker. A broker who posts a listing is presumed to have the landlord’s permission, though that presumption can be challenged. Ask for the fee terms in writing.', k: 'law' },
+    { t: 'A cheaper rent with a bigger fee', d: 'Ask for the gross rent, every fee, and who hired the broker in writing. A lower advertised rent does not make an otherwise unlawful broker fee lawful. Check the terms with DCWP or a qualified adviser.', k: 'law' },
+    { t: 'An application fee over $20', d: 'For a standard residential rental, credit and background checks are limited to the actual cost or $20, whichever is less. A qualifying report from the last 30 days waives that fee. The law has exceptions, including certain co-op ownership applications; check the source for your situation.', k: 'law' },
+    { t: 'A tip for the super', d: 'For a standard residential rental, a required extra payment to receive the keys may violate the fee rules. Ask for every charge in writing and check it against the official guidance.', k: 'law' },
+    { t: '"Let us just talk on the phone"', d: 'A phone call can be useful, but ask for the agreed rent, fees, and promises in writing. Save the reply with the listing and lease.', k: 'paper' },
+    { t: 'Days on market reset to three', d: 'Compare the address, unit number, photos, and older listings. A new posting date may not show how long the apartment has been offered. Ask about any conflicting details.', k: 'dupe' },
+    { t: 'The listing is already rented', d: 'A listing can stay online after a unit is rented. Confirm the exact unit and availability before arranging a viewing or sending an application.', k: 'dupe' },
+    { t: 'A virtual doorman is not a doorman', d: 'Ask what each amenity includes. A video entry system differs from an on-site doorman, and a shared courtyard differs from private outdoor space.', k: 'photos' },
+    { t: 'Net effective rent', d: 'Net effective rent spreads a discount across the lease term. Check the gross monthly rent, when each payment is due, and whether the discount continues at renewal.', k: 'money' },
   ];
 
   /* ================================================================
@@ -606,18 +606,19 @@
      ================================================================ */
 
   var VERIFY_TOOLS = [
-    ['Who Owns What', 'https://whoownswhat.justfix.org/', 'See every other building the same owner controls. Free, open source, and the tool New Yorkers recommend to each other most.'],
+    ['Who Owns What', 'https://whoownswhat.justfix.org/', 'Explore buildings linked through public ownership records. Check the source and matching details before drawing a conclusion.'],
     ['HPD Online', 'https://hpdonline.nyc.gov/', 'Violations by class, complaints, and the registered owner. Class C means immediately hazardous.'],
-    ['ACRIS', 'https://a836-acris.nyc.gov/', 'The deed and the mortgage. Confirms who actually owns the building — and whether the asking rent could plausibly carry it.'],
+    ['ACRIS', 'https://a836-acris.nyc.gov/', 'Search recorded deeds and mortgages. Check the property and recording date when identifying an owner.'],
     ['DOB Building Information', 'https://a810-bisweb.nyc.gov/', 'Permits, complaints, and the Certificate of Occupancy that tells you whether the unit is even legal.'],
     ['NY licence check', 'https://appext20.dos.ny.gov/nydos/selSearchType.do', 'Every real broker holds a licence. Search the name before you send anything.'],
-    ['311 complaint history', 'https://portal.311.nyc.gov/', 'Heat and hot water outages by date. A building that lost heat five times last winter will do it again.'],
+    ['311 complaint history', 'https://portal.311.nyc.gov/', 'Review heat and hot-water complaints by date. Ask what was repaired and check later records; past complaints do not predict the next outage.'],
   ];
 
   /* The Field Manual’s legal claims point back to the primary public record.
      These are not a substitute for legal advice; they are the source a renter
      can check before deciding what to pay or sign. */
   var LAW_SOURCES = [
+    ['NYS tenant rights guide', 'https://ag.ny.gov/publications/residential-tenants-rights-guide', 'Security deposits, return deadlines, and the distinction between regulated and non-regulated units.'],
     ['NYS fee and screening rule', 'https://www.nysenate.gov/legislation/laws/RPP/238-A', 'Application, screening, and pre-tenancy payment limits in Real Property Law §238-a.'],
     ['NYC broker-fee rule', 'https://www.nyc.gov/site/dca/about/FAQ-Broker-Fees.page', 'DCWP’s current FARE Act guidance and complaint path.'],
     ['HCR rent-history access', 'https://hcr.ny.gov/most-common-rent-regulation-issues-tenants', 'Who can obtain a rent history and how HCR delivers it.'],

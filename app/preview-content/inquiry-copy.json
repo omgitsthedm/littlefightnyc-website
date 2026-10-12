@@ -3,7 +3,7 @@
     "accent": "#92BFFF",
     "eyebrow": "Websites · a first look",
     "title": "Make your business easy to choose.",
-    "summary": "Tell us what customers need to find, understand, or do. We’ll look at the path and send a clear next step.",
+    "summary": "Share your site, or tell us you need your first one. What should a customer be able to find or do there? We’ll review it and explain where to start.",
     "messageLabel": "What should your website make easier?",
     "placeholder": "For example: customers cannot tell what we do, we need a first website, or booking is hard to find.",
     "submit": "Send my website request"
@@ -12,7 +12,7 @@
     "accent": "#F5D95B",
     "eyebrow": "Support · a first look",
     "title": "Get your day moving again.",
-    "summary": "Tell us what stopped working or keeps slowing everyone down. We’ll help name the next useful move.",
+    "summary": "Tell us what stopped working, when it started, and who is affected. We’ll review the issue and confirm what help we can offer.",
     "messageLabel": "What needs support?",
     "placeholder": "For example: our Wi-Fi drops, the register is unreliable, or we cannot get into an account.",
     "submit": "Send my support request"
@@ -20,26 +20,26 @@
   "consulting": {
     "accent": "#A0DF85",
     "eyebrow": "Consulting · a first look",
-    "title": "Make a confident next move.",
-    "summary": "Tell us what needs a clear decision before you change it. We’ll help map the next useful move.",
+    "title": "Check the plan before you spend.",
+    "summary": "Share the quote, software bill, or decision you are weighing. We’ll look at what your business needs and explain the options.",
     "messageLabel": "What needs a clearer plan?",
-    "placeholder": "For example: we are choosing a new tool, our customer handoffs are messy, or we need to know what to keep.",
+    "placeholder": "For example: we have two tools that do the same job, a vendor sent a quote, or we need to choose booking software.",
     "submit": "Send my consulting request"
   },
   "systems": {
     "accent": "#F09BDD",
     "eyebrow": "Custom software · a first look",
-    "title": "Plan software that fits your business.",
-    "summary": "Tell us where a repeated handoff breaks down. We’ll help decide whether to keep, connect, replace, or build.",
+    "title": "Make the repeat work easier.",
+    "summary": "Describe one task that gets copied, delayed, or lost between tools. We’ll check whether the tools you have can do the job before proposing a build.",
     "messageLabel": "What should work together?",
-    "placeholder": "For example: staff copy the same information between tools, a client handoff gets lost, or a repeat job needs a simpler system.",
+    "placeholder": "For example: staff type each order twice, approvals get lost in messages, or a weekly report takes hours to put together.",
     "submit": "Send my software request"
   },
   "general": {
     "accent": "#FF7839",
     "eyebrow": "Free first look",
-    "title": "Get a clear next step.",
-    "summary": "Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.",
+    "title": "Start with what is getting in the way.",
+    "summary": "A website link, an error message, or a few lines about the business are enough to start. We’ll take a free first look and explain what we can help with.",
     "messageLabel": "What would you like to improve or fix?",
     "placeholder": "For example: We have no website yet and customers find us on Instagram, we need online booking, or a tool is slowing us down.",
     "submit": "Send my first-look request"

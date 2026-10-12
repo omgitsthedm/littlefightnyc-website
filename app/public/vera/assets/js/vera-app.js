@@ -1891,7 +1891,7 @@
       moveInWatch = '<aside class="movein-watch" aria-label="Move-in law watch"><b>Signed ' + esc(selectedCase.signedAt) + '</b>' +
         (daysSinceSigning < 7 ? '<span>Day one: request the rent history; New York State mails it to the apartment.</span>' : '') +
         '<span>' + (daysToRenewalWatch > 0 ? 'Renewal watch in ' + daysToRenewalWatch + ' days.' : 'Renewal window: start the conversation.') + '</span>' +
-        '<span>At move-out: deposit back in ' + C.LAW.depositReturnDays + ' days, itemized, by law.</span></aside>';
+        '<span>For non-regulated units: deposit return and itemized deductions are due within ' + C.LAW.depositReturnDays + ' days of move-out. Regulated units have different return rules.</span></aside>';
     }
 
     page.innerHTML =

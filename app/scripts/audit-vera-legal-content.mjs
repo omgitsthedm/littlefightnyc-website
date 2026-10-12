@@ -29,6 +29,7 @@ const sources = [
   "https://hcr.ny.gov/most-common-rent-regulation-issues-tenants",
   "https://hcr.ny.gov/fact-sheet-2",
   "https://www.nyc.gov/pl/main/services/rent-increase-guide",
+  "https://ag.ny.gov/publications/residential-tenants-rights-guide",
 ];
 const failures = [];
 
@@ -85,6 +86,9 @@ mustNotContain("vera-app.js", app, "upheld on appeal July 2026");
 
 mustContain("vera-ledger.js", ledger, "actual cost or $20, whichever is less");
 mustContain("vera-ledger.js", ledger, "before or at the beginning of the tenancy");
+mustContain("vera-ledger.js", ledger, "For non-regulated apartments");
+mustContain("vera-ledger.js", ledger, "Rent-regulated apartments have different return rules");
+mustNotContain("vera-ledger.js", ledger, "a broker fee wearing a disguise");
 mustNotContain("vera-ledger.js", ledger, "any money before lease signing");
 mustNotContain("vera-ledger.js", ledger, "before the lease is executed");
 
@@ -95,11 +99,11 @@ mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord
 
 for (const asset of [
   "./assets/css/vera.css?v=62",
-  "./assets/js/vera-core.js?v=51",
+  "./assets/js/vera-core.js?v=52",
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=60",
-  "./assets/js/vera-ledger.js?v=58",
-  "./assets/js/vera-app.js?v=62",
+  "./assets/js/vera-ledger.js?v=59",
+  "./assets/js/vera-app.js?v=63",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);
   mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
@@ -130,7 +134,7 @@ const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
 if (glyphBytes > 105_000_000) {
   failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v15");
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v16");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

@@ -18,7 +18,7 @@
     {
       "id": "platform",
       "question": "Should I use a website builder or hire someone to build my site?",
-      "answer": "Choose the option that keeps your accounts in your name and makes the customer path clear from the first screen.",
+      "answer": "A website builder can suit a simple site when you have time to write, build, and update it. Hire help when the design, writing, booking setup, or upkeep takes more time than you can give it.",
       "detail": "We compare the pages, updates, and connections your business needs, then say when a simpler setup is enough and when custom work earns its place.",
       "nextStep": "Show us the site you have and the customer action it needs to support."
     },
@@ -46,9 +46,9 @@
     {
       "id": "cost",
       "question": "How much does a small business website cost?",
-      "answer": "A useful website quote reflects the pages, words, photos, and connections your business actually needs, not a package someone guessed at.",
+      "answer": "The price depends on how many pages you need, who supplies the content, and which tools must connect. We review those with you, then write down the scope and price before paid work starts.",
       "detail": "Current terms are 50% to start and 50% on hosting, with no monthly hosting fee. Domain renewals and optional paid tools stay separate; monthly checks, upgrades, and changes are free within the agreed scope.",
-      "nextStep": "Tell us what customers need to understand or do on the new site."
+      "nextStep": "Tell us what customers need to do on the new site."
     },
     {
       "id": "web-domain-renewal",
@@ -68,7 +68,7 @@
       "id": "web-homepage-priority",
       "question": "What should I write on a homepage when I have too many services to explain?",
       "answer": "A homepage earns its place when a new visitor quickly sees the problem you solve and where to go next.",
-      "detail": "We turn your customer questions into a few clear paths, then add the proof and service detail each path needs to carry a decision.",
+      "detail": "Lead with the work customers ask for most. Give each service a clear name, a short explanation, and a link to the details people need before they call.",
       "nextStep": "Tell us the questions you hear before someone chooses your business."
     },
     {
@@ -81,7 +81,7 @@
     {
       "id": "web-redesign-decision",
       "question": "Does my small business website need a rebuild or a few focused fixes?",
-      "answer": "A rebuild earns its cost when the platform, pages, ownership, or customer path keeps fighting the business every day.",
+      "answer": "Start with repairs when the site still fits your business and the main tools work well. A rebuild may make sense when the system cannot support the pages, tools, or changes you need.",
       "detail": "We review what a customer sees, what your team maintains, and what is worth preserving before recommending repairs or a new structure.",
       "nextStep": "Show us one service page and the path a customer takes to contact you."
     },
@@ -109,7 +109,7 @@
     {
       "id": "website",
       "question": "What pages does a small business website need before it launches?",
-      "answer": "A first website needs enough pages to explain the business, show the services, prove the work, and make contact simple.",
+      "answer": "Start with the services you offer, work people can see, and a clear way to contact you. Add pages when they answer a different customer question.",
       "detail": "We plan the first useful path, then aim to launch in six weeks or less once scope and supplied materials are agreed.",
       "nextStep": "Tell us what a customer should understand before they contact you."
     },
@@ -158,14 +158,14 @@
     {
       "id": "web-site-health-check",
       "question": "What should I check after a website update goes live?",
-      "answer": "A website update is finished when the customer path it touched still looks right, works on a phone, and reaches the business.",
+      "answer": "After an update, use a phone to test every page, link, or button that you changed. Follow each link or button you changed and check that any form, booking, or payment still reaches the right place.",
       "detail": "We test the pages, forms, links, booking, or checkout involved, then leave a short record of what changed for the next update.",
       "nextStep": "Send the update you made and the customer action it was meant to improve."
     },
     {
       "id": "web-hosting-ownership",
       "question": "What should a business know about website hosting before changing providers?",
-      "answer": "A hosting move needs a clear account owner, domain registrar, renewal contact, email dependencies, and backup plan before anything changes.",
+      "answer": "Before moving a site, find out who controls its hosting, domain, and email and how they connect. Check how email is connected, keep a backup, and agree on how to restore the old setup if needed.",
       "detail": "We map what the site depends on, keep the business as the account owner, and plan the move around the pages customers rely on.",
       "nextStep": "Send the hosting provider and domain details before you end any service."
     },

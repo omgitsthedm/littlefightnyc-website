@@ -23,7 +23,9 @@ export default function Thanks() {
     let storedReplyRoute = null;
     let storedReportId = "";
     let storedDiscoverySource = "";
+    let storedSubmission = false;
     try {
+      storedSubmission = window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.submitted) === "true";
       storedIntent = parseTechAuditLeadIntent(
         window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.intent),
       );
@@ -43,13 +45,14 @@ export default function Thanks() {
 
     const reportId = query.reportId || storedReportId;
     return {
+      hasSubmissionContext: query.submitted || storedSubmission,
       leadIntent: query.intent ?? storedIntent ?? (reportId ? "website" : "general"),
       replyRoute: query.replyRoute ?? storedReplyRoute,
       reportId,
       discoverySource: query.discoverySource || storedDiscoverySource,
     };
   });
-  const { leadIntent, replyRoute, reportId, discoverySource } = confirmation;
+  const { leadIntent, replyRoute, reportId, discoverySource, hasSubmissionContext } = confirmation;
   const replyLanguage = techAuditReplyLanguage(replyRoute);
   const websiteIntent = leadIntent === "website" || Boolean(reportId);
   const trackedRef = useRef(false);
@@ -124,9 +127,11 @@ export default function Thanks() {
   return (
     <div className="lf-thanks">
       <PageHero
-        eyebrow="Message received"
+        eyebrow={hasSubmissionContext ? "Message received" : "Talk with Little Fight"}
         icon={CheckCircle2}
-        title={websiteIntent ? (
+        title={!hasSubmissionContext ? (
+          <>A clear next step<br /> <span className="lf-em">starts here.</span></>
+        ) : websiteIntent ? (
           <>
             Your website message<br />{" "}
             <span className="lf-em">is with us.</span>
@@ -138,13 +143,15 @@ export default function Thanks() {
             <span className="lf-em">with us.</span>
           </>
         )}
-        dek={websiteIntent
+        dek={!hasSubmissionContext
+          ? `Tell us what your business needs or what stopped working. The first conversation is free. Call or text ${PHONE_DISPLAY}; a person answers 9am–9pm Eastern. After hours, leave a message.`
+          : websiteIntent
           ? `You told us what you want. A real person reads it 9am–9pm Eastern and ${replyLanguage.action} with a clear next step. Messages sent after hours wait for the next reply window. The first look is free, and nothing moves until the plan makes sense to you.`
           : `You told us what is stuck. A real person reads it 9am–9pm Eastern. Messages sent after hours wait for the next reply window. If customers are blocked now, call ${PHONE_DISPLAY}.`}
         action={false}
       />
 
-      <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">
+      {hasSubmissionContext && <section className="lf-thanks__handoff" aria-labelledby="thanks-next-title">
         <div className="lf-thanks__handoff-inner">
           <p className="lf-thanks__eyebrow">What happens next</p>
           <h2 id="thanks-next-title">Your message made it to us.</h2>
@@ -170,7 +177,7 @@ export default function Thanks() {
             </li>
           </ol>
         </div>
-      </section>
+      </section>}
 
       {websiteIntent && (
         <section className="lf-thanks__booking" aria-labelledby="thanks-booking-title">
@@ -179,7 +186,7 @@ export default function Thanks() {
               <p className="lf-thanks__eyebrow">A time you choose</p>
               <h2 id="thanks-booking-title">Free second opinion.</h2>
               <p>
-                Your message is already here. Choose a time, and we will look
+                Choose a time, and we will look
                 at the website with you. No prep or commitment.
               </p>
             </div>

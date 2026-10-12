@@ -115,11 +115,11 @@ async function main() {
 
   // --- the manual ---
   const law = `<h2>The money, by law</h2><ul>
-<li>Security deposit: capped at ${C.LAW.depositMaxMonths} month (HSTPA 2019), returned within ${C.LAW.depositReturnDays} days of move-out, itemized.</li>
+<li>Security deposit: generally capped at ${C.LAW.depositMaxMonths} month. For non-regulated units, return and an itemized deduction statement are due within ${C.LAW.depositReturnDays} days of move-out. Regulated units have different return rules; see the tenant guide below.</li>
 <li>Screening fee: the actual cost or $${C.LAW.appFeeMax}, whichever is less — waived with a qualifying credit or background report from the last 30 days.</li>
 <li>Extra fees: for a standard residential rental, a landlord cannot demand an extra holding, reservation, or key fee before or at the beginning of the tenancy. Lawful rent and up to one month of security may still be due under the lease.</li>
 <li>Broker fee: a broker representing the landlord, or publishing their listing with permission, cannot charge you; a broker you independently hire can (FARE Act, in effect since ${esc(C.LAW.fareActFrom)}).</li>
-<li>Income convention: ${C.LAW.incomeRuleX}× monthly rent annually; guarantors are asked for ${C.LAW.guarantorRuleX}×.</li>
+<li>Income convention, not law: some landlords ask for annual income of ${C.LAW.incomeRuleX}× monthly rent, or ${C.LAW.guarantorRuleX}× for a guarantor. Requirements vary.</li>
 </ul><h2>Read the law itself</h2><ul>${C.LAW_SOURCES.map((source) => `<li><a href="${esc(source[1])}" rel="noopener">${esc(source[0])}</a> — ${esc(source[2])}</li>`).join('')}</ul>`;
   const tells = '<h2>Scam School — the sixteen tells</h2>' + C.TELLS.map((t) => `<h3>${esc(t.t)}</h3><p>${esc(t.d)}</p>`).join('');
   const checks = '<h2>The viewing checklist</h2>' + C.checkGroups().map((g) =>
@@ -130,7 +130,7 @@ async function main() {
   mkdirSync(join(DIST_VERA, 'manual'), { recursive: true });
   writeFileSync(join(DIST_VERA, 'manual', 'index.html'), page(
     'Field manual',
-    'New York rent law in hard numbers, sixteen scam tells, and the 26-point viewing checklist — free, no account, from the VERA apartment engine.',
+    'Check rental fees, spot reasons to investigate a listing, and take a practical viewing checklist. VERA links to the official New York sources.',
     law + tells + checks + tools
   ));
 

@@ -4,6 +4,7 @@ No framework boot, external data, form submissions, or analytics transport.
 Every tile opens the same HTML that a direct visitor and crawler receive.
 """
 from pathlib import Path
+import os
 from html import escape, unescape
 from html.parser import HTMLParser
 from urllib.parse import quote, urlsplit
@@ -27,6 +28,7 @@ from retained_answers import render_retained_answers
 from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
+from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -312,12 +314,17 @@ def normalize(p):
     m=p.get('marketContent')
     if m:
         q['summary']=m.get('introduction') or m.get('answer') or m.get('deck') or q['summary']
-        guide_links=([{'label':'Plan the next step +','href':'/services/tech-consulting/'}]
-                     if reader_family(p)=='consulting' else [{'label':'Website design +','href':'/services/custom-local-websites/'}])
+        guide_links=([{'label':'Plan the next step','href':'/services/tech-consulting/'}]
+                     if reader_family(p)=='consulting' else [{'label':'Website design','href':'/services/custom-local-websites/'}])
+        if p.get('marketType') == 'place':
+            for topic_id in m.get('topicIds', []):
+                topic_path = '/markets/'+p['marketId']+'/answers/'+topic_id+'/'
+                if topic_path in pages:
+                    guide_links.append({'label':pages[topic_path]['heading'], 'href':topic_path})
         q['sections']=[{'heading':'A useful starting point','paragraphs':[x for x in [m.get('introductionDetail'),m.get('availability')] if x],'links':guide_links}]
         topics=m.get('topics',[])
         if topics:
-            q['sections'] += [{'heading':t.get('question') or t.get('outcome','Your next step'),'paragraphs':[t.get('answer','')],'bullets':t.get('checklist',[]),'links':[{'label':'Read the full answer','href':'/markets/'+m.get('id',p.get('marketId',''))+'/'+t['id']+'/'}] if '/markets/'+m.get('id',p.get('marketId',''))+'/'+t['id']+'/' in pages else []} for t in topics]
+            q['sections'] += [{'heading':t.get('question') or t.get('outcome','Your next step'),'paragraphs':[t.get('answer','')],'bullets':t.get('checklist',[]),'links':[{'label':t.get('question') or 'Read the full answer','href':'/markets/'+m.get('id',p.get('marketId',''))+'/answers/'+t['id']+'/'}] if '/markets/'+m.get('id',p.get('marketId',''))+'/answers/'+t['id']+'/' in pages else []} for t in topics]
         elif m.get('steps'):
             q['sections'] += [{'heading':s['title'],'paragraphs':[s['body']]} for s in m['steps']]
         q['faqs']=m.get('faqs',[])
@@ -505,7 +512,7 @@ def article(p):
     body+=q.get('extraHtml','')
     if path=='/legal/' and PRODUCTION:
         body+='<p><button type="button" data-production-open-consent>Review analytics choices</button></p>'
-    body+=contact(path,q.get('contactPrompt') or 'Tell us what is getting in the way. We’ll give you a clear next step.')
+    body+=contact(path,q.get('contactPrompt') or 'Send a website link, an error message, or a few lines about the work. We’ll take a free first look and explain what we can help with.')
     if immersive:
         body += '</div></details>'
     else:
@@ -536,7 +543,7 @@ for album in albums:
 pages['/reviews/']={'path':'/reviews/','title':'Google Reviews | Little Fight NYC','heading':'Good people. Kind words.','summary':'Read what clients have shared about working with Little Fight NYC. Every excerpt links to its Google source.','description':'Seven Google reviews of Little Fight NYC, with direct links and first-name-only attribution.','sections':[]}
 pages['/websites-for-your-business/']={'path':'/websites-for-your-business/','title':'Websites for Your Business | Little Fight NYC','heading':'Your business has its own story.','summary':'A roofing company, a salon and a law firm need different things from a website. Start with the customers you want to reach.','description':'Explore website design for trades, home services, law firms and salons across the United States.','sections':[]}
 pages['/tech-audit/']={'path':'/tech-audit/','title':'Tell Us What You Need | Little Fight NYC','heading':'What needs to work better?','summary':'Bring the old website, the rough idea or the problem you cannot quite name. We’ll help you work out the next step.','description':'Call, text or email Little Fight NYC about a new website or a business technology problem.','sections':[]}
-pages['/thanks/']={'path':'/thanks/','title':'Your Next Step | Little Fight NYC','heading':'Thanks for reaching out.','summary':'If you just sent an inquiry, we’ll use the contact details you provided to reply. You can also call, text or email us.','description':'What happens after you contact Little Fight NYC.','sections':[]}
+pages['/thanks/']={'path':'/thanks/','title':'Your Next Step | Little Fight NYC','heading':'Thanks for the note.','summary':'If you just sent an inquiry, we’ll use the contact details you provided to reply. You can also call, text or email us.','description':'What happens after you contact Little Fight NYC.','sections':[]}
 pages['/services/it-support/']={'path':'/services/it-support/','title':'New York Tech Support | Little Fight NYC','heading':'A little help with the everyday tech.','summary':'Computers, Wi-Fi, email and the tools you rely on. Tell us what stopped working so we can discuss the right kind of help.','description':'Practical technology help for New York residents and small businesses. Ask about future on-site availability.','sections':[{'heading':'New York visits, planned with you.','paragraphs':['We are currently prioritizing website projects nationwide. Ask about future New York on-site availability before planning a visit.','Share the issue and your neighborhood. We’ll confirm the scope, timing and available options directly. No appointment is implied by this page.']},{'heading':'Start with the interruption.','bullets':['A computer that will not cooperate.','Wi-Fi that does not reach the rooms you use.','An email account or device that needs attention.','A change of equipment without losing your files.']}]}
 pages['/construction/']={'path':'/construction/','id':'construction-showcase','title':'Websites & Interactive Tools for Builders | Little Fight NYC','heading':'Websites & Interactive Tools for Builders','summary':'Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.','description':'Explore a real contractor website and hands-on design studies for cabinets, buildings and interiors.','family':'software','sections':[]}
 for lab in labs:
@@ -616,16 +623,24 @@ def head(q, home=False):
             graph.append({'@type':'Service','name':q['heading'],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
                           'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'}})
-    elif path == '/how-we-help/' and q.get('faqs'):
+    elif q.get('faqs'):
         graph.append({'@type':'FAQPage', '@id':ORIGIN+path+'#questions',
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
+    graph[2]['inLanguage'] = q.get('language', 'en')
+    if path.startswith('/journal/') and path != '/journal/':
+        graph.append({'@type':'Article', '@id':ORIGIN+path+'#article',
+                      'headline':q.get('heading') or q.get('title'), 'description':q.get('description'),
+                      'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
+                      'author':{'@id':ORIGIN+'/#organization'},
+                      'publisher':{'@id':ORIGIN+'/#organization'},
+                      'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if home and CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
-    question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
+    question_link='<a class="start-button" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a>'
     services=''  # The current master has Websites and Our work in the header.
     return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
 
@@ -712,7 +727,7 @@ mosaic,homepage_inventory=apply_homepage_groups(mosaic,home_groups,hidden_home_i
 mosaic,sculpture_inventory=sculptural_mosaic(mosaic)
 write('sculpture-inventory.json',json.dumps(sculpture_inventory,ensure_ascii=False,indent=2)+'\n')
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
-q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
+q={'path':'/','title':'Little Fight NYC | Websites, Tech Support & Software','description':'Websites, tech support, and custom software for independent businesses. Based in New York, building websites nationwide. Start with a free first look.'}
 home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
@@ -737,12 +752,18 @@ write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC
 # One design system. Retired prototype themes never enter the release cascade.
 css_files = load('import-provenance.json')['activeCssOrder']
 css='\n'.join((UI/name).read_text() for name in css_files)
+if CLAY_LIBRARY:
+    css += '\n' + (UI/'clay-library.css').read_text()
 minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
 write('site.css',minified_css)
 for name in ['tile-motion.js','mosaic-layout.js','sculpture-static.css']:shutil.copy2(UI/'vendor'/name,OUT/name)
 for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js']:shutil.copy2(UI/name,OUT/name)
 shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)
+copy_clay_library(OUT)
+if 'data-hero="clay-neighborhood"' in home:
+    from clay_hero import copy_assets
+    copy_assets(APP/'public', OUT)
 for relative in RETIRED_PUBLISHED_ASSETS:
     target = OUT / relative
     if target.is_file():

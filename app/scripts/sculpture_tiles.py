@@ -8,9 +8,11 @@ from html import escape, unescape
 from html.parser import HTMLParser
 import re
 import json
+import os
 from pathlib import Path
 from functools import lru_cache
 from clay_icons import clay_scene
+from clay_library import art_asset, dimensions as png_dimensions, png_scene
 
 E = lambda value: escape(str(value or ''), quote=True)
 ASSET = '/assets/sculpture/'
@@ -135,6 +137,8 @@ class Attributes(HTMLParser):
 
 @lru_cache(maxsize=None)
 def image_dimensions(name):
+    if asset := art_asset(name):
+        return png_dimensions(asset)
     # Build hosts need only Python's standard library. Read the WebP canvas
     # header instead of importing an image-editing dependency just for its size.
     # https://developers.google.com/speed/webp/docs/riff_container
@@ -167,6 +171,8 @@ def image_dimensions(name):
     raise ValueError(f'WebP canvas dimensions unavailable: {artwork}')
 
 def image(name, cls='', eager=False, alt=''):
+    if asset := art_asset(name):
+        return png_scene(asset, 'sculpture-object ' + cls, eager=eager, alt=alt)
     if name.startswith('clay-'):
         return clay_scene(name, eager=eager)
     variants=DELIVERY.get(name,[])
@@ -256,6 +262,8 @@ def sculptural_mosaic(markup):
         if identity=='speed': attrs['data-featured']='phone'
         if art:
             attrs['data-sculpture-art']=art
+            if asset := art_asset(art):
+                attrs['data-clay-art']=asset
             width,height=image_dimensions(art)
             attrs['data-art-ratio']=str(width/height)
         icon=icon_for(identity,kind,family)
@@ -288,7 +296,8 @@ def sculptural_mosaic(markup):
             front=front.replace('class="sculpture-copy"','class="sculpture-copy lab-tile-copy"').replace('class="sculpture-title"','class="sculpture-title lab-tile-title"').replace('class="sculpture-description"','class="sculpture-description lab-tile-hook"').replace('class="sculpture-lab-action"','class="sculpture-lab-action lab-tile-action"').replace('class="sculpture-art"','class="sculpture-art lab-tile-media"')
             front='<span class="lab-tile-face">'+front+'</span>'
         result='<a '+ ' '.join(f'{key}="{E(value)}"' if value is not None else key for key,value in attrs.items())+'>'+front+'</a>'
-        records.append({'id':identity,'href':attrs.get('href'),'art':art,'icon':icon,'motion':motion,'kind':modifier,'family':family})
+        records.append({'id':identity,'href':attrs.get('href'),'art':art,'icon':icon,'motion':motion,'kind':modifier,'family':family,
+                        **({'pngArt': art_asset(art)} if art_asset(art) else {})})
         if is_service: services.append(result); return ''
         if attrs.get('data-featured'):
             featured[attrs['data-featured']]=result
@@ -303,8 +312,11 @@ def sculptural_mosaic(markup):
     return intro+markup,records
 
 def sculptural_hero():
+    if os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1':
+        from clay_hero import clay_hero
+        return clay_hero()
     return '''<section class="sculpture-hero" data-hero="master-reference" aria-labelledby="home-title">
-<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1><p>You get thoughtful websites and dependable tech,<br class="hero-desktop-break"> with real people <span class="hero-ending">in your corner.</span></p><div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link>Get help <span aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link><span>Explore our work <span aria-hidden="true">+</span></span></a></div></div>
+<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1><p>You get thoughtful websites and dependable tech,<br class="hero-desktop-break"> with real people <span class="hero-ending">in your corner.</span></p><div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link><span>Explore our work <span aria-hidden="true">+</span></span></a></div></div>
 <div class="sculpture-hero-stage">
 <picture class="hero-reference-art"><source media="(max-width: 600px)" srcset="/assets/sculpture/hero-reference-mobile.webp" width="288" height="194"><img src="/assets/sculpture/hero-reference-desktop.webp" width="762" height="337" alt="" loading="eager" decoding="async" fetchpriority="high"></picture>
 <a class="hero-project hero-main" href="/case-studies/chromatic-painting-design/" data-reader-link aria-label="Explore the Chromatic Painting and Design website"></a>

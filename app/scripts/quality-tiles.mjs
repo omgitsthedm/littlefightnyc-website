@@ -92,7 +92,7 @@ async function browserLanes() {
     if (presentation === "sculpture-clay-2026-10-07") {
       run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
       run("node", ["scripts/verify-responsive-sculpture.cjs"], env);
-      run("node", ["scripts/verify-hero-reference.cjs"], env);
+      run("node", ["scripts/verify-clay-hero.cjs"], env);
     }
     run("node", ["scripts/verify-lab-fronts.cjs"], { ...env, LAB_FRONTS_URL: url });
     run("node", ["scripts/verify-construction-labs.cjs"], { ...env, CONSTRUCTION_URL: url });

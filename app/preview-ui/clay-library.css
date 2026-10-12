@@ -1,0 +1,15 @@
+/* Transparent clay PNGs retain their natural materials and alpha edges. */
+.clay-cutout{position:relative;display:block;width:100%;height:100%;isolation:isolate;transform-origin:50% 85%}
+.clay-cutout-rig{display:none;position:absolute;inset:0;pointer-events:none}
+.clay-cutout-rig svg{display:block;width:100%;height:100%;overflow:visible}
+.clay-cutout.is-articulated .clay-cutout-rig{display:block}
+.clay-cutout.is-articulated>.clay-cutout-rest{visibility:hidden}
+#canvas .clay-cutout>.clay-cutout-rest{animation:none!important;transform:none!important;transition:none!important}
+#canvas .sculpture-tile .sculpture-art .clay-png{object-fit:contain;object-position:center;filter:none;max-width:100%;max-height:100%}
+#canvas .sculpture-tile[data-clay-art] .sculpture-art{overflow:visible;mask:none;-webkit-mask:none}
+#canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art] .sculpture-art img{object-fit:contain;object-position:center;filter:none}
+@media(max-width:600px){
+ #canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art]{display:flex;flex-direction:column}
+ #canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art] .sculpture-copy{flex:0 0 auto}
+ #canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art] .sculpture-art{position:relative!important;inset:auto!important;align-self:flex-end;width:76%!important;height:82px!important;min-height:82px;flex:1 0 82px;margin:0 4px 5px}
+}

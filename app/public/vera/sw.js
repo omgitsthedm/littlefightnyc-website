@@ -5,7 +5,7 @@
    badge the staleness instead of pretending the sweep just ran. */
 'use strict';
 
-var SHELL = 'vera-shell-v15';
+var SHELL = 'vera-shell-v16';
 var FEED = 'vera-feed-v2';
 /* Installation stores only the versioned UI shell. Publication data stays out
    of this list so its network-first, visibly timestamped fallback below remains
@@ -24,11 +24,11 @@ var SHELL_ASSETS = [
   '/vera/assets/icons/vera-icon-192.png',
   '/vera/assets/icons/vera-icon-512.png',
   '/vera/assets/icons/vera-icon-maskable-512.png',
-  '/vera/assets/js/vera-core.js?v=51',
+  '/vera/assets/js/vera-core.js?v=52',
   '/vera/assets/js/vera-geo.js?v=60',
   '/vera/assets/js/vera-map.js?v=60',
-  '/vera/assets/js/vera-ledger.js?v=58',
-  '/vera/assets/js/vera-app.js?v=62'
+  '/vera/assets/js/vera-ledger.js?v=59',
+  '/vera/assets/js/vera-app.js?v=63'
 ];
 /* The receipts were left out of this list, so an offline visitor got the
    drop but not the record of every previous drop — on a page whose whole

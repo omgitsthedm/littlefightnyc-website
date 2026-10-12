@@ -419,17 +419,17 @@
           '</div><p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that a 15% broker fee would have taken.</p></div>' +
           '<div class="insp-sec"><h3>What a landlord will ask you to prove</h3>' +
           '<p>Annual income of about <b>' + money(m.annualIncomeNeeded) + '</b> (the 40× convention). Short of that, a guarantor is usually asked to show <b>' + money(m.guarantorIncomeNeeded) + '</b>, or an institutional guarantor will stand in for roughly <b>' + money(m.guarantorCost) + '</b> once.</p>' +
-          '<p class="insp-fine">Income multiples are landlord convention, not law. Private landlords bend them. Corporate portfolios almost never do — which is exactly why VERA points you at the former.</p></div>' +
-          '<div class="insp-sec"><h3>Illegal to ask you for</h3><ul class="bad">' +
+          '<p class="insp-fine">Income multiples are landlord convention, not law. Ask which income records or guarantors the landlord accepts. The figures above are estimates, not approval rules.</p></div>' +
+          '<div class="insp-sec"><h3>Fees to check before you pay</h3><ul class="bad">' +
           '<li>More than ' + money(m.deposit) + ' in security or prepaid rent</li>' +
           '<li>A screening charge above the actual cost or $' + C.LAW.appFeeMax + ' — waived if you bring a qualifying credit or background report from the last 30 days</li>' +
           '<li>A broker fee, if the landlord hired the broker (FARE Act, since ' + C.LAW.fareActFrom + ')</li>' +
           '<li>An extra "good faith," holding, reservation, or key fee before or at the beginning of the tenancy</li>' +
           '<li>Key money, or a "tip for the super" to get the keys</li>' +
-          '</ul><p class="insp-fine">Screenshot the ask and report it to DCWP through 311. Your deposit is also due back within ' + C.LAW.depositReturnDays + ' days of move-out with an itemized list of any deductions. Watch the quiet workaround too: a first month priced higher than every month after it is a broker fee wearing a disguise.</p></div>';
+          '</ul><p class="insp-fine">Save the written request and compare it with the official sources. For non-regulated apartments, the landlord must return the deposit and an itemized list of deductions within ' + C.LAW.depositReturnDays + ' days of move-out. Rent-regulated apartments have different return rules. Ask 311 where to report a fee you believe is unlawful.</p></div>';
       }
       html += '<div class="insp-sec"><h3>What you give up here</h3>' +
-        '<p class="insp-fine">Owner-direct is where the fair deals and the human negotiation live. It is also, often, where the least legal protection lives. VERA would rather you knew.</p>' +
+        '<p class="insp-fine">Renting from an owner does not tell you which laws cover the apartment. Building size, rental history, and exemptions matter. These are starting points to check, not a decision about your rights.</p>' +
         C.protections(l).map(function (p) {
           var cls = p.state === 'likely in' ? 'is-good' : p.state === 'likely out' ? 'is-bad' : 'is-unk';
           return '<div class="prot ' + cls + '"><span class="prot__state">' + p.state + '</span>' +

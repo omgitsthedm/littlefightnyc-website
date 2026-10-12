@@ -54,8 +54,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .primary-nav{display:flex;align-items:center;gap:4px;margin-right:auto}
 .primary-nav a,.pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 14px;border:0;border-radius:999px;background:transparent;color:#e8e6e2;font:700 16px/1 'Atkinson Hyperlegible Next',Arial,sans-serif;text-decoration:none;white-space:nowrap}
 .primary-nav a:hover,.primary-nav a:focus-visible,.pill:hover,.pill:focus-visible{background:#25252a}
-.primary-nav .start-button{background:var(--lf-orange);color:#160c07}.primary-nav .start-button:hover,.primary-nav .start-button:focus-visible{background:#ff9a70;color:#160c07}
-.primary-nav .start-button__short{display:none}
+.primary-nav .start-button,.sculpture-help{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:20px;background:transparent;color:#241208;font-weight:700;line-height:1.1;text-decoration:none;text-shadow:0 1px 0 #ffd5ad66,0 -1px 1px #73341b33;box-shadow:none;transform-origin:center;transition:translate .18s ease,scale .12s ease}
+/* Native clay surface, with live type above it. The small inner fill also
+   keeps the label readable while the transparent artwork is loading. */
+.primary-nav .start-button::before,.sculpture-help::before{content:'';position:absolute;z-index:-1;inset:-8px -5px -6px;pointer-events:none;background-image:url('/assets/clay-ui/help-button-orange.png'),linear-gradient(#ef9157,#ef9157);background-image:image-set(url('/assets/clay-ui/help-button-orange.webp') type('image/webp'),url('/assets/clay-ui/help-button-orange.png') type('image/png')),linear-gradient(#ef9157,#ef9157);background-position:center;background-size:100% 100%,80% 55%;background-repeat:no-repeat;filter:drop-shadow(0 5px 3px #0008);transition:filter .18s ease}
+.primary-nav .start-button:is(:hover,:focus-visible),.sculpture-help:is(:hover,:focus-visible){background:transparent;color:#241208}
+.primary-nav .start-button:is(:hover,:focus-visible)::before,.sculpture-help:is(:hover,:focus-visible)::before{filter:drop-shadow(0 7px 4px #0009)}
+.primary-nav .start-button:focus-visible,.sculpture-help:focus-visible{outline:2px solid var(--lf-paper);outline-offset:6px}
+.primary-nav .start-button:active,.sculpture-help:active{scale:.96;translate:0 1px}
+.primary-nav .start-button:active::before,.sculpture-help:active::before{filter:drop-shadow(0 1px 1px #0007)}
+.help-button__plus{display:inline-flex;align-items:center;justify-content:center;flex:none;width:.75em;height:1em;font-size:1.15em;line-height:1;translate:0 -.035em}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){.primary-nav .start-button:hover,.sculpture-help:hover{translate:0 -1px}}
+@media(prefers-reduced-motion:reduce){.primary-nav .start-button:active,.sculpture-help:active{scale:1;translate:none}}
+@media(forced-colors:active){.primary-nav .start-button,.sculpture-help{border:1px solid ButtonText;background:ButtonFace;color:ButtonText;text-shadow:none}.primary-nav .start-button::before,.sculpture-help::before{display:none}}
 .topbar :is(#explore-toggle,#motion-toggle){gap:8px;min-width:44px;color:var(--lf-paper)}
 
 .site-footer{display:block;width:100%;margin-top:clamp(44px,8vw,104px);padding:24px 0 0;border-top:1px solid #3a3a40}
@@ -96,13 +107,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .primary-nav a{padding-inline:4px;font-size:15px}
 }
 
-/* Keep the three header actions in one useful phone row.  The source keeps the
-   complete accessible name; this is only the compact visible label. */
+/* Keep the three header actions in one useful phone row. */
 @media (max-width:440px){
   .primary-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
   .primary-nav .start-button{grid-column:auto;justify-self:stretch;padding-inline:5px}
-  .primary-nav .start-button__long{display:none}
-  .primary-nav .start-button__short{display:inline;font-size:15px;line-height:1;white-space:nowrap}
+  .primary-nav .start-button{gap:7px;font-size:16px;line-height:1.1;white-space:nowrap}
 }
 
 @media (prefers-reduced-motion:reduce){

@@ -99,10 +99,18 @@ async function materialMotion(browser,inventory){
   await card.focus();await delay(50);
   const animation=await card.evaluate(card=>{
    const inspect=selector=>{const node=card.querySelector(selector);const style=getComputedStyle(node);const active=node.getAnimations().find(a=>a.playState==='running');return {name:style.animationName,transform:style.transform,duration:active?.effect.getTiming().duration,iterations:active?.effect.getTiming().iterations}};
-   return {...(card.dataset.sculptureKind==='review'||card.querySelector('[data-clay-icon]')?{}:{art:inspect('.sculpture-art img')}),icon:inspect('.sculpture-symbol')};
+   return {...(card.dataset.sculptureKind==='review'||card.querySelector('[data-clay-icon],[data-clay-cutout]')?{}:{art:inspect('.sculpture-art img')}),icon:inspect('.sculpture-symbol')};
   });
   rows.push({id:tile.id,...animation});
   check(tile.id+' has visible finite material and icon motion',Object.values(animation).every(a=>a.name.startsWith('sculpture-')&&a.transform!=='none'&&a.duration>=250&&a.duration<=400&&a.iterations===1),animation);
+  if(await card.locator('[data-clay-cutout]').count()){
+   const cutout=card.locator('[data-clay-cutout]');
+   await page.waitForFunction(id=>{const s=document.querySelector(`[data-answer="${id}"] [data-clay-cutout]`);return s?.dataset.clayRunning==='true'&&Number(s.dataset.clayPose)>0;},tile.id,{timeout:5000});
+   const moving=await cutout.evaluate(s=>({poster:s.querySelector('img').currentSrc,parts:[...s.querySelectorAll('[data-cutout-part]')].map(n=>n.getAttribute('transform')),transform:s.style.transform}));
+   check(tile.id+' moves its clay cutout or separate sculpted parts',moving.parts.some(Boolean)||Boolean(moving.transform),moving);
+   await page.waitForFunction(id=>document.querySelector(`[data-answer="${id}"] [data-clay-cutout]`)?.dataset.clayRunning==='false',tile.id,{timeout:3000});
+   check(tile.id+' returns to the identical transparent PNG at rest',await cutout.evaluate((s,poster)=>s.querySelector('img').currentSrc===poster&&getComputedStyle(s.querySelector('img')).visibility==='visible'&&!s.classList.contains('is-articulated')&&!s.style.transform,moving.poster));
+  }
   if(await card.locator('[data-clay-icon]').count()){
    await page.waitForFunction(id=>{const s=document.querySelector(`[data-answer="${id}"] [data-clay-icon]`);return s?.dataset.clayRunning==='true'&&Number(s.dataset.clayPose)>0;},tile.id,{timeout:5000});
    const clay=await card.locator('[data-clay-icon]').evaluate(s=>({pose:Number(s.dataset.clayPose),poster:s.querySelector('.clay-rest').currentSrc,articulated:s.classList.contains('is-articulated'),transforms:[...s.querySelectorAll('[data-layer],[data-mesh]')].map(n=>n.getAttribute('transform'))}));
@@ -119,11 +127,11 @@ async function materialMotion(browser,inventory){
  await page.locator('[data-answer="software-business-ownership"]').focus();
  await delay(60);
  check('Pause control stops all sculpture motion',await page.locator('.sculpture-tile').evaluateAll(tiles=>document.body.classList.contains('no-motion')&&tiles.every(t=>t.getAnimations({subtree:true}).every(a=>a.playState!=='running'))));
- check('Pause control returns every clay scene to its static photograph',await page.locator('[data-clay-icon]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
+ check('Pause control returns every clay scene to its static photograph',await page.locator('[data-clay-icon],[data-clay-cutout]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
  await page.emulateMedia({reducedMotion:'reduce'});await page.reload();await settled(page);
  await page.locator(`[data-answer="${inventory[0].id}"]`).focus();
  check('OS reduced motion keeps every icon and sculpture static',await page.locator('.sculpture-tile').evaluateAll(tiles=>tiles.every(t=>[...t.querySelectorAll('.sculpture-symbol,.sculpture-art img')].every(n=>getComputedStyle(n).animationName==='none'&&getComputedStyle(n).transform==='none'))));
- check('OS reduced motion keeps every clay scene at rest',await page.locator('[data-clay-icon]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
+ check('OS reduced motion keeps every clay scene at rest',await page.locator('[data-clay-icon],[data-clay-cutout]').evaluateAll(scenes=>scenes.every(s=>s.dataset.clayRunning==='false'&&!s.classList.contains('is-articulated'))));
  fs.writeFileSync(path.join(evidence,`all-curated-motion-${engineName}.json`),JSON.stringify(rows,null,2));await context.close();
 }
 async function main(){
@@ -136,7 +144,7 @@ async function main(){
  const illustrated=inventory.filter(t=>t.art);
  check('All 51 illustrated tiles use globally unique artwork',illustrated.length===expectedIllustrated&&new Set(illustrated.map(t=>t.art)).size===expectedIllustrated);
  check('No large extruded symbol illustrations remain',illustrated.every(t=>!t.art.startsWith('cast-')));
- check('Unique artwork names resolve to 51 different image files',new Set(illustrated.map(t=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'dist/assets/sculpture',t.art+'.webp'))).digest('hex'))).size===expectedIllustrated);
+ check('Unique artwork names resolve to 51 different image files',new Set(illustrated.map(t=>crypto.createHash('sha256').update(fs.readFileSync(t.pngArt?path.join(app,'dist/assets/clay-png',t.pngArt+'.png'):path.join(app,'dist/assets/sculpture',t.art+'.webp'))).digest('hex'))).size===expectedIllustrated);
  check('Seven review tiles have no 3D star illustration',inventory.filter(t=>t.kind==='review').length===7&&inventory.filter(t=>t.kind==='review').every(t=>t.art===null));
  for(const art of ['printer','security','clay-software-v1'])check(art+' appears exactly once among all tiles',inventory.filter(t=>t.art===art).length===1);
  check('Exactly the reviewed five clay designs are installed',inventory.filter(t=>t.art?.startsWith('clay-')).length===5&&['browser','storefront','router','notebook','software'].every(name=>inventory.some(t=>t.art===`clay-${name}-v1`)));
@@ -144,7 +152,8 @@ async function main(){
  check('All '+Object.keys(baseline.routes).length+' prior reader mappings retained with exactly seven new review backs',Object.entries(baseline.routes).every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===Object.keys(baseline.routes).length+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
  check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
- check('Protected VERA source bytes unchanged',Object.entries(baseline.protectedVera).every(([f,hash])=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'public',f))).digest('hex')===hash));
+ const approved=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/clay-release.json')));
+ check('VERA retains protected assets and the reviewed copy corrections',Object.entries({...baseline.protectedVera,...approved.protectedVeraCopyOverrides}).every(([f,hash])=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'public',f))).digest('hex')===hash));
  const browser=isWebKit?await webkit.launch({headless:true}):await chromium.launch({channel:'chrome',headless:true});
  report.version=browser.version();
  try{
@@ -153,7 +162,7 @@ async function main(){
   const page=await context.newPage();page.on('pageerror',e=>report.errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)report.resources.push([r.status(),r.url()]);});
   await page.goto(base+'/?qa=1');await settled(page);
   check('Website case studies use desktop, tablet, iPhone and Duo presentations',await page.locator('[data-topic-grid="web"] [data-device]').evaluateAll(cards=>cards.length===9&&['desktop','tablet','iphone','duo'].every(device=>cards.some(card=>card.dataset.device===device))));
-  check('Hero uses the supplied master artwork with two project links and no added props',await page.locator('.sculpture-hero').evaluate(hero=>hero.dataset.hero==='master-reference'&&hero.querySelectorAll('img').length===1&&hero.querySelector('img').getAttribute('src')==='/assets/sculpture/hero-reference-desktop.webp'&&hero.querySelector('source').getAttribute('srcset')==='/assets/sculpture/hero-reference-mobile.webp'&&hero.querySelectorAll('.hero-project[aria-label]').length===2&&!hero.querySelector('[data-hero-body]')));
+  check('Hero uses the approved clay neighborhood with two client projects and four service rooms',await page.locator('.sculpture-hero').evaluate(hero=>hero.dataset.hero==='clay-neighborhood'&&hero.querySelectorAll('.clay-hero-project[aria-label]').length===2&&hero.querySelectorAll('.clay-room-link[aria-label]').length===4&&hero.querySelectorAll('.clay-equipment').length===2&&hero.querySelectorAll('.clay-cloud').length===4));
   check('Category icons distinguish every non-review tile',await page.locator('[data-topic-grid]').evaluateAll(grids=>grids.every(grid=>{const icons=[...grid.querySelectorAll('.tile:not(.review-tile)')].map(t=>t.dataset.sculptureIcon);return icons.length===new Set(icons).size})));
   await page.locator('.sculpture-object').evaluateAll(async imgs=>{await Promise.all(imgs.map(async img=>{img.loading='eager';try{await img.decode()}catch(error){throw new Error(img.currentSrc+': '+error.message)}}))});
   for(const width of [320,360,375,393,414,430,540,600,640,667,744,768,800,820,834,912,1000,1001,1024,1180,1280,1366,1440,1920,2560]){
