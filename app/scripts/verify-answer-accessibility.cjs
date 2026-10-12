@@ -26,7 +26,7 @@ const check = text => report.checks.push(text);
   }
   await page.goto(base + '/', { waitUntil: 'networkidle' });
   assert.match(await page.locator('.primary-nav .start-button').innerText(), /Get help/);
-  assert.match(await page.locator('.primary-nav .start-button').getAttribute('href'), /intent=support/);
+  assert.equal(await page.locator('.primary-nav .start-button').getAttribute('href'), '/tech-audit/', 'global help opens the general inquiry; reader links retain service context');
   assert.match(await page.locator('#explore-toggle').getAttribute('aria-label'), /Search answers/);
   await axe('homepage');
   await page.locator('#explore-toggle').click();

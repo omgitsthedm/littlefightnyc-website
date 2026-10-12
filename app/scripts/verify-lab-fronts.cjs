@@ -168,7 +168,7 @@ async function awaitImage(image, label) {
   return metadata;
 }
 
-async function inspectLab(page, lab, label) {
+async function inspectLab(page, lab, label, javaScriptEnabled = true) {
   const href = lab.sharePath || `/labs/${lab.slug}/`;
   const tile = page.locator(`a.tile[data-kind="lab"][href="${href}"]`);
   assert.equal(await tile.count(), 1, `${label}/${lab.slug}: one Lab tile`);
@@ -186,6 +186,14 @@ async function inspectLab(page, lab, label) {
   assert.equal((await hook.innerText()).trim(), lab.tileDescription, `${label}/${lab.slug}: visible hook matches catalog`);
   assert.equal((await action.innerText()).trim(), lab.tileAction, `${label}/${lab.slug}: visible action matches catalog`);
   await awaitImage(image, `${label}/${lab.slug}`);
+  // Scrolling a sculptural cover into view starts its short arrival motion.
+  // Measure its settled layout; the sculpture suite verifies the motion itself.
+  if (javaScriptEnabled) await image.evaluate(async node => {
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await Promise.all(node.getAnimations()
+      .filter(animation => Number.isFinite(animation.effect.getTiming().iterations))
+      .map(animation => animation.finished.catch(() => {})));
+  });
 
   const geometry = await tile.evaluate(node => {
     const rect = value => {
@@ -400,7 +408,7 @@ async function run() {
         await waitForHome(page);
         await check(`${width}px: Lab fronts work without JavaScript`, async () => {
           await assertCatalog(page, `${width}px/no-js`);
-          for (const lab of visibleLabs) await inspectLab(page, lab, `${width}px/no-js`);
+          for (const lab of visibleLabs) await inspectLab(page, lab, `${width}px/no-js`, false);
           await assertGridFits(page, `${width}px/no-js`);
           return 'all visible Lab descriptions, previews, and native links remain readable';
         });

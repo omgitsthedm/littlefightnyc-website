@@ -109,19 +109,21 @@ async function checkReaders(browser) {
 }
 
 async function checkRotation(browser) {
-  // The owner removed the cursor; a shared ground contains the storefront.
+  // The approved clay neighborhood retains native links into the same readers.
   const current = await context(browser);
   try {
     const { page } = current;
     await page.goto(base + '/', { waitUntil:'networkidle' });
     const displays = page.locator('.sculpture-hero img');
-    assert.equal(await displays.count(), 1);
+    assert.equal(await page.locator('.sculpture-hero[data-hero="clay-neighborhood"]').count(), 1);
     const sources = await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src')));
-    assert.deepEqual(sources, ['/assets/sculpture/hero-reference-desktop.webp']);
+    assert.ok(sources.includes('/assets/clay-library/hero-diorama-clean.webp'));
+    assert.ok(sources.includes('/assets/clay-library/rachel-clay-portrait-yellow.webp'));
     assert.equal(await page.locator('.hero-cursor').count(), 0);
     assert.ok(await displays.evaluateAll(imgs => imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await page.locator('.hero-work-index').count(), 0);
-    assert.equal(await page.locator('.hero-project').count(), 2);
+    assert.equal(await page.locator('.clay-hero-project').count(), 2);
+    assert.equal(await page.locator('.clay-room-link').count(), 4);
     assert.deepEqual(await page.locator('.sculpture-hero-actions a').evaluateAll(links => links.map(a => a.getAttribute('href'))), ['/tech-audit/', '/examples/']);
     await page.locator('#explore-toggle').click();
     await page.locator('#motion-toggle').click();
@@ -132,14 +134,16 @@ async function checkRotation(browser) {
     assert.equal(await tile.locator('.sculpture-object').evaluate(n => getComputedStyle(n).transform), 'none');
     await page.emulateMedia({ reducedMotion:'reduce' });
     assert.deepEqual(await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src'))), sources);
-    pass('The reference hero has two authentic screens, a shared storefront ground and tugboat, with two useful actions and no pointer or caption rail; pause and reduced motion suppress decorative tile motion');
+    pass('The clay neighborhood has two client panels, four room links, the approved diorama and Rachel portrait, and two useful actions; pause and reduced motion preserve the artwork and suppress decorative tile motion');
   } finally { await current.ctx.close(); }
   const plain = await context(browser, { javaScriptEnabled:false });
   try {
     await plain.page.goto(base + '/');
-    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 1 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length > 1 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.equal(await plain.page.locator('.clay-hero-project[href]').count(), 2);
+    assert.equal(await plain.page.locator('.clay-room-link[href]').count(), 4);
     assert.equal(await plain.page.locator('.sculpture-hero-actions a[href]').count(), 2);
-    pass('Without JavaScript, the complete reference hero and both actions remain available');
+    pass('Without JavaScript, the complete clay neighborhood, client and room links, and both actions remain available');
   } finally { await plain.ctx.close(); }
 }
 
