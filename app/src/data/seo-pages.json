@@ -51,7 +51,7 @@
     },
     {
       "path": "/services/custom-local-websites/",
-      "updated": "2026-09-27",
+      "updated": "2026-10-13",
       "title": "Small Business Website Design NYC | Little Fight NYC",
       "description": "Website design for small businesses in NYC and beyond: a custom site built around your business, so customers find you, see what you do, and book without calling. Free first look; a scoped website can be ready in six weeks or less.",
       "h1": "Websites that make the next step obvious.",
@@ -958,6 +958,16 @@
       "shortAnswer": "Short answer: Keep the Instagram feed, but give customers one page you control for hours, address, and booking.",
       "type": "Article",
       "image": "/assets/figure-les-bottleshop.webp"
+    },
+    {
+      "path": "/answers/wordpress-vs-custom-website-small-business/",
+      "updated": "2026-10-13",
+      "title": "WordPress vs Custom Website for Your Shop | Little Fight NYC",
+      "description": "You can get a good site either way. WordPress fits when someone will keep it updated every month.",
+      "h1": "Should I use WordPress or a custom website?",
+      "shortAnswer": "Short answer: You can get a good site either way. WordPress fits when someone will keep it updated every month. Custom fits when the customer path, the connections, or the upkeep matter more than the fastest start.",
+      "type": "Article",
+      "image": "/assets/websites.webp"
     },
     {
       "path": "/about/",

@@ -40,7 +40,9 @@ _GROUPS = (
             "/answers/does-my-small-business-need-a-website-reddit/", "/answers/instagram-instead-of-a-website-nyc-shop/",
             "/answers/website-design-for-small-business-nyc/", "/answers/best-web-designer-nyc-reddit/",
             "/answers/best-web-design-agency-nyc-reddit/", "/answers/squarespace-vs-hiring-web-designer-reddit/",
-            "/answers/wix-vs-custom-website-reddit/", "/journal/nyc-small-business-digital/",
+            "/answers/wix-vs-custom-website-reddit/",
+            "/answers/wordpress-vs-custom-website-small-business/",
+            "/journal/nyc-small-business-digital/",
             "/journal/webflow-vs-squarespace-manhattan-small-business/", "/journal/shopify-vs-squarespace-nyc-retail/",
             "/journal/wordpress-vs-webflow-vs-custom-nyc/",
         }),
@@ -222,8 +224,8 @@ def render_retained_answers(
     paths = _hub_routes(pages)
     answers = [path for path in paths if path.startswith("/answers/")]
     journals = [path for path in paths if path.startswith("/journal/")]
-    if len(answers) != 101 or len(journals) != 37:
-        raise ValueError(f"answer hub expected 101 answers and 37 journal notes, found {len(answers)} and {len(journals)}")
+    if len(answers) != 102 or len(journals) != 37:
+        raise ValueError(f"answer hub expected 102 answers and 37 journal notes, found {len(answers)} and {len(journals)}")
     groups = _group_paths(paths)
     # The map starts compact. All links remain in the document, but a visitor
     # sees six recognizable decisions instead of an undifferentiated link wall.

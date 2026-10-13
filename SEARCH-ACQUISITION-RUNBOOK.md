@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-10-05
+Last updated: 2026-10-13
 
 ## Current code readiness
 
@@ -187,7 +187,7 @@ assume a fixed daily allowance or repeat a queued request.
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
 | done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
 | done 2026-08-25 | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
-| pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
+| done 2026-10-13 | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
 | pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
 | pending | managed it services vs break fix small business | /answers/managed-it-vs-break-fix-small-business/ |
@@ -203,7 +203,12 @@ assume a fixed daily allowance or repeat a queued request.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
+- last refreshed: `/services/custom-local-websites/` 2026-10-13 (the
+  "new website or just a cleanup?" answer now gives the owner the three-part
+  phone test — can a customer tell what you do, reach you in one tap, and
+  finish a booking or form — instead of sending them to a "free consult";
+  "free consult" replaced with "free first look"; `updated` bumped with it)
+- previously: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
   response window the first screen was missing, replacing "No tech words needed";
   the quick answer moved from "We build…" to "You get…"; `updated` bumped with it)
 - previously: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
