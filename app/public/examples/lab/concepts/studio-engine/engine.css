@@ -102,7 +102,7 @@ html, body {
 
 .studio { padding: 8px max(20px, 4vw) 48px; max-width: 1080px; margin: 0 auto; }
 
-.console { display: grid; gap: 12px; margin-bottom: 22px; }
+.console { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 22px; }
 
 .ask {
   display: flex;

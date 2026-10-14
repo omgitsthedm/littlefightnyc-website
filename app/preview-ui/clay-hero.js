@@ -22,7 +22,7 @@
   }
 
   function sync() {
-    const running = inView && !document.hidden && !motion.matches && !paused;
+    const running = inView && !document.hidden && !motion.matches && !paused && document.documentElement.dataset.siteBoot !== 'loading';
     hero.dataset.motion = running ? 'running' : 'paused';
     toggle.hidden = motion.matches;
     toggle.setAttribute('aria-pressed', String(paused));
@@ -68,6 +68,7 @@
   observer.observe(stage);
   motion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
+  document.addEventListener('lf:site-ready', sync);
   window.addEventListener('pagehide', () => {
     resetDepth();
     clearTimeout(surpriseTimer);

@@ -36,6 +36,10 @@ function localTarget(reference, sourceFile) {
   if (!clean || /^(?:https?:|mailto:|tel:|sms:|data:|javascript:|#)/i.test(clean)) {
     return null;
   }
+  if (clean === "/site.css") return path.join(appRoot, "dist/site.css");
+  if (clean === "/assets/boat-orange.svg" || clean.startsWith("/assets/mineral/")) {
+    return path.join(appRoot, "preview-ui", clean);
+  }
   if (clean.startsWith("/")) return path.join(publicRoot, clean);
   return path.resolve(path.dirname(sourceFile), clean);
 }

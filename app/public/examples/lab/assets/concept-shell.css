@@ -7,11 +7,11 @@
 }
 
 :root {
-  --lab-shell-bg: rgba(10, 11, 15, 0.92);
+  --lab-shell-bg: #141417;
   --lab-shell-line: rgba(255, 255, 255, 0.14);
-  --lab-shell-ink: #fff;
-  --lab-shell-muted: #a1a1aa;
-  --lab-shell-signal: #f97316;
+  --lab-shell-ink: #f6f3ec;
+  --lab-shell-muted: #c1c1cb;
+  --lab-shell-signal: #ff7839;
   --lab-shell-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -34,7 +34,7 @@
   border-radius: 12px;
   background: var(--lab-shell-bg);
   color: var(--lab-shell-ink);
-  font: 600 14px/1.3 "Barlow", ui-sans-serif, system-ui, sans-serif;
+  font: 600 14px/1.3 "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
 }
 
 .lab-concept-shell {
@@ -57,9 +57,9 @@
   background: var(--lab-shell-bg);
   color: var(--lab-shell-ink);
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.44);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  backdrop-filter: blur(20px) saturate(140%);
-  font-family: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  font-family: "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
 }
 
 .lab-concept-shell a,
@@ -71,7 +71,7 @@
   border: 0;
   border-radius: 999px;
   color: inherit;
-  font: 700 16px/1 "Barlow", ui-sans-serif, system-ui, sans-serif;
+  font: 700 16px/1 "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
   /* The shell is injected after page load. Transitioning its colors from the
@@ -100,9 +100,9 @@
   padding: 0 17px;
   background: var(--lab-shell-signal);
   color: #111217 !important;
-  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-family: "LF Lab Atkinson", ui-sans-serif, sans-serif !important;
   font-size: 16px !important;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .lab-concept-shell__back:hover {
@@ -123,7 +123,7 @@
 }
 
 .lab-concept-shell__identity strong {
-  font: 700 17px/1.15 "Oswald", ui-sans-serif, system-ui, sans-serif;
+  font: 700 17px/1.15 "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0.01em;
 }
 
@@ -181,7 +181,7 @@
   box-shadow: 0 16px 44px rgba(0, 0, 0, 0.38);
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
-  font: 600 16px/1.35 "Barlow", ui-sans-serif, system-ui, sans-serif;
+  font: 600 16px/1.35 "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
   text-align: center;
   opacity: 0;
   pointer-events: none;
@@ -203,7 +203,7 @@
   border-radius: 12px;
   background: var(--lab-shell-bg);
   color: var(--lab-shell-ink);
-  font: 600 14px/1.3 "Barlow", ui-sans-serif, system-ui, sans-serif;
+  font: 600 14px/1.3 "LF Lab Atkinson", ui-sans-serif, system-ui, sans-serif;
 }
 
 .lab-concept-hint.is-visible {

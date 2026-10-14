@@ -47,7 +47,7 @@ const check = text => report.checks.push(text);
   assert.equal(await page.locator('#reader-hub').innerText(), 'Back to home +', 'return control names its actual destination');
   const printerArt = page.locator('#detail img.reader-context-image');
   assert.equal(await printerArt.count(), 1, 'printer help has one subject-specific physical illustration');
-  assert.equal(await printerArt.getAttribute('src'), '/assets/sculpture/printer.webp', 'printer help must not use an unrelated trades photograph');
+  assert.equal(await printerArt.getAttribute('src'), '/assets/clay-webp/object-printer.webp', 'printer help uses the same transparent clay printer as its tile');
   assert.ok(await printerArt.getAttribute('alt'), 'the printer illustration has a useful text alternative');
   await axe('printer reader', '#detail');
   await page.locator('#detail-body a.contact-plan[href^="/tech-audit/?intent=support"]').click();
@@ -76,7 +76,9 @@ const check = text => report.checks.push(text);
    assert.equal(await main.locator('h1').count(), 1);
    assert.equal(await main.locator('.story-hero .story-art').count(), route === '/answers/help/wifi/' ? 1 : 0, route + ': only the approved Wi-Fi subject illustration accompanies this answer');
    if (route === '/answers/help/wifi/') {
-    assert.equal(await main.locator('.reader-support-opening img.reader-context-image').getAttribute('src'), '/assets/sculpture/router.webp');
+    const wifiArt = main.locator('.reader-support-opening img.reader-context-image');
+    assert.equal(await wifiArt.getAttribute('src'), '/assets/clay-webp/object-network-switch.webp', 'Wi-Fi help uses the same transparent equipment as its tile');
+    assert.ok(await wifiArt.getAttribute('alt'), 'network equipment keeps a descriptive text alternative');
     assert.ok(await main.locator('.story-hero').evaluate(hero => hero.querySelector('.story-art').getBoundingClientRect().top >= hero.querySelector('.story-summary').getBoundingClientRect().bottom - 1), 'Wi-Fi diagnosis precedes its supporting illustration');
    }
    assert.ok((await main.locator('.story-summary').innerText()).length > 45, route + ': immediate substantive answer');
@@ -109,7 +111,10 @@ const check = text => report.checks.push(text);
    const last = page.locator('#reader-next');
    await last.focus();
    await page.keyboard.press('Tab');
-   assert.equal(await page.locator('#close-detail').evaluate(n => n === document.activeElement), true, 'last control wraps to close');
+   const firstControl = page.locator('#detail .workbench-brand');
+   assert.equal(await firstControl.evaluate(n => n === document.activeElement), true, 'last control wraps to the first header control');
+   await page.keyboard.press('Shift+Tab');
+   assert.equal(await last.evaluate(n => n === document.activeElement), true, 'reverse Tab wraps within the reader too');
    const closeBox = await page.locator('#close-detail').boundingBox();
    assert.ok(closeBox && closeBox.y >= 0 && closeBox.y + closeBox.height <= viewport.height, 'close remains inside the short viewport');
    const scroll = await page.evaluate(() => {

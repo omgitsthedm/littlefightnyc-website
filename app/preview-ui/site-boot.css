@@ -1,0 +1,19 @@
+.site-loading{display:none}
+html[data-site-boot] .site-loading{position:fixed;inset:0;z-index:90;display:grid;place-content:center;justify-items:center;gap:14px;background:#080a0b;color:#f6f3ec;opacity:1;visibility:visible;transition:opacity 180ms ease,visibility 180ms ease}
+html[data-site-boot=loading]{overflow:hidden}
+html[data-site-boot=loading] .app-shell{visibility:hidden}
+html[data-site-boot=loading] .app-shell *,html[data-site-boot=loading] .app-shell *::before,html[data-site-boot=loading] .app-shell *::after{animation-play-state:paused!important}
+html[data-site-boot=ready] .site-loading{opacity:0;visibility:hidden;pointer-events:none}
+.site-loading p{margin:0;font-size:18px}
+.site-loading .boot-name{font-size:22px;font-weight:700;letter-spacing:-.035em}
+.boot-harbor{position:relative;width:160px;height:110px;display:grid;place-items:center;margin-bottom:10px}
+.boot-tug{position:relative;width:114px;height:90px;padding:12px;border:0;background:transparent;cursor:pointer;color:#ff7839}
+.boot-tug svg{width:90px;height:62px;overflow:visible;animation:boot-bob 1400ms ease-in-out infinite}
+.boot-tug.is-nudged svg{animation:boot-nudge 480ms ease-out,boot-bob 1400ms 480ms ease-in-out infinite}
+.boot-wake{position:absolute;bottom:7px;width:140px;height:10px;border-bottom:2px solid #92bfff;border-radius:50%;opacity:.6;animation:boot-wake 1400ms ease-in-out infinite}
+.boot-skip{min-height:44px;padding:10px 14px;margin-top:8px;border:0;background:transparent;color:#c1c1cb;font-size:16px;text-underline-offset:4px;text-decoration:underline}
+.boot-tug:focus-visible,.boot-skip:focus-visible{outline:3px solid #92bfff;outline-offset:4px}
+@keyframes boot-bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+@keyframes boot-nudge{0%,100%{transform:rotate(0)}35%{transform:translateY(-9px) rotate(-9deg)}70%{transform:translateY(2px) rotate(4deg)}}
+@keyframes boot-wake{0%,100%{transform:scaleX(.85);opacity:.4}50%{transform:scaleX(1);opacity:.7}}
+@media(prefers-reduced-motion:reduce){html[data-site-boot] .site-loading{transition:none}.boot-tug svg,.boot-tug.is-nudged svg,.boot-wake{animation:none}}

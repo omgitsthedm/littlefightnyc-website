@@ -136,13 +136,6 @@
         'data-lab-concept-shell': ''
       });
     }
-    if (!document.querySelector('link[data-lab-fonts]')) {
-      addAsset('link', {
-        rel: 'stylesheet',
-        href: '/assets/lf-fonts.css',
-        'data-lab-fonts': ''
-      });
-    }
 
     document.documentElement.classList.add('lab-concept-page');
     document.documentElement.setAttribute('data-lab-concept', current.item.slug);

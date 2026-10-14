@@ -1,0 +1,66 @@
+/* The same Soft Mineral / clay brand on retained Little Fight documents.
+   Embedded client and Lab applications retain their own authored interfaces. */
+body.standalone-page{
+  --workbench-ink:#090c0e;--workbench-paper:#f6f3ec;--workbench-prose:#d9d8d4;
+  --workbench-dim:#aaa9ab;--workbench-rule:rgb(246 243 236 / .24);--workbench-accent:#ff7839;
+  --lf-ink:#090c0e;--lf-paper:#17191d;--lf-paper-2:#141417;--lf-hairline:#3a3a40;
+  --lf-bone:#f6f3ec;--lf-bone-soft:#c1c1cb;--lf-bone-dim:#aaa9ab;--lf-fight:#ff7839;--lf-blue:#92bfff;
+  --lf-heading:LFReader,LFAtkinson,Arial,sans-serif;--lf-body:LFAtkinson,Arial,sans-serif;--lf-mono:LFAtkinson,Arial,sans-serif;
+  --lf-display:LFReader,LFAtkinson,Arial,sans-serif;--heading:LFReader,LFAtkinson,Arial,sans-serif;
+  --font-heading:LFReader,LFAtkinson,Arial,sans-serif;--font-body:LFAtkinson,Arial,sans-serif;
+  --lab-bg:#090c0e;--lab-surface:#141417;--lab-surface-raised:#202126;--lab-line:#3a3a40;
+  --lab-ink:#f6f3ec;--lab-muted:#c1c1cb;--lab-dim:#aaa9ab;--lab-signal:#ff7839;--lab-blue:#92bfff;
+  --lab-display:LFReader,LFAtkinson,Arial,sans-serif;--lab-body:LFAtkinson,Arial,sans-serif;--lab-mono:LFAtkinson,Arial,sans-serif;
+  --suite-bg:#090c0e;--suite-surface:#141417;--suite-raised:#202126;--suite-line:#3a3a40;
+  --suite-ink:#f6f3ec;--suite-muted:#c1c1cb;--suite-signal:#ff7839;--suite-blue:#92bfff;
+  --suite-display:LFReader,LFAtkinson,Arial,sans-serif;--suite-body:LFAtkinson,Arial,sans-serif;--suite-mono:LFAtkinson,Arial,sans-serif;
+  --primary:#ff7839;--background:#090c0e;--text:#f6f3ec;--muted:#c1c1cb;
+  background:var(--workbench-ink);color:var(--workbench-paper);font:400 18px/1.5 LFAtkinson,Arial,sans-serif;
+}
+.standalone-page::before,.standalone-page .lf-glow{display:none}
+.standalone-page :is(h1,h2,h3,.headline){font-family:LFReader,LFAtkinson,Arial,sans-serif;font-weight:600;letter-spacing:-.045em;line-height:1.08;text-wrap:balance;text-transform:none}
+.standalone-page :is(p,li,a,button,input,label,textarea,select){font-family:LFAtkinson,Arial,sans-serif}
+.standalone-page :is(p,li){text-wrap:pretty}
+.standalone-page :is(.lab-hero h1,.headline){font-size:clamp(42px,5.4vw,76px);max-width:14ch}
+.standalone-page .lab-hero__lede{font-size:clamp(20px,1.7vw,24px);line-height:1.5}
+.standalone-page :is(.lab-kicker,.audit-eyebrow,.label){font-family:LFAtkinson,Arial,sans-serif;color:#ff7839;font-weight:700}
+.standalone-page .standalone-chrome{position:relative;top:auto;display:block;max-width:1440px;width:100%;min-height:0;margin:0 auto;padding:18px clamp(18px,4vw,56px) 0;border:0;background:#090c0e;backdrop-filter:none;text-align:left;box-shadow:none}
+.standalone-page .workbench-chrome-top{min-height:48px}
+.standalone-page .workbench-brand{margin:0;font:700 22px/1 LFAtkinson,Arial,sans-serif;color:#f6f3ec;text-transform:none;letter-spacing:-.035em}
+.standalone-page .workbench-brand img{width:43px;height:38px;filter:none}
+.standalone-page .workbench-contacts{position:static;gap:24px;width:auto;margin:0}
+.standalone-page .workbench-contacts a{padding:4px 0;color:#ff7839!important;background:transparent;border:0;border-radius:0;font-size:16px}
+.standalone-page .workbench-tabs{margin-bottom:0}
+.standalone-page .workbench-tab[aria-current=page]{color:var(--workbench-accent);opacity:1}
+.standalone-page .workbench-tab[aria-current=page]::after{opacity:1;transform:scaleX(1)}
+.standalone-page .workbench-tab[data-family=web]{--workbench-accent:#92bfff}
+.standalone-page .workbench-tab[data-family=it]{--workbench-accent:#f5d95b}
+.standalone-page .workbench-tab[data-family=consulting]{--workbench-accent:#a0df85}
+.standalone-page .workbench-tab[data-family=software]{--workbench-accent:#f09bdd}
+.standalone-section-nav{display:flex;flex-wrap:wrap;gap:8px 24px;margin:10px 0 0;padding:0}
+.standalone-section-nav a{display:inline-flex;align-items:center;min-height:44px;color:#c1c1cb;font-size:16px;text-decoration:none}
+.standalone-section-nav a[aria-current=page]{color:#ff7839}
+.standalone-page .lab-hero{padding-top:clamp(32px,4vw,64px)}
+.standalone-page .lab-hero__visual img{width:100%;height:100%;object-fit:cover}
+.standalone-page .lab-hero__visual{border-radius:24px;background:#141417}
+.standalone-page .lab-action--signal{background:#ff7839;color:#1b100a;border-color:#ff7839}
+.standalone-page .lab-action--signal:hover{background:#ff9868}
+.standalone-page .lab-card{background:#141417;border-color:#3a3a40}
+.standalone-page .lab-card :is(h2,h3){text-transform:none}
+.standalone-page .site-main{padding-top:clamp(32px,5vw,72px)}
+.standalone-page .ad-gallery-intro{padding-top:32px}
+.standalone-page .ad-gallery-intro h1{font-size:clamp(42px,5.5vw,76px)}
+.standalone-page .site-header .workbench-backlinks{margin-bottom:0}
+@media(max-width:760px){
+ .standalone-page .standalone-chrome{padding-top:14px}
+ .standalone-page .workbench-chrome-top{grid-template-columns:1fr;gap:4px}
+ .standalone-page .workbench-brand{font-size:20px}
+ .standalone-page .workbench-chrome-top>.workbench-contacts{grid-row:2;grid-column:1;justify-content:flex-start!important;margin-left:0!important}
+ .standalone-page .workbench-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px;padding-left:0;margin-top:4px}
+ .standalone-page .workbench-tab{min-height:44px;font-size:15px;white-space:normal}
+ .standalone-page .workbench-tab-icon{width:20px;height:20px;flex:none}
+ .standalone-page .workbench-backlinks{display:none}
+ .standalone-section-nav{gap:8px 20px;margin-top:4px}
+ .standalone-page :is(.lab-hero h1,.headline){font-size:clamp(36px,9vw,52px)}
+}
+@media(prefers-reduced-motion:reduce){.standalone-page *, .standalone-page *::before,.standalone-page *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

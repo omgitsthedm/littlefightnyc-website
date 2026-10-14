@@ -83,6 +83,7 @@ async function browserLanes() {
   await withProductionServer(async (url) => {
     const env = { ...process.env, TILE_DIST: "production", PREVIEW_URL: url, TILE_PRODUCTION_URL: url, VERA_PREVIEW_URL: url, CASE_EDITORIAL_URL: url, INQUIRY_ENHANCEMENT_URL: url, TOPIC_MOSAIC_URL: url };
     run("node", ["scripts/verify-tile-preview.cjs"], env);
+    run("node", ["scripts/verify-ui-consistency.cjs"], env);
     run("node", ["scripts/verify-social-sharing.cjs"], env);
     run("node", ["scripts/verify-review-readers.cjs"], { ...env, REVIEW_READERS_URL: url });
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });

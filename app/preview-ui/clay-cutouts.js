@@ -1,9 +1,9 @@
 /* Transparent clay keeps its parts and its 12 fps workshop movement.
- * A finite move runs on arrival, hover, focus or touch; rest is the original PNG. */
+ * A finite move runs on intent; rest is a lossless copy of the approved artwork. */
 (() => {
   'use strict';
   const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-  const roots = [...document.querySelectorAll('#canvas [data-clay-cutout]')];
+  const known = new WeakSet();
   const states = new Map(), queue = [], active = new Set();
   const FPS = 12, LAST = 15, DURATION = LAST / FPS * 1000;
   const articulated = {
@@ -33,8 +33,10 @@
   const hop = [0, 5, 8, -25, -64, -80, -42, 6, -4, 1, 0, 0, 0, 0, 0, 0];
   const wag = [0, -.12, -.25, .45, 1, .5, -.5, .26, -.12, .03, 0, 0, 0, 0, 0, 0];
   const roll = [0, -.025, -.07, .14, .5, .85, 1, .9, .55, .13, -.06, .025, 0, 0, 0, 0];
-  const enabled = () => !reduce.matches && !document.hidden &&
-    !document.body.matches('.no-motion,.reader-open,.explore-open');
+  const enabled = st => !reduce.matches && !document.hidden &&
+    document.documentElement.dataset.siteBoot !== 'loading' &&
+    !document.body.matches('.no-motion,.explore-open') &&
+    !(st?.tile.matches('.tile') && document.body.classList.contains('reader-open'));
   let serial = 0;
   const path = d => `<path d="${d}"/>`;
   const rect = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}"/>`;
@@ -45,7 +47,7 @@
   function rig(st) {
     const uid = `cutout-${++serial}`, original = st.image.currentSrc || st.image.src;
     const photo = `<image href="${original}" width="1536" height="1024"/>`;
-    const plate = `<image href="/assets/clay-png/motion-${st.kind}-clean.png" width="1536" height="1024"/>`;
+    const plate = `<image href="/assets/clay-webp/motion-${st.kind}-clean.webp" width="1536" height="1024"/>`;
     let defs = '', holes = '', parts = '';
     const patch = shape => { holes += shape; };
     const cut = (name, shape) => {
@@ -147,7 +149,7 @@
     if (!st.kind || st.parts) return;
     if (!st.warming) st.warming = (async () => {
       const plate = new Image();
-      plate.src = `/assets/clay-png/motion-${st.kind}-clean.png`;
+      plate.src = `/assets/clay-webp/motion-${st.kind}-clean.webp`;
       await Promise.all([st.image.decode(), plate.decode()]);
       if (st.root.isConnected) rig(st);
     })();
@@ -158,12 +160,12 @@
     st.pending = true; active.add(st);
     try { await warm(st); } catch (error) { stop(st); console.warn('Clay motion plate could not load', st.id, error); pump(); return; }
     if (epoch !== st.epoch) { pump(); return; }
-    if (!enabled() || !st.visible) { stop(st); pump(); return; }
+    if (!enabled(st) || !st.visible) { stop(st); pump(); return; }
     st.pending = false; st.running = true; st.plays++;
     st.root.dataset.clayRunning = 'true'; st.root.dataset.clayPlays = String(st.plays); pose(st, 0);
     const start = performance.now(); let previous = -1;
     const tick = now => {
-      if (!enabled() || !st.visible) { stop(st); pump(); return; }
+      if (!enabled(st) || !st.visible) { stop(st); pump(); return; }
       const n = Math.min(LAST, Math.floor((now - start) * FPS / 1000));
       if (n !== previous) { pose(st, n); previous = n; }
       if (now - start >= DURATION) { st.running = false; st.root.dataset.clayRunning = 'false'; active.delete(st); pose(st, LAST); pump(); return; }
@@ -175,31 +177,40 @@
     if (!enabled()) return;
     while (active.size < 3 && queue.length) {
       const st = queue.shift(); st.queued = false;
-      if (st.visible && !st.running && !st.pending) void play(st);
+      if (enabled(st) && st.visible && !st.running && !st.pending) void play(st);
     }
   }
   function request(st, priority = false) {
-    if (!enabled() || st.running || st.pending || st.queued) return;
+    if (!enabled(st) || st.running || st.pending || st.queued) return;
     st.queued = true; priority ? queue.unshift(st) : queue.push(st); pump();
   }
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
       const st = states.get(entry.target); st.visible = entry.isIntersecting;
-      if (st.visible && !st.seen) { st.seen = true; request(st); }
-      else if (!st.visible) stop(st);
+      if (!st.visible) stop(st);
     }
     pump();
   }, { threshold: .18 });
-  roots.forEach(root => {
-    const tile = root.closest('.tile'), id = root.dataset.clayCutout;
+  function scan(scope) {
+   scope.querySelectorAll('[data-clay-cutout]').forEach(root => {
+    if (known.has(root)) return;
+    known.add(root);
+    const tile = root.closest('.tile,[data-clay-trigger]'), id = root.dataset.clayCutout;
+    if (!tile) return;
     const st = { root, tile, id, kind: articulated[id], image: root.querySelector('img'), parts: null, epoch: 0, plays: 0, running: false, pending: false, queued: false, seen: false, visible: false, raf: 0 };
     states.set(root, st); pose(st, 0); observer.observe(root);
     tile.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') request(st, true); }, { passive: true });
     tile.addEventListener('focusin', () => request(st, true));
     tile.addEventListener('pointerdown', event => { if (event.pointerType === 'touch') request(st, true); }, { passive: true });
-  });
+    if (!tile.matches('.tile')) tile.addEventListener('click', () => request(st, true));
+   });
+   for (const [root, st] of states) if (!root.isConnected) { stop(st); observer.unobserve(root); states.delete(root); }
+  }
+  scan(document);
+  document.addEventListener('lf:reader-ready', () => scan(document.querySelector('#detail-body')));
   function reconcile() {
     if (!enabled()) { queue.splice(0).forEach(st => { st.queued = false; }); states.forEach(stop); }
+    else for (const st of states.values()) if (!enabled(st)) stop(st);
   }
   reduce.addEventListener('change', reconcile);
   document.addEventListener('visibilitychange', reconcile);

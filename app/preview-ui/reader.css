@@ -1,5 +1,5 @@
 @font-face{font-family:LFAtkinson;src:url('/assets/mineral/atkinson-hyperlegible-next-latin.woff2') format('woff2');font-display:swap}
-@font-face{font-family:LFReader;src:url('/assets/reader/manrope-600.ttf') format('truetype');font-weight:600;font-display:swap}
+@font-face{font-family:LFReader;src:url('/assets/reader/manrope-600.woff2') format('woff2');font-weight:600;font-display:swap}
 
 /* The page behind this sheet stays a mosaic. These rules only give opened pages a durable reading surface. */
 body.reader-open{overflow:hidden}

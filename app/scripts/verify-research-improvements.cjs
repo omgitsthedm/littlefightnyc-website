@@ -143,6 +143,8 @@ async function run() {
       assert.equal(await page.locator('#detail').evaluate(el => el.scrollTop), 0);
       await page.locator('#close-detail').click();
       await page.waitForURL(new URL('/', base).href);
+      // A hard return to the hub reveals its first view after artwork decoding.
+      await page.locator('.tile[data-reader-anchor="web"]').waitFor({ state: 'visible', timeout: 5000 });
       assert.ok(await page.locator('.tile[data-reader-anchor="web"]').isVisible());
       pass('Standalone inquiry → reader → inquiry keeps labels and fields separate, then exits to the hub');
       await ctx.close();

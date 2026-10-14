@@ -76,7 +76,11 @@ def header(*, family: str | None, contacts: str, dialog: bool = False) -> str:
         '<img src="/assets/boat-orange.svg" width="43" height="38" alt="">'
         '<span>Little Fight NYC</span></a>'
         f'<nav class="workbench-contacts direct-contact-rail contact-actions reader-rail" data-lf-contact-rail="true" aria-label="Quick contact">{contacts}</nav>'
-        '</div>'
+        + ('<nav class="workbench-reader-controls" aria-label="Card controls">'
+           '<button type="button" id="reader-back" class="workbench-reader-back" aria-label="Back to previous card" hidden>Back</button>'
+           '<button type="button" id="close-detail" class="workbench-close" aria-label="Return to homepage hub">×</button>'
+           '</nav>' if dialog else '')
+        + '</div>'
         # Direct documents retain ordinary hrefs without JavaScript, while the
         # enhanced reader can keep the card history and focus journey intact.
         + _tabs(None if dialog else family, intercept=True)

@@ -1,4 +1,4 @@
-"""Transparent PNG tile artwork; small interface icons stay unchanged."""
+"""Approved transparent artwork, delivered as pixel-identical lossless WebP."""
 from functools import lru_cache
 from html import escape
 from pathlib import Path
@@ -8,7 +8,7 @@ import shutil
 
 APP = Path(__file__).resolve().parents[1]
 ENABLED = os.environ.get('LFNYC_CLAY_LIBRARY_PREVIEW', '1') == '1'
-URL = '/assets/clay-png/'
+URL = '/assets/clay-webp/'
 ART_ALIASES = {
     'boat': 'symbol-tugboat', 'clay-browser-v1': 'symbol-browser',
     'clay-storefront-v1': 'object-storefront', 'clay-router-v1': 'object-router',
@@ -35,7 +35,7 @@ def attributes(values):
                     for k, v in values.items())
 
 def png_image(name, cls='', eager=False, alt='', sizes='(max-width:600px) 50vw, 420px', extra=None):
-    variants = assets()[name]['variants']
+    variants = assets()[name]['webpVariants']
     width, height = dimensions(name)
     values = dict(extra or {})
     values.update({'class': (cls + ' clay-png').strip(), 'data-clay-asset': name,
@@ -52,4 +52,5 @@ def png_scene(name, cls='', eager=False, alt=''):
 def copy_assets(destination):
     if ENABLED:
         shutil.copytree(APP / 'public/assets/clay-png', destination / 'assets/clay-png', dirs_exist_ok=True)
+        shutil.copytree(APP / 'public/assets/clay-webp', destination / 'assets/clay-webp', dirs_exist_ok=True)
         shutil.copy2(APP / 'preview-ui/clay-cutouts.js', destination / 'clay-cutouts.js')

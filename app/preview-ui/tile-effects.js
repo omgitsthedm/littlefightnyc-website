@@ -12,7 +12,7 @@
   const albums = new Map();
   const websiteRotators = new Map();
 
-  const motionEnabled = () => !document.hidden && !reduce.matches && !document.body.classList.contains('no-motion') && !document.body.classList.contains('reader-open') && !document.body.classList.contains('explore-open');
+  const motionEnabled = () => document.documentElement.dataset.siteBoot !== 'loading' && !document.hidden && !reduce.matches && !document.body.classList.contains('no-motion') && !document.body.classList.contains('reader-open') && !document.body.classList.contains('explore-open');
   const stateFor = tile => states.get(tile) || (() => {
     const state = { timers: [], queued: false, started: false };
     states.set(tile, state);
@@ -82,8 +82,8 @@
       const tile = entry.target;
       if (entry.isIntersecting) {
         visible.add(tile);
-        const state = stateFor(tile);
-        if (!state.started) request(tile);
+        // First paint is a settled composition. Motion begins on intent.
+        stateFor(tile).started = true;
       } else {
         visible.delete(tile);
         reset(tile);

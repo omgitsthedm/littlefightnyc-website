@@ -1,5 +1,6 @@
 """The five reviewed clay illustrations, shared by tile fronts and readers."""
 from html import escape
+from clay_library import ENABLED, art_asset, png_scene
 
 NAMES = {'browser', 'storefront', 'router', 'notebook', 'software'}
 ROUTES = {
@@ -29,6 +30,15 @@ def clay_scene(name, eager=False):
 
 def clay_figure(name):
     label = escape(LABELS[name], quote=True)
+    if ENABLED:
+        return (
+            '<figure class="reader-clay-figure reader-clay-cutout">'
+            f'<button class="clay-illustration" data-clay-trigger type="button" '
+            f'aria-label="Play the clay {label} illustration">'
+            + png_scene(art_asset('clay-' + name + '-v1'), eager=True)
+            + '<span class="clay-play-mark" aria-hidden="true">▶</span></button>'
+            '<figcaption>Clay illustration</figcaption></figure>'
+        )
     return (
         '<figure class="reader-clay-figure">'
         f'<button class="clay-illustration" data-clay-trigger type="button" '

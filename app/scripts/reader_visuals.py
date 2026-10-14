@@ -12,6 +12,7 @@ from urllib.parse import urlsplit
 import json
 
 from service_taxonomy import override_family
+from clay_library import art_asset, png_image
 
 
 APP = Path(__file__).resolve().parents[1]
@@ -299,6 +300,18 @@ def _it_figure(path):
 
 
 def _story_figure(story_id):
+    # Reader art uses the same transparent objects as the corresponding tiles.
+    aliases = {'platform': 'clay-browser-v1', 'cost': 'priority-notes',
+               'mobile': 'phone-chromatic', 'forms': 'booking-calendar',
+               'web-accessibility-basics': 'phone-chromatic',
+               'web-service-page': 'homepage-sketchbook',
+               'web-photos-with-purpose': 'content-camera',
+               'web-menu-and-hours': 'clay-storefront-v1',
+               'web-ecommerce-inventory': 'clay-storefront-v1'}
+    from sculpture_tiles import TOPIC_ART
+    asset = art_asset(TOPIC_ART.get(story_id) or aliases.get(story_id))
+    if asset:
+        return _clay_figure(asset)
     alt, caption = STORY_ART[story_id]
     image = f"/assets/illustrations/story-{story_id}-640.webp"
     return (
@@ -311,6 +324,15 @@ def _story_figure(story_id):
         f'<figcaption>{_text(caption)}</figcaption>'
         '</figure>'
     )
+
+
+def _clay_figure(asset):
+    alt = {'object-printer': 'Handmade clay office printer.',
+           'object-router': 'Handmade clay Wi-Fi router.',
+           'object-network-switch': 'Handmade clay network switch for a connection check.'}.get(asset, '')
+    return ('<figure class="reader-context-figure reader-clay-cutout">'
+            + png_image(asset, 'reader-context-image', eager=True, alt=alt,
+                        sizes='(max-width:760px) 80vw, 420px') + '</figure>')
 
 
 def reader_visual(p, q, cases, albums):
@@ -327,6 +349,16 @@ def reader_visual(p, q, cases, albums):
         return ""
 
     family = reader_family(p, q)
+    from sculpture_tiles import TOPIC_ART
+    identity = (p.get('_homeGroup') or {}).get('id') or _tile_id(p, q)
+    route_id = path.removeprefix('/answers/help/').strip('/')
+    art = TOPIC_ART.get(identity) or TOPIC_ART.get(route_id)
+    if not art:
+        art = {'web': 'clay-browser-v1', 'it': 'clay-router-v1',
+               'consulting': 'clay-notebook-v1', 'software': 'clay-software-v1',
+               'brand': 'boat'}[family]
+    if asset := art_asset(art):
+        return _clay_figure(asset)
     icon = _icon(p, q, family)
     # The printer and Wi-Fi tile groups need the approved physical subject in
     # the opening rail. A generic story illustration is useful elsewhere, but
