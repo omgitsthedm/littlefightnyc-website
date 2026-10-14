@@ -36,7 +36,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 402 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+EXPECTED_ROUTE_COUNT = 403 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed

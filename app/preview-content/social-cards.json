@@ -951,6 +951,25 @@
       "sha256": "7cb83e2578314be9819e6cfa111cdc86c7236d904910ef2be2fa625295a3f6fa",
       "signature": "472d1e60ddb5e2ae8308e887537b6881ba96ca1fe05e09104b1abf34856ceb14"
     },
+    "/answers/wordpress-vs-custom-website-small-business/": {
+      "path": "/answers/wordpress-vs-custom-website-small-business/",
+      "title": "WordPress vs Custom Website for Your Shop | Little Fight NYC",
+      "description": "You can get a good site either way. WordPress fits when someone will keep it updated every month.",
+      "headline": "Should I use WordPress or a custom website?",
+      "label": "Websites · Answers",
+      "color": "#92bfff",
+      "mode": "browser",
+      "image": "/assets/social/clay/answers-wordpress-vs-custom-website-small-business-d523b2a29fba.jpg",
+      "artAlt": "A handmade clay browser frame displaying the Chromatic Painting and Design website.",
+      "artSource": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+      "width": 2400,
+      "height": 1260,
+      "type": "image/jpeg",
+      "bytes": 277445,
+      "alt": "A handmade clay browser frame displaying the Chromatic Painting and Design website. Text: Should I use WordPress or a custom website? Little Fight NYC.",
+      "sha256": "ebcf10b82519b65f5cf200f55a7e146e5717fddc7c082a6e7b1a4fdf37feaa05",
+      "signature": "d523b2a29fba3abfd8dde376641d03b25b7b1d27066d1862be69f2ef829c6e24"
+    },
     "/about/": {
       "path": "/about/",
       "title": "About Little Fight NYC | Help for Small Businesses",
