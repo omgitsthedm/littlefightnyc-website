@@ -670,6 +670,42 @@ def topbar(home=False):
     services=''  # The current master has Websites and Our work in the header.
     return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
 
+def contact_dock():
+    """Call, Text and Get help stay within reach once the hero's buttons scroll away (site.js)."""
+    return ('<nav class="contact-dock" aria-label="Contact Little Fight NYC" data-contact-dock data-visible="false">'
+            '<span class="contact-dock__status"><span class="contact-dock__dot" aria-hidden="true"></span>'
+            '<span data-hours-short>9am–9pm ET</span></span>'
+            '<a class="contact-dock__link" href="tel:+16463600318">Call</a>'
+            '<a class="contact-dock__link" href="sms:+16463600318">Text</a>'
+            '<a class="contact-dock__help" href="/tech-audit/" data-get-help><span>Get help</span><span aria-hidden="true">+</span></a>'
+            '</nav>')
+
+
+HELP_CHOICES = (
+    ('website', 'A website', 'New, better, or easier to find', 'browser-duotone'),
+    ('support', 'Something broke', 'Email, Wi-Fi, printer, accounts', 'wrench-duotone'),
+    ('general', 'A second opinion', 'Quotes, tools, what to do next', 'chat-text-duotone'),
+    ('systems', 'Software that fits', 'Bookings, approvals, busywork', 'shapes-duotone'),
+)
+
+
+def help_panel():
+    """Get help opens a one-tap chooser; each choice starts the matching inquiry (site.js)."""
+    choices = ''.join(
+        f'<a class="help-choice" data-help-choice="{intent}" data-reader-link href="/tech-audit/?intent={intent}&amp;source=help-panel">'
+        f'<span class="help-choice__icon" aria-hidden="true" style="--help-icon:url(/assets/mineral/{icon}.svg)"></span>'
+        f'<span class="help-choice__text"><strong>{E(title)}</strong><small>{E(detail)}</small></span></a>'
+        for intent, title, detail, icon in HELP_CHOICES)
+    return ('<dialog id="get-help-panel" class="help-panel" aria-labelledby="help-panel-title">'
+            '<div class="help-panel__card"><button class="help-panel__close" type="button" data-help-close aria-label="Close">×</button>'
+            '<p class="help-panel__hours"><span class="contact-dock__dot" aria-hidden="true"></span><span data-hours-status>A person answers 9am–9pm ET</span></p>'
+            '<h2 id="help-panel-title">What’s going on?</h2>'
+            f'<div class="help-panel__choices">{choices}</div>'
+            '<p class="help-panel__next">Free first look. A written scope before any work.</p>'
+            '<p class="help-panel__talk">Rather talk? <a href="tel:+16463600318">Call</a> · <a href="sms:+16463600318">Text</a> · '
+            '<a href="mailto:hello@littlefightnyc.com">Email</a></p></div></dialog>')
+
+
 def site_footer():
     return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
 
@@ -758,7 +794,7 @@ write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False
 q={'path':'/','title':'Little Fight NYC | Websites, Tech Support & Software','description':'Websites, tech support, and custom software for independent businesses. Based in New York, building websites nationwide. Start with a free first look.'}
 # The homepage paints immediately; only the tile canvas waits for its layout (site-boot.css).
 boot=''
-home=head(q,True)+'<body class="mosaic-home">'+boot+'<a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
+home=head(q,True)+'<body class="mosaic-home">'+boot+'<a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+contact_dock()+'</div>'+shell_end(True)+help_panel()
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))

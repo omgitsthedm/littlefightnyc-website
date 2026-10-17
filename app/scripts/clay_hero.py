@@ -124,7 +124,7 @@ def room_activity():
         + '<g transform="translate(309 785)"><g class="clay-steam">'
         + fragment('hero-small-props', (810, 742, 330, 426), (0, 0, 34, 39))
         + '</g></g>'
-        + '<g transform="translate(505 667)"><g class="clay-open-sign">'
+        + '<g class="clay-open-sign-mount" transform="translate(505 667)"><g class="clay-open-sign">'
         + fragment('hero-small-props', (62, 55, 608, 620), (0, 0, 87, 89))
         + '</g></g>')
 
@@ -149,6 +149,16 @@ def pigeon():
         + '</g><g class="clay-bird">'
         + poses('hero-pigeon-poses', 'clay-pigeon-pose', (0, 0, 724, 724))
         + '</g></svg></button>')
+
+
+def review_sticker():
+    """A window decal on the red building: the real Google rating, linking to the reviews."""
+    import json
+    data = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/reviews.json').read_text())
+    rating = f"{float(data['rating']):.1f}"
+    return ('<a class="clay-review-sticker" href="/reviews/" data-reader-link data-review-sticker>'
+            '<span class="clay-review-sticker__stars" aria-hidden="true">★★★★★</span>'
+            f'<span class="clay-review-sticker__score">{rating} on Google</span></a>')
 
 
 def neighborhood():
@@ -177,8 +187,9 @@ def neighborhood():
         + responsive_image('hero-diorama-clean', 1448, 1086)
         + room_activity()
         + window_glow()
+        + '<rect class="clay-arrival-dim" width="1448" height="1086" fill="#05070a"/>'
         + '</g></svg>'
-        + links + pigeon() + '</div>')
+        + links + review_sticker() + pigeon() + '</div>')
 
 
 def equipment(name, css, path, label):

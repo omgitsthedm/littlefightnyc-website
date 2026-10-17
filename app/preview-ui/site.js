@@ -953,6 +953,48 @@
   prepareNativeInquiry(document, location.href);
   mountDemos(document.querySelector('main[data-page-content]') || document.createElement('div'));
   document.querySelectorAll('form[data-email-draft] textarea[name="message"]').forEach(field => { if (field.maxLength < 0) field.maxLength = 4000; });
+  // Contact dock: Call, Text and Get help appear once the hero's own buttons
+  // have scrolled away, and leave again when they return.
+  const dock = document.querySelector('[data-contact-dock]');
+  const heroActions = document.querySelector('.sculpture-hero-actions');
+  if (dock && heroActions && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      dock.dataset.visible = String(!entry.isIntersecting && entry.boundingClientRect.bottom < 0);
+    }).observe(heroActions);
+  }
+
+  // Get help opens a one-tap chooser. Each choice starts the matching inquiry
+  // in the reader; Call, Text and Email stay one tap away. Without scripts the
+  // links still go straight to the inquiry page.
+  const helpPanel = document.getElementById('get-help-panel');
+  if (helpPanel && typeof helpPanel.showModal === 'function') {
+    let helpSource = null;
+    document.addEventListener('click', event => {
+      const trigger = event.target.closest?.('.sculpture-help, .topbar .start-button, [data-get-help]');
+      if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      helpSource = trigger;
+      helpPanel.showModal();
+      helpPanel.querySelector('.help-choice')?.focus({ preventScroll: true });
+      interaction('help_panel_open', 'get-help', trigger.closest('.sculpture-hero') ? 'hero' : trigger.matches('[data-get-help]') ? 'dock' : 'header');
+    }, { capture: true });
+    helpPanel.addEventListener('click', event => {
+      if (event.target === helpPanel || event.target.closest('[data-help-close]')) { helpPanel.close(); return; }
+      const choice = event.target.closest('[data-help-choice]');
+      if (!choice || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      event.stopPropagation();
+      interaction('help_choice', choice.dataset.helpChoice, 'help-panel');
+      const source = helpSource;
+      helpPanel.close();
+      openReader(sameOriginPath(choice.href), source);
+    });
+    helpPanel.addEventListener('close', () => {
+      if (!dialogIsOpen()) helpSource?.focus({ preventScroll: true });
+    });
+  }
+
   // Warm the reader stylesheet once the homepage is idle so the first card
   // opens without waiting on it. It never competes with first paint.
   if (mosaic) {
