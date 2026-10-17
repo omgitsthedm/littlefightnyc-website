@@ -451,3 +451,5 @@
 .reader-share button:focus-visible,.reader-share a:focus-visible{outline:3px solid var(--workbench-accent,#ff7839);outline-offset:4px}
 .reader-share [role=status]{flex-basis:100%;color:var(--workbench-prose,#d9d8d4)}
 @media(prefers-reduced-motion:reduce){.reader-share button{transition:none}.reader-share button:active{transform:none}}
+/* Hero actions sit on solid orange; the workbench link reset must not turn them white. */
+.workbench-page .lf-reader .story-hero .contact-actions :is(a,button),#detail .lf-reader .story-hero .contact-actions :is(a,button){color:#1b100a}

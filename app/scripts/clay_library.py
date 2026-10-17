@@ -1,4 +1,4 @@
-"""Approved transparent artwork, delivered as pixel-identical lossless WebP."""
+"""Approved transparent artwork, delivered as quality-checked responsive WebP (see prepare-clay-webp.py)."""
 from functools import lru_cache
 from html import escape
 from pathlib import Path

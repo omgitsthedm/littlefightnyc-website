@@ -7,6 +7,10 @@
 # catch-all LAST. netlify.toml carries no [[redirects]] anymore.
 # ============================================================
 
+# --- Canonical host: www goes straight to the apex in one hop (http or https).
+http://www.littlefightnyc.com/*   https://littlefightnyc.com/:splat   301!
+https://www.littlefightnyc.com/*  https://littlefightnyc.com/:splat   301!
+
 # --- Retired private product: the old application and its hosts are gone.
 # Return a permanent noindex response without forwarding authentication tokens
 # or sending visitors into the public marketing shell.

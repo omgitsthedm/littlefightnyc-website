@@ -195,6 +195,10 @@ def image(name, cls='', eager=False, alt=''):
 def _text(markup):
     return unescape(re.sub(r'<[^>]+>', ' ', markup)).strip()
 
+def _spoken(text):
+    """Comparable form of a label: lowercase words only, decoration removed."""
+    return ' '.join(re.sub(r"[^a-z0-9' ]", ' ', text.lower().replace('’', "'")).split())
+
 def _span(markup, cls):
     found = re.search(r'<(?:span|strong|blockquote)[^>]*class="'+cls+r'"[^>]*>(.*?)</(?:span|strong|blockquote)>',markup,re.S)
     return _text(found[1]) if found else ''
@@ -279,6 +283,11 @@ def sculptural_mosaic(markup):
         attrs['style']=f'--preferred-columns:{cols};--preferred-rows:{rows};--mobile-columns:{mcols};--mobile-rows:{mrows}'
         if not attrs.get('aria-label'):
             attrs['aria-label']=_text(title)+(('. '+copy) if copy else '')
+        elif _spoken(_text(title)) not in _spoken(attrs['aria-label']):
+            # Label in name (WCAG 2.5.3): speech and voice control must hear the
+            # visible title first; the authored question stays as context.
+            visible=_text(title).rstrip(' +')
+            attrs['aria-label']=visible+('' if visible[-1:] in '?.!' else '.')+' '+attrs['aria-label']
         heading='blockquote' if modifier=='review' else 'strong'
         symbol=f'<span class="mineral-icon sculpture-symbol'+(' sculpture-service-icon' if is_service else '')+f'" aria-hidden="true" style="--mineral-asset:url(/assets/mineral/{E(icon)}.svg)"></span>'
         copy_html=f'<span class="sculpture-copy">{symbol}<{heading} class="sculpture-title">{E(title)}</{heading}>'+(f'<span class="sculpture-description">{E(copy)}</span>' if copy else '')+(extra if modifier=='lab' else '')+'</span>'

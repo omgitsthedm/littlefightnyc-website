@@ -519,46 +519,62 @@
     const context = document.createElement('canvas').getContext('2d');
     const offset = { web: 0, it: 2, consulting: 4, software: 6 }[grid.dataset.topicGrid] || 0;
     const rhythm = ['portrait', 'wide', 'compact', 'square', 'wide', 'square', 'portrait', 'compact'];
-    const options = cards.map((card, index) => {
+    const measurements = cards.map((card, index) => {
       const image = !!card.querySelector('.sculpture-art img');
       const ratio = Number(card.dataset.artRatio) || 1.25;
       const mode = card.dataset.device === 'iphone' || card.dataset.device === 'tablet' ? 'portrait'
         : card.dataset.device ? 'wide' : rhythm[(index + offset) % rhythm.length];
       const desiredRatio = card.dataset.device === 'iphone' ? .47 : { portrait: handset ? .5 : .68, wide: handset ? .9 : 1.7, compact: 1.12, square: 1 }[mode];
+      const limit = handset ? 5 : card.dataset.device === 'iphone' || card.dataset.device === 'tablet' ? 4 : 3;
       const desiredArea = baseArea * (card.dataset.device === 'iphone' ? .78 : mode === 'compact' ? .8 : mode === 'portrait' ? 1.05 : 1);
-      const result = [];
-      for (const width of widths) {
-        const pixels = spanWidth(width);
-        const narrow = pixels < 225;
-        for (const side of image && pixels >= 300 ? [false, true] : [false]) {
+      const copy = card.querySelector('.sculpture-copy');
+      const labels = [...copy.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')].map(node => {
+        const text = [];
+        const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+        let part;
+        while ((part = walker.nextNode())) if (!part.parentElement.closest('.sr-only,[aria-hidden=true]')) text.push(part.textContent);
+        return { node, words: text.join(' ').trim().split(/\s+/) };
+      });
+      return { card, copy, labels, image, ratio, desiredRatio, desiredArea, limit, options: [] };
+    });
+    // Measure one candidate shape across the collection at a time. Writing
+    // and reading each card in turn forced a complete style/layout flush for
+    // every candidate. Batch writes, word-fit reads, wrap writes, then height
+    // reads so the same authored measurements need only two flushes per shape.
+    for (const width of widths) {
+      const pixels = spanWidth(width);
+      const narrow = pixels < 225;
+      for (const side of pixels >= 300 ? [false, true] : [false]) {
+        const candidates = measurements.filter(item => !side || item.image);
+        for (const { card } of candidates) {
           card.style.width = `${pixels}px`;
           card.toggleAttribute('data-collection-narrow', narrow);
           card.toggleAttribute('data-collection-wide', side);
           card.removeAttribute('data-wrap-word');
-          const copy = card.querySelector('.sculpture-copy');
+        }
+        for (const item of candidates) {
+          const { copy, labels } = item;
           const copyStyle = getComputedStyle(copy);
           const textWidth = copy.clientWidth - parseFloat(copyStyle.paddingLeft) - parseFloat(copyStyle.paddingRight)
             - (copyStyle.display === 'grid' ? 28 + parseFloat(copyStyle.columnGap) : 0);
-          let wordsFit = true;
-          for (const node of copy.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')) {
-            context.font = getComputedStyle(node).font;
-            const text = [];
-            const walker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
-            let part;
-            while ((part = walker.nextNode())) if (!part.parentElement.closest('.sr-only,[aria-hidden=true]')) text.push(part.textContent);
-            const spacing = parseFloat(getComputedStyle(node).letterSpacing) || 0;
-            const longest = Math.max(...text.join(' ').trim().split(/\s+/).map(word => context.measureText(word).width + Math.max(0, word.length - 1) * spacing));
-            if (longest > textWidth + 1) wordsFit = false;
+          item.wordsFit = true;
+          for (const { node, words } of labels) {
+            const style = getComputedStyle(node);
+            context.font = style.font;
+            const spacing = parseFloat(style.letterSpacing) || 0;
+            const longest = Math.max(...words.map(word => context.measureText(word).width + Math.max(0, word.length - 1) * spacing));
+            if (longest > textWidth + 1) item.wordsFit = false;
           }
-          if (!wordsFit && width < columns) continue;
-          card.toggleAttribute('data-wrap-word', !wordsFit);
+        }
+        const fitting = candidates.filter(item => item.wordsFit || width >= columns);
+        for (const { card, wordsFit } of fitting) card.toggleAttribute('data-wrap-word', !wordsFit);
+        for (const { card, copy, image, ratio, desiredRatio, desiredArea, limit, wordsFit, options } of fitting) {
           const style = getComputedStyle(copy);
           const boxes = [...copy.children].map(node => node.getBoundingClientRect()).filter(box => box.height);
           const copyHeight = Math.max(...boxes.map(box => box.bottom)) - Math.min(...boxes.map(box => box.top))
             + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
           const minimum = side ? Math.max(copyHeight + 4, 144) : copyHeight + (image ? 98 : 4);
           const first = Math.max(2, Math.ceil((minimum + gap) / (rowUnit + gap)));
-          const limit = handset ? 5 : card.dataset.device === 'iphone' || card.dataset.device === 'tablet' ? 4 : 3;
           for (let height = first; height <= Math.max(first, limit); height += 1) {
             const h = spanHeight(height);
             if (h > 420) continue;
@@ -575,12 +591,12 @@
               + (side && pixels / h < 1.5 ? .65 : 0)
               + (!side && pixels / h > 1.9 && image ? .6 : 0)
               + (image && artFit < 90 ? .8 : 0);
-            result.push({ width, height, narrow, side, wrap: !wordsFit, cost });
+            options.push({ width, height, narrow, side, wrap: !wordsFit, cost });
           }
         }
       }
-      return result;
-    });
+    }
+    const options = measurements.map(item => item.options);
     // A bounded skyline search fills the first open position in reading
     // order. Unlike equal-height shelves, a portrait can sit beside two
     // compact cards. Every completed plan closes with no empty grid cells.
@@ -915,8 +931,20 @@
     grid.dataset.gridRevision = '5';
   }
 
+  let layoutKey = '';
+  let contentEpoch = 0;
+
   function layout() {
-    grids().forEach(pack);
+    const currentGrids = grids();
+    // The packing pass writes grid tracks and card spans. A ResizeObserver
+    // reports those writes back as another resize batch, so a plain callback
+    // used to pack all 58 cards again even when neither the viewport nor the
+    // readable content had changed. Width, breakpoint, and actual content
+    // resizes are the only inputs to this calculation.
+    const key = `${innerWidth}:${phone.matches}:${contentEpoch}:${currentGrids.map(grid => Math.round(grid.clientWidth * 100) / 100).join(',')}`;
+    if (key === layoutKey) return;
+    layoutKey = key;
+    currentGrids.forEach(pack);
     canvas.dataset.gridRevision = '5';
   }
 
@@ -941,20 +969,41 @@
       layout();
     });
   };
-  const contentObserver = new ResizeObserver(queueContentLayout);
-  grids().forEach(grid => grid.querySelectorAll('.sculpture-copy > *').forEach(node => contentObserver.observe(node)));
+  const observedContent = new WeakMap();
+  const contentObserver = new ResizeObserver(entries => {
+    let changed = false;
+    for (const entry of entries) {
+      const { width: nextWidth, height: nextHeight } = entry.contentRect;
+      const previous = observedContent.get(entry.target);
+      observedContent.set(entry.target, { width: nextWidth, height: nextHeight });
+      // ResizeObserver always queues an initial record. Snapshot dimensions
+      // before observing so initial records and our own stable grid writes do
+      // not cause a duplicate full packing pass.
+      if (previous && (Math.abs(previous.width - nextWidth) > .5 || Math.abs(previous.height - nextHeight) > .5)) changed = true;
+    }
+    if (changed) {
+      contentEpoch += 1;
+      queueContentLayout();
+    }
+  });
+  const observeContent = node => {
+    const box = node.getBoundingClientRect();
+    observedContent.set(node, { width: box.width, height: box.height });
+    contentObserver.observe(node);
+  };
+  grids().forEach(grid => grid.querySelectorAll('.sculpture-copy > *').forEach(observeContent));
   grids().forEach(grid => grid.querySelectorAll('.tile[data-editorial-front] :is(.topic-anchor-copy,.brand-anchor-copy)').forEach(copy => {
-    contentObserver.observe(copy);
-    [...copy.children].forEach(child => contentObserver.observe(child));
+    observeContent(copy);
+    [...copy.children].forEach(observeContent);
   }));
-  grids().forEach(grid => grid.querySelectorAll('.home-group-tile .cell-title').forEach(title => contentObserver.observe(title)));
-  grids().forEach(grid => grid.querySelectorAll('.review-tile > .review-stars,.review-tile > .review-quote,.review-tile > .review-credit').forEach(node => contentObserver.observe(node)));
+  grids().forEach(grid => grid.querySelectorAll('.home-group-tile .cell-title').forEach(observeContent));
+  grids().forEach(grid => grid.querySelectorAll('.review-tile > .review-stars,.review-tile > .review-quote,.review-tile > .review-credit').forEach(observeContent));
   // Lab fronts have a native image above a written invitation. Observing the
   // copy lets accessibility text enlargement add whole square rows before it
   // can cover the image or fall below the tile.
   grids().forEach(grid => grid.querySelectorAll('.lab-tile-copy').forEach(copy => {
-    contentObserver.observe(copy);
-    [...copy.children].forEach(child => contentObserver.observe(child));
+    observeContent(copy);
+    [...copy.children].forEach(observeContent);
   }));
   phone.addEventListener('change', queueContentLayout);
 })();

@@ -346,6 +346,31 @@
     }
   }
 
+  // The homepage paints with home.css; readers need the complete cascade in
+  // site.css. Load it once, on the first reader, before the dialog appears.
+  let readerStylesPromise;
+  function ensureReaderStyles() {
+    if ([...document.styleSheets].some(sheet => sheet.href && new URL(sheet.href).pathname === '/site.css')) return Promise.resolve();
+    if (readerStylesPromise) return readerStylesPromise;
+    readerStylesPromise = new Promise((resolve, reject) => {
+      const link = document.createElement('link');
+      link.id = 'reader-styles';
+      link.rel = 'stylesheet';
+      link.href = '/site.css';
+      const fail = () => {
+        clearTimeout(timeout);
+        link.remove();
+        readerStylesPromise = undefined;
+        reject(new Error('Reader styles could not load.'));
+      };
+      const timeout = setTimeout(fail, 8000);
+      link.onload = () => { clearTimeout(timeout); resolve(); };
+      link.onerror = fail;
+      document.head.append(link);
+    });
+    return readerStylesPromise;
+  }
+
   async function fetchReader(path, signal) {
     const response = await fetch(path, { credentials: 'same-origin', signal, headers: { Accept: 'text/html' } });
     if (!response.ok) throw new Error(`Reader request failed: ${response.status}`);
@@ -404,9 +429,13 @@
     if (menu?.open) setMenu(false, { returnFocus: false });
 
     try {
-      const readerDocument = await readerFetchPath(readerPath, findTile(readerPath) || source);
-      if (version !== requestVersion || controller.signal.aborted) return false;
-      const reader = await fetchReader(readerDocument, controller.signal);
+      // Fetch the reader and the complete stylesheet together; the dialog
+      // stays closed until both are ready, including on a slow connection.
+      const [reader] = await Promise.all([
+        readerFetchPath(readerPath, findTile(readerPath) || source)
+          .then(readerDocument => fetchReader(readerDocument, controller.signal)),
+        ensureReaderStyles(),
+      ]);
       if (version !== requestVersion || controller.signal.aborted) return false;
       releaseDemos();
       window.LFWebsiteStory?.release(panel);
@@ -451,7 +480,7 @@
       interaction(isInReader ? 'reader_change' : 'reader_open', contentId(readerPath), isInReader ? 'reader_link' : (source ? 'tile' : 'history'));
       return true;
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (error.name !== 'AbortError' && version === requestVersion && !controller.signal.aborted) {
         // A real link remains the reliable fallback when an enhancement request fails.
         if (!options.fromHistory) location.assign(readerPath);
       }
@@ -870,4 +899,11 @@
   prepareNativeInquiry(document, location.href);
   mountDemos(document.querySelector('main[data-page-content]') || document.createElement('div'));
   document.querySelectorAll('form[data-email-draft] textarea[name="message"]').forEach(field => { if (field.maxLength < 0) field.maxLength = 4000; });
+  // Warm the reader stylesheet once the homepage is idle so the first card
+  // opens without waiting on it. It never competes with first paint.
+  if (mosaic) {
+    const warm = () => ensureReaderStyles().catch(() => {});
+    const idle = () => ('requestIdleCallback' in window ? requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 2500));
+    if (document.readyState === 'complete') idle(); else addEventListener('load', idle, { once: true });
+  }
 })();

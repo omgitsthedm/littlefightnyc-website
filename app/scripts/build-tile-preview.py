@@ -57,8 +57,11 @@ RETIRED_PUBLISHED_ASSETS = (
 )
 RETIRED_PUBLISHED_DIRECTORIES = ('brand-kit',)
 
+INDEXED_HELP_ANSWERS = frozenset(json.loads((APP/'preview-content/search-policy.json').read_text())['indexedHelpAnswers'])
+
 def indexable(path):
-    if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/areas/','/answers/help/','/_readers/')):return False
+    if path in INDEXED_HELP_ANSWERS:return True
+    if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
     return path=='/' or path in ['/reviews/','/websites-for-your-business/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
@@ -608,6 +611,18 @@ for path, family in anchor_paths.items():
                        family=family, sections=[], faqs=[{'question':item['q'], 'answer':item['a']} for item in anchor.get('faq',[])])
     authored[path] = pages[path]
 
+# Service-area business: city-level identity only, no street address. Hours
+# match the public contact line ("9am–9pm Eastern"), every day.
+LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
+    'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
+    'description':'Websites, tech support, consulting and custom software for independent businesses.',
+    'address':{'@type':'PostalAddress','addressLocality':'New York','addressRegion':'NY','addressCountry':'US'},
+    'areaServed':[{'@type':'City','name':'New York','containedInPlace':{'@type':'State','name':'New York'}},{'@type':'Country','name':'United States'}],
+    'openingHoursSpecification':{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'09:00','closes':'21:00'},
+    'knowsAbout':['small business websites','IT support','tech consulting','custom business software','Google Business Profile'],
+    'parentOrganization':{'@id':ORIGIN+'/#organization'},
+    'sameAs':['https://www.instagram.com/littlefightnyc/','https://www.facebook.com/1311467162048309','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
+
 def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
     visual=case_visuals.get(path.strip('/').split('/')[-1],{}) if path.startswith('/case-studies/') else {}
@@ -616,6 +631,7 @@ def head(q, home=False):
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
     graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    if path=='/':graph.append(LOCAL_BUSINESS)
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
     if q.get('_rewriteCategory'):
         family=q['_rewriteCategory']
@@ -640,7 +656,7 @@ def head(q, home=False):
                       'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/site.css">{'<link rel="preload" as="image" href="/assets/clay-library/hero-diorama-clean.webp" imagesrcset="/assets/clay-library/hero-diorama-clean-384.webp 384w, /assets/clay-library/hero-diorama-clean-768.webp 768w, /assets/clay-library/hero-diorama-clean.webp 1448w" imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">' if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/{'home' if home else 'site'}.css">{'<link rel="preload" as="image" href="/assets/clay-library/hero-diorama-clean.webp" imagesrcset="/assets/clay-library/hero-diorama-clean-384.webp 384w, /assets/clay-library/hero-diorama-clean-768.webp 768w, /assets/clay-library/hero-diorama-clean.webp 1448w" imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">' if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a>'
@@ -753,18 +769,36 @@ if PRODUCTION:
 else:
     write('robots.txt','User-agent: *\nDisallow: /\n')
     write('_headers',"/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: no-store\n  X-Content-Type-Options: nosniff\n  Referrer-Policy: strict-origin-when-cross-origin\n  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self' mailto:; frame-ancestors 'none'; base-uri 'self'\n")
-write('llms.txt','# Little Fight NYC\n\nCustom website design for independent businesses across the United States. New York on-site help is subject to confirmed availability.\n\n- [Websites]('+ORIGIN+'/services/custom-local-websites/)\n- [Work]('+ORIGIN+'/examples/)\n- [Reviews]('+ORIGIN+'/reviews/)\n- [Contact]('+ORIGIN+'/tech-audit/)\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'+('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
+def llms_text():
+    """A plain map of the indexable site for AI readers, built from approved page titles and descriptions."""
+    def line(p):
+        q=pages[p]; name=re.sub(r'\s*\|\s*Little Fight NYC$','',q.get('title') or p)
+        return '- ['+name+']('+ORIGIN+p+')'+(': '+q['description'] if q.get('description') else '')
+    def group(title, prefix):
+        found=sorted(p for p in pages if p.startswith(prefix) and p!=prefix and p.count('/')==prefix.count('/')+1 and indexable(p))
+        return ('## '+title+'\n\n'+'\n'.join(line(p) for p in found)+'\n\n') if found else ''
+    intro=('# Little Fight NYC\n\n> Websites, tech support, consulting and custom software for independent businesses. '
+           'Based in New York City; website work is available across the United States. New York on-site help is subject to confirmed availability. '
+           'A person answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
+    start=('## Start here\n\n'+'\n'.join(line(p) for p in ['/','/how-we-help/','/reviews/','/contact/'] if p in pages)+'\n\n')
+    sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Answers','/answers/help/')+group('New York neighborhoods','/areas/')
+    tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'
+          +('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
+    return intro+start+sections+tail
+write('llms.txt', llms_text())
 write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC','description':'Find your way back to Little Fight NYC.'})+'<body class="page-home"><div class="workbench-page" data-reader-family="brand">'+workbench_header(family='brand', contacts=channels())+'<main class="lf-reader"><section class="story-hero"><div><p class="story-kicker">This page isn’t here.</p><h1 class="story-title">Let’s get you to the right place.</h1>'+link('Explore Little Fight','/','button')+'</div></section></main></div>'+shell_end())
 
 # One design system. Retired prototype themes never enter the release cascade.
 css_files = load('import-provenance.json')['activeCssOrder']
-css='\n'.join((UI/name).read_text() for name in css_files) + '\n' + (UI/'site-boot.css').read_text()
-if CLAY_LIBRARY:
-    css += '\n' + (UI/'clay-library.css').read_text()
-minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
-write('site.css',minified_css)
-for name in ['tile-motion.js','mosaic-layout.js','sculpture-static.css']:shutil.copy2(UI/'vendor'/name,OUT/name)
-for name in ['site.js', 'site-boot.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js']:shutil.copy2(UI/name,OUT/name)
+from tile_stylesheets import write_stylesheets
+write_stylesheets(APP, UI, css_files, ['site-boot.css'] + (['clay-library.css'] if CLAY_LIBRARY else []), write)
+shutil.copy2(UI/'vendor/sculpture-static.css', OUT/'sculpture-static.css')
+# Ship the hand-written browser scripts minified; the readable sources stay in preview-ui.
+script_sources = {name: UI/'vendor'/name for name in ['tile-motion.js', 'mosaic-layout.js']}
+script_sources.update({name: UI/name for name in ['site.js', 'site-boot.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js']})
+for name, source in script_sources.items():
+    write(name, subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=js', '--minify', '--target=es2020'],
+                               input=source.read_text(), text=True, capture_output=True, check=True).stdout)
 shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)
 copy_clay_library(OUT)

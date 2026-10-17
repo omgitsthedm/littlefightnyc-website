@@ -24,7 +24,9 @@
   };
   // Install the escape hatch before doing any other work. Failed/slow images
   // never leave a blank page, and returning from the back-forward cache is instant.
-  deadline = setTimeout(() => finish('timeout'), 4000);
+  // The page is hidden while this runs, so keep the hold short: a slow
+  // connection sees the site after 1.5s and the artwork settles in place.
+  deadline = setTimeout(() => finish('timeout'), 1500);
   window.addEventListener('pageshow', event => { if (event.persisted) finish('history'); });
   const frame = () => new Promise(resolve => requestAnimationFrame(resolve));
   document.addEventListener('DOMContentLoaded', async () => {

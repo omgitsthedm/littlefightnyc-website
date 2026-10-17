@@ -49,7 +49,10 @@ UNSAFE_PHOTO_CREDIT = re.compile(r"<|>|\.mw-parser-output|@(?:media|import)|[{}]
 # may be generated under /_readers/, while the public application itself keeps
 # its own document, robots policy, and byte-for-byte source copy.
 STANDALONE = ("/vera/", "/examples/audit/", "/examples/lab/", "/ads/", "/myspace-demo/")
-NOINDEX_PREFIXES = ("/markets/", "/photos/", "/areas/", "/answers/help/", "/_readers/")
+NOINDEX_PREFIXES = ("/markets/", "/photos/", "/answers/help/", "/_readers/")
+# Mirrors the compiler: complete help answers are indexable; neighborhood
+# pages follow their original route-meta policy.
+INDEXED_HELP_ANSWERS = frozenset(json.loads((APP / "preview-content/search-policy.json").read_text())["indexedHelpAnswers"])
 # Dedicated VERA documents are rendered after the marketing compiler from its
 # protected core and pinned public archive. Preserve their existing policy.
 VERA_DOCUMENTS = ("/vera/manual/", "/vera/archive/")
@@ -436,6 +439,8 @@ def route_meta() -> dict[str, dict]:
 
 
 def indexable(route: str, meta: dict[str, dict]) -> bool:
+    if route in INDEXED_HELP_ANSWERS:
+        return True
     if route in ("/thanks/", "/404/") or route.startswith(NOINDEX_PREFIXES):
         return False
     existing = meta.get(route)

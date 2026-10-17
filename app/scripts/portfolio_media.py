@@ -8,6 +8,7 @@ import re
 ROOT = Path(__file__).resolve().parents[2]
 DELIVERY = json.loads((ROOT / '.lifi/design-source/sculpture/portfolio-delivery.json').read_text())
 ARTWORK = json.loads((ROOT / '.lifi/design-source/sculpture/delivery.json').read_text())
+READERS = json.loads((ROOT / '.lifi/design-source/sculpture/reader-delivery.json').read_text())['images']
 MEDIA = DELIVERY['media']
 REPLACEMENTS = DELIVERY['replacements']
 DIMENSIONS = {asset['src']: asset for group in MEDIA.values() for asset in ([group] if 'src' in group else group.values()) if asset}
@@ -45,11 +46,19 @@ def rewrite_portfolio_media(markup):
         source = re.search(r'\bsrc="([^"]+)"', tag)
         if not source: return tag
         target = mapped(source[1])
-        if target == source[1] and not target.startswith(('/assets/sculpture/browser-', '/assets/sculpture/lab-', '/assets/portfolio-20261007/')): return tag
+        if target == source[1] and target not in READERS and not target.startswith(('/assets/sculpture/browser-', '/assets/sculpture/lab-', '/assets/portfolio-20261007/')): return tag
         tag = tag.replace(source[0], 'src="'+escape(target, quote=True)+'"', 1)
         tag = re.sub(r'\s(?:srcset|sizes|width|height)="[^"]*"', '', tag)
-        dims = DIMENSIONS.get(target)
+        dims = READERS.get(target) or DIMENSIONS.get(target)
         if dims: tag = tag[:-1]+f' width="{dims["width"]}" height="{dims["height"]}">'
+        if target in READERS:
+            variants = READERS[target]['variants']
+            srcset = ', '.join(v['src'] + ' ' + str(v['width']) + 'w' for v in variants)
+            # Lazy images can use their actual layout width. The fallback also
+            # serves browsers without auto-sizes and eager case hero images.
+            sizes = '(max-width:760px) calc(100vw - 48px), (max-width:1200px) calc(100vw - 96px), 1080px'
+            if 'loading="lazy"' in tag: sizes = 'auto, ' + sizes
+            tag = tag[:-1]+f' srcset="{srcset}" sizes="{sizes}">'
         if target.startswith('/assets/sculpture/'):
             if 'data-sculpture-screen=' not in tag: tag = tag.replace('<img ', '<img data-sculpture-screen="true" ', 1)
             variants = ARTWORK.get(Path(target).stem, [])

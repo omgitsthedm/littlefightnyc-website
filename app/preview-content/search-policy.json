@@ -1,0 +1,16 @@
+{
+  "note": "Reader answers under /answers/help/ stay noindex unless they carry a complete answer (300+ words of page content). Neighborhood pages follow their original route-meta policy: the 19 neighborhood overviews are indexable; neighborhood x service pages stay noindex.",
+  "indexedHelpAnswers": [
+    "/answers/help/computer/",
+    "/answers/help/consulting-second-opinion/",
+    "/answers/help/consulting-tool-choice/",
+    "/answers/help/email/",
+    "/answers/help/it-password-ownership/",
+    "/answers/help/maps/",
+    "/answers/help/ownership/",
+    "/answers/help/speed/",
+    "/answers/help/web-content-collection/",
+    "/answers/help/web-homepage-priority/",
+    "/answers/help/wifi/"
+  ]
+}
