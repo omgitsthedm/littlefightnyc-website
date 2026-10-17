@@ -770,10 +770,18 @@
     ['E Williamsburg', 40.7095, -73.9330],
   ];
 
+  /* VERA iconography: one Phosphor Light sprite, referenced by name. Icons are
+     paint, never the label; every caller still prints the words. */
+  var ICON_SPRITE = '/vera/assets/icons/vera-icons.svg';
+  function icon(name, cls) {
+    return '<svg class="ico' + (cls ? ' ' + cls : '') + '" aria-hidden="true" focusable="false">' +
+      '<use href="' + ICON_SPRITE + '#i-' + esc(name) + '"/></svg>';
+  }
+
   function poly(points) { return points.map(function (p) { return pt(p[0], p[1]); }).join(' '); }
 
   window.__VERAC = {
-    esc: esc, money: money, num: num, median: median, timeago: timeago, trustedURL: trustedURL,
+    esc: esc, icon: icon, money: money, num: num, median: median, timeago: timeago, trustedURL: trustedURL,
     BRACKETS: BRACKETS, bracketOf: bracketOf, AREAS: AREAS, areaOf: areaOf,
     LINE_COLORS: LINE_COLORS, STATIONS: STATIONS, nearestStation: nearestStation, lineBullets: lineBullets,
     ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam,

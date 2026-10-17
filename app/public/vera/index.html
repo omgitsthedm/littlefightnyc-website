@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>VERA — NYC rental intelligence, on the record</title>
   <meta name="description" content="A free NYC rental lens that joins listings to public records, flags risk, shows uncertainty, and keeps every source record open for inspection.">
-  <meta name="theme-color" content="#0c0e0d">
+  <meta name="theme-color" content="#0b0b0a">
   <meta name="color-scheme" content="dark">
   <meta name="application-name" content="VERA">
   <meta name="mobile-web-app-capable" content="yes">
@@ -21,11 +21,11 @@
   <link rel="canonical" href="https://littlefightnyc.com/vera/">
   <link rel="icon" href="./assets/icons/vera-icon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="./assets/icons/vera-icon-180.png" sizes="180x180">
-  <link rel="preload" href="./assets/fonts/ibm-plex-sans-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-serif-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="stylesheet" href="./assets/css/vera.css?v=62">
+  <link rel="stylesheet" href="./assets/css/vera.css?v=63">
 <style>.lfc{display:inline-flex;align-items:center;gap:0.7em;min-height:44px;padding:0.25em 0.15em;color:inherit;font-size:var(--lfc-size,1em);font-weight:400;line-height:1;text-decoration:none;-webkit-tap-highlight-color:transparent}.lfc-boat{position:relative;display:block;flex:none;width:3.1em;height:2.2em}.lfc-hull{position:absolute;bottom:0.28em;left:50%;width:2.2em;transform:translateX(-50%);transform-origin:50% 92%;animation:lfc-bob 5.2s ease-in-out infinite}.lfc-mark{display:block;width:100%;height:auto;fill:currentColor}.lfc-beacon{position:absolute;top:-0.16em;left:0.64em;width:0.3em;height:0.3em;border-radius:50%;background:var(--lfc-signal,#f97316);box-shadow:0 0 0.5em 0.06em rgb(249 115 22 / 0.55);animation:lfc-beacon 2.6s ease-in-out infinite}.lfc-sea{position:absolute;inset:auto 0 0;display:block;overflow:hidden;width:100%;height:0.8em;opacity:0.75}.lfc-wave{position:absolute;inset:0;display:block;width:100%;height:100%;overflow:visible}.lfc-wave path{fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;animation:lfc-drift 3.6s linear infinite}.lfc-wave--back path{stroke-width:0.9;opacity:0.42;animation-duration:6s;animation-direction:reverse}.lfc-text{white-space:nowrap}.lfc-name{font-weight:600}.lfc:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}@keyframes lfc-bob{0%,100%{transform:translateX(-50%) translateY(0) rotate(-2.2deg)}50%{transform:translateX(-50%) translateY(-0.09em) rotate(2.2deg)}}@keyframes lfc-beacon{0%,100%{opacity:0.35;transform:scale(1)}50%{opacity:1;transform:scale(1.35)}}@keyframes lfc-drift{from{transform:translateX(0)}to{transform:translateX(-16px)}}@media (hover:hover) and (pointer:fine){.lfc:hover .lfc-hull{animation-duration:2.6s}.lfc:hover .lfc-wave path{animation-duration:1.8s}.lfc:hover .lfc-wave--back path{animation-duration:3s}.lfc:hover .lfc-name{text-decoration:underline;text-underline-offset:0.25em}}@media (prefers-reduced-motion:reduce){.lfc-hull,.lfc-beacon,.lfc-wave path,.lfc:hover .lfc-hull,.lfc:hover .lfc-wave path{animation:none}.lfc-hull{transform:translateX(-50%) rotate(-1.5deg)}.lfc-beacon{opacity:1}}.lfc-embed{--lfc-size:11px;display:flex;align-items:center;margin-top:10px;color:inherit;opacity:.8}.lfc-embed:hover{opacity:1}</style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="VERA — NYC rental intelligence, on the record">
@@ -51,10 +51,9 @@
 
   <div class="shell" data-shell>
     <header class="masthead">
-      <a class="brand" href="#/today" aria-label="VERA — NYC rental intelligence">
-        <img class="insignia" src="./assets/brand/vera-mark-96.png" width="34" height="34" alt="" aria-hidden="true" decoding="async">
+      <a class="brand" href="#/today" aria-label="VERA — NYC rental index">
         <span class="brand__word"><span class="brand__name">VERA</span>
-        <span class="brand__tag">NYC rental intelligence</span></span>
+        <span class="brand__tag">NYC rental index</span></span>
       </a>
       <div class="masthead__status">
         <span class="pulse" data-pulse aria-hidden="true"></span>
@@ -62,24 +61,24 @@
       </div>
       <div class="mastnav__zone">
         <nav class="mastnav" aria-label="Sections">
-          <a href="#/today" data-nav="today">Today</a>
-          <a href="#/atlas" data-nav="atlas">Atlas</a>
-          <a href="#/market" data-nav="market" class="mastnav__2nd">Market</a>
-          <a href="#/browse" data-nav="browse">Browse</a>
-          <a href="#/hunt" data-nav="hunt">My hunt<b class="nv__badge" data-case-badge hidden>0</b></a>
-          <a href="#/manual" data-nav="manual" class="mastnav__2nd">Field manual</a>
-          <a href="#/archive" data-nav="archive" class="mastnav__2nd">Receipts</a>
-          <a href="#/system" data-nav="system" class="mastnav__2nd">System</a>
-          <button type="button" class="mastnav__more" data-nav-more aria-expanded="false" aria-haspopup="true">More</button>
+          <a href="#/today" data-nav="today"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-today"/></svg><span>Today</span></a>
+          <a href="#/atlas" data-nav="atlas"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-atlas"/></svg><span>Atlas</span></a>
+          <a href="#/market" data-nav="market" class="mastnav__2nd"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-market"/></svg><span>Market</span></a>
+          <a href="#/browse" data-nav="browse"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-browse"/></svg><span>Browse</span></a>
+          <a href="#/hunt" data-nav="hunt"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-hunt"/></svg><span>My hunt</span><b class="nv__badge" data-case-badge hidden>0</b></a>
+          <a href="#/manual" data-nav="manual" class="mastnav__2nd"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-manual"/></svg><span>Field manual</span></a>
+          <a href="#/archive" data-nav="archive" class="mastnav__2nd"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-receipts"/></svg><span>Receipts</span></a>
+          <a href="#/system" data-nav="system" class="mastnav__2nd"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-system"/></svg><span>System</span></a>
+          <button type="button" class="mastnav__more" data-nav-more aria-expanded="false" aria-haspopup="true"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-more"/></svg><span>More</span></button>
         </nav>
         <!-- Phone-only overflow: the four secondary sections live here under
              More. Links carry data-nav, so the router's active-state sync
              reaches them unchanged. -->
         <div class="mastnav__sheet" data-nav-sheet hidden>
-          <a href="#/market" data-nav="market">Market</a>
-          <a href="#/manual" data-nav="manual">Field manual</a>
-          <a href="#/archive" data-nav="archive">Receipts</a>
-          <a href="#/system" data-nav="system">System</a>
+          <a href="#/market" data-nav="market"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-market"/></svg><span>Market</span></a>
+          <a href="#/manual" data-nav="manual"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-manual"/></svg><span>Field manual</span></a>
+          <a href="#/archive" data-nav="archive"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-receipts"/></svg><span>Receipts</span></a>
+          <a href="#/system" data-nav="system"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-system"/></svg><span>System</span></a>
         </div>
       </div>
     </header>
@@ -178,7 +177,7 @@
           <button id="vera-tab-score" type="button" data-tab="score" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Score</button>
           <button id="vera-tab-visit" type="button" data-tab="visit" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Visit</button>
           <button id="vera-tab-verify" type="button" data-tab="verify" role="tab" aria-controls="vera-tabpanel" aria-selected="false" tabindex="-1">Verify</button>
-          <button type="button" class="inspector__tabmore" data-tab-more aria-expanded="false" aria-haspopup="true">More</button>
+          <button type="button" class="inspector__tabmore" data-tab-more aria-expanded="false" aria-haspopup="true"><svg class="ico" aria-hidden="true" focusable="false"><use href="./assets/icons/vera-icons.svg#i-more"/></svg><span>More</span></button>
         </div>
         <!-- Phone-only overflow: Money / Owner / Score / Visit under More.
              data-tab clicks route through the app's delegated handler, so
@@ -208,13 +207,13 @@
   </div>
 
   <noscript><p class="fallback">VERA renders a live data feed and needs JavaScript.</p></noscript>
-  <script src="./assets/js/vera-core.js?v=52" defer></script>
+  <script src="./assets/js/vera-core.js?v=53" defer></script>
   <script src="./assets/js/vera-geo.js?v=60" defer></script>
   <!-- MapLibre (~1MB) and vera-tests.js are deliberately NOT here: the map
        engine loads on first Atlas open, the test suite only under ?test=1.
        Both are injected by vera-app.js. -->
-  <script src="./assets/js/vera-map.js?v=60" defer></script>
+  <script src="./assets/js/vera-map.js?v=61" defer></script>
   <script src="./assets/js/vera-ledger.js?v=59" defer></script>
-  <script src="./assets/js/vera-app.js?v=63" defer></script>
+  <script src="./assets/js/vera-app.js?v=64" defer></script>
 </body>
 </html>

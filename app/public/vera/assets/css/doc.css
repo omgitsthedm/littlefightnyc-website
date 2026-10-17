@@ -192,3 +192,84 @@ a:focus-visible {
   .lockup { gap: 10px; }
   .lockup b { font-size: clamp(28px, 10vw, 40px); }
 }
+
+/* ============================================================
+   VERA INDEX — 2026-10
+   Document pages follow the console: black ground, newsprint ink,
+   hairline rules, serif to read, mono to label. See /vera/brand/.
+   ============================================================ */
+@font-face { font-family: "IBM Plex Serif"; src: url("../fonts/ibm-plex-serif-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+:root {
+  --bg: #0b0b0a; --panel: #0b0b0a; --panel-2: #151514; --well: #0f0f0e;
+  --line: rgba(240, 236, 227, 0.34); --line-soft: rgba(240, 236, 227, 0.16);
+  --ink: #f0ece3; --dim: #cbc5b8; --mute: #a29c90;
+  --green: #62d69d; --amber: #f2be58; --red: #ff7d6e; --blue: #a3c3ff;
+  --sans: "IBM Plex Serif", Georgia, serif;
+}
+html, body { font-family: var(--serif); font-weight: 400; }
+a { color: var(--ink); }
+a:hover { color: var(--green); }
+a:focus-visible { outline-color: #f2c46d; }
+::selection { background: var(--ink); color: var(--bg); }
+
+.docbar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; border-bottom-color: var(--line); }
+.docbar__brand img { display: none; }
+.docbar__brand b { font: 500 24px var(--serif); letter-spacing: 0.04em; }
+.docbar__links { gap: 0; border: 1px solid var(--line-soft); }
+.docbar__links a { border: 0; border-right: 1px solid var(--line-soft); border-radius: 0; padding: 6px 14px; }
+.docbar__links a:last-child { border-right: 0; }
+.docbar__links a.is-here { color: var(--bg); background: var(--ink); border-color: var(--line-soft); }
+
+.doc__kicker { color: var(--dim); letter-spacing: 0.16em; }
+.doc h1 { font-family: var(--serif); font-weight: 500; letter-spacing: -0.02em; }
+.doc h2 { font-family: var(--serif); font-weight: 500; border-top-color: var(--line); }
+.doc h3 { font-family: var(--serif); font-weight: 600; }
+
+.callout { border-radius: 0; border: 1px solid var(--line-soft); border-left: 3px solid var(--green); background: none; }
+.callout--warn { border-left-color: var(--amber); background: none; }
+.sw, .logobox, .dodont > div { border-radius: 0; background: var(--bg); }
+.swatches { gap: 0; border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
+.sw { border: 0; border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.sw__name { font-family: var(--serif); }
+.logobox { border-color: var(--line-soft); }
+.logobox--light { background: #f0ece3; }
+.lockup b { font: 500 44px var(--serif); letter-spacing: 0.04em; }
+.dodont { gap: 0; border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); }
+.dodont > div { border: 0; border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.dodont h3 { margin: 0 0 10px; font: 600 12px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.dodont--do h3 { color: var(--green); }
+.dodont--dont h3 { color: var(--red); }
+
+/* the icon library */
+.icongrid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); margin: 20px 0 26px; padding: 0;
+  list-style: none; border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft);
+}
+.icongrid li {
+  display: grid; justify-items: start; gap: 10px; margin: 0; padding: 14px 12px 12px;
+  border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); color: var(--ink);
+}
+.icongrid svg { width: 28px; height: 28px; fill: currentColor; }
+.icongrid code { font: 400 12px var(--mono); color: var(--mute); }
+.numeral {
+  display: inline-grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--ink);
+  border-radius: 50%; font: 500 15px/1 var(--mono); color: var(--ink); vertical-align: middle;
+}
+.specimen { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); border-top: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); margin: 20px 0; }
+.specimen > div { padding: 16px; border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.specimen dt { font: 400 11.5px var(--mono); letter-spacing: 0.13em; text-transform: uppercase; color: var(--mute); }
+.specimen dd { margin: 8px 0 0; font: 600 18px var(--serif); color: var(--ink); }
+.specimen dd span { display: block; margin-top: 4px; font: 400 14px var(--serif); color: var(--dim); }
+.doc .icongrid { padding-left: 0; }
+.doc .specimen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) {
+  .docbar__links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; border-right: 0; border-bottom: 0; }
+  .docbar__links a { justify-content: center; border-bottom: 1px solid var(--line-soft); }
+  .docbar__links a:nth-child(3n) { border-right: 1px solid var(--line-soft); }
+  .doc .specimen { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .docbar { position: static; }
+  .icongrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

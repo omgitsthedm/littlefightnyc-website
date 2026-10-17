@@ -945,32 +945,38 @@
       : '<p class="qualify qualify--warn">Needs a guarantor at your income — the bar here is ' + money(need) + '</p>';
   }
 
-  function ownerLine(l) {
-    var o = C.ownerRead(l);
-    var name = l.owner_name ? C.titleCase(String(l.owner_name).toLowerCase()) : null;
-    var ind = +l.likely_independent_landlord_score || 0;
-    var read = name ? name : (l.owner_type === 'llc' ? 'An LLC — human owner unproven' : 'Not named on the post');
-    return '<span class="dropcard__owner"><span class="dropcard__ownerlabel">Landlord</span>' +
-      '<b>' + esc(read) + '</b>' +
-      '<span class="tag ' + o.cls + '">' + o.label + '</span>' +
-      '<span class="ometer" title="Private-owner signal, 0–100"><i style="width:' + Math.max(4, Math.min(100, ind)) + '%"></i></span>' +
-      '<span class="ometer__n">' + Math.round(ind) + '</span></span>';
+  /* One fact in the card's index grid: icon, label, the answer, then the
+     evidence behind it. The answer is always words or numbers, never only
+     a colour or a glyph. */
+  function factCell(name, label, value, sub, cls) {
+    return '<div class="fact fact--' + name + (cls ? ' ' + cls : '') + '">' +
+      '<dt>' + C.icon(name) + '<span>' + label + '</span></dt>' +
+      '<dd><b>' + value + '</b>' + (sub ? '<span>' + sub + '</span>' : '') + '</dd></div>';
   }
 
   function dropCard(l, i) {
     var st = C.stabilized(l);
     var t = C.nearestStation(l);
     var m = C.moveInMath(l);
-    var why = l.why_this_listing || (l.trust_strengths || [])[0] || 'Clears every gate VERA can check from public data.';
+    /* Why it cleared, as a short checklist a renter can scan: the engine's
+       named strengths first, its prose sentence only as a fallback. */
+    var whys = (l.trust_strengths || []).filter(Boolean).slice(0, 3);
+    if (!whys.length) whys = String(l.why_this_listing || '').split(/\s*Note:/)[0].split(/\.\s+/).filter(Boolean).slice(0, 3);
+    if (!whys.length) whys = ['Clears every gate VERA can check from public data'];
     var flaw = (l.trust_caveats || [])[0] || (l.what_to_verify_before_applying || [])[0];
     var addr = addressOf(l);
     var unit = C.unitOf(l) === 'studio' ? 'Studio' : C.unitOf(l) === '1br' ? 'One bedroom' : esc(l.unit_type || 'Apartment');
     var place = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.placeRead(l) : null;
     var hoodLine = esc(l.neighborhood || (place && place.name) || '—');
+    if (l.borough && l.borough !== l.neighborhood) hoodLine += ', ' + esc(l.borough);
     if (place && !place.agrees) hoodLine += ' <span class="dropcard__pinwarn">· pin sits in ' + esc(place.name) + '</span>';
     var mini = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.minimap(l, 300, 300) : '';
     var stew = C.stewardOf(l);
     var spatial = C.spatialLine(l);
+    var owner = C.ownerRead(l);
+    var ownerName = l.owner_name
+      ? C.titleCase(String(l.owner_name).toLowerCase()).replace(/\b(Llc|Lp|Llp|Inc|Hdfc|Nyc)\b/g, function (w) { return w.toUpperCase(); })
+      : (l.owner_type === 'llc' ? 'An LLC' : 'Not named');
     var ageMs = l.first_seen_at ? (Date.now() - new Date(l.first_seen_at).getTime()) : null;
     var freshBadge = ageMs != null && ageMs < 24 * 3.6e6
       ? '<span class="dropcard__fresh">' + (ageMs < 3.6e6 ? 'just posted' : Math.round(ageMs / 3.6e6) + 'h fresh') + '</span>' : '';
@@ -980,41 +986,49 @@
       var ang = Math.atan2(+l.longitude - (Mb.w + Mb.e) / 2, +l.latitude - (Mb.s + Mb.n) / 2) * 180 / Math.PI;
       bearing = ' data-bearing="' + Math.round((ang + 360) % 360) + '"';
     }
+    var stewLine = stew.failures.length ? C.stewardText(stew.failures)
+      : stew.strengths.length ? C.stewardText(stew.strengths)
+      : 'city record too thin to judge';
+    var name = addr || C.charName(l);
     return '<article class="dropcard"' + bearing + ' style="--i:' + i + '">' +
       '<div class="dropcard__hit">' +
-        '<span class="dropcard__media">' + gallery(l) +
-          '<span class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></span>' + freshBadge +
-          '<span class="dropcard__no">' + (i + 1 < 10 ? '0' : '') + (i + 1) + '</span></span>' +
+        '<span class="dropcard__media">' + gallery(l) + freshBadge +
+          '<span class="dropcard__no" aria-hidden="true">' + (i + 1) + '</span></span>' +
         '<div class="dropcard__body">' +
           '<div class="dropcard__main">' +
-            '<span class="dropcard__hood">' + hoodLine + ' · ' + unit + (t ? ' · <span class="nowrap">≈' + t.mins + ' min walk ' + C.lineBullets(t.lines) + ' ' + esc(t.name) + '</span>' : '') + '</span>' +
+            '<div class="dropcard__verdict"><span class="verdict verdict--go">' + C.icon('check') + 'Cleared every check</span>' +
+              (l.overall_score != null ? '<span class="dropcard__score"><small aria-hidden="true">VERA score</small>' + scoreRing(l.overall_score) + '</span>' : '') + '</div>' +
+            '<p class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></p>' +
+            '<h2 class="dropcard__name">' + esc(name) + '</h2>' +
+            '<p class="dropcard__hood">' + C.icon('pin') + '<span>' + hoodLine + ' · ' + unit + '</span></p>' +
+            '<dl class="dropcard__facts">' +
+              factCell('train', 'Subway',
+                t ? '≈' + t.mins + ' min walk' : 'No station matched',
+                t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'verify the walk yourself') +
+              factCell('cash', 'Move-in cash', '≈ ' + money(m.total),
+                'first month, deposit, ' + money(m.appFee) + ' fee · no broker fee') +
+              factCell('building', 'Building', 'Grade ' + stew.grade + ' · ' + esc(stew.word),
+                (stew.score != null ? stew.score + '/100 · ' : '') + esc(stewLine), 'steward steward--' + stew.grade) +
+              factCell('owner', 'Landlord', esc(ownerName),
+                '<span class="tag ' + owner.cls + '">' + owner.label + '</span>', 'dropcard__owner') +
+            '</dl>' +
             commuteLines(l) +
-            '<h2 class="dropcard__name">' + esc(addr || C.charName(l)) + '</h2>' +
-            (addr ? '<p class="dropcard__flavor">' + esc(C.charName(l)) + '</p>' : '') +
-            ownerLine(l) +
-            '<span class="steward steward--' + stew.grade + '">' +
-              '<b class="steward__grade">' + stew.grade + '</b>' +
-              '<span class="steward__body"><span class="steward__word">Stewardship: ' + esc(stew.word) + (stew.score != null ? ' · ' + stew.score + '/100' : '') + '</span>' +
-              (stew.failures.length ? '<span class="steward__line steward__line--bad">' + esc(C.stewardText(stew.failures)) + '</span>'
-                : stew.strengths.length ? '<span class="steward__line steward__line--good">' + esc(C.stewardText(stew.strengths)) + '</span>'
-                : '<span class="steward__line">city record too thin to judge — verify in person</span>') + '</span>' +
-            '</span>' +
-            '<p class="dropcard__why">' + esc(why) + '</p>' +
-            (spatial ? '<p class="dropcard__spatial">' + esc(spatial) + ' · no floor plan published</p>' : '') +
-            (flaw ? '<p class="dropcard__flaw">Eyes open: ' + esc(flaw) + '</p>' : '') +
+            '<ul class="dropcard__why" aria-label="Why it cleared">' + whys.map(function (w) {
+              return '<li>' + C.icon('check') + '<span>' + esc(String(w).replace(/\.$/, '')) + '</span></li>';
+            }).join('') + '</ul>' +
+            (flaw ? '<p class="dropcard__flaw">' + C.icon('warning') + '<span><b>Check first:</b> ' + esc(flaw) + '</span></p>' : '') +
             qualifyLine(l) +
             '<span class="dropcard__chips">' +
               valueChip(l) +
               priceMoveTag(l) +
               (l.voucher_signal ? '<span class="tag tag--blue" title="The listing text states this explicitly — VERA never infers it">vouchers welcomed (stated)</span>' : '') +
               (st ? '<span class="tag ' + st.cls + '">' + st.label + '</span>' : '') +
-              '<span class="tag">move-in ≈ ' + money(m.total) + '</span>' +
-              scoreRing(l.overall_score) +
+              (spatial ? '<span class="tag">' + esc(spatial) + '</span>' : '') +
             '</span>' +
             provenance(l) +
-            '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(addr || C.charName(l)) + '">Open full ledger <span aria-hidden="true">→</span></button>' +
+            '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(name) + '">' + C.icon('ledger') + '<span>Open full ledger</span>' + C.icon('arrow', 'ico--end') + '</button>' +
           '</div>' +
-          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(addr || C.charName(l)) + ' on the Atlas map">' + mini + '<span class="dropcard__mapaction">View in Atlas <span aria-hidden="true">↗</span></span></button>' : '') +
+          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(name) + ' on the Atlas map">' + mini + '<span class="dropcard__mapaction">' + C.icon('atlas') + 'View in Atlas</span></button>' : '') +
         '</div>' +
       '</div></article>';
   }
@@ -1057,7 +1071,14 @@
     var reasonBits = Object.keys(reasons).sort(function (a, b) { return reasons[b] - reasons[a]; }).slice(0, 4)
       .map(function (r) { return reasons[r] + ' ' + r; }).join(', ');
 
-    var dateStr = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    /* The drop is dated by its publication, in New York time, never by the
+       visitor's clock: a Friday sweep read on Saturday is still Friday's. */
+    var pub = D && D.generated_at ? new Date(D.generated_at) : null;
+    var pubOK = pub && !isNaN(pub.getTime());
+    var pubLine = pubOK
+      ? pub.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: 'America/New_York' }) + ', ' +
+        pub.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }) + ' ET'
+      : 'publication time unknown';
     var sm = (D && D.summary) || {};
     // Count what CLEARED, not what fitted on the page. The lede read
     // "8 clear every gate" out of 270 on the night 21 did, and "we passed on
@@ -1071,18 +1092,31 @@
     page.innerHTML =
       (usedFallbackPool ? '<p class="notice">The full listing feed is unavailable. This drop shows a limited selection from the available listings.</p>' : '') +
       '<header class="drophead">' +
-        '<p class="kicker">The drop · sweep ' + timeago(D && D.generated_at) + '</p>' +
-        '<h1 class="drophead__title">' + esc(dateStr) + '</h1>' +
+        '<p class="drophead__kicker">' + C.icon('today') + '<span>Swept ' + esc(pubLine) + ' · ' + timeago(D && D.generated_at) + '</span></p>' +
+        '<h1 class="drophead__title">' +
+          (drop.length
+            ? '<b class="drophead__count">' + clearedCount + '</b> apartment' + (clearedCount === 1 ? '' : 's') + ' cleared every check.'
+            : 'Nothing cleared every check today.') +
+        '</h1>' +
         '<p class="drophead__lede">' +
           (drop.length
-            ? 'Out of <b>' + POOL.length + '</b> listings across the four-borough net, <b>' + clearedCount + '</b> clear' + (clearedCount === 1 ? 's' : '') + ' every gate — price, papers, building record, and an owner worth talking to.' +
+            ? 'Out of <b>' + POOL.length + '</b> listings swept across Manhattan, Brooklyn, Queens and the Bronx. Each one below passed price, papers, building record, and an owner worth talking to.' +
               (beyondDrop ? ' The <b>' + drop.length + '</b> strongest are below; <a href="#/browse" data-view-jump="cleared">the other ' + beyondDrop + ' are here ↗</a>' : '')
-            : 'Nothing met the bar today — out of ' + POOL.length + ' swept, none cleared every gate. The net stays out and tomorrow sweeps again.') +
+            : 'Out of ' + POOL.length + ' swept, none cleared every gate. The net stays out and the next sweep tries again.') +
         '</p>' +
+        '<dl class="dropstats">' +
+          '<div><dt>Swept</dt><dd>' + POOL.length + '</dd></div>' +
+          '<div class="is-go"><dt>Cleared</dt><dd>' + clearedCount + '</dd></div>' +
+          '<div><dt>Second look</dt><dd>' + nearMiss.length + '</dd></div>' +
+          '<div><dt>Next sweep</dt><dd><span class="mono" data-countdown>—</span></dd></div>' +
+        '</dl>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
-        '<p class="drophead__next">next scheduled sweep <span class="mono" data-countdown>—</span></p>' +
         (sinceLastVisit ? '<p class="drophead__since">' + sinceLastVisit + ' new in the net since your last visit</p>' : '') +
-        anchorPanel() +
+        '<details class="anchorfold"' + (anchors.length || profile.income ? ' open' : '') + '>' +
+          '<summary>' + C.icon('commute') + '<span>Personalize: commute and income</span>' +
+            '<em>' + (anchors.length || profile.income ? 'on · stays in this browser' : 'off') + '</em>' + C.icon('caret', 'ico--end') + '</summary>' +
+          anchorPanel() +
+        '</details>' +
       '</header>' +
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
         : '<div class="dropempty">' +
@@ -1696,6 +1730,7 @@
             '<p class="atlas-map-note" id="vera-atlas-map-note"><strong>Street + building context.</strong> Atlas excludes Staten Island, New Jersey, and Nassau/Suffolk listings. Pins reflect feed coordinates; footprints are context, not a verified unit match. Some listings share one coordinate; List shows every record.</p>' +
             '<div class="mp-key">' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--point"></i>Listing coordinate</span>' +
+              '<span class="mp-key__i"><i class="mp-swatch mp-swatch--cluster">3</i>Listings grouped here; zoom in to separate</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--good"></i>Clears the bar</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--warn"></i>Needs verification</span>' +
               '<span class="mp-key__i"><i class="mp-swatch mp-swatch--bad"></i>Scam wall</span>' +
@@ -2212,6 +2247,7 @@
           '<li><b><a href="https://whoownswhat.justfix.org/" target="_blank" rel="noopener noreferrer">JustFix — Who Owns What</a></b> — links buildings into landlord portfolios through HPD registration contacts.</li>' +
           '<li><b>AI-photo detection</b> — <a href="https://huggingface.co/umm-maybe/AI-image-detector" target="_blank" rel="noopener noreferrer">umm-maybe/AI-image-detector</a>, licensed CC BY 4.0; a probabilistic warning layer, never proof.</li>' +
           '<li><b>Open map data</b> — neighborhood context and map tiles derived from public OpenStreetMap data.</li>' +
+          '<li><b><a href="https://phosphoricons.com/" target="_blank" rel="noopener noreferrer">Phosphor Icons</a></b> — the interface icons, Light weight, licensed MIT.</li>' +
         '</ul>' +
         '<aside class="lab-callout"><p class="kicker">Little Fight Lab</p><h3>Focused software, built around the decision.</h3><p>VERA is proof that a small, owner-controlled system can replace tabs, spreadsheets, and guesswork without another subscription.</p><a class="bigbtn" href="/services/business-systems/">See what Little Fight builds ↗</a></aside>' +
         '<p class="ethos__credit">A <a href="https://littlefightnyc.com/" rel="noopener">Little Fight NYC</a> system · <a href="/vera/brand/">brand</a> · <a href="/vera/terms/">terms</a> · <a href="/vera/privacy/">privacy</a></p>' +

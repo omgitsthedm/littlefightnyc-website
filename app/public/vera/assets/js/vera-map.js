@@ -462,11 +462,12 @@
       source: SOURCE_ID,
       filter: ['has', 'point_count'],
       paint: {
-        'circle-color': '#173f2e',
-        'circle-opacity': 0.98,
-        'circle-radius': ['step', ['get', 'point_count'], 18, 10, 22, 30, 27],
-        'circle-stroke-color': '#e8e1d4',
-        'circle-stroke-width': 1.8,
+        /* A circled numeral, the same mark the drop uses for its entries. */
+        'circle-color': '#0b0b0a',
+        'circle-opacity': 0.96,
+        'circle-radius': ['step', ['get', 'point_count'], 15, 10, 18, 30, 22],
+        'circle-stroke-color': '#f0ece3',
+        'circle-stroke-width': 1.5,
       },
     });
 
@@ -476,8 +477,8 @@
       source: SOURCE_ID,
       filter: ['has', 'point_count'],
       layout: {
-        'text-field': ['concat', ['to-string', ['get', 'point_count_abbreviated']], ' listings'],
-        'text-size': 12,
+        'text-field': ['to-string', ['get', 'point_count_abbreviated']],
+        'text-size': 14,
         'text-font': ['Noto Sans Bold'],
         'text-allow-overlap': true,
       },

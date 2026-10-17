@@ -1640,7 +1640,7 @@ test(
   async ({ page }) => {
     test.slow();
     const documents = [
-      ["/vera/brand/", "VERA looks like the instrument it is."],
+      ["/vera/brand/", "An index of apartments, on the record."],
       ["/vera/privacy/", "Your hunt stays yours."],
       ["/vera/terms/", "An instrument, not an agent."],
       ["/vera/corrections/", "Corrections"],
@@ -1653,7 +1653,7 @@ test(
       await expect(page.getByRole("heading", { level: 1, name: heading })).toBeVisible();
       await expect(page.locator('.skip-link[href="#main"]')).toHaveCount(1);
       await expect(page.locator('.docbar__brand img[src*="vera-mark-96.png"]')).toHaveCount(1);
-      await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute("href", /doc\.css\?v=2$/);
+      await expect(page.locator('link[rel="stylesheet"]')).toHaveAttribute("href", /doc\.css\?v=3$/);
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
         "href",
         `https://littlefightnyc.com${path}`,
