@@ -1016,6 +1016,7 @@
   })();
   let prebuilt = null;
   let started = false;
+  let fontsSettled = false;
 
   function markReady() {
     if (canvas.dataset.layoutReady) return;
@@ -1037,6 +1038,10 @@
     if (!force && prebuilt && prebuilt.apply()) {
       canvas.dataset.gridRevision = '5';
       markReady();
+      // Once fonts have settled, any later application (resize, text that a
+      // visitor or extension enlarged) is checked on the next frame; content
+      // that no longer fits the measured layout goes to the live engine.
+      if (fontsSettled) requestAnimationFrame(() => { if (prebuilt && !prebuilt.verify()) layout({ force: true }); });
       return;
     }
     currentGrids.forEach(pack);
@@ -1052,11 +1057,10 @@
     prebuilt = result || null;
     started = true;
     layout();
-    if (prebuilt) {
-      document.fonts.ready.then(() => requestAnimationFrame(() => {
-        if (!prebuilt.verify()) layout({ force: true });
-      }));
-    }
+    document.fonts.ready.then(() => requestAnimationFrame(() => {
+      fontsSettled = true;
+      if (prebuilt && !prebuilt.verify()) layout({ force: true });
+    }));
   });
 
   let width = canvas.clientWidth;
