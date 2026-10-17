@@ -64,6 +64,7 @@ def load_rewrite(content):
         'categories': {item['path']: item for item in [web['category'], *support['categories']]},
         'industries': web['industries'], 'hooks': hooks,
         'groupIntros': {**web.get('groupIntros', {}), **support.get('groupIntros', {})},
+        'sources': support.get('sources', {}),
     }
 
 
@@ -84,7 +85,10 @@ def guide_sections(item, rewrite):
     """A complete troubleshooting answer: the short answer, checks, signals, our side, related reading."""
     guide = item['guide']
     sections = [{'heading': '', 'paragraphs': [item['detail']]},
-                {'id': 'checks', 'heading': guide.get('stepsHeading', 'Check this first'), 'steps': guide['steps']},
+                {'id': 'checks', 'heading': guide.get('stepsHeading', 'Check this first'), 'steps': guide['steps']}]
+    if guide.get('fixes'):
+        sections.append({'id': 'specific-fixes', 'heading': 'Specific fixes', 'groups': guide['fixes']})
+    sections += [
                 {'id': 'when-to-get-help', 'heading': guide.get('helpHeading', 'When to bring in help'), 'bullets': guide['helpWhen']},
                 {'id': 'what-we-check', 'heading': 'What Little Fight checks', 'paragraphs': [guide['weCheck']]},
                 {'id': 'more-questions', 'heading': 'Related questions', 'qa': guide['faqs']}]
@@ -95,6 +99,8 @@ def guide_sections(item, rewrite):
         sections.append({'id': 'related-answers', 'heading': 'Related answers',
                          'links': [{'label': intros.get(row['id'], {}).get('heading') or row['question'],
                                     'href': '/answers/help/' + row['id'] + '/'} for row in related]})
+    if guide.get('sources'):
+        sections.append({'id': 'sources', 'heading': 'Sources', 'links': [rewrite['sources'][key] for key in guide['sources']]})
     return sections
 
 
@@ -106,7 +112,11 @@ def answer_section(item, *, include_next=True):
     paragraphs = [item['answer'], item['detail']]
     if include_next:
         paragraphs.append(item['nextStep'])
-    return {'id': 'answer-' + item['id'], 'heading': item['question'], 'paragraphs': paragraphs}
+    section = {'id': 'answer-' + item['id'], 'heading': item['question'], 'paragraphs': paragraphs}
+    if item.get('guide'):
+        # A grouped short answer leads to its complete troubleshooting page.
+        section['links'] = [{'label': 'Read the full answer', 'href': '/answers/help/' + item['id'] + '/'}]
+    return section
 
 
 def prepare_groups(groups, rewrite):

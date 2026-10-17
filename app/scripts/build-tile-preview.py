@@ -244,6 +244,7 @@ def sections_html(sections):
         if s.get('steps'): body+='<ol>'+''.join(f'<li>{E(display(b))}</li>' for b in s['steps'])+'</ol>'
         if s.get('bullets'): body+='<ul>'+''.join(f'<li>{E(display(b))}</li>' for b in s['bullets'])+'</ul>'
         if s.get('qa'): body+=''.join(f'<h3>{E(display(x["question"]))}</h3><p>{E(display(x["answer"]))}</p>' for x in s['qa'])
+        if s.get('groups'): body+=''.join(f'<h3>{E(display(g["label"]))}</h3><ol>'+''.join(f'<li>{E(display(b))}</li>' for b in g['steps'])+'</ol>' for g in s['groups'])
         if s.get('links'):body+='<nav class="story-related">'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
         heading=display(s.get('heading',''))
         plain=heading in ('','The details','Start here','A useful starting point')

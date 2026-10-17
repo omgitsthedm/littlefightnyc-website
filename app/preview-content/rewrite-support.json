@@ -125,7 +125,36 @@
           "it-software-updates",
           "human"
         ],
-        "metaDescription": "One computer prints and another cannot? Compare their Wi-Fi network, selected printer and print queue before replacing the printer."
+        "metaDescription": "One computer prints and another cannot? Compare their Wi-Fi network, selected printer and print queue before replacing the printer.",
+        "fixes": [
+          {
+            "label": "On Windows 11",
+            "steps": [
+              "Open Settings > Bluetooth & devices > Printers & scanners and remove any duplicate or offline copy of the printer.",
+              "Choose Add device. If the printer is not listed, choose Add manually and enter the printer’s IP address, which most printers can show on a network status page.",
+              "If jobs stay stuck, open Services, restart Print Spooler, then send a one-page test.",
+              "Install the printer maker’s current driver if Windows keeps choosing a generic one."
+            ]
+          },
+          {
+            "label": "On a Mac",
+            "steps": [
+              "Open System Settings > Printers & Scanners, select the printer, and remove it.",
+              "Choose Add Printer, Scanner or Fax. If the printer is not listed, use the IP tab and enter its IP address.",
+              "Open the print queue and resume the printer if it shows as paused."
+            ]
+          },
+          {
+            "label": "On the router",
+            "steps": [
+              "Reserve a fixed address for the printer in the router’s DHCP settings, so the address your computers saved does not change."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-printer",
+          "apple-printer"
+        ]
       }
     },
     {
@@ -141,7 +170,8 @@
           "Find where each set lives: one computer, a shared drive, or a cloud service.",
           "Check that the backup service shows a recent date for those folders.",
           "Restore one harmless sample file into a new folder and open it.",
-          "Write down who can sign in to the backup and how they would recover that account."
+          "Write down who can sign in to the backup and how they would recover that account.",
+          "Export a copy of the records kept in rented tools, such as booking or accounting software, on a schedule."
         ],
         "helpWhen": [
           "No one can say where the copy lives or when it last ran.",
@@ -163,6 +193,35 @@
           "it-storage-full",
           "it-shared-files",
           "it-security-basics"
+        ],
+        "fixes": [
+          {
+            "label": "On a Mac",
+            "steps": [
+              "Time Machine backs up to an external drive or a network drive. Open System Settings > General > Time Machine to see the date of the last backup.",
+              "To test a restore, open the folder in Finder, choose Browse Time Machine Backups from the Time Machine menu, pick an earlier version, and choose Restore."
+            ]
+          },
+          {
+            "label": "On Windows 11",
+            "steps": [
+              "Settings > Accounts > Windows backup shows which folders sync to OneDrive.",
+              "File History, in Control Panel, can still copy folders to an external drive."
+            ]
+          },
+          {
+            "label": "In OneDrive or SharePoint",
+            "steps": [
+              "Deleted files go to the recycle bin, and Version history restores an earlier copy of a file."
+            ]
+          }
+        ],
+        "sources": [
+          "apple-tm",
+          "apple-tm-restore",
+          "ms-windows-backup",
+          "ms-onedrive-restore",
+          "cisa-smb"
         ]
       }
     },
@@ -203,6 +262,16 @@
           "onsite",
           "it-support-notes",
           "care"
+        ],
+        "fixes": [
+          {
+            "label": "Take a screenshot",
+            "steps": [
+              "Windows: press Windows + Shift + S.",
+              "Mac: press Shift + Command + 4.",
+              "iPhone: press the side button and volume up together."
+            ]
+          }
         ]
       }
     },
@@ -241,6 +310,15 @@
           "it-internet-outage",
           "it-phone-setup",
           "it-payment-device-check"
+        ],
+        "fixes": [
+          {
+            "label": "Keep devices reconnecting on their own",
+            "steps": [
+              "Bring the router’s admin login and Wi-Fi details. If the new network uses the same name and password, most devices reconnect without anyone touching them.",
+              "Ask the phone provider whether your numbers move with you before you cancel anything at the old address."
+            ]
+          }
         ]
       }
     },
@@ -317,6 +395,18 @@
           "wifi",
           "it-payment-device-check",
           "it-security-basics"
+        ],
+        "fixes": [
+          {
+            "label": "In the router settings",
+            "steps": [
+              "Turn on the guest network and its isolation option, sometimes called client or AP isolation, so guest devices cannot reach your equipment.",
+              "Keep payment devices and staff computers on the staff network, with a different password."
+            ]
+          }
+        ],
+        "sources": [
+          "apple-router"
         ]
       }
     },
@@ -355,6 +445,26 @@
           "wifi",
           "it-guest-network",
           "move"
+        ],
+        "fixes": [
+          {
+            "label": "On the computer",
+            "steps": [
+              "On Windows 11, Settings > Network & internet shows whether the computer reaches the internet or only the local network.",
+              "On a Mac, System Settings > Network shows whether Wi-Fi and Ethernet are connected."
+            ]
+          },
+          {
+            "label": "At the modem",
+            "steps": [
+              "Note the status lights before restarting anything, so you can tell the provider what you saw.",
+              "Run a speed test from a wired computer while the problem is happening, and keep the result for the provider."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-wifi",
+          "square-network"
         ]
       }
     },
@@ -393,6 +503,24 @@
           "email",
           "it-domain-email-renewal",
           "it-account-handoff"
+        ],
+        "fixes": [
+          {
+            "label": "In Microsoft 365",
+            "steps": [
+              "Create a shared mailbox in the Microsoft 365 admin center under Teams & groups > Shared mailboxes, then add the people who need it.",
+              "Give them Send as permission, so replies come from the business address instead of a personal one."
+            ]
+          },
+          {
+            "label": "In Google Workspace",
+            "steps": [
+              "A Google Group set up as a collaborative inbox lets several people read and reply to one address."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-shared-mailbox"
         ]
       }
     },
@@ -431,6 +559,32 @@
           "it-permission-review",
           "it-password-ownership",
           "it-new-hire-access"
+        ],
+        "fixes": [
+          {
+            "label": "In Microsoft 365",
+            "steps": [
+              "Block sign-in first.",
+              "If colleagues need the mail, convert the mailbox to a shared mailbox and check its size limit.",
+              "Give a manager access to the person’s OneDrive files before you remove the license."
+            ]
+          },
+          {
+            "label": "In Google Workspace",
+            "steps": [
+              "Suspend the account to stop sign-in, then transfer the person’s Drive files to another user in the Admin console before deleting it."
+            ]
+          },
+          {
+            "label": "On Apple devices",
+            "steps": [
+              "Sign the device out of the person’s Apple Account and remove it from any device manager before erasing it."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-remove-employee",
+          "google-transfer"
         ]
       }
     },
@@ -469,6 +623,35 @@
           "it-password-ownership",
           "backup",
           "it-software-updates"
+        ],
+        "fixes": [
+          {
+            "label": "In Microsoft 365",
+            "steps": [
+              "Security defaults in the Microsoft Entra admin center require two-step sign-in for every account. Check they are on, or that your own sign-in rules cover every user."
+            ]
+          },
+          {
+            "label": "In Google Workspace",
+            "steps": [
+              "Turn on and enforce 2-Step Verification in the Admin console under Security > Authentication."
+            ]
+          },
+          {
+            "label": "If an account may be compromised",
+            "steps": [
+              "Change the password from a trusted device and sign out of every other session.",
+              "Check for forwarding rules and connected apps that you did not set up.",
+              "If there may be an active breach, stop changing things and contact a qualified incident-response professional. Do not pay anyone who contacts you first."
+            ]
+          }
+        ],
+        "sources": [
+          "cisa-smb",
+          "nist-smb",
+          "cisa-mfa",
+          "ms-security-defaults",
+          "google-2sv"
         ]
       }
     },
@@ -515,6 +698,16 @@
           "it-domain-email-renewal",
           "it-account-handoff",
           "care"
+        ],
+        "fixes": [
+          {
+            "label": "Where renewal dates live",
+            "steps": [
+              "Microsoft 365: the admin center under Billing > Your products.",
+              "Google Workspace: the Admin console under Billing > Subscriptions.",
+              "Apps bought through Apple: Settings > your name > Subscriptions on an iPhone."
+            ]
+          }
         ]
       }
     },
@@ -553,6 +746,19 @@
           "it-internet-outage",
           "it-home-work-boundary",
           "onsite"
+        ],
+        "fixes": [
+          {
+            "label": "Test calls by platform",
+            "steps": [
+              "Zoom: join a test meeting at zoom.us/test.",
+              "Microsoft Teams: go to Settings > Devices and choose Make a test call.",
+              "Google Meet: open the meeting link early and use Check your audio and video before joining."
+            ]
+          }
+        ],
+        "sources": [
+          "zoom-test"
         ]
       }
     },
@@ -591,6 +797,30 @@
           "backup",
           "it-shared-files",
           "computer"
+        ],
+        "fixes": [
+          {
+            "label": "On Windows 11",
+            "steps": [
+              "Settings > System > Storage shows what is using space, and Storage Sense can clear temporary files on a schedule."
+            ]
+          },
+          {
+            "label": "On a Mac",
+            "steps": [
+              "System Settings > General > Storage shows what is using space and offers recommendations, including keeping files in iCloud."
+            ]
+          },
+          {
+            "label": "In OneDrive",
+            "steps": [
+              "Right-click a synced folder and choose Free up space to keep its files online until you open them."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-storage",
+          "apple-storage"
         ]
       }
     },
@@ -629,6 +859,24 @@
           "backup",
           "it-permission-review",
           "it-storage-full"
+        ],
+        "fixes": [
+          {
+            "label": "In Google Workspace",
+            "steps": [
+              "Use shared drives for team files. Files in a shared drive belong to the business, so they stay when someone leaves."
+            ]
+          },
+          {
+            "label": "In Microsoft 365",
+            "steps": [
+              "Keep team files in a SharePoint site or a Teams channel rather than in one person’s OneDrive, for the same reason."
+            ]
+          }
+        ],
+        "sources": [
+          "google-shared-drives",
+          "ms-sharing"
         ]
       }
     },
@@ -667,6 +915,20 @@
           "move",
           "it-domain-email-renewal",
           "human"
+        ],
+        "fixes": [
+          {
+            "label": "Business texting",
+            "steps": [
+              "In the United States, carriers expect business texting from local numbers to be registered, often called 10DLC registration. Ask your provider whether your number is registered before you invite customers to text it."
+            ]
+          },
+          {
+            "label": "Listings",
+            "steps": [
+              "Use the same main number on your website, Google Business Profile, Apple Business Connect and Yelp."
+            ]
+          }
         ]
       }
     },
@@ -705,6 +967,29 @@
           "it-security-basics",
           "backup",
           "care"
+        ],
+        "fixes": [
+          {
+            "label": "On Windows 11",
+            "steps": [
+              "Settings > Windows Update lets you set active hours, so restarts happen outside the workday."
+            ]
+          },
+          {
+            "label": "On a Mac",
+            "steps": [
+              "System Settings > General > Software Update has automatic update options. Keep security responses and system files turned on."
+            ]
+          },
+          {
+            "label": "Unsupported systems",
+            "steps": [
+              "Windows 10 stopped receiving free security updates on October 14, 2025. Plan to upgrade or replace those computers."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-win10"
         ]
       }
     },
@@ -743,6 +1028,23 @@
           "it-account-handoff",
           "it-password-ownership",
           "it-shared-files"
+        ],
+        "fixes": [
+          {
+            "label": "In Google Drive",
+            "steps": [
+              "Search Drive for files shared with the contractor’s address, and change any file set to Anyone with the link that should be private."
+            ]
+          },
+          {
+            "label": "In OneDrive and SharePoint",
+            "steps": [
+              "Remove the contractor’s guest access and any sharing links they still hold, then review the external sharing settings."
+            ]
+          }
+        ],
+        "sources": [
+          "ms-sharing"
         ]
       }
     },
@@ -781,6 +1083,27 @@
           "it-guest-network",
           "wifi",
           "it-internet-outage"
+        ],
+        "fixes": [
+          {
+            "label": "During service",
+            "steps": [
+              "Check whether one device or every device is affected.",
+              "Test the internet from a phone on cellular data to tell a provider outage from a local problem.",
+              "Use the business’s approved fallback, such as a second reader or offline mode, rather than changing settings mid-service."
+            ]
+          },
+          {
+            "label": "After service",
+            "steps": [
+              "Write down what failed, when, and on which device, leaving out customer card details.",
+              "Read your provider’s offline payment rules before relying on them: offline payments carry limits and risk."
+            ]
+          }
+        ],
+        "sources": [
+          "square-network",
+          "square-offline"
         ]
       }
     },
@@ -820,6 +1143,18 @@
           "it-account-handoff",
           "it-password-ownership",
           "it-shared-files"
+        ],
+        "fixes": [
+          {
+            "label": "In Microsoft 365 or Google Workspace",
+            "steps": [
+              "Create the person’s own account, assign a license, and add them to the groups for their role rather than to individual files.",
+              "Have them set up two-step sign-in during the first session, with someone there to help."
+            ]
+          }
+        ],
+        "sources": [
+          "cisa-mfa"
         ]
       }
     },
@@ -858,6 +1193,23 @@
           "email",
           "it-password-ownership",
           "it-license-renewal"
+        ],
+        "fixes": [
+          {
+            "label": "Find who holds the domain",
+            "steps": [
+              "ICANN Lookup shows the registrar and expiry date for most domains."
+            ]
+          },
+          {
+            "label": "At the registrar",
+            "steps": [
+              "Turn on auto-renew and the transfer lock, and add a second business contact for renewal notices."
+            ]
+          }
+        ],
+        "sources": [
+          "icann-lookup"
         ]
       }
     },
@@ -935,6 +1287,17 @@
           "it-support-notes",
           "it-password-ownership",
           "it-domain-email-renewal"
+        ],
+        "fixes": [
+          {
+            "label": "Admin accounts to confirm",
+            "steps": [
+              "Microsoft 365 Global Administrator or Google Workspace super admin.",
+              "The domain registrar and the DNS host.",
+              "The router, firewall and Wi-Fi controller.",
+              "The internet provider account and any backup service."
+            ]
+          }
         ]
       }
     },
@@ -973,6 +1336,18 @@
           "it-video-call-room",
           "wifi",
           "it-security-basics"
+        ],
+        "fixes": [
+          {
+            "label": "Home network",
+            "steps": [
+              "For calls, sit near the router on the 5 GHz band or use a cable.",
+              "Many routers can create a separate network for work devices, apart from smart TVs and guests."
+            ]
+          }
+        ],
+        "sources": [
+          "apple-router"
         ]
       }
     },
@@ -1092,7 +1467,36 @@
   "groupIntros": {
     "wifi": {
       "heading": "Why does my Wi-Fi keep dropping?",
-      "summary": "Check whether one device, one room, or the whole business loses its connection. That helps separate a local signal problem from an internet-provider outage."
+      "summary": "Check whether one device, one room, or the whole business loses its connection. That helps separate a local signal problem from an internet-provider outage.",
+      "supplementalSections": [
+        {
+          "heading": "Specific fixes for weak or dropping Wi-Fi",
+          "bullets": [
+            "Put the router or access point high, central and in the open: not in a closet, behind a copier, or against brick and metal.",
+            "Use the 5 GHz band near the router for speed and 2.4 GHz for reach through walls; most routers offer both.",
+            "If one router cannot cover the space, add a second access point or a mesh system rather than a basic range extender, which often slows the connection.",
+            "Keep router firmware updated, and replace equipment that no longer receives updates.",
+            "When it drops, record the time, devices, room and exact error, then test one wired device and one nearby wireless device before restarting anything."
+          ]
+        },
+        {
+          "heading": "Sources",
+          "links": [
+            {
+              "label": "Apple: Recommended settings for Wi-Fi routers and access points",
+              "href": "https://support.apple.com/en-us/102766"
+            },
+            {
+              "label": "Microsoft: Fix Wi-Fi connection issues in Windows",
+              "href": "https://support.microsoft.com/en-us/topic/how-to-fix-wi-fi-connection-issues-in-windows-9424a1f7-6a3b-65a6-4d78-7f07eee84d2c"
+            },
+            {
+              "label": "Square: Troubleshoot your network connection",
+              "href": "https://squareup.com/help/us/en/article/8305-troubleshooting-your-connection"
+            }
+          ]
+        }
+      ]
     },
     "email": {
       "heading": "What is going wrong with my business email?",
@@ -1119,6 +1523,37 @@
               "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee-step-5?view=o365-worldwide"
             }
           ]
+        },
+        {
+          "heading": "When mail goes to spam",
+          "bullets": [
+            "Check whether one recipient or many are affected, and send a plain test to an outside inbox.",
+            "Ask your email provider to confirm SPF, DKIM and DMARC for your domain. These settings tell receiving servers that mail from your domain is genuine.",
+            "In Microsoft 365, message trace in the Exchange admin center shows where a message went. In Google Workspace, Email Log Search does the same.",
+            "If Sent shows messages you did not write, change the password and check for new forwarding rules before anything else.",
+            "Hold off on bulk sending until the cause is clear."
+          ]
+        },
+        {
+          "heading": "Sources",
+          "links": [
+            {
+              "label": "Google: Email sender guidelines",
+              "href": "https://support.google.com/a/answer/81126"
+            },
+            {
+              "label": "Microsoft: How email authentication works in Microsoft 365",
+              "href": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-about"
+            },
+            {
+              "label": "Microsoft: Message trace in Exchange Online",
+              "href": "https://learn.microsoft.com/en-us/exchange/monitoring/trace-an-email-message/message-trace-modern-eac"
+            },
+            {
+              "label": "Google Workspace: Find messages with Email Log Search",
+              "href": "https://support.google.com/a/answer/2618874"
+            }
+          ]
         }
       ]
     },
@@ -1143,6 +1578,28 @@
               "href": "https://support.apple.com/en-us/102649"
             }
           ]
+        },
+        {
+          "heading": "Specific steps",
+          "bullets": [
+            "Keep at least two people with admin access to email, the domain and payments, so one absence cannot lock the business out.",
+            "Store business passwords in a password manager with a shared business vault, not in notes or spreadsheets.",
+            "Save each account’s recovery codes somewhere the business controls, and check that the recovery email and phone number are current.",
+            "Turn on two-step sign-in for every admin account first."
+          ]
+        },
+        {
+          "heading": "Sources",
+          "links": [
+            {
+              "label": "CISA: Require strong passwords",
+              "href": "https://www.cisa.gov/secure-our-world/require-strong-passwords"
+            },
+            {
+              "label": "CISA: Turn on MFA",
+              "href": "https://www.cisa.gov/secure-our-world/turn-mfa"
+            }
+          ]
         }
       ]
     },
@@ -1165,6 +1622,32 @@
             {
               "label": "Windows backup and recovery guidance",
               "href": "https://support.microsoft.com/en-us/windows/experience/backup-recovery/backup-restore-and-recovery-in-windows"
+            }
+          ]
+        },
+        {
+          "heading": "Tools that make the move easier",
+          "bullets": [
+            "On a Mac, Migration Assistant moves accounts, apps and files from the old Mac or from a Time Machine backup.",
+            "On Windows 11, sign in with the same work account and use OneDrive or Windows Backup to bring folders and settings across.",
+            "Windows 10 stopped receiving free security updates on October 14, 2025; plan to replace or upgrade those computers.",
+            "Sign the old device out of work accounts, and remove it from them, before it is erased or handed on."
+          ]
+        },
+        {
+          "heading": "Sources",
+          "links": [
+            {
+              "label": "Apple: Transfer to a new Mac with Migration Assistant",
+              "href": "https://support.apple.com/en-us/102613"
+            },
+            {
+              "label": "Microsoft: Back up and restore with Windows Backup",
+              "href": "https://support.microsoft.com/en-us/windows/back-up-your-windows-pc-87a81f8a-78fa-456e-b521-ac0560e32338"
+            },
+            {
+              "label": "Microsoft: Windows 10 support has ended",
+              "href": "https://support.microsoft.com/en-us/windows/windows-10-support-has-ended-on-october-14-2025-2ca8b313-1946-43d3-b55c-2b95b107f281"
             }
           ]
         }
@@ -1193,6 +1676,132 @@
     "software-business-ownership": {
       "heading": "Your business stays in control.",
       "summary": "Custom work should leave the agreed files, data, accounts, and operating notes with the business. That keeps future support and recovery possible."
+    }
+  },
+  "sources": {
+    "ms-printer": {
+      "label": "Microsoft: Fix printer connection and printing problems in Windows",
+      "href": "https://support.microsoft.com/en-us/windows/fix-printer-connection-and-printing-problems-in-windows-fb830bff-7702-6349-33cd-9443fe987f73"
+    },
+    "apple-printer": {
+      "label": "Apple: Add and manage printers on Mac",
+      "href": "https://support.apple.com/guide/mac-help/add-a-printer-to-your-printer-list-mh14004/mac"
+    },
+    "cisa-smb": {
+      "label": "CISA: Small and medium-sized business resources",
+      "href": "https://www.cisa.gov/small-and-medium-sized-business-resources"
+    },
+    "nist-smb": {
+      "label": "NIST: Small Business Cybersecurity Corner",
+      "href": "https://www.nist.gov/itl/smallbusinesscyber"
+    },
+    "cisa-mfa": {
+      "label": "CISA: Turn on MFA",
+      "href": "https://www.cisa.gov/secure-our-world/turn-mfa"
+    },
+    "cisa-passwords": {
+      "label": "CISA: Require strong passwords",
+      "href": "https://www.cisa.gov/secure-our-world/require-strong-passwords"
+    },
+    "apple-tm": {
+      "label": "Apple: Back up your Mac with Time Machine",
+      "href": "https://support.apple.com/en-us/104984"
+    },
+    "apple-tm-restore": {
+      "label": "Apple: Restore items backed up with Time Machine",
+      "href": "https://support.apple.com/guide/mac-help/restore-items-backed-up-with-time-machine-mh11422/mac"
+    },
+    "ms-windows-backup": {
+      "label": "Microsoft: Back up and restore with Windows Backup",
+      "href": "https://support.microsoft.com/en-us/windows/back-up-your-windows-pc-87a81f8a-78fa-456e-b521-ac0560e32338"
+    },
+    "ms-onedrive-restore": {
+      "label": "Microsoft: Restore files deleted from your OneDrive",
+      "href": "https://support.microsoft.com/en-us/office/restore-deleted-files-or-folders-in-onedrive-949ada80-0026-4db3-a953-c99083e6a84f"
+    },
+    "ms-security-defaults": {
+      "label": "Microsoft: Security defaults for Microsoft Entra ID",
+      "href": "https://learn.microsoft.com/en-us/entra/fundamentals/security-defaults"
+    },
+    "google-2sv": {
+      "label": "Google Workspace: Protect your business with 2-Step Verification",
+      "href": "https://support.google.com/a/answer/175197"
+    },
+    "square-network": {
+      "label": "Square: Troubleshoot your network connection",
+      "href": "https://squareup.com/help/us/en/article/8305-troubleshooting-your-connection"
+    },
+    "square-offline": {
+      "label": "Square: Process offline payments",
+      "href": "https://squareup.com/help/us/en/article/7777-process-card-payments-with-offline-mode"
+    },
+    "google-sender": {
+      "label": "Google: Email sender guidelines",
+      "href": "https://support.google.com/a/answer/81126"
+    },
+    "ms-email-auth": {
+      "label": "Microsoft: How email authentication works in Microsoft 365",
+      "href": "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-about"
+    },
+    "ms-message-trace": {
+      "label": "Microsoft: Message trace in Exchange Online",
+      "href": "https://learn.microsoft.com/en-us/exchange/monitoring/trace-an-email-message/message-trace-modern-eac"
+    },
+    "google-email-log": {
+      "label": "Google Workspace: Find messages with Email Log Search",
+      "href": "https://support.google.com/a/answer/2618874"
+    },
+    "ms-shared-mailbox": {
+      "label": "Microsoft: Create a shared mailbox",
+      "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/email/create-a-shared-mailbox"
+    },
+    "ms-remove-employee": {
+      "label": "Microsoft: Remove a former employee from Microsoft 365",
+      "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee"
+    },
+    "google-transfer": {
+      "label": "Google Workspace: Transfer Drive files to a new owner",
+      "href": "https://support.google.com/a/answer/1247799"
+    },
+    "ms-win10": {
+      "label": "Microsoft: Windows 10 support has ended",
+      "href": "https://support.microsoft.com/en-us/windows/windows-10-support-has-ended-on-october-14-2025-2ca8b313-1946-43d3-b55c-2b95b107f281"
+    },
+    "ms-storage": {
+      "label": "Microsoft: Free up drive space in Windows",
+      "href": "https://support.microsoft.com/en-us/windows/free-up-drive-space-in-windows-85529ccb-c365-490d-b548-831022bc9b32"
+    },
+    "apple-storage": {
+      "label": "Apple: Free up storage space on Mac",
+      "href": "https://support.apple.com/en-us/102624"
+    },
+    "google-shared-drives": {
+      "label": "Google Workspace: What are shared drives?",
+      "href": "https://support.google.com/a/answer/7212025"
+    },
+    "ms-sharing": {
+      "label": "Microsoft: Manage sharing settings for SharePoint and OneDrive",
+      "href": "https://learn.microsoft.com/en-us/sharepoint/turn-external-sharing-on-or-off"
+    },
+    "icann-lookup": {
+      "label": "ICANN Lookup: find a domain’s registrar and expiry date",
+      "href": "https://lookup.icann.org/"
+    },
+    "ms-wifi": {
+      "label": "Microsoft: Fix Wi-Fi connection issues in Windows",
+      "href": "https://support.microsoft.com/en-us/topic/how-to-fix-wi-fi-connection-issues-in-windows-9424a1f7-6a3b-65a6-4d78-7f07eee84d2c"
+    },
+    "apple-router": {
+      "label": "Apple: Recommended settings for Wi-Fi routers and access points",
+      "href": "https://support.apple.com/en-us/102766"
+    },
+    "apple-migration": {
+      "label": "Apple: Transfer to a new Mac with Migration Assistant",
+      "href": "https://support.apple.com/en-us/102613"
+    },
+    "zoom-test": {
+      "label": "Zoom: Join a test meeting",
+      "href": "https://zoom.us/test"
     }
   }
 }

@@ -65,6 +65,7 @@ FAQ_RICH_RESULT_CLAIMS = (
 )
 WORD = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 INDEXED_HELP_ANSWERS = frozenset(json.loads((CONTENT / "search-policy.json").read_text())["indexedHelpAnswers"])
+SUPPORT_SOURCES = json.loads((CONTENT / "rewrite-support.json").read_text()).get("sources", {})
 COMPLETE_ANSWER_WORDS = 300
 
 
@@ -330,9 +331,14 @@ def audit_source_catalog(failures: list[str]) -> tuple[dict[str, dict[str, Any]]
     return answers, category_by_id, hooks
 
 
+OFFICIAL_SOURCE_HOSTS = ("support.microsoft.com", "learn.microsoft.com", "support.apple.com", "support.google.com",
+                         "www.cisa.gov", "www.nist.gov", "squareup.com", "lookup.icann.org", "zoom.us")
+
+
 def guide_texts(guide: dict[str, Any]) -> list[str]:
     return [*guide.get("steps", []), *guide.get("helpWhen", []), guide.get("weCheck", ""),
-            *(text for row in guide.get("faqs", []) for text in (row.get("question", ""), row.get("answer", "")))]
+            *(text for row in guide.get("faqs", []) for text in (row.get("question", ""), row.get("answer", ""))),
+            *(text for group in guide.get("fixes", []) for text in (group.get("label", ""), *group.get("steps", [])))]
 
 
 def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[dict[str, Any]], failures: list[str]) -> None:
@@ -357,6 +363,16 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
     for related in guide.get("related", []):
         if related not in known or related == identity:
             failures.append(f"rewrite guide {identity}: related answer {related!r} does not exist")
+    for group in guide.get("fixes", []):
+        if not compact(group.get("label")) or not isinstance(group.get("steps"), list) or not 1 <= len(group["steps"]) <= 5:
+            failures.append(f"rewrite guide {identity}: each specific-fix group needs a label and 1–5 steps")
+    registry = SUPPORT_SOURCES
+    for key in guide.get("sources", []):
+        source = registry.get(key)
+        if not source:
+            failures.append(f"rewrite guide {identity}: unknown source {key!r}")
+        elif urlsplit(source["href"]).scheme != "https" or urlsplit(source["href"]).hostname not in OFFICIAL_SOURCE_HOSTS:
+            failures.append(f"rewrite guide {identity}: source {key!r} is not an official https reference")
     copy = normalized(" ".join([*guide_texts(guide), guide.get("metaDescription", "")]))
     for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
         if phrase in copy:
@@ -501,6 +517,10 @@ def audit_answer_routes(
         for related in guide["related"]:
             if f"/answers/help/{related}/" not in anchor_paths:
                 failures.append(f"{route}: missing related answer link /answers/help/{related}/")
+        hrefs = set(parser.anchors())
+        for key in guide.get("sources", []):
+            if SUPPORT_SOURCES.get(key, {}).get("href") not in hrefs:
+                failures.append(f"{route}: missing source link {key}")
         nodes = [node for root in schema_objects(parser, route, failures) for node in flatten_schema(root)]
         faq_pages = [node for node in nodes if has_type(node, "FAQPage")]
         expected = [(item["question"], item["answer"] + " " + item["detail"]), *((row["question"], row["answer"]) for row in guide["faqs"])]
