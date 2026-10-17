@@ -308,7 +308,9 @@
 
 /* Contact choices are stacked cards, not inline buttons. The editorial layout
    that once stacked them is scoped to .lf-editorial, which islands never have,
-   so the card structure is declared here and the primary keeps its orange. */
+   so the card structure is declared here and the primary keeps its orange.
+   The a. selectors outrank the reader shell's link reset
+   (.workbench-page .lf-reader a). */
 .production-island .lf-contact-choice__route {
   display: flex;
   flex-direction: column;
@@ -319,9 +321,10 @@
   gap: 0;
   color: var(--tile-paper);
   text-decoration: none;
+  container-type: inline-size;
 }
 
-.production-island .lf-contact-choice__route--primary {
+.production-island a.lf-contact-choice__route--primary {
   border: 1px solid var(--tile-orange);
   color: #1d1712;
   background: var(--tile-orange);
@@ -349,7 +352,7 @@
   max-width: none;
   margin-top: 16px;
   font-family: Manrope, "Atkinson Hyperlegible Next", sans-serif;
-  font-size: clamp(1.45rem, 6vw, 2.25rem);
+  font-size: clamp(1.35rem, 10.5cqi, 2.25rem);
   font-weight: 800;
   line-height: 1.08;
   overflow-wrap: normal;
@@ -388,12 +391,12 @@
 }
 
 /* The page hero's primary decision sits on orange; keep its label dark. */
-.production-island .lf-pagehero__decision--primary,
-.production-island .lf-pagehero__decision--primary > strong {
+.production-island a.lf-pagehero__decision--primary,
+.production-island a.lf-pagehero__decision--primary > strong {
   color: #09090b;
 }
 
-.production-island .lf-pagehero__decision--primary > span {
+.production-island a.lf-pagehero__decision--primary > span {
   color: rgb(9 9 11 / 78%);
 }
 

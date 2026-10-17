@@ -104,6 +104,15 @@ export async function mountProductionIsland(host: HTMLElement, kind: IslandKind)
   // input event can arrive. Other islands retain React's normal scheduling.
   if (kind === "tech-audit") flushSync(() => root.render(application));
   else root.render(application);
+  // The page's "Skip to content" link targets #detail-title, which lived in
+  // the static fallback this island just replaced. Keep the skip link working
+  // by making the island itself the target when nothing else carries the id.
+  window.requestAnimationFrame(() => {
+    if (!document.getElementById("detail-title") && host.isConnected) {
+      host.id = "detail-title";
+      host.tabIndex = -1;
+    }
+  });
 }
 
 export async function openConsentNotices() {
