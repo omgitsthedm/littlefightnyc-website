@@ -56,7 +56,13 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
         pass(engine + ' ' + width + ' respects reduced motion', state.motion === 'paused');
         if (width === 2560) pass(engine + ' Retina desktop receives the native diorama', /\/hero-diorama-clean\.(avif|webp)$/.test(state.building.source));
         else if (width <= 393) pass(engine + ' phones receive responsive diorama artwork', /\/hero-diorama-clean-384\.(avif|webp)$/.test(state.building.source));
-        for (const selector of ['.sculpture-help', '.hero-main', '.hero-secondary', '.clay-room-home', '.clay-room-studio', '.clay-room-meeting', '.clay-room-shop']) {
+        // Get help opens the one-tap chooser; closing it returns focus to the button.
+        await page.locator('.sculpture-help').click();
+        await page.waitForFunction(() => document.querySelector('#get-help-panel')?.open && document.querySelectorAll('#get-help-panel [data-help-choice]').length === 4);
+        await page.keyboard.press('Escape');
+        await page.waitForFunction(() => !document.querySelector('#get-help-panel').open && document.activeElement === document.querySelector('.sculpture-help'));
+        pass(engine + ' ' + width + ' Get help chooser opens and restores focus', true);
+        for (const selector of ['.hero-main', '.hero-secondary', '.clay-room-home', '.clay-room-studio', '.clay-room-meeting', '.clay-room-shop', '.clay-review-sticker']) {
           const link = page.locator(selector), href = await link.getAttribute('href');
           await link.click();
           await page.waitForFunction(href => document.querySelector('#detail')?.open && document.querySelector('#detail-body')?.dataset.readerPath === href, href);
@@ -87,7 +93,7 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
       await page.close();
       const nojs = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 393, height: 852 } });
       await nojs.goto(base + '/');
-      pass(engine + ' native links and artwork survive without JavaScript', await nojs.locator('.sculpture-hero a[href]').count() === 10 && await nojs.locator('.clay-building img').count() > 0);
+      pass(engine + ' native links and artwork survive without JavaScript', await nojs.locator('.sculpture-hero a[href]').count() === 11 && await nojs.locator('.clay-building img').count() > 0);
       await nojs.close();
     } finally { await browser.close(); }
   }
