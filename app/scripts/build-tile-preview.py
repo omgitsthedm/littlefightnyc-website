@@ -25,7 +25,7 @@ from clay_icons import ROUTES as CLAY_ROUTES, clay_figure
 from portfolio_media import apply_portfolio_media, rewrite_portfolio_media
 from consolidated_tiles import load_groups, home_contexts, source_routes, apply_readers, apply_homepage_groups, render_group_sections, group_hero
 from retained_answers import render_retained_answers
-from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
+from tile_rewrite import GUIDE_UPDATED, load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
 from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library
@@ -241,7 +241,9 @@ def sections_html(sections):
     html=[]
     for i,s in enumerate(sections):
         body=''.join(f'<p>{E(display(p))}</p>' for p in s.get('paragraphs',[]))
+        if s.get('steps'): body+='<ol>'+''.join(f'<li>{E(display(b))}</li>' for b in s['steps'])+'</ol>'
         if s.get('bullets'): body+='<ul>'+''.join(f'<li>{E(display(b))}</li>' for b in s['bullets'])+'</ul>'
+        if s.get('qa'): body+=''.join(f'<h3>{E(display(x["question"]))}</h3><p>{E(display(x["answer"]))}</p>' for x in s['qa'])
         if s.get('links'):body+='<nav class="story-related">'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
         heading=display(s.get('heading',''))
         plain=heading in ('','The details','Start here','A useful starting point')
@@ -613,15 +615,18 @@ for path, family in anchor_paths.items():
 
 # Service-area business: city-level identity only, no street address. Hours
 # match the public contact line ("9am–9pm Eastern"), every day.
+# The verified Google Business Profile recorded with the review excerpts.
+REVIEWS_PROFILE = json.loads((CONTENT/'reviews.json').read_text())['profileUrl']
 LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
     'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
     'description':'Websites, tech support, consulting and custom software for independent businesses.',
     'address':{'@type':'PostalAddress','addressLocality':'New York','addressRegion':'NY','addressCountry':'US'},
     'areaServed':[{'@type':'City','name':'New York','containedInPlace':{'@type':'State','name':'New York'}},{'@type':'Country','name':'United States'}],
     'openingHoursSpecification':{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'09:00','closes':'21:00'},
-    'knowsAbout':['small business websites','IT support','tech consulting','custom business software','Google Business Profile'],
+    'knowsAbout':['small business websites','small business IT support','Mac and Windows computers','Microsoft 365','business email','Wi-Fi networks','printers','data backup','tech consulting','custom business software','Google Business Profile'],
+    'hasMap':REVIEWS_PROFILE,
     'parentOrganization':{'@id':ORIGIN+'/#organization'},
-    'sameAs':['https://www.instagram.com/littlefightnyc/','https://www.facebook.com/1311467162048309','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
+    'sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/','https://www.facebook.com/1311467162048309','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
 
 def hero_preload():
     """Preload the diorama in the format and size the hero <picture> will choose."""
@@ -637,16 +642,24 @@ def head(q, home=False):
     card = social_card(q, reader_family(q), visual.get('desktop'),
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':['https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path=='/':graph.append(LOCAL_BUSINESS)
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
     if q.get('_rewriteCategory'):
         family=q['_rewriteCategory']
         graph.append(category_schema(rewrite,family,ORIGIN,path))
         if family!='web':
-            graph.append({'@type':'Service','name':q['heading'],'description':q['description'],
+            graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':q['heading'],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
                           'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'}})
+    elif q.get('_rewriteGuide'):
+        # The page's own question and its related questions, exactly as shown.
+        item = rewrite['answers'][q['_rewriteAnswer']]
+        graph[2]['about'] = {'@id': ORIGIN + q['_servicePath'] + '#service'}
+        graph[2]['dateModified'] = GUIDE_UPDATED
+        graph.append({'@type':'FAQPage', '@id':ORIGIN+path+'#questions', 'isPartOf':{'@id':ORIGIN+path+'#webpage'},
+                      'mainEntity':[{'@type':'Question', 'name':row['question'], 'acceptedAnswer':{'@type':'Answer','text':row['answer']}}
+                                    for row in [{'question':item['question'], 'answer':item['answer']+' '+item['detail']}, *q['_rewriteGuide']['faqs']]]})
     elif q.get('faqs'):
         graph.append({'@type':'FAQPage', '@id':ORIGIN+path+'#questions',
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
@@ -817,14 +830,17 @@ def llms_text():
     def line(p):
         q=pages[p]; name=re.sub(r'\s*\|\s*Little Fight NYC$','',q.get('title') or p)
         return '- ['+name+']('+ORIGIN+p+')'+(': '+q['description'] if q.get('description') else '')
-    def group(title, prefix):
-        found=sorted(p for p in pages if p.startswith(prefix) and p!=prefix and p.count('/')==prefix.count('/')+1 and indexable(p))
+    def group(title, prefix, keep=lambda p: True):
+        found=sorted(p for p in pages if p.startswith(prefix) and p!=prefix and p.count('/')==prefix.count('/')+1 and indexable(p) and keep(p))
         return ('## '+title+'\n\n'+'\n'.join(line(p) for p in found)+'\n\n') if found else ''
+    support=lambda p: reader_family(pages[p])=='it'
     intro=('# Little Fight NYC\n\n> Websites, tech support, consulting and custom software for independent businesses. '
            'Based in New York City; website work is available across the United States. New York on-site help is subject to confirmed availability. '
+           'Tech support for small businesses covers Mac and Windows computers, iPhone and iPad, Microsoft 365 and business email, Wi-Fi, printers, account ownership and backups. '
+           'A free first look comes before any paid work, with a written scope before anything starts. '
            'A person answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
     start=('## Start here\n\n'+'\n'.join(line(p) for p in ['/','/how-we-help/','/reviews/','/contact/'] if p in pages)+'\n\n')
-    sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Answers','/answers/help/')+group('New York neighborhoods','/areas/')
+    sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
     tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'
           +('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
     return intro+start+sections+tail

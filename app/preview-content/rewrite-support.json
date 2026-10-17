@@ -56,7 +56,38 @@
       "question": "What happens during an on-site tech visit?",
       "answer": "An on-site visit starts with the symptom, the people affected, and the work that must keep moving.",
       "detail": "We confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made.",
-      "nextStep": "Share the location, the problem, and what work is blocked."
+      "nextStep": "Share the location, the problem, and what work is blocked.",
+      "guide": {
+        "stepsHeading": "Before the visit",
+        "steps": [
+          "Write down the symptom in your own words and when it started.",
+          "List who is affected and which work is blocked: payments, email, printing, or calls.",
+          "Note where the equipment lives, such as the modem, router, printer, or card reader.",
+          "Make sure someone who can approve changes will be there or reachable.",
+          "Keep passwords off paper notes and agree on a safe way to sign in."
+        ],
+        "helpWhen": [
+          "The problem involves equipment you cannot reach or reset safely.",
+          "Several people or devices fail at once and the cause is not obvious.",
+          "A fix needs cables, mounting, or a change to the network equipment."
+        ],
+        "weCheck": "We start with the work that is blocked, then check the equipment, connections, and accounts involved. Before changing anything, we explain what we found and agree on the next step. You get a plain note of what changed, what was left alone, and anything that needs a follow-up. For New York City businesses, we confirm visit availability once we know the issue and the location.",
+        "faqs": [
+          {
+            "question": "Can a problem be handled without a visit?",
+            "answer": "Sometimes. A call, text, or email with the symptom and a screenshot can show whether the cause is an account setting, a provider issue, or something that needs hands on the equipment. We tell you which before anyone travels."
+          },
+          {
+            "question": "What should be ready when the visit starts?",
+            "answer": "Access to the space and the equipment, a person who can approve changes, and the list of work that cannot stop. If an account owner needs to sign in, plan for them to be available."
+          }
+        ],
+        "related": [
+          "human",
+          "it-support-notes",
+          "care"
+        ]
+      }
     },
     {
       "id": "printer",
@@ -64,7 +95,37 @@
       "question": "Why will one computer print but another cannot?",
       "answer": "If one computer can print but another cannot, compare their connections and settings before replacing the printer. Check their Wi-Fi networks, selected printer, and error messages first.",
       "detail": "Choose the same printer on both devices and check whether a stuck job is holding the queue. Note which computer works before changing settings. We can help check the printer software and connection if the difference is unclear.",
-      "nextStep": "Tell us which computer prints and which one does not."
+      "nextStep": "Tell us which computer prints and which one does not.",
+      "guide": {
+        "steps": [
+          "Print a test page from the computer that works, so you know the printer itself is ready.",
+          "On the computer that fails, confirm it is on the same Wi-Fi network as the printer, not a guest network.",
+          "Check that it has selected the same printer, not an old copy with a similar name.",
+          "Open the print queue and clear any stuck job before sending a new one.",
+          "Restart the failing computer, then try a one-page test."
+        ],
+        "helpWhen": [
+          "The printer disappears again after it was added back.",
+          "Only computers on one floor, network, or account fail.",
+          "The fix would mean reinstalling printer software or changing the printer’s network settings."
+        ],
+        "weCheck": "We compare the working computer with the failing one: the network, the printer software, saved printer entries, and the print queue. We also check how the printer gets its network address, because an address that keeps changing can make it vanish from some computers. You get a short note on what was different and how to add the printer back if it happens again.",
+        "faqs": [
+          {
+            "question": "Why does the printer keep disappearing?",
+            "answer": "A printer can drop off when its network address changes, when it goes into a deep sleep, or when a computer switches to another Wi-Fi network. Reserving a fixed address for the printer on the router often keeps it in one place."
+          },
+          {
+            "question": "Should we buy a new printer?",
+            "answer": "Not until the cause is clear. If one computer prints, the printer is working. The difference is usually in the other computer’s connection, settings, or saved printer entry."
+          }
+        ],
+        "related": [
+          "it-internet-outage",
+          "it-software-updates",
+          "human"
+        ]
+      }
     },
     {
       "id": "backup",
@@ -72,7 +133,37 @@
       "question": "How do I know our files are really backed up?",
       "answer": "Keep a separate copy of important files and check that you can recover a sample. Seeing a backup icon is not the same as knowing your files can be restored.",
       "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample into a new location, protecting the working file. Ask us if the settings are unclear.",
-      "nextStep": "Bring the backup service name and one file you would need back."
+      "nextStep": "Bring the backup service name and one file you would need back.",
+      "guide": {
+        "steps": [
+          "Name the files you could not work without: client records, invoices, contracts, and photos.",
+          "Find where each set lives: one computer, a shared drive, or a cloud service.",
+          "Check that the backup service shows a recent date for those folders.",
+          "Restore one harmless sample file into a new folder and open it.",
+          "Write down who can sign in to the backup and how they would recover that account."
+        ],
+        "helpWhen": [
+          "No one can say where the copy lives or when it last ran.",
+          "The only copy is a sync service, where a deletion can reach every device.",
+          "A restore test fails or the file opens damaged."
+        ],
+        "weCheck": "We check what is copied, how often, where the copy lives, and whether it is separate from the working files. Then we run a safe restore test with you and record the steps. If the business needs a second copy or a different schedule, we explain the options and what each one depends on.",
+        "faqs": [
+          {
+            "question": "Is cloud sync the same as a backup?",
+            "answer": "Not always. Sync keeps files the same across devices, so a deleted or damaged file can disappear everywhere. A backup keeps separate earlier copies you can restore. Some services do both, so check the version history and how far back it goes."
+          },
+          {
+            "question": "How often should we test a restore?",
+            "answer": "Test after setting up a backup, after a big change, and on a regular schedule the business can keep. A small restore test proves more than a green check mark."
+          }
+        ],
+        "related": [
+          "it-storage-full",
+          "it-shared-files",
+          "it-security-basics"
+        ]
+      }
     },
     {
       "id": "human",
@@ -80,7 +171,39 @@
       "question": "What should I include when I ask for tech help?",
       "answer": "A useful tech request names what changed, who is affected, which device or service is involved, and what work is blocked.",
       "detail": "A screenshot, exact error message, and the time the problem started can help. Do not send passwords by text or email; agree on a safe access method first.",
-      "nextStep": "Call, text, or email the symptom in your own words."
+      "nextStep": "Call, text, or email the symptom in your own words.",
+      "guide": {
+        "stepsHeading": "What to include",
+        "steps": [
+          "Describe what you were doing when it stopped, in your own words.",
+          "Copy the exact error message or take a screenshot.",
+          "Note when it started and whether anything changed, such as an update, a new device, or a move.",
+          "Say who else is affected and what work is blocked.",
+          "Name the device and service: Mac or Windows, iPhone, Microsoft 365, or the printer model."
+        ],
+        "helpHeading": "Reach out when",
+        "helpWhen": [
+          "Customers cannot reach you, pay you, or book with you.",
+          "The same problem keeps returning after a restart.",
+          "You are unsure whether a change could make things worse."
+        ],
+        "weCheck": "We read the request, ask what we still need to know, and tell you whether we can help and what the first step is. A free first look comes before any paid work, and you get a written scope before anything starts. We never ask for passwords by text or email; if access is needed, we agree on a safe method together.",
+        "faqs": [
+          {
+            "question": "Should I send my password so you can check?",
+            "answer": "No. Do not send passwords, sign-in codes, or private customer details by text or email. If access is needed, we agree on a safe method, and the account stays under your control."
+          },
+          {
+            "question": "When can I reach Little Fight?",
+            "answer": "Call, text, or email from 9am to 9pm Eastern. After hours, leave a message with the symptom and the best way to reach you."
+          }
+        ],
+        "related": [
+          "onsite",
+          "it-support-notes",
+          "care"
+        ]
+      }
     },
     {
       "id": "move",
@@ -88,7 +211,37 @@
       "question": "What should a small office plan before moving?",
       "answer": "Plan the internet connection, equipment locations, and the critical work that must continue before the move day arrives.",
       "detail": "Confirm the provider’s installation plan, map where network equipment and printers will live, and list the systems that staff need on the first day. Test the essentials once the space is ready.",
-      "nextStep": "Share the move date, new address, and the systems that must work first."
+      "nextStep": "Share the move date, new address, and the systems that must work first.",
+      "guide": {
+        "steps": [
+          "Book the internet installation at the new address early and get the install date in writing.",
+          "Map where the modem, router, printer, and any card readers will sit, near power and cable points.",
+          "List the systems staff need on day one: email, phones, printing, payments, and shared files.",
+          "Label cables and equipment before packing, and photograph how the network is connected.",
+          "Plan a test day in the new space before staff and customers arrive."
+        ],
+        "helpWhen": [
+          "The new space needs Wi-Fi to reach more than one room or floor.",
+          "Phone numbers, card readers, or security cameras must move with you.",
+          "The provider’s install date is close to opening day."
+        ],
+        "weCheck": "We review the move date, the new layout, and the work that must keep running. We help plan where the network equipment should go, what the provider must do, and what to test once the space is ready. After the move, we check the essentials with you and note anything still waiting on a vendor.",
+        "faqs": [
+          {
+            "question": "Can we keep our business phone number?",
+            "answer": "Usually, but it depends on the phone provider and the type of number. Ask the provider about moving or transferring the number before cancelling anything at the old address."
+          },
+          {
+            "question": "What should we test on the first day?",
+            "answer": "Test the work customers notice first: calls, card payments, email, and booking. Then check printing, shared files, and the Wi-Fi in each room people use."
+          }
+        ],
+        "related": [
+          "it-internet-outage",
+          "it-phone-setup",
+          "it-payment-device-check"
+        ]
+      }
     },
     {
       "id": "care",
@@ -96,7 +249,37 @@
       "question": "Do we need ongoing tech support?",
       "answer": "The right amount of tech support depends on what keeps breaking, what changes often, and who handles the fixes now.",
       "detail": "Start with the work your team needs each day. Check who owns the accounts, runs updates, and tests backups. A regular check may help; a new monthly bill should have a clear purpose.",
-      "nextStep": "Tell us which problems keep coming back."
+      "nextStep": "Tell us which problems keep coming back.",
+      "guide": {
+        "stepsHeading": "Before you decide",
+        "steps": [
+          "List the problems from the last few months and how often each one came back.",
+          "Note who fixed them and how long work was stopped.",
+          "Check who owns the main accounts: email, domain, Wi-Fi, and payments.",
+          "Check whether updates run and backups are tested, and who does it."
+        ],
+        "helpWhen": [
+          "The same problems return and no one knows why.",
+          "Only one person knows how things are set up.",
+          "Updates, renewals, or backups depend on someone remembering."
+        ],
+        "weCheck": "We look at what keeps breaking, what changes often, and who handles it now. Sometimes a one-time fix and a clear note are enough. If a regular check makes sense, we explain what it covers, why it helps, and the terms before you commit. Any ongoing plan should have a purpose you can name.",
+        "faqs": [
+          {
+            "question": "Is a monthly plan required?",
+            "answer": "Not always. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
+          },
+          {
+            "question": "What does a regular check usually cover?",
+            "answer": "It depends on the business. Common parts are confirming updates, testing a backup restore, reviewing who has access, and watching renewal dates. The plan should match the work your team does each day."
+          }
+        ],
+        "related": [
+          "it-support-notes",
+          "it-software-updates",
+          "backup"
+        ]
+      }
     },
     {
       "id": "it-guest-network",
@@ -104,7 +287,37 @@
       "question": "Should guest Wi-Fi be separate from business equipment?",
       "answer": "Give guests their own Wi-Fi network so their phones do not share access with your work devices and private files.",
       "detail": "The name alone is not enough: the router must keep the two networks apart. We can check its settings and how your staff devices and card readers connect before making a change.",
-      "nextStep": "Tell us what guests use and what the staff uses."
+      "nextStep": "Tell us what guests use and what the staff uses.",
+      "guide": {
+        "steps": [
+          "List what connects to the business network: computers, printers, card readers, cameras, and phones.",
+          "Check whether guests join the same network name as those devices.",
+          "Look in the router settings for a guest network or a setting that keeps guest devices apart.",
+          "Use a different password for guests and change it on a schedule you can keep.",
+          "Test from a guest phone that it can browse the web but cannot see the printer or shared files."
+        ],
+        "helpWhen": [
+          "Guests can see your printers, speakers, or shared folders.",
+          "Card readers or staff computers share a network with the public.",
+          "The router has no guest option or the settings are unclear."
+        ],
+        "weCheck": "We check how the router separates guest and staff traffic, which devices sit on each network, and whether card readers and printers still work after the change. We plan the change around business hours and leave a note of the network names and who can manage them.",
+        "faqs": [
+          {
+            "question": "Is a separate network name enough?",
+            "answer": "No. The router has to keep the guest network apart from the staff network. Some routers create a second name that still shares access, so test what a guest device can reach."
+          },
+          {
+            "question": "Will a guest network slow down our work?",
+            "answer": "Guests share the same internet connection. Many routers can limit guest speed so a busy room does not crowd out payments and calls."
+          }
+        ],
+        "related": [
+          "wifi",
+          "it-payment-device-check",
+          "it-security-basics"
+        ]
+      }
     },
     {
       "id": "it-internet-outage",
@@ -112,7 +325,37 @@
       "question": "Is the internet down, or is our Wi-Fi the problem?",
       "answer": "A wired test can help separate a provider connection problem from a problem inside the Wi-Fi network.",
       "detail": "If a computer works through a cable but not through Wi-Fi, focus on the local network. If both fail, check the provider status and the internet equipment before changing settings.",
-      "nextStep": "Tell us what works on a cable and what fails on Wi-Fi."
+      "nextStep": "Tell us what works on a cable and what fails on Wi-Fi.",
+      "guide": {
+        "steps": [
+          "Check whether every device has lost the internet, or only some.",
+          "Plug a laptop into the router with a network cable and try a website.",
+          "Look at the modem lights and compare them with the provider’s guide.",
+          "Check the provider’s outage page or app from a phone on cellular data.",
+          "Restart the modem first, then the router, and wait a few minutes before testing again."
+        ],
+        "helpWhen": [
+          "A cable works but Wi-Fi does not, and restarting does not help.",
+          "The connection drops at about the same time every day.",
+          "The provider says the line is fine, but the problem continues."
+        ],
+        "weCheck": "We test the provider connection, the router, and the Wi-Fi separately, so the fix goes to the right place. If the provider needs to act, we tell you what to ask for and which results to share. If the problem is inside the office, we explain the cause and the options before changing equipment.",
+        "faqs": [
+          {
+            "question": "Why does restarting the router help for a while?",
+            "answer": "A restart clears temporary faults, but it can hide a pattern. If you restart often, note the time and what was happening. That record helps find an overheating device, a failing cable, or a provider problem."
+          },
+          {
+            "question": "Should we buy a faster internet plan?",
+            "answer": "Not until you know where the slowdown is. A faster plan will not fix weak Wi-Fi in a back room or a router that keeps dropping connections."
+          }
+        ],
+        "related": [
+          "wifi",
+          "it-guest-network",
+          "move"
+        ]
+      }
     },
     {
       "id": "it-shared-inbox-owner",
@@ -120,7 +363,37 @@
       "question": "Why are customer replies missing from a shared inbox?",
       "answer": "Replies can go missing when a shared inbox has unclear forwarding rules, access settings, or no one assigned to check it.",
       "detail": "Test it from an outside email account. Check which address the customer sees, where the reply lands, and who can read it. Give each public address a person who checks it.",
-      "nextStep": "Share the address customers use and where replies should arrive."
+      "nextStep": "Share the address customers use and where replies should arrive.",
+      "guide": {
+        "steps": [
+          "Send a test message from an outside account to the address customers use.",
+          "Reply to it and see where the reply lands and who can read it.",
+          "Check Junk, Spam, and any filtered or Other folder.",
+          "Look for mailbox rules or forwarding that move messages somewhere else.",
+          "Write down who is responsible for checking the inbox each day."
+        ],
+        "helpWhen": [
+          "Messages arrive for some people but not for others.",
+          "Replies go out from a personal address instead of the business address.",
+          "No one is sure who can change the inbox settings."
+        ],
+        "weCheck": "We trace the message path: the public address, forwarding, mailbox rules, permissions, and the address replies are sent from. In Microsoft 365, we check shared-mailbox access and send-as permissions. We change settings only after the account owner agrees, and we record who now looks after the inbox.",
+        "faqs": [
+          {
+            "question": "Should we use a shared mailbox or forwarding?",
+            "answer": "It depends on how the team replies. A shared mailbox keeps messages and replies in one place that several people can open. Forwarding copies messages into personal inboxes, which can scatter the replies."
+          },
+          {
+            "question": "Who should own a shared inbox?",
+            "answer": "One named person should check it and know who has access. The account itself should belong to the business, not to whoever set it up."
+          }
+        ],
+        "related": [
+          "email",
+          "it-domain-email-renewal",
+          "it-account-handoff"
+        ]
+      }
     },
     {
       "id": "it-account-handoff",
@@ -128,7 +401,37 @@
       "question": "What should we do when someone leaves the team?",
       "answer": "Before someone leaves, make sure the business can still reach the mail, files, and tools that person used for work.",
       "detail": "List their work accounts, including Microsoft 365 where used. An approved account manager should keep needed records, transfer control, and then remove access. Do not wipe a device until the business has its files.",
-      "nextStep": "Start with the accounts and files the person controls."
+      "nextStep": "Start with the accounts and files the person controls.",
+      "guide": {
+        "steps": [
+          "List every work account the person uses: email, files, payments, social media, booking, and vendors.",
+          "Find which accounts they own or manage, not only the ones they use.",
+          "Move ownership of files, shared folders, and admin roles to the business.",
+          "Save the mail and records the business must keep.",
+          "Then remove their access, change shared passwords, and collect business devices."
+        ],
+        "helpWhen": [
+          "The person set up the domain, email, or website and holds the login.",
+          "Recovery codes or two-step sign-in go to their personal phone.",
+          "Devices need to be cleared and given to someone else."
+        ],
+        "weCheck": "We help list the accounts, confirm who has authority to change them, and plan the order of changes so nothing is lost. For Microsoft 365 and Apple devices, we check mailbox handling, licenses, and device management. We record what changed and who now owns each account.",
+        "faqs": [
+          {
+            "question": "Should we delete their email account right away?",
+            "answer": "Not before the business has saved what it needs. Keeping or converting the mailbox for a set time can preserve customer messages. Remove their sign-in access first, then decide what happens to the mail."
+          },
+          {
+            "question": "What if they used a personal account for work tools?",
+            "answer": "Ask them to transfer ownership to a business account before they go. If that is not possible, contact the vendor with proof that the business owns the account."
+          }
+        ],
+        "related": [
+          "it-permission-review",
+          "it-password-ownership",
+          "it-new-hire-access"
+        ]
+      }
     },
     {
       "id": "it-security-basics",
@@ -136,7 +439,37 @@
       "question": "What security basics should a small business check first?",
       "answer": "Start with a separate login for each person, a second sign-in step, current software, and a backup you have tested.",
       "detail": "Give staff a clear way to report a strange message. These steps lower risk; they cannot remove it. Check who can change the key accounts and how the business would get back in.",
-      "nextStep": "Bring the accounts and devices you most need to protect."
+      "nextStep": "Bring the accounts and devices you most need to protect.",
+      "guide": {
+        "steps": [
+          "Give each person their own login instead of sharing one account.",
+          "Turn on two-step sign-in for email, banking, the domain, and payment accounts.",
+          "Let devices and apps install updates on a regular schedule.",
+          "Set up a backup and restore one file to prove it works.",
+          "Agree on how staff report a strange email, text, or payment request."
+        ],
+        "helpWhen": [
+          "Someone clicked a suspicious link or typed a password into a strange page.",
+          "An account sent messages that no one wrote.",
+          "You are not sure who can sign in to the business email or domain."
+        ],
+        "weCheck": "We review the accounts that matter most, how people sign in, who holds admin rights, and how the business would get back in if a login were lost. We explain each step in plain language and agree on changes before making them.",
+        "faqs": [
+          {
+            "question": "What should we do if someone clicked a phishing link?",
+            "answer": "Change that account’s password from a trusted device, sign out other sessions, and check for new forwarding rules. Tell your bank or payment provider if money or card details may be involved. Then get help checking what else was reached."
+          },
+          {
+            "question": "Do we need extra antivirus software?",
+            "answer": "Current Mac and Windows computers include built-in protection. Keeping them updated and using two-step sign-in matters more than adding another product. Some businesses need more, depending on the information they handle."
+          }
+        ],
+        "related": [
+          "it-password-ownership",
+          "backup",
+          "it-software-updates"
+        ]
+      }
     },
     {
       "id": "it-password-ownership",
@@ -152,7 +485,37 @@
       "question": "How do we find duplicate subscriptions and surprise renewals?",
       "answer": "Make one list of the tools you pay for, what each one does, and when the next bill is due.",
       "detail": "Ask who uses each tool and which records it holds. Two apps may do the same job, but one might hold files the business still needs. Check that before you cancel.",
-      "nextStep": "Bring a recent list of software charges."
+      "nextStep": "Bring a recent list of software charges.",
+      "guide": {
+        "steps": [
+          "Export a few months of card and bank charges and mark every software charge.",
+          "For each tool, write what it does, who uses it, and when it renews.",
+          "Group tools that do the same job, such as storage, video calls, forms, or email marketing.",
+          "Check which records each tool holds before cancelling anything.",
+          "Put renewal dates on a shared calendar with a reminder a few weeks ahead."
+        ],
+        "helpWhen": [
+          "Charges appear that no one recognizes.",
+          "A tool holds client records and no one knows how to export them.",
+          "Licenses are still assigned to people who have left."
+        ],
+        "weCheck": "We go through the list with you, confirm what each tool does, and flag overlaps, unused licenses, and renewal dates. Before anything is cancelled, we check the information it holds and how to move or export it. You keep the final decision on what stays.",
+        "faqs": [
+          {
+            "question": "Is it safe to cancel a tool nobody seems to use?",
+            "answer": "Check first. Look for files, contacts, forms, or automations that depend on it, and export what the business needs. Some tools delete data soon after an account is cancelled."
+          },
+          {
+            "question": "Who should receive renewal notices?",
+            "answer": "A business address that more than one person can read. Notices sent to one person’s inbox are easy to miss when that person is away or leaves."
+          }
+        ],
+        "related": [
+          "it-domain-email-renewal",
+          "it-account-handoff",
+          "care"
+        ]
+      }
     },
     {
       "id": "it-video-call-room",
@@ -160,7 +523,37 @@
       "question": "How do we make a meeting room ready for a client call?",
       "answer": "Test the camera, microphone, display, and connection from the room where the meeting will happen.",
       "detail": "Use the same laptop, conferencing account, and display path the team expects to use. Little Fight can check the working inputs and a fallback contact method before an important meeting.",
-      "nextStep": "Tell us which room, devices, and call platform you use."
+      "nextStep": "Tell us which room, devices, and call platform you use.",
+      "guide": {
+        "steps": [
+          "Join a test call from the room with the laptop and account you will really use.",
+          "Check the camera view, the microphone from the far end of the table, and the speaker volume.",
+          "Share a screen to the display and confirm the right input is selected.",
+          "Test the Wi-Fi in the room, or use a network cable if one is available.",
+          "Keep a fallback ready, such as a dial-in number or a second signed-in device."
+        ],
+        "helpWhen": [
+          "Remote guests cannot hear people at the far end of the table.",
+          "The display or camera works with only one person’s laptop.",
+          "Calls freeze in the room but not at desks."
+        ],
+        "weCheck": "We test the room the way your team uses it: the laptop, the call platform, the display connection, the audio, and the network. We note the steps that work and a fallback if something fails. If equipment needs to change, we explain why before you buy anything.",
+        "faqs": [
+          {
+            "question": "Do we need a dedicated room system?",
+            "answer": "Not always. A laptop with a good external microphone and camera can work for a small room. A room system helps when many people use the room and need the same setup every time."
+          },
+          {
+            "question": "Why does the audio echo on calls?",
+            "answer": "Echo often comes from speakers feeding back into a microphone, or from two devices joined to the call in the same room. Use one device for audio, or a speakerphone with echo control."
+          }
+        ],
+        "related": [
+          "it-internet-outage",
+          "it-home-work-boundary",
+          "onsite"
+        ]
+      }
     },
     {
       "id": "it-storage-full",
@@ -168,7 +561,37 @@
       "question": "What should we do when a work computer is out of storage?",
       "answer": "Check what is taking up space before you delete files, especially folders that sync with other people or devices.",
       "detail": "Start with the storage screen. Old downloads or installers may be easy to clear, but a shared file may disappear for everyone. Confirm you have a safe copy of any business records before removing them.",
-      "nextStep": "Share the storage summary without showing private files."
+      "nextStep": "Share the storage summary without showing private files.",
+      "guide": {
+        "steps": [
+          "Open the storage screen and see which categories use the most space.",
+          "Clear old installers and downloads you have already saved somewhere else.",
+          "Check large video, photo, and email archives before moving them.",
+          "Look at synced folders, because deleting a synced file can delete it for everyone.",
+          "Move business records to their agreed home and confirm they open there."
+        ],
+        "helpWhen": [
+          "The computer is slow, apps crash, or updates will not install.",
+          "You cannot tell which files are synced or shared.",
+          "The space fills up again soon after clearing it."
+        ],
+        "weCheck": "We look at what is using space and whether it is synced, shared, or backed up. Then we suggest what can be cleared, what can move, and what needs to stay. Nothing the business relies on is removed until there is a safe copy.",
+        "faqs": [
+          {
+            "question": "Can online-only files free up space?",
+            "answer": "Yes. OneDrive, iCloud Drive, Google Drive, and Dropbox can keep files in the cloud and download them when opened. If your work happens offline, check that the files you need still open without a connection."
+          },
+          {
+            "question": "Is it time for a new computer?",
+            "answer": "Not always. Clearing space and moving files can help. If the drive is too small for the work you do, a new computer or more storage may make sense; compare the costs before deciding."
+          }
+        ],
+        "related": [
+          "backup",
+          "it-shared-files",
+          "computer"
+        ]
+      }
     },
     {
       "id": "it-shared-files",
@@ -176,7 +599,37 @@
       "question": "How should a small team organize shared files?",
       "answer": "Use folder names that describe the work, give each person the right access, and put someone in charge of keeping things tidy.",
       "detail": "Try a normal task. Can the right person find a recent invoice or an approved template without asking around? Fix the part that makes them stop and ask.",
-      "nextStep": "Show us one folder that the team struggles to use."
+      "nextStep": "Show us one folder that the team struggles to use.",
+      "guide": {
+        "steps": [
+          "Choose one place for shared business files and stop saving copies elsewhere.",
+          "Name the top-level folders after the work: clients, finance, marketing, and templates.",
+          "Give access by role instead of sharing single files with personal email addresses.",
+          "Keep approved templates in one place and mark old versions clearly.",
+          "Name one person to keep the structure tidy and review who has access."
+        ],
+        "helpWhen": [
+          "People keep asking where the latest version is.",
+          "Files are shared with personal accounts or former staff.",
+          "The team uses two or more storage services for the same work."
+        ],
+        "weCheck": "We look at where files live now, how people find them, and who can open what. We suggest a structure that fits your work, help move files without breaking the links people use, and review access. The business keeps ownership of the storage account.",
+        "faqs": [
+          {
+            "question": "Should we use Google Drive, OneDrive, or Dropbox?",
+            "answer": "Use the one that fits the tools you already pay for. Microsoft 365 includes OneDrive and SharePoint; Google Workspace includes Drive. Running two services for the same files usually causes confusion."
+          },
+          {
+            "question": "How do we stop people deleting shared files by mistake?",
+            "answer": "Limit who can delete in key folders, and check that version history and the deleted-files bin are turned on. Practice restoring a file so the team knows how."
+          }
+        ],
+        "related": [
+          "backup",
+          "it-permission-review",
+          "it-storage-full"
+        ]
+      }
     },
     {
       "id": "it-phone-setup",
@@ -184,7 +637,37 @@
       "question": "What should we test before using a new business phone number?",
       "answer": "Call the new business number from another phone before you publish it, and check what happens when no one answers.",
       "detail": "Listen to the voicemail, leave a test message, and confirm who gets it. Check the after-hours path too. We can help test the number and make sure customers have a clear way to reach you.",
-      "nextStep": "Tell us where calls should go."
+      "nextStep": "Tell us where calls should go.",
+      "guide": {
+        "steps": [
+          "Call the number from a mobile phone and from another line if you have one.",
+          "Let it ring out and listen to the voicemail greeting.",
+          "Leave a test message and confirm who receives it and how.",
+          "Send a text to the number if customers will text it.",
+          "Test calls after hours and on weekends against the hours you publish."
+        ],
+        "helpWhen": [
+          "Calls ring the wrong phone or go straight to voicemail.",
+          "Texts to the business number never arrive.",
+          "Voicemails land in an inbox no one checks."
+        ],
+        "weCheck": "We test the number the way a customer would, then check the call routing, voicemail, and after-hours path. We make sure the number on your website, Google Business Profile, and listings matches the one that rings. You get a note of where calls go and who manages the phone account.",
+        "faqs": [
+          {
+            "question": "Why does a business number not receive texts?",
+            "answer": "Some phone services do not turn on texting by default, and business texting in the United States can require registration. Ask the provider whether texts are enabled and what they need from you."
+          },
+          {
+            "question": "Should the website number match our Google listing?",
+            "answer": "Yes. Use one main number everywhere customers find you. Different numbers on different sites can confuse customers and search results."
+          }
+        ],
+        "related": [
+          "move",
+          "it-domain-email-renewal",
+          "human"
+        ]
+      }
     },
     {
       "id": "it-software-updates",
@@ -192,7 +675,37 @@
       "question": "How should we handle software updates without disrupting work?",
       "answer": "List the devices and apps the team needs, then choose a time to update them when work can safely pause.",
       "detail": "Check what a change could affect: payments, booking, files, or shared access. Keep a way to recover if it fails. After the update, test a normal task before the team relies on it.",
-      "nextStep": "Tell us which tasks cannot stop during the workday."
+      "nextStep": "Tell us which tasks cannot stop during the workday.",
+      "guide": {
+        "steps": [
+          "List the computers, phones, tablets, and apps the business depends on.",
+          "Turn on automatic updates where they are safe and set them to run after hours.",
+          "Before a major upgrade, check that your key apps support the new version.",
+          "Make sure a recent backup exists.",
+          "After updating, test payments, booking, printing, and email."
+        ],
+        "helpWhen": [
+          "An update failed or left a computer unable to start.",
+          "A key app stopped working after an update.",
+          "Devices are too old to receive security updates."
+        ],
+        "weCheck": "We review which devices and apps need updates, which are no longer supported, and what depends on them. We plan the timing with you, keep a way to recover, and test normal work afterward. You get a note of what was updated and what still needs attention.",
+        "faqs": [
+          {
+            "question": "Should we delay updates?",
+            "answer": "Install security updates soon. A major version upgrade can wait a short time while you check that key apps support it. Avoid leaving devices without updates for months."
+          },
+          {
+            "question": "What if a computer is too old for updates?",
+            "answer": "A device that no longer receives security updates becomes a growing risk, especially for email and payments. Plan to replace it, and move its work to a supported device first."
+          }
+        ],
+        "related": [
+          "it-security-basics",
+          "backup",
+          "care"
+        ]
+      }
     },
     {
       "id": "it-permission-review",
@@ -200,7 +713,37 @@
       "question": "How do we make sure a former contractor no longer has access?",
       "answer": "Turning off an email account may still leave a former contractor able to open shared files or sign into other tools.",
       "detail": "List the systems they used. Have each account owner check and remove that access, including shared links. Keep the records the business needs and transfer control of files before closing an account.",
-      "nextStep": "Start with the services and folders the contractor used."
+      "nextStep": "Start with the services and folders the contractor used.",
+      "guide": {
+        "steps": [
+          "List the tools and folders the contractor used, including shared links.",
+          "Check each tool’s user list for their name and personal email address.",
+          "Remove their access and admin roles, and transfer any files they own.",
+          "Change shared passwords they knew and update recovery details they set.",
+          "Review shared links that anyone with the link can open."
+        ],
+        "helpWhen": [
+          "The contractor set up your domain, website, or email.",
+          "Two-step codes or recovery emails still go to them.",
+          "No one at the business has admin access to a key account."
+        ],
+        "weCheck": "We help list the systems, check user lists and shared links, and plan the order so the business keeps its files. Each account owner approves the removal. We record what was removed, what was transferred, and who manages each account now.",
+        "faqs": [
+          {
+            "question": "Is turning off their email account enough?",
+            "answer": "No. Access to files, website builders, payment tools, and social accounts can continue without their work email. Check each tool’s user list."
+          },
+          {
+            "question": "What if we cannot get into an account they set up?",
+            "answer": "Ask the contractor to transfer ownership. If they will not or cannot, contact the provider with proof the business owns the account, such as invoices or domain records."
+          }
+        ],
+        "related": [
+          "it-account-handoff",
+          "it-password-ownership",
+          "it-shared-files"
+        ]
+      }
     },
     {
       "id": "it-payment-device-check",
@@ -208,7 +751,37 @@
       "question": "Why does the card reader disconnect during service?",
       "answer": "A card reader may drop out because of a weak signal, a power problem, its settings, or the payment service itself.",
       "detail": "Note the time and exact message on the screen. Check whether it happens in one place or across the shop. Plan tests around service, and keep customer card details out of support messages.",
-      "nextStep": "Tell us the reader model and when it fails."
+      "nextStep": "Tell us the reader model and when it fails.",
+      "guide": {
+        "steps": [
+          "Note the time, the place in the shop, and the exact message on the reader or app.",
+          "Check the reader’s battery and charging cable.",
+          "Check that the phone or tablet running the payment app is on the right Wi-Fi or Bluetooth connection.",
+          "Move closer to the router or charging base and run a test outside service hours.",
+          "Check the payment provider’s status page for an outage."
+        ],
+        "helpWhen": [
+          "Readers drop in one area of the shop but not in others.",
+          "The problem started after a Wi-Fi or router change.",
+          "Readers share a network with guest Wi-Fi."
+        ],
+        "weCheck": "We check the reader’s connection and power, the device running the payment app, and the network it uses. We plan tests around service and keep card details out of support messages. If the payment provider needs to act, we tell you what to report.",
+        "faqs": [
+          {
+            "question": "Should card readers use the guest Wi-Fi?",
+            "answer": "No. Keep card readers on the staff network, apart from guest devices, and follow your payment provider’s network guidance."
+          },
+          {
+            "question": "What is the fallback if the reader fails during service?",
+            "answer": "Check whether your payment provider supports offline payments or a phone-based reader, and learn the limits before you need them."
+          }
+        ],
+        "related": [
+          "it-guest-network",
+          "wifi",
+          "it-internet-outage"
+        ]
+      }
     },
     {
       "id": "it-new-hire-access",
@@ -216,7 +789,38 @@
       "question": "What access should a new teammate receive?",
       "answer": "Give a new teammate the accounts, devices, files, and instructions their role needs, then test a real first task with the manager.",
       "detail": "Use role-based access rather than copying another person’s entire setup. Keep the owner of each account clear so later changes do not depend on memory.",
-      "nextStep": "Describe the role and the first task the person must complete."
+      "nextStep": "Describe the role and the first task the person must complete.",
+      "guide": {
+        "steps": [
+          "Write down the role and the tasks the person will do in the first week.",
+          "Create their own accounts instead of sharing another person’s login.",
+          "Add them to the groups and folders that the role needs.",
+          "Set up two-step sign-in on their first day.",
+          "Test a real first task with their manager before they work alone."
+        ],
+        "helpWhen": [
+          "New staff receive a copy of someone else’s access.",
+          "Setting up a new person takes days.",
+          "No one knows which accounts each role needs.",
+          "The new person needs access to payments, payroll, or client records."
+        ],
+        "weCheck": "We help list the accounts each role needs, set up access by role, and prepare the device. We record who owns each account and what the new person received, so the next hire and the eventual departure are easier to handle. Where Microsoft 365 or Google Workspace is used, we check the license and the groups before their first day.",
+        "faqs": [
+          {
+            "question": "Should new staff use their own devices?",
+            "answer": "It depends on the work. If they handle client information or payments, a business-owned device is easier to secure and recover. If personal devices are allowed, agree on basic rules such as a screen lock and updates."
+          },
+          {
+            "question": "What belongs on a first-day checklist?",
+            "answer": "Their accounts, two-step sign-in, email signature, shared folders, printer, phone or messaging setup, and a short note on how to report a problem."
+          }
+        ],
+        "related": [
+          "it-account-handoff",
+          "it-password-ownership",
+          "it-shared-files"
+        ]
+      }
     },
     {
       "id": "it-domain-email-renewal",
@@ -224,7 +828,37 @@
       "question": "How do we avoid a domain or email renewal problem?",
       "answer": "Keep a clear record of where you bought the domain, who runs your email, and who gets each renewal notice.",
       "detail": "Check the payment method and recovery details before a bill is due. Make sure the business can reach the person allowed to renew or change the account. We can help untangle who controls what.",
-      "nextStep": "Start with the domain name and latest renewal notice."
+      "nextStep": "Start with the domain name and latest renewal notice.",
+      "guide": {
+        "steps": [
+          "Look up where the domain is registered and who has the login.",
+          "Check the renewal date and turn on automatic renewal.",
+          "Update the payment card and the contact email on the account.",
+          "Make sure renewal notices go to a business address that more than one person reads.",
+          "Write down who runs your email and website, and how each connects to the domain."
+        ],
+        "helpWhen": [
+          "The domain sits in a former employee’s or web designer’s account.",
+          "Email or the website stopped working around a renewal date.",
+          "No one can sign in to the account where the domain is registered."
+        ],
+        "weCheck": "We find where the domain and email are held, who controls them, and what depends on them. We help move control to the business, check renewal and payment details, and record how the domain connects to email and the website. We leave domain settings alone until the cause of any problem is clear.",
+        "faqs": [
+          {
+            "question": "What happens if a domain expires?",
+            "answer": "Email and the website can stop working, and after a grace period someone else may be able to register the name. Most registrars allow a renewal for a while after expiry, sometimes for an extra fee."
+          },
+          {
+            "question": "Should the domain and email be with the same company?",
+            "answer": "Not necessarily. What matters is that the business owns both accounts, knows how to sign in, and has a record of how they connect."
+          }
+        ],
+        "related": [
+          "email",
+          "it-password-ownership",
+          "it-license-renewal"
+        ]
+      }
     },
     {
       "id": "it-support-notes",
@@ -232,7 +866,38 @@
       "question": "Why should a tech fix be written down?",
       "answer": "A clear support note makes the next problem easier to understand because it records what changed, who owns it, and what to check first.",
       "detail": "Keep the note plain enough for the business owner to use. Include the symptom, action, affected account or device, and any follow-up the owner needs to schedule.",
-      "nextStep": "Ask for a plain-language record after the next important fix."
+      "nextStep": "Ask for a plain-language record after the next important fix.",
+      "guide": {
+        "stepsHeading": "What a useful note includes",
+        "steps": [
+          "The symptom: what stopped and who noticed.",
+          "The cause, as far as it is known.",
+          "What changed: the setting, account, or device.",
+          "What to check first if it happens again.",
+          "Any follow-up, such as a renewal, an update, or an open vendor request."
+        ],
+        "helpWhen": [
+          "The same problem returns and no one remembers the last fix.",
+          "A change of tech provider is coming.",
+          "Only one person knows how things are set up."
+        ],
+        "weCheck": "After the work, we leave a plain-language note with the symptom, what we changed, the affected account or device, and what to check next time. The note belongs to the business and should make sense to the owner without us in the room. If a vendor or the internet provider was involved, the note names the open request and what they agreed to do.",
+        "faqs": [
+          {
+            "question": "Where should support notes live?",
+            "answer": "In a shared place the owner controls, such as a business document or folder. Keep passwords out of the notes and record where they are kept instead."
+          },
+          {
+            "question": "How detailed should a note be?",
+            "answer": "Detailed enough for someone else to understand what happened and repeat the check. A few clear sentences usually beat a long technical log."
+          }
+        ],
+        "related": [
+          "care",
+          "it-vendor-handoff",
+          "human"
+        ]
+      }
     },
     {
       "id": "it-vendor-handoff",
@@ -240,7 +905,37 @@
       "question": "What should we gather before changing IT providers?",
       "answer": "Before changing tech providers, list the accounts they manage, who owns them, and which parts of the work must keep running.",
       "detail": "Keep passwords out of email and text. Agree on a safe way to grant access. Set a time for the change, test the work afterward, and keep a record of who now handles each account.",
-      "nextStep": "Bring the service list and key work hours."
+      "nextStep": "Bring the service list and key work hours.",
+      "guide": {
+        "steps": [
+          "List every service the current provider manages: email, domain, Wi-Fi, backups, and devices.",
+          "Confirm that the business holds admin access to each account.",
+          "Ask for documentation: network details, licenses, renewal dates, and setup notes.",
+          "Agree on a handoff date that avoids your busiest hours.",
+          "Test the key work after the change and record who now handles each account."
+        ],
+        "helpWhen": [
+          "The current provider holds the only admin logins.",
+          "There are no notes on how the network or email is set up.",
+          "Contracts or renewals are tied to the old provider."
+        ],
+        "weCheck": "We help build the service list, confirm what the business controls, and plan the change so work keeps running. We keep passwords out of email and text and agree on a safe way to grant access. After the handoff, we test with you and record who owns what.",
+        "faqs": [
+          {
+            "question": "Do we need the old provider’s cooperation?",
+            "answer": "It helps. Ask in writing for admin access and documentation. If they will not help, the business can usually regain control by contacting each vendor as the account owner."
+          },
+          {
+            "question": "Will changing providers interrupt our work?",
+            "answer": "A planned handoff lowers the risk. Problems are more likely when no one knows what the old provider managed, so start with the list."
+          }
+        ],
+        "related": [
+          "it-support-notes",
+          "it-password-ownership",
+          "it-domain-email-renewal"
+        ]
+      }
     },
     {
       "id": "it-home-work-boundary",
@@ -248,7 +943,37 @@
       "question": "What makes a home office ready for real work?",
       "answer": "A useful home office starts with the work you need to do, then matches the devices, connection, and account access to that job.",
       "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a simple record of cables, Wi-Fi details, and settings the owner may need later.",
-      "nextStep": "List the programs, devices, and calls you need to handle from home."
+      "nextStep": "List the programs, devices, and calls you need to handle from home.",
+      "guide": {
+        "steps": [
+          "Test the work laptop, monitor, printer, and call platform together.",
+          "Check the Wi-Fi in the room where you work, and use a cable if calls freeze.",
+          "Sign in to work accounts with two-step sign-in, separate from family accounts.",
+          "Keep business files in the business storage, not only on a personal computer.",
+          "Note the cables, Wi-Fi details, and settings in a simple record."
+        ],
+        "helpWhen": [
+          "Calls freeze or drop in the room where you work.",
+          "Work and family devices share accounts or files.",
+          "A printer or monitor works only some of the time."
+        ],
+        "weCheck": "We start with the work you need to do from home, then check the devices, connection, and account access against that job. We keep work accounts under the business and leave a simple record of the setup. If the home connection is the weak point, we explain what to ask the internet provider before you change plans.",
+        "faqs": [
+          {
+            "question": "Should work and family use different Wi-Fi?",
+            "answer": "It helps. Many routers support a separate network, which keeps work devices apart from smart TVs and visiting guests."
+          },
+          {
+            "question": "Is a mesh Wi-Fi system worth it?",
+            "answer": "When one router cannot reach the room where you work, a mesh system or a wired access point can help. Test the signal in that room first."
+          }
+        ],
+        "related": [
+          "it-video-call-room",
+          "wifi",
+          "it-security-basics"
+        ]
+      }
     },
     {
       "id": "consulting-first-priority",

@@ -64,6 +64,8 @@ FAQ_RICH_RESULT_CLAIMS = (
     "earn faq rich",
 )
 WORD = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
+INDEXED_HELP_ANSWERS = frozenset(json.loads((CONTENT / "search-policy.json").read_text())["indexedHelpAnswers"])
+COMPLETE_ANSWER_WORDS = 300
 
 
 class Node:
@@ -316,6 +318,8 @@ def audit_source_catalog(failures: list[str]) -> tuple[dict[str, dict[str, Any]]
         for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
             if phrase in copy:
                 failures.append(f"rewrite answer {identity} contains prohibited copy: {phrase!r}")
+        if "guide" in item:
+            audit_guide_source(identity, item, raw_answers, failures)
 
     catalog_labs = json.loads((CONTENT / "labs.json").read_text())
     hook_counts = {**EXPECTED_HOOK_COUNTS, "labs": len(catalog_labs) if isinstance(catalog_labs, list) else 0}
@@ -324,6 +328,56 @@ def audit_source_catalog(failures: list[str]) -> tuple[dict[str, dict[str, Any]]
         if not isinstance(values, dict) or len(values) != expected:
             failures.append(f"rewrite hooks must have exactly {expected} {family}, found {len(values) if isinstance(values, dict) else 0}")
     return answers, category_by_id, hooks
+
+
+def guide_texts(guide: dict[str, Any]) -> list[str]:
+    return [*guide.get("steps", []), *guide.get("helpWhen", []), guide.get("weCheck", ""),
+            *(text for row in guide.get("faqs", []) for text in (row.get("question", ""), row.get("answer", "")))]
+
+
+def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[dict[str, Any]], failures: list[str]) -> None:
+    """An expanded answer must be complete, related to real answers, and inside the copy contract."""
+    guide = item["guide"]
+    known = {row.get("id") for row in raw_answers}
+    if item.get("category") != "it":
+        failures.append(f"rewrite guide {identity}: guides are authored for tech support answers only")
+    for key, low, high in (("steps", 3, 6), ("helpWhen", 2, 4), ("related", 2, 4)):
+        values = guide.get(key)
+        if not isinstance(values, list) or not low <= len(values) <= high or not all(compact(value) for value in values):
+            failures.append(f"rewrite guide {identity}: {key} needs {low}–{high} entries")
+    if not compact(guide.get("weCheck")):
+        failures.append(f"rewrite guide {identity}: weCheck is missing")
+    faqs = guide.get("faqs")
+    if not isinstance(faqs, list) or len(faqs) != 2 or not all(compact(row.get("question")) and compact(row.get("answer")) for row in faqs):
+        failures.append(f"rewrite guide {identity}: needs exactly two related questions with answers")
+    for related in guide.get("related", []):
+        if related not in known or related == identity:
+            failures.append(f"rewrite guide {identity}: related answer {related!r} does not exist")
+    copy = normalized(" ".join(guide_texts(guide)))
+    for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
+        if phrase in copy:
+            failures.append(f"rewrite guide {identity} contains prohibited copy: {phrase!r}")
+    # The site publishes no prices and speaks as the agency, never as one person.
+    if "$" in copy or re.search(r"\bdavid\b", copy):
+        failures.append(f"rewrite guide {identity} publishes a price or a personal name")
+
+
+def reader_words(parser: StaticHTML) -> int:
+    """Words in the page's reader, excluding the shared contact block."""
+    main = next((node for node in parser.nodes("main") if "lf-reader" in node.classes), None)
+    if main is None:
+        return 0
+    parts: list[str] = []
+
+    def walk(node: Node) -> None:
+        if node.tag in {"script", "style", "template", "noscript"} or "story-contact" in node.classes:
+            return
+        parts.extend(node.text)
+        for child in node.children:
+            walk(child)
+
+    walk(main)
+    return len(WORD.findall(" ".join(parts)))
 
 
 def audit_category_page(
@@ -428,6 +482,31 @@ def audit_answer_routes(
         anchor_paths = {urlsplit(href).path for href in parser.anchors()}
         if service_path not in anchor_paths:
             failures.append(f"{route}: must link back to {service_path}")
+        robots = next((node.attrs.get("content", "") for node in parser.nodes("meta")
+                       if node.attrs.get("name", "").casefold() == "robots"), "").casefold()
+        guide = item.get("guide")
+        if not guide:
+            continue
+        if route not in INDEXED_HELP_ANSWERS or "noindex" in robots or "index" not in robots:
+            failures.append(f"{route}: expanded answer must be indexable and listed in search-policy indexedHelpAnswers")
+        if reader_words(parser) < COMPLETE_ANSWER_WORDS:
+            failures.append(f"{route}: expanded answer has {reader_words(parser)} reader words, needs {COMPLETE_ANSWER_WORDS}+")
+        for text in guide_texts(guide):
+            if not matches_text(body, text):
+                failures.append(f"{route}: expanded answer omits {text[:48]!r}")
+        for related in guide["related"]:
+            if f"/answers/help/{related}/" not in anchor_paths:
+                failures.append(f"{route}: missing related answer link /answers/help/{related}/")
+        nodes = [node for root in schema_objects(parser, route, failures) for node in flatten_schema(root)]
+        faq_pages = [node for node in nodes if has_type(node, "FAQPage")]
+        expected = [(item["question"], item["answer"] + " " + item["detail"]), *((row["question"], row["answer"]) for row in guide["faqs"])]
+        found = [(compact(entity.get("name")), compact((entity.get("acceptedAnswer") or {}).get("text")))
+                 for entity in (faq_pages[0].get("mainEntity") or [])] if len(faq_pages) == 1 else []
+        if found != [(compact(question), compact(answer)) for question, answer in expected]:
+            failures.append(f"{route}: FAQPage must list the page question and its related questions exactly as shown")
+        category_route = output_file(dist, service_path)
+        if f'href="/answers/help/{identity}/">Read the full answer' not in category_route.read_text():
+            failures.append(f"{service_path}: must link to the full answer for {identity}")
 
 
 def audit_hook_coverage(dist: Path, hooks: dict[str, Any], failures: list[str]) -> None:

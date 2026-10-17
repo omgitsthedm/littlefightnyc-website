@@ -6,6 +6,8 @@ from service_taxonomy import override_family
 CATEGORY_NAMES = {'web': 'Website', 'it': 'Tech support', 'consulting': 'Consulting', 'software': 'Custom software'}
 EXPECTED_COUNTS = {'web': 27, 'it': 28, 'consulting': 6, 'software': 8}
 CONTENT_UPDATED = '2026-10-03'
+# Expanded troubleshooting answers (rewrite-support.json "guide") were last revised here.
+GUIDE_UPDATED = '2026-10-17'
 EXTRA_MEMBERS = {
     'maps': ['web-reviews-response'],
     'consulting-tool-choice': ['web-newsletter-choice', 'web-multilingual-start'],
@@ -78,6 +80,28 @@ def apply_catalog_hooks(rewrite, cases, labs, albums):
         item['caption'] = hooks['albums'][item['id']]['summary']
 
 
+def guide_sections(item, rewrite):
+    """A complete troubleshooting answer: the short answer, checks, signals, our side, related reading."""
+    guide = item['guide']
+    sections = [{'heading': '', 'paragraphs': [item['detail']]},
+                {'id': 'checks', 'heading': guide.get('stepsHeading', 'Check this first'), 'steps': guide['steps']},
+                {'id': 'when-to-get-help', 'heading': guide.get('helpHeading', 'When to bring in help'), 'bullets': guide['helpWhen']},
+                {'id': 'what-we-check', 'heading': 'What Little Fight checks', 'paragraphs': [guide['weCheck']]},
+                {'id': 'more-questions', 'heading': 'Related questions', 'qa': guide['faqs']}]
+    answers, intros = rewrite['answers'], rewrite['groupIntros']
+    related = [answers[key] for key in guide['related'] if key in answers]
+    if related:
+        # A grouped answer page is titled by its group heading, not its first question.
+        sections.append({'id': 'related-answers', 'heading': 'Related answers',
+                         'links': [{'label': intros.get(row['id'], {}).get('heading') or row['question'],
+                                    'href': '/answers/help/' + row['id'] + '/'} for row in related]})
+    return sections
+
+
+def guided_paths(rewrite):
+    return {'/answers/help/' + identity + '/' for identity, item in rewrite['answers'].items() if item.get('guide')}
+
+
 def answer_section(item, *, include_next=True):
     paragraphs = [item['answer'], item['detail']]
     if include_next:
@@ -141,8 +165,8 @@ def apply_page_rewrite(pages, authored, rewrite):
             p.pop(key, None)
         p.update(heading=item['question'], title=item['question'] + ' | Little Fight NYC',
                  summary=item['answer'], description=item['answer'], family=item['category'],
-                 sections=[{'heading': '', 'paragraphs': [item['detail']]}],
-                 contactPrompt=item['nextStep'], _rewriteAnswer=identity,
+                 sections=guide_sections(item, rewrite) if item.get('guide') else [{'heading': '', 'paragraphs': [item['detail']]}],
+                 contactPrompt=item['nextStep'], _rewriteAnswer=identity, _rewriteGuide=item.get('guide'),
                  _servicePath=next(path for path, category in rewrite['categories'].items() if category['id'] == item['category']))
         authored[path] = p
     for path, item in rewrite['categories'].items():
@@ -200,9 +224,12 @@ def render_category_answers(rewrite, family):
     """Native disclosure keeps every question in the initial static document."""
     rows = []
     for item in category_answers(rewrite, family):
+        # Expanded answers keep their short form here and link to the full page.
+        more = ('<p class="category-answer-more"><a data-reader-link href="/answers/help/' + escape(item['id']) +
+                '/">Read the full answer</a></p>') if item.get('guide') else ''
         rows.append('<section class="category-answer" id="answer-' + escape(item['id']) + '"><h3>' +
                     escape(item['question']) + '</h3>' + ''.join('<p>' + escape(item[key]) + '</p>'
-                    for key in ('answer', 'detail', 'nextStep')) + '</section>')
+                    for key in ('answer', 'detail', 'nextStep')) + more + '</section>')
     return '<section class="category-questions" id="questions"><details><summary><h2>' + CATEGORY_NAMES[family] + \
            ' questions</h2><span aria-hidden="true">+</span></summary><div class="category-answer-list">' + \
            ''.join(rows) + '</div></details></section>'
