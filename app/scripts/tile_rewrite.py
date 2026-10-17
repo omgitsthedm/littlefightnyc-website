@@ -52,7 +52,8 @@ def load_rewrite(content):
     web = json.loads((content / 'rewrite-web.json').read_text())
     support = json.loads((content / 'rewrite-support.json').read_text())
     hooks = json.loads((content / 'rewrite-hooks.json').read_text())
-    answers = [dict(item, category='web') for item in web['answers']] + support['answers']
+    answers = [dict(item, category='web', _origin='web') for item in web['answers']] + \
+              [dict(item, _origin='support') for item in support['answers']]
     assert len({item['id'] for item in answers}) == 69, 'Rewrite requires 69 distinct service questions'
     for family, count in EXPECTED_COUNTS.items():
         assert sum(item['category'] == family for item in answers) == count, f'Incomplete {family} rewrite'
@@ -224,7 +225,10 @@ def apply_page_rewrite(pages, authored, rewrite):
 
 
 def category_answers(rewrite, family):
-    return [item for item in rewrite['answers'].values() if item['category'] == family]
+    """A category leads with its own questions; answers moved in from another family follow."""
+    native = 'web' if family == 'web' else 'support'
+    return sorted((item for item in rewrite['answers'].values() if item['category'] == family),
+                  key=lambda item: item.get('_origin') != native)
 
 
 def answer_text(item):

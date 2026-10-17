@@ -120,7 +120,7 @@ anchor_paths = {'/services/it-support/':'it', '/services/tech-consulting/':'cons
 anchor_icons = {'it':'/assets/mineral/wifi-high-bold.svg',
                 'consulting':'/assets/mineral/chats-circle-duotone.svg',
                 'software':'/assets/mineral/app-window-duotone.svg', 'brand':'/assets/boat-orange.svg'}
-anchor_labels = {'it':'Tech support', 'consulting':'Consulting', 'software':'Custom software', 'brand':'Little Fight NYC'}
+anchor_labels = {'it':'Tech support', 'consulting':'Tech consulting for small businesses', 'software':'Custom software for small businesses', 'brand':'Little Fight NYC'}
 apply_catalog_hooks(rewrite, cases, labs, albums)
 lab_by_embed_path = {x['embedPath']: x for x in labs}
 lab_by_share_path = {x['sharePath']: x for x in labs}
@@ -652,7 +652,10 @@ def head(q, home=False):
         if family!='web':
             graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':q['heading'],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
-                          'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'}})
+                          'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'},
+                          # On-site tech support is a New York service; advice and software travel.
+                          'areaServed':({'@type':'City','name':'New York','containedInPlace':{'@type':'State','name':'New York'}}
+                                        if family=='it' else {'@type':'Country','name':'United States'})})
     elif q.get('_rewriteGuide'):
         # The page's own question and its related questions, exactly as shown.
         item = rewrite['answers'][q['_rewriteAnswer']]
