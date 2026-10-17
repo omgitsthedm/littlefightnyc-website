@@ -437,7 +437,7 @@
       ]
     },
     {
-      "path": "/answers/best-web-designer-nyc-reddit/",
+      "path": "/answers/how-to-choose-a-web-designer-nyc/",
       "title": "How to Choose a Web Designer in NYC | Little Fight NYC",
       "description": "Reddit says check portfolios, vet the person, get scope in writing. Here is what that advice misses for NYC small businesses \u2014 and how to actually choose.",
       "h1": "Best Web Designer NYC? What Reddit Actually Says",
@@ -460,76 +460,7 @@
       ]
     },
     {
-      "path": "/answers/best-web-design-agency-nyc-reddit/",
-      "title": "Do I Need a Web Design Agency in NYC? | Little Fight NYC",
-      "description": "Reddit says most small businesses skip the big agency \u2014 mostly right. When an NYC agency is worth it, when a small studio wins, and the questions to ask.",
-      "h1": "Best Web Design Agency NYC \u2014 a Reddit Roundup",
-      "shortAnswer": "Short answer: Reddit says most small businesses do not need a big agency, and that is mostly right. Agencies earn their keep on large scopes. For a storefront or small team, what matters is who personally does your work and what they promise in writing.",
-      "type": "Article",
-      "image": "/assets/coworking-laptops.webp",
-      "faq": [
-        {
-          "question": "Do agencies have minimum budgets?",
-          "answer": "Many do, formally or not. If your project is under their usual scope, you risk becoming the account nobody prioritizes. Ask directly before signing anything."
-        },
-        {
-          "question": "How do I know who will actually build my site?",
-          "answer": "Ask for names and roles of everyone touching the project, and whether any work is subcontracted. A trustworthy shop answers plainly."
-        },
-        {
-          "question": "Is a small studio riskier than a big agency?",
-          "answer": "Not inherently. The risk in both cases is the same: unclear scope, no written timeline, and accounts not in your name. Fix those and size matters much less."
-        }
-      ]
-    },
-    {
-      "path": "/answers/small-business-it-support-nyc-reddit-recommendations/",
-      "title": "How to Choose Small-Business IT Help in NYC | Little Fight NYC",
-      "description": "Reddit’s IT support advice: local, responsive, no long contracts. We vet it for NYC storefronts, where response time and on-site help decide everything.",
-      "h1": "Small Business IT Support NYC: Reddit Recommendations, Vetted",
-      "shortAnswer": "Short answer: Reddit’s standard advice is solid. Find responsive local help, avoid long contracts, keep your own passwords. The part it undersells: in NYC, response time is everything. A remote-only provider cannot fix the dead router in your basement.",
-      "type": "Article",
-      "image": "/assets/storefront-beauty-supply.webp",
-      "faq": [
-        {
-          "question": "Do I need managed IT support for a small shop?",
-          "answer": "Usually not the enterprise version. Most NYC storefronts need reliable on-call help, documented accounts, and fast on-site response \u2014 not a full managed contract."
-        },
-        {
-          "question": "What response time should I expect from IT support?",
-          "answer": "Get the response arrangement in writing. We answer 9am–9pm Eastern; after hours, leave a message. If a job needs hands, we confirm on-site timing after we know the issue and location."
-        },
-        {
-          "question": "What should I do before switching IT providers?",
-          "answer": "Collect every password, account, and renewal into a list the business owns. Never switch while your only copy of the keys lives with the old provider."
-        }
-      ]
-    },
-    {
-      "path": "/answers/how-to-find-good-it-guy-reddit/",
-      "title": "How to Find Good Small-Business IT Help | Little Fight NYC",
-      "description": "Reddit is right about referrals and test jobs, wrong to stop there. The real tests: accounts in your name, written response times, plain-English answers.",
-      "h1": "How to Find a Good IT Guy \u2014 What Reddit Gets Right (and Wrong)",
-      "shortAnswer": "Short answer: Reddit is right that referrals and a small test job beat any directory. It is wrong to stop there. The real test of an IT person is whether your accounts stay in your name and whether they explain things you can repeat back.",
-      "type": "Article",
-      "image": "/assets/interior-spice-shop.webp",
-      "faq": [
-        {
-          "question": "Is a solo IT person riskier than an IT company?",
-          "answer": "Only if they are a single point of failure. Documentation, accounts in your name, and written response times matter more than headcount."
-        },
-        {
-          "question": "What if my old IT guy controls my accounts?",
-          "answer": "Start recovery now, while things are calm. Domains, email, and hosting can usually be reclaimed with proof of ownership, but it takes longer under pressure."
-        },
-        {
-          "question": "How should I test a new IT provider?",
-          "answer": "Give them one small paid job and watch three things: how fast they respond, whether the fix holds, and whether you understood their explanation."
-        }
-      ]
-    },
-    {
-      "path": "/answers/squarespace-vs-hiring-web-designer-reddit/",
+      "path": "/answers/squarespace-vs-hiring-a-web-designer/",
       "title": "Squarespace vs a Web Designer for Small Business | Little Fight NYC",
       "description": "Reddit’s Squarespace-vs-designer debate, settled honestly: when DIY is genuinely enough, when hiring pays, and why owner time is the real budget in NYC.",
       "h1": "Squarespace vs Hiring a Designer: the Reddit Debate, Settled Honestly",
@@ -552,7 +483,7 @@
       ]
     },
     {
-      "path": "/answers/wix-vs-custom-website-reddit/",
+      "path": "/answers/wix-vs-custom-website/",
       "title": "Wix vs a Custom Website for Small Business | Little Fight NYC",
       "description": "Reddit is right: the Wix-hurts-SEO claim is outdated, but the lock-in is real. When Wix is enough for an NYC business and when a custom site earns its cost.",
       "h1": "Wix vs Custom Website \u2014 Reddit’s Take vs Ours",
@@ -575,7 +506,7 @@
       ]
     },
     {
-      "path": "/answers/is-local-seo-worth-it-reddit/",
+      "path": "/answers/is-local-seo-worth-it/",
       "title": "Is Local Search Help Worth It in NYC? | Little Fight NYC",
       "description": "Reddit’s verdict holds up: SEO agencies often waste money, and local SEO is real. What NYC owners can do themselves and where paid help actually earns it.",
       "h1": "Is Local SEO Worth It? Reddit’s Verdict for NYC",
@@ -598,7 +529,7 @@
       ]
     },
     {
-      "path": "/answers/google-business-profile-tips-reddit/",
+      "path": "/answers/google-business-profile-tips/",
       "title": "Google Business Profile Tips for NYC Businesses | Little Fight NYC",
       "description": "Reddit’s favorite Google Business Profile tips, checked by a pro: what actually moves NYC map rankings, what barely matters, and what risks suspension.",
       "h1": "Google Business Profile Tips Reddit Swears By \u2014 Checked by a Pro",
@@ -621,7 +552,7 @@
       ]
     },
     {
-      "path": "/answers/web-developer-ghosted-me-reddit/",
+      "path": "/answers/website-developer-disappeared/",
       "title": "Your Website Person Disappeared: What to Do | Little Fight NYC",
       "description": "Reddit says document and dispute. Better: secure your domain, hosting, and email first, then recover the project. A calm triage plan for stranded sites.",
       "h1": "Web Developer Ghosted You? Reddit’s Advice, Improved",
@@ -644,7 +575,7 @@
       ]
     },
     {
-      "path": "/answers/best-pos-system-small-business-reddit/",
+      "path": "/answers/how-to-pick-a-pos-system/",
       "title": "How to Pick a POS for a Small Business | Little Fight NYC",
       "description": "Reddit recommends Square for simplicity and Toast for restaurants \u2014 fair. What the threads miss: the right POS is the one that connects to everything else.",
       "h1": "Best POS for a Small Business: What Reddit Recommends",
@@ -667,76 +598,7 @@
       ]
     },
     {
-      "path": "/answers/square-vs-toast-reddit/",
-      "title": "Square vs Toast for NYC Restaurants | Little Fight NYC",
-      "description": "Reddit’s Square vs Toast verdict, summarized: counters lean Square, full service leans Toast. Plus the NYC restaurant realities the threads leave out.",
-      "h1": "Square vs Toast \u2014 the Reddit Threads, Summarized",
-      "shortAnswer": "Short answer: Reddit’s split decision is consistent \u2014 Square for counters, cafes, and simple service; Toast for full-service restaurants that live and die by kitchen flow. Both verdicts hold up. The contract terms and your service style decide it, not the brand.",
-      "type": "Article",
-      "image": "/assets/pizza-menu-chalkboard.webp",
-      "faq": [
-        {
-          "question": "Is Toast overkill for a small cafe?",
-          "answer": "Often, yes. Counter-service spots rarely use the kitchen and table features that justify Toast’s weight. Square-style simplicity usually fits better."
-        },
-        {
-          "question": "Can Square handle a full-service restaurant?",
-          "answer": "Up to a point. It has restaurant features, but busy full-service spots with coursing and kitchen timing tend to outgrow it \u2014 which is where Toast earns its case."
-        },
-        {
-          "question": "What should NYC restaurants check before committing?",
-          "answer": "Total fee math at your real volume, contract exit terms, offline mode behavior, and whether the hardware suits your building. Our Journal comparison covers each."
-        }
-      ]
-    },
-    {
-      "path": "/answers/glossgenius-vs-square-appointments-reddit/",
-      "title": "GlossGenius vs Square Appointments for Salons | Little Fight NYC",
-      "description": "Reddit’s take: solo stylists lean GlossGenius, staffed salons lean Square Appointments. The roundup, checked against real NYC salon setups and no-shows.",
-      "h1": "GlossGenius vs Square Appointments: the Reddit Roundup",
-      "shortAnswer": "Short answer: Reddit’s pattern is clear \u2014 solo stylists and chair renters lean GlossGenius for the polish and flat pricing; salons with staff and retail lean Square Appointments for the free tier and ecosystem. Both readings hold up in practice.",
-      "type": "Article",
-      "image": "/assets/nyc-hair-salon-street.webp",
-      "faq": [
-        {
-          "question": "Is GlossGenius worth it for a solo stylist?",
-          "answer": "Often yes \u2014 polished client-facing booking and predictable flat pricing suit independents. Do the fee math at your real volume before deciding."
-        },
-        {
-          "question": "Is Square Appointments really free?",
-          "answer": "The solo tier is, with processing fees per payment. Costs appear as you add staff and features \u2014 reasonable, but read the tier list before building your book on it."
-        },
-        {
-          "question": "What matters more than which booking app I pick?",
-          "answer": "Deposits, reminder settings, and a booking link connected to your Google profile. Misconfigured settings cost NYC stylists more than platform choice does."
-        }
-      ]
-    },
-    {
-      "path": "/answers/shopify-vs-squarespace-reddit/",
-      "title": "Shopify vs Squarespace for NYC Retail | Little Fight NYC",
-      "description": "Reddit says Shopify when selling is the business, Squarespace when it is presence. For NYC retail the tiebreaker is inventory sync between floor and web.",
-      "h1": "Shopify vs Squarespace \u2014 Reddit’s Answers for NYC Retail",
-      "shortAnswer": "Short answer: Reddit’s rule of thumb is right. Shopify when selling is the business, Squarespace when the site is mostly presence with some selling. For NYC retail the deciding question is inventory: if the shop floor and the website must share stock, Shopify pulls ahead.",
-      "type": "Article",
-      "image": "/assets/interior-jeans-rack.webp",
-      "faq": [
-        {
-          "question": "Is Shopify too much for a small NYC boutique?",
-          "answer": "Not if the floor and website share inventory \u2014 that sync is Shopify’s strength. If online is a side channel, Squarespace’s simplicity may serve you better."
-        },
-        {
-          "question": "Why do Shopify costs keep growing?",
-          "answer": "Apps. The base platform is predictable, but features often live in paid add-ons. Audit your app list quarterly and cut what the business stopped using."
-        },
-        {
-          "question": "Can Squarespace handle in-store pickup?",
-          "answer": "At a basic level, yes. If pickup, local delivery, and live stock visibility are core to your shop, that is the point where Shopify starts earning its complexity."
-        }
-      ]
-    },
-    {
-      "path": "/answers/does-my-small-business-need-a-website-reddit/",
+      "path": "/answers/does-my-small-business-need-a-website/",
       "title": "Does My Small Business Need a Website? | Little Fight NYC",
       "description": "Reddit is split on whether small businesses need websites. In 2026, search engines and AI assistants answer customers by reading them. The honest call.",
       "h1": "Do I Even Need a Website? Reddit vs Reality in 2026",
@@ -759,52 +621,6 @@
       ]
     },
     {
-      "path": "/answers/airtable-vs-notion-reddit-small-business/",
-      "title": "Airtable vs Notion for Small Business | Little Fight NYC",
-      "description": "Reddit’s rule is right: Notion for docs, Airtable for records. The harder small-business question: which tool will your least techy employee open?",
-      "h1": "Airtable vs Notion for Small Business: Reddit Roundup",
-      "shortAnswer": "Short answer: Reddit’s rule is correct. Notion for documents and wikis, Airtable for structured records. Most fights start when someone forces one tool to do the other’s job. For a small business the harder question is simpler: which one will your least techy person actually open?",
-      "type": "Article",
-      "image": "/assets/manhattan.webp",
-      "faq": [
-        {
-          "question": "Can I run my whole business in Notion?",
-          "answer": "You can, but structured records like orders, clients, and inventory get fragile in it. Most teams do better with Notion for docs and something table-shaped for data."
-        },
-        {
-          "question": "Is Airtable worth paying for over a spreadsheet?",
-          "answer": "When multiple people update the same records and you need views, filters, and forms \u2014 yes. For one person’s simple list, a spreadsheet is honestly fine."
-        },
-        {
-          "question": "Why do our workspaces always turn into junk drawers?",
-          "answer": "No owner and no pruning. Someone must be in charge of structure, and anything nobody updated in a quarter should be archived without ceremony."
-        }
-      ]
-    },
-    {
-      "path": "/answers/nyc-small-business-tech-help-reddit/",
-      "title": "How NYC Small Businesses Can Get Tech Help | Little Fight NYC",
-      "description": "Where NYC small business owners really find tech help: referrals, Reddit, neighborhood groups, free city programs. And how to vet whoever you choose.",
-      "h1": "Where NYC Owners Actually Get Tech Help (Reddit Included)",
-      "shortAnswer": "Short answer: NYC owners get tech help from referrals, neighborhood groups, Reddit threads, city small-business programs, and whoever built the last thing that worked. Referrals are the best of these \u2014 and even they only work if you know what to ask for.",
-      "type": "Article",
-      "image": "/assets/nyc-street-crowd.webp",
-      "faq": [
-        {
-          "question": "Are the city’s free small-business resources worth using?",
-          "answer": "Yes \u2014 NYC Small Business Services runs free courses and advising that are genuinely useful for planning. They are not built for urgent technical fixes."
-        },
-        {
-          "question": "How do I vet a tech provider a friend recommended?",
-          "answer": "Ask what they will do in plain English, what response times they put in writing, and whether every account ends up owned by your business. Then test with one small job."
-        },
-        {
-          "question": "Is asking on Reddit or neighborhood groups a bad idea?",
-          "answer": "It is a fine way to gather names, not a way to vet them. Treat every group-chat recommendation as a lead that still needs the same three questions."
-        }
-      ]
-    },
-    {
       "path": "/answers/website-design-for-small-business-nyc/",
       "updated": "2026-08-19",
       "title": "Website Design for Small Business NYC: What to Expect | Little Fight NYC",
@@ -813,26 +629,6 @@
       "shortAnswer": "Short answer: A site built around the one thing a customer needs to do — find you, see what you do, book or call — with the domain, code, and words in your name. Ask any designer for that in writing.",
       "type": "Article",
       "image": "/assets/nyc-hair-salon-street.webp"
-    },
-    {
-      "path": "/answers/it-consultants-for-small-business-nyc/",
-      "updated": "2026-08-19",
-      "title": "IT Consultants for Small Business NYC: How to Choose | Little Fight NYC",
-      "description": "Pick someone who starts with the problem you have, writes down what they change, and leaves you owning every login. A retainer is optional; ownership is…",
-      "h1": "How do I choose IT consultants for a small business in NYC?",
-      "shortAnswer": "Short answer: Pick someone who starts with the problem you have, writes down what they change, and leaves you owning every login. A retainer is optional; ownership is not.",
-      "type": "Article",
-      "image": "/assets/nyc-street-crowd.webp"
-    },
-    {
-      "path": "/answers/computer-security-for-small-business-ny/",
-      "updated": "2026-08-19",
-      "title": "Computer Security for Small Business NY: What Actually Matters | Little Fight NYC",
-      "description": "Four boring jobs done well: one strong login per person with two-step codes, updates on the devices that take money, a backup you have restored once, and…",
-      "h1": "What does computer security for a small business in New York actually require?",
-      "shortAnswer": "Short answer: Four boring jobs done well: one strong login per person with two-step codes, updates on the devices that take money, a backup you have restored once, and one rule for suspicious messages. Everything else can wait.",
-      "type": "Article",
-      "image": "/assets/nyc-street.webp"
     },
     {
       "path": "/answers/google-business-profile-suspended/",
@@ -877,52 +673,6 @@
         {
           "question": "Was my site hacked?",
           "answer": "Probably not \u2014 billing lapses and expired certificates cause far more outages than attacks. But if you see defaced pages or strange redirects, treat it as a hack and get help."
-        }
-      ]
-    },
-    {
-      "path": "/answers/pos-system-down-restaurant-nyc/",
-      "title": "POS Down During Service? A Restaurant Triage Guide",
-      "description": "POS down mid-service? Sixty-second triage: internet, provider, or hardware. Then offline mode or paper to keep serving. An NYC restaurant recovery guide.",
-      "h1": "POS Down During Service? A Restaurant Triage Guide",
-      "shortAnswer": "Short answer: figure out in sixty seconds whether it is your internet, your POS provider, or one dead device \u2014 the fixes are completely different. Then switch to offline mode or paper, keep serving, and do the real diagnosis after the rush, not during it.",
-      "type": "Article",
-      "image": "/assets/pos.webp",
-      "faq": [
-        {
-          "question": "Can I take card payments when the internet is down?",
-          "answer": "Usually yes, through your POS’s offline mode \u2014 payments queue and sync later, with some risk on declines. Enable and test it before the night you need it."
-        },
-        {
-          "question": "Should I switch POS providers after an outage?",
-          "answer": "Not in anger. Every provider has outages. Switch for repeated failures your setup cannot absorb, and only after checking whether the real weakness was your internet."
-        },
-        {
-          "question": "What backup gear should a small restaurant keep?",
-          "answer": "A charged hotspot or second internet source, a spare card reader and receipt printer, a battery backup on the router, and a printed what-to-do sheet for staff."
-        }
-      ]
-    },
-    {
-      "path": "/answers/business-email-going-to-spam/",
-      "title": "Your Business Email Is Going to Spam \u2014 Here’s Why",
-      "description": "Business email landing in spam? Your domain is likely missing SPF, DKIM, and DMARC \u2014 the ID papers inbox providers now require. Plain-English fix guide.",
-      "h1": "Your Business Email Is Going to Spam \u2014 Here’s Why",
-      "shortAnswer": "Short answer: your domain is probably missing its ID papers \u2014 three DNS records called SPF, DKIM, and DMARC that prove your email is really from you. Since inbox providers tightened rules in 2024, mail without them lands in spam even when it is perfectly legitimate.",
-      "type": "Article",
-      "image": "/assets/typing.webp",
-      "faq": [
-        {
-          "question": "What are SPF, DKIM, and DMARC in plain English?",
-          "answer": "Three small settings on your domain that prove your email really comes from you. Inbox providers treat mail without them as suspicious, no matter how legitimate it is."
-        },
-        {
-          "question": "Why did my email suddenly start going to spam in 2024?",
-          "answer": "Google and Yahoo tightened requirements for senders \u2014 authentication records, low complaint rates, easy unsubscribe. Mail that misses the bar now gets filtered much harder."
-        },
-        {
-          "question": "Can I send my newsletter from my regular inbox?",
-          "answer": "You should not. Bulk mail from a normal inbox hurts your domain’s reputation. Use a proper email service and keep your day-to-day address for conversations."
         }
       ]
     },

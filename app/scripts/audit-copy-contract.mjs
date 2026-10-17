@@ -163,8 +163,8 @@ const answerPaths = new Set(
   seoPages.pages.filter((page) => page.path.startsWith("/answers/")).map((page) => page.path),
 );
 const renderedAnswerPaths = new Set([...routePaths].filter((routePath) => routePath.startsWith("/answers/")));
-if (answerPaths.size !== 31) {
-  failures.push(`answers source coverage: expected 31 guides, found ${answerPaths.size}`);
+if (answerPaths.size !== 19) {
+  failures.push(`answers source coverage: expected 19 guides, found ${answerPaths.size}`);
 }
 for (const routePath of setDifference(answerPaths, renderedAnswerPaths)) {
   failures.push(`${routePath}: answer exists in seo-pages.json but not rendered route metadata`);
@@ -181,8 +181,8 @@ if (!Array.isArray(journalCopyPosts)) {
 const journalCopySlugs = new Set((journalCopyPosts ?? []).map((post) => post.slug));
 const journalIndexSlugs = new Set(journal.map((post) => post.slug));
 const renderedJournalPaths = new Set([...routePaths].filter((routePath) => routePath.startsWith("/journal/")));
-if (journalIdentitySlugs.size !== 37) {
-  failures.push(`journal source coverage: expected 37 posts, found ${journalIdentitySlugs.size}`);
+if (journalIdentitySlugs.size !== 33) {
+  failures.push(`journal source coverage: expected 33 posts, found ${journalIdentitySlugs.size}`);
 }
 for (const [label, slugs] of [
   ["journal-copy.json", journalCopySlugs],

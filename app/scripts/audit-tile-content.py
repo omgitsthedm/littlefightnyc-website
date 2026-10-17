@@ -36,7 +36,8 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-EXPECTED_ROUTE_COUNT = 402 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+# 16 consolidated answer and journal routes now 301 (public/_redirects, 2026-10-17).
+EXPECTED_ROUTE_COUNT = 402 - 16 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -983,7 +984,7 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
     guides = json.loads((CONTENT / "answer-guides.json").read_text())["guides"]
     guide_paths = {guide["path"] for guide in guides}
     expected_guide_paths = {
-        "/answers/wix-vs-custom-website-reddit/",
+        "/answers/wix-vs-custom-website/",
         "/answers/website-design-for-small-business-nyc/",
         "/answers/website-form-not-working-small-business/",
         "/journal/how-to-own-your-domain-name-not-your-web-guy/",

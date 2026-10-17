@@ -31,8 +31,8 @@ for (const source of ["/blog", "/blog/"]) {
 }
 
 const blogArticleRedirects = [
-  ["/blog/cybersecurity-for-small-business", "/journal/cybersecurity-for-small-business/", "301"],
-  ["/blog/cybersecurity-for-small-business.html", "/journal/cybersecurity-for-small-business/", "301"],
+  ["/blog/cybersecurity-for-small-business", "/answers/help/it-security-basics/", "301"],
+  ["/blog/cybersecurity-for-small-business.html", "/answers/help/it-security-basics/", "301"],
   ["/blog/nyc-small-business-digital", "/journal/nyc-small-business-digital/", "301"],
   ["/blog/nyc-small-business-digital.html", "/journal/nyc-small-business-digital/", "301"],
   ["/blog/protecting-kids-from-ai", "/journal/protecting-kids-from-ai/", "301"],
@@ -42,6 +42,24 @@ for (const expected of blogArticleRedirects) {
   const rule = rules.find(([from]) => from === expected[0]);
   assert.deepEqual(rule, expected);
   assert.ok(rules.indexOf(rule) < blogWildcardIndex, `${expected[0]} must retain its article redirect`);
+}
+
+// Consolidated answers (2026-10-17) go straight to the page that now answers them.
+for (const expected of [
+  ["/answers/wix-vs-custom-website-reddit/", "/answers/wix-vs-custom-website/", "301"],
+  ["/answers/how-to-find-good-it-guy-reddit", "/services/it-support/", "301"],
+  ["/journal/what-to-do-when-business-wifi-keeps-dropping/", "/answers/help/wifi/", "301"],
+  ["/answers/best-web-design-agency-nyc-reddit/", "/answers/how-to-choose-a-web-designer-nyc/", "301"],
+]) {
+  const rule = rules.find(([from]) => from === expected[0]);
+  assert.deepEqual(rule, expected);
+  assert.ok(
+    rules.indexOf(rule) < rules.findIndex(([from, destination, status]) =>
+      from === "/*" && destination === "/404.html" && status === "404",
+    ),
+    `${expected[0]} must remain ahead of the 404 catch-all`,
+  );
+  assert.ok(!rules.some(([from]) => from === expected[1]), `${expected[1]} must not redirect again`);
 }
 
 for (const source of ["/app", "/app/*", "/dakota.html", "/studio/dakota", "/studio/dakota/"]) {

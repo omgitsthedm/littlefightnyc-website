@@ -37,10 +37,9 @@ _GROUPS = (
         "title": "Start or replace a website.",
         "summary": "Choose a path before you pay for one.",
         "paths": frozenset({
-            "/answers/does-my-small-business-need-a-website-reddit/", "/answers/instagram-instead-of-a-website-nyc-shop/",
-            "/answers/website-design-for-small-business-nyc/", "/answers/best-web-designer-nyc-reddit/",
-            "/answers/best-web-design-agency-nyc-reddit/", "/answers/squarespace-vs-hiring-web-designer-reddit/",
-            "/answers/wix-vs-custom-website-reddit/", "/journal/nyc-small-business-digital/",
+            "/answers/does-my-small-business-need-a-website/", "/answers/instagram-instead-of-a-website-nyc-shop/",
+            "/answers/website-design-for-small-business-nyc/", "/answers/how-to-choose-a-web-designer-nyc/", "/answers/squarespace-vs-hiring-a-web-designer/",
+            "/answers/wix-vs-custom-website/", "/journal/nyc-small-business-digital/",
             "/journal/webflow-vs-squarespace-manhattan-small-business/", "/journal/shopify-vs-squarespace-nyc-retail/",
             "/journal/wordpress-vs-webflow-vs-custom-nyc/",
         }),
@@ -52,7 +51,7 @@ _GROUPS = (
         "summary": "Fix the page, path, or handoff that is getting in the way.",
         "paths": frozenset({
             "/answers/website-form-not-working-small-business/", "/answers/website-down-emergency-nyc/",
-            "/answers/web-developer-ghosted-me-reddit/", "/answers/local-pharmacy-website-community-support/",
+            "/answers/website-developer-disappeared/", "/answers/local-pharmacy-website-community-support/",
             "/journal/migrate-off-squarespace-without-breaking-booking/", "/journal/spot-developer-about-to-ghost/",
             "/journal/your-website-is-your-hardest-working-employee/", "/journal/ada-website-lawsuits-nyc-small-business/",
             "/journal/how-to-stop-double-bookings-small-business/", "/journal/calendly-vs-square-appointments-nyc/",
@@ -64,8 +63,8 @@ _GROUPS = (
         "title": "Help customers find and contact you.",
         "summary": "Make it easier to show up, make sense, and take the next step.",
         "paths": frozenset({
-            "/answers/business-not-showing-on-google-maps/", "/answers/is-local-seo-worth-it-reddit/",
-            "/answers/google-business-profile-tips-reddit/", "/answers/google-business-profile-suspended/",
+            "/answers/business-not-showing-on-google-maps/", "/answers/is-local-seo-worth-it/",
+            "/answers/google-business-profile-tips/", "/answers/google-business-profile-suspended/",
             "/answers/google-reviews-not-showing-up/", "/journal/set-up-google-business-profile-nyc/",
             "/journal/how-to-answer-google-reviews-nyc-business/", "/journal/how-to-get-your-business-into-chatgpt-answers/",
             "/journal/ai-is-already-answering-questions-about-your-business/", "/journal/ai-google-broke-the-internet-websites-survive/",
@@ -91,13 +90,7 @@ _GROUPS = (
         "title": "Keep the business moving.",
         "summary": "Plain help for an interruption, a tool, or the tech behind the counter.",
         "paths": frozenset({
-            "/answers/small-business-it-support-nyc-reddit-recommendations/", "/answers/how-to-find-good-it-guy-reddit/",
-            "/answers/nyc-small-business-tech-help-reddit/", "/answers/it-consultants-for-small-business-nyc/",
-            "/answers/computer-security-for-small-business-ny/", "/answers/business-email-going-to-spam/",
-            "/answers/pos-system-down-restaurant-nyc/", "/journal/cybersecurity-for-small-business/",
-            "/journal/how-do-i-back-up-my-business-data/", "/journal/what-to-do-when-business-wifi-keeps-dropping/",
-            "/journal/signs-your-pos-is-about-to-fail/", "/journal/gmail-vs-google-workspace-small-business/",
-            "/journal/why-small-business-tech-should-be-boring/",
+            "/journal/gmail-vs-google-workspace-small-business/", "/journal/why-small-business-tech-should-be-boring/",
         }),
     },
     {
@@ -106,9 +99,7 @@ _GROUPS = (
         "title": "Choose or build a better system.",
         "summary": "Compare the tools, then decide what the business actually needs.",
         "paths": frozenset({
-            "/answers/hair-salon-save-money-software/", "/answers/best-pos-system-small-business-reddit/",
-            "/answers/square-vs-toast-reddit/", "/answers/glossgenius-vs-square-appointments-reddit/",
-            "/answers/shopify-vs-squarespace-reddit/", "/answers/airtable-vs-notion-reddit-small-business/",
+            "/answers/hair-salon-save-money-software/", "/answers/how-to-pick-a-pos-system/",
             "/journal/airtable-vs-notion-vs-monday-small-business/",
             "/journal/square-appointments-vs-glossgenius-nyc-salons/", "/journal/square-vs-toast-manhattan-restaurants/",
             "/journal/the-pen-and-paper-tax/", "/journal/questions-nyc-owners-actually-ask-us-about-ai/",
@@ -222,8 +213,10 @@ def render_retained_answers(
     paths = _hub_routes(pages)
     answers = [path for path in paths if path.startswith("/answers/")]
     journals = [path for path in paths if path.startswith("/journal/")]
-    if len(answers) != 101 or len(journals) != 37:
-        raise ValueError(f"answer hub expected 101 answers and 37 journal notes, found {len(answers)} and {len(journals)}")
+    # 2026-10-17 consolidation: 12 overlapping answers and 4 journal notes now
+    # 301 to the page that answers them (public/_redirects).
+    if len(answers) != 89 or len(journals) != 33:
+        raise ValueError(f"answer hub expected 89 answers and 33 journal notes, found {len(answers)} and {len(journals)}")
     groups = _group_paths(paths)
     # The map starts compact. All links remain in the document, but a visitor
     # sees six recognizable decisions instead of an undifferentiated link wall.

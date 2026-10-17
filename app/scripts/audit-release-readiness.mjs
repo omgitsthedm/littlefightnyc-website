@@ -14,7 +14,8 @@ const expectedTotalTileInventory = 132;
 const expectedOriginalTileCount = 106;
 const expectedConsolidatedGroups = 19;
 // The seven source-faithful review backs each retain their own static URL.
-const expectedRouteCount = 421;
+// 16 consolidated answer and journal routes now 301 (public/_redirects, 2026-10-17).
+const expectedRouteCount = 405;
 
 function git(args, fallback = "") {
   try {
