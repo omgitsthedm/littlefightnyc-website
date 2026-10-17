@@ -198,6 +198,8 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 
 # --- Content consolidation (2026-10-17): overlapping and thin answers merged into
 # the page that now answers them; -reddit slugs moved to plain slugs.
+/websites-for-your-business/                                       /industries/                                               301
+/websites-for-your-business                                        /industries/                                               301
 /answers/airtable-vs-notion-reddit-small-business/                 /journal/airtable-vs-notion-vs-monday-small-business/      301
 /answers/airtable-vs-notion-reddit-small-business                  /journal/airtable-vs-notion-vs-monday-small-business/      301
 /answers/best-pos-system-small-business-reddit/                    /answers/how-to-pick-a-pos-system/                         301

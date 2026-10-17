@@ -36,8 +36,8 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-# 16 consolidated answer and journal routes now 301 (public/_redirects, 2026-10-17).
-EXPECTED_ROUTE_COUNT = 402 - 16 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+# 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17).
+EXPECTED_ROUTE_COUNT = 402 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -226,7 +226,7 @@ def source_pages() -> dict[str, dict]:
     for tile in json.loads((CONTENT / "topic-tiles.json").read_text()):
         route = f"/answers/help/{tile['id']}/"
         pages[route] = {"path": route, "id": tile["id"], "category": tile["family"]}
-    for route in ("/reviews/", "/websites-for-your-business/", "/tech-audit/", "/thanks/", "/services/it-support/"):
+    for route in ("/reviews/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
     # These seven readers are derived directly from the verified review source,
     # not from route-meta or unsourced authored copy.
@@ -447,7 +447,7 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
-    return route == "/" or route in ("/reviews/", "/websites-for-your-business/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
+    return route == "/" or route in ("/reviews/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
 
 
 def redirect_patterns() -> list[re.Pattern[str]]:

@@ -8,6 +8,7 @@ import os
 from html import escape, unescape
 from html.parser import HTMLParser
 from urllib.parse import quote, urlsplit
+import datetime
 import hashlib
 import json
 import re
@@ -64,7 +65,7 @@ def indexable(path):
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
-    return path=='/' or path in ['/reviews/','/websites-for-your-business/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
+    return path=='/' or path in ['/reviews/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
 
 def preserved(path):
     return PRODUCTION and path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file()
@@ -378,7 +379,7 @@ def article(p):
         )
         return q, render_construction(labs, cases, link) + contact(path, 'Tell us about the work your customers need to see or choose.')
     if path=='/reviews/':
-        body='<div class="review-collection"><h1 class="sr-only" id="detail-title" tabindex="-1">Google reviews for Little Fight NYC</h1><section class="story-reviews" aria-label="Google reviews">'+review_cards()+'</section></div>'+contact(path)
+        body='<div class="review-collection"><h1 class="sr-only" id="detail-title" tabindex="-1">Google reviews for Little Fight NYC</h1>'+sections_html(q['sections'])+'<section class="story-reviews" aria-label="Google reviews">'+review_cards()+'</section></div>'+contact(path)
         return q,body
     case_slug=path.strip('/').split('/')[-1]
     if (path.startswith('/case-studies/') and case_slug in cases) or path=='/examples/':
@@ -503,7 +504,7 @@ def article(p):
         body+=('<div class="answer-composition">' if simple_answer else '')+section_body
     if q.get('sourceDepth'):
         body+=render_legacy_sections(q['sourceDepth'],display,link)
-    if path in ['/nationwide/','/websites-for-your-business/']:
+    if path in ['/nationwide/']:
         body+='<section class="story-section story-section--plain"><nav class="industry-links" aria-label="Websites by business type">'+''.join(link(label,url) for label,url in INDUSTRIES)+'</nav></section>'
     if path.startswith('/industries/') and path != '/industries/' and not slugs:
         examples = INDUSTRY_PROOF.get(path, [])
@@ -541,6 +542,8 @@ def article(p):
             fallback=f'<section class="story-hero"><div><p class="story-kicker" data-inquiry-eyebrow>{E(general["eyebrow"])}</p><h1 id="detail-title" class="story-title" data-inquiry-title>{E(general["title"])}</h1><p data-inquiry-summary>{E(general["summary"])}</p><nav class="contact-actions">{channels(contact_intent(path),path)}</nav></div></section>'
             fallback+='<script type="application/json" data-inquiry-copy>'+json.dumps(inquiry_copy,ensure_ascii=False).replace('<','\\u003c')+'</script>'
             fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="source" value="/tech-audit/"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name (optional)<input name="business" autocomplete="organization" maxlength="150"></label><label>Website or business profile link <span>(optional)</span><input name="website_url" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="2048" placeholder="yourbusiness.com" aria-describedby="static-website-url-hint"><small id="static-website-url-hint">A website, Google profile, or social link. Leave blank if you’re starting fresh.</small></label><label>Phone or email<input name="contact" type="text" inputmode="text" autocomplete="off" required maxlength="250" aria-describedby="static-contact-hint"><small id="static-contact-hint">Use a phone number for a call or text, or an email address for an email reply.</small></label><label>What do you need help with?<select name="intent" required><option value="" selected disabled>Choose a service</option><option value="general">General question</option><option value="website">Website</option><option value="support">Tech support</option><option value="consulting">Tech consulting</option><option value="systems">Custom software</option></select></label><label>How should we reply?<select name="follow_up"><option value="fastest" selected>Whatever is fastest</option><option value="text">Text me</option><option value="phone">Call me</option><option value="email">Email me</option></select></label><label><span data-inquiry-message-label>What would you like to change?</span><textarea name="message" required maxlength="4000"></textarea></label><button type="submit" data-inquiry-submit>Send your inquiry +</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
+        if path=='/website-check/':
+            fallback+='<section class="story-faq"><h2>Questions about the Website Check</h2>'+''.join(f'<h3>{E(x["question"])}</h3><p>{E(x["answer"])}</p>' for x in WEBSITE_CHECK_FAQ)+'</section>'
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}">{fallback}</div>'
     return q,body
 
@@ -552,8 +555,14 @@ for album in albums:
         gallery+=f'<figure><img src="{E(photo["localUrl"])}" width="{photo["width"]}" height="{photo["height"]}" loading="lazy" decoding="async" alt="{E(photo["title"])}"><figcaption>{E(photo["title"])} · {E(photo["photographer"])}<br>{link(photo["licenseName"],photo["licenseUrl"])} · {link("Original source",photo["sourcePage"])}<br>{E(photo.get("adaptation",""))}</figcaption></figure>'
     gallery+='</div></section>'
     pages[path]={'path':path,'id':album['id'],'heading':album['title'],'title':album['title']+' | Little Fight NYC','summary':album['caption'],'description':album['question'],'sections':[{'heading':album['question'],'paragraphs':[album['answer']]}],'extraHtml':gallery}
-pages['/reviews/']={'path':'/reviews/','title':'Google Reviews | Little Fight NYC','heading':'Good people. Kind words.','summary':'Read what clients have shared about working with Little Fight NYC. Every excerpt links to its Google source.','description':'Seven Google reviews of Little Fight NYC, with direct links and first-name-only attribution.','sections':[]}
-pages['/websites-for-your-business/']={'path':'/websites-for-your-business/','title':'Websites for Your Business | Little Fight NYC','heading':'Your business has its own story.','summary':'A roofing company, a salon and a law firm need different things from a website. Start with the customers you want to reach.','description':'Explore website design for trades, home services, law firms and salons across the United States.','sections':[]}
+NUMBER_WORDS = {1:'one',2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven',8:'eight',9:'nine',10:'ten'}
+pages['/reviews/']={'path':'/reviews/','title':'Google Reviews | Little Fight NYC','heading':'Good people. Kind words.','summary':'Read what clients have shared about working with Little Fight NYC. Every excerpt links to its Google source.','description':'Seven Google reviews of Little Fight NYC, with direct links and first-name-only attribution.',
+    # Facts from the verified review record; no Review or AggregateRating markup (reviews.json displayPolicy).
+    'sections':[{'heading':'','paragraphs':[f'All {NUMBER_WORDS[reviews["reviewCount"]]} reviews on the Little Fight NYC Google Business Profile give five stars, as of {datetime.date.fromisoformat(reviews["verifiedAt"]).strftime("%B %-d, %Y")}. Each excerpt below is a short, exact quote with a first name only. Open one to read the whole review on Google.' if reviews['rating']==5 else ''],'links':[{'label':'Read every review on Google','href':reviews['profileUrl']}]}]}
+# The Website Check island renders these questions after it loads; crawlers get them in the static page too.
+WEBSITE_CHECK_FAQ = json.loads((APP/'src/data/website-check-content.json').read_text())['faq']
+if '/website-check/' in pages:
+    pages['/website-check/']['faqs'] = WEBSITE_CHECK_FAQ
 pages['/tech-audit/']={'path':'/tech-audit/','title':'Tell Us What You Need | Little Fight NYC','heading':'What needs to work better?','summary':'Bring the old website, the rough idea or the problem you cannot quite name. We’ll help you work out the next step.','description':'Call, text or email Little Fight NYC about a new website or a business technology problem.','sections':[]}
 pages['/thanks/']={'path':'/thanks/','title':'Your Next Step | Little Fight NYC','heading':'Thanks for the note.','summary':'If you just sent an inquiry, we’ll use the contact details you provided to reply. You can also call, text or email us.','description':'What happens after you contact Little Fight NYC.','sections':[]}
 pages['/services/it-support/']={'path':'/services/it-support/','title':'New York Tech Support | Little Fight NYC','heading':'A little help with the everyday tech.','summary':'Computers, Wi-Fi, email and the tools you rely on. Tell us what stopped working so we can discuss the right kind of help.','description':'Practical technology help for New York residents and small businesses. Ask about future on-site availability.','sections':[{'heading':'New York visits, planned with you.','paragraphs':['We are currently prioritizing website projects nationwide. Ask about future New York on-site availability before planning a visit.','Share the issue and your neighborhood. We’ll confirm the scope, timing and available options directly. No appointment is implied by this page.']},{'heading':'Start with the interruption.','bullets':['A computer that will not cooperate.','Wi-Fi that does not reach the rooms you use.','An email account or device that needs attention.','A change of equipment without losing your files.']}]}
@@ -724,11 +733,11 @@ def help_panel():
 
 
 def site_footer():
-    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()
-    menu = '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close services and search">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Pause animations and image rotation"><span class="motion-label">Pause motion &amp; slideshows</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/websites-for-your-business/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog>'''
+    menu = '''<dialog id="explore-menu" aria-labelledby="explore-title"><div class="menu-panel"><button type="button" class="menu-close" aria-label="Close services and search">×</button><h2 id="explore-title">What brings you here?</h2><label class="sr-only" for="preview-search">Search questions, services and work</label><input id="preview-search" type="search" autocomplete="off" placeholder="Websites, booking, email, tech support…"><div id="search-results" aria-live="polite"></div><button class="motion pill" id="motion-toggle" aria-pressed="false" aria-label="Pause animations and image rotation"><span class="motion-label">Pause motion &amp; slideshows</span> <span aria-hidden="true">◌</span></button><nav class="preview-filters" aria-label="Explore by service"><button data-filter="web">Websites</button><button data-filter="it">Tech support</button><button data-filter="software">Software</button><button data-filter="consulting">Consulting</button><button data-filter="all" aria-pressed="true">All tiles</button></nav><nav class="menu-links">'''+''.join(link(label,url) for label,url in [('Website design','/services/custom-local-websites/'),('For your business','/industries/'),('See our work','/examples/'),('Read our reviews','/reviews/'),('Ask us a question','/tech-audit/')])+'''</nav></div></dialog>'''
     reader = '<dialog id="detail" aria-labelledby="detail-title"><section class="detail-window lf-reader reader-longform">'+workbench_header(family=None, contacts=channels(), dialog=True)+'<div id="detail-body" class="detail-body"></div><nav class="reader-navigation" aria-label="Reader navigation"><button type="button" id="reader-previous">Previous</button><button type="button" id="reader-hub">Back to home +</button><button type="button" id="reader-next">Next +</button></nav></section></dialog></body></html>'
     return ('' if home else privacy) + menu + reader
 
