@@ -4621,21 +4621,21 @@
     "/answers/help/printer/": {
       "path": "/answers/help/printer/",
       "title": "Why will one computer print but another cannot? | Little Fight NYC",
-      "description": "If one computer can print but another cannot, compare their connections and settings before replacing the printer. Check their Wi-Fi networks, selected printer, and error messages first.",
+      "description": "One computer prints and another cannot? Compare their Wi-Fi network, selected printer and print queue before replacing the printer.",
       "headline": "Why will one computer print but another cannot?",
       "label": "Tech support · Answers",
       "color": "#f5d95b",
       "mode": "clay",
-      "image": "/assets/social/clay/answers-help-printer-0992f8cfdf1e.jpg",
+      "image": "/assets/social/clay/answers-help-printer-25dd6ec70169.jpg",
       "artAlt": "A handmade clay printer.",
       "artSource": "/assets/clay-png/object-printer.png",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 261676,
+      "bytes": 253000,
       "alt": "A handmade clay printer. Text: Why will one computer print but another cannot? Little Fight NYC.",
-      "sha256": "ec0679494aa69b9f3b9bd9e12745dc5a5eb5b7b5e26a7b277b0b683350d7d2f3",
-      "signature": "0992f8cfdf1e6ef6ef03f433eb08cebd10c2d828e8410749ee07b8cddb0de8f6"
+      "sha256": "4e1b3587eef839c9f72ebd1a055ba779fd0c0c2784f509bde7a7a7953aa3c927",
+      "signature": "25dd6ec70169d518b8c83d452d2ec02138b6b42b4124b7ddc79b2c0171adf148"
     },
     "/answers/help/speed/": {
       "path": "/answers/help/speed/",
