@@ -63,6 +63,8 @@ async function snapshot(page, name) {
         if (engine === 'chrome' && [393, 820, 1440].includes(width)) await snapshot(page, 'card-' + width);
         await page.locator('#reader-next').click();
         await page.locator('#reader-back').waitFor({state: 'visible'});
+        // Card-to-card moves use a View Transition; check the settled reader.
+        await page.waitForFunction(() => !document.documentElement.dataset.readerTurn);
         await controls(page, engine + ' ' + width + ' with Back');
         await page.locator('#reader-back').click();
         await page.waitForFunction(() => document.querySelector('#detail-body').dataset.readerPath === '/services/custom-local-websites/');

@@ -455,12 +455,12 @@
 .workbench-page .lf-reader .story-hero .contact-actions :is(a,button),#detail .lf-reader .story-hero .contact-actions :is(a,button){color:#1b100a}
 /* Card-to-card View Transitions inside the reader (site.js). */
 ::view-transition-old(root),::view-transition-new(root){animation:none}
-::view-transition-old(lf-reader),::view-transition-new(lf-reader){animation-duration:.42s;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-fill-mode:both}
+::view-transition-old(lf-reader),::view-transition-new(lf-reader){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1);animation-fill-mode:both}
 :root[data-reader-turn=next]::view-transition-old(lf-reader){animation-name:lf-reader-out-left}
 :root[data-reader-turn=next]::view-transition-new(lf-reader){animation-name:lf-reader-in-right}
 :root[data-reader-turn=prev]::view-transition-old(lf-reader){animation-name:lf-reader-out-right}
 :root[data-reader-turn=prev]::view-transition-new(lf-reader){animation-name:lf-reader-in-left}
-::view-transition-group(lf-reader-art){animation-duration:.42s;animation-timing-function:cubic-bezier(.22,1,.36,1);z-index:2}
+::view-transition-group(lf-reader-art){animation-duration:.32s;animation-timing-function:cubic-bezier(.22,1,.36,1);z-index:2}
 @keyframes lf-reader-out-left{to{opacity:0;transform:translateX(-6%)}}
 @keyframes lf-reader-in-right{from{opacity:0;transform:translateX(6%)}}
 @keyframes lf-reader-out-right{to{opacity:0;transform:translateX(6%)}}
