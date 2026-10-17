@@ -692,7 +692,7 @@ HELP_CHOICES = (
 def help_panel():
     """Get help opens a one-tap chooser; each choice starts the matching inquiry (site.js)."""
     choices = ''.join(
-        f'<a class="help-choice" data-help-choice="{intent}" data-reader-link href="/tech-audit/?intent={intent}&amp;source=help-panel">'
+        f'<a class="help-choice" data-help-choice="{intent}" data-reader-link href="/tech-audit/?intent={intent}&amp;source=%2F">'
         f'<span class="help-choice__icon" aria-hidden="true" style="--help-icon:url(/assets/mineral/{icon}.svg)"></span>'
         f'<span class="help-choice__text"><strong>{E(title)}</strong><small>{E(detail)}</small></span></a>'
         for intent, title, detail, icon in HELP_CHOICES)
