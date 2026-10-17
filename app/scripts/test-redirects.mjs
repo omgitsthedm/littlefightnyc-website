@@ -44,13 +44,12 @@ for (const expected of blogArticleRedirects) {
   assert.ok(rules.indexOf(rule) < blogWildcardIndex, `${expected[0]} must retain its article redirect`);
 }
 
-// Consolidated answers (2026-10-17) go straight to the page that now answers them.
-for (const expected of [
-  ["/answers/wix-vs-custom-website-reddit/", "/answers/wix-vs-custom-website/", "301"],
-  ["/answers/how-to-find-good-it-guy-reddit", "/services/it-support/", "301"],
-  ["/journal/what-to-do-when-business-wifi-keeps-dropping/", "/answers/help/wifi/", "301"],
-  ["/answers/best-web-design-agency-nyc-reddit/", "/answers/how-to-choose-a-web-designer-nyc/", "301"],
-]) {
+// Consolidated routes (2026-10-17) go straight to the page that now answers them.
+const consolidation = JSON.parse(await readFile(path.join(appRoot, "preview-content", "consolidation.json"), "utf8"));
+const consolidated = Object.entries({ ...consolidation.retired, ...consolidation.renamed })
+  .flatMap(([from, to]) => [[from, to, "301"], [from.replace(/\/$/, ""), to, "301"]]);
+assert.ok(consolidated.length >= 50, "consolidation map is present");
+for (const expected of consolidated) {
   const rule = rules.find(([from]) => from === expected[0]);
   assert.deepEqual(rule, expected);
   assert.ok(

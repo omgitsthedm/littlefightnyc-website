@@ -93,8 +93,7 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /areas/brooklyn/     /areas/                 301
 /work/               /services/              301
 /work                /services/              301
-/industries/     /examples/#industries      301
-/industries      /examples/#industries      301
+# /industries/ is a generated hub again; its old redirect to /examples/#industries was shadowed by the page.
 /industries.html /examples/#industries      301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301

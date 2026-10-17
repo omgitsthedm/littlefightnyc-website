@@ -153,7 +153,12 @@ async function main(){
  for(const art of ['printer','security','clay-software-v1'])check(art+' appears exactly once among all tiles',inventory.filter(t=>t.art===art).length===1);
  check('Exactly the reviewed five clay designs are installed',inventory.filter(t=>t.art?.startsWith('clay-')).length===5&&['browser','storefront','router','notebook','software'].every(name=>inventory.some(t=>t.art===`clay-${name}-v1`)));
  const routes=JSON.parse(fs.readFileSync(path.join(app,'dist/reader-routes.json')));
- check('All '+Object.keys(baseline.routes).length+' prior reader mappings retained with exactly seven new review backs',Object.entries(baseline.routes).every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===Object.keys(baseline.routes).length+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
+ // Routes merged on purpose (preview-content/consolidation.json) 301 to their replacement.
+ const consolidation=JSON.parse(fs.readFileSync(path.join(app,'preview-content/consolidation.json')));
+ const merged=new Set([...Object.keys(consolidation.retired),...Object.keys(consolidation.renamed)]);
+ const kept=Object.entries(baseline.routes).filter(([route])=>!merged.has(route));
+ const added=Object.values(consolidation.renamed).filter(route=>!(route in baseline.routes)).length;
+ check('All '+kept.length+' prior reader mappings outside the consolidation retained with exactly seven new review backs',kept.every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===kept.length+added+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
  check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
  const approved=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/clay-release.json')));

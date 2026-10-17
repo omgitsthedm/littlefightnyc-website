@@ -1,0 +1,33 @@
+{
+  "note": "Content consolidation of 2026-10-17. Each old route 301s to its target (public/_redirects). Retired routes were thin or repeated another page; renamed routes moved off -reddit slugs. Tests treat these routes as deliberately removed.",
+  "date": "2026-10-17",
+  "retired": {
+    "/answers/airtable-vs-notion-reddit-small-business/": "/journal/airtable-vs-notion-vs-monday-small-business/",
+    "/answers/best-web-design-agency-nyc-reddit/": "/answers/how-to-choose-a-web-designer-nyc/",
+    "/answers/business-email-going-to-spam/": "/answers/help/email/",
+    "/answers/computer-security-for-small-business-ny/": "/answers/help/it-security-basics/",
+    "/answers/glossgenius-vs-square-appointments-reddit/": "/journal/square-appointments-vs-glossgenius-nyc-salons/",
+    "/answers/how-to-find-good-it-guy-reddit/": "/services/it-support/",
+    "/answers/it-consultants-for-small-business-nyc/": "/services/it-support/",
+    "/answers/nyc-small-business-tech-help-reddit/": "/services/it-support/",
+    "/answers/pos-system-down-restaurant-nyc/": "/answers/help/it-payment-device-check/",
+    "/answers/shopify-vs-squarespace-reddit/": "/journal/shopify-vs-squarespace-nyc-retail/",
+    "/answers/small-business-it-support-nyc-reddit-recommendations/": "/services/it-support/",
+    "/answers/square-vs-toast-reddit/": "/journal/square-vs-toast-manhattan-restaurants/",
+    "/journal/cybersecurity-for-small-business/": "/answers/help/it-security-basics/",
+    "/journal/how-do-i-back-up-my-business-data/": "/answers/help/backup/",
+    "/journal/signs-your-pos-is-about-to-fail/": "/answers/help/it-payment-device-check/",
+    "/journal/what-to-do-when-business-wifi-keeps-dropping/": "/answers/help/wifi/",
+    "/websites-for-your-business/": "/industries/"
+  },
+  "renamed": {
+    "/answers/best-pos-system-small-business-reddit/": "/answers/how-to-pick-a-pos-system/",
+    "/answers/best-web-designer-nyc-reddit/": "/answers/how-to-choose-a-web-designer-nyc/",
+    "/answers/does-my-small-business-need-a-website-reddit/": "/answers/does-my-small-business-need-a-website/",
+    "/answers/google-business-profile-tips-reddit/": "/answers/google-business-profile-tips/",
+    "/answers/is-local-seo-worth-it-reddit/": "/answers/is-local-seo-worth-it/",
+    "/answers/squarespace-vs-hiring-web-designer-reddit/": "/answers/squarespace-vs-hiring-a-web-designer/",
+    "/answers/web-developer-ghosted-me-reddit/": "/answers/website-developer-disappeared/",
+    "/answers/wix-vs-custom-website-reddit/": "/answers/wix-vs-custom-website/"
+  }
+}

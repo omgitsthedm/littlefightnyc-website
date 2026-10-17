@@ -150,7 +150,8 @@ def render_group_sections(group, link):
         if section.get('bullets'):
             body += '<ul>' + ''.join('<li>' + escape(text) + '</li>' for text in section['bullets']) + '</ul>'
         if section.get('links'):
-            body += '<nav class="group-references" aria-label="Related details">' + ''.join(link(item['label'], item['href']) for item in section['links']) + '</nav>'
+            label = 'More on ' + section['heading'] if section.get('heading') else 'Related details'
+            body += '<nav class="group-references" aria-label="' + escape(label) + '">' + ''.join(link(item['label'], item['href']) for item in section['links']) + '</nav>'
         art_id = CHAPTER_ART.get(group['id'], {}).get(index)
         # Avoid repeating the hero artwork inside the same reader.
         if art_id == FRONT_ART.get(group['id']):
