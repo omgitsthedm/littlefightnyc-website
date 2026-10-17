@@ -1204,6 +1204,68 @@ test(
 );
 
 test(
+  "VERA Tour mode saves by drag, passes by button, and closes by keyboard @vera-all-platforms",
+  async ({ page }) => {
+    await mockVeraData(page, undefined, expandedVeraFixture(24));
+    await page.goto("/vera/#/today", { waitUntil: "domcontentloaded" });
+    await waitForVera(page);
+
+    const open = page.getByRole("button", { name: /tour the drop/i });
+    await expect(open).toBeVisible();
+    await open.click();
+    const deck = page.getByRole("dialog", { name: /tour the drop/i });
+    await expect(deck).toBeVisible();
+    await expect(deck.getByRole("button", { name: /^save$/i })).toBeFocused();
+    await expect(deck.locator("[data-tour-count]")).toHaveText(/^1 of 2$/);
+    await expect(page.locator("[data-shell]")).toHaveAttribute("inert", "");
+
+    // Every action stays reachable by a thumb and meets the 44px target.
+    for (const name of [/^pass$/i, /^details$/i, /^save$/i]) {
+      const target = await deck.getByRole("button", { name }).boundingBox();
+      expect(target!.height, "tour actions keep a 44px touch target").toBeGreaterThanOrEqual(44);
+    }
+
+    // A deliberate drag to the right saves the listing.
+    const media = await deck.locator(".tourcard__media").boundingBox();
+    const x = media!.x + media!.width / 2;
+    const y = media!.y + media!.height / 2;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    for (let step = 1; step <= 10; step += 1) await page.mouse.move(x + step * 18, y + 1);
+    await page.mouse.up();
+    await expect(deck.locator("[data-tour-count]")).toHaveText(/^2 of 2$/);
+    const savedUids = await page.evaluate(() =>
+      Object.entries(JSON.parse(localStorage.getItem("vera-cases") || "{}") as Record<string, VeraCase>)
+        .filter(([, value]) => value.stage === "saved")
+        .map(([uid]) => uid),
+    );
+    expect(savedUids).toHaveLength(1);
+
+    // Pass changes no data and reaches the end of the drop.
+    await deck.getByRole("button", { name: /^pass$/i }).click();
+    await expect(deck.getByRole("heading", { name: /you saved 1 of 2/i })).toBeVisible();
+    expect(
+      await page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem("vera-cases") || "{}")).length),
+    ).toBe(1);
+
+    // Escape closes, hands focus back, and releases the workspace.
+    await page.keyboard.press("Escape");
+    await expect(deck).toHaveCount(0);
+    await expect(open).toBeFocused();
+    await expect(page.locator("[data-shell]")).not.toHaveAttribute("inert", "");
+    await expect(page.locator(`[data-quicksave="${savedUids[0]}"]`)).toHaveAttribute("aria-pressed", "true");
+
+    // Arrow keys mirror the buttons for keyboard users.
+    await open.click();
+    await expect(deck.locator("[data-tour-count]")).toHaveText(/^1 of 2$/);
+    await page.keyboard.press("ArrowLeft");
+    await expect(deck.locator("[data-tour-count]")).toHaveText(/^2 of 2$/);
+    await page.keyboard.press("Escape");
+    await expect(deck).toHaveCount(0);
+  },
+);
+
+test(
   "VERA My Hunt saves a listing and advances a renter decision @vera-all-platforms",
   async ({ page }) => {
     await openVera(page, "browse");

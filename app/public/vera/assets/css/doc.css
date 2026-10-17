@@ -262,14 +262,19 @@ a:focus-visible { outline-color: #f2c46d; }
 .specimen dd { margin: 8px 0 0; font: 600 18px var(--serif); color: var(--ink); }
 .specimen dd span { display: block; margin-top: 4px; font: 400 14px var(--serif); color: var(--dim); }
 .doc .icongrid { padding-left: 0; }
-.doc .specimen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 560px) {
-  .docbar__links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; border-right: 0; border-bottom: 0; }
-  .docbar__links a { justify-content: center; border-bottom: 1px solid var(--line-soft); }
-  .docbar__links a:nth-child(3n) { border-right: 1px solid var(--line-soft); }
-  .doc .specimen { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 560px) {
-  .docbar { position: static; }
-  .icongrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Mobile first. Phones: the document bar scrolls away and its links sit in
+   a ruled three-column grid; specimens stack; icons run three across. */
+.docbar { position: static; }
+.docbar__links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; border-right: 0; border-bottom: 0; }
+.docbar__links a { justify-content: center; border-bottom: 1px solid var(--line-soft); }
+.docbar__links a:nth-child(3n) { border-right: 1px solid var(--line-soft); }
+.doc .specimen { grid-template-columns: minmax(0, 1fr); }
+.icongrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (min-width: 561px) {
+  .docbar { position: sticky; }
+  .docbar__links { display: flex; grid-template-columns: none; border-right: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+  .docbar__links a { justify-content: flex-start; border-bottom: 0; }
+  .docbar__links a:last-child { border-right: 0; }
+  .doc .specimen { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .icongrid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); }
 }

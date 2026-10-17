@@ -278,7 +278,7 @@
 
   function caseOf(uid) { return cases[uid] || null; }
 
-  function setStage(uid, stage) {
+  function setStage(uid, stage, quiet) {
     var l = byUid(uid);
     if (!cases[uid]) {
       cases[uid] = { uid: uid, stage: stage, added: new Date().toISOString(), notes: '', checks: {},
@@ -291,7 +291,7 @@
       cases[uid].signedAt = new Date().toISOString().slice(0, 10);
     }
     saveCases();
-    toast(stage === 'dead' ? 'Passed — VERA will stop suggesting it.' : 'Moved to ' + (STAGES.filter(function (s) { return s.id === stage; })[0] || {}).label);
+    if (!quiet) toast(stage === 'dead' ? 'Passed — VERA will stop suggesting it.' : 'Moved to ' + (STAGES.filter(function (s) { return s.id === stage; })[0] || {}).label);
   }
 
   function dropCase(uid) { delete cases[uid]; saveCases(); toast('Removed from your hunt.'); }
@@ -1151,6 +1151,7 @@
     }
     var fits = POOL.filter(C.isFullFit).sort(function (a, b) { return dropRank(b) - dropRank(a); });
     var drop = fits.slice(0, 8);
+    currentDrop = drop;
     var inDrop = {};
     drop.forEach(function (l) { inDrop[l.listing_uid] = 1; });
 
@@ -1220,6 +1221,7 @@
           '<div><dt>Second look</dt><dd data-tally="' + nearMiss.length + '" data-tally-delay="250">' + nearMiss.length + '</dd></div>' +
           '<div><dt>Next sweep</dt><dd><span class="mono" data-countdown>—</span></dd></div>' +
         '</dl>' +
+        tourEntry(drop) +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
         (sinceLastVisit ? '<p class="drophead__since">' + sinceLastVisit + ' new in the net since your last visit</p>' : '') +
         '<details class="anchorfold"' + (anchors.length || profile.income ? ' open' : '') + '>' +
@@ -3280,6 +3282,255 @@
     if (document.visibilityState === 'visible' && !D) recoverPublicationOnResume();
   });
 
+  /* ================================================================
+     TOUR — the drop, one apartment at a time. Phone-first and thumb-
+     reachable: Pass, Details, and Save sit at the bottom; a swipe right
+     saves and a swipe left passes, and every gesture also has a button
+     and a key. Only Save changes data, through the card's own save path.
+     ================================================================ */
+  var currentDrop = [];
+  var tour = null;
+
+  function tourEntry(drop) {
+    if (drop.length < 2) return '';
+    return '<button type="button" class="tourbtn" data-tour-open>' + C.icon('compass') +
+      '<span><b>Tour the drop</b><small>' + drop.length + ' apartments, one at a time. Swipe to save or pass.</small></span>' +
+      C.icon('arrow', 'ico--end') + '</button>';
+  }
+
+  function isSaved(uid) { return !!(caseOf(uid) && caseOf(uid).stage !== 'dead'); }
+
+  function syncCardSave(uid, saved) {
+    $$('[data-quicksave]').forEach(function (b) {
+      if (b.getAttribute('data-quicksave') === uid) paintSave(b, saved, false);
+    });
+  }
+
+  function tourCard(l, i) {
+    var addr = addressOf(l);
+    var name = addr || C.charName(l);
+    var t = C.nearestStation(l);
+    var m = C.moveInMath(l);
+    var stew = C.stewardOf(l);
+    var owner = C.ownerRead(l);
+    var flaw = (l.trust_caveats || [])[0] || (l.what_to_verify_before_applying || [])[0];
+    var photo = photoOf(l);
+    var unit = C.unitOf(l) === 'studio' ? 'Studio' : C.unitOf(l) === '1br' ? 'One bedroom' : esc(l.unit_type || 'Apartment');
+    var hood = esc(l.neighborhood || '—') + (l.borough && l.borough !== l.neighborhood ? ', ' + esc(l.borough) : '');
+    var ownerName = l.owner_name
+      ? C.titleCase(String(l.owner_name).toLowerCase()).replace(/\b(Llc|Lp|Llp|Inc|Hdfc|Nyc)\b/g, function (w) { return w.toUpperCase(); })
+      : (l.owner_type === 'llc' ? 'An LLC' : 'Not named');
+    return '<article class="tourcard" data-tour-card data-uid="' + esc(l.listing_uid) + '" aria-label="' + esc(name) + ', ' + money(l.rent) + ' a month">' +
+      '<div class="tourcard__media">' +
+        (photo ? '<img src="' + esc(photo) + '" alt="" draggable="false" decoding="async" referrerpolicy="no-referrer">' : C.portrait(l, 640, 480, sweepHour())) +
+        '<span class="tourcard__no" aria-hidden="true">' + (i + 1) + '</span>' +
+        (i === 0 ? '<span class="dropcard__toppick">' + C.icon('grade') + 'Top pick</span>' : '') +
+        '<span class="tourcard__stamp tourcard__stamp--save" aria-hidden="true">Save</span>' +
+        '<span class="tourcard__stamp tourcard__stamp--pass" aria-hidden="true">Pass</span>' +
+      '</div>' +
+      '<div class="tourcard__body" tabindex="0" role="group" aria-label="Facts for ' + esc(name) + '">' +
+        '<p class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></p>' +
+        '<h3 class="dropcard__name">' + esc(name) + '</h3>' +
+        '<p class="dropcard__hood">' + C.icon('pin') + '<span>' + hood + ' · ' + unit + '</span></p>' +
+        '<dl class="dropcard__facts">' +
+          factCell('train', 'Subway', t ? '≈' + t.mins + ' min walk' : 'No station matched', t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'verify the walk yourself') +
+          factCell('cash', 'Move-in cash', '≈ ' + money(m.total), 'no broker fee') +
+          factCell('building', 'Building', 'Grade ' + stew.grade + ' · ' + esc(stew.word), stew.score != null ? stew.score + '/100' : 'record thin', 'steward--' + stew.grade) +
+          factCell('owner', 'Landlord', esc(ownerName), '<span class="tag ' + owner.cls + '">' + owner.label + '</span>') +
+        '</dl>' +
+        (flaw ? '<p class="dropcard__flaw">' + C.icon('warning') + '<span><b>Check first:</b> ' + esc(flaw) + '</span></p>' : '') +
+      '</div></article>';
+  }
+
+  function tourEnd() {
+    var total = tour.list.length;
+    var saved = tour.saved.map(byUid).filter(Boolean);
+    return '<article class="tourcard tourcard--end" data-tour-card>' +
+      '<div class="tourend">' +
+        '<p class="tourend__kicker">' + C.icon('grade') + 'Tour complete</p>' +
+        '<h3 class="tourend__title">' + (saved.length ? 'You saved ' + saved.length + ' of ' + total + '.' : 'You toured all ' + total + '.') + '</h3>' +
+        (saved.length
+          ? '<ul class="tourend__list">' + saved.map(function (l) {
+              return '<li><b>' + esc(addressOf(l) || C.charName(l)) + '</b><span>' + money(l.rent) + ' · ' + esc(l.neighborhood || '—') + '</span></li>';
+            }).join('') + '</ul>'
+          : '<p class="tourend__note">Nothing saved this time. Every listing is still in Browse, and the next sweep brings a new drop.</p>') +
+        '<div class="tourend__actions">' +
+          (saved.length ? '<button type="button" class="tour__act tour__act--save" data-tour-hunt>' + C.icon('hunt') + '<span>Open My hunt</span></button>' : '') +
+          '<button type="button" class="tour__act" data-tour-close>' + C.icon('today') + '<span>Back to the drop</span></button>' +
+        '</div>' +
+      '</div></article>';
+  }
+
+  function renderTourCard(arriving) {
+    if (!tour) return;
+    var total = tour.list.length;
+    var stage = tour.el.querySelector('[data-tour-stage]');
+    var count = tour.el.querySelector('[data-tour-count]');
+    var bar = tour.el.querySelector('[data-tour-bar]');
+    var actions = tour.el.querySelector('[data-tour-actions]');
+    var done = tour.i >= total;
+    bar.style.transform = 'scaleX(' + (Math.min(tour.i + (done ? 0 : 1), total) / total) + ')';
+    if (done) {
+      count.textContent = 'Tour complete';
+      stage.innerHTML = tourEnd();
+      actions.hidden = true;
+      tour.el.classList.add('is-complete');
+      var first = stage.querySelector('button');
+      if (first) first.focus();
+      return;
+    }
+    var l = tour.list[tour.i];
+    count.textContent = (tour.i + 1) + ' of ' + total;
+    stage.innerHTML = tourCard(l, tour.i);
+    var card = stage.querySelector('[data-tour-card]');
+    if (arriving && !RM) card.classList.add('is-arriving');
+    bindSwipe(card);
+    var save = tour.el.querySelector('[data-tour-save]');
+    var already = isSaved(l.listing_uid);
+    save.setAttribute('aria-pressed', already ? 'true' : 'false');
+    save.innerHTML = C.icon(already ? 'saved' : 'hunt') + '<span>' + (already ? 'Saved' : 'Save') + '</span>';
+  }
+
+  function openTour() {
+    if (tour || currentDrop.length < 2) return;
+    tour = { list: currentDrop.slice(), i: 0, saved: [], busy: false, el: null };
+    var el = document.createElement('div');
+    el.className = 'tour';
+    el.setAttribute('role', 'dialog');
+    el.setAttribute('aria-modal', 'true');
+    el.setAttribute('aria-labelledby', 'vera-tour-title');
+    el.setAttribute('data-tour', '');
+    el.innerHTML =
+      '<div class="tour__top">' +
+        '<h2 class="tour__title" id="vera-tour-title">Tour the drop</h2>' +
+        '<p class="tour__count" data-tour-count aria-live="polite"></p>' +
+        '<button type="button" class="tour__close" data-tour-close aria-label="Close the tour">' + C.icon('close') + '</button>' +
+        '<span class="tour__bar" aria-hidden="true"><i data-tour-bar></i></span>' +
+      '</div>' +
+      '<div class="tour__stage" data-tour-stage></div>' +
+      '<div class="tour__actions" data-tour-actions>' +
+        '<button type="button" class="tour__act tour__act--pass" data-tour-pass>' + C.icon('skip') + '<span>Pass</span></button>' +
+        '<button type="button" class="tour__act tour__act--info" data-tour-details>' + C.icon('ledger') + '<span>Details</span></button>' +
+        '<button type="button" class="tour__act tour__act--save" data-tour-save>' + C.icon('hunt') + '<span>Save</span></button>' +
+      '</div>' +
+      '<p class="tour__hint"><span class="tour__hint--touch">Swipe right to save, left to pass.</span><span class="tour__hint--keys">Keyboard: → saves, ← passes, Esc closes. Dragging the card works too.</span></p>';
+    document.body.appendChild(el);
+    tour.el = el;
+    var shell = $('[data-shell]');
+    if (shell) shell.setAttribute('inert', '');
+    document.documentElement.classList.add('vera-tour-open');
+    renderTourCard(false);
+    if (RM) el.classList.add('is-open');
+    else requestAnimationFrame(function () { el.classList.add('is-open'); });
+    var save = el.querySelector('[data-tour-save]');
+    if (save) save.focus();
+  }
+
+  function closeTour(restoreFocus) {
+    if (!tour) return;
+    var t = tour;
+    tour = null;
+    var shell = $('[data-shell]');
+    if (shell) shell.removeAttribute('inert');
+    document.documentElement.classList.remove('vera-tour-open');
+    t.el.remove();
+    if (restoreFocus !== false) {
+      var opener = $('[data-tour-open]');
+      if (opener) opener.focus();
+    }
+  }
+
+  function commitTour(kind, card) {
+    if (!tour || tour.busy || tour.i >= tour.list.length) return;
+    var l = tour.list[tour.i];
+    if (kind === 'save') {
+      var uid = l.listing_uid;
+      if (!isSaved(uid)) setStage(uid, 'saved', true);
+      if (tour.saved.indexOf(uid) < 0) tour.saved.push(uid);
+      syncCardSave(uid, true);
+      if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+    }
+    card = card || tour.el.querySelector('[data-tour-card]');
+    tour.i += 1;
+    if (RM || !card) { renderTourCard(false); return; }
+    var dir = kind === 'save' ? 1 : -1;
+    tour.busy = true;
+    card.classList.remove('is-dragging', 'is-arriving');
+    card.classList.add('is-leaving');
+    card.style.setProperty('--' + kind, '1');
+    card.style.transform = 'translateX(' + (dir * 115) + '%) rotate(' + (dir * 12) + 'deg)';
+    setTimeout(function () {
+      if (!tour) return;
+      tour.busy = false;
+      renderTourCard(true);
+    }, 230);
+  }
+
+  function bindSwipe(card) {
+    var id = null, startX = 0, startY = 0, dx = 0, lock = null, t0 = 0;
+    function reset() {
+      card.style.transform = '';
+      card.style.removeProperty('--save');
+      card.style.removeProperty('--pass');
+    }
+    card.addEventListener('pointerdown', function (e) {
+      if ((e.pointerType === 'mouse' && e.button !== 0) || (e.target.closest && e.target.closest('button,a'))) return;
+      id = e.pointerId; startX = e.clientX; startY = e.clientY; dx = 0; lock = null; t0 = performance.now();
+    });
+    card.addEventListener('pointermove', function (e) {
+      if (e.pointerId !== id) return;
+      var mx = e.clientX - startX, my = e.clientY - startY;
+      if (lock === null && (Math.abs(mx) > 8 || Math.abs(my) > 8)) {
+        lock = Math.abs(mx) > Math.abs(my) ? 'x' : 'y';
+        if (lock === 'x') {
+          card.classList.add('is-dragging');
+          try { card.setPointerCapture(id); } catch (err) {}
+        }
+      }
+      if (lock !== 'x') return;
+      dx = mx;
+      card.style.transform = 'translateX(' + dx + 'px) rotate(' + (dx / 24).toFixed(2) + 'deg)';
+      card.style.setProperty('--save', String(Math.max(0, Math.min(1, dx / 110))));
+      card.style.setProperty('--pass', String(Math.max(0, Math.min(1, -dx / 110))));
+    });
+    function end(e) {
+      if (e.pointerId !== id) return;
+      id = null;
+      card.classList.remove('is-dragging');
+      if (lock !== 'x') return;
+      var speed = Math.abs(dx) / Math.max(1, performance.now() - t0);
+      if (dx > 110 || (dx > 45 && speed > 0.6)) commitTour('save', card);
+      else if (dx < -110 || (dx < -45 && speed > 0.6)) commitTour('pass', card);
+      else reset();
+    }
+    card.addEventListener('pointerup', end);
+    card.addEventListener('pointercancel', function (e) {
+      if (e.pointerId !== id) return;
+      id = null;
+      card.classList.remove('is-dragging');
+      reset();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (!tour) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeTour(); return; }
+    var inField = e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName);
+    if (!inField && e.key === 'ArrowRight') { e.preventDefault(); commitTour('save'); return; }
+    if (!inField && e.key === 'ArrowLeft') { e.preventDefault(); commitTour('pass'); return; }
+    if (e.key === 'Tab') {
+      var items = $$('button, [href], [tabindex]:not([tabindex="-1"])', tour.el).filter(function (n) {
+        return !n.closest('[hidden]') && n.getClientRects().length;
+      });
+      if (!items.length) return;
+      var first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !tour.el.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || !tour.el.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  window.addEventListener('hashchange', function () { if (tour) closeTour(false); });
+
   document.addEventListener('click', function (e) {
     var save = e.target.closest && e.target.closest('[data-quicksave]');
     if (save) {
@@ -3290,6 +3541,20 @@
       if (on) {
         var n = Object.keys(cases).filter(function (k) { return cases[k].stage !== 'dead'; }).length;
         toast('Saved to your hunt · ' + n + ' saved so far');
+      }
+      return;
+    }
+    var tourBtn = e.target.closest && e.target.closest('[data-tour-open],[data-tour-close],[data-tour-save],[data-tour-pass],[data-tour-details],[data-tour-hunt]');
+    if (tourBtn) {
+      if (tourBtn.hasAttribute('data-tour-open')) openTour();
+      else if (tourBtn.hasAttribute('data-tour-close')) closeTour();
+      else if (tourBtn.hasAttribute('data-tour-save')) commitTour('save');
+      else if (tourBtn.hasAttribute('data-tour-pass')) commitTour('pass');
+      else if (tourBtn.hasAttribute('data-tour-hunt')) { closeTour(false); location.hash = '#/hunt'; }
+      else if (tourBtn.hasAttribute('data-tour-details') && tour) {
+        var openUid = (tour.list[tour.i] || {}).listing_uid;
+        closeTour(false);
+        if (openUid && window.__VERAL) window.__VERAL.open(openUid);
       }
       return;
     }
