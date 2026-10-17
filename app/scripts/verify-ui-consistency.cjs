@@ -41,13 +41,16 @@ async function snapshot(page, name) {
         page.on('pageerror', e => errors.push(engine + ' ' + width + ': ' + e.message));
         await page.goto(base + '/?qa=1');
         await ready(page);
+        await page.waitForFunction(() => [...document.querySelectorAll('.sculpture-hero img')].every(i => i.complete && i.naturalWidth), null, {timeout: 15000});
         const start = await page.evaluate(() => ({
           bootMs: performance.getEntriesByName('lf-first-view-ready')[0].startTime,
           overflow: document.documentElement.scrollWidth > innerWidth + 1,
           heroLoaded: [...document.querySelectorAll('.sculpture-hero img')].every(i => i.complete && i.naturalWidth),
           inert: document.querySelector('.app-shell').inert,
+          layout: document.querySelector('#canvas').dataset.layoutReady,
+          canvasVisible: getComputedStyle(document.querySelector('#canvas')).visibility === 'visible',
         }));
-        check(engine + ' ' + width + ' settled homepage', !start.overflow && start.heroLoaded && !start.inert, start);
+        check(engine + ' ' + width + ' settled homepage', !start.overflow && start.heroLoaded && !start.inert && !!start.layout && start.canvasVisible, start);
         const tile = page.locator('#canvas a[href="/services/custom-local-websites/"]');
         await tile.scrollIntoViewIfNeeded();
         const idle = await page.locator('#canvas').evaluate(el => !el.querySelector('[data-clay-running="true"],.is-performing'));
@@ -56,7 +59,7 @@ async function snapshot(page, name) {
         await page.waitForFunction(() => document.querySelector('#detail').open && document.activeElement === document.querySelector('#close-detail'));
         await controls(page, engine + ' ' + width);
         const artwork = await page.locator('#detail-body .reader-clay-cutout img').evaluate(async el => { await el.decode(); return {src: el.currentSrc, width: el.naturalWidth, alphaSurface: getComputedStyle(el.closest('.clay-illustration')).backgroundColor}; });
-        check(engine + ' ' + width + ' reader uses transparent WebP', artwork.src.includes('/clay-webp/') && artwork.src.endsWith('.webp') && artwork.alphaSurface === 'rgba(0, 0, 0, 0)', artwork);
+        check(engine + ' ' + width + ' reader uses transparent clay AVIF/WebP', /\/clay-(avif|webp)\/[^/]+\.(avif|webp)$/.test(artwork.src) && artwork.alphaSurface === 'rgba(0, 0, 0, 0)', artwork);
         if (engine === 'chrome' && [393, 820, 1440].includes(width)) await snapshot(page, 'card-' + width);
         await page.locator('#reader-next').click();
         await page.locator('#reader-back').waitFor({state: 'visible'});
@@ -109,11 +112,10 @@ async function snapshot(page, name) {
     const page = await browser.newPage({viewport: {width: 393, height: 852}});
     await page.route('**/assets/clay-library/hero-diorama*', async route => { await new Promise(r => setTimeout(r, 1300)); await route.continue(); });
     await page.goto(base + '/', {waitUntil: 'domcontentloaded'});
-    check('Slow artwork shows tugboat before reveal', await page.locator('.site-loading').isVisible() && !(await page.locator('.app-shell').isVisible()));
-    await page.locator('[data-boot-tug]').click();
-    await snapshot(page, 'tugboat-loading');
-    await ready(page);
-    check('Slow load releases after artwork is decoded', await page.locator('.clay-building img').first().evaluate(img => img.complete && img.naturalWidth > 0));
+    check('Slow artwork never hides the page', await page.locator('#home-title').isVisible() && await page.locator('.app-shell').isVisible() && !(await page.locator('.site-loading').count()));
+    await snapshot(page, 'slow-artwork-first-view');
+    await page.waitForFunction(() => document.querySelector('.clay-building img')?.complete && document.querySelector('.clay-building img').naturalWidth > 0, null, {timeout: 15000});
+    check('Slow artwork appears when it arrives', true);
     await page.close();
     const stalled = await browser.newPage();
     await stalled.route('**/assets/clay-library/**', route => new Promise(resolve => setTimeout(resolve, 6000)).then(() => route.abort().catch(() => {})));

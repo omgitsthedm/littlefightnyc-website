@@ -1,5 +1,6 @@
 """Approved living-clay hero, shared by local and production builds."""
 from html import escape
+from pathlib import Path
 import shutil
 
 ASSETS = '/assets/clay-library/'
@@ -8,7 +9,7 @@ SCENE_WIDTH, SCENE_HEIGHT = 1448, 1086
 
 def copy_assets(public, destination):
     """Include the native-resolution artwork used by this candidate."""
-    paths = [str(file.relative_to(public)) for file in (public / 'assets/clay-library').glob('*.webp')]
+    paths = [str(file.relative_to(public)) for pattern in ('*.webp', '*.avif') for file in (public / 'assets/clay-library').glob(pattern)]
     paths.append('assets/portfolio-20261007/chromatic-painting-design-desktop.webp')
     for path in paths:
         target = destination / path
@@ -17,11 +18,33 @@ def copy_assets(public, destination):
     shutil.copy2(public.parent / 'preview-ui' / 'clay-hero.js', destination / 'clay-hero.js')
 
 
+PUBLIC = Path(__file__).resolve().parents[1] / 'public'
+
+
+def widths(name, native):
+    """Delivered sizes for one hero asset: 384, 768, 1152 (when present) and native."""
+    sizes = [384, 768] + ([1152] if (PUBLIC / f'assets/clay-library/{name}-1152.webp').exists() else [])
+    return [(f'{name}-{size}', size) for size in sizes] + [(name, native)]
+
+
+def srcset(name, native, extension, full=None):
+    return ', '.join((full if full and file == name else f'{ASSETS}{file}.{extension}') + f' {width}w'
+                     for file, width in widths(name, native))
+
+
+def has_avif(name):
+    return (PUBLIC / f'assets/clay-library/{name}.avif').exists()
+
+
 def prop(name, css):
-    return (f'<img class="clay-hero-prop {css}" src="{ASSETS}{name}.webp" '
-            f'srcset="{ASSETS}{name}-384.webp 384w, {ASSETS}{name}-768.webp 768w, {ASSETS}{name}.webp 1536w" '
-            'sizes="(max-width:600px) 30vw, 250px" fetchpriority="low" '
-            'width="1536" height="1024" alt="" decoding="async" data-native-width="1536">')
+    sizes = '(max-width:600px) 30vw, 250px'
+    image = (f'<img class="clay-hero-prop {css}" src="{ASSETS}{name}.webp" '
+             f'srcset="{srcset(name, 1536, "webp")}" sizes="{sizes}" fetchpriority="low" '
+             'width="1536" height="1024" alt="" decoding="async" data-native-width="1536">')
+    if not has_avif(name):
+        return image
+    return (f'<picture class="clay-picture"><source type="image/avif" srcset="{srcset(name, 1536, "avif")}" sizes="{sizes}">'
+            + image + '</picture>')
 
 
 def responsive_image(name, width, height, x=0, y=0, extra=''):
@@ -41,8 +64,9 @@ def responsive_image(name, width, height, x=0, y=0, extra=''):
     priority = 'high' if name == 'hero-diorama-clean' else 'low'
     return (f'<foreignObject x="{x}" y="{y}" width="{width}" height="{height}" {extra}>'
             '<picture xmlns="http://www.w3.org/1999/xhtml">'
-            f'<source srcset="{ASSETS}{name}-384.webp 384w, '
-            f'{ASSETS}{name}-768.webp 768w, {full} {native_width}w" sizes="{sizes}">'
+            + (f'<source type="image/avif" srcset="{srcset(name, native_width, "avif")}" sizes="{sizes}">'
+               if name != 'hero-chromatic-screen' and has_avif(name) else '')
+            + f'<source srcset="{srcset(name, native_width, "webp", full)}" sizes="{sizes}">'
             f'<img src="{full}" '
             f'alt="" width="{width}" height="{height}" fetchpriority="{priority}" '
             'style="display:block;width:100%;height:100%;object-fit:cover"/></picture></foreignObject>')
@@ -72,10 +96,10 @@ def browser(slug, label, css, clip, portrait=False):
             '<svg x="151" y="272" width="1307" height="542" viewBox="0 350 1600 664" '
             'preserveAspectRatio="xMidYMid slice">'
             + responsive_image('hero-chromatic-screen', 1600, 1111) + '</svg>')
-        accessible = 'Explore the Chromatic Painting and Design client website'
+        accessible = 'Explore the Chromatic Painting & Design client website'
     return (
         f'<a class="clay-hero-project {css}" href="/case-studies/{slug}/" data-reader-link '
-        f'aria-label="{accessible}" data-native-width="1610">'
+        f'aria-label="{escape(accessible, quote=True)}" data-native-width="1610">'
         '<svg viewBox="0 0 1610 977" aria-hidden="true" focusable="false">'
         + responsive_image('hero-browser-wide', 1610, 977) +
         f'<defs><clipPath id="{clip}"><rect x="151" y="272" width="1307" height="542" rx="28"/></clipPath></defs>'
@@ -103,6 +127,17 @@ def room_activity():
         + '<g transform="translate(505 667)"><g class="clay-open-sign">'
         + fragment('hero-small-props', (62, 55, 608, 620), (0, 0, 87, 89))
         + '</g></g>')
+
+
+def window_glow():
+    """Warm interior light over the four rooms; its strength follows New York time (clay-hero.js)."""
+    rooms = ((289, 174, 420, 185), (289, 413, 405, 141), (825, 369, 261, 185), (289, 684, 318, 185))
+    return ('<defs><radialGradient id="clay-window-light"><stop offset="0" stop-color="#ffd28a" stop-opacity=".9"/>'
+            '<stop offset="1" stop-color="#ffb24d" stop-opacity="0"/></radialGradient></defs>'
+            '<g class="clay-window-glow" aria-hidden="true">'
+            + ''.join(f'<ellipse cx="{x + w / 2:g}" cy="{y + h / 2:g}" rx="{w * .42:g}" ry="{h * .4:g}" fill="url(#clay-window-light)"/>'
+                      for x, y, w, h in rooms)
+            + '</g>')
 
 
 def pigeon():
@@ -141,6 +176,7 @@ def neighborhood():
         '<g id="clay-building-art">'
         + responsive_image('hero-diorama-clean', 1448, 1086)
         + room_activity()
+        + window_glow()
         + '</g></svg>'
         + links + pigeon() + '</div>')
 
@@ -188,6 +224,7 @@ def clay_hero():
         + equipment('hero-printer-front', 'clay-printer', '/answers/help/printer/', 'Get help with your office printer')
         + equipment('hero-router-front', 'clay-router', '/answers/help/wifi/', 'Get help with your Wi-Fi')
         + neighborhood()
-        + '</div><div class="clay-hero-footer"><p>In your corner, wherever you work.</p>'
+        + '</div><div class="clay-hero-footer"><div class="clay-hero-note"><p>In your corner, wherever you work.</p>'
+        '<p class="clay-hours" data-hours-status>A person answers 9am–9pm ET</p></div>'
         '<button class="clay-motion-toggle" type="button" aria-pressed="false" hidden>Pause animation</button>'
         '</div><p class="clay-surprise-status" role="status" aria-live="polite"></p></section>')

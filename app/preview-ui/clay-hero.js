@@ -61,6 +61,23 @@
     }, 3600);
   });
 
+  // The block keeps New York time. The OPEN sign is lit only while a person
+  // answers (9am-9pm Eastern, as the contact pages state), the windows glow
+  // after dark and the clouds take the light of dawn and dusk.
+  const hours = hero.querySelector('[data-hours-status]');
+  const clock = new Intl.DateTimeFormat('en-US', {timeZone: 'America/New_York', hour: 'numeric', minute: 'numeric', hourCycle: 'h23'});
+  function keepTime() {
+    const parts = Object.fromEntries(clock.formatToParts(new Date()).map(part => [part.type, part.value]));
+    const time = Number(parts.hour) % 24 + Number(parts.minute) / 60;
+    const open = time >= 9 && time < 21;
+    hero.dataset.nycOpen = String(open);
+    hero.dataset.nycPhase = time >= 6 && time < 8 ? 'dawn' : time >= 8 && time < 17 ? 'day' : time >= 17 && time < 20 ? 'dusk' : 'night';
+    // Short enough to stay on one line at 320px, so the swap never moves the page.
+    if (hours) hours.textContent = open ? 'Open now · answering until 9pm ET' : 'Closed now · back at 9am ET';
+  }
+  keepTime();
+  window.setInterval(keepTime, 60000);
+
   const observer = new IntersectionObserver(entries => {
     inView = entries.some(entry => entry.isIntersecting);
     sync();

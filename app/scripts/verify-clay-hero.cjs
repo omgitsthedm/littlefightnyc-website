@@ -54,8 +54,8 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
         pass(engine + ' ' + width + ' approved scene fits', state.design === 'clay-neighborhood' && !state.overflow && state.rooms === 4 && state.projects === 2 && state.rachel && state.building.visible);
         pass(engine + ' ' + width + ' accessible handmade Get help buttons', state.buttons.length >= 1 && state.buttons.every(b => b.width >= 44 && b.height >= 44 && b.text.includes('Get help') && b.href === '/tech-audit/' && /help-button-orange(-\d+)?\.webp/.test(b.surface)));
         pass(engine + ' ' + width + ' respects reduced motion', state.motion === 'paused');
-        if (width === 2560) pass(engine + ' Retina desktop receives the native diorama', state.building.source.endsWith('/hero-diorama-clean.webp'));
-        else if (width <= 393) pass(engine + ' phones receive responsive diorama artwork', state.building.source.endsWith('/hero-diorama-clean-384.webp'));
+        if (width === 2560) pass(engine + ' Retina desktop receives the native diorama', /\/hero-diorama-clean\.(avif|webp)$/.test(state.building.source));
+        else if (width <= 393) pass(engine + ' phones receive responsive diorama artwork', /\/hero-diorama-clean-384\.(avif|webp)$/.test(state.building.source));
         for (const selector of ['.sculpture-help', '.hero-main', '.hero-secondary', '.clay-room-home', '.clay-room-studio', '.clay-room-meeting', '.clay-room-shop']) {
           const link = page.locator(selector), href = await link.getAttribute('href');
           await link.click();

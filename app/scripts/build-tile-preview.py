@@ -623,6 +623,13 @@ LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','
     'parentOrganization':{'@id':ORIGIN+'/#organization'},
     'sameAs':['https://www.instagram.com/littlefightnyc/','https://www.facebook.com/1311467162048309','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
 
+def hero_preload():
+    """Preload the diorama in the format and size the hero <picture> will choose."""
+    from clay_hero import srcset, has_avif
+    kind, extension = ('image/avif', 'avif') if has_avif('hero-diorama-clean') else ('image/webp', 'webp')
+    return (f'<link rel="preload" as="image" type="{kind}" imagesrcset="{srcset("hero-diorama-clean", 1448, extension)}" '
+            'imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">')
+
 def head(q, home=False):
     title=E(q.get('title','Little Fight NYC')); desc=E(q.get('description','Custom websites for independent businesses nationwide.'));path=q['path']
     visual=case_visuals.get(path.strip('/').split('/')[-1],{}) if path.startswith('/case-studies/') else {}
@@ -656,7 +663,7 @@ def head(q, home=False):
                       'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/{'home' if home else 'site'}.css">{'<link rel="preload" as="image" href="/assets/clay-library/hero-diorama-clean.webp" imagesrcset="/assets/clay-library/hero-diorama-clean-384.webp 384w, /assets/clay-library/hero-diorama-clean-768.webp 768w, /assets/clay-library/hero-diorama-clean.webp 1448w" imagesizes="(max-width:600px) 90vw, (max-width:1000px) 70vw, 720px" fetchpriority="high">' if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/{'home' if home else 'site'}.css">{hero_preload() if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a>'
@@ -749,8 +756,8 @@ mosaic,sculpture_inventory=sculptural_mosaic(mosaic)
 write('sculpture-inventory.json',json.dumps(sculpture_inventory,ensure_ascii=False,indent=2)+'\n')
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
 q={'path':'/','title':'Little Fight NYC | Websites, Tech Support & Software','description':'Websites, tech support, and custom software for independent businesses. Based in New York, building websites nationwide. Start with a free first look.'}
-boot_mark=(UI/'assets/boat-orange.svg').read_text().replace('<svg ', '<svg aria-hidden="true" focusable="false" ')
-boot='<div class="site-loading"><div class="boot-harbor"><span class="boot-wake" aria-hidden="true"></span><button class="boot-tug" type="button" data-boot-tug aria-label="Give the tugboat a nudge">'+boot_mark+'</button></div><p class="boot-name">Little Fight NYC</p><p role="status">Coming into port…</p><button class="boot-skip" type="button" data-boot-skip>Explore now</button></div>'
+# The homepage paints immediately; only the tile canvas waits for its layout (site-boot.css).
+boot=''
 home=head(q,True)+'<body class="mosaic-home">'+boot+'<a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
@@ -822,6 +829,42 @@ if redirects.is_file():
 total_tiles=Links();total_tiles.feed(home)
 missing=[t['href'] for t in total_tiles.tiles if t.get('href','').startswith('/') and urlsplit(t['href']).path not in pages]
 if missing:raise RuntimeError('Missing tile routes: '+str(missing))
+def embed_mosaic_layouts():
+    """Embed the prebuilt homepage layouts while they still describe this page.
+
+    scripts/generate-mosaic-layouts.cjs records the mosaic engine's output for
+    every width. If the canvas markup, home.css or the engine changed since,
+    the signature differs and the live engine lays out the page instead.
+    """
+    source = CONTENT/'mosaic-layouts.json'
+    if not source.is_file():
+        return 'absent'
+    data = json.loads(source.read_text())
+    page = OUT/'index.html'
+    html = page.read_text()
+    start = html.index('<main class="topic-canvas"'); end = html.index('</main>', start)
+    signature = hashlib.sha256(html[start:end].encode() + b'\0' + (OUT/'home.css').read_bytes() + b'\0'
+                               + (UI/'vendor/mosaic-layout.js').read_text().split("  let layoutKey = '';")[0].encode()).hexdigest()
+    if data.get('signature') != signature:
+        print('NOTE: prebuilt mosaic layouts are out of date; the live engine will lay out the homepage. '
+              'Regenerate after the build with: node scripts/generate-mosaic-layouts.cjs', file=sys.stderr)
+        return 'stale'
+    # One small file per engine, fetched in parallel with the page; only the
+    # tile canvas (below the hero) waits for it. The signature in the name
+    # makes each file immutable.
+    version = signature[:12]
+    shared = {key: data[key] for key in ('schema', 'selector', 'keys', 'elements', 'rootFontSize', 'scrollbar', 'touched', 'values')}
+    for engine, table in data['engines'].items():
+        used = sorted({state for _, _, state in table['ranges']})
+        index = {state: position for position, state in enumerate(used)}
+        payload = {**shared, 'engine': engine, 'states': [data['states'][state] for state in used],
+                   'spill': [data['spill'][state] for state in used],
+                   'ranges': [[low, high, index[state]] for low, high, state in table['ranges']]}
+        write(f'mosaic/{engine}.{version}.json', json.dumps(payload, separators=(',', ':')))
+    page.write_text(html.replace('</head>', f'<meta name="lf-mosaic-layouts" content="/mosaic/{{engine}}.{version}.json"></head>', 1))
+    return 'published'
+mosaic_layouts = embed_mosaic_layouts()
+print('Prebuilt mosaic layouts: ' + mosaic_layouts)
 digest=hashlib.sha256()
 files=sorted(p for p in OUT.rglob('*') if p.is_file() and p.name not in ('preview-release.json','tile-release.json','release.json'))
 for p in files:digest.update(str(p.relative_to(OUT)).encode()+b'\0'+p.read_bytes())

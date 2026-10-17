@@ -17,3 +17,4 @@
 .detail-window.is-tile-flight{opacity:0;pointer-events:none}
 .no-motion .tile:active,.no-motion .tile.is-pressed{scale:1!important}
 @media(prefers-reduced-motion:reduce){.lf-tile-flight{display:none}.tile:active,.tile.is-pressed{scale:1!important}.tile.is-motion-source{visibility:visible!important}}
+.lf-motion-art{position:absolute;z-index:3;transform-origin:0 0;object-fit:contain;will-change:transform,filter;pointer-events:none}

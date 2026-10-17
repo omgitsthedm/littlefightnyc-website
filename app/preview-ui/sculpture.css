@@ -335,3 +335,24 @@ body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animatio
 
 .hero-ending{white-space:nowrap}
 @media(max-width:360px){.sculpture-hero-actions{gap:8px}.sculpture-help{padding-inline:10px}}
+
+/* Live storefront: New York time and real availability (clay-hero.js). */
+.clay-window-glow{opacity:0;mix-blend-mode:screen;transition:opacity 1.2s ease;pointer-events:none}
+[data-nyc-phase=dawn] .clay-window-glow{opacity:.22}
+[data-nyc-phase=dusk] .clay-window-glow{opacity:.38}
+[data-nyc-phase=night] .clay-window-glow{opacity:.95}
+/* After dark the block dims and its windows carry the light; client screens stay bright. */
+.clay-building>g>foreignObject,.clay-equipment{transition:filter 1.2s ease}
+[data-nyc-phase=dusk] .clay-building>g>foreignObject,[data-nyc-phase=dusk] .clay-equipment{filter:brightness(.9) sepia(.12)}
+[data-nyc-phase=night] .clay-building>g>foreignObject,[data-nyc-phase=night] .clay-equipment{filter:brightness(.7) saturate(.9)}
+.clay-neighborhood .clay-cloud{transition:translate .5s ease,filter 1.2s ease}
+[data-nyc-phase=dawn] .clay-neighborhood .clay-cloud{filter:sepia(.25) saturate(1.25) hue-rotate(-28deg)}
+[data-nyc-phase=dusk] .clay-neighborhood .clay-cloud{filter:sepia(.35) saturate(1.35) hue-rotate(-12deg) brightness(.95)}
+[data-nyc-phase=night] .clay-neighborhood .clay-cloud{filter:brightness(.84) sepia(.25) hue-rotate(185deg) saturate(.75)}
+.clay-open-sign{transition:filter 1.2s ease}
+[data-nyc-open=false] .clay-open-sign{filter:grayscale(1) brightness(.62);animation:none}
+.clay-hero-note{display:grid;gap:4px}
+.clay-hero-footer .clay-hours{font-size:15px;color:#a8adaa;max-width:none}
+.clay-hours::before{content:'';display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:#6f7572;vertical-align:.08em}
+[data-nyc-open=true] .clay-hours::before{background:#9bd8a6;box-shadow:0 0 0 3px rgb(155 216 166 / .18)}
+@media(prefers-reduced-motion:reduce){.clay-window-glow,.clay-neighborhood .clay-cloud,.clay-open-sign,.clay-building>g>foreignObject,.clay-equipment{transition:none}}

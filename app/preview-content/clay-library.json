@@ -59,6 +59,32 @@
           "bytes": 140466,
           "sha256": "cddd3debc01e814f47b85e73a8856fcc114e50c7bdb8cc404c17600d04ed6f15"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "symbol-browser-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 9043
+        },
+        {
+          "file": "symbol-browser-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 30764
+        },
+        {
+          "file": "symbol-browser-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 75635
+        },
+        {
+          "file": "symbol-browser.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 114984
+        }
       ]
     },
     "symbol-tugboat": {
@@ -116,6 +142,32 @@
           "height": 1024,
           "bytes": 176994,
           "sha256": "2cbbf8442ff6a4d4210d2c3beaee145169cefd5b1cc14407b338f9a2987d5c84"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "symbol-tugboat-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 10797
+        },
+        {
+          "file": "symbol-tugboat-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 34398
+        },
+        {
+          "file": "symbol-tugboat-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 82236
+        },
+        {
+          "file": "symbol-tugboat.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 119959
         }
       ]
     },
@@ -175,6 +227,32 @@
           "bytes": 127124,
           "sha256": "0f0a2ca6dfc3fff2cc972f5f93568ba933693f74e14fbbbe502150c724236bff"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-approval-stamp-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 9123
+        },
+        {
+          "file": "object-approval-stamp-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 27910
+        },
+        {
+          "file": "object-approval-stamp-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 65129
+        },
+        {
+          "file": "object-approval-stamp.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 93471
+        }
       ]
     },
     "object-backup-drive": {
@@ -232,6 +310,32 @@
           "height": 1024,
           "bytes": 98150,
           "sha256": "8ea24147543ee3066b76410d9f74cccf15bfd41f786b388b9908659c562b5e02"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-backup-drive-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 9841
+        },
+        {
+          "file": "object-backup-drive-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 27121
+        },
+        {
+          "file": "object-backup-drive-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 56355
+        },
+        {
+          "file": "object-backup-drive.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 69759
         }
       ]
     },
@@ -291,6 +395,32 @@
           "bytes": 123442,
           "sha256": "dc3f8562044f674e52836da4beefbb78a37e5fe2e6d80895ab1451efd4058546"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-booking-calendar-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 11101
+        },
+        {
+          "file": "object-booking-calendar-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 29070
+        },
+        {
+          "file": "object-booking-calendar-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 65753
+        },
+        {
+          "file": "object-booking-calendar.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 94133
+        }
       ]
     },
     "object-connected-cables": {
@@ -348,6 +478,32 @@
           "height": 1024,
           "bytes": 112276,
           "sha256": "6b069e9800ac2b1b9a3ace4175dd50d2cf132cba2d61803c776a81fd0d136049"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-connected-cables-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 12518
+        },
+        {
+          "file": "object-connected-cables-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 30964
+        },
+        {
+          "file": "object-connected-cables-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 65394
+        },
+        {
+          "file": "object-connected-cables.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 76934
         }
       ]
     },
@@ -407,6 +563,32 @@
           "bytes": 172270,
           "sha256": "7ec3423d6295bd8c57a9a2adf5d5cba1e244d6209a420d3198181271b8564de4"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-consulting-toolbox-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 12264
+        },
+        {
+          "file": "object-consulting-toolbox-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 37650
+        },
+        {
+          "file": "object-consulting-toolbox-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 83208
+        },
+        {
+          "file": "object-consulting-toolbox.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 115576
+        }
       ]
     },
     "object-operating-system": {
@@ -464,6 +646,32 @@
           "height": 1024,
           "bytes": 190258,
           "sha256": "f23486e87607bdce9fe351967184ad860a3908860dec173c2abc5a75ee4d90b4"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-operating-system-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 15539
+        },
+        {
+          "file": "object-operating-system-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 43799
+        },
+        {
+          "file": "object-operating-system-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 100159
+        },
+        {
+          "file": "object-operating-system.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 142825
         }
       ]
     },
@@ -523,6 +731,32 @@
           "bytes": 114294,
           "sha256": "e2804786272071ac918fd0e81408846182f1e3d50dcc303120949551ffa50147"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-desk-workstation-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 10440
+        },
+        {
+          "file": "object-desk-workstation-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 28116
+        },
+        {
+          "file": "object-desk-workstation-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 60556
+        },
+        {
+          "file": "object-desk-workstation.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 83508
+        }
       ]
     },
     "object-mail": {
@@ -580,6 +814,32 @@
           "height": 1024,
           "bytes": 91042,
           "sha256": "233ca7ad5780ccc0b74557caceb54d95c370fb10c1e2d9b4ce964e570af91928"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-mail-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 8145
+        },
+        {
+          "file": "object-mail-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 21580
+        },
+        {
+          "file": "object-mail-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 49647
+        },
+        {
+          "file": "object-mail.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 70203
         }
       ]
     },
@@ -639,6 +899,32 @@
           "bytes": 125420,
           "sha256": "c912b35d4b6eedf2f9e69900642f66cbb1225b4faae70a72759497df95c36124"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-map-red-pin-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 13080
+        },
+        {
+          "file": "object-map-red-pin-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 33485
+        },
+        {
+          "file": "object-map-red-pin-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 70730
+        },
+        {
+          "file": "object-map-red-pin.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 94838
+        }
       ]
     },
     "object-network-switch": {
@@ -696,6 +982,32 @@
           "height": 1024,
           "bytes": 115012,
           "sha256": "e4aa020ad0a7d50aa9ddf5c1478eb184e7f2ed6d57917d7ee05090f089d24dff"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-network-switch-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 10078
+        },
+        {
+          "file": "object-network-switch-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 26918
+        },
+        {
+          "file": "object-network-switch-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 61651
+        },
+        {
+          "file": "object-network-switch.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 84828
         }
       ]
     },
@@ -755,6 +1067,32 @@
           "bytes": 120906,
           "sha256": "f280acac8957497b8e467723c56c607ed0bfdca555872cfb7adeaa9ab55f092d"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-notebook-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 14309
+        },
+        {
+          "file": "object-notebook-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 37704
+        },
+        {
+          "file": "object-notebook-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 74816
+        },
+        {
+          "file": "object-notebook.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 96477
+        }
       ]
     },
     "object-password-safe": {
@@ -813,6 +1151,32 @@
           "bytes": 100006,
           "sha256": "0a312591dd75d1c3965e14e12b27a73b6c3ddd4b404301abe3ab6c1998c52e35"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-password-safe-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 7819
+        },
+        {
+          "file": "object-password-safe-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 23630
+        },
+        {
+          "file": "object-password-safe-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 54073
+        },
+        {
+          "file": "object-password-safe.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 78381
+        }
       ]
     },
     "object-payment-terminal": {
@@ -870,6 +1234,32 @@
           "height": 1024,
           "bytes": 98568,
           "sha256": "6ea9bf7500c0410085406d318cf481f295b8e40e867e07f2122fc95bc9663e46"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-payment-terminal-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 8163
+        },
+        {
+          "file": "object-payment-terminal-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 22887
+        },
+        {
+          "file": "object-payment-terminal-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 52533
+        },
+        {
+          "file": "object-payment-terminal.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 73233
         }
       ]
     },
@@ -930,6 +1320,32 @@
           "bytes": 151874,
           "sha256": "f9a36b8572d14ae197702920c40ac2a582426cef3f1a6929b19557adb73e0f81"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-printer-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 10948
+        },
+        {
+          "file": "object-printer-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 34930
+        },
+        {
+          "file": "object-printer-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 85023
+        },
+        {
+          "file": "object-printer.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 124443
+        }
       ]
     },
     "object-priority-notes": {
@@ -987,6 +1403,32 @@
           "height": 1024,
           "bytes": 98930,
           "sha256": "94d8f20801f60e4e330bfb779fe8a0fd79140070304ef7b82f0d0199cc2370c8"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-priority-notes-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 8811
+        },
+        {
+          "file": "object-priority-notes-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 24454
+        },
+        {
+          "file": "object-priority-notes-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 56352
+        },
+        {
+          "file": "object-priority-notes.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 83181
         }
       ]
     },
@@ -1046,6 +1488,32 @@
           "bytes": 153498,
           "sha256": "6300e55427c31d6596f49f72225db9a31f2f824c637d444ffc8021ddd0e43e4b"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-redesign-paint-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 12628
+        },
+        {
+          "file": "object-redesign-paint-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 36381
+        },
+        {
+          "file": "object-redesign-paint-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 77656
+        },
+        {
+          "file": "object-redesign-paint.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 106980
+        }
       ]
     },
     "object-repeat-work-machine": {
@@ -1103,6 +1571,32 @@
           "height": 1024,
           "bytes": 125430,
           "sha256": "3e173c997e77327501917338285bfe36e7af22d40b2b4649439b21024c3205ce"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-repeat-work-machine-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 10855
+        },
+        {
+          "file": "object-repeat-work-machine-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 29289
+        },
+        {
+          "file": "object-repeat-work-machine-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 67619
+        },
+        {
+          "file": "object-repeat-work-machine.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 89541
         }
       ]
     },
@@ -1163,6 +1657,32 @@
           "bytes": 128102,
           "sha256": "7950b379ebcff070e7f20ac54fe09e0cc62dc44f25a77a86afdf05284f427f0e"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-router-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 13056
+        },
+        {
+          "file": "object-router-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 39429
+        },
+        {
+          "file": "object-router-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 80979
+        },
+        {
+          "file": "object-router.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 101256
+        }
       ]
     },
     "object-rubber-duck": {
@@ -1220,6 +1740,32 @@
           "height": 1024,
           "bytes": 79202,
           "sha256": "8defd6587cd3396d5c5d79987f260c4306f7aa24a43d2b4b615b937da6a9555c"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-rubber-duck-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 6785
+        },
+        {
+          "file": "object-rubber-duck-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 18022
+        },
+        {
+          "file": "object-rubber-duck-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 40630
+        },
+        {
+          "file": "object-rubber-duck.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 58294
         }
       ]
     },
@@ -1279,6 +1825,32 @@
           "bytes": 122630,
           "sha256": "5fc7d9c7ae39f193063f820ccad98f3963ec4643d0dc43cffdb4213551f8a324"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-security-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 8439
+        },
+        {
+          "file": "object-security-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 25853
+        },
+        {
+          "file": "object-security-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 61706
+        },
+        {
+          "file": "object-security.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 91047
+        }
       ]
     },
     "object-software": {
@@ -1336,6 +1908,32 @@
           "height": 1024,
           "bytes": 145682,
           "sha256": "db9e500214e8e4e8c5307ce6602a802d496b1e40e72373552f3fb58292ca3f84"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-software-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 12253
+        },
+        {
+          "file": "object-software-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 39310
+        },
+        {
+          "file": "object-software-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 86445
+        },
+        {
+          "file": "object-software.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 123444
         }
       ]
     },
@@ -1395,6 +1993,32 @@
           "bytes": 109740,
           "sha256": "86b53cb06a0cb3b05657dfbc4d4ee1417e524072f41cd3fa19f4ad28ddf1225d"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-storage-drives-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 7114
+        },
+        {
+          "file": "object-storage-drives-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 22416
+        },
+        {
+          "file": "object-storage-drives-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 54081
+        },
+        {
+          "file": "object-storage-drives.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 79916
+        }
       ]
     },
     "object-storefront": {
@@ -1452,6 +2076,32 @@
           "height": 1024,
           "bytes": 155322,
           "sha256": "9afff0c79a1a28eb8a0555bc3d52d382fc515ba0162a98cad2cd52699b726488"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-storefront-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 14566
+        },
+        {
+          "file": "object-storefront-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 38965
+        },
+        {
+          "file": "object-storefront-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 81493
+        },
+        {
+          "file": "object-storefront.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 118281
         }
       ]
     },
@@ -1511,6 +2161,32 @@
           "bytes": 120050,
           "sha256": "83f7d9fe9d6b256017d5c4eaace674a42b07455e204bf3080d47395915e2235c"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-vendor-handoff-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 9828
+        },
+        {
+          "file": "object-vendor-handoff-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 29414
+        },
+        {
+          "file": "object-vendor-handoff-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 62782
+        },
+        {
+          "file": "object-vendor-handoff.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 84342
+        }
       ]
     },
     "object-vera-brownstone": {
@@ -1568,6 +2244,32 @@
           "height": 1024,
           "bytes": 99866,
           "sha256": "784cedf37f59b43ed5cd0b86de28a43d87aa4ace2dc66d661c1967103bafe2db"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-vera-brownstone-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 8781
+        },
+        {
+          "file": "object-vera-brownstone-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 24947
+        },
+        {
+          "file": "object-vera-brownstone-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 50666
+        },
+        {
+          "file": "object-vera-brownstone.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 71450
         }
       ]
     },
@@ -1627,6 +2329,32 @@
           "bytes": 151828,
           "sha256": "e2e877454db5044a769e2c0122faf0b0a0e532fd61a8bf613117f2126965381f"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-video-meeting-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 12141
+        },
+        {
+          "file": "object-video-meeting-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 35834
+        },
+        {
+          "file": "object-video-meeting-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 77862
+        },
+        {
+          "file": "object-video-meeting.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 105247
+        }
       ]
     },
     "object-yellow-taxi-v1": {
@@ -1684,6 +2412,32 @@
           "height": 1024,
           "bytes": 155074,
           "sha256": "424f98d0209eff0d57a393c5193f653cfd69abb68fb60ae7db129c1670b155fd"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-yellow-taxi-v1-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 13330
+        },
+        {
+          "file": "object-yellow-taxi-v1-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 38157
+        },
+        {
+          "file": "object-yellow-taxi-v1-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 83746
+        },
+        {
+          "file": "object-yellow-taxi-v1.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 117663
         }
       ]
     },
@@ -1743,6 +2497,32 @@
           "bytes": 137172,
           "sha256": "1046b79e0b8df165669fc1e85d10da717099e059ce035b51fda4d4c3dc16bf4d"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-construction-plans-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 13093
+        },
+        {
+          "file": "object-construction-plans-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 35224
+        },
+        {
+          "file": "object-construction-plans-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 75368
+        },
+        {
+          "file": "object-construction-plans.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 102003
+        }
       ]
     },
     "object-content-camera": {
@@ -1800,6 +2580,32 @@
           "height": 1024,
           "bytes": 231998,
           "sha256": "dd9954813633dbb5312de6d39055bfc3a67faa12b600ca8cf3c118604051bb2a"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-content-camera-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 18716
+        },
+        {
+          "file": "object-content-camera-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 52376
+        },
+        {
+          "file": "object-content-camera-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 117883
+        },
+        {
+          "file": "object-content-camera.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 163467
         }
       ]
     },
@@ -1859,6 +2665,32 @@
           "bytes": 143398,
           "sha256": "d8ac5844966f93900fee57b798a5be8f98dfb0eb8f7364f06fe8dcd2cead39d3"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-homepage-sketchbook-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 13821
+        },
+        {
+          "file": "object-homepage-sketchbook-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 37387
+        },
+        {
+          "file": "object-homepage-sketchbook-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 79502
+        },
+        {
+          "file": "object-homepage-sketchbook.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 103912
+        }
       ]
     },
     "object-ownership-keys": {
@@ -1917,6 +2749,32 @@
           "bytes": 179764,
           "sha256": "c62135d1a1f1f849670208cc53f845b8563c50eb23822f0dea0acc293a974c8d"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-ownership-keys-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 15112
+        },
+        {
+          "file": "object-ownership-keys-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 42822
+        },
+        {
+          "file": "object-ownership-keys-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 95761
+        },
+        {
+          "file": "object-ownership-keys.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 132910
+        }
       ]
     },
     "object-phone-chromatic": {
@@ -1967,6 +2825,26 @@
           "height": 1536,
           "bytes": 174774,
           "sha256": "6659e7f430910a57b08c3206824645eb7ef6c1f265cfc0eaa4c761cc32310585"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-phone-chromatic-384.avif",
+          "width": 384,
+          "height": 576,
+          "bytes": 20316
+        },
+        {
+          "file": "object-phone-chromatic-768.avif",
+          "width": 768,
+          "height": 1152,
+          "bytes": 69464
+        },
+        {
+          "file": "object-phone-chromatic.avif",
+          "width": 1024,
+          "height": 1536,
+          "bytes": 136399
         }
       ]
     },
@@ -2026,6 +2904,32 @@
           "bytes": 157540,
           "sha256": "47b3db84afdec02b0154c6feddf7284b4847637f9d67cbe118a0d35e146039cf"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-phone-dock-384.avif",
+          "width": 384,
+          "height": 320,
+          "bytes": 15817
+        },
+        {
+          "file": "object-phone-dock-768.avif",
+          "width": 768,
+          "height": 640,
+          "bytes": 44063
+        },
+        {
+          "file": "object-phone-dock-1152.avif",
+          "width": 1152,
+          "height": 960,
+          "bytes": 98802
+        },
+        {
+          "file": "object-phone-dock.avif",
+          "width": 1374,
+          "height": 1145,
+          "bytes": 118162
+        }
       ]
     },
     "object-renewal-hourglass": {
@@ -2083,6 +2987,32 @@
           "height": 1024,
           "bytes": 127004,
           "sha256": "d7c009b35c3f147befe3ab32858a4f45910b598680009cdfdf03a9de0b137b17"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-renewal-hourglass-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 9837
+        },
+        {
+          "file": "object-renewal-hourglass-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 29444
+        },
+        {
+          "file": "object-renewal-hourglass-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 64910
+        },
+        {
+          "file": "object-renewal-hourglass.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 88543
         }
       ]
     },
@@ -2142,6 +3072,32 @@
           "bytes": 151348,
           "sha256": "caa2f066e975d99662bddc28a075d1f6aecbcef18d29961b0e85f70e7d6cd9eb"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-scissors-red-tape-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 14410
+        },
+        {
+          "file": "object-scissors-red-tape-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 37887
+        },
+        {
+          "file": "object-scissors-red-tape-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 85028
+        },
+        {
+          "file": "object-scissors-red-tape.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 108243
+        }
       ]
     },
     "object-shared-file-cabinet": {
@@ -2200,6 +3156,32 @@
           "bytes": 117426,
           "sha256": "b5db3f6913c659416af5c03fd7361476585ed8a5d5e35a93955d9b779f141a7e"
         }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-shared-file-cabinet-384.avif",
+          "width": 384,
+          "height": 320,
+          "bytes": 11780
+        },
+        {
+          "file": "object-shared-file-cabinet-768.avif",
+          "width": 768,
+          "height": 640,
+          "bytes": 32530
+        },
+        {
+          "file": "object-shared-file-cabinet-1152.avif",
+          "width": 1152,
+          "height": 960,
+          "bytes": 73078
+        },
+        {
+          "file": "object-shared-file-cabinet.avif",
+          "width": 1374,
+          "height": 1145,
+          "bytes": 88689
+        }
       ]
     },
     "object-software-maintenance": {
@@ -2257,6 +3239,32 @@
           "height": 1024,
           "bytes": 175248,
           "sha256": "978debb69a9c4a40535b288a3e284b2a5d9035e73fae0d6c93315814e52598e9"
+        }
+      ],
+      "avifVariants": [
+        {
+          "file": "object-software-maintenance-384.avif",
+          "width": 384,
+          "height": 256,
+          "bytes": 14832
+        },
+        {
+          "file": "object-software-maintenance-768.avif",
+          "width": 768,
+          "height": 512,
+          "bytes": 43439
+        },
+        {
+          "file": "object-software-maintenance-1152.avif",
+          "width": 1152,
+          "height": 768,
+          "bytes": 95048
+        },
+        {
+          "file": "object-software-maintenance.avif",
+          "width": 1536,
+          "height": 1024,
+          "bytes": 130744
         }
       ]
     }

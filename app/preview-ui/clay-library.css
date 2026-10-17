@@ -18,3 +18,6 @@
  #canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art] .sculpture-copy{flex:0 0 auto}
  #canvas .sculpture-tile[data-sculpture-kind=service][data-clay-art] .sculpture-art{position:relative!important;inset:auto!important;align-self:flex-end;width:76%!important;height:82px!important;min-height:82px;flex:1 0 82px;margin:0 4px 5px}
 }
+
+/* AVIF wrappers around clay art add no box; the image lays out as before. */
+picture.clay-picture{display:contents}

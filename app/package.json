@@ -68,6 +68,8 @@
     "indexnow:plan": "node scripts/indexnow-release.mjs --dry-run",
     "indexnow:submit": "node scripts/indexnow-release.mjs --submit --confirm-production",
     "build:tile-preview": "python3 scripts/build-tile-preview.py",
+    "generate:layouts": "node scripts/generate-mosaic-layouts.cjs",
+    "prepare:avif": "python3 scripts/prepare-avif-delivery.py",
     "audit:tiles": "python3 scripts/audit-tile-content.py --dist dist",
     "test:tile-browser": "node scripts/verify-tile-preview.cjs",
     "test:tile-production": "node scripts/verify-tile-production.cjs",

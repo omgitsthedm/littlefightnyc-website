@@ -9,6 +9,7 @@ import shutil
 APP = Path(__file__).resolve().parents[1]
 ENABLED = os.environ.get('LFNYC_CLAY_LIBRARY_PREVIEW', '1') == '1'
 URL = '/assets/clay-webp/'
+AVIF_URL = '/assets/clay-avif/'
 ART_ALIASES = {
     'boat': 'symbol-tugboat', 'clay-browser-v1': 'symbol-browser',
     'clay-storefront-v1': 'object-storefront', 'clay-router-v1': 'object-router',
@@ -43,7 +44,15 @@ def png_image(name, cls='', eager=False, alt='', sizes='(max-width:600px) 50vw, 
                    'srcset': ', '.join(URL + v['file'] + ' ' + str(v['width']) + 'w' for v in variants),
                    'sizes': sizes, 'width': width, 'height': height,
                    'alt': alt, 'loading': 'eager' if eager else 'lazy', 'decoding': 'async'})
-    return '<img ' + attributes(values) + '>'
+    image = '<img ' + attributes(values) + '>'
+    avif = assets()[name].get('avifVariants')
+    if not avif:
+        return image
+    # AVIF where the browser decodes it; the <img> keeps the WebP fallback and
+    # every attribute scripts and tests read. display:contents keeps layout.
+    return ('<picture class="clay-picture"><source type="image/avif" srcset="'
+            + escape(', '.join(AVIF_URL + v['file'] + ' ' + str(v['width']) + 'w' for v in avif), quote=True)
+            + '" sizes="' + escape(sizes, quote=True) + '">' + image + '</picture>')
 
 def png_scene(name, cls='', eager=False, alt=''):
     return (f'<span class="clay-cutout" data-clay-cutout="{escape(name, quote=True)}" aria-hidden="true">'
@@ -53,4 +62,6 @@ def copy_assets(destination):
     if ENABLED:
         shutil.copytree(APP / 'public/assets/clay-png', destination / 'assets/clay-png', dirs_exist_ok=True)
         shutil.copytree(APP / 'public/assets/clay-webp', destination / 'assets/clay-webp', dirs_exist_ok=True)
+        if (APP / 'public/assets/clay-avif').is_dir():
+            shutil.copytree(APP / 'public/assets/clay-avif', destination / 'assets/clay-avif', dirs_exist_ok=True)
         shutil.copy2(APP / 'preview-ui/clay-cutouts.js', destination / 'clay-cutouts.js')

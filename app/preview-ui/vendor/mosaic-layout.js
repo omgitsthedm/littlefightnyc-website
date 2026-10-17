@@ -933,23 +933,131 @@
 
   let layoutKey = '';
   let contentEpoch = 0;
+  const currentKey = currentGrids => `${innerWidth}:${phone.matches}:${contentEpoch}:${currentGrids.map(grid => Math.round(grid.clientWidth * 100) / 100).join(',')}`;
 
-  function layout() {
+  // Prebuilt layouts. The build ships this engine's own output for every
+  // viewport width from 320 to 2560px, measured in Chrome and WebKit with the
+  // site fonts (scripts/generate-mosaic-layouts.cjs). Applying it is a few
+  // hundred attribute writes instead of 80-600ms of measuring on load and on
+  // every resize. Anything the map was not measured under - another engine,
+  // a changed default text size, space-taking scrollbars, an unknown width -
+  // falls back to the live engine below.
+  const prebuiltReady = (async () => {
+    const meta = document.querySelector('meta[name="lf-mosaic-layouts"]');
+    if (!meta || window.__LF_LAYOUT_GENERATOR) return null;
+    const ua = navigator.userAgent;
+    const engine = navigator.userAgentData || (/Chrome\//.test(ua) && !/CriOS|EdgiOS|FxiOS/.test(ua)) ? 'blink'
+      : /AppleWebKit/.test(ua) && !/Firefox|Gecko\/\d/.test(ua) ? 'webkit' : '';
+    if (!engine) return null;
+    let data;
+    try {
+      const response = await fetch(meta.content.replace('{engine}', engine), { credentials: 'same-origin' });
+      if (!response.ok) return null;
+      data = await response.json();
+    } catch { return null; }
+    if (data.schema !== 2 || data.engine !== engine) return null;
+    const elements = [canvas, ...canvas.querySelectorAll(data.selector)];
+    if (elements.length !== data.elements) return null;
+    const keys = data.keys.map(key => ({ kind: key[0], name: key.slice(2) }));
+    const read = (element, { kind, name }) => {
+      if (kind === 's') {
+        const value = element.style.getPropertyValue(name);
+        return value ? value + (element.style.getPropertyPriority(name) ? ' !important' : '') : null;
+      }
+      if (kind === 'c') return element.classList.contains(name) ? '1' : '0';
+      return element.getAttribute(name);
+    };
+    const write = (element, { kind, name }, value) => {
+      if (kind === 's') {
+        if (value === null) element.style.removeProperty(name);
+        else element.style.setProperty(name, value.replace(/ !important$/, ''), value.endsWith(' !important') ? 'important' : '');
+      } else if (kind === 'c') element.classList.toggle(name, value === '1');
+      else if (value === null) element.removeAttribute(name);
+      else element.setAttribute(name, value);
+    };
+    // Engine-owned values as authored. Nothing has written them yet: the
+    // live engine waits for this file (or its timeout) before its first pass.
+    const baseline = data.touched.map(([index, key]) => read(elements[index], keys[key]));
+    const conditions = () => getComputedStyle(document.documentElement).fontSize === data.rootFontSize
+      && innerWidth - document.documentElement.clientWidth === data.scrollbar;
+    const stateFor = width => {
+      for (const [min, max, state] of data.ranges) if (width >= min && width <= max) return state;
+      return -1;
+    };
+    let failed = false;
+    let current = -1;
+    return {
+      apply() {
+        if (failed || !conditions()) return false;
+        const state = stateFor(innerWidth);
+        if (state < 0) return false;
+        current = state;
+        const vector = data.states[state];
+        data.touched.forEach(([index, key], position) => {
+          const value = vector[position];
+          write(elements[index], keys[key], value === -2 ? baseline[position] : value === -1 ? null : data.values[value]);
+        });
+        return true;
+      },
+      // A map can only be wrong if the page renders differently from where it
+      // was measured. After fonts settle, one read-only pass checks that no
+      // card's contents spill beyond what the engine itself produced; any new
+      // spill hands control to the engine.
+      verify() {
+        if (current < 0) return true;
+        const expected = new Set(data.spill[current]);
+        const cards = [...canvas.querySelectorAll('[data-topic-grid] > .tile')];
+        const spill = cards.some((card, index) => !expected.has(index)
+          && (card.scrollHeight > card.clientHeight + 2 || card.scrollWidth > card.clientWidth + 2));
+        if (spill) failed = true;
+        return !spill;
+      },
+    };
+  })();
+  let prebuilt = null;
+  let started = false;
+
+  function markReady() {
+    if (canvas.dataset.layoutReady) return;
+    canvas.dataset.layoutReady = prebuilt ? 'prebuilt' : 'engine';
+    performance.mark('lf-layout-ready');
+  }
+
+  function layout({ force = false } = {}) {
+    if (!started && !force && !window.__LF_LAYOUT_GENERATOR) return;
     const currentGrids = grids();
     // The packing pass writes grid tracks and card spans. A ResizeObserver
     // reports those writes back as another resize batch, so a plain callback
     // used to pack all 58 cards again even when neither the viewport nor the
     // readable content had changed. Width, breakpoint, and actual content
     // resizes are the only inputs to this calculation.
-    const key = `${innerWidth}:${phone.matches}:${contentEpoch}:${currentGrids.map(grid => Math.round(grid.clientWidth * 100) / 100).join(',')}`;
-    if (key === layoutKey) return;
+    const key = currentKey(currentGrids);
+    if (!force && key === layoutKey) return;
     layoutKey = key;
+    if (!force && prebuilt && prebuilt.apply()) {
+      canvas.dataset.gridRevision = '5';
+      markReady();
+      return;
+    }
     currentGrids.forEach(pack);
     canvas.dataset.gridRevision = '5';
+    if (canvas.dataset.layoutReady === 'prebuilt') canvas.dataset.layoutReady = 'engine';
+    markReady();
   }
 
   window.LF_MOSAIC = { layout };
-  layout();
+  // Wait briefly for the prebuilt file; the live engine lays out the page if
+  // it is missing, stale for this browser, or slower than 1.5s.
+  Promise.race([prebuiltReady, new Promise(resolve => setTimeout(resolve, 1500, null))]).then(result => {
+    prebuilt = result || null;
+    started = true;
+    layout();
+    if (prebuilt) {
+      document.fonts.ready.then(() => requestAnimationFrame(() => {
+        if (!prebuilt.verify()) layout({ force: true });
+      }));
+    }
+  });
 
   let width = canvas.clientWidth;
   new ResizeObserver(() => {
@@ -974,6 +1082,9 @@
     let changed = false;
     for (const entry of entries) {
       const { width: nextWidth, height: nextHeight } = entry.contentRect;
+      // Sections skipped by content-visibility report an empty box; that is
+      // not a content change and must not trigger another packing pass.
+      if (!nextWidth && !nextHeight) continue;
       const previous = observedContent.get(entry.target);
       observedContent.set(entry.target, { width: nextWidth, height: nextHeight });
       // ResizeObserver always queues an initial record. Snapshot dimensions
