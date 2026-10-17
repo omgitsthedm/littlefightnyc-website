@@ -345,6 +345,10 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
         values = guide.get(key)
         if not isinstance(values, list) or not low <= len(values) <= high or not all(compact(value) for value in values):
             failures.append(f"rewrite guide {identity}: {key} needs {low}–{high} entries")
+    # Guided answers are indexable, so their description must fit the 160-character budget.
+    description = compact(guide.get("metaDescription") or item.get("answer"))
+    if len(description) > 160:
+        failures.append(f"rewrite guide {identity}: description is {len(description)} characters; add a metaDescription of 160 or fewer")
     if not compact(guide.get("weCheck")):
         failures.append(f"rewrite guide {identity}: weCheck is missing")
     faqs = guide.get("faqs")
@@ -353,7 +357,7 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
     for related in guide.get("related", []):
         if related not in known or related == identity:
             failures.append(f"rewrite guide {identity}: related answer {related!r} does not exist")
-    copy = normalized(" ".join(guide_texts(guide)))
+    copy = normalized(" ".join([*guide_texts(guide), guide.get("metaDescription", "")]))
     for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
         if phrase in copy:
             failures.append(f"rewrite guide {identity} contains prohibited copy: {phrase!r}")

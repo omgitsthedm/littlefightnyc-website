@@ -164,7 +164,8 @@ def apply_page_rewrite(pages, authored, rewrite):
         for key in ('answerContent', 'contentBlocks', 'sourceDepth', 'extraHtml'):
             p.pop(key, None)
         p.update(heading=item['question'], title=item['question'] + ' | Little Fight NYC',
-                 summary=item['answer'], description=item['answer'], family=item['category'],
+                 summary=item['answer'], description=(item.get('guide') or {}).get('metaDescription') or item['answer'],
+                 family=item['category'],
                  sections=guide_sections(item, rewrite) if item.get('guide') else [{'heading': '', 'paragraphs': [item['detail']]}],
                  contactPrompt=item['nextStep'], _rewriteAnswer=identity, _rewriteGuide=item.get('guide'),
                  _servicePath=next(path for path, category in rewrite['categories'].items() if category['id'] == item['category']))

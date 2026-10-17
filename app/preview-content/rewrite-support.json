@@ -124,7 +124,8 @@
           "it-internet-outage",
           "it-software-updates",
           "human"
-        ]
+        ],
+        "metaDescription": "One computer prints and another cannot? Compare their Wi-Fi network, selected printer and print queue before replacing the printer."
       }
     },
     {
