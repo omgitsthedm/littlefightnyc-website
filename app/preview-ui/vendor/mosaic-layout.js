@@ -1098,6 +1098,9 @@
     }
     if (changed) {
       contentEpoch += 1;
+      // Content changed size (web fonts arriving, enlarged text). Check it
+      // now, so a spill hands the very next pass to the live engine.
+      if (prebuilt) prebuilt.verify();
       queueContentLayout();
     }
   });
