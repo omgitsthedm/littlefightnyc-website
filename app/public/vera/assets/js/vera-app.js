@@ -970,7 +970,7 @@
     var hoodLine = esc(l.neighborhood || (place && place.name) || '—');
     if (l.borough && l.borough !== l.neighborhood) hoodLine += ', ' + esc(l.borough);
     if (place && !place.agrees) hoodLine += ' <span class="dropcard__pinwarn">· pin sits in ' + esc(place.name) + '</span>';
-    var mini = window.__VERAG && window.__VERAG.ready() ? window.__VERAG.minimap(l, 300, 300) : '';
+    var mini = C.streetSnap(l, 360, 240, !addr);
     var stew = C.stewardOf(l);
     var spatial = C.spatialLine(l);
     var owner = C.ownerRead(l);
@@ -1028,7 +1028,7 @@
             provenance(l) +
             '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(name) + '">' + C.icon('ledger') + '<span>Open full ledger</span>' + C.icon('arrow', 'ico--end') + '</button>' +
           '</div>' +
-          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(name) + ' on the Atlas map">' + mini + '<span class="dropcard__mapaction">' + C.icon('atlas') + 'View in Atlas</span></button>' : '') +
+          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(name) + ' on the Atlas street map">' + mini + '<span class="dropcard__mapaction">' + C.icon('atlas') + 'View in Atlas</span></button>' : '') +
         '</div>' +
       '</div></article>';
   }
@@ -2956,7 +2956,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=57').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=58').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
@@ -3155,6 +3155,55 @@
   document.addEventListener('visibilitychange', function () {
     if (document.visibilityState === 'visible' && !D) recoverPublicationOnResume();
   });
+
+  /* Street snapshots: a listing's map renders only as it nears the viewport,
+     through one shared hidden map, so Today pays for streets it shows. */
+  var snapIO = null;
+  var snapScanQueued = false;
+  function renderSnap(el) {
+    if (el.getAttribute('data-snap-state')) return;
+    el.setAttribute('data-snap-state', 'loading');
+    loadMapAssets().then(function () {
+      if (!window.__VERAM || !window.__VERAM.snap) throw new Error('map module unavailable');
+      /* Render at the size it is shown, so street names stay crisp. */
+      var baseW = +el.getAttribute('data-snap-w'), baseH = +el.getAttribute('data-snap-h');
+      var shownW = Math.round(el.getBoundingClientRect().width) || baseW;
+      var w = Math.max(240, Math.min(900, shownW));
+      return window.__VERAM.snap(+el.getAttribute('data-snap-lng'), +el.getAttribute('data-snap-lat'),
+        w, Math.round(w * baseH / baseW), +el.getAttribute('data-snap-zoom'));
+    }).then(function (url) {
+      var img = el.querySelector('.snap__img');
+      if (img) { img.src = url; img.hidden = false; }
+      el.setAttribute('data-snap-state', 'ready');
+    }).catch(function () {
+      el.setAttribute('data-snap-state', 'failed');
+      var note = el.querySelector('.snap__state');
+      if (note) note.textContent = 'Street map unavailable here. Open it in Atlas.';
+    });
+  }
+  function scanSnaps() {
+    snapScanQueued = false;
+    var found = $$('[data-snap]:not([data-snap-state]):not([data-snap-watched])');
+    if (!found.length) return;
+    if (!('IntersectionObserver' in window)) { found.forEach(renderSnap); return; }
+    if (!snapIO) {
+      snapIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          snapIO.unobserve(entry.target);
+          renderSnap(entry.target);
+        });
+      }, { rootMargin: '320px 0px' });
+    }
+    found.forEach(function (el) { el.setAttribute('data-snap-watched', ''); snapIO.observe(el); });
+  }
+  if ('MutationObserver' in window) {
+    new MutationObserver(function () {
+      if (snapScanQueued) return;
+      snapScanQueued = true;
+      requestAnimationFrame(scanSnaps);
+    }).observe(document.body, { childList: true, subtree: true });
+  }
 
   /* Warm the Atlas engine and the vendored style while the browser is idle,
      so the first Atlas open draws streets immediately instead of spending its

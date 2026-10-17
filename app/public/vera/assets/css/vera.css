@@ -2331,7 +2331,7 @@ body { font-family: var(--serif); font-weight: 400; color: var(--ink); }
   .dropcard__media { grid-column: 1; grid-row: 1; aspect-ratio: 4 / 3; }
   .dropcard__body { display: contents; }
   .dropcard__main { grid-column: 2; grid-row: 1 / span 2; }
-  .dropcard__map { grid-column: 1; grid-row: 2; width: min(100%, 300px); margin-top: 16px; }
+  .dropcard__map { grid-column: 1; grid-row: 2; width: 100%; max-width: none; margin-top: 16px; }
 }
 
 @media (min-width: 761px) and (max-width: 1179px) {
@@ -2419,3 +2419,27 @@ body { font-family: var(--serif); font-weight: 400; color: var(--ink); }
   .filter-dock { grid-row: 3; }
   .main { grid-row: 4; }
 }
+
+/* Street snapshots: real streets from the Atlas style, rendered as a still. */
+.snap { position: relative; display: block; width: 100%; overflow: hidden; background: var(--bg2); }
+.snap__img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.snap__pin {
+  position: absolute; left: 50%; top: 50%; z-index: 2; width: 18px; height: 18px; margin: -9px 0 0 -9px;
+  border: 3px solid var(--bg); border-radius: 50%; background: var(--green);
+  box-shadow: 0 0 0 1px var(--green), 0 0 0 10px rgba(98, 214, 157, 0.16);
+}
+.snap--approx .snap__pin {
+  width: 128px; height: 128px; margin: -64px 0 0 -64px; border: 1px dashed var(--green);
+  background: rgba(98, 214, 157, 0.1); box-shadow: none;
+}
+.snap__state {
+  position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center;
+  font: 400 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute);
+}
+.snap[data-snap-state="ready"] .snap__state { display: none; }
+.snap:not([data-snap-state="ready"]) .snap__pin { opacity: 0.35; }
+.snap__credit {
+  position: absolute; left: 0; bottom: 0; z-index: 2; padding: 5px 8px;
+  background: rgba(11, 11, 10, 0.82); color: var(--dim); font: 400 10.5px/1 var(--mono);
+}
+.dropcard__map .snap, .insp-map .snap { border: 0; }

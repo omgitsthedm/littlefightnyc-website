@@ -1166,29 +1166,37 @@ test(
 );
 
 test(
-  "VERA's listing minimap names walk and station context without a remote data request @vera-desktop",
+  "VERA's listing street map renders real streets from the Atlas tile host only @vera-desktop",
   async ({ page }) => {
-    const nonImageExternalRequests: string[] = [];
+    const unexpectedExternalRequests: string[] = [];
     page.on("request", (request) => {
       const url = new URL(request.url());
-      if (request.resourceType() !== "image" && url.origin !== PREVIEW_ORIGIN) {
-        nonImageExternalRequests.push(url.href);
+      if (
+        request.resourceType() !== "image" &&
+        url.origin !== PREVIEW_ORIGIN &&
+        url.origin !== "https://tiles.openfreemap.org"
+      ) {
+        unexpectedExternalRequests.push(url.href);
       }
     });
 
     await openVera(page, "today");
-    const minimap = page.locator(".dropcard__map .gm").first();
-    await expect(minimap).toBeVisible();
-    await expect(minimap).toHaveAttribute(
-      "aria-label",
-      /neighborhood map:.*nearest station.*minutes walk/i,
-    );
-    await expect(minimap).toContainText(/5 min radius.*10 min radius/i);
-    await expect(minimap.locator("image, [href]")).toHaveCount(0);
+    const mapButton = page.locator(".dropcard__map").first();
+    await mapButton.scrollIntoViewIfNeeded();
+    await expect(mapButton).toHaveAttribute("aria-label", /on the Atlas street map/i);
+    const snapshot = mapButton.locator("[data-snap]");
+    await expect(snapshot).toHaveAttribute("data-snap-state", "ready", { timeout: 20_000 });
+    await expect(snapshot.locator("img.snap__img")).toBeVisible();
+    await expect(snapshot.locator("img.snap__img")).toHaveAttribute("src", /^data:image\//);
+    await expect(snapshot).toContainText(/OpenStreetMap/);
     expect(
-      nonImageExternalRequests,
-      "the static minimap must not require a remote geocoder, route, or station request",
+      unexpectedExternalRequests,
+      "the street snapshot may use only the Atlas tile host, never a geocoder or route service",
     ).toEqual([]);
+    expect(
+      await page.locator("[data-vera-snap-host]").count(),
+      "one hidden map renders every snapshot",
+    ).toBeLessThanOrEqual(1);
   },
 );
 

@@ -778,10 +778,24 @@
       '<use href="' + ICON_SPRITE + '#i-' + esc(name) + '"/></svg>';
   }
 
+  /* A real street snapshot placeholder. The app renders the image only when
+     it nears the viewport; an approximate pin gets a wider view and an area
+     ring instead of a precise marker. */
+  function streetSnap(l, w, h, approximate) {
+    var lat = +(l && l.latitude), lng = +(l && l.longitude);
+    if (!isFinite(lat) || !isFinite(lng) || !lat || !lng || Math.abs(lat) > 90 || Math.abs(lng) > 180) return '';
+    return '<span class="snap' + (approximate ? ' snap--approx' : '') + '" data-snap data-snap-lng="' + lng + '" data-snap-lat="' + lat +
+      '" data-snap-w="' + w + '" data-snap-h="' + h + '" data-snap-zoom="' + (approximate ? 14.2 : 15.4) + '" style="aspect-ratio:' + w + ' / ' + h + '">' +
+      '<img class="snap__img" alt="" width="' + w + '" height="' + h + '" decoding="async" hidden>' +
+      '<span class="snap__pin" aria-hidden="true"></span>' +
+      '<span class="snap__state">Loading street map…</span>' +
+      '<span class="snap__credit">© OpenStreetMap</span></span>';
+  }
+
   function poly(points) { return points.map(function (p) { return pt(p[0], p[1]); }).join(' '); }
 
   window.__VERAC = {
-    esc: esc, icon: icon, money: money, num: num, median: median, timeago: timeago, trustedURL: trustedURL,
+    esc: esc, icon: icon, streetSnap: streetSnap, money: money, num: num, median: median, timeago: timeago, trustedURL: trustedURL,
     BRACKETS: BRACKETS, bracketOf: bracketOf, AREAS: AREAS, areaOf: areaOf,
     LINE_COLORS: LINE_COLORS, STATIONS: STATIONS, nearestStation: nearestStation, lineBullets: lineBullets,
     ownerRead: ownerRead, isSmallOwner: isSmallOwner, authenticity: authenticity, isScam: isScam,

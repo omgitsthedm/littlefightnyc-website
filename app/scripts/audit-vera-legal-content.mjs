@@ -102,14 +102,14 @@ for (const asset of [
   "./assets/js/vera-core.js?v=53",
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=61",
-  "./assets/js/vera-ledger.js?v=59",
+  "./assets/js/vera-ledger.js?v=60",
   "./assets/js/vera-app.js?v=64",
 ]) {
   mustContain("vera/index.html cache contract", index, asset);
   mustContain("vera/sw.js cache contract", serviceWorker, asset.replace("./", "/vera/"));
 }
 mustContain("vera-app.js Atlas style contract", app, "./assets/vendor/maplibre/style/liberty-local.json");
-mustContain("vera-app.js acceptance harness contract", app, "./assets/js/vera-tests.js?v=57");
+mustContain("vera-app.js acceptance harness contract", app, "./assets/js/vera-tests.js?v=58");
 mustContain("liberty-local.json Atlas style contract", mapStyle, "\"sprite\":\"/vera/assets/vendor/maplibre/style/sprite/ofm\"");
 mustContain("liberty-local.json Atlas style contract", mapStyle, "\"glyphs\":\"/vera/assets/vendor/maplibre/style/fonts/{fontstack}/{range}.pbf\"");
 mustContain("OpenFreeMap vendor notice", openFreeMapLicense, "Copyright (c) 2023 Zsolt Ero");

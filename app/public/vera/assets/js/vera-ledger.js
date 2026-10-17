@@ -344,11 +344,11 @@
           : 'No photo on this post, so VERA drew the building from the record — floors, era, and lit windows follow this building\'s own data.') +
         '</span></div>';
       if (window.__VERAG && window.__VERAG.ready()) {
-        var mini = window.__VERAG.minimap(l, 440, 260);
+        var exact = !!app.addressOf(l);
+        var mini = C.streetSnap(l, 440, 260, !exact);
         if (mini) {
           var pr = window.__VERAG.placeRead(l);
-          var exact = !!app.addressOf(l);
-          html += '<div class="insp-sec"><h3>' + (exact ? 'Exactly here' : 'Approximate area') + '</h3><button type="button" class="insp-map insp-map--open" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show this listing on the Atlas map">' + mini + '<span class="dropcard__mapaction">View in Atlas <span aria-hidden="true">↗</span></span></button>' +
+          html += '<div class="insp-sec"><h3>' + (exact ? 'Exactly here' : 'Approximate area') + '</h3><button type="button" class="insp-map insp-map--open" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show this listing on the Atlas street map">' + mini + '<span class="dropcard__mapaction">View in Atlas <span aria-hidden="true">↗</span></span></button>' +
             (!exact ? '<p class="insp-fine">This post does not carry a complete street address. Its map pin can place the neighborhood, but VERA will not use that pin to name or grade a building.</p>' : '') +
             (pr && !pr.agrees ? '<p class="insp-fine">The post says ' + esc(l.neighborhood || '?') + '; the coordinates sit in <b>' + esc(pr.name) + '</b>. Small gaps are normal at borders — big ones are a tell.</p>' : '') +
             '</div>';

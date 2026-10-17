@@ -818,5 +818,87 @@
     }
   }
 
-  window.__VERAM = { available: available, mount: mount, update: update, flyTo: flyTo, retry: retry, destroy: destroy };
+  /* ---------- listing street snapshots ----------
+     A listing card needs real streets, not a schematic. One hidden map is
+     reused for every listing in turn: it renders the same themed Liberty
+     style as Atlas, hands back a still image, and is released after a short
+     quiet period so no page keeps an extra WebGL context alive. */
+  var SNAP_ZOOM = 15.4;
+  var snapMap = null, snapHost = null, snapQueue = [], snapBusy = false, snapIdleT = null;
+
+  function releaseSnap() {
+    if (snapMap) { try { snapMap.remove(); } catch (e) {} snapMap = null; }
+    if (snapHost) { snapHost.remove(); snapHost = null; }
+  }
+
+  function snap(lng, lat, w, h, zoom) {
+    return new Promise(function (resolve, reject) {
+      snapQueue.push({ lng: +lng, lat: +lat, w: Math.round(w), h: Math.round(h), zoom: +zoom || SNAP_ZOOM, resolve: resolve, reject: reject });
+      pumpSnap();
+    });
+  }
+
+  function pumpSnap() {
+    if (snapBusy || !snapQueue.length) return;
+    if (!available() || !window.__VERA_MAP_STYLE__) {
+      while (snapQueue.length) snapQueue.shift().reject(new Error('street map unavailable'));
+      return;
+    }
+    snapBusy = true;
+    clearTimeout(snapIdleT);
+    var job = snapQueue.shift();
+    var done = false;
+    var timer = null;
+    function finish(error) {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      if (error) job.reject(error);
+      else {
+        try { job.resolve(snapMap.getCanvas().toDataURL('image/webp', 0.84)); }
+        catch (e) { job.reject(e); }
+      }
+      snapBusy = false;
+      if (snapQueue.length) pumpSnap();
+      else snapIdleT = setTimeout(releaseSnap, 5000);
+    }
+    try {
+      if (!snapMap) {
+        snapHost = document.createElement('div');
+        snapHost.setAttribute('aria-hidden', 'true');
+        snapHost.setAttribute('data-vera-snap-host', '');
+        snapHost.style.cssText = 'position:fixed;left:-10000px;top:0;pointer-events:none;';
+        document.body.appendChild(snapHost);
+      }
+      snapHost.style.width = job.w + 'px';
+      snapHost.style.height = job.h + 'px';
+      if (!snapMap) {
+        var style = JSON.parse(JSON.stringify(window.__VERA_MAP_STYLE__));
+        hardenNullableStyleNumbers(style);
+        themeBaseMap(style);
+        snapMap = new window.maplibregl.Map({
+          container: snapHost,
+          style: style,
+          center: [job.lng, job.lat],
+          zoom: job.zoom,
+          interactive: false,
+          attributionControl: false,
+          preserveDrawingBuffer: true,
+          fadeDuration: 0,
+          pixelRatio: Math.min(2, window.devicePixelRatio || 1),
+        });
+        installMissingStyleImageFallback(snapMap, snapHost);
+      } else {
+        snapMap.resize();
+        snapMap.jumpTo({ center: [job.lng, job.lat], zoom: job.zoom });
+      }
+      timer = setTimeout(function () { finish(new Error('street map timed out')); }, 15000);
+      snapMap.once('idle', function () { finish(); });
+    } catch (e) {
+      releaseSnap();
+      finish(e);
+    }
+  }
+
+  window.__VERAM = { available: available, mount: mount, update: update, flyTo: flyTo, retry: retry, destroy: destroy, snap: snap };
 })();

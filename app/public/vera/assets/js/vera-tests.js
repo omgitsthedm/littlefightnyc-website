@@ -238,7 +238,7 @@
         var hood = window.__VERAG.hoodAt(40.7265, -73.9815);
         check('point-in-polygon finds the East Village', !!hood && /East Village/i.test(hood.n), hood && hood.n);
         location.hash = '#/today'; app.route();
-        check('drop cards carry a neighborhood minimap', $$('.dropcard__map .gm').length > 0 || $$('.dropcard').length === 0, $$('.dropcard__map .gm').length + ' maps');
+        check('drop cards carry a street map', $$('.dropcard__map [data-snap]').length > 0 || $$('.dropcard').length === 0, $$('.dropcard__map [data-snap]').length + ' maps');
         /* an empty drop is an honest state, not a failure — the suite must
            not cry wolf on the nights when nothing clears every gate */
         check('drop headline is the address, big',
