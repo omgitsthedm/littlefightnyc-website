@@ -1183,12 +1183,15 @@ test(
     await openVera(page, "today");
     const mapButton = page.locator(".dropcard__map").first();
     await mapButton.scrollIntoViewIfNeeded();
-    await expect(mapButton).toHaveAttribute("aria-label", /on the Atlas street map/i);
+    await expect(mapButton).toHaveAttribute("aria-label", /^View in Atlas: .+ street map$/i);
     const snapshot = mapButton.locator("[data-snap]");
     await expect(snapshot).toHaveAttribute("data-snap-state", "ready", { timeout: 20_000 });
     await expect(snapshot.locator("img.snap__img")).toBeVisible();
     await expect(snapshot.locator("img.snap__img")).toHaveAttribute("src", /^data:image\//);
-    await expect(snapshot).toContainText(/OpenStreetMap/);
+    expect(
+      await snapshot.evaluate((element) => getComputedStyle(element, "::after").content),
+      "every street snapshot shows the OpenStreetMap credit",
+    ).toMatch(/OpenStreetMap/);
     expect(
       unexpectedExternalRequests,
       "the street snapshot may use only the Atlas tile host, never a geocoder or route service",

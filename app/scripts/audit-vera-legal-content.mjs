@@ -99,6 +99,7 @@ mustContain("vera-prerender.mjs", prerender, "a broker representing the landlord
 
 for (const asset of [
   "./assets/css/vera.css?v=63",
+  "./assets/js/vera-boot.js?v=1",
   "./assets/js/vera-core.js?v=53",
   "./assets/js/vera-geo.js?v=60",
   "./assets/js/vera-map.js?v=61",
@@ -134,7 +135,7 @@ const glyphBytes = glyphStats.reduce((total, entry) => total + entry.size, 0);
 if (glyphBytes > 105_000_000) {
   failures.push(`Atlas glyph bundle exceeds its 105,000,000-byte release cap (${glyphBytes})`);
 }
-mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v17");
+mustContain("vera/sw.js cache contract", serviceWorker, "vera-shell-v18");
 mustNotContain("vera-core.js", core, "before the lease is executed");
 mustNotContain("vera-app.js", app, "before the lease is executed");
 mustNotContain("vera-prerender.mjs", prerender, "before the lease is executed");

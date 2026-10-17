@@ -945,6 +945,104 @@
       : '<p class="qualify qualify--warn">Needs a guarantor at your income — the bar here is ' + money(need) + '</p>';
   }
 
+  /* One tap from interest to your hunt. The button updates in place, so the
+     drop keeps its scroll position and the stamp has room to land. */
+  function saveButton(uid, saved) {
+    return '<button type="button" class="dropcard__save' + (saved ? ' is-saved' : '') + '" data-quicksave="' + esc(uid) + '" aria-pressed="' + (saved ? 'true' : 'false') + '">' +
+      C.icon(saved ? 'saved' : 'hunt') + '<span>' + (saved ? 'Saved' : 'Save') + '</span></button>';
+  }
+
+  function paintSave(button, saved, celebrate) {
+    button.classList.toggle('is-saved', saved);
+    button.setAttribute('aria-pressed', saved ? 'true' : 'false');
+    button.innerHTML = C.icon(saved ? 'saved' : 'hunt') + '<span>' + (saved ? 'Saved' : 'Save') + '</span>';
+    if (!celebrate || RM) return;
+    button.classList.remove('is-stamped');
+    void button.offsetWidth;
+    button.classList.add('is-stamped');
+    if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
+  }
+
+  /* The drop's standouts: the best of what cleared, measured, never puffed.
+     Each category appears only when the data can actually support it. */
+  function standouts(drop) {
+    var picks = [];
+    var value = null, close = null, kept = null, cheap = null;
+    drop.forEach(function (l, i) {
+      var v = valueRead(l);
+      if (v && v.under && (!value || v.pct > value.v.pct)) value = { l: l, i: i, v: v };
+      var t = C.nearestStation(l);
+      if (t && (!close || t.mins < close.t.mins)) close = { l: l, i: i, t: t };
+      var st = C.stewardOf(l);
+      if (st.score != null && (!kept || st.score > kept.st.score)) kept = { l: l, i: i, st: st };
+      var m = C.moveInMath(l);
+      if (m.total && (!cheap || m.total < cheap.m.total)) cheap = { l: l, i: i, m: m };
+    });
+    if (value) picks.push({ icon: 'fee', label: 'Best value', value: value.v.pct + '% under', sub: 'the ' + esc(value.l.neighborhood || 'area') + ' median', p: value });
+    if (close) picks.push({ icon: 'train', label: 'Closest to a train', value: '≈' + close.t.mins + ' min walk', sub: C.lineBullets(close.t.lines) + ' ' + esc(close.t.name), p: close });
+    if (kept) picks.push({ icon: 'building', label: 'Best-kept building', value: 'Grade ' + kept.st.grade + ' · ' + kept.st.score + '/100', sub: esc(kept.st.word), p: kept });
+    if (picks.length < 3 && cheap) picks.push({ icon: 'cash', label: 'Lowest move-in', value: '≈ ' + money(cheap.m.total), sub: 'everything due to move in', p: cheap });
+    if (drop.length < 2 || !picks.length) return '';
+    return '<section class="standouts" aria-labelledby="vera-standouts">' +
+      '<h2 class="standouts__title" id="vera-standouts">' + C.icon('new') + 'Standouts in this drop</h2>' +
+      '<div class="standouts__grid">' + picks.slice(0, 3).map(function (k) {
+        var name = addressOf(k.p.l) || C.charName(k.p.l);
+        return '<button type="button" class="standout" data-standout="' + esc(k.p.l.listing_uid) + '">' +
+          '<span class="standout__label">' + C.icon(k.icon) + k.label + '</span>' +
+          '<b class="standout__value">' + k.value + '</b>' +
+          '<span class="standout__sub">' + k.sub + '</span>' +
+          '<span class="standout__who"><i aria-hidden="true">' + (k.p.i + 1) + '</i>' + esc(name) + '</span></button>';
+      }).join('') + '</div></section>';
+  }
+
+  /* Numbers arrive the way a ledger is tallied: quickly, once, and they end
+     on the exact value that was already in the markup. */
+  /* Today can re-render while the tally runs (neighbourhood data arriving),
+     so every render shares one clock and simply continues the count. */
+  var revealStart = 0;
+  var REVEAL_WINDOW_MS = 1700;
+  function tallyUp(root) {
+    var nodes = $$('[data-tally]', root);
+    if (RM || document.hidden || !nodes.length) return;
+    if (!revealStart) revealStart = performance.now();
+    if (performance.now() - revealStart > REVEAL_WINDOW_MS) return;
+    var start = revealStart;
+    nodes.forEach(function (el) {
+      var to = +el.getAttribute('data-tally') || 0;
+      var delay = +el.getAttribute('data-tally-delay') || 0;
+      var dur = to > 20 ? 900 : 650;
+      el.textContent = '0';
+      function frame(now) {
+        var t = Math.min(1, Math.max(0, (now - start - delay) / dur));
+        var eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(to * eased));
+        if (t < 1 && !document.hidden) requestAnimationFrame(frame);
+        else { el.textContent = String(to); el.classList.add('is-tallied'); }
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  /* Entries settle into place as they reach the reader. Motion is transform
+     only: nothing is ever hidden, dimmed, or waiting on an animation. */
+  var revealIO = null;
+  function choreograph(root) {
+    if (RM || !('IntersectionObserver' in window)) return;
+    if (!revealIO) {
+      revealIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          revealIO.unobserve(entry.target);
+          entry.target.classList.add('is-in');
+        });
+      }, { rootMargin: '0px 0px -12% 0px' });
+    }
+    $$('.dropcard', root).forEach(function (card) {
+      card.classList.add('will-reveal');
+      revealIO.observe(card);
+    });
+  }
+
   /* One fact in the card's index grid: icon, label, the answer, then the
      evidence behind it. The answer is always words or numbers, never only
      a colour or a glyph. */
@@ -990,9 +1088,11 @@
       : stew.strengths.length ? C.stewardText(stew.strengths)
       : 'city record too thin to judge';
     var name = addr || C.charName(l);
-    return '<article class="dropcard"' + bearing + ' style="--i:' + i + '">' +
+    var saved = !!(caseOf(l.listing_uid) && caseOf(l.listing_uid).stage !== 'dead');
+    return '<article class="dropcard"' + bearing + ' data-drop-uid="' + esc(l.listing_uid) + '" style="--i:' + i + '">' +
       '<div class="dropcard__hit">' +
         '<span class="dropcard__media">' + gallery(l) + freshBadge +
+          (i === 0 ? '<span class="dropcard__toppick">' + C.icon('grade') + 'Top pick</span>' : '') +
           '<span class="dropcard__no" aria-hidden="true">' + (i + 1) + '</span></span>' +
         '<div class="dropcard__body">' +
           '<div class="dropcard__main">' +
@@ -1026,11 +1126,20 @@
               (spatial ? '<span class="tag">' + esc(spatial) + '</span>' : '') +
             '</span>' +
             provenance(l) +
-            '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open the ledger for ' + esc(name) + '">' + C.icon('ledger') + '<span>Open full ledger</span>' + C.icon('arrow', 'ico--end') + '</button>' +
+            '<div class="dropcard__actions">' +
+              saveButton(l.listing_uid, saved) +
+              '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open full ledger: ' + esc(name) + '">' + C.icon('ledger') + '<span>Open full ledger</span>' + C.icon('arrow', 'ico--end') + '</button>' +
+            '</div>' +
           '</div>' +
-          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Show ' + esc(name) + ' on the Atlas street map">' + mini + '<span class="dropcard__mapaction">' + C.icon('atlas') + 'View in Atlas</span></button>' : '') +
+          (mini ? '<button type="button" class="dropcard__map" data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="View in Atlas: ' + esc(name) + ' street map">' + mini + '<span class="dropcard__mapaction">' + C.icon('atlas') + 'View in Atlas</span></button>' : '') +
         '</div>' +
       '</div></article>';
+  }
+
+  /* A concierge says hello in the reader's own time of day. */
+  function greeting() {
+    var h = new Date().getHours();
+    return h >= 5 && h < 12 ? 'Good morning.' : h >= 12 && h < 17 ? 'Good afternoon.' : h >= 17 && h < 22 ? 'Good evening.' : 'Up late?';
   }
 
   function renderToday(page) {
@@ -1093,9 +1202,10 @@
       (usedFallbackPool ? '<p class="notice">The full listing feed is unavailable. This drop shows a limited selection from the available listings.</p>' : '') +
       '<header class="drophead">' +
         '<p class="drophead__kicker">' + C.icon('today') + '<span>Swept ' + esc(pubLine) + ' · ' + timeago(D && D.generated_at) + '</span></p>' +
+        '<p class="drophead__greet">' + greeting() + (drop.length ? ' Here is what VERA found for you.' : ' Here is where the net stands.') + '</p>' +
         '<h1 class="drophead__title">' +
           (drop.length
-            ? '<b class="drophead__count">' + clearedCount + '</b> apartment' + (clearedCount === 1 ? '' : 's') + ' cleared every check.'
+            ? '<b class="drophead__count' + (RM ? '' : ' is-lockin') + '">' + clearedCount + '</b> apartment' + (clearedCount === 1 ? '' : 's') + ' cleared every check.'
             : 'Nothing cleared every check today.') +
         '</h1>' +
         '<p class="drophead__lede">' +
@@ -1105,9 +1215,9 @@
             : 'Out of ' + POOL.length + ' swept, none cleared every gate. The net stays out and the next sweep tries again.') +
         '</p>' +
         '<dl class="dropstats">' +
-          '<div><dt>Swept</dt><dd>' + POOL.length + '</dd></div>' +
-          '<div class="is-go"><dt>Cleared</dt><dd>' + clearedCount + '</dd></div>' +
-          '<div><dt>Second look</dt><dd>' + nearMiss.length + '</dd></div>' +
+          '<div><dt>Swept</dt><dd data-tally="' + POOL.length + '">' + POOL.length + '</dd></div>' +
+          '<div class="is-go"><dt>Cleared</dt><dd data-tally="' + clearedCount + '">' + clearedCount + '</dd></div>' +
+          '<div><dt>Second look</dt><dd data-tally="' + nearMiss.length + '" data-tally-delay="250">' + nearMiss.length + '</dd></div>' +
           '<div><dt>Next sweep</dt><dd><span class="mono" data-countdown>—</span></dd></div>' +
         '</dl>' +
         '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
@@ -1118,6 +1228,7 @@
           anchorPanel() +
         '</details>' +
       '</header>' +
+      standouts(drop) +
       (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
         : '<div class="dropempty">' +
             '<svg width="86" height="86" viewBox="0 0 24 24" aria-hidden="true" class="dropempty__mark"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".35"/><path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".75"/></svg>' +
@@ -1152,6 +1263,8 @@
 
     page.classList.add('is-entered');
     startCountdown();
+    tallyUp(page);
+    choreograph(page);
   }
 
   /* When the city's endpoints fail, every lookup errors, nothing earns a
@@ -3076,7 +3189,18 @@
         if (done || !ownsAttempt() || requestGeneration !== feedBootGeneration || requestAttempt !== attempt) return;
         if (ctrl) { try { ctrl.abort(); } catch (e) {} }
       }, FEED_ATTEMPT_TIMEOUT_MS);
-      fetch(feed.url, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+      /* The first attempt of the first boot adopts the request vera-boot.js
+         started at first byte. It still answers to this attempt's timeout. */
+      var early = attempt === 1 && bootGeneration === 1 ? window.__VERA_EARLY_FEED : null;
+      window.__VERA_EARLY_FEED = null;
+      window.__VERA_FEED_STARTED = true;
+      var request = early
+        ? new Promise(function (resolve, reject) {
+          early.then(resolve, reject);
+          if (ctrl) ctrl.signal.addEventListener('abort', function () { reject(new Error('aborted')); });
+        })
+        : fetch(feed.url, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined });
+      request
         .then(function (r) {
           if (!r.ok) {
             retryAfterMs = boundedRetryAfter(r.headers.get('Retry-After'));
@@ -3156,6 +3280,30 @@
     if (document.visibilityState === 'visible' && !D) recoverPublicationOnResume();
   });
 
+  document.addEventListener('click', function (e) {
+    var save = e.target.closest && e.target.closest('[data-quicksave]');
+    if (save) {
+      var uid = save.getAttribute('data-quicksave');
+      var on = !(caseOf(uid) && caseOf(uid).stage !== 'dead');
+      if (on) setStage(uid, 'saved'); else dropCase(uid);
+      paintSave(save, on, true);
+      if (on) {
+        var n = Object.keys(cases).filter(function (k) { return cases[k].stage !== 'dead'; }).length;
+        toast('Saved to your hunt · ' + n + ' saved so far');
+      }
+      return;
+    }
+    var jump = e.target.closest && e.target.closest('[data-standout]');
+    if (jump) {
+      var card = document.querySelector('[data-drop-uid="' + jump.getAttribute('data-standout') + '"]');
+      if (!card) return;
+      card.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' });
+      card.classList.remove('is-spotlit');
+      void card.offsetWidth;
+      card.classList.add('is-spotlit');
+    }
+  });
+
   /* Street snapshots: a listing's map renders only as it nears the viewport,
      through one shared hidden map, so Today pays for streets it shows. */
   var snapIO = null;
@@ -3177,8 +3325,6 @@
       el.setAttribute('data-snap-state', 'ready');
     }).catch(function () {
       el.setAttribute('data-snap-state', 'failed');
-      var note = el.querySelector('.snap__state');
-      if (note) note.textContent = 'Street map unavailable here. Open it in Atlas.';
     });
   }
   function scanSnaps() {

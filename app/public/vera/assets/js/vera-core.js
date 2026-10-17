@@ -788,8 +788,7 @@
       '" data-snap-w="' + w + '" data-snap-h="' + h + '" data-snap-zoom="' + (approximate ? 14.2 : 15.4) + '" style="aspect-ratio:' + w + ' / ' + h + '">' +
       '<img class="snap__img" alt="" width="' + w + '" height="' + h + '" decoding="async" hidden>' +
       '<span class="snap__pin" aria-hidden="true"></span>' +
-      '<span class="snap__state">Loading street map…</span>' +
-      '<span class="snap__credit">© OpenStreetMap</span></span>';
+      '</span>';
   }
 
   function poly(points) { return points.map(function (p) { return pt(p[0], p[1]); }).join(' '); }

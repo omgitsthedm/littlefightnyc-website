@@ -2432,14 +2432,159 @@ body { font-family: var(--serif); font-weight: 400; color: var(--ink); }
   width: 128px; height: 128px; margin: -64px 0 0 -64px; border: 1px dashed var(--green);
   background: rgba(98, 214, 157, 0.1); box-shadow: none;
 }
-.snap__state {
-  position: absolute; inset: 0; display: grid; place-items: center; padding: 16px; text-align: center;
-  font: 400 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute);
+/* Status is generated content with empty alt text: seen, never spoken as
+   part of the map button's name. */
+.snap::before {
+  content: "Loading street map…" / ""; position: absolute; inset: 0; z-index: 1; display: grid; place-items: center;
+  padding: 16px; text-align: center; font: 400 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--mute);
 }
-.snap[data-snap-state="ready"] .snap__state { display: none; }
+.snap[data-snap-state="failed"]::before { content: "Street map unavailable here · open it in Atlas" / ""; }
+.snap[data-snap-state="ready"]::before { content: none; }
 .snap:not([data-snap-state="ready"]) .snap__pin { opacity: 0.35; }
-.snap__credit {
-  position: absolute; left: 0; bottom: 0; z-index: 2; padding: 5px 8px;
+/* Map credit: always visible on the image; the System page carries the
+   readable credit, so it is not repeated inside the button's name. */
+.snap::after {
+  content: "© OpenStreetMap" / ""; position: absolute; left: 0; bottom: 0; z-index: 2; padding: 5px 8px;
   background: rgba(11, 11, 10, 0.82); color: var(--dim); font: 400 10.5px/1 var(--mono);
 }
 .dropcard__map .snap, .insp-map .snap { border: 0; }
+
+/* ============================================================
+   VERA CONCIERGE — 2026-10
+   The drop opens like a private briefing: a greeting, a tally that
+   lands on the real numbers, the standouts, then the entries. Gold
+   marks what VERA recommends; green still means cleared. All motion
+   is short, runs once, moves only transforms, and never hides content.
+   ============================================================ */
+:root { --gold: #e9c27a; --gold-soft: rgba(233, 194, 122, 0.12); }
+
+.drophead__greet {
+  margin: 0 0 10px; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: clamp(18px, 1.8vw, 22px); color: var(--gold);
+}
+.drophead__count, .dropstats dd { display: inline-block; }
+.dropstats .is-go dd.is-tallied { animation: vera-lockin 520ms var(--ease-out) 1; }
+/* The headline never counts: it states the real number from first paint and
+   lands one gold pulse as the tally below finishes. */
+.drophead__count.is-lockin { animation: vera-lockin 560ms var(--ease-out) 760ms 1 both; }
+@keyframes vera-lockin {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.14); text-shadow: 0 0 22px rgba(98, 214, 157, 0.55); }
+  100% { transform: scale(1); text-shadow: none; }
+}
+
+/* standouts */
+.standouts { margin: 30px 0 4px; }
+.standouts__title {
+  display: flex; align-items: center; gap: 9px; margin: 0 0 12px;
+  font: 500 12px/1.2 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold);
+}
+.standouts__title .ico { --ico: 18px; }
+.standouts__grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); border-left: 1px solid var(--line);
+}
+.standout {
+  display: grid; align-content: start; gap: 6px; min-width: 0; padding: 16px 16px 15px; text-align: left;
+  border: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0;
+  background: var(--bg); color: var(--ink); cursor: pointer;
+  transition: background-color var(--app-signal) ease;
+}
+.standout__label { display: flex; align-items: center; gap: 8px; font: 400 11.5px/1.2 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); }
+.standout__label .ico { --ico: 17px; }
+.standout__value { font: 600 clamp(19px, 1.8vw, 23px)/1.15 var(--serif); color: var(--ink); }
+.standout__sub { font-size: 14px; line-height: 1.4; color: var(--dim); }
+.standout__sub .bul { width: 17px; height: 17px; font-size: 10.5px; }
+.standout__who { display: flex; align-items: center; gap: 8px; margin-top: 6px; font: 400 12.5px/1.3 var(--mono); color: var(--mute); }
+.standout__who i {
+  display: inline-grid; place-items: center; flex: none; width: 22px; height: 22px; border: 1px solid var(--line2);
+  border-radius: 50%; font: 500 11px/1 var(--mono); font-style: normal; color: var(--ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .standout:hover { background: var(--gold-soft); }
+  .standout:hover .standout__who { color: var(--ink); }
+}
+
+/* top pick */
+.dropcard__toppick {
+  position: absolute; top: 12px; right: 12px; z-index: 3; display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 10px; background: var(--gold); color: #1a1407;
+  font: 600 11.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase;
+}
+.dropcard__toppick .ico { --ico: 15px; }
+.dropcard:first-child .dropcard__media { border-color: color-mix(in srgb, var(--gold) 60%, transparent); }
+
+/* actions: save beside the ledger */
+.dropcard__actions { display: grid; grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr); gap: 8px; margin-top: 18px; }
+.dropcard__actions .dropcard__open { margin-top: 0; }
+.dropcard__save {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 14px;
+  border: 1px solid var(--line2); border-radius: 0; background: var(--bg); color: var(--ink);
+  font: 600 13px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+  transition: border-color var(--app-signal) ease, background-color var(--app-signal) ease, color var(--app-signal) ease;
+}
+.dropcard__save .ico { --ico: 19px; }
+.dropcard__save.is-saved { border-color: var(--gold); color: var(--gold); background: var(--gold-soft); }
+@media (hover: hover) and (pointer: fine) { .dropcard__save:hover { border-color: var(--gold); color: var(--gold); } }
+.dropcard__save.is-stamped .ico { animation: vera-stamp 460ms cubic-bezier(0.2, 1.4, 0.4, 1) 1; }
+.dropcard__save.is-stamped::after {
+  content: ""; position: absolute; inset: -1px; border: 1px solid var(--gold); pointer-events: none;
+  animation: vera-ring 560ms var(--ease-out) 1 forwards;
+}
+@keyframes vera-stamp { 0% { transform: scale(0.4) rotate(-12deg); } 60% { transform: scale(1.35) rotate(4deg); } 100% { transform: none; } }
+@keyframes vera-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.12, 1.4); opacity: 0; } }
+
+/* entrance: transform only, content is always visible */
+.dropcard.will-reveal .dropcard__hit { transform: translateY(26px); transition: transform 760ms var(--ease-out); }
+.dropcard.will-reveal .gal__shot, .dropcard.will-reveal .dropcard__media .port { transform: scale(1.06); transition: transform 1400ms var(--ease-out); }
+.dropcard.will-reveal.is-in .dropcard__hit { transform: none; }
+.dropcard.will-reveal.is-in .gal__shot, .dropcard.will-reveal.is-in .dropcard__media .port { transform: none; }
+.dropcard.will-reveal .fact { transition: transform 620ms var(--ease-out); transform: translateY(10px); }
+.dropcard.will-reveal.is-in .fact { transform: none; }
+.dropcard.will-reveal.is-in .fact:nth-child(2) { transition-delay: 60ms; }
+.dropcard.will-reveal.is-in .fact:nth-child(3) { transition-delay: 120ms; }
+.dropcard.will-reveal.is-in .fact:nth-child(4) { transition-delay: 180ms; }
+
+/* a standout jump lands on its entry with a brief gold frame */
+.dropcard.is-spotlit .dropcard__media { animation: vera-spot 1400ms var(--ease-out) 1; }
+@keyframes vera-spot { 0% { box-shadow: 0 0 0 0 rgba(233, 194, 122, 0); } 25% { box-shadow: 0 0 0 4px rgba(233, 194, 122, 0.85); } 100% { box-shadow: 0 0 0 0 rgba(233, 194, 122, 0); } }
+
+@media (max-width: 760px) {
+  .standouts__grid { grid-template-columns: minmax(0, 1fr); }
+  .standout { grid-template-columns: minmax(0, 1fr) auto; column-gap: 12px; padding: 13px 12px; }
+  .standout__label, .standout__value, .standout__sub { grid-column: 1; }
+  .standout__who { grid-column: 1; margin-top: 2px; }
+  .dropcard__toppick { top: 10px; right: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dropcard.will-reveal .dropcard__hit, .dropcard.will-reveal .gal__shot, .dropcard.will-reveal .fact { transform: none !important; transition: none !important; }
+  .dropcard__save.is-stamped .ico, .dropcard__save.is-stamped::after, .dropcard.is-spotlit .dropcard__media,
+  .dropstats .is-go dd.is-tallied, .drophead__count.is-lockin { animation: none !important; }
+}
+
+/* Phone standouts: one swipeable strip, so the first entry stays close. */
+@media (max-width: 760px) {
+  .standouts { margin-top: 24px; }
+  .standouts__grid {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-inline: contain;
+    scrollbar-width: none; border-left: 0;
+  }
+  .standouts__grid::-webkit-scrollbar { display: none; }
+  .standout {
+    flex: 0 0 min(80vw, 300px); display: grid; grid-template-columns: minmax(0, 1fr); scroll-snap-align: start;
+    border-left: 1px solid var(--line); padding: 14px 14px 13px;
+  }
+  .standout + .standout { border-left: 0; }
+  .standout__value { font-size: 21px; }
+}
+
+/* Confirmations speak in the index voice. */
+.toast {
+  border-radius: 0 !important; border: 1px solid var(--line2) !important; background: var(--bg) !important;
+  color: var(--ink) !important; font: 500 13px/1.3 var(--mono) !important; letter-spacing: 0.02em; box-shadow: none !important;
+}
+
+/* VERA renders its workspace in place (saves, tallies, snapshots), so the
+   browser's scroll anchoring has nothing to protect and was moving the page
+   between a tap and its click. The workspace scroller holds still instead. */
+.main { overflow-anchor: none; }
