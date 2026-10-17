@@ -1044,7 +1044,11 @@
       if (fontsSettled) requestAnimationFrame(() => { if (prebuilt && !prebuilt.verify()) layout({ force: true }); });
       return;
     }
+    // Measuring needs the canvas laid out; it stays invisible until ready.
+    const measuring = !canvas.dataset.layoutReady;
+    if (measuring) canvas.dataset.layoutMeasuring = '';
     currentGrids.forEach(pack);
+    if (measuring) delete canvas.dataset.layoutMeasuring;
     canvas.dataset.gridRevision = '5';
     if (canvas.dataset.layoutReady === 'prebuilt') canvas.dataset.layoutReady = 'engine';
     markReady();
@@ -1053,8 +1057,10 @@
   window.LF_MOSAIC = { layout };
   // Wait briefly for the prebuilt file; the live engine lays out the page if
   // it is missing, stale for this browser, or slower than 1.5s.
-  Promise.race([prebuiltReady, new Promise(resolve => setTimeout(resolve, 1500, null))]).then(result => {
+  Promise.race([prebuiltReady, new Promise(resolve => setTimeout(resolve, 1500, null))]).then(async result => {
     prebuilt = result || null;
+    // Measuring is the expensive path; let the page paint first.
+    if (!prebuilt) await new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0)));
     started = true;
     layout();
     document.fonts.ready.then(() => requestAnimationFrame(() => {
@@ -1063,10 +1069,15 @@
     }));
   });
 
-  let width = canvas.clientWidth;
-  new ResizeObserver(() => {
-    if (Math.abs(canvas.clientWidth - width) > 0.5) {
-      width = canvas.clientWidth;
+  // Starting sizes come from each observer's first report, delivered after the
+  // browser's own layout. Reading them synchronously here forced a full page
+  // layout before first paint (about 0.7s on a slow phone).
+  let width = null;
+  new ResizeObserver(([entry]) => {
+    const next = entry.contentRect.width;
+    if (width === null) { width = next; return; }
+    if (Math.abs(next - width) > 0.5) {
+      width = next;
       // Packing changes observed child sizes. Defer those writes to the
       // next frame so WebKit can finish delivering this resize batch.
       queueContentLayout();
@@ -1091,6 +1102,7 @@
       if (!nextWidth && !nextHeight) continue;
       const previous = observedContent.get(entry.target);
       observedContent.set(entry.target, { width: nextWidth, height: nextHeight });
+      if (!previous) continue; // first report is the starting size
       // ResizeObserver always queues an initial record. Snapshot dimensions
       // before observing so initial records and our own stable grid writes do
       // not cause a duplicate full packing pass.
@@ -1104,11 +1116,7 @@
       queueContentLayout();
     }
   });
-  const observeContent = node => {
-    const box = node.getBoundingClientRect();
-    observedContent.set(node, { width: box.width, height: box.height });
-    contentObserver.observe(node);
-  };
+  const observeContent = node => contentObserver.observe(node);
   grids().forEach(grid => grid.querySelectorAll('.sculpture-copy > *').forEach(observeContent));
   grids().forEach(grid => grid.querySelectorAll('.tile[data-editorial-front] :is(.topic-anchor-copy,.brand-anchor-copy)').forEach(copy => {
     observeContent(copy);

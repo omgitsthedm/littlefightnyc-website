@@ -1,8 +1,10 @@
-/* The homepage paints at once: no loading screen. Only the tile canvas waits
-   until its layout is in place (prebuilt map or measured, mosaic-layout.js),
-   so tiles never jump. A CSS failsafe reveals it after 3s if scripts never
-   finish; without scripts the static layout shows immediately. */
+/* The homepage paints at once: no loading screen. The tile canvas is not
+   laid out or painted until its layout is in place (prebuilt map or measured,
+   mosaic-layout.js), which keeps first paint quick on slow phones and means
+   tiles never jump. The engine lifts this briefly when it has to measure.
+   site-boot.js reveals the canvas after 3s if layout never completes; without
+   scripts the static layout shows immediately. */
 @media (scripting: enabled) {
-  #canvas:not([data-layout-ready]) { visibility: hidden; animation: lf-canvas-failsafe 0s 3s forwards; }
+  #canvas:not([data-layout-ready]) { visibility: hidden; content-visibility: hidden; contain-intrinsic-size: auto 2400px; }
+  #canvas[data-layout-measuring]:not([data-layout-ready]) { content-visibility: visible; }
 }
-@keyframes lf-canvas-failsafe { to { visibility: visible; } }

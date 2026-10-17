@@ -11,6 +11,11 @@
     performance.mark('lf-first-view-ready');
     document.dispatchEvent(new CustomEvent('lf:site-ready', {detail: {reason}}));
   };
+  // Failsafe: reveal the tile canvas if its layout never completes.
+  setTimeout(() => {
+    const canvas = document.getElementById('canvas');
+    if (canvas && !canvas.dataset.layoutReady) canvas.dataset.layoutReady = 'failsafe';
+  }, 3000);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => ready('parsed'), {once: true});
   else ready('parsed');
   window.addEventListener('pageshow', event => { if (event.persisted) ready('history'); });
