@@ -43,7 +43,7 @@ def prop(name, css):
              'width="1536" height="1024" alt="" decoding="async" data-native-width="1536">')
     if not has_avif(name):
         return image
-    return (f'<picture class="clay-picture"><source type="image/avif" srcset="{srcset(name, 1536, "avif")}" sizes="{sizes}">'
+    return (f'<picture class="clay-picture"><source type="image/avif" srcset="{srcset(name, 1536, "avif")}" sizes="{sizes}" width="1536" height="1024">'
             + image + '</picture>')
 
 
