@@ -36,6 +36,74 @@ async function files(directory) {
   return out;
 }
 
+/* VERA share cards: the product's own index design (black ground, hairline
+   rules, Plex Serif headline, Plex Mono labels, Phosphor Light icons). */
+const VERA_CARD_COPY = {
+  '/vera/': { n:1, kicker:'Today’s drop', icon:'today', headline:'Every NYC apartment,\nchecked on the record.' },
+  '/vera/archive/': { n:2, kicker:'Receipts', icon:'receipts', headline:'Every drop,\non the record.' },
+  '/vera/manual/': { n:3, kicker:'Field manual', icon:'manual', headline:'What to check\nbefore you pay.' },
+  '/vera/brand/': { n:4, kicker:'Brand kit', icon:'grade', headline:'An index of apartments,\non the record.' },
+  '/vera/terms/': { n:5, kicker:'Terms of use', icon:'law', headline:'An instrument,\nnot an agent.' },
+  '/vera/privacy/': { n:6, kicker:'Privacy', icon:'shield', headline:'Your hunt\nstays yours.' },
+  '/vera/corrections/': { n:7, kicker:'Corrections', icon:'records', headline:'Found a wrong record?\nTell us.' },
+};
+function veraCard(route, title) {
+  const copy = VERA_CARD_COPY[route] || { kicker:title.replace(/\s*—\s*VERA$/, ''), icon:'today', headline:title.replace(/\s*—\s*VERA$/, '') };
+  return { label:'VERA · NYC rental index', color:'#62d69d', mode:'vera', image:'/vera/assets/icons/vera-icons.svg',
+    index:copy.n || 1, kicker:copy.kicker, icon:copy.icon, headline:copy.headline,
+    artAlt:'VERA share card: a black index card ruled with fine lines, showing the VERA wordmark.' };
+}
+const veraSprite = await readFile(path.join(publicRoot, 'vera/assets/icons/vera-icons.svg'), 'utf8');
+function veraIcon(name, cls) {
+  const m = veraSprite.match(new RegExp('<symbol id="i-'+name+'" viewBox="([^"]+)">([\\s\\S]*?)</symbol>'));
+  return m ? `<svg class="${cls}" viewBox="${m[1]}" aria-hidden="true">${m[2]}</svg>` : '';
+}
+const veraCSS = `
+@font-face{font-family:VSerif;src:url('/vera/assets/fonts/ibm-plex-serif-latin-400-normal.woff2') format('woff2');font-weight:400}
+@font-face{font-family:VSerif;src:url('/vera/assets/fonts/ibm-plex-serif-latin-500-normal.woff2') format('woff2');font-weight:500}
+@font-face{font-family:VSerif;src:url('/vera/assets/fonts/ibm-plex-serif-latin-600-normal.woff2') format('woff2');font-weight:600}
+@font-face{font-family:VMono;src:url('/vera/assets/fonts/ibm-plex-mono-400.woff2') format('woff2');font-weight:400}
+@font-face{font-family:VMono;src:url('/vera/assets/fonts/ibm-plex-mono-500.woff2') format('woff2');font-weight:500}
+*{box-sizing:border-box}html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#0b0b0a;color:#f0ece3;-webkit-font-smoothing:antialiased}
+.v{position:relative;width:1200px;height:630px;padding:40px 52px;background:#0b0b0a;font-family:VSerif,Georgia,serif}
+.v-frame{position:absolute;inset:22px;border:1px solid rgba(240,236,227,.22);pointer-events:none}
+.v-top{display:flex;justify-content:space-between;align-items:flex-start;padding:2px 2px 18px;border-bottom:1px solid rgba(240,236,227,.34)}
+.v-word b{display:block;font:500 46px/1 VSerif;letter-spacing:.04em}.v-word span{display:block;margin-top:8px;font:400 15px/1 VMono;letter-spacing:.18em;text-transform:uppercase;color:#a29c90}
+.v-url{font:400 17px/1 VMono;color:#cbc5b8;letter-spacing:.02em;padding-top:6px}
+.v-copy{position:absolute;left:54px;top:150px;width:610px}
+.v-kicker{display:flex;align-items:center;gap:12px;margin:0 0 18px;font:500 17px/1 VMono;letter-spacing:.16em;text-transform:uppercase;color:#e9c27a}
+.v-kicker svg{width:26px;height:26px;fill:#e9c27a}
+h1{margin:0;font:500 58px/1.04 VSerif;letter-spacing:-.018em;white-space:pre-line;text-wrap:balance}
+.v-note{margin:22px 0 0;max-width:560px;font:400 22px/1.42 VSerif;color:#cbc5b8}
+.v-art{position:absolute;right:54px;top:150px;width:436px;height:356px;border-top:1px solid rgba(240,236,227,.34);border-left:1px solid rgba(240,236,227,.18)}
+.v-cell{position:absolute;inset:0;border-right:1px solid rgba(240,236,227,.18);border-bottom:1px solid rgba(240,236,227,.18);display:grid;place-items:center}
+.v-num{position:absolute;top:16px;left:16px;display:grid;place-items:center;width:42px;height:42px;border:1px solid #f0ece3;border-radius:50%;font:500 19px/1 VMono}
+.v-big{width:168px;height:168px;fill:#f0ece3}
+.v-of{position:absolute;right:18px;bottom:16px;font:400 14px/1 VMono;letter-spacing:.14em;text-transform:uppercase;color:#a29c90}
+.v-facts{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto 1fr 1fr}
+.v-verdict{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:16px 18px;border-right:1px solid rgba(240,236,227,.18);border-bottom:1px solid rgba(240,236,227,.18);font:500 16px/1 VMono;letter-spacing:.12em;text-transform:uppercase;color:#62d69d}
+.v-verdict svg{width:22px;height:22px;fill:#62d69d}
+.v-fact{padding:16px 18px;border-right:1px solid rgba(240,236,227,.18);border-bottom:1px solid rgba(240,236,227,.18)}
+.v-fact dt{display:flex;align-items:center;gap:8px;font:400 14px/1 VMono;letter-spacing:.14em;text-transform:uppercase;color:#a29c90}.v-fact dt svg{width:20px;height:20px;fill:#cbc5b8}
+.v-fact dd{margin:12px 0 0;font:600 22px/1.2 VSerif;color:#f0ece3}
+.v-foot{position:absolute;left:54px;right:54px;bottom:40px;display:flex;justify-content:space-between;align-items:center;font:400 16px/1 VMono;color:#a29c90;letter-spacing:.04em}
+.v-foot b{font-weight:500;color:#62d69d;letter-spacing:.1em;text-transform:uppercase}
+`;
+function veraCardHTML(spec) {
+  const art = spec.icon === 'today'
+    ? `<div class="v-facts"><div class="v-verdict">${veraIcon('check')}Cleared every check</div>
+        <div class="v-fact"><dt>${veraIcon('train')}Subway</dt><dd>Minutes to a train</dd></div>
+        <div class="v-fact"><dt>${veraIcon('cash')}Move-in cash</dt><dd>Every dollar due</dd></div>
+        <div class="v-fact"><dt>${veraIcon('building')}Building</dt><dd>Graded from city records</dd></div>
+        <div class="v-fact"><dt>${veraIcon('owner')}Landlord</dt><dd>Named and sized</dd></div></div>`
+    : `<div class="v-cell"><span class="v-num">${spec.index}</span>${veraIcon(spec.icon, 'v-big')}<span class="v-of">${spec.index} of 7 · ${esc(spec.kicker)}</span></div>`;
+  return `<main class="v"><div class="v-frame"></div>
+    <header class="v-top"><div class="v-word"><b>VERA</b><span>NYC rental index</span></div><div class="v-url">littlefightnyc.com/vera</div></header>
+    <section class="v-copy"><p class="v-kicker">${veraIcon(spec.icon)}${esc(spec.kicker)}</p><h1>${esc(spec.headline)}</h1><p class="v-note">${esc(spec.note || spec.description)}</p></section>
+    <aside class="v-art">${art}</aside>
+    <footer class="v-foot"><span>A Little Fight NYC system</span><b>Free · no accounts · on the record</b></footer></main>`;
+}
+
 await mkdir(evidence, { recursive:true });
 await mkdir(output, { recursive:true });
 // The compiler exports exactly the copy and artwork it uses, including hidden readers.
@@ -66,10 +134,9 @@ for (const prefix of ['examples', 'vera', 'ads', 'myspace-demo']) {
         artAlt:(previous.cards[route]?.artAlt || meta(html, 'og:image:alt') || 'A handmade clay model of connected software tools.').split(' Text: ')[0],
         label:'Little Fight Lab', color:'#f09bdd' };
       if (route.startsWith('/vera/')) {
-        card = { ...card, label:'VERA · NYC rental intelligence', color:'#a0df85',
-          mode:'clay', image:'/assets/clay-png/object-vera-brownstone.png',
-          artAlt:'A handmade clay New York brownstone.',
-          headline: route === '/vera/' ? 'NYC rentals.\nOn the record.' : title.replace(/\s*—\s*VERA$/, '') };
+        // VERA is its own product brand: its cards use VERA's index design,
+        // not the Little Fight clay scene. Copy comes from VERA_CARD_COPY.
+        card = { ...card, ...veraCard(route, title) };
       } else if (route.startsWith('/examples/audit/')) {
         card = { ...card, label:'Website Audit Lab', mode:'clay', image:'/assets/clay-png/object-homepage-sketchbook.png',
           artAlt:'A handmade clay sketchbook showing a website layout.' };
@@ -88,7 +155,7 @@ for (const slug of ['manual','archive']) {
   const html = await readFile(path.join(app, 'dist/vera', slug, 'index.html'), 'utf8');
   const title = decode(html.match(/<title>([\s\S]*?)<\/title>/i)?.[1]);
   plan['/vera/'+slug+'/'] = { ...plan['/vera/'], path:'/vera/'+slug+'/', title,
-    description:meta(html, 'description'), headline:title.replace(/\s*—\s*VERA$/, '') };
+    description:meta(html, 'description'), ...veraCard('/vera/'+slug+'/', title) };
 }
 const homeHTML = await readFile(path.join(app, 'dist/index.html'), 'utf8');
 const clayCSS = await readFile(path.join(app, 'preview-ui/sculpture.css'), 'utf8');
@@ -160,17 +227,28 @@ const rendered = {};
 let created = 0;
 try {
   for (const [route, spec] of Object.entries(plan)) {
-    const signature = createHash('sha256').update(JSON.stringify(spec)+css+fontHash+(['hero','browser'].includes(spec.mode) ? sceneHash : await assetHash(spec.image))).digest('hex');
+    const signature = spec.mode === 'vera'
+      ? createHash('sha256').update(JSON.stringify(spec)+veraCSS+veraCardHTML.toString()+(await assetHash(spec.image))).digest('hex')
+      : createHash('sha256').update(JSON.stringify(spec)+css+fontHash+(['hero','browser'].includes(spec.mode) ? sceneHash : await assetHash(spec.image))).digest('hex');
     const old = previous.cards[route];
     if (only && !only.split(',').includes(route)) { if (old) rendered[route]=old; continue; }
     if (old?.signature === signature && await stat(path.join(publicRoot, old.image)).catch(() => false)) {rendered[route]=old;continue;}
     const art = spec.mode === 'hero' ? `<div class="scene">${scene}</div>` : spec.mode === 'browser' ? `<div class="clay-neighborhood web-browser">${browserScene}</div>` : spec.mode === 'screen' ?
       `<div class="screen"><div class="chrome"><i></i><i></i><i></i></div><img src="${esc(spec.image)}" alt=""></div>` :
       `<div class="art"><img class="object" src="${esc(spec.image)}" alt=""></div>`;
-    await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${css}</style></head><body><main class="card ${route==='/'?'home':''}" style="--accent:${spec.color}"><div class="brand"><img src="/assets/boat-orange.svg" alt="">little fight NYC</div><div class="category">${esc(spec.label)}</div><div class="copy"><h1>${esc(spec.headline)}</h1></div><p class="note">${esc(spec.note || spec.description)}</p>${art}<div class="url">littlefightnyc.com</div><div class="signal"></div></main></body></html>`);
+    if (spec.mode === 'vera') await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${veraCSS}</style></head><body>${veraCardHTML(spec)}</body></html>`);
+    else await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${css}</style></head><body><main class="card ${route==='/'?'home':''}" style="--accent:${spec.color}"><div class="brand"><img src="/assets/boat-orange.svg" alt="">little fight NYC</div><div class="category">${esc(spec.label)}</div><div class="copy"><h1>${esc(spec.headline)}</h1></div><p class="note">${esc(spec.note || spec.description)}</p>${art}<div class="url">littlefightnyc.com</div><div class="signal"></div></main></body></html>`);
     await page.evaluate(async () => {
       await document.fonts.ready;
       await Promise.all([...document.images].map(img => img.decode()));
+      if (document.querySelector('.v')) {
+        const vTitle = document.querySelector('.v h1');
+        while(vTitle.getBoundingClientRect().height > 130 && parseFloat(getComputedStyle(vTitle).fontSize)>40) vTitle.style.fontSize=(parseFloat(getComputedStyle(vTitle).fontSize)-1)+'px';
+        const vNote = document.querySelector('.v-note');
+        while(vNote.scrollHeight > 96 && parseFloat(getComputedStyle(vNote).fontSize)>17) vNote.style.fontSize=(parseFloat(getComputedStyle(vNote).fontSize)-1)+'px';
+        if(vTitle.getBoundingClientRect().height>136 || vNote.scrollHeight>100) throw new Error('VERA card copy does not fit');
+        return;
+      }
       const title = document.querySelector('h1');
       while(title.getBoundingClientRect().height > 242 && parseFloat(getComputedStyle(title).fontSize)>35) title.style.fontSize=(parseFloat(getComputedStyle(title).fontSize)-1)+'px';
       const note = document.querySelector('.note');
