@@ -7,7 +7,7 @@ CATEGORY_NAMES = {'web': 'Website', 'it': 'Tech support', 'consulting': 'Consult
 EXPECTED_COUNTS = {'web': 27, 'it': 28, 'consulting': 6, 'software': 8}
 CONTENT_UPDATED = '2026-10-03'
 # Expanded troubleshooting answers (rewrite-support.json "guide") were last revised here.
-GUIDE_UPDATED = '2026-10-17'
+GUIDE_UPDATED = '2026-10-18'
 EXTRA_MEMBERS = {
     'maps': ['web-reviews-response'],
     'consulting-tool-choice': ['web-newsletter-choice', 'web-multilingual-start'],

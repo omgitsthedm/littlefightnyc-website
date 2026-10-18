@@ -332,7 +332,8 @@ def audit_source_catalog(failures: list[str]) -> tuple[dict[str, dict[str, Any]]
 
 
 OFFICIAL_SOURCE_HOSTS = ("support.microsoft.com", "learn.microsoft.com", "support.apple.com", "support.google.com",
-                         "www.cisa.gov", "www.nist.gov", "squareup.com", "lookup.icann.org", "zoom.us")
+                         "knowledge.workspace.google.com", "www.cisa.gov", "www.nist.gov", "www.fcc.gov",
+                         "www.icann.org", "squareup.com", "lookup.icann.org", "zoom.us")
 
 
 def guide_texts(guide: dict[str, Any]) -> list[str]:

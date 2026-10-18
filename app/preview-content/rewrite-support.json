@@ -64,7 +64,7 @@
           "List who is affected and which work is blocked: payments, email, printing, or calls.",
           "Note where the equipment lives, such as the modem, router, printer, or card reader.",
           "Make sure someone who can approve changes will be there or reachable.",
-          "Keep passwords off paper notes and agree on a safe way to sign in."
+          "Keep passwords off paper notes. Plan for the account owner to sign in themselves, and do not share passwords or sign-in codes by text, email, or out loud."
         ],
         "helpWhen": [
           "The problem involves equipment you cannot reach or reset safely.",
@@ -162,14 +162,14 @@
       "category": "it",
       "question": "How do I know our files are really backed up?",
       "answer": "Keep a separate copy of important files and check that you can recover a sample. Seeing a backup icon is not the same as knowing your files can be restored.",
-      "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample into a new location, protecting the working file. Ask us if the settings are unclear.",
+      "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample without replacing the working file. Ask us if the settings are unclear.",
       "nextStep": "Bring the backup service name and one file you would need back.",
       "guide": {
         "steps": [
           "Name the files you could not work without: client records, invoices, contracts, and photos.",
           "Find where each set lives: one computer, a shared drive, or a cloud service.",
           "Check that the backup service shows a recent date for those folders.",
-          "Restore one harmless sample file into a new folder and open it.",
+          "Restore one harmless sample file without replacing the working copy, then open it.",
           "Write down who can sign in to the backup and how they would recover that account.",
           "Export a copy of the records kept in rented tools, such as booking or accounting software, on a schedule."
         ],
@@ -199,20 +199,20 @@
             "label": "On a Mac",
             "steps": [
               "Time Machine backs up to an external drive or a network drive. Open System Settings > General > Time Machine to see the date of the last backup.",
-              "To test a restore, open the folder in Finder, choose Browse Time Machine Backups from the Time Machine menu, pick an earlier version, and choose Restore."
+              "To test a restore, open the folder in Finder, then choose Browse Time Machine Backups from the Time Machine menu in the menu bar, or open Time Machine with Spotlight. Pick an earlier version of one harmless file and click Restore. Time Machine puts it back in the same folder, so if it asks, choose Keep Both. Do not choose Replace, because that overwrites the current file."
             ]
           },
           {
             "label": "On Windows 11",
             "steps": [
-              "Settings > Accounts > Windows backup shows which folders sync to OneDrive.",
-              "File History, in Control Panel, can still copy folders to an external drive."
+              "With a personal Microsoft account, Settings > Accounts > Windows backup shows which folders sync to OneDrive. With a work or school account, open OneDrive settings and choose Sync and backup > Manage backup. Either way, this is sync, not a separate copy.",
+              "File History, in Control Panel under System and Security, copies folders to an external drive or network location on a schedule."
             ]
           },
           {
             "label": "In OneDrive or SharePoint",
             "steps": [
-              "Deleted files go to the recycle bin, and Version history restores an earlier copy of a file."
+              "Deleted files go to the recycle bin, but only for a limited time: 30 days for personal accounts and usually 93 days for work or school accounts. Version history restores an earlier copy of a file."
             ]
           }
         ],
@@ -221,7 +221,9 @@
           "apple-tm-restore",
           "ms-windows-backup",
           "ms-onedrive-restore",
-          "cisa-smb"
+          "cisa-smb",
+          "ms-file-history",
+          "ms-onedrive-backup"
         ]
       }
     },
@@ -236,7 +238,7 @@
         "stepsHeading": "What to include",
         "steps": [
           "Describe what you were doing when it stopped, in your own words.",
-          "Copy the exact error message or take a screenshot.",
+          "Copy the exact error message or take a screenshot. Before you send it, crop out passwords, sign-in codes, and customer details.",
           "Note when it started and whether anything changed, such as an update, a new device, or a move.",
           "Say who else is affected and what work is blocked.",
           "Name the device and service: Mac or Windows, iPhone, Microsoft 365, or the printer model."
@@ -247,11 +249,11 @@
           "The same problem keeps returning after a restart.",
           "You are unsure whether a change could make things worse."
         ],
-        "weCheck": "We read the request, ask what we still need to know, and tell you whether we can help and what the first step is. A free first look comes before any paid work, and you get a written scope before anything starts. We never ask for passwords by text or email; if access is needed, we agree on a safe method together.",
+        "weCheck": "We read the request, ask what we still need to know, and tell you whether we can help and what the first step is. A free first look comes before any paid work, and you get a written scope before anything starts. Do not send passwords by text or email. If access is needed, we agree on a safe method together, and accounts stay in your business’s name.",
         "faqs": [
           {
             "question": "Should I send my password so you can check?",
-            "answer": "No. Do not send passwords, sign-in codes, or private customer details by text or email. If access is needed, we agree on a safe method, and the account stays under your control."
+            "answer": "No. Do not send passwords or private customer details by text or email, and never share a sign-in code with anyone, even on a phone call. If access is needed, we agree on a safe method, and the account stays in your business’s name."
           },
           {
             "question": "When can I reach Little Fight?",
@@ -268,10 +270,14 @@
             "label": "Take a screenshot",
             "steps": [
               "Windows: press Windows + Shift + S.",
-              "Mac: press Shift + Command + 4.",
-              "iPhone: press the side button and volume up together."
+              "Mac: press Shift + Command + 3 for the whole screen, or Shift + Command + 4 and drag over the part you want. The picture saves to your desktop.",
+              "iPhone: press the side button and volume up at the same time, then let go of both right away. On an iPhone with a Home button, press the side button and the Home button."
             ]
           }
+        ],
+        "sources": [
+          "apple-iphone-screenshot",
+          "apple-mac-screenshot"
         ]
       }
     },
@@ -287,7 +293,8 @@
           "Book the internet installation at the new address early and get the install date in writing.",
           "Map where the modem, router, printer, and any card readers will sit, near power and cable points.",
           "List the systems staff need on day one: email, phones, printing, payments, and shared files.",
-          "Label cables and equipment before packing, and photograph how the network is connected.",
+          "If your phones run over the internet, update the 911 address with the phone provider on move day, so emergency calls show the new address.",
+          "Before unplugging anything, make sure shared files and any office computers or file server that are moving have a recent backup, with one copy kept outside the office. Then label cables and equipment, and photograph how the network is connected.",
           "Plan a test day in the new space before staff and customers arrive."
         ],
         "helpWhen": [
@@ -299,7 +306,7 @@
         "faqs": [
           {
             "question": "Can we keep our business phone number?",
-            "answer": "Usually, but it depends on the phone provider and the type of number. Ask the provider about moving or transferring the number before cancelling anything at the old address."
+            "answer": "Usually, but it depends on the phone provider and the type of number. Ask the provider how to move or transfer the number, and keep the old service active until the number works at the new address. If you switch providers, the new provider starts the transfer. Moving out of the local area may mean you cannot keep the number."
           },
           {
             "question": "What should we test on the first day?",
@@ -316,9 +323,13 @@
             "label": "Keep devices reconnecting on their own",
             "steps": [
               "Bring the router’s admin login and Wi-Fi details. If the new network uses the same name and password, most devices reconnect without anyone touching them.",
-              "Ask the phone provider whether your numbers move with you before you cancel anything at the old address."
+              "Confirm your numbers can move to the new address, and keep the old phone service running until calls work there. If you are switching phone providers, the new provider starts the number transfer. Cancelling first can cost you the number."
             ]
           }
+        ],
+        "sources": [
+          "fcc-porting",
+          "fcc-voip-911"
         ]
       }
     },
@@ -346,7 +357,7 @@
         "faqs": [
           {
             "question": "Is a monthly plan required?",
-            "answer": "Not always. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
+            "answer": "No. Hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
           },
           {
             "question": "What does a regular check usually cover?",
@@ -400,13 +411,15 @@
           {
             "label": "In the router settings",
             "steps": [
-              "Turn on the guest network and its isolation option, sometimes called client or AP isolation, so guest devices cannot reach your equipment.",
+              "Turn on the guest network and keep guests off your local network. Routers name this differently: look for a guest setting such as Allow guests to access my local network or Access Intranet, and make sure it is off.",
+              "Client or AP isolation is a different setting: it stops wireless devices from talking to each other. On some routers it covers every wireless device, so turning it on for the staff network can cut computers and payment devices off from their printers.",
               "Keep payment devices and staff computers on the staff network, with a different password."
             ]
           }
         ],
         "sources": [
-          "apple-router"
+          "apple-router",
+          "google-guest-wifi"
         ]
       }
     },
@@ -423,7 +436,7 @@
           "Plug a laptop into the router with a network cable and try a website.",
           "Look at the modem lights and compare them with the provider’s guide.",
           "Check the provider’s outage page or app from a phone on cellular data.",
-          "Restart the modem first, then the router, and wait a few minutes before testing again."
+          "Restart by unplugging the power, not by pressing Reset, which can erase the Wi-Fi name and password. Unplug the router, then the modem, and wait 30 seconds. Plug the modem back in and wait for its lights to stop blinking, then plug in the router. If one box does both jobs, unplug just that box. Card readers and phones drop off for a few minutes, so if the internet is only slow, wait until after hours."
         ],
         "helpWhen": [
           "A cable works but Wi-Fi does not, and restarting does not help.",
@@ -480,13 +493,14 @@
           "Send a test message from an outside account to the address customers use.",
           "Reply to it and see where the reply lands and who can read it.",
           "Check Junk, Spam, and any filtered or Other folder.",
-          "Look for mailbox rules or forwarding that move messages somewhere else.",
+          "Look for mailbox rules or forwarding that move messages somewhere else. A rule nobody on the team set up, especially one that sends mail to an outside address or moves messages to Junk Email or RSS Subscriptions, can mean someone else got into the account: change the password, sign the account out everywhere, and check two-step sign-in before you turn the rule off.",
           "Write down who is responsible for checking the inbox each day."
         ],
         "helpWhen": [
           "Messages arrive for some people but not for others.",
           "Replies go out from a personal address instead of the business address.",
-          "No one is sure who can change the inbox settings."
+          "No one is sure who can change the inbox settings.",
+          "You find a forwarding or inbox rule no one remembers creating."
         ],
         "weCheck": "We trace the message path: the public address, forwarding, mailbox rules, permissions, and the address replies are sent from. In Microsoft 365, we check shared-mailbox access and send-as permissions. We change settings only after the account owner agrees, and we record who now looks after the inbox.",
         "faqs": [
@@ -508,19 +522,23 @@
           {
             "label": "In Microsoft 365",
             "steps": [
-              "Create a shared mailbox in the Microsoft 365 admin center under Teams & groups > Shared mailboxes, then add the people who need it.",
+              "If the address customers use is already its own user account with a shared password, do not delete it: deleting it can lose the old mail for good. Convert it instead. In the Microsoft 365 admin center, go to Users > Active users, select the account, and on the Mail tab choose Convert to shared mailbox. Then block sign-in on that account, so the old shared password stops working.",
+              "If the address does not exist yet, create a shared mailbox under Teams & groups > Shared mailboxes, then add the people who need it.",
               "Give them Send as permission, so replies come from the business address instead of a personal one."
             ]
           },
           {
             "label": "In Google Workspace",
             "steps": [
-              "A Google Group set up as a collaborative inbox lets several people read and reply to one address."
+              "A Google Group set up as a collaborative inbox lets several people read, assign, and reply to messages sent to one address. In the group’s settings, under Posting policies, set Who can post as group to include the people who reply, and set Default sender to Group address, so replies come from the business address instead of a personal one."
             ]
           }
         ],
         "sources": [
-          "ms-shared-mailbox"
+          "ms-shared-mailbox",
+          "ms-convert-shared",
+          "google-groups-settings",
+          "ms-compromised"
         ]
       }
     },
@@ -529,15 +547,16 @@
       "category": "it",
       "question": "What should we do when someone leaves the team?",
       "answer": "Before someone leaves, make sure the business can still reach the mail, files, and tools that person used for work.",
-      "detail": "List their work accounts, including Microsoft 365 where used. An approved account manager should keep needed records, transfer control, and then remove access. Do not wipe a device until the business has its files.",
+      "detail": "List their work accounts, including Microsoft 365 where used. When they leave, an approved account manager should stop their sign-in first, without deleting anything, then keep needed records, transfer control, and only then close or reassign their accounts. Do not wipe a device until the business has its files.",
       "nextStep": "Start with the accounts and files the person controls.",
       "guide": {
         "steps": [
           "List every work account the person uses: email, files, payments, social media, booking, and vendors.",
-          "Find which accounts they own or manage, not only the ones they use.",
+          "Find which accounts they own or manage, not only the ones they use. Before they go, ask them to hand over any account only they can transfer.",
+          "The day they leave, or right away if they have already gone, stop their sign-in without deleting the account. Change shared passwords they knew, and remove their personal phone and email from two-step sign-in and account recovery on business accounts.",
           "Move ownership of files, shared folders, and admin roles to the business.",
-          "Save the mail and records the business must keep.",
-          "Then remove their access, change shared passwords, and collect business devices."
+          "Save the mail and records the business must keep, and collect business devices.",
+          "Delete or close their accounts only after the files and mail are saved."
         ],
         "helpWhen": [
           "The person set up the domain, email, or website and holds the login.",
@@ -548,7 +567,7 @@
         "faqs": [
           {
             "question": "Should we delete their email account right away?",
-            "answer": "Not before the business has saved what it needs. Keeping or converting the mailbox for a set time can preserve customer messages. Remove their sign-in access first, then decide what happens to the mail."
+            "answer": "Not before the business has saved what it needs. Keeping or converting the mailbox for a set time can preserve customer messages. In Microsoft 365, a shared mailbox or mail forwarding only works while the old user account exists, so do not delete that account while you still need the mail. Remove their sign-in access first, then decide what happens to the mail."
           },
           {
             "question": "What if they used a personal account for work tools?",
@@ -564,27 +583,31 @@
           {
             "label": "In Microsoft 365",
             "steps": [
-              "Block sign-in first.",
-              "If colleagues need the mail, convert the mailbox to a shared mailbox and check its size limit.",
-              "Give a manager access to the person’s OneDrive files before you remove the license."
+              "Reset their password and choose Sign out of all sessions, then block sign-in. Blocking on its own can take up to 24 hours to take effect.",
+              "If colleagues need the mail, convert the mailbox to a shared mailbox while the license is still assigned. Do not delete the user account afterward, because the shared mailbox depends on it. Without a license, a shared mailbox holds up to 50 GB.",
+              "Before you remove the license, give a manager access to the person’s OneDrive and have them copy the files the business needs to a shared SharePoint site. Access alone does not keep the files: by default, an unlicensed OneDrive becomes read-only after 60 days and is archived after 93."
             ]
           },
           {
             "label": "In Google Workspace",
             "steps": [
-              "Suspend the account to stop sign-in, then transfer the person’s Drive files to another user in the Admin console before deleting it."
+              "Suspend the account to stop sign-in. A suspended account blocks new mail, so decide where customer mail should go. Before you delete the account, transfer the person’s Drive files in the Admin console and move or export the mail you need. Deleting the account also deletes their Gmail."
             ]
           },
           {
             "label": "On Apple devices",
             "steps": [
-              "Sign the device out of the person’s Apple Account and remove it from any device manager before erasing it."
+              "Have the person sign out of their Apple Account on the device, or use your device manager to turn off Activation Lock, then erase it. If the business will reuse the device, keep it in your device manager. Remove it only if the device is sold, given away, lost, or can’t be repaired."
             ]
           }
         ],
         "sources": [
           "ms-remove-employee",
-          "google-transfer"
+          "google-transfer",
+          "ms-convert-shared",
+          "ms-unlicensed-onedrive",
+          "google-delete-user",
+          "apple-activation-lock"
         ]
       }
     },
@@ -598,9 +621,9 @@
       "guide": {
         "steps": [
           "Give each person their own login instead of sharing one account.",
-          "Turn on two-step sign-in for email, banking, the domain, and payment accounts.",
+          "Turn on two-step sign-in for email, banking, the domain, and payment accounts. Save the backup codes somewhere safe and set up a second way in, such as a second admin or a backup sign-in method, so a lost phone or a staff departure does not lock the business out.",
           "Let devices and apps install updates on a regular schedule.",
-          "Set up a backup and restore one file to prove it works.",
+          "Set up a backup, then restore one file without replacing the current version, keeping both copies if asked, to prove it works.",
           "Agree on how staff report a strange email, text, or payment request."
         ],
         "helpWhen": [
@@ -628,21 +651,21 @@
           {
             "label": "In Microsoft 365",
             "steps": [
-              "Security defaults in the Microsoft Entra admin center require two-step sign-in for every account. Check they are on, or that your own sign-in rules cover every user."
+              "In the Microsoft Entra admin center, under Entra ID > Overview > Properties, check that security defaults are on, or that your own sign-in rules cover every user. Security defaults make everyone register for two-step sign-in, and admins must use it every time. Before you turn them on, tell staff they will need to set up the Microsoft Authenticator app at their next sign-in. Check whether a copier, scanner, or older mail app sends email for you, because security defaults block the older sign-in methods these often use."
             ]
           },
           {
             "label": "In Google Workspace",
             "steps": [
-              "Turn on and enforce 2-Step Verification in the Admin console under Security > Authentication."
+              "In the Admin console, under Security > Authentication > 2-Step Verification, allow users to turn it on. Have everyone set it up and check the enrollment report, then turn on enforcement. Enforcing before people have set it up can lock them out."
             ]
           },
           {
             "label": "If an account may be compromised",
             "steps": [
               "Change the password from a trusted device and sign out of every other session.",
-              "Check for forwarding rules and connected apps that you did not set up.",
-              "If there may be an active breach, stop changing things and contact a qualified incident-response professional. Do not pay anyone who contacts you first."
+              "Check for forwarding rules, inbox rules or filters that move or delete mail, connected apps, and any sign-in method, recovery phone, or recovery email you did not set up. Remove anything you do not recognize.",
+              "If there may be an active breach, such as files suddenly locked or renamed, disconnect the affected computers from the network by unplugging the cable or turning off Wi-Fi, but leave them on. Do not wipe, reset, or reinstall anything. Then contact a qualified incident-response professional, and your cyber insurer if you have one. Do not pay anyone who contacts you first."
             ]
           }
         ],
@@ -651,7 +674,10 @@
           "nist-smb",
           "cisa-mfa",
           "ms-security-defaults",
-          "google-2sv"
+          "google-2sv",
+          "google-2sv-deploy",
+          "ms-compromised",
+          "cisa-ransomware"
         ]
       }
     },
@@ -672,10 +698,10 @@
       "nextStep": "Bring a recent list of software charges.",
       "guide": {
         "steps": [
-          "Export a few months of card and bank charges and mark every software charge.",
+          "Export at least the last 12 months of card and bank charges so yearly renewals show up, and mark every software charge.",
           "For each tool, write what it does, who uses it, and when it renews.",
           "Group tools that do the same job, such as storage, video calls, forms, or email marketing.",
-          "Check which records each tool holds before cancelling anything.",
+          "Before cancelling anything, check which records each tool holds and whether your domain name, website, or business email depends on it.",
           "Put renewal dates on a shared calendar with a reminder a few weeks ahead."
         ],
         "helpWhen": [
@@ -752,13 +778,14 @@
             "label": "Test calls by platform",
             "steps": [
               "Zoom: join a test meeting at zoom.us/test.",
-              "Microsoft Teams: go to Settings > Devices and choose Make a test call.",
+              "Microsoft Teams: in the desktop app for Windows or Mac, select the three dots next to your profile picture, then Settings > Devices > Make a test call. Teams on the web does not have this option, so join early and check your camera and microphone before you join.",
               "Google Meet: open the meeting link early and use Check your audio and video before joining."
             ]
           }
         ],
         "sources": [
-          "zoom-test"
+          "zoom-test",
+          "ms-teams-test-call"
         ]
       }
     },
@@ -802,13 +829,13 @@
           {
             "label": "On Windows 11",
             "steps": [
-              "Settings > System > Storage shows what is using space, and Storage Sense can clear temporary files on a schedule."
+              "Settings > System > Storage shows what is using space. Storage Sense can clear temporary files on a schedule, but it also empties older items from the Recycle Bin and can make OneDrive files online-only. Restore anything you still need from the Recycle Bin and check its settings before you turn it on."
             ]
           },
           {
             "label": "On a Mac",
             "steps": [
-              "System Settings > General > Storage shows what is using space and offers recommendations, including keeping files in iCloud."
+              "System Settings > General > Storage shows what is using space and offers recommendations. Before you choose Store in iCloud, check which Apple Account is signed in: it moves the Desktop and Documents folders into that account’s iCloud Drive. Use it only if that is where business files belong and no other service, such as OneDrive or Google Drive, already syncs those folders."
             ]
           },
           {
@@ -820,7 +847,8 @@
         ],
         "sources": [
           "ms-storage",
-          "apple-storage"
+          "apple-storage",
+          "ms-storage-sense"
         ]
       }
     },
@@ -844,15 +872,15 @@
           "Files are shared with personal accounts or former staff.",
           "The team uses two or more storage services for the same work."
         ],
-        "weCheck": "We look at where files live now, how people find them, and who can open what. We suggest a structure that fits your work, help move files without breaking the links people use, and review access. The business keeps ownership of the storage account.",
+        "weCheck": "We look at where files live now, how people find them, and who can open what. We suggest a structure that fits your work, plan the move with you, tell you ahead of time which shared links will change, and send people the new ones. Then we review access. The business keeps ownership of the storage account.",
         "faqs": [
           {
             "question": "Should we use Google Drive, OneDrive, or Dropbox?",
-            "answer": "Use the one that fits the tools you already pay for. Microsoft 365 includes OneDrive and SharePoint; Google Workspace includes Drive. Running two services for the same files usually causes confusion."
+            "answer": "Use the one that fits the tools you already pay for. Microsoft 365 Business Basic, Business Standard, and Business Premium include OneDrive, SharePoint, and Teams; Microsoft 365 Apps for business includes OneDrive but not SharePoint or Teams. Google Workspace includes Drive. Running two services for the same files usually causes confusion."
           },
           {
             "question": "How do we stop people deleting shared files by mistake?",
-            "answer": "Limit who can delete in key folders, and check that version history and the deleted-files bin are turned on. Practice restoring a file so the team knows how."
+            "answer": "Limit who can delete in key folders. In a Google shared drive, give most people Contributor access: they can add and edit files but cannot move them to the trash. Deleted files can only be brought back for a limited time: 30 days from a shared drive’s trash, and up to 93 days from the SharePoint recycle bin. Ask people to report a missing file right away, practice restoring one so the team knows how, and keep a separate backup of files you cannot afford to lose."
           }
         ],
         "related": [
@@ -876,7 +904,9 @@
         ],
         "sources": [
           "google-shared-drives",
-          "ms-sharing"
+          "ms-sharing",
+          "ms-onedrive-retention",
+          "ms-plan-options"
         ]
       }
     },
@@ -892,7 +922,7 @@
           "Call the number from a mobile phone and from another line if you have one.",
           "Let it ring out and listen to the voicemail greeting.",
           "Leave a test message and confirm who receives it and how.",
-          "Send a text to the number if customers will text it.",
+          "If customers will text the number, text it from your mobile, then reply from the business line and check that the reply reaches your mobile.",
           "Test calls after hours and on weekends against the hours you publish."
         ],
         "helpWhen": [
@@ -900,7 +930,7 @@
           "Texts to the business number never arrive.",
           "Voicemails land in an inbox no one checks."
         ],
-        "weCheck": "We test the number the way a customer would, then check the call routing, voicemail, and after-hours path. We make sure the number on your website, Google Business Profile, and listings matches the one that rings. You get a note of where calls go and who manages the phone account.",
+        "weCheck": "We test the number the way a customer would, then check the call routing, voicemail, and after-hours path. We compare the number on your website, Google Business Profile, and listings with the one that rings, and list any that differ. You get a note of where calls go and who manages the phone account.",
         "faqs": [
           {
             "question": "Why does a business number not receive texts?",
@@ -920,15 +950,18 @@
           {
             "label": "Business texting",
             "steps": [
-              "In the United States, carriers expect business texting from local numbers to be registered, often called 10DLC registration. Ask your provider whether your number is registered before you invite customers to text it."
+              "In the United States, carriers block texts a business sends from a local number through a business phone service or texting app unless the number is registered. This is called 10DLC registration. Toll-free numbers need their own verification before they can send texts. Ask your provider whether your number is registered or verified before you invite customers to text it."
             ]
           },
           {
             "label": "Listings",
             "steps": [
-              "Use the same main number on your website, Google Business Profile, Apple Business Connect and Yelp."
+              "Use the same main number on your website, Google Business Profile, Apple Business (formerly Apple Business Connect, which runs your Apple Maps listing) and Yelp."
             ]
           }
+        ],
+        "sources": [
+          "apple-business"
         ]
       }
     },
@@ -960,7 +993,7 @@
           },
           {
             "question": "What if a computer is too old for updates?",
-            "answer": "A device that no longer receives security updates becomes a growing risk, especially for email and payments. Plan to replace it, and move its work to a supported device first."
+            "answer": "A device that no longer gets security updates becomes a growing risk, especially for email and payments. Plan to replace it, and move its files and work to a supported device first. Before the old one leaves the business, sign out of its accounts and erase it. In New York, computers cannot go in the trash, so recycle it through an e-waste program."
           }
         ],
         "related": [
@@ -972,7 +1005,7 @@
           {
             "label": "On Windows 11",
             "steps": [
-              "Settings > Windows Update lets you set active hours, so restarts happen outside the workday."
+              "Settings > Windows Update > Advanced options > Active hours lets you set your working hours, so Windows restarts outside the workday whenever possible."
             ]
           },
           {
@@ -1004,7 +1037,7 @@
         "steps": [
           "List the tools and folders the contractor used, including shared links.",
           "Check each tool’s user list for their name and personal email address.",
-          "Remove their access and admin roles, and transfer any files they own.",
+          "Make sure someone at the business is an admin on each tool and has its own copy of every file the contractor owns. Transfer files held in an account your business manages. If they sit in the contractor’s personal or company account, Google Drive will not move ownership to your work account, so make your own copy. Then remove their access and admin roles.",
           "Change shared passwords they knew and update recovery details they set.",
           "Review shared links that anyone with the link can open."
         ],
@@ -1044,7 +1077,10 @@
           }
         ],
         "sources": [
-          "ms-sharing"
+          "ms-sharing",
+          "ms-manage-sharing",
+          "google-drive-sharing",
+          "google-drive-owner"
         ]
       }
     },
@@ -1089,7 +1125,7 @@
             "label": "During service",
             "steps": [
               "Check whether one device or every device is affected.",
-              "Test the internet from a phone on cellular data to tell a provider outage from a local problem.",
+              "On a phone with Wi-Fi off, open a website on cellular data, then try the same site on the shop Wi-Fi. If it works on cellular but not on the Wi-Fi, the problem is the shop’s connection. For a payment outage, check the provider’s status page.",
               "Use the business’s approved fallback, such as a second reader or offline mode, rather than changing settings mid-service."
             ]
           },
@@ -1097,7 +1133,7 @@
             "label": "After service",
             "steps": [
               "Write down what failed, when, and on which device, leaving out customer card details.",
-              "Read your provider’s offline payment rules before relying on them: offline payments carry limits and risk."
+              "If you took offline payments, get that device back online as soon as you can so they upload. Until they go through, do not sign out of the payment app, delete it, or factory reset the device or reader, or they can be lost for good. Read your provider’s offline rules before you rely on them: with Square, payments not uploaded within 72 hours expire, and the business covers any that are declined."
             ]
           }
         ],
@@ -1149,7 +1185,7 @@
             "label": "In Microsoft 365 or Google Workspace",
             "steps": [
               "Create the person’s own account, assign a license, and add them to the groups for their role rather than to individual files.",
-              "Have them set up two-step sign-in during the first session, with someone there to help."
+              "Have them set up two-step sign-in during the first session, with someone there to help, and add a second method as a backup so a lost or replaced phone does not lock them out. In Google Workspace, printed backup codes can be that backup."
             ]
           }
         ],
@@ -1169,8 +1205,8 @@
         "steps": [
           "Look up where the domain is registered and who has the login.",
           "Check the renewal date and turn on automatic renewal.",
-          "Update the payment card and the contact email on the account.",
-          "Make sure renewal notices go to a business address that more than one person reads.",
+          "Update the payment card and the contact email on the account. If you change the domain owner’s email, the registrar sends a confirmation message to the new address. Answer it right away: if nobody confirms it, the registrar can suspend the domain, which takes the website and email offline.",
+          "Make sure renewal notices go to a business address that more than one person reads, plus a backup address that is not on the same domain, so notices and password resets still arrive if the domain stops working.",
           "Write down who runs your email and website, and how each connects to the domain."
         ],
         "helpWhen": [
@@ -1182,7 +1218,7 @@
         "faqs": [
           {
             "question": "What happens if a domain expires?",
-            "answer": "Email and the website can stop working, and after a grace period someone else may be able to register the name. Most registrars allow a renewal for a while after expiry, sometimes for an extra fee."
+            "answer": "Email and the website can stop working. Many registrars let you renew for a short time after expiry, sometimes for an extra fee, but depending on the registrar’s terms the name can be registered by or auctioned to someone else during that time. Renew as soon as you notice."
           },
           {
             "question": "Should the domain and email be with the same company?",
@@ -1204,12 +1240,13 @@
           {
             "label": "At the registrar",
             "steps": [
-              "Turn on auto-renew and the transfer lock, and add a second business contact for renewal notices."
+              "Turn on auto-renew and the transfer lock. Renewal notices usually go only to the account email and the domain owner’s email, so set both to addresses the business controls, including one that is not on this domain. If the registrar lets you add another user to the account, add one, so one person’s absence does not lock the business out."
             ]
           }
         ],
         "sources": [
-          "icann-lookup"
+          "icann-lookup",
+          "icann-errp"
         ]
       }
     },
@@ -1238,7 +1275,7 @@
         "faqs": [
           {
             "question": "Where should support notes live?",
-            "answer": "In a shared place the owner controls, such as a business document or folder. Keep passwords out of the notes and record where they are kept instead."
+            "answer": "In a shared place the owner controls, such as a business document or folder. Keep passwords, PINs, and two-step backup codes out of the notes, and record where they are kept instead, such as a password manager the business controls."
           },
           {
             "question": "How detailed should a note be?",
@@ -1257,15 +1294,15 @@
       "category": "it",
       "question": "What should we gather before changing IT providers?",
       "answer": "Before changing tech providers, list the accounts they manage, who owns them, and which parts of the work must keep running.",
-      "detail": "Keep passwords out of email and text. Agree on a safe way to grant access. Set a time for the change, test the work afterward, and keep a record of who now handles each account.",
+      "detail": "Keep passwords out of email and text. Agree on a safe way to grant access. Set a time for the change, test the work afterward, remove the old provider’s access, and keep a record of who now handles each account.",
       "nextStep": "Bring the service list and key work hours.",
       "guide": {
         "steps": [
           "List every service the current provider manages: email, domain, Wi-Fi, backups, and devices.",
-          "Confirm that the business holds admin access to each account.",
+          "Confirm that the business holds admin access to each account. Sign in yourself, and check that sign-in codes and the recovery email and phone go to someone at the business, not the old provider.",
           "Ask for documentation: network details, licenses, renewal dates, and setup notes.",
           "Agree on a handoff date that avoids your busiest hours.",
-          "Test the key work after the change and record who now handles each account."
+          "Test the key work after the change. Once your own admin logins work, remove the old provider’s access: turn off their admin logins, remove their roles on the Partner relationships page in the Microsoft 365 admin center, uninstall their remote-support apps, and change any passwords they knew. Record who now handles each account."
         ],
         "helpWhen": [
           "The current provider holds the only admin logins.",
@@ -1276,7 +1313,7 @@
         "faqs": [
           {
             "question": "Do we need the old provider’s cooperation?",
-            "answer": "It helps. Ask in writing for admin access and documentation. If they will not help, the business can usually regain control by contacting each vendor as the account owner."
+            "answer": "It helps. Ask in writing for admin access and documentation. If they will not help, contact each vendor directly with proof that the business owns the account, such as bills or company records. Start with the domain registrar: Google and Microsoft may ask you to change your domain settings to prove ownership before they restore admin access. If the domain or accounts are in the provider’s name, this is harder, so start before the old contract ends."
           },
           {
             "question": "Will changing providers interrupt our work?",
@@ -1298,6 +1335,11 @@
               "The internet provider account and any backup service."
             ]
           }
+        ],
+        "sources": [
+          "cisa-msp",
+          "ms-gdap-terminate",
+          "google-admin-recovery"
         ]
       }
     },
@@ -1306,15 +1348,15 @@
       "category": "it",
       "question": "What makes a home office ready for real work?",
       "answer": "A useful home office starts with the work you need to do, then matches the devices, connection, and account access to that job.",
-      "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a simple record of cables, Wi-Fi details, and settings the owner may need later.",
+      "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a simple record of cables, the Wi-Fi name, and settings the owner may need later, with the Wi-Fi and router passwords in a password manager instead.",
       "nextStep": "List the programs, devices, and calls you need to handle from home.",
       "guide": {
         "steps": [
           "Test the work laptop, monitor, printer, and call platform together.",
           "Check the Wi-Fi in the room where you work, and use a cable if calls freeze.",
-          "Sign in to work accounts with two-step sign-in, separate from family accounts.",
+          "Sign in to work accounts with two-step sign-in, separate from family accounts. Add a backup way to sign in, such as a second phone number or backup codes kept somewhere safe, so a lost phone does not lock you out.",
           "Keep business files in the business storage, not only on a personal computer.",
-          "Note the cables, Wi-Fi details, and settings in a simple record."
+          "Note the cables, the Wi-Fi name, and settings in a simple record. Keep the Wi-Fi and router passwords in a password manager, not in that record."
         ],
         "helpWhen": [
           "Calls freeze or drop in the room where you work.",
@@ -1325,7 +1367,7 @@
         "faqs": [
           {
             "question": "Should work and family use different Wi-Fi?",
-            "answer": "It helps. Many routers support a separate network, which keeps work devices apart from smart TVs and visiting guests."
+            "answer": "It helps. Many routers have a guest network. Put smart TVs and visiting guests on it, and keep work devices and the printer on the main network."
           },
           {
             "question": "Is a mesh Wi-Fi system worth it?",
@@ -1341,13 +1383,15 @@
           {
             "label": "Home network",
             "steps": [
-              "For calls, sit near the router on the 5 GHz band or use a cable.",
-              "Many routers can create a separate network for work devices, apart from smart TVs and guests."
+              "For calls, sit close to the router with nothing in the way, or use a cable. Use one Wi-Fi name for all bands so the laptop can move to the best band on its own.",
+              "Many routers have a guest network. Put smart TVs and visitors on it, and keep the work laptop and printer on the main network."
             ]
           }
         ],
         "sources": [
-          "apple-router"
+          "apple-router",
+          "google-guest-wifi",
+          "google-wifi-speed"
         ]
       }
     },
@@ -1473,7 +1517,7 @@
           "heading": "Specific fixes for weak or dropping Wi-Fi",
           "bullets": [
             "Put the router or access point high, central and in the open: not in a closet, behind a copier, or against brick and metal.",
-            "Use the 5 GHz band near the router for speed and 2.4 GHz for reach through walls; most routers offer both.",
+            "Most routers offer 5 GHz (faster, shorter reach) and 2.4 GHz (slower, better through walls). Keep every band turned on under one network name so each device can switch on its own; giving each band its own name can make connections less reliable.",
             "If one router cannot cover the space, add a second access point or a mesh system rather than a basic range extender, which often slows the connection.",
             "Keep router firmware updated, and replace equipment that no longer receives updates.",
             "When it drops, record the time, devices, room and exact error, then test one wired device and one nearby wireless device before restarting anything."
@@ -1506,10 +1550,10 @@
           "heading": "Give Microsoft 365 a named owner",
           "paragraphs": [
             "Microsoft 365 separates user accounts, shared-mailbox permissions, licenses, and administrator roles. Before adding, removing, or changing access, record the business administrator, the mailbox that customers use, the shared mailboxes involved, and the license that keeps the work running.",
-            "Use the smallest administrator role that can do the job. Before a staff change, preserve the mail and files the business needs, then test the new owner’s access before removing the old one."
+            "Use the smallest administrator role that can do the job. When someone leaves, reset their password and select Sign out of all sessions first. That shuts them out without deleting their mail or files. Then save what the business needs, and test the new owner’s access before you remove the old license or delete the account."
           ],
           "bullets": [
-            "Name the business administrator and a recovery route.",
+            "Name the business administrator and a second person who can reset that administrator’s sign-in, so one lost phone or one departure does not lock the business out.",
             "Keep shared-mailbox ownership separate from a person’s private inbox.",
             "Check mail, files, and customer replies after an access change."
           ],
@@ -1529,8 +1573,8 @@
           "bullets": [
             "Check whether one recipient or many are affected, and send a plain test to an outside inbox.",
             "Ask your email provider to confirm SPF, DKIM and DMARC for your domain. These settings tell receiving servers that mail from your domain is genuine.",
-            "In Microsoft 365, message trace in the Exchange admin center shows where a message went. In Google Workspace, Email Log Search does the same.",
-            "If Sent shows messages you did not write, change the password and check for new forwarding rules before anything else.",
+            "In Microsoft 365, message trace in the Exchange admin center shows whether a message left your system and which server took it. In Google Workspace, Email Log Search does the same. For mail sent to outside addresses, Delivered only means the other side’s server accepted it, so ask the recipient to check their spam folder.",
+            "If Sent shows messages you did not write, treat the account as taken over. From a trusted device, change the password, sign the account out of all sessions, and check its two-step sign-in methods. Then remove any forwarding, inbox rules (filters in Gmail), or connected apps you do not recognize.",
             "Hold off on bulk sending until the cause is clear."
           ]
         },
@@ -1552,6 +1596,10 @@
             {
               "label": "Google Workspace: Find messages with Email Log Search",
               "href": "https://support.google.com/a/answer/2618874"
+            },
+            {
+              "label": "Microsoft: Respond to a compromised email account in Microsoft 365",
+              "href": "https://learn.microsoft.com/en-us/defender-office-365/responding-to-a-compromised-email-account"
             }
           ]
         }
@@ -1565,10 +1613,10 @@
           "heading": "Keep device accounts easy to identify",
           "paragraphs": [
             "A Mac, iPhone, iPad, or Windows computer can hold a business mailbox, cloud files, saved sign-ins, and the only copy of an important setting. Keep a private device record with the device, its work account, its approved recovery route, and the person responsible for it.",
-            "Before wiping, replacing, or handing over a device, confirm that the business can open the records it needs from another approved account or device. Do not put account passwords or sign-in codes into the record."
+            "Before wiping, replacing, or handing over a device, confirm that the business can open the records it needs from another approved account or device. On a Mac, iPhone, or iPad, have the person signed in sign out of their Apple Account on the device itself before it is erased; a device erased while still signed in can stay locked to that account. Do not put account passwords or sign-in codes into the record."
           ],
           "bullets": [
-            "Check the signed-in devices before removing one.",
+            "Check the signed-in devices in the Apple, Microsoft, or Google account before removing one.",
             "Keep business recovery details under business control.",
             "Test access before an old device leaves the business."
           ],
@@ -1576,16 +1624,24 @@
             {
               "label": "Apple Account device list",
               "href": "https://support.apple.com/en-us/102649"
+            },
+            {
+              "label": "Microsoft work account devices",
+              "href": "https://support.microsoft.com/en-us/accounts-billing/work-school/manage-your-work-or-school-account-connected-devices-from-the-devices-page"
+            },
+            {
+              "label": "Google Account devices",
+              "href": "https://support.google.com/accounts/answer/3067630"
             }
           ]
         },
         {
           "heading": "Specific steps",
           "bullets": [
+            "Start here: turn on two-step sign-in for every admin account. For each one, add a second sign-in method, such as a second phone, an authenticator app, or a security key, and save the backup codes, so a lost phone does not lock you out.",
             "Keep at least two people with admin access to email, the domain and payments, so one absence cannot lock the business out.",
-            "Store business passwords in a password manager with a shared business vault, not in notes or spreadsheets.",
-            "Save each account’s recovery codes somewhere the business controls, and check that the recovery email and phone number are current.",
-            "Turn on two-step sign-in for every admin account first."
+            "Store business passwords in a password manager with a shared business vault, not in notes or spreadsheets. Set it up as a business account with at least two admins, and keep its recovery kit somewhere outside it.",
+            "Save each account’s recovery codes somewhere the business controls, and check that the recovery email and phone number are current."
           ]
         },
         {
@@ -1596,8 +1652,8 @@
               "href": "https://www.cisa.gov/secure-our-world/require-strong-passwords"
             },
             {
-              "label": "CISA: Turn on MFA",
-              "href": "https://www.cisa.gov/secure-our-world/turn-mfa"
+              "label": "CISA: Require multifactor authentication",
+              "href": "https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication"
             }
           ]
         }
@@ -1629,9 +1685,9 @@
           "heading": "Tools that make the move easier",
           "bullets": [
             "On a Mac, Migration Assistant moves accounts, apps and files from the old Mac or from a Time Machine backup.",
-            "On Windows 11, sign in with the same work account and use OneDrive or Windows Backup to bring folders and settings across.",
+            "On Windows 11, sign in with the same work account and let OneDrive bring back the Desktop, Documents, and Pictures folders. Windows Backup works with a personal Microsoft account; with a work account, its restore works only if whoever runs your Microsoft 365 has turned it on. Copy files kept anywhere else, such as Outlook data files or accounting files, across separately.",
             "Windows 10 stopped receiving free security updates on October 14, 2025; plan to replace or upgrade those computers.",
-            "Sign the old device out of work accounts, and remove it from them, before it is erased or handed on."
+            "Before you erase or hand on an old phone, set up your sign-in codes (authenticator app or passkeys) on the new phone and check you can sign in with them. Then sign the old device out of work accounts and your Apple Account or Microsoft account, and remove it from them."
           ]
         },
         {
@@ -1648,6 +1704,14 @@
             {
               "label": "Microsoft: Windows 10 support has ended",
               "href": "https://support.microsoft.com/en-us/windows/windows-10-support-has-ended-on-october-14-2025-2ca8b313-1946-43d3-b55c-2b95b107f281"
+            },
+            {
+              "label": "Microsoft: Back up your folders with OneDrive",
+              "href": "https://support.microsoft.com/en-us/onedrive/back-up-your-folders-with-onedrive"
+            },
+            {
+              "label": "Microsoft: Back up your accounts in Microsoft Authenticator",
+              "href": "https://support.microsoft.com/en-us/authenticator/back-up-your-accounts-in-microsoft-authenticator"
             }
           ]
         }
@@ -1696,8 +1760,8 @@
       "href": "https://www.nist.gov/itl/smallbusinesscyber"
     },
     "cisa-mfa": {
-      "label": "CISA: Turn on MFA",
-      "href": "https://www.cisa.gov/secure-our-world/turn-mfa"
+      "label": "CISA: Require multifactor authentication",
+      "href": "https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication"
     },
     "cisa-passwords": {
       "label": "CISA: Require strong passwords",
@@ -1725,7 +1789,7 @@
     },
     "google-2sv": {
       "label": "Google Workspace: Protect your business with 2-Step Verification",
-      "href": "https://support.google.com/a/answer/175197"
+      "href": "https://knowledge.workspace.google.com/admin/security/protect-your-business-with-2-step-verification"
     },
     "square-network": {
       "label": "Square: Troubleshoot your network connection",
@@ -1760,8 +1824,8 @@
       "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/remove-former-employee"
     },
     "google-transfer": {
-      "label": "Google Workspace: Transfer Drive files to a new owner",
-      "href": "https://support.google.com/a/answer/1247799"
+      "label": "Google Workspace: Transfer Drive files to a new owner as an admin",
+      "href": "https://knowledge.workspace.google.com/admin/drive/transfer-drive-files-to-a-new-owner-as-an-admin"
     },
     "ms-win10": {
       "label": "Microsoft: Windows 10 support has ended",
@@ -1802,6 +1866,118 @@
     "zoom-test": {
       "label": "Zoom: Join a test meeting",
       "href": "https://zoom.us/test"
+    },
+    "ms-file-history": {
+      "label": "Microsoft: Backup and restore with File History",
+      "href": "https://support.microsoft.com/en-us/windows/backup-and-restore-with-file-history-7bf065bf-f1ea-0a78-c1cf-7dcf51cc8bfc"
+    },
+    "ms-onedrive-backup": {
+      "label": "Microsoft: Back up your folders with OneDrive",
+      "href": "https://support.microsoft.com/en-us/onedrive/back-up-your-folders-with-onedrive"
+    },
+    "apple-iphone-screenshot": {
+      "label": "Apple: Take a screenshot on iPhone",
+      "href": "https://support.apple.com/en-us/102616"
+    },
+    "apple-mac-screenshot": {
+      "label": "Apple: Take a screenshot on Mac",
+      "href": "https://support.apple.com/en-us/102646"
+    },
+    "fcc-porting": {
+      "label": "FCC: Keeping your phone number when you change providers",
+      "href": "https://www.fcc.gov/consumers/guides/porting-keeping-your-phone-number-when-you-change-providers"
+    },
+    "fcc-voip-911": {
+      "label": "FCC: VoIP and 911 service",
+      "href": "https://www.fcc.gov/consumers/guides/voip-and-911-service"
+    },
+    "google-guest-wifi": {
+      "label": "Google: Create, edit and share a guest Wi-Fi network",
+      "href": "https://support.google.com/googlehome/answer/6327302"
+    },
+    "google-wifi-speed": {
+      "label": "Google: Improve Wi-Fi speed and performance",
+      "href": "https://support.google.com/googlehome/answer/7578264"
+    },
+    "ms-compromised": {
+      "label": "Microsoft: Respond to a compromised email account in Microsoft 365",
+      "href": "https://learn.microsoft.com/en-us/defender-office-365/responding-to-a-compromised-email-account"
+    },
+    "ms-convert-shared": {
+      "label": "Microsoft: Convert a user mailbox to a shared mailbox",
+      "href": "https://learn.microsoft.com/en-us/microsoft-365/admin/email/convert-user-mailbox-to-shared-mailbox"
+    },
+    "google-groups-settings": {
+      "label": "Google Groups: Create a group and choose group settings",
+      "href": "https://support.google.com/groups/answer/2464926"
+    },
+    "ms-unlicensed-onedrive": {
+      "label": "Microsoft: Manage unlicensed OneDrive accounts",
+      "href": "https://learn.microsoft.com/en-us/sharepoint/unlicensed-onedrive-accounts"
+    },
+    "google-delete-user": {
+      "label": "Google Workspace: Delete or remove a user from your organization",
+      "href": "https://knowledge.workspace.google.com/admin/users/delete-or-remove-a-user-from-your-organization"
+    },
+    "apple-activation-lock": {
+      "label": "Apple: Activation Lock on Apple devices",
+      "href": "https://support.apple.com/guide/deployment/activation-lock-depf4ab94ef1/web"
+    },
+    "google-2sv-deploy": {
+      "label": "Google Workspace: Deploy 2-Step Verification",
+      "href": "https://knowledge.workspace.google.com/admin/security/deploy-2-step-verification"
+    },
+    "cisa-ransomware": {
+      "label": "CISA: #StopRansomware Guide",
+      "href": "https://www.cisa.gov/stopransomware/ransomware-guide"
+    },
+    "ms-teams-test-call": {
+      "label": "Microsoft: Make a test call in Teams",
+      "href": "https://support.microsoft.com/en-us/office/make-a-test-call-6c131ac4-8998-4cb1-9076-1801741d0e59"
+    },
+    "ms-storage-sense": {
+      "label": "Microsoft: Manage drive space with Storage Sense",
+      "href": "https://support.microsoft.com/en-us/windows/experience/storage-filemanagement/manage-drive-space-with-storage-sense"
+    },
+    "ms-onedrive-retention": {
+      "label": "Microsoft: OneDrive retention and deletion",
+      "href": "https://learn.microsoft.com/en-us/sharepoint/retention-and-deletion"
+    },
+    "ms-plan-options": {
+      "label": "Microsoft: Microsoft 365 plan options",
+      "href": "https://learn.microsoft.com/en-us/office365/servicedescriptions/office-365-platform-service-description/office-365-plan-options"
+    },
+    "apple-business": {
+      "label": "Apple: Apple Business Connect is now Apple Business",
+      "href": "https://support.apple.com/guide/apple-business-connect/welcome/web"
+    },
+    "ms-manage-sharing": {
+      "label": "Microsoft: Manage sharing and permissions in OneDrive and SharePoint",
+      "href": "https://support.microsoft.com/en-us/onedrive/sharepoint/manage-sharing-and-permissions-in-onedrive-and-sharepoint"
+    },
+    "google-drive-sharing": {
+      "label": "Google Drive: Stop, limit, or change sharing",
+      "href": "https://support.google.com/drive/answer/2494893"
+    },
+    "google-drive-owner": {
+      "label": "Google Drive: Make someone else the owner of your file",
+      "href": "https://support.google.com/drive/answer/2494892"
+    },
+    "icann-errp": {
+      "label": "ICANN: What registrants should know about expired domain names",
+      "href": "https://www.icann.org/resources/pages/registrant-about-errp-2018-12-07-en"
+    },
+    "ms-gdap-terminate": {
+      "label": "Microsoft: Remove a partner's admin roles",
+      "href": "https://learn.microsoft.com/en-us/partner-center/customers/gdap-customer-terminate"
+    },
+    "google-admin-recovery": {
+      "label": "Google Workspace: Recover administrator access",
+      "href": "https://knowledge.workspace.google.com/admin/users/recovering-administrator-access-to-your-account"
+    },
+    "cisa-msp": {
+      "label": "CISA: Protecting against cyber threats to managed service providers and their customers",
+      "href": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-131a"
     }
   }
 }
