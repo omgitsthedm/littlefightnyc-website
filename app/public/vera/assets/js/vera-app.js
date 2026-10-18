@@ -542,7 +542,8 @@
       deck.setAttribute('aria-modal', 'true');
       deck.setAttribute('aria-labelledby', 'vera-filter-title');
     } else {
-      deck.removeAttribute('role');
+      /* inline on wider screens: a named region, so it is a landmark */
+      deck.setAttribute('role', 'region');
       deck.removeAttribute('aria-modal');
       deck.removeAttribute('aria-labelledby');
     }
@@ -660,7 +661,7 @@
     if (l.source_name) bits.push('<span class="prov__i">' + esc(l.source_name) + '</span>');
     if (a != null) bits.push('<span class="prov__i" title="Authenticity confidence, 0–100">real ' + num(a) + '</span>');
     bits.push('<span class="prov__i" title="HPD building-risk score — lower is cleaner">HPD ' + num(l.hpd_risk_score) + '</span>');
-    if (l.duplicate_count) bits.push('<span class="prov__i">' + l.duplicate_count + '× reposted</span>');
+    if (+l.duplicate_count > 1) bits.push('<span class="prov__i" title="Copies of this listing VERA found beyond the original">' + (l.duplicate_count - 1) + '× reposted</span>');
     if (l.neighborhood_resolved_from_coords && l.neighborhood_source) {
       bits.push('<span class="prov__i" title="The post said only the borough; VERA placed it by its coordinates against the city\u2019s own neighborhood boundaries">posted as ' + esc(l.neighborhood_source) + ' \u2192 placed by coordinates</span>');
     }
@@ -861,7 +862,7 @@
     }
     return '<div class="anchorbar"><span class="anchorbar__label">Commute anchors</span>' + sel(0) + sel(1) +
       '<span class="anchorbar__label">Income</span>' +
-      '<input type="number" name="vera-income" autocomplete="off" inputmode="numeric" min="0" step="5000" placeholder="e.g. 85000…" value="' + (+profile.income || '') + '" data-profile-income aria-label="Annual income — stored locally only">' +
+      '<input type="text" name="vera-income" autocomplete="off" inputmode="numeric" pattern="[0-9$, ]*" enterkeyhint="done" placeholder="e.g. 85000…" value="' + (+profile.income || '') + '" data-profile-income aria-label="Annual income — stored locally only">' +
       '<span class="anchorbar__hint">' + (anchors.length || profile.income ? 'printed on every card, marked ≈ — VERA never invents routing minutes; your income never leaves this browser' : 'work, a person, your income — VERA personalizes every card, all of it local-only') + '</span></div>';
   }
 
@@ -875,23 +876,30 @@
     var rent = +l.rent;
     var hood = l.neighborhood;
     if (!rent || !hood) return null;
+    /* Like with like: a studio is only ever measured against studios. The
+       StreetEasy series counts only when it is published per unit size; the
+       all-sizes median would flatter every studio in the city. */
+    var unit = C.unitOf(l);
+    var unitWord = unit === 'studio' ? 'studio' : unit === '1br' ? 'one-bedroom' : null;
     var mc = D && D.market_context;
-    if (mc && mc.series && mc.series[hood]) {
-      var s = mc.series[hood];
-      var vals = (s.median_asking_rent || []).filter(function (v) { return v != null; });
-      if (vals.length >= 12 && s.median_asking_rent_latest) {
-        var med = s.median_asking_rent_latest;
+    var s = mc && mc.series && mc.series[hood];
+    var bySize = s && s.by_unit && unit ? s.by_unit[unit] : null;
+    if (bySize && unitWord) {
+      var vals = (bySize.median_asking_rent || []).filter(function (v) { return v != null; });
+      if (vals.length >= 12 && bySize.median_asking_rent_latest) {
+        var med = bySize.median_asking_rent_latest;
         var d = Math.round((med - rent) / med * 100);
         if (d === 0) return null;
-        return { pct: Math.abs(d), under: d > 0, label: Math.abs(d) + '% ' + (d > 0 ? 'under' : 'over') + ' the ' + hood + ' median', src: 'StreetEasy series' };
+        return { pct: Math.abs(d), under: d > 0, label: Math.abs(d) + '% ' + (d > 0 ? 'under' : 'over') + ' the ' + hood + ' ' + unitWord + ' median', against: 'the ' + hood + ' ' + unitWord + ' median', src: 'StreetEasy series, ' + unitWord + 's' };
       }
     }
-    var peers = POOL.filter(function (x) { return x.neighborhood === hood && +x.rent > 0; }).map(function (x) { return +x.rent; });
+    if (!unitWord) return null;
+    var peers = POOL.filter(function (x) { return x.neighborhood === hood && C.unitOf(x) === unit && +x.rent > 0; }).map(function (x) { return +x.rent; });
     if (peers.length >= 5) {
       var m2 = median(peers);
       var d2 = Math.round((m2 - rent) / m2 * 100);
       if (d2 === 0) return null;
-      return { pct: Math.abs(d2), under: d2 > 0, label: Math.abs(d2) + '% ' + (d2 > 0 ? 'under' : 'over') + ' others in the net (' + hood + ')', src: 'net-internal' };
+      return { pct: Math.abs(d2), under: d2 > 0, label: Math.abs(d2) + '% ' + (d2 > 0 ? 'under' : 'over') + ' other ' + hood + ' ' + unitWord + 's in the net', against: 'other ' + hood + ' ' + unitWord + 's in the net', src: 'net-internal, ' + unitWord + 's only', peers: peers.length };
     }
     return null;
   }
@@ -978,7 +986,7 @@
       var m = C.moveInMath(l);
       if (m.total && (!cheap || m.total < cheap.m.total)) cheap = { l: l, i: i, m: m };
     });
-    if (value) picks.push({ icon: 'fee', label: 'Best value', value: value.v.pct + '% under', sub: 'the ' + esc(value.l.neighborhood || 'area') + ' median', p: value });
+    if (value) picks.push({ icon: 'fee', label: 'Best value', value: value.v.pct + '% under', sub: esc(value.v.against), p: value });
     if (close) picks.push({ icon: 'train', label: 'Closest to a train', value: '≈' + close.t.mins + ' min walk', sub: C.lineBullets(close.t.lines) + ' ' + esc(close.t.name), p: close });
     if (kept) picks.push({ icon: 'building', label: 'Best-kept building', value: 'Grade ' + kept.st.grade + ' · ' + kept.st.score + '/100', sub: esc(kept.st.word), p: kept });
     if (picks.length < 3 && cheap) picks.push({ icon: 'cash', label: 'Lowest move-in', value: '≈ ' + money(cheap.m.total), sub: 'everything due to move in', p: cheap });
@@ -1058,7 +1066,10 @@
     var m = C.moveInMath(l);
     /* Why it cleared, as a short checklist a renter can scan: the engine's
        named strengths first, its prose sentence only as a fallback. */
-    var whys = (l.trust_strengths || []).filter(Boolean).slice(0, 3);
+    var whys = (l.trust_strengths || []).filter(function (w) {
+      /* the engine's "fresh" line describes the sweep, not the listing */
+      return w && (!/fresh listing discovered/i.test(w) || C.isFresh(l));
+    }).slice(0, 3);
     if (!whys.length) whys = String(l.why_this_listing || '').split(/\s*Note:/)[0].split(/\.\s+/).filter(Boolean).slice(0, 3);
     if (!whys.length) whys = ['Clears every gate VERA can check from public data'];
     var flaw = (l.trust_caveats || [])[0] || (l.what_to_verify_before_applying || [])[0];
@@ -1089,6 +1100,7 @@
       : 'city record too thin to judge';
     var name = addr || C.charName(l);
     var saved = !!(caseOf(l.listing_uid) && caseOf(l.listing_uid).stage !== 'dead');
+    var careful = String(l.recommendation || '').toLowerCase() !== 'pursue';
     return '<article class="dropcard"' + bearing + ' data-drop-uid="' + esc(l.listing_uid) + '" style="--i:' + i + '">' +
       '<div class="dropcard__hit">' +
         '<span class="dropcard__media">' + gallery(l) + freshBadge +
@@ -1096,7 +1108,9 @@
           '<span class="dropcard__no" aria-hidden="true">' + (i + 1) + '</span></span>' +
         '<div class="dropcard__body">' +
           '<div class="dropcard__main">' +
-            '<div class="dropcard__verdict"><span class="verdict verdict--go">' + C.icon('check') + 'Cleared every check</span>' +
+            '<div class="dropcard__verdict">' + (careful
+              ? '<span class="verdict verdict--care">' + C.icon('warning') + 'Passed the gates · go carefully</span>'
+              : '<span class="verdict verdict--go">' + C.icon('check') + 'Cleared every check</span>') +
               (l.overall_score != null ? '<span class="dropcard__score"><small aria-hidden="true">VERA score</small>' + scoreRing(l.overall_score) + '</span>' : '') + '</div>' +
             '<p class="dropcard__rent">' + money(l.rent) + '<small>/mo</small></p>' +
             '<h2 class="dropcard__name">' + esc(name) + '</h2>' +
@@ -1106,7 +1120,7 @@
                 t ? '≈' + t.mins + ' min walk' : 'No station matched',
                 t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'verify the walk yourself') +
               factCell('cash', 'Move-in cash', '≈ ' + money(m.total),
-                'first month, deposit, ' + money(m.appFee) + ' fee · no broker fee') +
+                'first month, deposit, ' + money(m.appFee) + ' screening · ' + esc(m.fee.short)) +
               factCell('building', 'Building', 'Grade ' + stew.grade + ' · ' + esc(stew.word),
                 (stew.score != null ? stew.score + '/100 · ' : '') + esc(stewLine), 'steward steward--' + stew.grade) +
               factCell('owner', 'Landlord', esc(ownerName),
@@ -1128,6 +1142,7 @@
             provenance(l) +
             '<div class="dropcard__actions">' +
               saveButton(l.listing_uid, saved) +
+              '<button type="button" class="dropcard__share" data-share="' + esc(l.listing_uid) + '" aria-label="Share ' + esc(name) + '">' + C.icon('share') + '</button>' +
               '<button type="button" class="dropcard__open" data-open="' + esc(l.listing_uid) + '" aria-label="Open full ledger: ' + esc(name) + '">' + C.icon('ledger') + '<span>Open full ledger</span>' + C.icon('arrow', 'ico--end') + '</button>' +
             '</div>' +
           '</div>' +
@@ -1140,6 +1155,47 @@
   function greeting() {
     var h = new Date().getHours();
     return h >= 5 && h < 12 ? 'Good morning.' : h >= 12 && h < 17 ? 'Good afternoon.' : h >= 17 && h < 22 ? 'Good evening.' : 'Up late?';
+  }
+
+  /* The answer before the explanation: every cleared apartment as one
+     scannable line (price, place, walk, building, cash to move in), each a
+     jump to its full card. */
+  function answerRows(drop) {
+    if (!drop.length) return '';
+    var shown = drop.slice(0, 5);
+    return '<ol class="answers" aria-label="The drop at a glance">' + shown.map(function (l, i) {
+      var t = C.nearestStation(l);
+      var m = C.moveInMath(l);
+      var stew = C.stewardOf(l);
+      var unit = C.unitOf(l) === 'studio' ? 'Studio' : C.unitOf(l) === '1br' ? '1 bed' : esc(l.unit_type || 'Apartment');
+      return '<li><button type="button" class="answer" data-standout="' + esc(l.listing_uid) + '">' +
+        '<i class="answer__no" aria-hidden="true">' + (i + 1) + '</i>' +
+        '<span class="answer__main"><b class="answer__rent">' + money(l.rent) + '</b>' +
+          '<span class="answer__where">' + esc(l.neighborhood || '—') + ' · ' + unit + '</span></span>' +
+        '<span class="answer__facts">' +
+          '<span>' + C.icon('train') + (t ? '≈' + t.mins + ' min walk' : 'no station') + '</span>' +
+          '<span class="answer__grade steward--' + esc(stew.grade) + '">' + C.icon('building') + 'Grade ' + esc(stew.grade) + '</span>' +
+          '<span>' + C.icon('cash') + '≈' + money(m.total) + ' to move in</span>' +
+        '</span>' + C.icon('caret', 'ico--end') + '</button></li>';
+    }).join('') + '</ol>' +
+      (drop.length > shown.length ? '<p class="answers__more">' + (drop.length - shown.length) + ' more in the drop below.</p>' : '');
+  }
+
+  /* The cron starts the sweep; the drop lands when the sweep finishes. Say
+     when that has actually been, from the feed's own run history. */
+  function landingNote() {
+    var runs = (D && D.run_trends || []).slice(-7).map(function (r) { return new Date(r.timestamp); })
+      .filter(function (d) { return !isNaN(d.getTime()); });
+    if (runs.length < 3) return '';
+    var hours = runs.map(function (d) {
+      var parts = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: false, timeZone: 'America/New_York' }).split(':');
+      return (+parts[0] % 24) + (+parts[1]) / 60;
+    });
+    var lo = Math.floor(Math.min.apply(null, hours)), hi = Math.ceil(Math.max.apply(null, hours));
+    if (hi - lo > 8) return '';
+    function h12(h) { var x = h % 12 || 12; return x + (h < 12 ? ' AM' : ' PM'); }
+    return '<p class="dropstats__note">' + C.icon('clock') + '<span>The sweep runs overnight. Lately the new drop has landed between ' +
+      h12(lo) + ' and ' + h12(hi) + ' ET.</span></p>';
   }
 
   function renderToday(page) {
@@ -1178,8 +1234,12 @@
       var r = C.whyPassed(l);
       reasons[r] = (reasons[r] || 0) + 1;
     });
-    var reasonBits = Object.keys(reasons).sort(function (a, b) { return reasons[b] - reasons[a]; }).slice(0, 4)
-      .map(function (r) { return reasons[r] + ' ' + r; }).join(', ');
+    var reasonKeys = Object.keys(reasons).sort(function (a, b) { return reasons[b] - reasons[a]; });
+    var reasonBits = reasonKeys.slice(0, 4).map(function (r) { return reasons[r] + ' ' + r; });
+    var otherReasons = reasonKeys.slice(4).reduce(function (n, r) { return n + reasons[r]; }, 0);
+    if (otherReasons) reasonBits.push(otherReasons + ' for other reasons');
+    reasonBits = reasonBits.join(', ');
+    var carefulAll = fits.filter(function (l) { return String(l.recommendation || '').toLowerCase() !== 'pursue'; }).length;
 
     /* The drop is dated by its publication, in New York time, never by the
        visitor's clock: a Friday sweep read on Saturday is still Friday's. */
@@ -1206,23 +1266,25 @@
         '<p class="drophead__greet">' + greeting() + (drop.length ? ' Here is what VERA found for you.' : ' Here is where the net stands.') + '</p>' +
         '<h1 class="drophead__title">' +
           (drop.length
-            ? '<b class="drophead__count' + (RM ? '' : ' is-lockin') + '">' + clearedCount + '</b> apartment' + (clearedCount === 1 ? '' : 's') + ' cleared every check.'
-            : 'Nothing cleared every check today.') +
+            ? '<b class="drophead__count' + (RM ? '' : ' is-lockin') + '">' + clearedCount + '</b> apartment' + (clearedCount === 1 ? '' : 's') + ' passed every gate.'
+            : 'Nothing passed every gate today.') +
         '</h1>' +
+        answerRows(drop) +
+        tourEntry(drop) +
         '<p class="drophead__lede">' +
           (drop.length
-            ? 'Out of <b>' + POOL.length + '</b> listings swept across Manhattan, Brooklyn, Queens and the Bronx. Each one below passed price, papers, building record, and an owner worth talking to.' +
+            ? 'Out of <b>' + POOL.length + '</b> listings swept across Manhattan, Brooklyn, Queens and the Bronx. Each one here asks ' + money(C.FIT.maxRent) + ' or less, scored ' + C.FIT.minScore + ' or better, reads as a real listing, and sits in a building without a heavy HPD or DOB record.' +
+              (carefulAll ? ' The engine still says go carefully on <b>' + carefulAll + '</b> of ' + clearedCount + '; each card names what to check first.' : '') +
               (beyondDrop ? ' The <b>' + drop.length + '</b> strongest are below; <a href="#/browse" data-view-jump="cleared">the other ' + beyondDrop + ' are here ↗</a>' : '')
-            : 'Out of ' + POOL.length + ' swept, none cleared every gate. The net stays out and the next sweep tries again.') +
+            : 'Out of ' + POOL.length + ' swept, none passed every gate. The net stays out and the next sweep tries again.') +
         '</p>' +
         '<dl class="dropstats">' +
           '<div><dt>Swept</dt><dd data-tally="' + POOL.length + '">' + POOL.length + '</dd></div>' +
           '<div class="is-go"><dt>Cleared</dt><dd data-tally="' + clearedCount + '">' + clearedCount + '</dd></div>' +
           '<div><dt>Second look</dt><dd data-tally="' + nearMiss.length + '" data-tally-delay="250">' + nearMiss.length + '</dd></div>' +
-          '<div><dt>Next sweep</dt><dd><span class="mono" data-countdown>—</span></dd></div>' +
+          '<div><dt>Sweep starts</dt><dd><span class="mono" data-countdown>—</span></dd></div>' +
         '</dl>' +
-        tourEntry(drop) +
-        '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
+        landingNote() +
         (sinceLastVisit ? '<p class="drophead__since">' + sinceLastVisit + ' new in the net since your last visit</p>' : '') +
         '<details class="anchorfold"' + (anchors.length || profile.income ? ' open' : '') + '>' +
           '<summary>' + C.icon('commute') + '<span>Personalize: commute and income</span>' +
@@ -1231,7 +1293,8 @@
         '</details>' +
       '</header>' +
       standouts(drop) +
-      (drop.length ? '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
+      (drop.length ? '<p class="dropgrid__rank">' + C.icon('grade') + '<span>Ranked by VERA score plus the building’s city record, so a well-kept building can outrank a slightly higher score.</span></p>' +
+          '<div class="dropgrid">' + drop.map(dropCard).join('') + '</div>'
         : '<div class="dropempty">' +
             '<svg width="86" height="86" viewBox="0 0 24 24" aria-hidden="true" class="dropempty__mark"><circle cx="12" cy="12" r="9.25" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".35"/><path d="M12 12 L12 2.75 A9.25 9.25 0 0 1 20.01 7.38 Z" fill="#4cc38a" opacity=".75"/></svg>' +
             '<h2>Nothing cleared the bar today</h2>' +
@@ -1239,11 +1302,12 @@
             funnel() +
             '<p class="dropempty__close">The bar does not move on a slow day. <a href="#/market">See what the market is doing ↗</a></p>' +
           '</div>') +
+      '<p class="drophead__trust">We passed on ' + passedCount + ': ' + esc(reasonBits || 'nothing else in the net') + '. <a href="#/browse">Every listing is still inspectable ↗</a></p>' +
       recordsWarning() +
       memorialLine() +
       (bubble.length ?
-        '<section class="bubble"><h2 class="bubble__title">On the bubble</h2>' +
-        '<p class="bubble__hint">Strong records that failed exactly one gate — usually verification. Worth a look with your eyes open, not your deposit.' +
+        '<section class="bubble"><h2 class="bubble__title">Second look</h2>' +
+        '<p class="bubble__hint">The ' + nearMiss.length + ' listings the engine rated “pursue cautiously” or “needs a human read” that missed at least one gate; the ' + bubble.length + ' highest-scored are here. Worth a look with your eyes open, not your deposit.' +
           (whisker > bubble.length
             ? ' <b>' + whisker + '</b> of tonight’s came within a point of clearing; the ' + bubble.length + ' strongest are here.'
             : '') +
@@ -1538,8 +1602,9 @@
     { key: 'value_delta', label: 'Value', render: function (l) { return l.value_delta == null ? '<span class="t-dim">—</span>' : l.value_delta > 0 ? '<span class="t-under">' + l.value_delta + '% under</span>' : '<span class="t-over">' + (-l.value_delta) + '% over</span>'; } },
     { key: 'title', label: 'Listing', render: function (l) {
       var title = l.title || l.address_normalized || 'Listing';
-      return '<button type="button" class="t-title" data-open="' + esc(l.listing_uid) + '" aria-label="Open ledger for ' + esc(title) + '">' +
-        '<span class="t-title__name">' + esc(title) + '</span><span class="t-title__action" aria-hidden="true">Open ledger</span></button>' +
+      /* The name is built from the visible words, so speech and sight agree. */
+      return '<button type="button" class="t-title" data-open="' + esc(l.listing_uid) + '">' +
+        '<span class="sr-only">Open ledger for </span><span class="t-title__name">' + esc(title) + '</span><span class="t-title__action" aria-hidden="true">Open ledger</span></button>' +
         browseTrustLine(l);
     } },
     { key: 'neighborhood', label: 'Hood', render: function (l) { return '<span class="t-dim">' + esc(l.neighborhood || '—') + '</span>'; } },
@@ -1595,7 +1660,7 @@
           '<p class="workspacehead__lede">Search once, compare the evidence, keep the city record beside the listing.</p></div>' +
           '<dl class="workspace-metrics" aria-label="Current VERA publication">' +
             '<div><dt>Net</dt><dd>' + POOL.length + '</dd></div>' +
-            '<div><dt>Filtered</dt><dd>' + f.length + '</dd></div>' +
+            '<div><dt>Shown</dt><dd data-browse-shown>' + f.length + '</dd></div>' +
             '<div><dt>Clear</dt><dd>' + clearCount + '</dd></div>' +
             '<div><dt>Mapped</dt><dd>' + mappedCount + '</dd></div>' +
           '</dl>' +
@@ -1607,7 +1672,7 @@
         '</div>' +
         '<div class="dtoolbar" role="search">' +
           '<label class="command-search"><span class="sr-only">Search listings</span>' +
-            '<input type="search" name="vera-search" autocomplete="off" placeholder="Search the four-borough net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
+            '<input type="search" name="vera-search" autocomplete="off" enterkeyhint="search" placeholder="Search the four-borough net by listing, neighborhood, address, or source…" value="' + esc(state.q) + '" data-q aria-label="Search listings" aria-keyshortcuts="Meta+K Control+K">' +
             '<kbd aria-hidden="true">⌘K</kbd></label>' +
           '<span class="dtoolbar__count" data-browse-count aria-live="polite">' + f.length + ' matches · ' + renderedCount + ' loaded</span>' +
           '<span class="dtoolbar__density" aria-label="Result density">' +
@@ -1615,7 +1680,7 @@
             '<button type="button" data-density="compact" class="' + (state.density === 'compact' ? 'is-on' : '') + '">Dense</button>' +
           '</span>' +
         '</div>' +
-      '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '" aria-rowcount="' + (f.length + 1) + '">' +
+      '<div class="tablewrap"><table class="dt ' + (state.density === 'compact' ? 'is-compact' : '') + '" aria-rowcount="' + (f.length + 1) + '" data-browse-table>' +
         '<caption class="sr-only" data-browse-caption>' + browseLoadedText(renderedCount, f.length) + (renderedCount < f.length ? ' Use the control after the table to load more.' : '') + '</caption>' +
         '<thead><tr>' +
         COLS.map(function (c) {
@@ -1628,15 +1693,60 @@
       '</tr></thead><tbody data-browse-body>' +
         (f.length ? browseRows(f.slice(0, renderedCount), openUid) : '<tr><td colspan="' + COLS.length + '" class="dt__empty">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>') +
       '</tbody></table></div>' +
-      (renderedCount < f.length ? '<div class="browse-more"><p data-browse-progress aria-live="polite" aria-atomic="true">' + browseLoadedText(renderedCount, f.length) + '</p>' +
-        '<button type="button" data-browse-more>' + browseMoreText(renderedCount, f.length) + '</button></div>' : '') +
+      '<div class="browse-more" data-browse-moreblock' + (renderedCount < f.length ? '' : ' hidden') + '><p data-browse-progress aria-live="polite" aria-atomic="true">' + browseLoadedText(renderedCount, f.length) + '</p>' +
+        '<button type="button" data-browse-more>' + browseMoreText(renderedCount, f.length) + '</button></div>' +
       '</section>';
 
+    /* Search refreshes the results in place. The field itself is never
+       rebuilt, so the caret, an IME composition, and a phone's keyboard all
+       stay exactly where the reader left them. */
+    function refreshResults() {
+      f = filtered();
+      renderedCount = Math.min(BROWSE_BATCH, f.length);
+      var shown = $('[data-browse-shown]', page);
+      if (shown) shown.textContent = f.length;
+      var table = $('[data-browse-table]', page);
+      if (table) table.setAttribute('aria-rowcount', String(f.length + 1));
+      var body = $('[data-browse-body]', page);
+      if (body) body.innerHTML = f.length ? browseRows(f.slice(0, renderedCount), openUid) : '<tr><td colspan="' + COLS.length + '" class="dt__empty">Nothing matches this lens. Widen a tier or clear a filter.</td></tr>';
+      syncLoaded();
+      syncPressed(page);
+      renderFilters();
+    }
+    function syncLoaded(fromMore) {
+      var count = $('[data-browse-count]', page);
+      if (count) count.textContent = f.length + ' matches · ' + renderedCount + ' loaded';
+      var caption = $('[data-browse-caption]', page);
+      if (caption) caption.textContent = browseLoadedText(renderedCount, f.length) + (renderedCount < f.length ? ' Use the control after the table to load more.' : '');
+      var progress = $('[data-browse-progress]', page);
+      if (progress) progress.textContent = browseLoadedText(renderedCount, f.length);
+      var done = renderedCount >= f.length;
+      var block = $('[data-browse-moreblock]', page);
+      var btn = $('[data-browse-more]', page);
+      /* Loading the last batch keeps its "all loaded" line; a new search
+         that fits in one batch needs no control at all. */
+      if (block && !fromMore) block.hidden = done;
+      if (btn) {
+        btn.hidden = done;
+        if (!done) btn.textContent = browseMoreText(renderedCount, f.length);
+      }
+    }
+
     var qEl = $('[data-q]', page);
-    qEl.addEventListener('input', function () {
+    qEl.addEventListener('input', function (e) {
       state.q = qEl.value;
       clearTimeout(qEl._t);
-      qEl._t = setTimeout(function () { renderRoute(); var q2 = $('[data-q]'); if (q2) { q2.focus(); q2.setSelectionRange(q2.value.length, q2.value.length); } }, 160);
+      if (e.isComposing) return;
+      qEl._t = setTimeout(refreshResults, 160);
+    });
+    qEl.addEventListener('compositionend', function () {
+      state.q = qEl.value;
+      clearTimeout(qEl._t);
+      qEl._t = setTimeout(refreshResults, 160);
+    });
+    /* Enter puts the keyboard away; the results are already live. */
+    qEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.isComposing) { e.preventDefault(); qEl.blur(); }
     });
     var more = $('[data-browse-more]', page);
     if (more) more.addEventListener('click', function () {
@@ -1646,17 +1756,8 @@
       if (!body || end <= start) return;
       body.insertAdjacentHTML('beforeend', browseRows(f.slice(start, end), openUid));
       renderedCount = end;
-      var count = $('[data-browse-count]', page);
-      if (count) count.textContent = f.length + ' matches · ' + renderedCount + ' loaded';
-      var caption = $('[data-browse-caption]', page);
-      if (caption) caption.textContent = browseLoadedText(renderedCount, f.length) + (renderedCount < f.length ? ' Use the control after the table to load more.' : '');
-      var progress = $('[data-browse-progress]', page);
-      if (progress) progress.textContent = browseLoadedText(renderedCount, f.length);
-      if (renderedCount >= f.length) {
-        more.hidden = true;
-      } else {
-        more.textContent = browseMoreText(renderedCount, f.length);
-      }
+      syncLoaded(true);
+      syncPressed(page);
       var firstNewOpen = $$('tr[data-listing-row] .t-title[data-open]', body)[start];
       if (firstNewOpen) firstNewOpen.focus();
     });
@@ -1770,10 +1871,12 @@
       (sorted.length ? '<div class="walklist">' + sorted.map(function (l) {
         var t = C.nearestStation(l);
         var title = l.title || l.address_normalized || 'listing';
-        var action = state.atlasMode === 'map'
-          ? ' data-atlas-focus="' + esc(l.listing_uid) + '" aria-label="Focus ' + esc(title) + ' on the Atlas map"'
-          : ' data-open="' + esc(l.listing_uid) + '" aria-label="Open ledger for ' + esc(title) + '"';
+        /* Names come from the visible words plus a spoken verb, so speech
+           and sight never disagree. */
+        var onMap = state.atlasMode === 'map';
+        var action = onMap ? ' data-atlas-focus="' + esc(l.listing_uid) + '"' : ' data-open="' + esc(l.listing_uid) + '"';
         return '<button type="button" class="walkrow"' + action + '>' +
+          '<span class="sr-only">' + (onMap ? 'Show on the map: ' : 'Open ledger for ') + '</span>' +
           '<span class="walkrow__min">' + (t ? '≈' + t.mins : '—') + '<small>min</small></span>' +
           '<span class="walkrow__body"><b>' + esc(title) + '</b>' +
           '<span>' + (t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'no station within reach') + '</span></span>' +
@@ -2324,7 +2427,9 @@
     page.innerHTML =
       '<header class="pagehead"><p class="kicker">System</p>' +
       '<h1 class="pagehead__title">The machine behind the drop</h1>' +
-      '<p class="pagehead__lede">VERA sweeps nightly, reads public records, scores what it finds, and publishes this sanitized public lens. It never contacts landlords, never files anything, never pretends a gap is a fact.</p></header>' +
+      '<p class="pagehead__lede">VERA sweeps nightly, reads public records, scores what it finds, and publishes this sanitized public lens. It never contacts landlords, never files anything, never pretends a gap is a fact.</p>' +
+      '<p class="pagehead__actions"><button type="button" class="ghostbtn" data-check-drop>' + C.icon('refresh') + '<span>Check for a new drop</span></button>' +
+        '<span>Published ' + esc(timeago(D.generated_at)) + '</span></p></header>' +
       '<div class="stages">' + order.map(function (name) {
         var st = stages[name] || {};
         var cls = st.status === 'success' ? 'is-ok' : st.status === 'running' ? 'is-run' : st.status ? 'is-bad' : '';
@@ -2388,6 +2493,9 @@
     }
     if (LEGACY[h]) h = LEGACY[h];
     if (ROUTES.indexOf(h) === -1) h = 'today';
+    if (h !== 'today' && window.__VERAM && window.__VERAM.snapRelease) window.__VERAM.snapRelease();
+    /* Atlas warms its map while the list is read, so Map view opens at once. */
+    if (h === 'atlas') idleSoon(function () { loadMapAssets().catch(function () { mapAssetState = 'idle'; mapAssetPromise = null; }); });
     state.route = h;
     $$('[data-nav]').forEach(function (a) {
       var on = a.getAttribute('data-nav') === h;
@@ -2505,8 +2613,9 @@
               else if (+live.rent && +r.rent && +live.rent < +r.rent) { badge = 'price dropped to ' + money(live.rent); cls = 'is-drop'; }
               else { badge = 'still listed'; cls = 'is-live'; }
               var tag = live ? 'button type="button"' : 'div';
-              var attrs = live ? ' data-open="' + esc(r.listing_uid) + '" aria-label="Open ledger for ' + esc(r.address_normalized || r.title || 'listing') + '"' : '';
+              var attrs = live ? ' data-open="' + esc(r.listing_uid) + '"' : '';
               return '<' + tag + ' class="arcrow' + (live ? '"' : ' arcrow--dead"') + attrs + '>' +
+                (live ? '<span class="sr-only">Open ledger for </span>' : '') +
                 '<b>' + esc(C.titleCase(String(r.address_normalized || r.title || 'listing').toLowerCase())) + '</b>' +
                 '<span>' + money(r.rent) + ' · ' + esc(r.neighborhood || '—') + '</span>' +
                 '<span class="arcrow__badge ' + cls + '">' + badge + '</span></' + (live ? 'button' : 'div') + '>';
@@ -2932,7 +3041,7 @@
       return;
     }
     if (t.hasAttribute && t.hasAttribute('data-profile-income')) {
-      profile.income = +t.value || 0;
+      profile.income = +String(t.value).replace(/[^0-9.]/g, '') || 0;
       saveProfile();
       renderRoute();
       return;
@@ -3071,7 +3180,7 @@
        it is no longer shipped in index.html and arrives only under ?test=1. */
     if (TESTMODE) {
       if (window.__VERAT) window.__VERAT.run();
-      else loadScript('./assets/js/vera-tests.js?v=58').then(function () {
+      else loadScript('./assets/js/vera-tests.js?v=59').then(function () {
         if (window.__VERAT) window.__VERAT.run();
       }, function () {
         window.__testResults = { pass: false, results: [{ name: 'test suite loads on demand', ok: false, detail: 'vera-tests.js failed to load' }] };
@@ -3275,11 +3384,76 @@
     if (D || document.visibilityState !== 'visible') return;
     boot();
   }
+  /* A Home Screen VERA is resumed, not reloaded. On return, and on request
+     from System, look for a newer publication and adopt it when nothing in
+     progress would be lost; otherwise the next return tries again. */
+  var lastDropCheck = 0;
+  function checkForNewDrop(manual) {
+    if (!D) return Promise.resolve('none');
+    var age = Date.now() - (Date.parse(D.generated_at) || 0);
+    if (!manual && (age < 12 * 3.6e6 || Date.now() - lastDropCheck < 10 * 60000)) return Promise.resolve('skip');
+    lastDropCheck = Date.now();
+    return fetch(FEEDS[0].url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+      if (!data || !Array.isArray(data.pool) || !Array.isArray(data.shortlist) || typeof data.generated_at !== 'string') return 'none';
+      if ((Date.parse(data.generated_at) || 0) <= (Date.parse(D.generated_at) || 0)) return 'same';
+      var active = document.activeElement;
+      var busy = tour || (window.__VERAL && window.__VERAL.openUid()) || (active && /^(INPUT|SELECT|TEXTAREA)$/.test(active.tagName));
+      if (busy && !manual) { lastDropCheck = 0; return 'later'; }
+      if (tour) closeTour(false);
+      tourResume = null;
+      servedFromCache = null;
+      adopt(data);
+      return 'new';
+    }).catch(function () { return 'error'; });
+  }
+  function resumeCheck() {
+    checkForNewDrop(false).then(function (result) {
+      if (result === 'new') toast('A new drop landed. VERA is up to date.');
+    });
+  }
   window.addEventListener('pageshow', function (event) {
-    if (event.persisted) recoverPublicationOnResume();
+    if (!event.persisted) return;
+    if (D) resumeCheck(); else recoverPublicationOnResume();
   });
   document.addEventListener('visibilitychange', function () {
-    if (document.visibilityState === 'visible' && !D) recoverPublicationOnResume();
+    if (document.visibilityState !== 'visible') return;
+    if (D) resumeCheck(); else recoverPublicationOnResume();
+  });
+  /* Share a listing's own deep link: the phone's share sheet where there is
+     one, the clipboard where there is not. Nothing leaves without a tap. */
+  function shareListing(uid) {
+    var l = byUid(uid);
+    if (!l) return;
+    var name = addressOf(l) || C.charName(l);
+    var t = C.nearestStation(l);
+    var m = C.moveInMath(l);
+    var url = location.origin + location.pathname + '#/listing/' + encodeURIComponent(uid);
+    var text = name + ' · ' + money(l.rent) + '/mo · ≈' + money(m.total) + ' to move in' +
+      (t ? ' · ≈' + t.mins + ' min to the subway' : '') + ' · building grade ' + C.stewardOf(l).grade;
+    if (navigator.share) {
+      navigator.share({ title: name + ' · VERA', text: text, url: url }).catch(function () {});
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(function () { toast('Link copied. It opens this listing in VERA.'); },
+        function () { toast('Copy this link: ' + url); });
+      return;
+    }
+    toast('Copy this link: ' + url);
+  }
+
+  document.addEventListener('click', function (e) {
+    var share = e.target.closest && e.target.closest('[data-share]');
+    if (share) { shareListing(share.getAttribute('data-share')); return; }
+    var btn = e.target.closest && e.target.closest('[data-check-drop]');
+    if (!btn) return;
+    btn.disabled = true;
+    checkForNewDrop(true).then(function (result) {
+      btn.disabled = false;
+      toast(result === 'new' ? 'A new drop landed. VERA is up to date.'
+        : result === 'same' ? 'You already have the latest drop.'
+        : 'VERA could not reach the feed. Try again in a moment.');
+    });
   });
 
   /* ================================================================
@@ -3290,11 +3464,27 @@
      ================================================================ */
   var currentDrop = [];
   var tour = null;
+  /* A tour keeps its place for the drop it belongs to, so Details, Back and
+     a mid-deck close all pick up where the renter left off. */
+  var tourResume = null;
+  var tourReopen = false;
+  var TOUR_EDGE = 24;
+
+  function dropKey(list) { return list.map(function (l) { return l.listing_uid; }).join('|'); }
+  function resumableTour(drop) {
+    var r = tourResume;
+    return r && r.key === dropKey(drop) && r.i > 0 && r.i < drop.length ? r : null;
+  }
+  function tourEntryNote(drop) {
+    var r = resumableTour(drop);
+    return r ? 'Pick up at ' + (r.i + 1) + ' of ' + drop.length + '. Swipe to save or pass.'
+      : drop.length + ' apartments, one at a time. Swipe to save or pass.';
+  }
 
   function tourEntry(drop) {
     if (drop.length < 2) return '';
     return '<button type="button" class="tourbtn" data-tour-open>' + C.icon('compass') +
-      '<span><b>Tour the drop</b><small>' + drop.length + ' apartments, one at a time. Swipe to save or pass.</small></span>' +
+      '<span><b>Tour the drop</b><small data-tour-note>' + tourEntryNote(drop) + '</small></span>' +
       C.icon('arrow', 'ico--end') + '</button>';
   }
 
@@ -3334,7 +3524,7 @@
         '<p class="dropcard__hood">' + C.icon('pin') + '<span>' + hood + ' · ' + unit + '</span></p>' +
         '<dl class="dropcard__facts">' +
           factCell('train', 'Subway', t ? '≈' + t.mins + ' min walk' : 'No station matched', t ? C.lineBullets(t.lines) + ' ' + esc(t.name) : 'verify the walk yourself') +
-          factCell('cash', 'Move-in cash', '≈ ' + money(m.total), 'no broker fee') +
+          factCell('cash', 'Move-in cash', '≈ ' + money(m.total), esc(m.fee.short)) +
           factCell('building', 'Building', 'Grade ' + stew.grade + ' · ' + esc(stew.word), stew.score != null ? stew.score + '/100' : 'record thin', 'steward--' + stew.grade) +
           factCell('owner', 'Landlord', esc(ownerName), '<span class="tag ' + owner.cls + '">' + owner.label + '</span>') +
         '</dl>' +
@@ -3361,39 +3551,71 @@
       '</div></article>';
   }
 
-  function renderTourCard(arriving) {
+  /* One sentence per action for screen readers: what happened, then what is
+     in front of you now. The visible counter stays silent. */
+  function tourSay(what) {
+    if (!tour) return;
+    var total = tour.list.length;
+    var next = tour.i >= total
+      ? 'Tour complete: you saved ' + tour.saved.length + ' of ' + total + '.'
+      : (tour.i + 1) + ' of ' + total + ': ' + (addressOf(tour.list[tour.i]) || C.charName(tour.list[tour.i])) + ', ' + money(tour.list[tour.i].rent) + ' a month.';
+    var status = tour.el.querySelector('[data-tour-status]');
+    if (status) status.textContent = (what ? what + ' ' : '') + next;
+  }
+
+  function rememberTour(t) {
+    tourResume = t && t.i < t.list.length
+      ? { key: t.key, i: t.i, saved: t.saved.slice(), history: t.history.slice() }
+      : null;
+  }
+
+  function renderTourCard(arriving, focusCard) {
     if (!tour) return;
     var total = tour.list.length;
     var stage = tour.el.querySelector('[data-tour-stage]');
     var count = tour.el.querySelector('[data-tour-count]');
     var bar = tour.el.querySelector('[data-tour-bar]');
     var actions = tour.el.querySelector('[data-tour-actions]');
+    var undo = tour.el.querySelector('[data-tour-undo]');
     var done = tour.i >= total;
+    if (undo) undo.disabled = !tour.history.length;
     bar.style.transform = 'scaleX(' + (Math.min(tour.i + (done ? 0 : 1), total) / total) + ')';
+    /* A card on its way out keeps animating on top; the next one is already
+       underneath and taking input. */
+    $$('[data-tour-card]', stage).forEach(function (n) { n.remove(); });
+    actions.hidden = done;
+    tour.el.classList.toggle('is-complete', done);
     if (done) {
       count.textContent = 'Tour complete';
-      stage.innerHTML = tourEnd();
-      actions.hidden = true;
-      tour.el.classList.add('is-complete');
-      var first = stage.querySelector('button');
+      stage.insertAdjacentHTML('beforeend', tourEnd());
+      var first = stage.querySelector('[data-tour-card] button');
       if (first) first.focus();
       return;
     }
     var l = tour.list[tour.i];
     count.textContent = (tour.i + 1) + ' of ' + total;
-    stage.innerHTML = tourCard(l, tour.i);
+    stage.insertAdjacentHTML('beforeend', tourCard(l, tour.i));
     var card = stage.querySelector('[data-tour-card]');
-    if (arriving && !RM) card.classList.add('is-arriving');
+    if (arriving && !RM) {
+      card.classList.add('is-arriving');
+      card.addEventListener('animationend', function () { card.classList.remove('is-arriving'); }, { once: true });
+    }
     bindSwipe(card);
     var save = tour.el.querySelector('[data-tour-save]');
     var already = isSaved(l.listing_uid);
     save.setAttribute('aria-pressed', already ? 'true' : 'false');
     save.innerHTML = C.icon(already ? 'saved' : 'hunt') + '<span>' + (already ? 'Saved' : 'Save') + '</span>';
+    if (focusCard) {
+      var body = card.querySelector('.tourcard__body');
+      if (body) { try { body.focus({ preventScroll: true }); } catch (e) { body.focus(); } }
+    }
   }
 
-  function openTour() {
+  function openTour(fromHistory) {
     if (tour || currentDrop.length < 2) return;
-    tour = { list: currentDrop.slice(), i: 0, saved: [], busy: false, el: null };
+    var key = dropKey(currentDrop);
+    var r = tourResume && tourResume.key === key && tourResume.i < currentDrop.length ? tourResume : null;
+    tour = { key: key, list: currentDrop.slice(), i: r ? r.i : 0, saved: r ? r.saved.slice() : [], history: r ? r.history.slice() : [], el: null, ownsEntry: false };
     var el = document.createElement('div');
     el.className = 'tour';
     el.setAttribute('role', 'dialog');
@@ -3403,37 +3625,52 @@
     el.innerHTML =
       '<div class="tour__top">' +
         '<h2 class="tour__title" id="vera-tour-title">Tour the drop</h2>' +
-        '<p class="tour__count" data-tour-count aria-live="polite"></p>' +
+        '<p class="tour__count" data-tour-count></p>' +
+        '<button type="button" class="tour__undo" data-tour-undo disabled>' + C.icon('undo') + '<span>Undo</span></button>' +
         '<button type="button" class="tour__close" data-tour-close aria-label="Close the tour">' + C.icon('close') + '</button>' +
         '<span class="tour__bar" aria-hidden="true"><i data-tour-bar></i></span>' +
       '</div>' +
+      '<p class="sr-only" role="status" aria-live="polite" data-tour-status></p>' +
       '<div class="tour__stage" data-tour-stage></div>' +
       '<div class="tour__actions" data-tour-actions>' +
         '<button type="button" class="tour__act tour__act--pass" data-tour-pass>' + C.icon('skip') + '<span>Pass</span></button>' +
         '<button type="button" class="tour__act tour__act--info" data-tour-details>' + C.icon('ledger') + '<span>Details</span></button>' +
         '<button type="button" class="tour__act tour__act--save" data-tour-save>' + C.icon('hunt') + '<span>Save</span></button>' +
       '</div>' +
-      '<p class="tour__hint"><span class="tour__hint--touch">Swipe right to save, left to pass.</span><span class="tour__hint--keys">Keyboard: → saves, ← passes, Esc closes. Dragging the card works too.</span></p>';
+      '<p class="tour__hint"><span class="tour__hint--touch">Swipe right to save, left to pass.</span><span class="tour__hint--keys">Keyboard: → saves, ← passes, Backspace undoes, Esc closes.</span></p>';
     document.body.appendChild(el);
     tour.el = el;
     var shell = $('[data-shell]');
     if (shell) shell.setAttribute('inert', '');
     document.documentElement.classList.add('vera-tour-open');
+    /* The deck is a place in history: Back closes it instead of leaving
+       Today, and a ledger opened from it comes back to it. */
+    if (fromHistory) tour.ownsEntry = true;
+    else {
+      try { history.pushState({ veraTour: 1 }, '', location.href); tour.ownsEntry = true; } catch (e) {}
+    }
     renderTourCard(false);
     if (RM) el.classList.add('is-open');
     else requestAnimationFrame(function () { el.classList.add('is-open'); });
     var save = el.querySelector('[data-tour-save]');
-    if (save) save.focus();
+    if (save && tour.i < tour.list.length) save.focus();
+    tourSay(r ? 'Picking up where you left off.' : '');
   }
 
-  function closeTour(restoreFocus) {
+  function closeTour(restoreFocus, keepEntry) {
     if (!tour) return;
     var t = tour;
     tour = null;
+    rememberTour(t);
     var shell = $('[data-shell]');
     if (shell) shell.removeAttribute('inert');
     document.documentElement.classList.remove('vera-tour-open');
     t.el.remove();
+    if (t.ownsEntry && !keepEntry && history.state && history.state.veraTour) {
+      try { history.back(); } catch (e) {}
+    }
+    var note = $('[data-tour-note]');
+    if (note) note.textContent = tourEntryNote(currentDrop);
     if (restoreFocus !== false) {
       var opener = $('[data-tour-open]');
       if (opener) opener.focus();
@@ -3441,29 +3678,67 @@
   }
 
   function commitTour(kind, card) {
-    if (!tour || tour.busy || tour.i >= tour.list.length) return;
+    if (!tour || tour.i >= tour.list.length) return;
     var l = tour.list[tour.i];
+    var uid = l.listing_uid;
+    var entry = { uid: uid, kind: kind, prev: caseOf(uid) ? caseOf(uid).stage : null, changed: false, added: false };
     if (kind === 'save') {
-      var uid = l.listing_uid;
-      if (!isSaved(uid)) setStage(uid, 'saved', true);
-      if (tour.saved.indexOf(uid) < 0) tour.saved.push(uid);
+      if (!isSaved(uid)) { setStage(uid, 'saved', true); entry.changed = true; }
+      if (tour.saved.indexOf(uid) < 0) { tour.saved.push(uid); entry.added = true; }
       syncCardSave(uid, true);
       if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} }
     }
+    tour.history.push(entry);
     card = card || tour.el.querySelector('[data-tour-card]');
+    var hadFocus = !!(card && card.contains(document.activeElement));
     tour.i += 1;
-    if (RM || !card) { renderTourCard(false); return; }
-    var dir = kind === 'save' ? 1 : -1;
-    tour.busy = true;
-    card.classList.remove('is-dragging', 'is-arriving');
-    card.classList.add('is-leaving');
-    card.style.setProperty('--' + kind, '1');
-    card.style.transform = 'translateX(' + (dir * 115) + '%) rotate(' + (dir * 12) + 'deg)';
-    setTimeout(function () {
-      if (!tour) return;
-      tour.busy = false;
-      renderTourCard(true);
-    }, 230);
+    if (card) {
+      /* The leaving card stops being the card: it no longer matches queries,
+         takes input, or speaks, and is gone when its exit ends. */
+      card.removeAttribute('data-tour-card');
+      card.setAttribute('aria-hidden', 'true');
+      if (RM) card.remove();
+      else {
+        var dir = kind === 'save' ? 1 : -1;
+        card.classList.remove('is-dragging', 'is-arriving');
+        card.classList.add('is-leaving');
+        card.style.setProperty('--' + kind, '1');
+        card.style.transform = 'translateX(' + (dir * 115) + '%) rotate(' + (dir * 12) + 'deg)';
+        var gone = false;
+        var drop = function () { if (!gone) { gone = true; card.remove(); } };
+        card.addEventListener('transitionend', function (e) { if (e.target === card) drop(); });
+        setTimeout(drop, 360);
+      }
+    }
+    renderTourCard(true, hadFocus);
+    if (card && card.isConnected) card.inert = true;
+    rememberTour(tour);
+    tourSay(kind === 'save' ? 'Saved to My hunt.' : 'Passed.');
+  }
+
+  /* One step back: the card returns, and a save the tour made is unmade. */
+  function undoTour() {
+    if (!tour || !tour.history.length) return;
+    var entry = tour.history.pop();
+    if (entry.changed) {
+      if (entry.prev == null) { delete cases[entry.uid]; saveCases(); }
+      else setStage(entry.uid, entry.prev, true);
+    }
+    if (entry.added) tour.saved = tour.saved.filter(function (u) { return u !== entry.uid; });
+    syncCardSave(entry.uid, isSaved(entry.uid));
+    var stage = tour.el.querySelector('[data-tour-stage]');
+    var hadFocus = !!(stage && stage.contains(document.activeElement));
+    var undoBtn = tour.el.querySelector('[data-tour-undo]');
+    var fromUndo = document.activeElement === undoBtn;
+    tour.i = Math.max(0, tour.i - 1);
+    renderTourCard(true, hadFocus);
+    /* the last undo disables its own button; focus moves to Save, not away */
+    if (fromUndo && undoBtn.disabled) {
+      var save = tour.el.querySelector('[data-tour-save]');
+      if (save) save.focus();
+    }
+    rememberTour(tour);
+    tourSay(entry.kind === 'save' ? 'Undone: removed from My hunt. Back to' : 'Undone. Back to');
   }
 
   function bindSwipe(card) {
@@ -3475,6 +3750,9 @@
     }
     card.addEventListener('pointerdown', function (e) {
       if ((e.pointerType === 'mouse' && e.button !== 0) || (e.target.closest && e.target.closest('button,a'))) return;
+      /* A touch that starts at the screen edge belongs to the system's own
+         back and forward gestures, not to the deck. */
+      if (e.pointerType === 'touch' && (e.clientX < TOUR_EDGE || e.clientX > window.innerWidth - TOUR_EDGE)) return;
       id = e.pointerId; startX = e.clientX; startY = e.clientY; dx = 0; lock = null; t0 = performance.now();
     });
     card.addEventListener('pointermove', function (e) {
@@ -3483,6 +3761,8 @@
       if (lock === null && (Math.abs(mx) > 8 || Math.abs(my) > 8)) {
         lock = Math.abs(mx) > Math.abs(my) ? 'x' : 'y';
         if (lock === 'x') {
+          /* the arrival animation would override the finger's transform */
+          card.classList.remove('is-arriving');
           card.classList.add('is-dragging');
           try { card.setPointerCapture(id); } catch (err) {}
         }
@@ -3516,11 +3796,13 @@
     if (!tour) return;
     if (e.key === 'Escape') { e.preventDefault(); closeTour(); return; }
     var inField = e.target && /^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName);
-    if (!inField && e.key === 'ArrowRight') { e.preventDefault(); commitTour('save'); return; }
-    if (!inField && e.key === 'ArrowLeft') { e.preventDefault(); commitTour('pass'); return; }
+    var mod = e.metaKey || e.ctrlKey;
+    if (!inField && (e.key === 'Backspace' || (mod && !e.shiftKey && (e.key === 'z' || e.key === 'Z')))) { e.preventDefault(); undoTour(); return; }
+    if (!inField && !mod && !e.altKey && e.key === 'ArrowRight') { e.preventDefault(); commitTour('save'); return; }
+    if (!inField && !mod && !e.altKey && e.key === 'ArrowLeft') { e.preventDefault(); commitTour('pass'); return; }
     if (e.key === 'Tab') {
-      var items = $$('button, [href], [tabindex]:not([tabindex="-1"])', tour.el).filter(function (n) {
-        return !n.closest('[hidden]') && n.getClientRects().length;
+      var items = $$('button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])', tour.el).filter(function (n) {
+        return !n.closest('[hidden],[inert],[aria-hidden="true"]') && n.getClientRects().length;
       });
       if (!items.length) return;
       var first = items[0], last = items[items.length - 1];
@@ -3529,7 +3811,21 @@
     }
   });
 
-  window.addEventListener('hashchange', function () { if (tour) closeTour(false); });
+  window.addEventListener('popstate', function (e) {
+    if (tour && !(e.state && e.state.veraTour)) { tour.ownsEntry = false; closeTour(); }
+  });
+  window.addEventListener('hashchange', function () {
+    if (tour) { tour.ownsEntry = false; closeTour(false); }
+  });
+  /* Details hands the deck to the ledger; closing the ledger hands it back,
+     unless the renter went somewhere else from there. */
+  document.addEventListener('vera:ledger-closed', function () {
+    if (!tourReopen) return;
+    tourReopen = false;
+    if (tour || state.route !== 'today' || !/^(#\/?(today)?)?$/.test(location.hash || '')) return;
+    if (!tourResume || tourResume.key !== dropKey(currentDrop)) return;
+    openTour(!!(history.state && history.state.veraTour));
+  });
 
   document.addEventListener('click', function (e) {
     var save = e.target.closest && e.target.closest('[data-quicksave]');
@@ -3544,16 +3840,23 @@
       }
       return;
     }
-    var tourBtn = e.target.closest && e.target.closest('[data-tour-open],[data-tour-close],[data-tour-save],[data-tour-pass],[data-tour-details],[data-tour-hunt]');
+    var tourBtn = e.target.closest && e.target.closest('[data-tour-open],[data-tour-close],[data-tour-save],[data-tour-pass],[data-tour-undo],[data-tour-details],[data-tour-hunt]');
     if (tourBtn) {
       if (tourBtn.hasAttribute('data-tour-open')) openTour();
       else if (tourBtn.hasAttribute('data-tour-close')) closeTour();
       else if (tourBtn.hasAttribute('data-tour-save')) commitTour('save');
       else if (tourBtn.hasAttribute('data-tour-pass')) commitTour('pass');
-      else if (tourBtn.hasAttribute('data-tour-hunt')) { closeTour(false); location.hash = '#/hunt'; }
+      else if (tourBtn.hasAttribute('data-tour-undo')) undoTour();
+      else if (tourBtn.hasAttribute('data-tour-hunt')) {
+        /* leave the deck's history entry behind as a plain Today entry */
+        closeTour(false, true);
+        try { if (history.state && history.state.veraTour) history.replaceState(null, '', location.href); } catch (err) {}
+        location.hash = '#/hunt';
+      }
       else if (tourBtn.hasAttribute('data-tour-details') && tour) {
         var openUid = (tour.list[tour.i] || {}).listing_uid;
-        closeTour(false);
+        tourReopen = !!openUid;
+        closeTour(false, true);
         if (openUid && window.__VERAL) window.__VERAL.open(openUid);
       }
       return;
@@ -3563,9 +3866,24 @@
       var card = document.querySelector('[data-drop-uid="' + jump.getAttribute('data-standout') + '"]');
       if (!card) return;
       card.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' });
-      card.classList.remove('is-spotlit');
-      void card.offsetWidth;
-      card.classList.add('is-spotlit');
+      /* Focus travels with the reader; the spotlight waits for the scroll to
+         land so it is seen, not spent mid-flight. */
+      card.setAttribute('tabindex', '-1');
+      try { card.focus({ preventScroll: true }); } catch (err) { card.focus(); }
+      var lit = false;
+      var spot = function () {
+        if (lit) return;
+        lit = true;
+        card.classList.remove('is-spotlit');
+        void card.offsetWidth;
+        card.classList.add('is-spotlit');
+      };
+      if (RM) spot();
+      else {
+        var scroller = card.closest('.main') || window;
+        scroller.addEventListener('scrollend', spot, { once: true });
+        setTimeout(spot, 900);
+      }
     }
   });
 
@@ -3573,18 +3891,27 @@
      through one shared hidden map, so Today pays for streets it shows. */
   var snapIO = null;
   var snapScanQueued = false;
+  /* A re-render of Today reuses the stills it already made. */
+  var snapCache = {};
+  var snapCacheKeys = [];
   function renderSnap(el) {
     if (el.getAttribute('data-snap-state')) return;
     el.setAttribute('data-snap-state', 'loading');
-    loadMapAssets().then(function () {
+    /* Render at the size it is shown, so street names stay crisp. */
+    var baseW = +el.getAttribute('data-snap-w'), baseH = +el.getAttribute('data-snap-h');
+    var shownW = Math.round(el.getBoundingClientRect().width) || baseW;
+    var w = Math.max(240, Math.min(900, shownW));
+    var h = Math.round(w * baseH / baseW);
+    var key = [el.getAttribute('data-snap-lng'), el.getAttribute('data-snap-lat'), w, h, el.getAttribute('data-snap-zoom')].join(',');
+    (snapCache[key] ? Promise.resolve(snapCache[key]) : loadMapAssets().then(function () {
       if (!window.__VERAM || !window.__VERAM.snap) throw new Error('map module unavailable');
-      /* Render at the size it is shown, so street names stay crisp. */
-      var baseW = +el.getAttribute('data-snap-w'), baseH = +el.getAttribute('data-snap-h');
-      var shownW = Math.round(el.getBoundingClientRect().width) || baseW;
-      var w = Math.max(240, Math.min(900, shownW));
-      return window.__VERAM.snap(+el.getAttribute('data-snap-lng'), +el.getAttribute('data-snap-lat'),
-        w, Math.round(w * baseH / baseW), +el.getAttribute('data-snap-zoom'));
+      return window.__VERAM.snap(+el.getAttribute('data-snap-lng'), +el.getAttribute('data-snap-lat'), w, h, +el.getAttribute('data-snap-zoom'));
     }).then(function (url) {
+      snapCache[key] = url;
+      snapCacheKeys.push(key);
+      if (snapCacheKeys.length > 32) delete snapCache[snapCacheKeys.shift()];
+      return url;
+    })).then(function (url) {
       var img = el.querySelector('.snap__img');
       if (img) { img.src = url; img.hidden = false; }
       el.setAttribute('data-snap-state', 'ready');
@@ -3592,17 +3919,51 @@
       el.setAttribute('data-snap-state', 'failed');
     });
   }
+  /* Booting a map mid-scroll costs frames the reader can feel. Stills wait
+     for the scroll to settle, then render one per idle moment. */
+  var snapPending = [];
+  var snapDrainT = null;
+  var lastScrollAt = 0;
+  document.addEventListener('scroll', function () { lastScrollAt = performance.now(); }, { capture: true, passive: true });
+  function queueSnap(el) {
+    snapPending.push(el);
+    drainSnaps();
+  }
+  function drainSnaps() {
+    if (snapDrainT) return;
+    var wait = Math.max(0, 160 - (performance.now() - lastScrollAt));
+    snapDrainT = setTimeout(function () {
+      snapDrainT = null;
+      if (performance.now() - lastScrollAt < 150) { drainSnaps(); return; }
+      idleSoon(function () {
+        /* Skip anything that left the page or was hidden (a closed ledger)
+           while it waited; a later scan picks it up if it comes back. */
+        var el = snapPending.shift();
+        while (el && (!el.isConnected || !el.getClientRects().length)) {
+          if (el.isConnected) { el.removeAttribute('data-snap-watched'); if (snapIO) snapIO.unobserve(el); }
+          el = snapPending.shift();
+        }
+        if (el) renderSnap(el);
+        if (snapPending.length) drainSnaps();
+      });
+    }, wait);
+  }
+  function idleSoon(fn) {
+    if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 1200 });
+    else setTimeout(fn, 60);
+  }
+
   function scanSnaps() {
     snapScanQueued = false;
     var found = $$('[data-snap]:not([data-snap-state]):not([data-snap-watched])');
     if (!found.length) return;
-    if (!('IntersectionObserver' in window)) { found.forEach(renderSnap); return; }
+    if (!('IntersectionObserver' in window)) { found.forEach(queueSnap); return; }
     if (!snapIO) {
       snapIO = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           snapIO.unobserve(entry.target);
-          renderSnap(entry.target);
+          queueSnap(entry.target);
         });
       }, { rootMargin: '320px 0px' });
     }
@@ -3620,8 +3981,13 @@
      so the first Atlas open draws streets immediately instead of spending its
      first seconds on downloads. The map itself still boots only on open; a
      failed warm-up resets to idle so a real Atlas visit retries cleanly. */
-  var idleFn = window.requestIdleCallback || function (fn) { return setTimeout(fn, 1500); };
-  idleFn(function () {
+  /* Warm the map on intent (a finger or pointer heading for Atlas), never
+     on every visit to Today. */
+  function warmMap(e) {
+    if (!e.target.closest || !e.target.closest('[data-nav="atlas"]')) return;
     loadMapAssets().catch(function () { mapAssetState = 'idle'; mapAssetPromise = null; });
-  });
+  }
+  document.addEventListener('pointerdown', warmMap, { capture: true, passive: true });
+  document.addEventListener('focusin', warmMap);
+  if (window.matchMedia && window.matchMedia('(hover: hover)').matches) document.addEventListener('pointerover', warmMap, { passive: true });
 })();

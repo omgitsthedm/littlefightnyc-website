@@ -474,18 +474,31 @@
     guarantorRuleX: 80,
   };
 
+  /* What the listing itself says about a broker fee. VERA repeats the
+     listing and never assumes the fee away: under the FARE Act the party who
+     hired the broker pays, so a listed fee is a question, not a verdict. */
+  function feeState(l) {
+    var s = String((l && l.fee_status) || '').toLowerCase().replace(/[_-]+/g, ' ').trim();
+    if (s === 'no fee' || s === 'none') return { id: 'none', short: 'listing says no broker fee', row: '$0', rowNote: 'the listing says no fee' };
+    if (s === 'fee' || s === 'broker fee') return { id: 'listed', short: 'broker fee listed: ask who hired the broker', row: 'Listed', rowNote: 'FARE Act: not yours to pay if the landlord hired the broker' };
+    return { id: 'unknown', short: 'broker fee not stated: ask', row: 'Not stated', rowNote: 'ask before you pay anything' };
+  }
+
   function moveInMath(l) {
     var rent = +l.rent || 0;
     var deposit = rent * LAW.depositMaxMonths;
-    var vera = rent + deposit;              /* no broker fee, by construction */
-    var brokerWorld = rent * 1.5;
+    var vera = rent + deposit;              /* the lawful core; a broker fee is never added in */
+    /* 15% of a year's rent, the old New York custom. */
+    var brokerWorld = Math.round(rent * 12 * 0.15);
+    var fee = feeState(l);
     return {
+      fee: fee,
       rent: rent,
       deposit: deposit,
       appFee: rent ? LAW.appFeeMax : 0,
       total: vera + (rent ? LAW.appFeeMax : 0),
       brokerWorld: brokerWorld,
-      saved: brokerWorld,
+      saved: fee.id === 'none' ? brokerWorld : 0,
       annualIncomeNeeded: rent * LAW.incomeRuleX,
       guarantorIncomeNeeded: rent * LAW.guarantorRuleX,
       guarantorCost: Math.round(rent * LAW.guarantorTypicalPct),
@@ -802,7 +815,7 @@
     srcCls: srcCls, isFresh: isFresh, stabilized: stabilized, riskCls: riskCls, unitOf: unitOf,
     FIT: FIT, isFullFit: isFullFit, whyPassed: whyPassed, charName: charName, streetOf: streetOf, titleCase: titleCase,
     stewardOf: stewardOf, stewardText: stewardText, spatialLine: spatialLine,
-    LAW: LAW, moveInMath: moveInMath, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
+    LAW: LAW, moveInMath: moveInMath, feeState: feeState, CHECKS: CHECKS, checkGroups: checkGroups, TELLS: TELLS,
     protections: protections, VERIFY_TOOLS: VERIFY_TOOLS, LAW_SOURCES: LAW_SOURCES, MARKET: MARKET,
     portrait: portrait, hashOf: hashOf, skyOf: skyOf,
     MAP: { B: B, VW: VW, VH: VH, px: px, py: py, pt: pt, poly: poly, HUDSON: HUDSON, EASTRIVER: EASTRIVER, CENTRAL_PARK: CENTRAL_PARK, HOOD_PINS: HOOD_PINS },

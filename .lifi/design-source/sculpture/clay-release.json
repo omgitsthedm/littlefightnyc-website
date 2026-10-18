@@ -1,13 +1,24 @@
 {
   "direction": "Owner-approved October 12 clay neighborhood, transparent tile artwork, handmade buttons and public copy pass.",
   "protectedVeraCopyOverrides": {
-    "vera/index.html": "e9a21fcff910977bf685c437a852526a406464b477cc4298d99a64c5bac1c290",
-    "vera/sw.js": "248615ecc7ebdffb317a61b34e8a91a0e5d412df31664accc9fe8578c91effbc",
-    "vera/brand/index.html": "ffe6165ad99ce5f30ab2f058db47eaee1f8c2452b7c42b7dfc84703d8cd2c9aa",
-    "vera/assets/js/vera-core.js": "e9e5c15b823e3f7a570be46d35b9c56b55e1d3a18a5c1a57ec6a92e263176bd7",
-    "vera/assets/js/vera-app.js": "d4b955771586f3537cd6c4fee0ce2d56dfdf7e378ee111ddc81fb7d288688a96",
-    "vera/assets/js/vera-ledger.js": "5bdcbf42e7b6e569894374b6335329cce925657641a6972d649d1b057a4eecb9",
-    "vera/corrections/index.html": "abc326d137d5d4d344f896a07c79fd31a41a4b4850686a1fec80dd4a5f26f00b"
+    "vera/index.html": "f894ad39016a0ed028f9f56d8980ad119eba3ee732dd9b6e356d34d1e7260cc1",
+    "vera/sw.js": "a8ba8ac3ab230145606f8f6546b391a7cc754f104c134057a47c0c9f99334d42",
+    "vera/brand/index.html": "77a1c188c1cb0c7d1345f6755534effc0d8373427bc19f84714b98b6b7a2b403",
+    "vera/assets/js/vera-core.js": "1ffff512c086d51ae3a249a40339f51dbc60e2125127892961f49e4cee444fce",
+    "vera/assets/js/vera-app.js": "60ccb3cd0efe9916b180381ce1bdd4bb79e92adbff4a65b8ef8cef34b47a2b0c",
+    "vera/assets/js/vera-ledger.js": "48387ac4cf824b4f00f26e324c976afdc2898096fa25c0258644039229cdb82a",
+    "vera/corrections/index.html": "3d4b8de5b7dc5e863b3a8021951648b8308546944700514a43d85e4997ee20d9",
+    "vera/privacy/index.html": "0fbacfacd00da1f4f4b5b4f56a766e3f5f3266f032483bddf977df74f30f6ba4",
+    "vera/terms/index.html": "b2a5bdf3fc7e6ffcd4d496d530a722d527292fa77901c965876ec1ed1d615c37",
+    "vera/assets/css/doc.css": "dfc95d8cbf3040515e629a5e0406987d3177b51984b90be205b1162136ed399a",
+    "vera/assets/css/vera.css": "929fce10ef2a9849e3a0316217b22bf3d308ae9893012545b74e885fc0f297ac",
+    "vera/assets/js/vera-map.js": "d671ef397579aac7e644bff826271dadcccd68d278c407cdf27000ae499cad35",
+    "vera/assets/js/vera-tests.js": "acf0265d3c57ee1acf5bf0a4ad2b6e768e6a8c9f023e29c94cc940219edb2618",
+    "vera/assets/js/vera-boot.js": "619160439e0dee77520e087cd1147b2c5a7b681f40eaf9e924941ccbfdd21ef5",
+    "vera/assets/icons/vera-icons.svg": "627c6e2c10bf7b395069ebd28a922a74ae8b8e23ed17ca07652fbdc94e043f09",
+    "vera/assets/icons/icon-manifest.json": "b1ac0bd2102a25e297826faac0d244a47db0f3cb4f5d90c56b45c9b40eadb9f8",
+    "vera/assets/icons/LICENSE-PHOSPHOR.txt": "ddbe6082ec3cf979db47e5af549d2849c5d6182b3e005ef91ce1dbb9eb122f11",
+    "vera/assets/fonts/ibm-plex-serif-latin-400-normal.woff2": "cb2c5eee2c0a43ff30d2365407c7bc8b20e3bd90720a4a64102ba0b328022a02"
   },
   "assets": {
     "app/public/assets/clay-library/environment-cloud-cumulus.webp": "3f5f0dfbc0abf5d99fff8cd0dd7dbba9128c299aaf5abef10e9709f698a4b15d",

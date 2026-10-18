@@ -628,6 +628,8 @@
   }
 
   function mount(container, listings, onOpen, onFailure) {
+    /* Atlas brings its own map; the hidden snapshot map steps aside. */
+    if (!snapBusy && !snapQueue.length) releaseSnap();
     if (!available()) return null;
     /* Filter changes update this map in place. Release an older WebGL context
        only when Atlas genuinely rebuilds its map pane (for example List → Map). */
@@ -821,8 +823,9 @@
   /* ---------- listing street snapshots ----------
      A listing card needs real streets, not a schematic. One hidden map is
      reused for every listing in turn: it renders the same themed Liberty
-     style as Atlas, hands back a still image, and is released after a short
-     quiet period so no page keeps an extra WebGL context alive. */
+     style as Atlas, hands back a still image, and is released once nothing
+     is left to draw, or when the page leaves Today, so no page keeps an
+     extra WebGL context alive. The still is encoded off the main thread. */
   var SNAP_ZOOM = 15.4;
   var snapMap = null, snapHost = null, snapQueue = [], snapBusy = false, snapIdleT = null;
 
@@ -849,18 +852,30 @@
     var job = snapQueue.shift();
     var done = false;
     var timer = null;
+    function next() {
+      snapBusy = false;
+      if (snapQueue.length) { pumpSnap(); return; }
+      /* Stay warm only while the page still has streets left to draw. */
+      var more = Array.prototype.some.call(
+        document.querySelectorAll('[data-snap]:not([data-snap-state="ready"]):not([data-snap-state="failed"])'),
+        function (el) { return el.getClientRects().length > 0; });
+      snapIdleT = setTimeout(releaseSnap, more ? 30000 : 4000);
+    }
     function finish(error) {
       if (done) return;
       done = true;
       clearTimeout(timer);
-      if (error) job.reject(error);
-      else {
-        try { job.resolve(snapMap.getCanvas().toDataURL('image/webp', 0.84)); }
-        catch (e) { job.reject(e); }
+      if (error) { job.reject(error); next(); return; }
+      try {
+        snapMap.getCanvas().toBlob(function (blob) {
+          if (blob) job.resolve(URL.createObjectURL(blob));
+          else job.reject(new Error('street map encode failed'));
+          next();
+        }, 'image/webp', 0.84);
+      } catch (e) {
+        job.reject(e);
+        next();
       }
-      snapBusy = false;
-      if (snapQueue.length) pumpSnap();
-      else snapIdleT = setTimeout(releaseSnap, 5000);
     }
     try {
       if (!snapMap) {
@@ -900,5 +915,10 @@
     }
   }
 
-  window.__VERAM = { available: available, mount: mount, update: update, flyTo: flyTo, retry: retry, destroy: destroy, snap: snap };
+  function snapRelease() {
+    clearTimeout(snapIdleT);
+    if (!snapBusy && !snapQueue.length) releaseSnap();
+  }
+
+  window.__VERAM = { available: available, mount: mount, update: update, flyTo: flyTo, retry: retry, destroy: destroy, snap: snap, snapRelease: snapRelease };
 })();

@@ -370,15 +370,20 @@
       /* ---- phase 1: personal value math ---- */
       var valueData = app.D();
       var hadMarketContext = valueData.market_context;
+      /* Like with like: a studio is measured only against the studio series;
+         the all-sizes median alone never produces a value claim. */
+      var flat = [2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500];
       valueData.market_context = { series: { 'East Village': {
-        median_asking_rent: [2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500, 2500],
-        median_asking_rent_latest: 2500,
+        median_asking_rent: flat, median_asking_rent_latest: 4000,
+        by_unit: { studio: { median_asking_rent: flat, median_asking_rent_latest: 2500 } },
       } } };
       var evMed = 2500;
-      var vr = app.valueRead({ rent: Math.round(evMed * 0.9), neighborhood: 'East Village' });
-      check('value math: 10% under the exact-hood median', !!vr && vr.under && vr.pct === 10 && vr.label.indexOf('East Village median') > -1, vr && vr.label);
-      var vrOver = app.valueRead({ rent: Math.round(evMed * 1.08), neighborhood: 'East Village' });
+      var vr = app.valueRead({ rent: Math.round(evMed * 0.9), neighborhood: 'East Village', unit_type: 'studio' });
+      check('value math: 10% under the exact-hood studio median', !!vr && vr.under && vr.pct === 10 && vr.label.indexOf('East Village studio median') > -1, vr && vr.label);
+      var vrOver = app.valueRead({ rent: Math.round(evMed * 1.08), neighborhood: 'East Village', unit_type: 'studio' });
       check('value math: over-median reads amber side', !!vrOver && !vrOver.under, vrOver && vrOver.label);
+      var vrMixed = app.valueRead({ rent: 2000, neighborhood: 'East Village', beds: 2 });
+      check('value math: no claim without a same-size comparison', vrMixed === null, vrMixed && vrMixed.label);
       valueData.market_context = hadMarketContext;
       var vrNone = app.valueRead({ rent: 2500, neighborhood: 'Nowhereville' });
       check('value math: unknown hood prints nothing', vrNone === null, String(vrNone));
@@ -498,7 +503,8 @@
         app.state.huntSelected = probeS;
         location.hash = '#/hunt'; app.route();
         var mv = ($('.movein-watch') || { textContent: '' }).textContent;
-        check('move-in ledger renders law countdowns', mv.toLowerCase().indexOf('renewal watch') > -1 && mv.toLowerCase().indexOf('deposit back in 14 days') > -1, mv.slice(0, 80));
+        /* the reviewed copy separates non-regulated and regulated returns */
+        check('move-in ledger renders law countdowns', /renewal (watch|window)/i.test(mv) && mv.indexOf('within ' + C.LAW.depositReturnDays + ' days of move-out') > -1, mv.slice(0, 80));
         check('decision timeline reaches Signed', !!$('.decision-timeline [data-stage="signed"][aria-current="step"]'),
           $$('.decision-timeline li').length + ' steps for ' + app.STAGES.length + ' stages');
         app.dropCase(probeS);

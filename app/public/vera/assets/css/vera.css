@@ -219,13 +219,13 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 }
 .mastnav__sheet a:hover, .inspector__tabsheet button:hover { color: var(--ink); background: rgba(233, 226, 210, 0.05); }
 .mastnav__sheet a.is-on, .inspector__tabsheet button.is-on { color: var(--brass); }
-@media (max-width: 700px) {
+@media (max-width: 760px) {
   .mastnav a.mastnav__2nd { display: none; }
   .mastnav__more { display: inline-flex; }
   .inspector__tabs [data-tab="money"], .inspector__tabs [data-tab="owner"],
   .inspector__tabs [data-tab="score"], .inspector__tabs [data-tab="visit"] { display: none; }
   /* outranks the base .inspector__tabmore { display: none } declared later */
-  .inspector__tabs .inspector__tabmore { display: inline-block; }
+  .inspector__tabzone .inspector__tabmore { display: inline-block; }
 }
 .nv__badge {
   font-family: var(--mono); font-size: var(--fs-floor); background: var(--green);
@@ -729,8 +729,8 @@ h1, h2, h3, h4 { text-wrap: balance; scroll-margin-top: 132px; }
 .inspector__close { background: none; border: 1px solid var(--line); border-radius: 9px; color: var(--dim); font-size: 21px; width: 44px; height: 44px; flex: none; line-height: 1; }
 .inspector__close:hover { color: var(--ink); border-color: var(--line2); }
 .inspector__actions { display: flex; gap: 8px; padding: 13px 24px; border-bottom: 1px solid var(--line); flex-wrap: wrap; align-items: center; }
-.stagepick { display: flex; gap: 4px; flex-wrap: wrap; }
-.stagepick button { background: none; border: 1px solid var(--line); border-radius: 999px; color: var(--mute); font-size: var(--fs-cap); padding: 6px 11px; }
+.stagepick { display: flex; gap: 8px; flex-wrap: wrap; }
+.stagepick button { display: inline-flex; align-items: center; min-height: 44px; background: none; border: 1px solid var(--line); border-radius: 999px; color: var(--mute); font-size: var(--fs-cap); padding: 0 14px; }
 .stagepick button.is-on { color: var(--green); border-color: rgba(76, 195, 138, 0.5); background: var(--green-soft); }
 .inspector__tabzone { position: relative; }
 .inspector__tabs { display: flex; gap: 2px; padding: 10px 24px 0; border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; scroll-padding-inline: 24px; }
@@ -828,7 +828,7 @@ ul.soft li::marker { color: var(--mute); }
 @keyframes vera-dotin { from { opacity: 0; } }
 .pricepath polyline { stroke-dasharray: 100; animation: vera-pricedraw 1s cubic-bezier(0.22, 1, 0.36, 1) both; }
 .pricepath circle { animation: vera-dotin 0.3s 0.85s both; }
-.notes { width: 100%; min-height: 84px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font-family: var(--sans); font-size: 13.5px; padding: 11px 13px; resize: vertical; }
+.notes { width: 100%; min-height: 84px; background: var(--panel); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--ink); font-family: var(--sans); font-size: 16px; padding: 11px 13px; resize: vertical; }
 .cprog { font-family: var(--mono); color: var(--green); margin-left: 8px; }
 .cbar { height: 6px; background: rgba(233, 226, 210, 0.06); border-radius: 3px; overflow: hidden; margin-bottom: 14px; }
 .cbar span { display: block; height: 100%; background: var(--green); border-radius: 3px; }
@@ -1533,7 +1533,7 @@ body {
   color: var(--mute); background: var(--app-bg); font: var(--fs-floor)/1.3 var(--mono);
 }
 .dtoolbar { flex-wrap: nowrap; margin: 12px 0 10px; }
-.dtoolbar input[type="search"] { min-height: 46px; background: var(--app-surface); border-color: var(--app-line-strong); font-size: 15px; }
+.dtoolbar input[type="search"] { min-height: 46px; background: var(--app-surface); border-color: var(--app-line-strong); font-size: 16px; }
 .dtoolbar__density { padding: 3px; border: 1px solid var(--app-line); border-radius: 9px; }
 .dtoolbar__density button { min-height: 34px; border: 0; }
 .dtoolbar__density button.is-on { background: var(--app-surface-2); }
@@ -1780,7 +1780,7 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
 /* iPad and compact desktop: full-height top-chrome application. */
 @media (min-width: 761px) and (max-width: 1179px) {
   html, body { height: 100%; overflow: hidden; }
-  .shell { display: grid; grid-template-rows: auto auto minmax(0, 1fr); width: 100%; height: 100dvh; padding: 0 max(18px, env(safe-area-inset-left)); }
+  .shell { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto minmax(0, 1fr); width: 100%; height: 100dvh; padding: 0 max(18px, env(safe-area-inset-left)); }
   .masthead { position: relative; top: auto; padding-top: max(14px, env(safe-area-inset-top)); }
   .filters { flex-wrap: nowrap; overflow-x: auto; min-height: 62px; }
   .filters { scrollbar-width: thin; scrollbar-color: rgba(76, 195, 138, 0.72) rgba(255, 255, 255, 0.035); }
@@ -1848,7 +1848,7 @@ button:active, .dropcard__hit:active, .walkrow:active, .shortlist-row:active { t
   .signalbar .pills { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 3px; scrollbar-width: none; }
   .signalbar .pills::-webkit-scrollbar { display: none; }
   .workspace .filter-button { display: none; }
-  .pills button { flex: none; min-height: 38px; padding: 6px 11px; font-size: var(--fs-micro); }
+  .pills button { flex: none; min-height: 44px; padding: 6px 11px; font-size: var(--fs-micro); }
   .dtoolbar { margin: 7px 0; gap: 7px; }
   .command-search { flex-basis: 100%; }
   .command-search input[type="search"] { min-height: 44px; font-size: 16px; padding: 8px 42px 8px 12px; }
@@ -2567,27 +2567,22 @@ body { font-size: 16.5px; }
 .dropcard__save .ico { --ico: 19px; }
 .dropcard__save.is-saved { border-color: var(--gold); color: var(--gold); background: var(--gold-soft); }
 @media (hover: hover) and (pointer: fine) { .dropcard__save:hover { border-color: var(--gold); color: var(--gold); } }
-.dropcard__save.is-stamped .ico { animation: vera-stamp 460ms cubic-bezier(0.2, 1.4, 0.4, 1) 1; }
+.dropcard__save.is-stamped .ico { animation: vera-stamp 200ms cubic-bezier(0.2, 0, 0, 1) 1; }
 .dropcard__save.is-stamped::after {
   content: ""; position: absolute; inset: -1px; border: 1px solid var(--gold); pointer-events: none;
-  animation: vera-ring 560ms var(--ease-out) 1 forwards;
+  animation: vera-ring 240ms var(--ease-out) 1 forwards;
 }
-@keyframes vera-stamp { 0% { transform: scale(0.4) rotate(-12deg); } 60% { transform: scale(1.35) rotate(4deg); } 100% { transform: none; } }
+@keyframes vera-stamp { 0% { transform: scale(0.7) rotate(-8deg); } 60% { transform: scale(1.15) rotate(2deg); } 100% { transform: none; } }
 @keyframes vera-ring { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.12, 1.4); opacity: 0; } }
 
 /* entrance: transform only, content is always visible */
-.dropcard.will-reveal .dropcard__hit { transform: translateY(26px); transition: transform 760ms var(--ease-out); }
-.dropcard.will-reveal .gal__shot, .dropcard.will-reveal .dropcard__media .port { transform: scale(1.06); transition: transform 1400ms var(--ease-out); }
+.dropcard.will-reveal .dropcard__hit { transform: translateY(12px); transition: transform 280ms cubic-bezier(0.2, 0, 0, 1); }
+.dropcard.will-reveal .gal__shot, .dropcard.will-reveal .dropcard__media .port { transform: scale(1.02); transition: transform 320ms var(--ease-out); }
 .dropcard.will-reveal.is-in .dropcard__hit { transform: none; }
 .dropcard.will-reveal.is-in .gal__shot, .dropcard.will-reveal.is-in .dropcard__media .port { transform: none; }
-.dropcard.will-reveal .fact { transition: transform 620ms var(--ease-out); transform: translateY(10px); }
-.dropcard.will-reveal.is-in .fact { transform: none; }
-.dropcard.will-reveal.is-in .fact:nth-child(2) { transition-delay: 60ms; }
-.dropcard.will-reveal.is-in .fact:nth-child(3) { transition-delay: 120ms; }
-.dropcard.will-reveal.is-in .fact:nth-child(4) { transition-delay: 180ms; }
 
 /* a standout jump lands on its entry with a brief gold frame */
-.dropcard.is-spotlit .dropcard__media { animation: vera-spot 1400ms var(--ease-out) 1; }
+.dropcard.is-spotlit .dropcard__media { animation: vera-spot 640ms var(--ease-out) 1; }
 @keyframes vera-spot { 0% { box-shadow: 0 0 0 0 rgba(233, 194, 122, 0); } 25% { box-shadow: 0 0 0 4px rgba(233, 194, 122, 0.85); } 100% { box-shadow: 0 0 0 0 rgba(233, 194, 122, 0); } }
 
 
@@ -2798,3 +2793,174 @@ html.vera-tour-open .main { overflow: hidden; }
   .mastnav a[data-nav="hunt"] { position: relative; }
   .mastnav a[data-nav="hunt"] .nv__badge { position: absolute; top: 4px; left: calc(50% + 6px); margin: 0; min-width: 18px; padding: 1px 5px; font-size: 10.5px; line-height: 1.3; text-align: center; }
 }
+
+/* ============================================================
+   AUDIT FIXES II — 2026-10-18. Mobile first: phone base, then
+   short screens, tablet (761px) and desktop (1180px) layers.
+   ============================================================ */
+
+/* The answer first: one ruled line per cleared apartment, right under the
+   headline. Price and place on the left, walk, building and cash beneath. */
+.answers { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--line2); }
+.answers li { border-bottom: 1px solid var(--line); }
+.answer {
+  display: grid; grid-template-columns: 30px minmax(0, 1fr) 18px; align-items: center; column-gap: 10px; row-gap: 4px;
+  width: 100%; min-height: 64px; padding: 10px 0; border: 0; border-radius: 0; background: none; color: var(--ink); text-align: left;
+}
+.answer__no {
+  grid-row: 1 / span 2; display: inline-grid; place-items: center; width: 28px; height: 28px;
+  border: 1px solid var(--line2); border-radius: 50%; font: 500 12.5px/1 var(--mono); font-style: normal; color: var(--dim);
+}
+.answers li:first-child .answer__no { border-color: var(--gold); color: var(--gold); }
+.answer__main { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+.answer__rent { font: 600 20px/1.1 var(--mono); color: var(--ink); letter-spacing: -0.01em; }
+.answer__where { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 400 15px/1.3 var(--serif); color: var(--dim); }
+.answer__facts { grid-column: 2; display: flex; flex-wrap: wrap; gap: 2px 12px; font: 400 12.5px/1.35 var(--mono); color: var(--dim); }
+.answer__facts > span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.answer__facts .ico { --ico: 14px; color: var(--mute); }
+.answer__grade.steward--A, .answer__grade.steward--B { color: var(--green); }
+.answer__grade.steward--C { color: var(--amber); }
+.answer__grade.steward--D, .answer__grade.steward--E, .answer__grade.steward--F { color: var(--red); }
+.answer > .ico--end { grid-column: 3; grid-row: 1 / span 2; --ico: 16px; color: var(--mute); }
+.answers__more { margin: 8px 0 0; font: 400 12.5px/1.4 var(--mono); color: var(--mute); }
+@media (hover: hover) and (pointer: fine) {
+  .answer:hover { background: var(--gold-soft); }
+  .answer:hover > .ico--end { color: var(--gold); }
+}
+.answer:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+
+.dropstats__note { display: flex; align-items: flex-start; gap: 8px; margin: 10px 0 0; font: 400 13px/1.45 var(--mono); color: var(--mute); }
+.dropstats__note .ico { --ico: 15px; flex: none; margin-top: 2px; }
+.dropgrid__rank { display: flex; align-items: flex-start; gap: 8px; margin: 26px 0 0; font: 400 13px/1.45 var(--mono); color: var(--mute); }
+.dropgrid__rank .ico { --ico: 15px; flex: none; margin-top: 2px; color: var(--gold); }
+.page[data-page="today"] .drophead__trust { margin: 22px 0 0; }
+
+/* The engine's own caution stays visible on the card. */
+.verdict--care { color: var(--amber); }
+
+/* A standout or answer jump hands focus to the card it lands on. */
+.dropcard:focus { outline: none; }
+.dropcard:focus-visible { outline: 2px solid var(--gold); outline-offset: 6px; }
+
+@media (min-width: 761px) {
+  .answers { margin-top: 22px; }
+  .answer { grid-template-columns: 34px minmax(170px, 0.9fr) minmax(0, 1.6fr) 18px; grid-template-rows: auto; min-height: 58px; column-gap: 16px; padding: 8px 6px 8px 0; }
+  .answer__no { grid-row: 1; width: 30px; height: 30px; }
+  .answer__facts { grid-column: 3; gap: 4px 18px; font-size: 13px; }
+  .answer > .ico--end { grid-row: 1; grid-column: 4; }
+  .answer__rent { font-size: 21px; }
+}
+
+/* ---- Tour: Undo, overlapping exits, and every fact on small screens ---- */
+.tour__top { grid-template-columns: minmax(0, 1fr) auto auto; }
+.tour__undo {
+  grid-column: 2; grid-row: 1 / span 2; display: inline-flex; align-items: center; gap: 6px; height: 48px; padding: 0 12px;
+  border: 1px solid var(--line2); border-radius: 0; background: var(--bg); color: var(--ink);
+  font: 600 12px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.tour__undo .ico { --ico: 18px; }
+.tour__undo:disabled { opacity: 0.38; cursor: default; }
+.tour__close { grid-column: 3; }
+.tour__stage > .tourcard { grid-area: 1 / 1; }
+.tourcard.is-leaving { z-index: 2; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .tour__undo:not(:disabled):hover, .tour__close:hover { border-color: var(--ink); }
+}
+
+/* Short portrait phones (SE, mini, 375x667): a shorter photo and a tighter
+   body so price, walk, cash, and the building grade all show without
+   scrolling inside the card. */
+@media (orientation: portrait) and (max-height: 700px) {
+  .tourcard__media { height: clamp(88px, 17dvh, 150px); }
+  .tour__hint { display: none; }
+}
+@media (orientation: portrait) and (max-height: 700px), (orientation: landscape) and (max-height: 520px) {
+  .tour__top { padding-bottom: 6px; }
+  .tour__actions { padding-top: 8px; }
+  .tourcard__body { padding: 8px 12px 10px; }
+  .tourcard__body .dropcard__rent { font-size: 26px; }
+  .tourcard__body .dropcard__name { margin-top: 0; font-size: 18px; line-height: 1.2; }
+  .tourcard__body .dropcard__hood { margin-top: 3px; font-size: 14px; }
+  .tourcard__body .dropcard__facts { margin-top: 8px; }
+  .tourcard__body .fact { padding: 7px 9px 8px; }
+  .tourcard__body .fact dd { margin-top: 3px; }
+  .tourcard__body .fact dd b { font-size: 15px; }
+  .tourcard__body .fact dd > span { font-size: 12px; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .tourcard__media { flex-basis: 36%; }
+  .tour__top { padding-top: 0; }
+  .tourcard__body .dropcard__rent { font-size: 23px; }
+  .tourcard__body .dropcard__name { font-size: 16.5px; }
+  .tourcard__body .dropcard__hood { font-size: 13px; }
+  /* A phone on its side has room for the four answers, not their footnotes;
+     Details carries the rest. */
+  .tourcard__body .fact dd > span { display: none; }
+  .tourcard__body .fact dd { margin-top: 2px; }
+}
+/* Landscape tablets: photo beside the facts, as on desktop, in a wider deck. */
+@media (min-width: 761px) and (max-width: 1179px) and (orientation: landscape) {
+  .tour > * { max-width: 920px; }
+  .tourcard { flex-direction: row; }
+  .tourcard__media { flex: 0 0 46%; height: auto; }
+  .tourcard__body { padding: 18px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour__act:active { transform: none; }
+}
+
+/* System: a visible way for an installed app to fetch a newer drop. */
+.pagehead__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 18px 0 0; font: 400 13px/1.4 var(--mono); color: var(--mute); }
+.pagehead__actions .ghostbtn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.pagehead__actions .ghostbtn .ico { --ico: 17px; }
+
+/* Ledger "More" tab sheet and the phone nav sheet share one 48px row. */
+.inspector__tabsheet button { display: flex; align-items: center; min-height: 48px; padding: 0 16px; }
+
+/* Browse metrics never let a label run into the next cell. */
+.workspace-metrics dt { overflow-wrap: anywhere; }
+@media (max-width: 380px) {
+  .workspace-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Card actions, phone first: Save and Share share a row, the ledger gets the
+   full width under them; from 400px all three sit on one line. */
+.dropcard__actions { grid-template-columns: minmax(0, 1fr) 50px; }
+.dropcard__actions .dropcard__open { grid-column: 1 / -1; }
+.dropcard__share {
+  display: inline-grid; place-items: center; min-height: 50px; padding: 0;
+  border: 1px solid var(--line2); border-radius: 0; background: var(--bg); color: var(--ink);
+}
+.dropcard__share .ico { --ico: 19px; }
+@media (hover: hover) and (pointer: fine) { .dropcard__share:hover { border-color: var(--ink); } }
+@media (min-width: 400px) {
+  .dropcard__actions { grid-template-columns: minmax(0, 0.42fr) 50px minmax(0, 1fr); }
+  .dropcard__actions .dropcard__open { grid-column: auto; }
+}
+.insp-actions .ghostbtn .ico, [data-insp-actions] .ghostbtn .ico { --ico: 16px; margin-right: 6px; }
+/* The shortest landscape phones (SE on its side): the title and the count
+   share one 44px row so the card keeps every answer in view. */
+@media (orientation: landscape) and (max-height: 360px) {
+  .tour__top { grid-template-columns: auto minmax(0, 1fr) auto auto; padding-bottom: 4px; }
+  .tour__title, .tour__count { grid-row: 1; align-self: center; }
+  .tour__count { grid-column: 2; }
+  .tour__undo, .tour__close { grid-row: 1; height: 44px; }
+  .tour__undo { grid-column: 3; }
+  .tour__close { grid-column: 4; }
+  .tour__bar { margin-top: 4px; }
+  .tour__act { min-height: 44px; }
+  .tourcard__media { flex-basis: 30%; }
+  .tourcard__body .fact { padding: 6px 9px 7px; }
+}
+/* On a phone held sideways the name and place keep to one line each. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .tourcard__body .dropcard__name, .tourcard__body .dropcard__hood > span,
+  .tourcard__body .fact dd b { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tourcard__body .dropcard__hood { min-width: 0; }
+}
+
+/* The ledger's More control sits beside its tablist; the zone draws the rule. */
+.inspector__tabzone { display: flex; align-items: flex-end; border-bottom: 1px solid var(--line); }
+.inspector__tabzone .inspector__tabs { flex: 1 1 auto; min-width: 0; border-bottom: 0; }
+.inspector__tabzone > .inspector__tabmore { flex: none; min-height: 44px; margin-right: max(12px, env(safe-area-inset-right)); }

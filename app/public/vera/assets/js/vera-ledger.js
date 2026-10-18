@@ -107,6 +107,9 @@
            saved route position remains authoritative. */
         window.scrollTo(scroll.x, scroll.y);
         if (main) main.scrollTop = scroll.main;
+        /* The app may hand the reader back to where they came from (the
+           Tour deck reopens at the same card). */
+        try { document.dispatchEvent(new CustomEvent('vera:ledger-closed', { detail: { uid: uid } })); } catch (e) {}
       });
     });
   }
@@ -329,9 +332,12 @@
       ? '<div class="stagepick">' + app.STAGES.map(function (s) {
           return '<button type="button" data-stage="' + s.id + '" data-uid="' + esc(l.listing_uid) + '" class="' + (c.stage === s.id ? 'is-on' : '') + '">' + s.label + '</button>';
         }).join('') + '</div>'
-      : '<button type="button" class="bigbtn bigbtn--save" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button>' +
-        (sourceURL ? '<a class="ghostbtn" href="' + esc(sourceURL) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '');
-    $('[data-insp-actions]').innerHTML += '<button type="button" class="ghostbtn" data-fieldkit="' + esc(l.listing_uid) + '">Field kit ⎙</button>';
+      : '<button type="button" class="bigbtn bigbtn--save" data-stage="saved" data-uid="' + esc(l.listing_uid) + '">＋ Save to my hunt</button>';
+    /* The source link survives a save; it is where the renter acts next. */
+    $('[data-insp-actions]').innerHTML +=
+      (sourceURL ? '<a class="ghostbtn" href="' + esc(sourceURL) + '" target="_blank" rel="noopener noreferrer">Original ↗</a>' : '') +
+      '<button type="button" class="ghostbtn" data-share="' + esc(l.listing_uid) + '">' + C.icon('share') + '<span>Share</span></button>' +
+      '<button type="button" class="ghostbtn" data-fieldkit="' + esc(l.listing_uid) + '">Field kit ⎙</button>';
 
     var body = $('[data-insp-body]');
     var html = '';
@@ -414,9 +420,13 @@
           '<div class="ledger__row"><span>First month</span><b>' + money(m.rent) + '</b></div>' +
           '<div class="ledger__row"><span>Security <em>1 month max, by law</em></span><b>' + money(m.deposit) + '</b></div>' +
           '<div class="ledger__row"><span>Screening <em>actual cost or $20, whichever is less</em></span><b>up to ' + money(m.appFee) + '</b></div>' +
-          '<div class="ledger__row ledger__row--zero"><span>Broker fee</span><b>$0</b></div>' +
-          '<div class="ledger__row ledger__row--total"><span>Total <em>using the $20 maximum</em></span><b>' + money(m.total) + '</b></div>' +
-          '</div><p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that a 15% broker fee would have taken.</p></div>' +
+          '<div class="ledger__row' + (m.fee.id === 'none' ? ' ledger__row--zero' : '') + '"><span>Broker fee <em>' + esc(m.fee.rowNote) + '</em></span><b>' + esc(m.fee.row) + '</b></div>' +
+          '<div class="ledger__row ledger__row--total"><span>Total <em>using the $20 maximum' + (m.fee.id === 'none' ? '' : ', before any broker fee') + '</em></span><b>' + money(m.total) + '</b></div>' +
+          '</div>' + (m.fee.id === 'none'
+            ? '<p class="insp-save">You keep roughly <b>' + money(m.saved) + '</b> that the old 15%-of-a-year broker fee would have taken.</p>'
+            : '<p class="insp-fine">' + (m.fee.id === 'listed'
+              ? 'This listing mentions a broker fee. Since ' + esc(C.LAW.fareActFrom) + ', the FARE Act puts that fee on whoever hired the broker. Ask in writing who that was before you pay anything.'
+              : 'This listing does not say whether a broker fee applies. Ask for every amount due at signing, in writing.') + '</p>') + '</div>' +
           '<div class="insp-sec"><h3>What a landlord will ask you to prove</h3>' +
           '<p>Annual income of about <b>' + money(m.annualIncomeNeeded) + '</b> (the 40× convention). Short of that, a guarantor is usually asked to show <b>' + money(m.guarantorIncomeNeeded) + '</b>, or an institutional guarantor will stand in for roughly <b>' + money(m.guarantorCost) + '</b> once.</p>' +
           '<p class="insp-fine">Income multiples are landlord convention, not law. Ask which income records or guarantors the landlord accepts. The figures above are estimates, not approval rules.</p></div>' +

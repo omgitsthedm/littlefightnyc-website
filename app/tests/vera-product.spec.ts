@@ -1187,7 +1187,8 @@ test(
     const snapshot = mapButton.locator("[data-snap]");
     await expect(snapshot).toHaveAttribute("data-snap-state", "ready", { timeout: 20_000 });
     await expect(snapshot.locator("img.snap__img")).toBeVisible();
-    await expect(snapshot.locator("img.snap__img")).toHaveAttribute("src", /^data:image\//);
+    // The still is encoded off the main thread (canvas.toBlob), so it arrives as a blob URL.
+    await expect(snapshot.locator("img.snap__img")).toHaveAttribute("src", /^blob:/);
     expect(
       await snapshot.evaluate((element) => getComputedStyle(element, "::after").content),
       "every street snapshot shows the OpenStreetMap credit",

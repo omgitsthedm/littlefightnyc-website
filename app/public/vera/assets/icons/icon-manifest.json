@@ -29,6 +29,7 @@
     "check": "check-circle (light)",
     "warning": "warning (light)",
     "skip": "x-circle (light)",
+    "undo": "arrow-u-up-left (light)",
     "unknown": "question (light)",
     "info": "info (light)",
     "share": "share-network (light)",
