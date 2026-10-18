@@ -734,6 +734,11 @@
               "Apps bought through Apple: Settings > your name > Subscriptions on an iPhone."
             ]
           }
+        ],
+        "sources": [
+          "ms-renewal",
+          "google-renewal",
+          "apple-subscriptions"
         ]
       }
     },
@@ -1978,6 +1983,18 @@
     "cisa-msp": {
       "label": "CISA: Protecting against cyber threats to managed service providers and their customers",
       "href": "https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-131a"
+    },
+    "ms-renewal": {
+      "label": "Microsoft: Manage recurring billing in the Microsoft 365 admin center",
+      "href": "https://learn.microsoft.com/en-us/microsoft-365/commerce/subscriptions/renew-your-subscription"
+    },
+    "google-renewal": {
+      "label": "Google Workspace: Manage your payment plan and renewal",
+      "href": "https://knowledge.workspace.google.com/admin/billing/manage-your-payment-plan-and-renewal"
+    },
+    "apple-subscriptions": {
+      "label": "Apple: Cancel a subscription from Apple",
+      "href": "https://support.apple.com/en-us/118428"
     }
   }
 }
