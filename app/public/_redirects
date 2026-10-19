@@ -130,6 +130,14 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /software-guides/square-vs-toast-manhattan-restaurants/*            /journal/square-vs-toast-manhattan-restaurants/            301
 /software-guides/webflow-vs-squarespace-manhattan-small-business/*  /journal/wordpress-vs-webflow-vs-custom-nyc/  301
 
+# --- Legacy URLs Bing still reports as 404. Prices live on About.
+/pricing/*                /about/  301
+/pricing                  /about/  301
+/home/*                   /  301
+/home                     /  301
+/about-5-1/*              /about/  301
+/about-5-1                /about/  301
+
 # --- Retired 2026 comparison ("battle") pages: Bing still crawls them as 404s.
 /vs-squarespace/*          /answers/squarespace-vs-hiring-a-web-designer/  301
 /vs-squarespace            /answers/squarespace-vs-hiring-a-web-designer/  301
