@@ -38,6 +38,27 @@
     const shade=document.createElement('span');shade.className='lf-motion-shade';
     face.append(clone,shade);return {face,shade};
   }
+  // The clay art lifts off the card as it turns and lands exactly where it
+  // sits in the opened reader (and flies home on close). Only artwork both
+  // sides actually show takes part; everything else keeps the plain flip.
+  const TILE_ART='img.clay-png[data-clay-asset]';
+  const visibleRect=node=>{const r=node?.getBoundingClientRect();return r&&r.width>8&&r.height>8&&r.bottom>0&&r.top<innerHeight?r:null;};
+  function artFlight(flight,direction){
+    // Fly only the same clay asset, and only to a spot visible in the reader's first view.
+    const tileArt=flight.source?.querySelector(TILE_ART);
+    const asset=tileArt?.dataset.clayAsset;
+    if(!asset)return;
+    const readerArt=[...flight.dialog.querySelectorAll('#detail-body img.clay-png')].find(img=>img.dataset.clayAsset===asset&&visibleRect(img));
+    const from=visibleRect(tileArt),to=visibleRect(readerArt);
+    if(!from||!to)return;
+    const flyer=document.createElement('img');
+    flyer.className='lf-motion-art';flyer.alt='';flyer.decoding='sync';
+    flyer.src=readerArt.currentSrc||readerArt.src;
+    const start=direction==='open'?from:to,end=direction==='open'?to:from;
+    Object.assign(flyer.style,{left:`${start.left}px`,top:`${start.top}px`,width:`${start.width}px`,height:`${start.height}px`});
+    flight.layer.append(flyer);flight.flyer=flyer;
+    flight.art={dx:end.left-start.left,dy:end.top-start.top,sx:end.width/start.width,sy:end.height/start.height};
+  }
   const turn=(x,y,angle,tilt=0,twist=0,scale=1)=>`perspective(1800px) translate3d(${x}px,${y}px,0) rotateX(${tilt}deg) rotateZ(${twist}deg) rotateY(${angle}deg) scale(${scale})`;
   function prepare({source,dialog,panel},direction){
     const from=source?.getBoundingClientRect(),to=panel.getBoundingClientRect();
@@ -73,6 +94,10 @@
       card.style.transform=direction==='open'?turn(x,y,0,0,0,.96):turn(0,0,-180);
       surface.style.transform=direction==='open'?`scale(${sx},${sy})`:'scale(1,1)';
     }
+    if(flight.card){
+      artFlight(flight,direction);
+      if(flight.flyer)flight.card.querySelectorAll(TILE_ART).forEach(img=>{img.style.visibility='hidden';});
+    }
     source?.classList.add('is-motion-source');
     panel.classList.add('is-tile-flight');panel.dataset.motionPhase=direction;
     panel.inert=true;
@@ -104,6 +129,15 @@
         {offset:1,transform:'scale(1,1)'}
       ],{duration,easing:'linear'});
       animate(flight,flight.shade,[{opacity:0},{opacity:.42}],{duration:duration*.46});
+      if(flight.flyer){
+        const {dx,dy,sx,sy}=flight.art;
+        // An arc: lift and grow slightly above the card, then settle in place.
+        animate(flight,flight.flyer,[
+          {offset:0,transform:'translate(0,0) scale(1,1)',filter:'drop-shadow(0 0 0 rgb(0 0 0 / 0))'},
+          {offset:.35,transform:`translate(${dx*.28}px,${dy*.28-28}px) scale(${1+(sx-1)*.3+.06},${1+(sy-1)*.3+.06})`,filter:'drop-shadow(0 22px 26px rgb(0 0 0 / .38))'},
+          {offset:1,transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`,filter:'drop-shadow(0 0 0 rgb(0 0 0 / 0))'}
+        ],{duration,easing:'cubic-bezier(.3,.7,.2,1)'});
+      }
       // The reader takes over only after the complete half-turn has landed.
       animate(flight,flight.back,[{opacity:1},{opacity:0}],{duration:110,delay:duration,easing:'ease-out'});
       animate(flight,flight.panel,[{opacity:0},{opacity:1}],{duration:1,delay:duration});
@@ -135,6 +169,14 @@
         {offset:1,transform:`scale(${sx},${sy})`}
       ],{duration,easing:'linear'});
       animate(flight,flight.shade,[{offset:0,opacity:.42},{offset:.6,opacity:.42},{offset:1,opacity:0}],{duration});
+      if(flight.flyer){
+        const {dx,dy,sx,sy}=flight.art;
+        animate(flight,flight.flyer,[
+          {offset:0,transform:'translate(0,0) scale(1,1)'},
+          {offset:.55,transform:`translate(${dx*.7}px,${dy*.7-24}px) scale(${1+(sx-1)*.7},${1+(sy-1)*.7})`},
+          {offset:1,transform:`translate(${dx}px,${dy}px) scale(${sx},${sy})`}
+        ],{duration,easing:'cubic-bezier(.4,0,.2,1)'});
+      }
     }
     await Promise.all(flight.animations.map(settled));finish(flight);
   }

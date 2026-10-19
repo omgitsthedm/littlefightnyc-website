@@ -34,7 +34,7 @@ for (const lab of await read('labs.json')) {
   paths.add(lab.sharePath);
   paths.add(lab.embedPath);
 }
-for (const pathname of ['/', '/reviews/', '/websites-for-your-business/', '/thanks/', '/construction/']) paths.add(pathname);
+for (const pathname of ['/', '/reviews/', '/thanks/', '/construction/']) paths.add(pathname);
 const safe = [...paths].filter(path => /^\/[a-z0-9/-]*$/.test(path) && !path.startsWith('/_readers/')).sort();
 for (const path of topicPaths) {
   if (!safe.includes(path)) throw new Error(`Topic reader is missing from measurement allowlist: ${path}`);

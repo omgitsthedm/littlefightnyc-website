@@ -31,8 +31,8 @@ for (const source of ["/blog", "/blog/"]) {
 }
 
 const blogArticleRedirects = [
-  ["/blog/cybersecurity-for-small-business", "/journal/cybersecurity-for-small-business/", "301"],
-  ["/blog/cybersecurity-for-small-business.html", "/journal/cybersecurity-for-small-business/", "301"],
+  ["/blog/cybersecurity-for-small-business", "/answers/help/it-security-basics/", "301"],
+  ["/blog/cybersecurity-for-small-business.html", "/answers/help/it-security-basics/", "301"],
   ["/blog/nyc-small-business-digital", "/journal/nyc-small-business-digital/", "301"],
   ["/blog/nyc-small-business-digital.html", "/journal/nyc-small-business-digital/", "301"],
   ["/blog/protecting-kids-from-ai", "/journal/protecting-kids-from-ai/", "301"],
@@ -42,6 +42,23 @@ for (const expected of blogArticleRedirects) {
   const rule = rules.find(([from]) => from === expected[0]);
   assert.deepEqual(rule, expected);
   assert.ok(rules.indexOf(rule) < blogWildcardIndex, `${expected[0]} must retain its article redirect`);
+}
+
+// Consolidated routes (2026-10-17) go straight to the page that now answers them.
+const consolidation = JSON.parse(await readFile(path.join(appRoot, "preview-content", "consolidation.json"), "utf8"));
+const consolidated = Object.entries({ ...consolidation.retired, ...consolidation.renamed })
+  .flatMap(([from, to]) => [[from, to, "301"], [from.replace(/\/$/, ""), to, "301"]]);
+assert.ok(consolidated.length >= 50, "consolidation map is present");
+for (const expected of consolidated) {
+  const rule = rules.find(([from]) => from === expected[0]);
+  assert.deepEqual(rule, expected);
+  assert.ok(
+    rules.indexOf(rule) < rules.findIndex(([from, destination, status]) =>
+      from === "/*" && destination === "/404.html" && status === "404",
+    ),
+    `${expected[0]} must remain ahead of the 404 catch-all`,
+  );
+  assert.ok(!rules.some(([from]) => from === expected[1]), `${expected[1]} must not redirect again`);
 }
 
 for (const source of ["/app", "/app/*", "/dakota.html", "/studio/dakota", "/studio/dakota/"]) {

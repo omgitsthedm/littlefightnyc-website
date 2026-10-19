@@ -62,6 +62,14 @@ async function main(){
     await page.goto(base+'/?qa=1');await settle(page);
     for(const action of ['.hero-main','.hero-secondary','.sculpture-help']){
      const link=page.locator(action),href=await link.getAttribute('href');await link.scrollIntoViewIfNeeded();await link.tap();
+     if(action==='.sculpture-help'){
+      // Get help opens the one-tap chooser; closing it returns focus to the button.
+      await page.waitForFunction(()=>document.querySelector('#get-help-panel')?.open&&document.querySelectorAll('#get-help-panel [data-help-choice]').length===4);
+      await page.locator('#get-help-panel [data-help-close]').click();
+      await page.waitForFunction(action=>!document.querySelector('#get-help-panel').open&&document.activeElement===document.querySelector(action),action,{timeout:1500});
+      check(engine+' cold visit '+visit+' Get help chooser opens and returns focus',true);
+      continue;
+     }
      await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
      await page.locator('#close-detail').click();
      await page.waitForFunction(action=>!document.querySelector('#detail').open&&document.activeElement===document.querySelector(action),action,{timeout:1500});
@@ -83,7 +91,13 @@ async function main(){
     for(const action of ['.sculpture-help','.sculpture-work','.hero-main','.hero-secondary']){
      const link=page.locator(action);await link.scrollIntoViewIfNeeded();const scroll=await page.evaluate(()=>scrollY),href=await link.getAttribute('href');
      if(profile.touch)await link.tap();else await link.click();
-     await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
+     if(action==='.sculpture-help'){
+      // Get help opens the chooser first; a website choice starts the inquiry reader.
+      await page.waitForFunction(()=>document.querySelector('#get-help-panel')?.open);
+      const choice=page.locator('#get-help-panel [data-help-choice="website"]');
+      if(profile.touch)await choice.tap();else await choice.click();
+      await page.waitForFunction(()=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath?.startsWith('/tech-audit/'));
+     }else await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
      await settle(page);
      const reader=await page.locator('#detail-body').evaluate(body=>({overflow:body.scrollWidth>body.clientWidth+1}));
      const close=page.locator('#close-detail');

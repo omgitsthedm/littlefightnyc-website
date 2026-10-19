@@ -41,6 +41,13 @@ for = "/*"
   Speculation-Rules = '"/speculation-rules.json"'
 
 [[headers]]
+for = "/mosaic/*"
+
+  [headers.values]
+  # Prebuilt homepage layouts; each file name carries its content signature.
+  Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
 for = "/speculation-rules.json"
 
   [headers.values]

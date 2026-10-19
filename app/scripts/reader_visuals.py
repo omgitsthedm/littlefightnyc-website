@@ -127,7 +127,7 @@ def reader_family(p, q=None):
     for source in (p, q, answer):
         if source.get("family") in FAMILIES:
             return source["family"]
-    if path.startswith("/industries/") or path in ("/nationwide/", "/websites-for-your-business/"):
+    if path.startswith("/industries/") or path in ("/nationwide/",):
         return "web"
     if path in _TOPICS:
         return _TOPICS[path]["family"]

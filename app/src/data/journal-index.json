@@ -1,14 +1,5 @@
 [
   {
-    "slug": "cybersecurity-for-small-business",
-    "category": "blog",
-    "title": "Cybersecurity for a Small Business in NYC, Without the Panic",
-    "description": "Computer security for a New York small business, in plain words: lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
-    "published": "",
-    "updated": "March 20, 2026",
-    "wordCount": 198
-  },
-  {
     "slug": "nyc-small-business-digital",
     "category": "blog",
     "title": "What a NYC Business Actually Needs Online",
@@ -153,24 +144,6 @@
     "wordCount": 183
   },
   {
-    "slug": "how-do-i-back-up-my-business-data",
-    "category": "howto",
-    "title": "Back Up the Business Before a Laptop Picks the Worst Day",
-    "description": "Know the important data, keep more than one copy, protect account access, and test a restore. A backup that cannot restore is décor.",
-    "published": "July 12, 2026",
-    "updated": "July 12, 2026",
-    "wordCount": 198
-  },
-  {
-    "slug": "what-to-do-when-business-wifi-keeps-dropping",
-    "category": "howto",
-    "title": "Business Wi-Fi Keeps Dropping? Isolate the Fault",
-    "description": "Check the company that runs the tool, router, local coverage, and one device separately. Random reboots are not a troubleshooting plan.",
-    "published": "July 12, 2026",
-    "updated": "July 12, 2026",
-    "wordCount": 195
-  },
-  {
     "slug": "how-to-own-your-domain-name-not-your-web-guy",
     "category": "howto",
     "title": "Make Sure the Business Controls Its Domain",
@@ -250,15 +223,6 @@
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
     "wordCount": 150
-  },
-  {
-    "slug": "signs-your-pos-is-about-to-fail",
-    "category": "blog",
-    "title": "POS Trouble: Prepare Before the Friday-Night Failure",
-    "description": "Repeated freezes, connection errors, power trouble, pending updates, and offline-mode surprises deserve a documented check and backup plan.",
-    "published": "July 12, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 209
   },
   {
     "slug": "questions-nyc-owners-actually-ask-us-about-ai",

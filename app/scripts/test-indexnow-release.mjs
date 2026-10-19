@@ -10,6 +10,12 @@ import {
 
 const sitemap = `<?xml version="1.0"?><urlset><url><loc>https://littlefightnyc.com/</loc></url><url><loc>https://littlefightnyc.com/soho/</loc></url></urlset>`;
 assert.deepEqual(sitemapUrls(sitemap), ["https://littlefightnyc.com/", "https://littlefightnyc.com/soho/"]);
+assert.deepEqual(
+  sitemapUrls(sitemap.replace("</urlset>", "<url><loc>https://littlefightnyc.com/examples/audit/</loc></url></urlset>")),
+  ["https://littlefightnyc.com/", "https://littlefightnyc.com/soho/"],
+  "crawlable pages excluded from IndexNow are skipped, not fatal",
+);
+assert.throws(() => canonicalPublicUrl("/examples/audit/"), /Private or non-discovery/);
 assert.equal(canonicalPublicUrl("/soho/"), "https://littlefightnyc.com/soho/");
 assert.throws(() => canonicalPublicUrl("https://example.com/soho/"), /Not a canonical/);
 assert.throws(() => canonicalPublicUrl("/app/"), /Private or non-discovery/);

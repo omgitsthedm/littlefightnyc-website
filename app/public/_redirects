@@ -93,8 +93,7 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /areas/brooklyn/     /areas/                 301
 /work/               /services/              301
 /work                /services/              301
-/industries/     /examples/#industries      301
-/industries      /examples/#industries      301
+# /industries/ is a generated hub again; its old redirect to /examples/#industries was shadowed by the page.
 /industries.html /examples/#industries      301
 /studio/         /services/#studio          301
 /studio          /services/#studio          301
@@ -112,8 +111,8 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /lab             /examples/lab/             301
 
 # --- Legacy article URLs — each legacy slug now lives at /journal/{slug}/
-/blog/cybersecurity-for-small-business       /journal/cybersecurity-for-small-business/  301
-/blog/cybersecurity-for-small-business.html  /journal/cybersecurity-for-small-business/  301
+/blog/cybersecurity-for-small-business       /answers/help/it-security-basics/  301
+/blog/cybersecurity-for-small-business.html  /answers/help/it-security-basics/  301
 /blog/nyc-small-business-digital             /journal/nyc-small-business-digital/        301
 /blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301
 /blog/protecting-kids-from-ai                /journal/protecting-kids-from-ai/           301
@@ -195,6 +194,59 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /examples/audit/premier-plastic-surgery/*   /website-check/ 301!
 /examples/audit/skinsmart-dermatology/*     /website-check/ 301!
 /examples/audit/the-cosmetic-clinic/*       /website-check/ 301!
+
+# --- Content consolidation (2026-10-17): overlapping and thin answers merged into
+# the page that now answers them; -reddit slugs moved to plain slugs.
+/websites-for-your-business/                                       /industries/                                               301
+/websites-for-your-business                                        /industries/                                               301
+/answers/airtable-vs-notion-reddit-small-business/                 /journal/airtable-vs-notion-vs-monday-small-business/      301
+/answers/airtable-vs-notion-reddit-small-business                  /journal/airtable-vs-notion-vs-monday-small-business/      301
+/answers/best-pos-system-small-business-reddit/                    /answers/how-to-pick-a-pos-system/                         301
+/answers/best-pos-system-small-business-reddit                     /answers/how-to-pick-a-pos-system/                         301
+/answers/best-web-design-agency-nyc-reddit/                        /answers/how-to-choose-a-web-designer-nyc/                 301
+/answers/best-web-design-agency-nyc-reddit                         /answers/how-to-choose-a-web-designer-nyc/                 301
+/answers/best-web-designer-nyc-reddit/                             /answers/how-to-choose-a-web-designer-nyc/                 301
+/answers/best-web-designer-nyc-reddit                              /answers/how-to-choose-a-web-designer-nyc/                 301
+/answers/business-email-going-to-spam/                             /answers/help/email/                                       301
+/answers/business-email-going-to-spam                              /answers/help/email/                                       301
+/answers/computer-security-for-small-business-ny/                  /answers/help/it-security-basics/                          301
+/answers/computer-security-for-small-business-ny                   /answers/help/it-security-basics/                          301
+/answers/does-my-small-business-need-a-website-reddit/             /answers/does-my-small-business-need-a-website/            301
+/answers/does-my-small-business-need-a-website-reddit              /answers/does-my-small-business-need-a-website/            301
+/answers/glossgenius-vs-square-appointments-reddit/                /journal/square-appointments-vs-glossgenius-nyc-salons/    301
+/answers/glossgenius-vs-square-appointments-reddit                 /journal/square-appointments-vs-glossgenius-nyc-salons/    301
+/answers/google-business-profile-tips-reddit/                      /answers/google-business-profile-tips/                     301
+/answers/google-business-profile-tips-reddit                       /answers/google-business-profile-tips/                     301
+/answers/how-to-find-good-it-guy-reddit/                           /services/it-support/                                      301
+/answers/how-to-find-good-it-guy-reddit                            /services/it-support/                                      301
+/answers/is-local-seo-worth-it-reddit/                             /answers/is-local-seo-worth-it/                            301
+/answers/is-local-seo-worth-it-reddit                              /answers/is-local-seo-worth-it/                            301
+/answers/it-consultants-for-small-business-nyc/                    /services/it-support/                                      301
+/answers/it-consultants-for-small-business-nyc                     /services/it-support/                                      301
+/answers/nyc-small-business-tech-help-reddit/                      /services/it-support/                                      301
+/answers/nyc-small-business-tech-help-reddit                       /services/it-support/                                      301
+/answers/pos-system-down-restaurant-nyc/                           /answers/help/it-payment-device-check/                     301
+/answers/pos-system-down-restaurant-nyc                            /answers/help/it-payment-device-check/                     301
+/answers/shopify-vs-squarespace-reddit/                            /journal/shopify-vs-squarespace-nyc-retail/                301
+/answers/shopify-vs-squarespace-reddit                             /journal/shopify-vs-squarespace-nyc-retail/                301
+/answers/small-business-it-support-nyc-reddit-recommendations/     /services/it-support/                                      301
+/answers/small-business-it-support-nyc-reddit-recommendations      /services/it-support/                                      301
+/answers/square-vs-toast-reddit/                                   /journal/square-vs-toast-manhattan-restaurants/            301
+/answers/square-vs-toast-reddit                                    /journal/square-vs-toast-manhattan-restaurants/            301
+/answers/squarespace-vs-hiring-web-designer-reddit/                /answers/squarespace-vs-hiring-a-web-designer/             301
+/answers/squarespace-vs-hiring-web-designer-reddit                 /answers/squarespace-vs-hiring-a-web-designer/             301
+/answers/web-developer-ghosted-me-reddit/                          /answers/website-developer-disappeared/                    301
+/answers/web-developer-ghosted-me-reddit                           /answers/website-developer-disappeared/                    301
+/answers/wix-vs-custom-website-reddit/                             /answers/wix-vs-custom-website/                            301
+/answers/wix-vs-custom-website-reddit                              /answers/wix-vs-custom-website/                            301
+/journal/cybersecurity-for-small-business/                         /answers/help/it-security-basics/                          301
+/journal/cybersecurity-for-small-business                          /answers/help/it-security-basics/                          301
+/journal/how-do-i-back-up-my-business-data/                        /answers/help/backup/                                      301
+/journal/how-do-i-back-up-my-business-data                         /answers/help/backup/                                      301
+/journal/signs-your-pos-is-about-to-fail/                          /answers/help/it-payment-device-check/                     301
+/journal/signs-your-pos-is-about-to-fail                           /answers/help/it-payment-device-check/                     301
+/journal/what-to-do-when-business-wifi-keeps-dropping/             /answers/help/wifi/                                        301
+/journal/what-to-do-when-business-wifi-keeps-dropping              /answers/help/wifi/                                        301
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404

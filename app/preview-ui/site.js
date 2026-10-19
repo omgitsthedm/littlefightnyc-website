@@ -371,10 +371,40 @@
     return readerStylesPromise;
   }
 
+  // Instant opens: a card's reader is fetched as soon as intent shows (pointer,
+  // touch or keyboard focus) and the open reuses that response. A cancelled
+  // open only stops waiting; the shared request keeps warming the cache.
+  const readerCache = new Map();
+  function readerMarkup(path) {
+    if (readerCache.has(path)) return readerCache.get(path);
+    const request = fetch(path, { credentials: 'same-origin', headers: { Accept: 'text/html' } })
+      .then(response => { if (!response.ok) throw new Error(`Reader request failed: ${response.status}`); return response.text(); });
+    readerCache.set(path, request);
+    request.catch(() => readerCache.delete(path));
+    return request;
+  }
+  const untilAborted = (promise, signal) => !signal ? promise : new Promise((resolve, reject) => {
+    const abort = () => reject(new DOMException('Reader request aborted', 'AbortError'));
+    if (signal.aborted) { abort(); return; }
+    signal.addEventListener('abort', abort, { once: true });
+    promise.then(resolve, reject);
+  });
+  const warmedLinks = new WeakSet();
+  function warmReader(link) {
+    if (warmedLinks.has(link) || navigator.connection?.saveData) return;
+    const path = sameOriginPath(link.href);
+    if (!path || path === '/') return;
+    warmedLinks.add(link);
+    readerFetchPath(path, link).then(readerMarkup).catch(() => {});
+    ensureReaderStyles().catch(() => {});
+  }
+  ['pointerover', 'focusin', 'touchstart'].forEach(type => document.addEventListener(type, event => {
+    const link = event.target.closest?.('#canvas a.tile[href], a[data-reader-link][href]');
+    if (link && !link.target) warmReader(link);
+  }, { passive: true, capture: true }));
+
   async function fetchReader(path, signal) {
-    const response = await fetch(path, { credentials: 'same-origin', signal, headers: { Accept: 'text/html' } });
-    if (!response.ok) throw new Error(`Reader request failed: ${response.status}`);
-    const markup = await response.text();
+    const markup = await untilAborted(readerMarkup(path), signal);
     const parsed = new DOMParser().parseFromString(markup, 'text/html');
     const reader = parsed.querySelector('main[data-page-content]');
     if (!reader) throw new Error('Reader markup was not found.');
@@ -437,37 +467,61 @@
         ensureReaderStyles(),
       ]);
       if (version !== requestVersion || controller.signal.aborted) return false;
-      releaseDemos();
-      window.LFWebsiteStory?.release(panel);
-      detailBody.innerHTML = reader.html;
-      activeSource = heroSource || findTile(reader.homePath) || activeSource;
-      detail.dataset.readerLayout = reader.layout;
-      panel.dataset.readerLayout = reader.layout;
-      detail.dataset.readerFamily = reader.family;
-      panel.dataset.readerFamily = reader.family;
-      panel.dataset.readerTemplate = reader.template;
-      detailBody.scrollTop = 0;
-      panel.scrollTop = 0;
-      detailBody.dataset.readerPath = readerPath;
-      detail.dataset.readerPath = readerPath;
-      panel.dataset.readerPath = readerPath;
-      document.title = reader.title;
-      applyShareHead(reader.shareHead);
-      // The bridge receives reader-ready on document and mounts against this URL.
-      // Commit the state before that event, while the fetched reader is already in place.
-      if (options.fromHistory) readerTrail = history.state?.trail || [readerPath];
-      else if (options.backTrail) readerTrail = options.backTrail;
-      else readerTrail = isInReader ? [...readerTrail, readerPath] : [readerPath];
-      lastOpenState = { lfReader: true, path: readerPath, trail: readerTrail };
-      if (options.backTrail) history.replaceState(lastOpenState, '', readerPath);
-      else if (!options.fromHistory) history.pushState(lastOpenState, '', readerPath);
-      updateNavigation(readerPath, reader.homePath);
-      prepareNativeInquiry(detailBody, readerPath);
-      // A standalone page can have its own detail-title behind this dialog.
-      // Name the modal from its own content, never a duplicate background ID.
-      detail.removeAttribute('aria-labelledby');
-      detail.setAttribute('aria-label', detailBody.querySelector('h1')?.textContent.trim() || reader.title);
-      document.dispatchEvent(new CustomEvent('lf:reader-ready', { detail: { path: readerPath } }));
+      const applyReader = () => {
+        releaseDemos();
+        window.LFWebsiteStory?.release(panel);
+        detailBody.innerHTML = reader.html;
+        activeSource = heroSource || findTile(reader.homePath) || activeSource;
+        detail.dataset.readerLayout = reader.layout;
+        panel.dataset.readerLayout = reader.layout;
+        detail.dataset.readerFamily = reader.family;
+        panel.dataset.readerFamily = reader.family;
+        panel.dataset.readerTemplate = reader.template;
+        detailBody.scrollTop = 0;
+        panel.scrollTop = 0;
+        detailBody.dataset.readerPath = readerPath;
+        detail.dataset.readerPath = readerPath;
+        panel.dataset.readerPath = readerPath;
+        document.title = reader.title;
+        applyShareHead(reader.shareHead);
+        // The bridge receives reader-ready on document and mounts against this URL.
+        // Commit the state before that event, while the fetched reader is already in place.
+        if (options.fromHistory) readerTrail = history.state?.trail || [readerPath];
+        else if (options.backTrail) readerTrail = options.backTrail;
+        else readerTrail = isInReader ? [...readerTrail, readerPath] : [readerPath];
+        lastOpenState = { lfReader: true, path: readerPath, trail: readerTrail };
+        if (options.backTrail) history.replaceState(lastOpenState, '', readerPath);
+        else if (!options.fromHistory) history.pushState(lastOpenState, '', readerPath);
+        updateNavigation(readerPath, reader.homePath);
+        prepareNativeInquiry(detailBody, readerPath);
+        // A standalone page can have its own detail-title behind this dialog.
+        // Name the modal from its own content, never a duplicate background ID.
+        detail.removeAttribute('aria-labelledby');
+        detail.setAttribute('aria-label', detailBody.querySelector('h1')?.textContent.trim() || reader.title);
+        document.dispatchEvent(new CustomEvent('lf:reader-ready', { detail: { path: readerPath } }));
+      };
+      // Moving between cards inside the reader is a same-document swap, the
+      // case View Transitions were made for: the page slides in the direction
+      // of travel and shared clay art morphs between the two cards.
+      const readerArt = () => detailBody.querySelector('.reader-clay-cutout img, .story-art .clay-illustration img');
+      if (isInReader && 'startViewTransition' in document && !prefersReducedMotion.matches && !document.body.classList.contains('no-motion')) {
+        const root = document.documentElement;
+        root.dataset.readerTurn = options.direction || 'next';
+        detailBody.style.viewTransitionName = 'lf-reader';
+        const outgoing = readerArt();
+        if (outgoing) outgoing.style.viewTransitionName = 'lf-reader-art';
+        const transition = document.startViewTransition(() => {
+          applyReader();
+          const incoming = readerArt();
+          if (incoming && outgoing) incoming.style.viewTransitionName = 'lf-reader-art';
+        });
+        await transition.updateCallbackDone;
+        transition.finished.finally(() => {
+          detailBody.style.viewTransitionName = '';
+          readerArt()?.style.removeProperty('view-transition-name');
+          delete root.dataset.readerTurn;
+        });
+      } else applyReader();
 
       showDialog();
       const motion = window.LFTileMotion;
@@ -571,11 +625,11 @@
     if (readerTrail.length < 2) return;
     const trail = readerTrail.slice(0, -1);
     const previous = trail[trail.length - 1];
-    openReader(previous, findTile(previous), { backTrail: trail });
+    openReader(previous, findTile(previous), { backTrail: trail, direction: 'prev' });
   });
   readerHub?.addEventListener('click', () => closeReader());
   [readerPrevious, readerNext].forEach(button => button?.addEventListener('click', () => {
-    if (button.dataset.readerTarget) openReader(button.dataset.readerTarget, findTile(button.dataset.readerTarget));
+    if (button.dataset.readerTarget) openReader(button.dataset.readerTarget, findTile(button.dataset.readerTarget), { direction: button === readerPrevious ? 'prev' : 'next' });
   }));
 
   closeButton?.addEventListener('click', event => { event.preventDefault(); closeReader(); });
@@ -899,6 +953,48 @@
   prepareNativeInquiry(document, location.href);
   mountDemos(document.querySelector('main[data-page-content]') || document.createElement('div'));
   document.querySelectorAll('form[data-email-draft] textarea[name="message"]').forEach(field => { if (field.maxLength < 0) field.maxLength = 4000; });
+  // Contact dock: Call, Text and Get help appear once the hero's own buttons
+  // have scrolled away, and leave again when they return.
+  const dock = document.querySelector('[data-contact-dock]');
+  const heroActions = document.querySelector('.sculpture-hero-actions');
+  if (dock && heroActions && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      dock.dataset.visible = String(!entry.isIntersecting && entry.boundingClientRect.bottom < 0);
+    }).observe(heroActions);
+  }
+
+  // Get help opens a one-tap chooser. Each choice starts the matching inquiry
+  // in the reader; Call, Text and Email stay one tap away. Without scripts the
+  // links still go straight to the inquiry page.
+  const helpPanel = document.getElementById('get-help-panel');
+  if (helpPanel && typeof helpPanel.showModal === 'function') {
+    let helpSource = null;
+    document.addEventListener('click', event => {
+      const trigger = event.target.closest?.('.sculpture-help, .topbar .start-button, [data-get-help]');
+      if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      helpSource = trigger;
+      helpPanel.showModal();
+      helpPanel.querySelector('.help-choice')?.focus({ preventScroll: true });
+      interaction('help_panel_open', 'get-help', trigger.closest('.sculpture-hero') ? 'hero' : trigger.matches('[data-get-help]') ? 'dock' : 'header');
+    }, { capture: true });
+    helpPanel.addEventListener('click', event => {
+      if (event.target === helpPanel || event.target.closest('[data-help-close]')) { helpPanel.close(); return; }
+      const choice = event.target.closest('[data-help-choice]');
+      if (!choice || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      event.stopPropagation();
+      interaction('help_choice', choice.dataset.helpChoice, 'help-panel');
+      const source = helpSource;
+      helpPanel.close();
+      openReader(sameOriginPath(choice.href), source);
+    });
+    helpPanel.addEventListener('close', () => {
+      if (!dialogIsOpen()) helpSource?.focus({ preventScroll: true });
+    });
+  }
+
   // Warm the reader stylesheet once the homepage is idle so the first card
   // opens without waiting on it. It never competes with first paint.
   if (mosaic) {

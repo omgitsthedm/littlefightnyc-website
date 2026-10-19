@@ -5,11 +5,22 @@ from html import escape
 import hashlib
 import json
 from urllib.parse import urlsplit
-from tile_rewrite import CONTENT_UPDATED, load_rewrite, rewritten_paths
+from tile_rewrite import CONTENT_UPDATED, GUIDE_UPDATED, guided_paths, load_rewrite, rewritten_paths
 
 ROOT = Path(__file__).resolve().parents[1] / 'dist'
 ORIGIN = 'https://littlefightnyc.com'
-updated = rewritten_paths(load_rewrite(ROOT.parent / 'preview-content'))
+rewrite = load_rewrite(ROOT.parent / 'preview-content')
+updated = rewritten_paths(rewrite)
+# The expanded answers and the category page that now links to each of them.
+guided = guided_paths(rewrite) | {path for path, category in rewrite['categories'].items()
+                                  if any(item.get('guide') and item['category'] == category['id'] for item in rewrite['answers'].values())}
+
+
+def lastmod(path):
+    """Only pages whose copy changed on a recorded date carry one."""
+    if path in guided:
+        return '<lastmod>' + GUIDE_UPDATED + '</lastmod>'
+    return '<lastmod>' + CONTENT_UPDATED + '</lastmod>' if path in updated else ''
 
 
 class Head(HTMLParser):
@@ -40,9 +51,7 @@ for file in ROOT.rglob('*.html'):
 (ROOT / 'sitemap.xml').write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    '\n'.join('<url><loc>' + escape(url) + '</loc>' +
-              ('<lastmod>' + CONTENT_UPDATED + '</lastmod>' if urlsplit(url).path in updated else '') +
-              '</url>' for url in sorted(urls)) +
+    '\n'.join('<url><loc>' + escape(url) + '</loc>' + lastmod(urlsplit(url).path) + '</url>' for url in sorted(urls)) +
     '\n</urlset>\n'
 )
 digest = hashlib.sha256()

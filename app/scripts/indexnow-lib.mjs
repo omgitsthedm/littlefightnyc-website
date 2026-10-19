@@ -19,6 +19,10 @@ function decodeXml(value) {
     .replace(/&#39;/g, "'");
 }
 
+function isPrivatePath(pathname) {
+  return PRIVATE_PATHS.has(pathname) || PRIVATE_PREFIXES.some((prefix) => pathname.startsWith(prefix));
+}
+
 export function canonicalPublicUrl(value, origin = PRODUCTION_ORIGIN) {
   const base = asOrigin(origin);
   const url = new URL(value, base);
@@ -27,7 +31,7 @@ export function canonicalPublicUrl(value, origin = PRODUCTION_ORIGIN) {
   }
 
   const pathname = url.pathname;
-  if (PRIVATE_PATHS.has(pathname) || PRIVATE_PREFIXES.some((prefix) => pathname.startsWith(prefix))) {
+  if (isPrivatePath(pathname)) {
     throw new Error(`Private or non-discovery URL cannot be submitted to IndexNow: ${pathname}`);
   }
   if (pathname.endsWith(".json") || pathname.endsWith(".xml") || pathname.endsWith(".txt")) {
@@ -40,7 +44,11 @@ export function sitemapUrls(xml, origin = PRODUCTION_ORIGIN) {
   if (typeof xml !== "string") throw new TypeError("Sitemap content must be text.");
   const matches = [...xml.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/gi)];
   if (!matches.length) throw new Error("Sitemap has no <loc> URLs.");
-  return [...new Set(matches.map((match) => canonicalPublicUrl(decodeXml(match[1]), origin)))].sort();
+  // A crawlable page can still be excluded from IndexNow pushes (the sample
+  // audit site). Skip those here; explicit --changed/--removed stay strict.
+  const locations = matches.map((match) => decodeXml(match[1]));
+  const discoverable = locations.filter((value) => !isPrivatePath(new URL(value, asOrigin(origin)).pathname));
+  return [...new Set(discoverable.map((value) => canonicalPublicUrl(value, origin)))].sort();
 }
 
 export function changedUrlManifest({ previousUrls, candidateUrls, changed = [], removed = [], origin = PRODUCTION_ORIGIN }) {

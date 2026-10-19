@@ -1,17 +1,6 @@
 {
   "posts": [
     {
-      "slug": "cybersecurity-for-small-business",
-      "title": "Cybersecurity for a Small Business in NYC, Without the Panic",
-      "description": "Computer security for a New York small business, in plain words: lock the accounts, update the devices, back up the files, and give staff one clear rule for suspicious messages.",
-      "answer": "Start with four boring jobs: strong logins, updates, backups, and a plan for suspicious messages. You do not need a movie hacker dashboard.",
-      "meaning": "Your email, payment account, domain, booking tool, and file storage are the keys to the shop. Protect those first. A giant security shopping list can wait.",
-      "watch": ["Shared passwords or one password used everywhere.", "Old staff accounts that still work.", "Updates postponed on the register, router, or office computer.", "A backup nobody has tested."],
-      "next": ["List the five accounts that could stop business today.", "Turn on multifactor authentication, starting with email and banking.", "Remove old users and update the devices that take money.", "Back up one important folder, then prove you can restore a file."],
-      "fit": "Call us when the list is messy, a device keeps failing, or nobody knows who owns the accounts. If there may be an active breach, stop changing things and contact a qualified incident-response professional.",
-      "sources": ["nistSmallBusiness", "cisaSmallBusiness"]
-    },
-    {
       "slug": "nyc-small-business-digital",
       "title": "What a NYC Business Actually Needs Online",
       "description": "A clear Google profile, a useful website, and one working path to call, book, order, or visit. The rest is optional.",
@@ -45,7 +34,7 @@
       "sources": ["airtablePricing", "notionPricing", "mondayPricing"],
       "relatedQuickAnswer": {
         "intro": "Need a short way to frame the choice before comparing all three tools?",
-        "href": "/answers/airtable-vs-notion-reddit-small-business/",
+        "href": "/journal/airtable-vs-notion-vs-monday-small-business/",
         "label": "Read the quick owner answer"
       }
     },
@@ -72,7 +61,7 @@
       "sources": ["shopifyPos", "squarespaceCommerce"],
       "relatedQuickAnswer": {
         "intro": "Need a short way to frame the choice before you map the whole store?",
-        "href": "/answers/shopify-vs-squarespace-reddit/",
+        "href": "/journal/shopify-vs-squarespace-nyc-retail/",
         "label": "Read the quick owner answer"
       }
     },
@@ -88,7 +77,7 @@
       "sources": ["squareAppointments", "glossGeniusPricing"],
       "relatedQuickAnswer": {
         "intro": "Need a short way to frame the choice before you test a booking flow?",
-        "href": "/answers/glossgenius-vs-square-appointments-reddit/",
+        "href": "/journal/square-appointments-vs-glossgenius-nyc-salons/",
         "label": "Read the quick owner answer"
       }
     },
@@ -104,7 +93,7 @@
       "sources": ["squareRestaurants", "toastOverview", "squareOffline"],
       "relatedQuickAnswer": {
         "intro": "Need a short way to frame the choice before you run a service test?",
-        "href": "/answers/square-vs-toast-reddit/",
+        "href": "/journal/square-vs-toast-manhattan-restaurants/",
         "label": "Read the quick owner answer"
       }
     },
@@ -208,28 +197,6 @@
       "sources": ["icannRegistrants"]
     },
     {
-      "slug": "how-do-i-back-up-my-business-data",
-      "title": "Back Up the Business Before a Laptop Picks the Worst Day",
-      "description": "Know the important data, keep more than one copy, protect account access, and test a restore. A backup that cannot restore is décor.",
-      "answer": "Keep important business data in more than one place, with at least one copy separated from the everyday device or account. Then test that you can restore it.",
-      "meaning": "Start with what would stop sales or operations: customer and booking data, financial exports, contracts, product files, credentials, website source, and configuration. Different tools need different backup methods.",
-      "watch": ["Everything synced to one cloud account with one login.", "Exports never taken from a critical SaaS tool.", "The backup drive always connected to the same computer.", "Nobody has restored a file or knows the recovery account."],
-      "next": ["List the data that would hurt most to lose.", "Find where each original and backup copy lives.", "Add a separate protected copy and recovery access.", "Restore one file and record the steps and date."],
-      "fit": "We can inventory the data, configure practical backups, and document recovery. A regulated business may need a qualified compliance or security review beyond this general guide.",
-      "sources": ["cisaSmallBusiness", "nistSmallBusiness"]
-    },
-    {
-      "slug": "what-to-do-when-business-wifi-keeps-dropping",
-      "title": "Business Wi-Fi Keeps Dropping? Isolate the Fault",
-      "description": "Check the provider, router, local coverage, and one device separately. Random reboots are not a troubleshooting plan.",
-      "answer": "Find out whether the problem is the internet line, the Wi-Fi box, coverage in one spot, or one device. Test one part at a time.",
-      "meaning": "The Wi-Fi symbol only proves a device sees the shop’s wireless network. It does not prove the Wi-Fi box reaches the internet or that the register can reach its service.",
-      "watch": ["Every device fails at once versus only one device.", "A wired computer works while Wi-Fi fails.", "Failures cluster in one room or at one busy time.", "The register shows a message from the company that runs it or says a security setting blocked it."],
-      "next": ["Record the time, devices, location, and exact error.", "Check the internet provider and critical service status.", "Test one wired device and one nearby wireless device.", "Reboot only the identified layer, then document what changed."],
-      "fit": "NYC businesses can call us for remote diagnosis or an approved on-site visit. Outside NYC, we can help with the website and documentation, not promise a local dispatch.",
-      "sources": ["squareNetwork"]
-    },
-    {
       "slug": "how-to-own-your-domain-name-not-your-web-guy",
       "title": "Make Sure the Business Controls Its Domain",
       "description": "The business should control the registrar account, renewal, recovery, and authorized contacts. A developer can get access without owning the name.",
@@ -328,17 +295,6 @@
       "fit": "Use the Tech Audit when the problem crosses tools or you do not know where it starts. For one obvious typo or cable, fix the typo or cable.",
       "sources": [],
       "cta": {"href": "/tech-audit/", "label": "Start the free first look"}
-    },
-    {
-      "slug": "signs-your-pos-is-about-to-fail",
-      "title": "POS Trouble: Prepare Before the Friday-Night Failure",
-      "description": "Repeated freezes, connection errors, power trouble, pending updates, and offline-mode surprises deserve a documented check and backup plan.",
-      "answer": "Repeated freezes, network failures, reader disconnects, storage warnings, delayed updates, or unexplained offline behavior mean it is time to diagnose and prepare. One glitch is not a prophecy.",
-      "meaning": "Separate the device, local network, internet provider, and POS service. Write down the exact error and time. A clear incident record beats reboot roulette.",
-      "watch": ["Errors across every device versus one terminal.", "Power, cable, heat, storage, or battery symptoms.", "Offline payments not configured or understood.", "Updates delayed because nobody knows the account or maintenance window."],
-      "next": ["Photograph the error and record time, device, and transaction state without customer data.", "Check power, connections, network, and provider status.", "Review the POS maker’s offline and recovery instructions.", "Train staff on the approved cash, offline, and escalation path."],
-      "fit": "NYC shops can call us to diagnose the local setup and prepare the runbook. Payment risk and offline limits come from the POS provider, so follow its current official guidance.",
-      "sources": ["squareOffline", "squareNetwork"]
     },
     {
       "slug": "questions-nyc-owners-actually-ask-us-about-ai",
