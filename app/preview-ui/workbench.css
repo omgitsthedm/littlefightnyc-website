@@ -477,3 +477,26 @@
 
 /* The Little Fight tugboat is always all orange: never tint it with a service colour. */
 img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!important}
+
+/* Article opening: topic chip, reading line and the topic's clay object on a soft stage. */
+.lf-reader .article-hero{--article-accent:var(--reader-accent,#ff7839)}
+.lf-reader .article-kicker{display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;padding:6px 14px 6px 8px;border:1px solid color-mix(in srgb,var(--article-accent) 45%,transparent);border-radius:999px;background:color-mix(in srgb,var(--article-accent) 12%,transparent);color:var(--article-accent);font-size:13px;font-weight:700;letter-spacing:.06em;line-height:1.2;text-transform:uppercase}
+.lf-reader .article-kicker-icon{flex:none;width:22px;height:22px;background:currentColor;-webkit-mask:var(--kicker-icon) center/contain no-repeat;mask:var(--kicker-icon) center/contain no-repeat}
+.lf-reader .article-kicker-topic::before{content:"·";margin:0 7px 0 1px;opacity:.65}
+.lf-reader .article-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin:20px 0 0;padding:0;list-style:none;color:color-mix(in srgb,var(--workbench-paper,#f6f3ec) 72%,transparent);font-size:14px;line-height:1.3}
+.lf-reader .article-meta li{display:inline-flex;align-items:center;gap:7px;margin:0;padding:0}
+.lf-reader .article-meta li::before{content:none}
+.lf-reader .article-meta-icon{flex:none;width:17px;height:17px;background:var(--article-accent);-webkit-mask:var(--meta-icon) center/contain no-repeat;mask:var(--meta-icon) center/contain no-repeat}
+.lf-reader .workbench-reader-sidebar .article-hero .story-art.article-art,.lf-reader .article-hero .story-art.article-art{display:block;width:min(100%,340px);margin-top:28px}
+.lf-reader .story-art.article-art .article-art-figure{position:relative;display:grid;place-items:center;margin:0;padding:14px 10px 6px;aspect-ratio:3/2;border-radius:28px;overflow:visible;outline:0;box-shadow:none;background:radial-gradient(60% 58% at 50% 62%,color-mix(in srgb,var(--article-accent) 34%,transparent) 0%,color-mix(in srgb,var(--article-accent) 10%,transparent) 55%,transparent 72%)}
+.lf-reader .story-art.article-art .article-art-figure::after{content:"";position:absolute;left:18%;right:18%;bottom:9%;height:9%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.42),transparent);z-index:0}
+.lf-reader .story-art.article-art .article-art-figure img{position:relative;z-index:1;width:100%;height:auto;max-height:none;background:transparent;border-radius:0;outline:0;box-shadow:none;object-fit:contain;filter:drop-shadow(0 14px 18px rgba(0,0,0,.38));animation:article-art-float 7s ease-in-out infinite}
+@keyframes article-art-float{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-7px) rotate(1.2deg)}}
+@media (prefers-reduced-motion:reduce){.lf-reader .story-art.article-art .article-art-figure img{animation:none}}
+@media (max-width:760px){
+  .lf-reader .workbench-reader-sidebar .article-hero .story-art.article-art,.lf-reader .article-hero .story-art.article-art{width:min(62vw,240px);margin-top:20px}
+  .lf-reader .article-kicker{margin-bottom:16px;font-size:12px}
+}
+
+/* Section headings in articles carry a small icon in the article's accent colour. */
+.lf-reader .story-section h2 .section-icon{display:block;width:30px;height:30px;margin:0 0 12px;background:var(--reader-accent,#ff7839);-webkit-mask:var(--section-icon) center/contain no-repeat;mask:var(--section-icon) center/contain no-repeat}

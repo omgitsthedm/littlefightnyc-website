@@ -29,7 +29,8 @@ from retained_answers import render_retained_answers
 from tile_rewrite import GUIDE_UPDATED, article_updates, load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
-from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library
+from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library, png_image as clay_png_image, assets as clay_assets
+from article_visuals import article_topic, section_icon_html
 from social_cards import register as social_card, tags as social_tags, write_plan as write_social_plan
 
 APP = Path(__file__).resolve().parents[1]
@@ -238,6 +239,73 @@ def channels(intent='general', source=''):
         query += '&source='+quote(source, safe='')
     write='' if source in ('/tech-audit/','/contact/','/thanks/') else '<a class="contact-plan" data-reader-link href="/tech-audit/'+query+'">Write</a>'
     return '<a href="tel:+16463600318">Call</a><a href="sms:+16463600318">Text</a><a href="mailto:hello@littlefightnyc.com">Email</a>'+write
+
+ARTICLE_META = '<!--ARTICLE_META-->'
+MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
+
+def published_date(path):
+    """The authored byline date (\"Published July 12, 2026\" or \"Published 2026-07-12\"), as ISO."""
+    for block in (pages.get(path) or {}).get('contentBlocks', [])[:4]:
+        text = block.get('text', '')
+        if m := re.search(r'Published (\d{4}-\d{2}-\d{2})', text):
+            return m.group(1)
+        if m := re.search(r'Published ([A-Z][a-z]+) (\d{1,2}), (\d{4})', text):
+            if m.group(1) in MONTHS:
+                return f'{m.group(3)}-{MONTHS.index(m.group(1)) + 1:02d}-{int(m.group(2)):02d}'
+    return None
+
+
+def article_updated(path, q):
+    return ARTICLE_UPDATES.get(path) or (GUIDE_UPDATED if q.get('_rewriteGuide') else None)
+
+
+def article_art_url(asset):
+    variant = clay_assets()[asset]['webpVariants'][-1]
+    return '/assets/clay-webp/' + variant['file'], variant['width'], variant['height']
+
+
+def article_hero(path, q, topic):
+    """Topic chip, title, summary, reading line and the topic's clay object."""
+    label, icon, asset, alt = topic
+    kind = 'Guide' if path.startswith('/answers/help/') else ('Field notes' if path.startswith('/journal/') else 'Answer')
+    extra_class = ' answer-guide-hero' if path.startswith('/answers/') else ''
+    art = clay_png_image(asset, 'reader-context-image article-art-image', eager=True, alt=alt,
+                         sizes='(max-width:760px) 56vw, 360px', extra={'fetchpriority': 'high'})
+    slug = re.sub(r'[^a-z0-9]+', '-', label.lower()).strip('-')
+    return (f'<header class="story-hero article-hero{extra_class}" data-article-topic="{E(slug)}">'
+            f'<p class="article-kicker"><span class="article-kicker-icon" aria-hidden="true" style="--kicker-icon:url(/assets/mineral/{E(icon)})"></span>'
+            f'<span>{E(kind)}</span><span class="article-kicker-topic">{E(label)}</span></p>'
+            f'<h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1>'
+            f'<p class="story-summary">{E(q["summary"])}</p>{ARTICLE_META}'
+            f'<div class="story-art article-art"><figure class="article-art-figure" data-clay-asset="{E(asset)}">{art}</figure></div></header>')
+
+
+def article_meta(path, q, body):
+    """Reading time, cited sources and last update, measured on the finished body."""
+    main = re.sub(r'<section class="story-contact"[\s\S]*?</section>', '', body)
+    main = re.sub(r'<(script|style|noscript|template)[\s\S]*?</\1>', '', main)
+    words = len(unescape(re.sub(r'<[^>]+>', ' ', main)).split())
+    minutes = max(2, -(-words // 230))
+    hosts = {h for h in re.findall(r'href="(https://[^"]+)"', main) if urlsplit(h).hostname not in ('littlefightnyc.com', 'www.littlefightnyc.com')}
+    items = [('clock', f'{minutes} min read')]
+    if hosts:
+        items.append(('book-open-text', f'{len(hosts)} cited source' + ('' if len(hosts) == 1 else 's')))
+    updated = article_updated(path, q)
+    if updated:
+        d = datetime.date.fromisoformat(updated)
+        items.append(('calendar-check', f'Updated <time datetime="{updated}">{MONTHS[d.month - 1][:3]} {d.day}, {d.year}</time>'))
+    icons = {'clock': 'clock-duotone.svg', 'book-open-text': 'book-open-text-duotone.svg', 'calendar-check': 'calendar-check-duotone.svg'}
+    return ('<ul class="article-meta" aria-label="About this article">'
+            + ''.join(f'<li><span class="article-meta-icon" aria-hidden="true" style="--meta-icon:url(/assets/mineral/{icons[k]})"></span>{v}</li>' for k, v in items)
+            + '</ul>')
+
+
+def decorate_sections(body):
+    """A small icon on each section heading in an article, so long answers scan easily."""
+    return re.sub(r'(<section class="story-section[^"]*"[^>]*>)<h2>(.*?)</h2>',
+                  lambda m: m.group(1) + '<h2>' + section_icon_html(unescape(re.sub(r'<[^>]+>', '', m.group(2)))) + m.group(2) + '</h2>', body)
+
 
 def sections_html(sections):
     html=[]
@@ -457,6 +525,9 @@ def article(p):
         hero = f'<header class="story-hero rw-scene anchor-service-hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker"><img src="{anchor_icons[family]}" width="32" height="32" alt="">{anchor_labels[family]}</p><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1></div><div class="rw-hero-promise"><p class="story-summary">{E(q["summary"])}</p><ul class="rw-benefits" aria-label="In this story">{benefits}</ul></div></header>'
     if path in CLAY_ROUTES and path != '/industries/':
         hero = hero.replace('</header>', clay_figure(CLAY_ROUTES[path]) + '</header>')
+    topic = article_topic(path)
+    if topic and path not in anchor_paths:
+        hero = article_hero(path, q, topic)
     immersive = path == '/vera/'
     if immersive:
         # VERA opens as the working workspace. The complete agency context is
@@ -546,6 +617,8 @@ def article(p):
         if path=='/website-check/':
             fallback+='<section class="story-faq"><h2>Questions about the Website Check</h2>'+''.join(f'<h3>{E(x["question"])}</h3><p>{E(x["answer"])}</p>' for x in WEBSITE_CHECK_FAQ)+'</section>'
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}">{fallback}</div>'
+    if topic and ARTICLE_META in body:
+        body = decorate_sections(body.replace(ARTICLE_META, article_meta(path, q, body)))
     return q,body
 
 INDUSTRIES=[('Plumbers','/industries/plumbers/'),('Roofers','/industries/roofing/'),('Builders & home services','/industries/luxury-home-services/'),('Law firms','/industries/law-firms/'),('Salons & wellness','/industries/salons-wellness/')]
@@ -682,10 +755,19 @@ def head(q, home=False):
     if path in ARTICLE_UPDATES:
         graph[2]['dateModified'] = ARTICLE_UPDATES[path]
     graph[2]['primaryImageOfPage'] = {'@type':'ImageObject', 'url':ORIGIN+card['image'], 'width':card['width'], 'height':card['height'], 'caption':card['alt']}
-    if path.startswith('/journal/') and path != '/journal/':
+    topic = article_topic(path)
+    if (path.startswith('/journal/') and path != '/journal/') or (topic and not path.startswith('/answers/help/')):
+        # The share card and the article's own clay object, with their real sizes.
+        images = [{'@type':'ImageObject','url':ORIGIN+card['image'],'width':card['width'],'height':card['height'],'caption':card['alt']}]
+        if topic:
+            art_url, art_w, art_h = article_art_url(topic[2])
+            images.append({'@type':'ImageObject','url':ORIGIN+art_url,'width':art_w,'height':art_h,'caption':topic[3]})
+        published = published_date(path)
         graph.append({'@type':'Article', '@id':ORIGIN+path+'#article',
                       'headline':q.get('heading') or q.get('title'), 'description':q.get('description'),
-                      'image':ORIGIN+card['image'],
+                      'image':images,
+                      **({'datePublished':published} if published else {}),
+                      **({'articleSection':topic[0]} if topic else {}),
                       'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
                       'author':{'@id':ORIGIN+'/#organization'},
                       'publisher':{'@id':ORIGIN+'/#organization'},

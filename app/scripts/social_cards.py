@@ -4,6 +4,7 @@ from html import escape
 import json
 import re
 from sculpture_tiles import TOPIC_ART
+from article_visuals import article_topic
 from clay_library import art_asset
 
 APP = Path(__file__).resolve().parents[1]
@@ -65,6 +66,9 @@ def register(page, family='brand', visual=None, lab=None):
                 image='/assets/clay-png/'+asset+'.png', artAlt=alt)
     if asset == 'symbol-browser':
         card.update(mode='browser', artAlt='A handmade clay browser frame displaying the Chromatic Painting and Design website.')
+    # Articles share the clay object that opens the page, so the preview matches the article.
+    if topic := article_topic(route):
+        card.update(mode='clay', image='/assets/clay-png/' + topic[2] + '.png', artAlt=topic[3])
     if route == '/':
         card.update(headline='A little fight.\nA big difference.', label='In your corner.', color='#ff7839', mode='hero',
                     note='Websites. Tech support.\nSoftware for independent businesses.',

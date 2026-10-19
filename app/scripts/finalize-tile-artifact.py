@@ -4,6 +4,7 @@ from html.parser import HTMLParser
 from html import escape
 import hashlib
 import json
+import re
 from urllib.parse import urlsplit
 from tile_rewrite import CONTENT_UPDATED, GUIDE_UPDATED, article_updates, guided_paths, load_rewrite, rewritten_paths
 
@@ -40,7 +41,20 @@ class Head(HTMLParser):
             self.robots = a.get('content', '').lower()
 
 
+def page_images(html):
+    """An article's share card and its own clay object, for the image sitemap."""
+    found = []
+    share = re.search(r'<meta property="og:image" content="([^"]+)"', html)
+    if share:
+        found.append(share.group(1))
+    art = re.search(r'<figure class="article-art-figure"[^>]*>.*?<img [^>]*src="([^"]+)"', html, re.S)
+    if art:
+        found.append(ORIGIN + art.group(1) if art.group(1).startswith('/') else art.group(1))
+    return list(dict.fromkeys(found)) if art else []
+
+
 urls = set()
+images = {}
 for file in ROOT.rglob('*.html'):
     h = Head()
     h.feed(file.read_text(errors='replace').split('</head>')[0])
@@ -50,11 +64,14 @@ for file in ROOT.rglob('*.html'):
     route = '/' + relative.removesuffix('index.html') if relative.endswith('index.html') else '/' + relative
     if urlsplit(h.canonical).path == route:
         urls.add(h.canonical)
+        images[h.canonical] = page_images(file.read_text(errors='replace'))
 
 (ROOT / 'sitemap.xml').write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
-    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    '\n'.join('<url><loc>' + escape(url) + '</loc>' + lastmod(urlsplit(url).path) + '</url>' for url in sorted(urls)) +
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' +
+    '\n'.join('<url><loc>' + escape(url) + '</loc>' + lastmod(urlsplit(url).path)
+              + ''.join('<image:image><image:loc>' + escape(img) + '</image:loc></image:image>' for img in images.get(url, []))
+              + '</url>' for url in sorted(urls)) +
     '\n</urlset>\n'
 )
 digest = hashlib.sha256()
