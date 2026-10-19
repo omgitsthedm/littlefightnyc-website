@@ -43,7 +43,7 @@ async function sourceLink(root, record) {
       await reader.waitFor({ state: 'visible' });
       assert.equal(await reader.getAttribute('data-review-id'), record.id, `${record.id}: direct reader identity`);
       assert.match(await reader.innerText(), new RegExp(record.displayName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `${record.id}: first-name source attribution`);
-      if (record.excerpt) assert.match(await reader.innerText(), new RegExp(record.excerpt.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), `${record.id}: exact source excerpt`);
+      if (record.text) assert.ok((await reader.innerText()).replace(/\s+/g, ' ').includes(record.text.replace(/\s+/g, ' ')), `${record.id}: whole review text`);
       await sourceLink(reader, record);
       await context.close();
     }

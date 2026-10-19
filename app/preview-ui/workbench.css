@@ -510,3 +510,14 @@ img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!import
 .lf-reader .story-art .about-portrait{width:auto}
 .lf-reader .story-art .about-portrait .about-portrait-image{width:min(100%,220px);height:auto;aspect-ratio:1;border-radius:50%;object-fit:cover;background:transparent;outline:0}
 .lf-reader .story-art .about-portrait figcaption{color:color-mix(in srgb,var(--workbench-paper,#f6f3ec) 72%,transparent);font-size:14px}
+
+/* Whole Google reviews (2026-10-19). Short reviews keep headline type; long ones read as
+   text. The /reviews/ page flows cards into balanced columns so long and short sit together. */
+.lf-reader .review-collection .review-grid{display:block;columns:3 17rem;column-gap:clamp(14px,2vw,24px)}
+.lf-reader .review-collection .review-grid>.review-card{break-inside:avoid;margin:0 0 clamp(14px,2vw,24px)}
+.lf-reader .review-card.review-card--long blockquote{font-size:clamp(16px,1.25vw,18px);line-height:1.55;letter-spacing:0;text-wrap:pretty}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--wide blockquote{max-inline-size:min(20ch,100%);font-size:clamp(30px,4vw,52px);line-height:1.06;letter-spacing:-.04em}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--full blockquote{max-inline-size:min(60ch,100%);color:var(--workbench-paper,#f6f3ec);font:500 clamp(19px,1.7vw,24px)/1.5 LFReader,LFAtkinson,Arial,sans-serif;letter-spacing:-.005em;text-wrap:pretty;overflow-wrap:normal}
+:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--full blockquote::first-line{color:var(--workbench-accent,#ff7839);font-weight:700}
+@media(max-width:600px){:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--wide blockquote{font-size:clamp(28px,8.4vw,36px)}
+  :is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--full blockquote{font-size:18px}}

@@ -14,11 +14,11 @@ def review_path(review_id):
 
 
 def review_reader_pages(reviews, family_by_id):
-    """Derive the seven reader records solely from the verified review source."""
+    """Derive one reader record per verified review, solely from the review source."""
     records = reviews.get("reviews") if isinstance(reviews, dict) else None
-    if not isinstance(records, list) or len(records) != 7:
-        raise ValueError("Review readers require the seven verified Google records")
-    expected = {f"google-review-{number}" for number in range(1, 8)}
+    if not isinstance(records, list) or not records or len(records) != reviews.get("reviewCount"):
+        raise ValueError("Review readers require every verified Google record")
+    expected = {f"google-review-{number}" for number in range(1, len(records) + 1)}
     actual = {str(record.get("id") or "") for record in records if isinstance(record, dict)}
     if actual != expected or len(actual) != len(records):
         raise ValueError("Review reader identities must exactly match the verified review records")
@@ -31,16 +31,18 @@ def review_reader_pages(reviews, family_by_id):
             raise ValueError(f"Review {review_id} needs its retained homepage family")
         if record.get("rating") != 5 or not record.get("displayName") or not record.get("sourceUrl"):
             raise ValueError(f"Review {review_id} is missing verified source fields")
-        excerpt = record.get("excerpt")
+        excerpt, text = record.get("excerpt"), record.get("text")
         if excerpt is not None and not isinstance(excerpt, str):
             raise ValueError(f"Review {review_id} excerpt must remain source text or null")
+        if bool(text) != bool(excerpt) or (excerpt and excerpt not in text):
+            raise ValueError(f"Review {review_id} excerpt must be an exact part of its full text")
         path = review_path(review_id)
         pages[path] = {
             "path": path,
             "id": review_id,
             "title": f"Google review from {record['displayName']} | Little Fight NYC",
             "heading": f"Google review from {record['displayName']}",
-            "summary": "A verified Google review excerpt, shown with its original source link.",
+            "summary": "A verified Google review, shown in full with its original source link.",
             "description": f"Google review from {record['displayName']} with a direct link to the original source.",
             "family": family,
             "sections": [],
@@ -57,9 +59,12 @@ def render_review_reader(record):
         raise ValueError("Review reader requires a verified five-star source record")
     name = E(record.get("displayName"))
     source = E(record.get("sourceUrl"))
-    excerpt = record.get("excerpt")
-    quote = f"<blockquote>“{E(excerpt)}”</blockquote>" if excerpt else "<p class=\"review-reader-rating-only\">Five stars.</p>"
-    quote_class = " review-reader-quote--long" if len(str(excerpt or "")) > 40 else ""
+    text = record.get("text")
+    quote = f"<blockquote>“{E(text)}”</blockquote>" if text else "<p class=\"review-reader-rating-only\">Five stars.</p>"
+    # Short reviews stay headline-sized; longer ones step down until they read as text.
+    length = len(str(text or ""))
+    quote_class = (" review-reader-quote--full" if length > 200 else " review-reader-quote--wide" if length > 100
+                   else " review-reader-quote--long" if length > 40 else "")
     title = f"Google review from {name}"
     family_actions = {
         "web": ("/services/custom-local-websites/", "Talk about your website +"),

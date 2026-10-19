@@ -27,12 +27,14 @@ const approvedReviewIds = [
   'google-review-5',
   'google-review-6',
   'google-review-7',
+  'google-review-8',
+  'google-review-9',
 ];
 const approvedReviewRecords = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews;
 assert.deepEqual(
   approvedReviewRecords.map(record => record.id).sort(),
   [...approvedReviewIds].sort(),
-  'the visual-support exception is limited to the seven approved Google review readers',
+  'the visual-support exception is limited to the approved Google review readers',
 );
 const approvedReviewsByPath = new Map(approvedReviewRecords.map(record => {
   assert.equal(record.rating, 5, `${record.id}: approved review must retain its verified five-star rating`);
@@ -199,7 +201,7 @@ async function assertApprovedReviewReader(page, record, controls) {
   const quote = reader.locator('.review-reader-quote');
   if (record.showAsQuote) {
     assert.equal(await quote.locator('blockquote').count(), 1, `${record.id}: source excerpt must remain a quote`);
-    assert.equal((await quote.locator('blockquote').textContent()).trim(), `“${record.excerpt}”`, `${record.id}: reader quote must exactly match the verified excerpt`);
+    assert.equal((await quote.locator('blockquote').textContent()).trim(), `“${record.text}”`, `${record.id}: reader must show the whole verified review, word for word`);
   } else {
     assert.equal(await quote.locator('blockquote').count(), 0, `${record.id}: source-linked rating must not invent a quote`);
     assert.equal((await quote.locator('.review-reader-rating-only').textContent()).trim(), 'Five stars.', `${record.id}: source-linked rating must remain explicit`);
@@ -216,7 +218,7 @@ async function assertApprovedReviewReader(page, record, controls) {
     id: record.id,
     reviewer: record.displayName,
     rating: record.rating,
-    quote: record.excerpt || null,
+    quote: record.text || null,
     sourceUrl: record.sourceUrl,
   };
 }

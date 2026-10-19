@@ -26,13 +26,14 @@ PUBLIC = APP / "public"
 ORIGIN = "https://littlefightnyc.com"
 LAB_CATALOG = json.loads((CONTENT / 'labs.json').read_text())
 ADDED_LAB_COUNT = len(LAB_CATALOG) - 9
-EXPECTED_TOTAL_TILE_INVENTORY = 129 + ADDED_LAB_COUNT + 1  # construction discovery tile
+EXPECTED_REVIEW_TILE_COUNT = len(json.loads((CONTENT / "reviews.json").read_text())["reviews"])
+# Construction discovery tile, plus the Google reviews added after the original seven.
+EXPECTED_TOTAL_TILE_INVENTORY = 129 + ADDED_LAB_COUNT + 1 + EXPECTED_REVIEW_TILE_COUNT - 7
 EXPECTED_ORIGINAL_TILE_COUNT = 106
-EXPECTED_REVIEW_TILE_COUNT = 7
 EXPECTED_REVIEW_DISTRIBUTION = {
-    "topic-web": 1,
+    "topic-web": 2,   # Rachel's review joined 2026-10-19
     "sculpture-services": 1,
-    "topic-it": 2,
+    "topic-it": 3,    # Sam's review joined 2026-10-19
     "topic-consulting": 2,
     "topic-software": 1,
 }
@@ -229,7 +230,7 @@ def source_pages() -> dict[str, dict]:
         pages[route] = {"path": route, "id": tile["id"], "category": tile["family"]}
     for route in ("/reviews/", "/tech-audit/", "/thanks/", "/services/it-support/"):
         pages[route] = {"path": route, "id": route}
-    # These seven readers are derived directly from the verified review source,
+    # These readers are derived directly from the verified review source,
     # not from route-meta or unsourced authored copy.
     for review in json.loads((CONTENT / "reviews.json").read_text())["reviews"]:
         identity = review["id"]
@@ -664,9 +665,9 @@ def review_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]
     document = target.read_text(errors="replace")
     required = (f'data-review-id="{identity}"', 'class="review-reader"', 'class="review-reader-stars"', source["displayName"])
     missing = [item for item in required if item not in document]
-    quote = source.get("excerpt")
-    if quote and f"“{quote}”" not in document:
-        missing.append("exact sourced excerpt")
+    quote = source.get("text")
+    if quote and f"“{__import__('html').escape(quote, quote=True)}”" not in document and f"“{quote}”" not in document:
+        missing.append("whole sourced review text")
     if not quote and '<blockquote>' in document:
         missing.append("quote-free rating-only review")
     google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', document, re.I)
@@ -681,7 +682,7 @@ def review_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]
                 break
     if 'story-contact' in document or 'story-section' in document:
         missing.append("generic long-story/contact treatment")
-    family = {'google-review-1':'web','google-review-4':'web','google-review-3':'it','google-review-2':'it','google-review-5':'consulting','google-review-7':'consulting','google-review-6':'software'}[identity]
+    family = {'google-review-1':'web','google-review-4':'web','google-review-3':'it','google-review-2':'it','google-review-5':'consulting','google-review-7':'consulting','google-review-6':'software','google-review-8':'web','google-review-9':'it'}[identity]
     if f'data-reader-family="{family}"' not in document:
         missing.append(f"retained {family} reader family")
     if missing:

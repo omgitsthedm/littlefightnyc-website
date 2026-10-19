@@ -22,8 +22,8 @@ for (const tile of await read('topic-tiles.json')) {
 // Do not accept arbitrary review identifiers or any visitor-supplied URL.
 const reviews = (await read('reviews.json')).reviews;
 const reviewIds = new Set(reviews.map(review => review.id));
-if (reviews.length !== 7 || reviewIds.size !== 7 || [...reviewIds].some(id => !/^google-review-[1-7]$/.test(id))) {
-  throw new Error('Review measurement paths require the seven verified public review identities.');
+if (!reviews.length || reviewIds.size !== reviews.length || [...reviewIds].some(id => !/^google-review-[1-9][0-9]*$/.test(id))) {
+  throw new Error('Review measurement paths require the verified public review identities.');
 }
 for (const id of reviewIds) paths.add(`/reviews/${id}/`);
 for (const album of await read('albums.json')) paths.add(`/photos/${album.id.replace(/^album-/, '')}/`);

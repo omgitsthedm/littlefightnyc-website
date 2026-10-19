@@ -10,13 +10,14 @@ const repoRoot = path.resolve(appRoot, "..");
 const distRoot = path.join(appRoot, "dist");
 const socialCards = JSON.parse(await readFile(path.join(appRoot, "preview-content/social-cards.json"), "utf8")).cards;
 const failures = [];
-const expectedTotalTileInventory = 132;
+const expectedTotalTileInventory = 134;
 const expectedOriginalTileCount = 106;
 const expectedConsolidatedGroups = 19;
-// The seven source-faithful review backs each retain their own static URL.
+// The nine source-faithful review backs each retain their own static URL
+// (two Google reviews added 2026-10-19).
 // 17 consolidated routes now 301 (public/_redirects, 2026-10-17); 17 more thin
 // articles folded into deepened articles (2026-10-19).
-const expectedRouteCount = 387;
+const expectedRouteCount = 389;
 
 function git(args, fallback = "") {
   try {

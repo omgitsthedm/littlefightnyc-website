@@ -1,10 +1,10 @@
 {
-  "verifiedAt": "2026-10-02",
+  "verifiedAt": "2026-10-19",
   "source": "Google Maps",
   "profileUrl": "https://www.google.com/maps/place/Little+Fight+NYC/data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416",
   "rating": 5,
-  "reviewCount": 7,
-  "displayPolicy": "First names only. DD uses the first public initials; no surnames. Quotes are short exact excerpts. No photos or invented review text. No Review or AggregateRating structured data for this self-serving business review display.",
+  "reviewCount": 9,
+  "displayPolicy": "First names only. DD uses the first public initials; no surnames. Each written review appears in full, word for word, as `text`; `excerpt` is a short exact quote from it for small homepage tiles, which open the full review. No photos or invented review text. No Review or AggregateRating structured data for this self-serving business review display.",
   "reviews": [
     {
       "id": "google-review-1",
@@ -13,8 +13,9 @@
       "excerpt": "built us a beautiful site",
       "sourceUrl": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
       "sourceLinkType": "individual-review",
-      "observedAge": "20 hours ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "If you need a website, you MUST hire David at Little Fight NYC. I was originally daunted by the idea of creating a website for our company, but David held my hand every step of the way. He built us a beautiful site that was perfectly tailored to our industry and needs, but the most valuable thing for me was how wonderful he was to work with. Anything he needed from me was always broken down into simple, easy-to-follow steps and his turnaround time was amazing. He went above and beyond my expectations testing our site, quickly catching any issues, and cleaning up our online presence. I would recommend him to anyone I know!"
     },
     {
       "id": "google-review-2",
@@ -23,8 +24,9 @@
       "excerpt": "easy to work with",
       "sourceUrl": "https://maps.app.goo.gl/DN3H137sCowxp9496",
       "sourceLinkType": "individual-review",
-      "observedAge": "20 hours ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "Little Flight NYC went above and beyond. Definitely hire David! Quick turn around time easy to work with and so talented."
     },
     {
       "id": "google-review-3",
@@ -33,8 +35,9 @@
       "excerpt": "Quick to respond",
       "sourceUrl": "https://maps.app.goo.gl/iroSD2VgyrKTPWgX6",
       "sourceLinkType": "individual-review",
-      "observedAge": "a day ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "Great experience working with Little Fight! Quick to respond and helpful every step of the way"
     },
     {
       "id": "google-review-4",
@@ -43,8 +46,9 @@
       "excerpt": "Clear communication, expectations and timelines!",
       "sourceUrl": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
       "sourceLinkType": "individual-review",
-      "observedAge": "a day ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "Attentive, dedicated, and proactive. Clear communication, expectations and timelines!"
     },
     {
       "id": "google-review-5",
@@ -53,8 +57,9 @@
       "excerpt": "Absolutely love love love!",
       "sourceUrl": "https://maps.app.goo.gl/PVRmfbCD1GCauwKH7",
       "sourceLinkType": "individual-review",
-      "observedAge": "a day ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "Absolutely love love love!"
     },
     {
       "id": "google-review-6",
@@ -63,8 +68,9 @@
       "excerpt": "ensuring a painless experience.",
       "sourceUrl": "https://maps.app.goo.gl/4s36rS4TCFThvc6J8",
       "sourceLinkType": "individual-review",
-      "observedAge": "a day ago",
-      "showAsQuote": true
+      "observedAge": "2 weeks ago",
+      "showAsQuote": true,
+      "text": "David does a great job, not only creating but maintaining my websites and IT, ensuring a painless experience."
     },
     {
       "id": "google-review-7",
@@ -73,8 +79,31 @@
       "excerpt": null,
       "sourceUrl": "https://www.google.com/maps/place/Little+Fight+NYC/data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416",
       "sourceLinkType": "business-profile",
-      "observedAge": "a day ago",
-      "showAsQuote": false
+      "observedAge": "2 weeks ago",
+      "showAsQuote": false,
+      "text": null
+    },
+    {
+      "id": "google-review-8",
+      "displayName": "Rachel",
+      "rating": 5,
+      "excerpt": "Little Fight is my secret weapon in attracting new clients",
+      "text": "Little Fight is my secret weapon in attracting new clients to my business as an independent hairstylist. David has been doing work for me since 2020 and I’m constantly receiving comments from my clients about how well done and professional my website is and how it’s made it easier for them to select services and book. Many people are absolutely floored by the quality, and I’m always impressed as well when I get new clients in my chair who have discovered me through my website / AI searches-my revenue this month alone has nearly doubled over the previous month due to being found in AI searches. I cannot recommend David and Little Fight enough. When so many markets are so saturated, Little Fight gives me the edge I need to competitive. David is also very easy to work with and highly responsive, through the entire process. I could not recommend him enough , 10/10",
+      "sourceUrl": "https://www.google.com/maps/reviews/@40.6971415,-73.979506,17z/data=!3m1!4b1!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT25kZlRrWkRXRTVWVUZWVVNXOTBVbWhRTmxCM1NVRRAB!2m1!1s0x0:0x3cfe5b8554bef416",
+      "sourceLinkType": "individual-review",
+      "observedAge": "5 hours ago",
+      "showAsQuote": true
+    },
+    {
+      "id": "google-review-9",
+      "displayName": "Sam",
+      "rating": 5,
+      "excerpt": "the endless patience is much appreciated",
+      "text": "I’m a new business owner and I needed help with website design/overall on site technical assistance - in comes Little Fight NYC. They have helped me start bringing my dreams to reality and the endless patience is much appreciated. Do yourself a favor and choose Little Fight!! Thank you for your help!!!",
+      "sourceUrl": "https://www.google.com/maps/reviews/@40.6971415,-73.979506,17z/data=!3m1!4b1!4m6!14m5!1m4!2m3!1sCi9DQUlRQUNvZENodHljRjlvT21wSVMwTkJlbFF6YlVwcFUyZ3hWM001V1dOcUxYYxAB!2m1!1s0x0:0x3cfe5b8554bef416",
+      "sourceLinkType": "individual-review",
+      "observedAge": "a week ago",
+      "showAsQuote": true
     }
   ]
 }

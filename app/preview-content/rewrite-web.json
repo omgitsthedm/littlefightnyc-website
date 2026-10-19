@@ -12,189 +12,189 @@
       "id": "maps",
       "question": "Why is my business not showing on Google Maps?",
       "answer": "A missing Google Maps listing needs a check of its verification status, business details, and any duplicate or restricted profiles.",
-      "detail": "We trace the public listing, the website, and the facts you can verify, then identify what needs correcting. Google controls the result, while the business should control its account and records.",
+      "detail": "At Little Fight NYC, we trace the public listing, the website, and the facts you can verify, then identify what needs correcting. Google controls the result, while the business should control its account and records.",
       "nextStep": "Send the listing that worries you and the public details it should show."
     },
     {
       "id": "platform",
       "question": "Should I use a website builder or hire someone to build my site?",
       "answer": "A website builder can suit a simple site when you have time to write, build, and update it. Hire help when the design, writing, booking setup, or upkeep takes more time than you can give it.",
-      "detail": "We compare the pages, updates, and connections your business needs, then say when a simpler setup is enough and when custom work earns its place.",
+      "detail": "At Little Fight NYC, we compare the pages, updates, and connections your business needs, then say when a simpler setup is enough and when custom work earns its place.",
       "nextStep": "Show us the site you have and the customer action it needs to support."
     },
     {
       "id": "speed",
       "question": "Why is my small business website slow on a phone?",
       "answer": "Oversized photos and extra scripts can leave customers staring at a blank screen before they see what you offer.",
-      "detail": "We measure the page on a phone, fix the heaviest parts first, and compare the result without stripping away the proof customers need.",
+      "detail": "At Little Fight NYC, we measure the page on a phone, fix the heaviest parts first, and compare the result without stripping away the proof customers need.",
       "nextStep": "Send the page that feels slow and tell us what a visitor needs to do there."
     },
     {
       "id": "ownership",
       "question": "How do I make sure I own my domain, website, and website accounts?",
       "answer": "Your domain, hosting, site platform, and connected tools should live in accounts the business can renew and recover.",
-      "detail": "We map who holds each account, move ownership where it belongs, and leave usable handoff notes so one person is never the only key.",
+      "detail": "At Little Fight NYC, we map who holds each account, move ownership where it belongs, and leave usable handoff notes so one person is never the only key.",
       "nextStep": "Bring the account names and renewal notices you can find; keep passwords private."
     },
     {
       "id": "booking",
       "question": "How can my website make it easier for customers to book an appointment?",
       "answer": "Booking is easier when customers can see the service, choose a time or send a request, and understand what happens next.",
-      "detail": "We test the full path from service choice to confirmation, then connect the request to the way your business actually responds.",
+      "detail": "At Little Fight NYC, we test the full path from service choice to confirmation, then connect the request to the way your business actually responds.",
       "nextStep": "Show us the booking link or form customers use now."
     },
     {
       "id": "cost",
       "question": "How much does a small business website cost?",
-      "answer": "The price depends on how many pages you need, who supplies the content, and which tools must connect. We review those with you, then write down the scope and price before paid work starts.",
-      "detail": "Current terms are 50% to start and 50% on hosting, with no monthly hosting fee. Domain renewals and optional paid tools stay separate; monthly checks, upgrades, and changes are free within the agreed scope.",
+      "answer": "Price depends on how many pages you need, who supplies the content, and which tools must connect. Little Fight NYC reviews those with you, then writes down the scope and price before paid work starts.",
+      "detail": "Terms are 50% to start and 50% on hosting, with no monthly hosting fee. Domain renewals and optional paid tools stay separate; monthly checks, upgrades, and changes are free within the agreed scope.",
       "nextStep": "Tell us what customers need to do on the new site."
     },
     {
       "id": "web-domain-renewal",
       "question": "How can a business avoid losing control of its domain name?",
       "answer": "Your domain needs a business-controlled login, renewal email, payment method, and recovery contact before the next notice arrives.",
-      "detail": "We identify the registrar and authorized account owner, then record the details that keep a later renewal or provider change manageable.",
+      "detail": "At Little Fight NYC, we identify the registrar and authorized account owner, then record the details that keep a later renewal or provider change manageable.",
       "nextStep": "Send the domain name and the email that receives its renewal notices."
     },
     {
       "id": "mobile",
       "question": "Why does my website look good on a computer but awkward on a phone?",
       "answer": "A site can look polished on a laptop and still make a customer pinch, squint, or abandon the contact path on a phone.",
-      "detail": "We test the service and contact pages at real phone sizes, repair what gets in the way, and keep the parts of the site that still work.",
+      "detail": "At Little Fight NYC, we test the service and contact pages at real phone sizes, repair what gets in the way, and keep the parts of the site that still work.",
       "nextStep": "Send the phone page that feels hardest to use."
     },
     {
       "id": "web-homepage-priority",
       "question": "What should I write on a homepage when I have too many services to explain?",
       "answer": "A homepage earns its place when a new visitor quickly sees the problem you solve and where to go next.",
-      "detail": "Lead with the work customers ask for most. Give each service a clear name, a short explanation, and a link to the details people need before they call.",
+      "detail": "Lead with the work customers ask for most. Give each service a clear name, a short explanation, and a link to the details people need before they call. Little Fight NYC can help choose which services lead and name them in plain words.",
       "nextStep": "Tell us the questions you hear before someone chooses your business."
     },
     {
       "id": "forms",
       "question": "Why are people visiting our website but not completing the contact form?",
       "answer": "A contact form loses people when it asks too much, hides the next step, or fails before the business sees the message.",
-      "detail": "We shorten the request to what your team needs first, test it on a phone, and make sure a call, text, or email remains easy to find.",
+      "detail": "At Little Fight NYC, we shorten the request to what your team needs first, test it on a phone, and make sure a call, text, or email remains easy to find.",
       "nextStep": "Send the form URL and explain where requests should land."
     },
     {
       "id": "web-redesign-decision",
       "question": "Does my small business website need a rebuild or a few focused fixes?",
       "answer": "Start with repairs when the site still fits your business and the main tools work well. A rebuild may make sense when the system cannot support the pages, tools, or changes you need.",
-      "detail": "We review what a customer sees, what your team maintains, and what is worth preserving before recommending repairs or a new structure.",
+      "detail": "At Little Fight NYC, we review what a customer sees, what your team maintains, and what is worth preserving before recommending repairs or a new structure.",
       "nextStep": "Show us one service page and the path a customer takes to contact you."
     },
     {
       "id": "web-accessibility-basics",
       "question": "What should a small business fix first to make a website more accessible?",
       "answer": "Readable text, clear controls, keyboard access, and usable forms help more customers finish the task they came to do.",
-      "detail": "We check the important path with a keyboard and phone, then make sure key facts are real text instead of information trapped inside an image.",
+      "detail": "At Little Fight NYC, we check the important path with a keyboard and phone, then make sure key facts are real text instead of information trapped inside an image.",
       "nextStep": "Send the page customers rely on most."
     },
     {
       "id": "web-local-facts",
       "question": "What location information should a local business put on its website?",
       "answer": "A local customer needs your current name, phone, address or service area, hours, and practical visit details before they contact you.",
-      "detail": "We put those facts where people look and align them with the Google Business Profile, then make seasonal hours and service boundaries easy to update.",
+      "detail": "At Little Fight NYC, we put those facts where people look and align them with the Google Business Profile, then make seasonal hours and service boundaries easy to update.",
       "nextStep": "Send the public facts a new customer should find first."
     },
     {
       "id": "web-proof-before-pitch",
       "question": "What should a small business website show to help a new customer feel confident?",
       "answer": "A new customer looks for real work, real people, clear service details, and a reason to believe the business can help.",
-      "detail": "We organize your approved photos, reviews, and service facts around the questions behind a first visit, then make contact feel like the natural next step.",
+      "detail": "At Little Fight NYC, we organize your approved photos, reviews, and service facts around the questions behind a first visit, then make contact feel like the natural next step.",
       "nextStep": "Show us the proof a customer should see before they call."
     },
     {
       "id": "website",
       "question": "What pages does a small business website need before it launches?",
       "answer": "Start with the services you offer, work people can see, and a clear way to contact you. Add pages when they answer a different customer question.",
-      "detail": "We plan the first useful path, then aim to launch in six weeks or less once scope and supplied materials are agreed.",
+      "detail": "At Little Fight NYC, we plan the first useful path, then aim to launch in six weeks or less once scope and supplied materials are agreed.",
       "nextStep": "Tell us what a customer should understand before they contact you."
     },
     {
       "id": "web-service-page",
       "question": "What should a service page answer before someone contacts us?",
       "answer": "A service page should name the customer's problem, show who the work fits, and make the first contact feel straightforward.",
-      "detail": "We write the practical details only your business knows, including preparation, service area, and what happens after a request arrives.",
+      "detail": "At Little Fight NYC, we write the practical details only your business knows, including preparation, service area, and what happens after a request arrives.",
       "nextStep": "Share the questions people ask before they request this service."
     },
     {
       "id": "web-photos-with-purpose",
       "question": "Which photos are useful on a small business website?",
       "answer": "Useful website photos show the place, the work, the people, and the result a customer is trying to understand.",
-      "detail": "We choose approved images with a job to do, add context where it matters, and keep important words outside the image itself.",
+      "detail": "At Little Fight NYC, we choose approved images with a job to do, add context where it matters, and keep important words outside the image itself.",
       "nextStep": "Send the photos that show your work at its clearest."
     },
     {
       "id": "web-menu-and-hours",
       "question": "How can a seasonal business explain its hours on a website?",
       "answer": "Seasonal hours work when the current schedule, opening dates, and off-season contact path appear where customers expect them.",
-      "detail": "We create one clear update routine so the website, Google listing, and booking tools agree before a customer makes the trip.",
+      "detail": "At Little Fight NYC, we create one clear update routine so the website, Google listing, and booking tools agree before a customer makes the trip.",
       "nextStep": "Send the current schedule and the dates that are most likely to change."
     },
     {
       "id": "web-events-calendar",
       "question": "What should an event page include before someone decides to attend?",
       "answer": "An event page needs the plan in plain sight: what is happening, when, where, who it is for, and how to join.",
-      "detail": "We put those facts near the top, connect the registration path, and make changes easy to publish when the schedule moves.",
+      "detail": "At Little Fight NYC, we put those facts near the top, connect the registration path, and make changes easy to publish when the schedule moves.",
       "nextStep": "Send the event details and the action a visitor should take."
     },
     {
       "id": "web-ecommerce-inventory",
       "question": "What does a small shop need before selling products online?",
       "answer": "A shop is ready to sell online when its product details, stock, payment, fulfillment, and customer policies agree with real operations.",
-      "detail": "We map one product from listing to delivery, then test the supported checkout path before a customer has to discover the gaps.",
+      "detail": "At Little Fight NYC, we map one product from listing to delivery, then test the supported checkout path before a customer has to discover the gaps.",
       "nextStep": "Show us the product and fulfillment path you want customers to use."
     },
     {
       "id": "web-multilingual-start",
       "question": "Should my business website have pages in more than one language?",
       "answer": "Another language earns its place when it matches the people you serve and someone can approve the words your customers rely on.",
-      "detail": "We start with the decision pages, then plan how every version stays current as services, hours, policies, and booking details change.",
+      "detail": "At Little Fight NYC, we start with the decision pages, then plan how every version stays current as services, hours, policies, and booking details change.",
       "nextStep": "Tell us the languages customers use and the pages that must stay accurate."
     },
     {
       "id": "web-site-health-check",
       "question": "What should I check after a website update goes live?",
       "answer": "After an update, use a phone to test every page, link, or button that you changed. Follow each link or button you changed and check that any form, booking, or payment still reaches the right place.",
-      "detail": "We test the pages, forms, links, booking, or checkout involved, then leave a short record of what changed for the next update.",
+      "detail": "At Little Fight NYC, we test the pages, forms, links, booking, or checkout involved, then leave a short record of what changed for the next update.",
       "nextStep": "Send the update you made and the customer action it was meant to improve."
     },
     {
       "id": "web-hosting-ownership",
       "question": "What should a business know about website hosting before changing providers?",
       "answer": "Before moving a site, find out who controls its hosting, domain, and email and how they connect. Check how email is connected, keep a backup, and agree on how to restore the old setup if needed.",
-      "detail": "We map what the site depends on, keep the business as the account owner, and plan the move around the pages customers rely on.",
+      "detail": "At Little Fight NYC, we map what the site depends on, keep the business as the account owner, and plan the move around the pages customers rely on.",
       "nextStep": "Send the hosting provider and domain details before you end any service."
     },
     {
       "id": "web-reviews-response",
       "question": "How should a small business respond to a public review without sounding scripted?",
       "answer": "A good review reply thanks the person for something specific, answers a useful question, and keeps private details off the public page.",
-      "detail": "We help shape a short response that sounds like your business and gives future customers a clear sense of how you handle people.",
+      "detail": "At Little Fight NYC, we help shape a short response that sounds like your business and gives future customers a clear sense of how you handle people.",
       "nextStep": "Send one review that feels difficult to answer well."
     },
     {
       "id": "web-search-answer",
       "question": "How do I make my website easier for customers and AI tools to understand?",
       "answer": "Customers and search tools understand a site when it answers real questions with current facts, clear headings, and useful links.",
-      "detail": "We turn the questions people ask before they call into readable pages, then keep service areas, hours, policies, and availability accurate as the business changes.",
+      "detail": "At Little Fight NYC, we turn the questions people ask before they call into readable pages, then keep service areas, hours, policies, and availability accurate as the business changes.",
       "nextStep": "Bring the questions customers ask before they request a quote or book."
     },
     {
       "id": "web-newsletter-choice",
       "question": "When does a small business need an email signup on its website?",
       "answer": "An email signup works when customers have a real reason to hear from you and someone can keep the list useful.",
-      "detail": "We decide what the signup promises, where it belongs, and whether a direct contact path would serve the business better right now.",
+      "detail": "At Little Fight NYC, we decide what the signup promises, where it belongs, and whether a direct contact path would serve the business better right now.",
       "nextStep": "Tell us what update customers would want to receive."
     },
     {
       "id": "web-launch-checklist",
       "question": "What should a business check before sharing a new website?",
       "answer": "A site is ready to share when its facts are current, its main action works on a phone, and every message reaches a real person.",
-      "detail": "We test the service pages, forms, booking or checkout path, confirmation messages, and account handoff before the business sends customers there.",
+      "detail": "At Little Fight NYC, we test the service pages, forms, booking or checkout path, confirmation messages, and account handoff before the business sends customers there.",
       "nextStep": "Tell us the one action a new customer must be able to complete."
     }
   ],

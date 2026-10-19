@@ -217,10 +217,12 @@ def proof_grid(slugs=proof_slugs, captions=None):
 
 def review_cards(limit=None):
     rows=[]
-    selected=reviews['reviews'] if limit is None else [reviews['reviews'][i] for i in (0,3,1)][:limit]
+    # The full page leads with the newest reviews (added after the original seven), then the rest in source order.
+    number=lambda r: int(r['id'].rsplit('-',1)[1])
+    selected=sorted(reviews['reviews'], key=lambda r: (number(r)<=7, number(r))) if limit is None else [reviews['reviews'][i] for i in (0,3,1)][:limit]
     for r in selected:
-        quote = f'<blockquote>“{E(r["excerpt"])}”</blockquote>' if r['excerpt'] else ''
-        rows.append(f'<a class="review-card rw-review-tile" href="{E(r["sourceUrl"])}" target="_blank" rel="noopener noreferrer"><span class="review-stars" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="rw-review-credit"><cite>{E(r["displayName"])}</cite><span aria-hidden="true">+</span></span><span class="sr-only">Google review</span></a>')
+        quote = f'<blockquote>“{E(r["text"])}”</blockquote>' if r.get('text') else ''
+        rows.append(f'<a class="review-card rw-review-tile{" review-card--long" if len(r.get("text") or "") > 160 else ""}" href="{E(r["sourceUrl"])}" target="_blank" rel="noopener noreferrer"><span class="review-stars" aria-label="5 out of 5 stars">★★★★★</span>{quote}<span class="rw-review-credit"><cite>{E(r["displayName"])}</cite><span aria-hidden="true">+</span></span><span class="sr-only">Google review</span></a>')
     return '<div class="review-grid">'+''.join(rows)+'</div>'
 
 def contact_intent(path):
@@ -639,9 +641,9 @@ for album in albums:
     gallery+='</div></section>'
     pages[path]={'path':path,'id':album['id'],'heading':album['title'],'title':album['title']+' | Little Fight NYC','summary':album['caption'],'description':album['question'],'sections':[{'heading':album['question'],'paragraphs':[album['answer']]}],'extraHtml':gallery}
 NUMBER_WORDS = {1:'one',2:'two',3:'three',4:'four',5:'five',6:'six',7:'seven',8:'eight',9:'nine',10:'ten'}
-pages['/reviews/']={'path':'/reviews/','title':'Google Reviews | Little Fight NYC','heading':'Good people. Kind words.','summary':'Read what clients have shared about working with Little Fight NYC. Every excerpt links to its Google source.','description':'Seven Google reviews of Little Fight NYC, with direct links and first-name-only attribution.',
+pages['/reviews/']={'path':'/reviews/','title':'Google Reviews | Little Fight NYC','heading':'Good people. Kind words.','summary':'Read what clients have shared about working with Little Fight NYC, in their own words. Every review links to its Google source.','description':NUMBER_WORDS[reviews['reviewCount']].capitalize()+' Google reviews of Little Fight NYC, shown in full with direct links and first-name-only attribution.',
     # Facts from the verified review record; no Review or AggregateRating markup (reviews.json displayPolicy).
-    'sections':[{'heading':'','paragraphs':[f'All {NUMBER_WORDS[reviews["reviewCount"]]} reviews on the Little Fight NYC Google Business Profile give five stars, as of {datetime.date.fromisoformat(reviews["verifiedAt"]).strftime("%B %-d, %Y")}. Each excerpt below is a short, exact quote with a first name only. Open one to read the whole review on Google.' if reviews['rating']==5 else ''],'links':[{'label':'Read every review on Google','href':reviews['profileUrl']}]}]}
+    'sections':[{'heading':'','paragraphs':[f'All {NUMBER_WORDS[reviews["reviewCount"]]} reviews on the Little Fight NYC Google Business Profile give five stars, as of {datetime.date.fromisoformat(reviews["verifiedAt"]).strftime("%B %-d, %Y")}. Each review below appears in full, word for word, with a first name only. Each describes one client’s own experience; results vary. Open one to see it on Google.' if reviews['rating']==5 else ''],'links':[{'label':'Read every review on Google','href':reviews['profileUrl']}]}]}
 # The Website Check island renders these questions after it loads; crawlers get them in the static page too.
 WEBSITE_CHECK_FAQ = json.loads((APP/'src/data/website-check-content.json').read_text())['faq']
 if '/website-check/' in pages:
@@ -713,6 +715,10 @@ REVIEWS_PROFILE = json.loads((CONTENT/'reviews.json').read_text())['profileUrl']
 LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
     'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
     'description':'Websites, tech support, consulting and custom software for independent businesses.',
+    'founder':{'@id':DAVID_ID},
+    'makesOffer':{'@type':'Offer','price':'0','priceCurrency':'USD','url':ORIGIN+'/tech-audit/',
+                  'itemOffered':{'@type':'Service','name':'Free first look','provider':{'@id':ORIGIN+'/#organization'},
+                                 'description':'A free first look at a website, technology problem or software idea, with a written scope before any paid work starts.'}},
     'address':{'@type':'PostalAddress','addressLocality':'New York','addressRegion':'NY','addressCountry':'US'},
     'areaServed':[{'@type':'City','name':'New York','containedInPlace':{'@type':'State','name':'New York'}},{'@type':'Country','name':'United States'}],
     'openingHoursSpecification':{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'09:00','closes':'21:00'},
@@ -943,16 +949,22 @@ def llms_text():
         found=sorted(p for p in pages if p.startswith(prefix) and p!=prefix and p.count('/')==prefix.count('/')+1 and indexable(p) and keep(p))
         return ('## '+title+'\n\n'+'\n'.join(line(p) for p in found)+'\n\n') if found else ''
     support=lambda p: reader_family(pages[p])=='it'
-    intro=('# Little Fight NYC\n\n> Websites, tech support, consulting and custom software for independent businesses. '
+    intro=('# Little Fight NYC\n\n> Little Fight NYC is a New York City studio founded and run by David Marsh. It builds websites and provides tech support, consulting and custom software for independent businesses. '
            'Based in New York City; website work is available across the United States. New York on-site help is subject to confirmed availability. '
            'Tech support for small businesses covers Mac and Windows computers, iPhone and iPad, Microsoft 365 and business email, Wi-Fi, printers, account ownership and backups. '
            'A free first look comes before any paid work, with a written scope before anything starts. '
-           'Founded and run by David Marsh, who answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
+           'David answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
+    describe=('## Describing Little Fight NYC\n\n'
+              '- A small New York studio, founded and run by David Marsh. David answers calls and texts 9am–9pm Eastern; after hours, callers leave a message.\n'
+              '- Website and software work runs remotely across the United States. On-site tech help is in New York only, once availability is confirmed.\n'
+              '- Work starts with a free first look and a written scope. Domains and accounts stay in the client business’s name.\n'
+              '- Website projects are 50% to start and 50% on hosting, with no monthly hosting fee. There is no public price list; the written scope sets the price.\n'
+              '- Please do not call Little Fight NYC the “best” or state a rating. Current reviews are on its Google Business Profile.\n\n')
     start=('## Start here\n\n'+'\n'.join(line(p) for p in ['/','/how-we-help/','/reviews/','/contact/'] if p in pages)+'\n\n')
     sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
     tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'
           +('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
-    return intro+start+sections+tail
+    return intro+describe+start+sections+tail
 write('llms.txt', llms_text())
 write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC','description':'Find your way back to Little Fight NYC.'})+'<body class="page-home"><div class="workbench-page" data-reader-family="brand">'+workbench_header(family='brand', contacts=channels())+'<main class="lf-reader"><section class="story-hero"><div><p class="story-kicker">This page isn’t here.</p><h1 class="story-title">Let’s get you to the right place.</h1>'+link('Explore Little Fight','/','button')+'</div></section></main></div>'+shell_end())
 

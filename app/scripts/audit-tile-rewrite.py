@@ -592,7 +592,8 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
     retained = inventory.get("retainedRoutes")
     catalog_labs = json.loads((CONTENT / "labs.json").read_text())
     added_labs = max(0, len(catalog_labs) - 9) if isinstance(catalog_labs, list) else 0
-    expected_total = 129 + added_labs + 1
+    review_count = len(json.loads((CONTENT / "reviews.json").read_text())["reviews"])
+    expected_total = 129 + added_labs + 1 + review_count - 7  # Google reviews added after the original seven
     if inventory.get("sourceTileCount") != 106 or inventory.get("totalTileInventory") != expected_total:
         failures.append(f"homepage inventory must preserve 106 original tiles within {expected_total} retained routes")
     curation = json.loads((CONTENT / "homepage-curation.json").read_text())
@@ -607,12 +608,12 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
         ids = [item.get("id") for item in visible if isinstance(item, dict)]
         if len(ids) != len(set(ids)):
             failures.append("homepage visible tiles must have unique ids")
-        if expected_visible != 58 or len(curation['hiddenTiles']) != 21:
-            failures.append("homepage must honor the approved 21 cuts and 58 remaining fronts")
+        if expected_visible != 60 or len(curation['hiddenTiles']) != 21:
+            failures.append("homepage must honor the approved 21 cuts and 60 remaining fronts")
         if set(ids).intersection(tile['id'] for tile in curation['hiddenTiles']):
             failures.append("an approved homepage cut remains visible")
         if not set(curation['retainedReviewIds']).issubset(ids):
-            failures.append("homepage must retain all seven authentic review fronts")
+            failures.append("homepage must retain every authentic review front")
         if any(str(item.get("family", "")).casefold() == "places" for item in visible if isinstance(item, dict)):
             failures.append("homepage must not expose Places tiles")
     home = parse_html(dist / "index.html", failures)

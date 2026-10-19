@@ -142,14 +142,15 @@ async function main(){
  fs.mkdirSync(evidence,{recursive:true});
  const baseline=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/previous-site.json')));
  const inventory=JSON.parse(fs.readFileSync(path.join(app,'dist/sculpture-inventory.json')));
- check('Only the approved homepage cuts are hidden; retained destinations and seven local review backs match',!inventory.some(t=>removedIds.has(t.id))&&baseline.tiles.filter(t=>!removedIds.has(t['data-answer'])).every(t=>inventory.some(i=>i.id===t['data-answer']&&i.href===(reviewPaths.get(t['data-answer'])||t.href)))&&inventory.length===expectedTiles);
- check('Local review backs retain every original Google source',reviewSources.length===7&&reviewSources.every(review=>baseline.tiles.some(tile=>tile['data-answer']===review.id&&tile.href===review.sourceUrl)));
+ check('Only the approved homepage cuts are hidden; retained destinations and local review backs match',!inventory.some(t=>removedIds.has(t.id))&&baseline.tiles.filter(t=>!removedIds.has(t['data-answer'])).every(t=>inventory.some(i=>i.id===t['data-answer']&&i.href===(reviewPaths.get(t['data-answer'])||t.href)))&&inventory.length===expectedTiles);
+ const originalReviews=reviewSources.filter(review=>baseline.tiles.some(tile=>tile['data-answer']===review.id));
+ check('Local review backs retain every original Google source',originalReviews.length===7&&originalReviews.every(review=>baseline.tiles.some(tile=>tile['data-answer']===review.id&&tile.href===review.sourceUrl))&&reviewSources.every(review=>review.sourceUrl.startsWith('https://www.google.com/maps/')||review.sourceUrl.startsWith('https://maps.app.goo.gl/')));
  check('Every named hidden destination remains generated',curation.hiddenTiles.every(tile=>fs.existsSync(path.join(app,'dist',tile.path,'index.html'))));
  const illustrated=inventory.filter(t=>t.art);
  check('All 51 illustrated tiles use globally unique artwork',illustrated.length===expectedIllustrated&&new Set(illustrated.map(t=>t.art)).size===expectedIllustrated);
  check('No large extruded symbol illustrations remain',illustrated.every(t=>!t.art.startsWith('cast-')));
  check('Unique artwork names resolve to 51 different image files',new Set(illustrated.map(t=>crypto.createHash('sha256').update(fs.readFileSync(t.pngArt?path.join(app,'dist/assets/clay-png',t.pngArt+'.png'):path.join(app,'dist/assets/sculpture',t.art+'.webp'))).digest('hex'))).size===expectedIllustrated);
- check('Seven review tiles have no 3D star illustration',inventory.filter(t=>t.kind==='review').length===7&&inventory.filter(t=>t.kind==='review').every(t=>t.art===null));
+ check('Every review tile has no 3D star illustration',inventory.filter(t=>t.kind==='review').length===reviewSources.length&&inventory.filter(t=>t.kind==='review').every(t=>t.art===null));
  for(const art of ['printer','security','clay-software-v1'])check(art+' appears exactly once among all tiles',inventory.filter(t=>t.art===art).length===1);
  check('Exactly the reviewed five clay designs are installed',inventory.filter(t=>t.art?.startsWith('clay-')).length===5&&['browser','storefront','router','notebook','software'].every(name=>inventory.some(t=>t.art===`clay-${name}-v1`)));
  const routes=JSON.parse(fs.readFileSync(path.join(app,'dist/reader-routes.json')));
@@ -158,7 +159,7 @@ async function main(){
  const merged=new Set([...Object.keys(consolidation.retired),...Object.keys(consolidation.renamed)]);
  const kept=Object.entries(baseline.routes).filter(([route])=>!merged.has(route));
  const added=Object.values(consolidation.renamed).filter(route=>!(route in baseline.routes)).length;
- check('All '+kept.length+' prior reader mappings outside the consolidation retained with exactly seven new review backs',kept.every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===kept.length+added+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
+ check('All '+kept.length+' prior reader mappings outside the consolidation retained with one review back per verified review',kept.every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===kept.length+added+reviewSources.length&&[...reviewPaths.values()].every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
  check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
  const approved=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/clay-release.json')));

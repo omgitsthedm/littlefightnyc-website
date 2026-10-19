@@ -31,7 +31,7 @@
       "category": "it",
       "question": "Why does the Wi-Fi work in one room but not another?",
       "answer": "A strong signal in one room can turn weak in another because walls, distance, or nearby devices get in the way.",
-      "detail": "Test near the router, then in the room where work stops. Note which devices fail. We can check whether the cause is the placement, the equipment, or your internet service.",
+      "detail": "Test near the router, then in the room where work stops. Note which devices fail. At Little Fight NYC, we can check whether the cause is the placement, the equipment, or your internet service.",
       "nextStep": "Tell us where the connection drops."
     },
     {
@@ -39,7 +39,7 @@
       "category": "it",
       "question": "Why are my business emails going to spam?",
       "answer": "Email can be flagged because of its content, how it was sent, or settings on either account. Check whether it affects everyone or only some people.",
-      "detail": "Check Junk or Spam and note any error. We can review sender checks, mailbox rules, account access, and Microsoft 365 shared-mailbox permissions. Leave domain settings alone until the cause is clear.",
+      "detail": "Check Junk or Spam and note any error. At Little Fight NYC, we can review sender checks, mailbox rules, account access, and Microsoft 365 shared-mailbox permissions. Leave domain settings alone until the cause is clear.",
       "nextStep": "Tell us what happened and the sending address. Never include passwords, sign-in codes, or private customer messages."
     },
     {
@@ -47,7 +47,7 @@
       "category": "it",
       "question": "What should happen before a new work computer replaces the old one?",
       "answer": "Set up the new Mac or Windows computer before the old one is retired, then test the work that cannot pause.",
-      "detail": "List the approved apps, accounts, files, printers, and shared folders. For a Mac, iPhone, iPad, or Windows device, record its work account and recovery route. Test the real work, then keep the old device until important tasks are checked.",
+      "detail": "List the approved apps, accounts, files, printers, and shared folders. For a Mac, iPhone, iPad, or Windows device, record its work account and recovery route. Test the real work, then keep the old device until important tasks are checked. Little Fight NYC can run the switch.",
       "nextStep": "List the programs and files the new computer must have on day one."
     },
     {
@@ -55,7 +55,7 @@
       "category": "it",
       "question": "What happens during an on-site tech visit?",
       "answer": "An on-site visit starts with the symptom, the people affected, and the work that must keep moving.",
-      "detail": "We confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made.",
+      "detail": "At Little Fight NYC, we confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made.",
       "nextStep": "Share the location, the problem, and what work is blocked.",
       "guide": {
         "stepsHeading": "Before the visit",
@@ -75,7 +75,7 @@
         "faqs": [
           {
             "question": "Can a problem be handled without a visit?",
-            "answer": "Sometimes. A call, text, or email with the symptom and a screenshot can show whether the cause is an account setting, a provider issue, or something that needs hands on the equipment. We tell you which before anyone travels."
+            "answer": "Sometimes. A call, text, or email with the symptom and a screenshot can show whether the cause is an account setting, a provider issue, or something that needs hands on the equipment. Little Fight NYC tells you which before anyone travels."
           },
           {
             "question": "What should be ready when the visit starts?",
@@ -95,7 +95,7 @@
       "category": "it",
       "question": "Why will one computer print but another cannot?",
       "answer": "If one computer can print but another cannot, compare their connections and settings before replacing the printer. Check their Wi-Fi networks, selected printer, and error messages first.",
-      "detail": "Choose the same printer on both devices and check whether a stuck job is holding the queue. Note which computer works before changing settings. We can help check the printer software and connection if the difference is unclear.",
+      "detail": "Choose the same printer on both devices and check whether a stuck job is holding the queue. Note which computer works before changing settings. At Little Fight NYC, we can help check the printer software and connection if the difference is unclear.",
       "nextStep": "Tell us which computer prints and which one does not.",
       "guide": {
         "steps": [
@@ -114,7 +114,7 @@
         "faqs": [
           {
             "question": "Why does the printer keep disappearing?",
-            "answer": "A printer can drop off when its network address changes, when it goes into a deep sleep, or when a computer switches to another Wi-Fi network. Reserving a fixed address for the printer on the router often keeps it in one place."
+            "answer": "A printer can drop off when its network address changes, when it goes into a deep sleep, or when a computer switches to another Wi-Fi network. Reserving a fixed address for the printer on the router often keeps it in one place. Little Fight NYC can set that up."
           },
           {
             "question": "Should we buy a new printer?",
@@ -164,7 +164,7 @@
       "category": "it",
       "question": "How do I know our files are really backed up?",
       "answer": "Keep a separate copy of important files and check that you can recover a sample. Seeing a backup icon is not the same as knowing your files can be restored.",
-      "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample without replacing the working file. Ask us if the settings are unclear.",
+      "detail": "Check which files are copied, where the copy lives, and who can recover it. Restore a harmless sample without replacing the working file. Ask Little Fight NYC if the settings are unclear.",
       "nextStep": "Bring the backup service name and one file you would need back.",
       "guide": {
         "steps": [
@@ -188,7 +188,7 @@
           },
           {
             "question": "How often should we test a restore?",
-            "answer": "Test after setting up a backup, after a big change, and on a regular schedule the business can keep. A small restore test proves more than a green check mark."
+            "answer": "Test after setting up a backup, after a big change, and on a regular schedule the business can keep. A small restore test proves more than a green check mark. Little Fight NYC can run the first one with you."
           }
         ],
         "related": [
@@ -235,7 +235,7 @@
       "category": "it",
       "question": "What should I include when I ask for tech help?",
       "answer": "A useful tech request names what changed, who is affected, which device or service is involved, and what work is blocked.",
-      "detail": "A screenshot, exact error message, and the time the problem started can help. Do not send passwords by text or email; agree on a safe access method first.",
+      "detail": "A screenshot, exact error message, and the time the problem started can help. Do not send passwords by text or email; agree on a safe access method first. Call, text, or email Little Fight NYC with those details, 9am–9pm Eastern.",
       "nextStep": "Call, text, or email the symptom in your own words.",
       "guide": {
         "stepsHeading": "What to include",
@@ -256,11 +256,11 @@
         "faqs": [
           {
             "question": "Should I send my password so you can check?",
-            "answer": "No. Do not send passwords or private customer details by text or email, and never share a sign-in code with anyone, even on a phone call. If access is needed, we agree on a safe method, and the account stays in your business’s name."
+            "answer": "No. Do not send passwords or private customer details by text or email, and never share a sign-in code with anyone, even on a phone call. If access is needed, Little Fight NYC agrees on a safe method with you, and the account stays in your business’s name."
           },
           {
             "question": "When can I reach Little Fight?",
-            "answer": "Call, text, or email from 9am to 9pm Eastern. After hours, leave a message with the symptom and the best way to reach you."
+            "answer": "Call, text, or email Little Fight NYC from 9am to 9pm Eastern; David answers. After hours, leave a message with the symptom and the best way to reach you."
           }
         ],
         "related": [
@@ -290,7 +290,7 @@
       "category": "it",
       "question": "What should a small office plan before moving?",
       "answer": "Plan the internet connection, equipment locations, and the critical work that must continue before the move day arrives.",
-      "detail": "Confirm the provider’s installation plan, map where network equipment and printers will live, and list the systems that staff need on the first day. Test the essentials once the space is ready.",
+      "detail": "Confirm the provider’s installation plan, map where network equipment and printers will live, and list the systems that staff need on the first day. Test the essentials once the space is ready. Little Fight NYC can help plan the network and equipment for a New York office move.",
       "nextStep": "Share the move date, new address, and the systems that must work first.",
       "guide": {
         "steps": [
@@ -343,7 +343,7 @@
       "category": "it",
       "question": "Do we need ongoing tech support?",
       "answer": "The right amount of tech support depends on what keeps breaking, what changes often, and who handles the fixes now.",
-      "detail": "Start with the work your team needs each day. Check who owns the accounts, runs updates, and tests backups. A regular check may help; a new monthly bill should have a clear purpose.",
+      "detail": "Start with the work your team needs each day. Check who owns the accounts, runs updates, and tests backups. A regular check may help; a new monthly bill should have a clear purpose. Little Fight NYC can review what you have now and say plainly whether ongoing support would earn its cost.",
       "nextStep": "Tell us which problems keep coming back.",
       "guide": {
         "stepsHeading": "Before you decide",
@@ -362,11 +362,11 @@
         "faqs": [
           {
             "question": "Is a monthly plan required?",
-            "answer": "No. Hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
+            "answer": "No. At Little Fight NYC, hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
           },
           {
             "question": "What does a regular check usually cover?",
-            "answer": "It depends on the business. Common parts are confirming updates, testing a backup restore, reviewing who has access, and watching renewal dates. The plan should match the work your team does each day."
+            "answer": "It depends on the business. Common parts are confirming updates, testing a backup restore, reviewing who has access, and watching renewal dates. Little Fight NYC matches the plan to the work your team does each day."
           }
         ],
         "related": [
@@ -381,7 +381,7 @@
       "category": "it",
       "question": "Should guest Wi-Fi be separate from business equipment?",
       "answer": "Give guests their own Wi-Fi network so their phones do not share access with your work devices and private files.",
-      "detail": "The name alone is not enough: the router must keep the two networks apart. We can check its settings and how your staff devices and card readers connect before making a change.",
+      "detail": "The name alone is not enough: the router must keep the two networks apart. At Little Fight NYC, we can check its settings and how your staff devices and card readers connect before making a change.",
       "nextStep": "Tell us what guests use and what the staff uses.",
       "guide": {
         "steps": [
@@ -400,7 +400,7 @@
         "faqs": [
           {
             "question": "Is a separate network name enough?",
-            "answer": "No. The router has to keep the guest network apart from the staff network. Some routers create a second name that still shares access, so test what a guest device can reach."
+            "answer": "No. The router has to keep the guest network apart from the staff network. Some routers create a second name that still shares access, so test what a guest device can reach. Little Fight NYC can run that test with you."
           },
           {
             "question": "Will a guest network slow down our work?",
@@ -434,7 +434,7 @@
       "category": "it",
       "question": "Is the internet down, or is our Wi-Fi the problem?",
       "answer": "A wired test can help separate a provider connection problem from a problem inside the Wi-Fi network.",
-      "detail": "If a computer works through a cable but not through Wi-Fi, focus on the local network. If both fail, check the provider status and the internet equipment before changing settings.",
+      "detail": "If a computer works through a cable but not through Wi-Fi, focus on the local network. If both fail, check the provider status and the internet equipment before changing settings. If the cause is still unclear, Little Fight NYC can help separate a provider problem from the local network.",
       "nextStep": "Tell us what works on a cable and what fails on Wi-Fi.",
       "guide": {
         "steps": [
@@ -457,7 +457,7 @@
           },
           {
             "question": "Should we buy a faster internet plan?",
-            "answer": "Not until you know where the slowdown is. A faster plan will not fix weak Wi-Fi in a back room or a router that keeps dropping connections."
+            "answer": "Not until you know where the slowdown is. A faster plan will not fix weak Wi-Fi in a back room or a router that keeps dropping connections. Little Fight NYC can test where the slowdown is before you change plans."
           }
         ],
         "related": [
@@ -493,7 +493,7 @@
       "category": "it",
       "question": "Why are customer replies missing from a shared inbox?",
       "answer": "Replies can go missing when a shared inbox has unclear forwarding rules, access settings, or no one assigned to check it.",
-      "detail": "Test it from an outside email account. Check which address the customer sees, where the reply lands, and who can read it. Give each public address a person who checks it.",
+      "detail": "Test it from an outside email account. Check which address the customer sees, where the reply lands, and who can read it. Give each public address a person who checks it. Little Fight NYC can trace where replies land and check who can read them.",
       "nextStep": "Share the address customers use and where replies should arrive.",
       "guide": {
         "steps": [
@@ -517,7 +517,7 @@
           },
           {
             "question": "Who should own a shared inbox?",
-            "answer": "One named person should check it and know who has access. The account itself should belong to the business, not to whoever set it up."
+            "answer": "One named person should check it and know who has access. The account itself should belong to the business, not to whoever set it up. Little Fight NYC can set that up."
           }
         ],
         "related": [
@@ -555,7 +555,7 @@
       "category": "it",
       "question": "What should we do when someone leaves the team?",
       "answer": "Before someone leaves, make sure the business can still reach the mail, files, and tools that person used for work.",
-      "detail": "List their work accounts, including Microsoft 365 where used. When they leave, an approved account manager should stop their sign-in first, without deleting anything, then keep needed records, transfer control, and only then close or reassign their accounts. Do not wipe a device until the business has its files.",
+      "detail": "List their work accounts, including Microsoft 365. When they leave, an approved account manager should stop their sign-in first, without deleting anything, then keep needed records, transfer control, and only then close or reassign them. Do not wipe a device until the business has its files. Little Fight NYC can help.",
       "nextStep": "Start with the accounts and files the person controls.",
       "guide": {
         "steps": [
@@ -625,7 +625,7 @@
       "category": "it",
       "question": "What security basics should a small business check first?",
       "answer": "Start with a separate login for each person, a second sign-in step, current software, and a backup you have tested.",
-      "detail": "Give staff a clear way to report a strange message. These steps lower risk; they cannot remove it. Check who can change the key accounts and how the business would get back in.",
+      "detail": "Give staff a clear way to report a strange message. These steps lower risk; they cannot remove it. Check who can change the key accounts and how the business would get back in. Little Fight NYC can check these basics with you and explain what each one protects.",
       "nextStep": "Bring the accounts and devices you most need to protect.",
       "guide": {
         "steps": [
@@ -644,7 +644,7 @@
         "faqs": [
           {
             "question": "What should we do if someone clicked a phishing link?",
-            "answer": "Change that account’s password from a trusted device, sign out other sessions, and check for new forwarding rules. Tell your bank or payment provider if money or card details may be involved. Then get help checking what else was reached."
+            "answer": "Change that account’s password from a trusted device, sign out other sessions, and check for new forwarding rules. Tell your bank or payment provider if money or card details may be involved. Then have Little Fight NYC or another trusted IT helper check what else was reached."
           },
           {
             "question": "Do we need extra antivirus software?",
@@ -696,7 +696,7 @@
       "category": "it",
       "question": "Who should own our business passwords and recovery methods?",
       "answer": "The business should control its work accounts and have a safe way to regain access if someone leaves the team.",
-      "detail": "Keep a record of who can manage email, domains, payments, and cloud files. Check recovery details before you need them. For Apple devices, record the work Apple Account or device manager; do not copy passwords into the notes.",
+      "detail": "Keep a record of who can manage email, domains, payments, and cloud files. Check recovery details before you need them. For Apple devices, record the work Apple Account or device manager; do not copy passwords into the notes. Little Fight NYC can help map who controls each account.",
       "nextStep": "Start with the account that controls your business email."
     },
     {
@@ -704,7 +704,7 @@
       "category": "it",
       "question": "How do we find duplicate subscriptions and surprise renewals?",
       "answer": "Make one list of the tools you pay for, what each one does, and when the next bill is due.",
-      "detail": "Ask who uses each tool and which records it holds. Two apps may do the same job, but one might hold files the business still needs. Check that before you cancel.",
+      "detail": "Ask who uses each tool and which records it holds. Two apps may do the same job, but one might hold files the business still needs. Check that before you cancel. Little Fight NYC can help build that list and check what each tool holds before anything is cancelled.",
       "nextStep": "Bring a recent list of software charges.",
       "guide": {
         "steps": [
@@ -758,7 +758,7 @@
       "category": "it",
       "question": "How do we make a meeting room ready for a client call?",
       "answer": "Test the camera, microphone, display, and connection from the room where the meeting will happen.",
-      "detail": "Use the same laptop, conferencing account, and display path the team expects to use. Little Fight can check the working inputs and a fallback contact method before an important meeting.",
+      "detail": "Use the same laptop, conferencing account, and display path the team expects to use. Little Fight NYC can check the working inputs and a fallback contact method before an important meeting.",
       "nextStep": "Tell us which room, devices, and call platform you use.",
       "guide": {
         "steps": [
@@ -811,7 +811,7 @@
       "category": "it",
       "question": "What should we do when a work computer is out of storage?",
       "answer": "Check what is taking up space before you delete files, especially folders that sync with other people or devices.",
-      "detail": "Start with the storage screen. Old downloads or installers may be easy to clear, but a shared file may disappear for everyone. Confirm you have a safe copy of any business records before removing them.",
+      "detail": "Start with the storage screen. Old downloads or installers may be easy to clear, but a shared file may disappear for everyone. Confirm you have a safe copy of any business records before removing them. Little Fight NYC can help find what is using the space and what is safe to move.",
       "nextStep": "Share the storage summary without showing private files.",
       "guide": {
         "steps": [
@@ -834,7 +834,7 @@
           },
           {
             "question": "Is it time for a new computer?",
-            "answer": "Not always. Clearing space and moving files can help. If the drive is too small for the work you do, a new computer or more storage may make sense; compare the costs before deciding."
+            "answer": "Not always. Clearing space and moving files can help. If the drive is too small for the work you do, a new computer or more storage may make sense; compare the costs before deciding. Little Fight NYC can help weigh the options before you buy."
           }
         ],
         "related": [
@@ -875,7 +875,7 @@
       "category": "it",
       "question": "How should a small team organize shared files?",
       "answer": "Use folder names that describe the work, give each person the right access, and put someone in charge of keeping things tidy.",
-      "detail": "Try a normal task. Can the right person find a recent invoice or an approved template without asking around? Fix the part that makes them stop and ask.",
+      "detail": "Try a normal task. Can the right person find a recent invoice or an approved template without asking around? Fix the part that makes them stop and ask. Little Fight NYC can help plan a folder layout and access list your team will keep using.",
       "nextStep": "Show us one folder that the team struggles to use.",
       "guide": {
         "steps": [
@@ -934,7 +934,7 @@
       "category": "it",
       "question": "What should we test before using a new business phone number?",
       "answer": "Call the new business number from another phone before you publish it, and check what happens when no one answers.",
-      "detail": "Listen to the voicemail, leave a test message, and confirm who gets it. Check the after-hours path too. We can help test the number and make sure customers have a clear way to reach you.",
+      "detail": "Listen to the voicemail, leave a test message, and confirm who gets it. Check the after-hours path too. At Little Fight NYC, we can help test the number and make sure customers have a clear way to reach you.",
       "nextStep": "Tell us where calls should go.",
       "guide": {
         "steps": [
@@ -990,7 +990,7 @@
       "category": "it",
       "question": "How should we handle software updates without disrupting work?",
       "answer": "List the devices and apps the team needs, then choose a time to update them when work can safely pause.",
-      "detail": "Check what a change could affect: payments, booking, files, or shared access. Keep a way to recover if it fails. After the update, test a normal task before the team relies on it.",
+      "detail": "Check what a change could affect: payments, booking, files, or shared access. Keep a way to recover if it fails. After the update, test a normal task before the team relies on it. Little Fight NYC can help plan updates around the hours your business runs.",
       "nextStep": "Tell us which tasks cannot stop during the workday.",
       "guide": {
         "steps": [
@@ -1052,7 +1052,7 @@
       "category": "it",
       "question": "How do we make sure a former contractor no longer has access?",
       "answer": "Turning off an email account may still leave a former contractor able to open shared files or sign into other tools.",
-      "detail": "List the systems they used. Have each account owner check and remove that access, including shared links. Keep the records the business needs and transfer control of files before closing an account.",
+      "detail": "List the systems they used. Have each account owner check and remove that access, including shared links. Keep the records the business needs and transfer control of files before closing an account. Little Fight NYC can help list those systems and check that the access is gone.",
       "nextStep": "Start with the services and folders the contractor used.",
       "guide": {
         "steps": [
@@ -1111,7 +1111,7 @@
       "category": "it",
       "question": "Why does the card reader disconnect during service?",
       "answer": "A card reader may drop out because of a weak signal, a power problem, its settings, or the payment service itself.",
-      "detail": "Note the time and exact message on the screen. Check whether it happens in one place or across the shop. Plan tests around service, and keep customer card details out of support messages.",
+      "detail": "Note the time and exact message on the screen. Check whether it happens in one place or across the shop. Plan tests around service, and keep customer card details out of support messages. Little Fight NYC can check the Wi-Fi and power around the reader.",
       "nextStep": "Tell us the reader model and when it fails.",
       "guide": {
         "steps": [
@@ -1171,7 +1171,7 @@
       "category": "it",
       "question": "What access should a new teammate receive?",
       "answer": "Give a new teammate the accounts, devices, files, and instructions their role needs, then test a real first task with the manager.",
-      "detail": "Use role-based access rather than copying another person’s entire setup. Keep the owner of each account clear so later changes do not depend on memory.",
+      "detail": "Use role-based access rather than copying another person’s entire setup. Keep the owner of each account clear so later changes do not depend on memory. Little Fight NYC can help set up role-based access and test the first day with the manager.",
       "nextStep": "Describe the role and the first task the person must complete.",
       "guide": {
         "steps": [
@@ -1195,7 +1195,7 @@
           },
           {
             "question": "What belongs on a first-day checklist?",
-            "answer": "Their accounts, two-step sign-in, email signature, shared folders, printer, phone or messaging setup, and a short note on how to report a problem."
+            "answer": "Their accounts, two-step sign-in, email signature, shared folders, printer, phone or messaging setup, and a short note on how to report a problem. Little Fight NYC can build one for your team."
           }
         ],
         "related": [
@@ -1223,7 +1223,7 @@
       "category": "it",
       "question": "How do we avoid a domain or email renewal problem?",
       "answer": "Keep a clear record of where you bought the domain, who runs your email, and who gets each renewal notice.",
-      "detail": "Check the payment method and recovery details before a bill is due. Make sure the business can reach the person allowed to renew or change the account. We can help untangle who controls what.",
+      "detail": "Check the payment method and recovery details before a bill is due. Make sure the business can reach the person allowed to renew or change the account. At Little Fight NYC, we can help untangle who controls what.",
       "nextStep": "Start with the domain name and latest renewal notice.",
       "guide": {
         "steps": [
@@ -1246,7 +1246,7 @@
           },
           {
             "question": "Should the domain and email be with the same company?",
-            "answer": "Not necessarily. What matters is that the business owns both accounts, knows how to sign in, and has a record of how they connect."
+            "answer": "Not necessarily. What matters is that the business owns both accounts, knows how to sign in, and has a record of how they connect. Little Fight NYC can map how yours connect."
           }
         ],
         "related": [
@@ -1280,7 +1280,7 @@
       "category": "it",
       "question": "Why should a tech fix be written down?",
       "answer": "A clear support note makes the next problem easier to understand because it records what changed, who owns it, and what to check first.",
-      "detail": "Keep the note plain enough for the business owner to use. Include the symptom, action, affected account or device, and any follow-up the owner needs to schedule.",
+      "detail": "Keep the note plain enough for the business owner to use. Include the symptom, action, affected account or device, and any follow-up the owner needs to schedule. Little Fight NYC leaves a plain note like this when a job is done.",
       "nextStep": "Ask for a plain-language record after the next important fix.",
       "guide": {
         "stepsHeading": "What a useful note includes",
@@ -1319,7 +1319,7 @@
       "category": "it",
       "question": "What should we gather before changing IT providers?",
       "answer": "Before changing tech providers, list the accounts they manage, who owns them, and which parts of the work must keep running.",
-      "detail": "Keep passwords out of email and text. Agree on a safe way to grant access. Set a time for the change, test the work afterward, remove the old provider’s access, and keep a record of who now handles each account.",
+      "detail": "Keep passwords out of email and text. Agree on a safe way to grant access. Set a time for the change, test the work afterward, remove the old provider’s access, and keep a record of who now handles each account. Little Fight NYC can help plan the change.",
       "nextStep": "Bring the service list and key work hours.",
       "guide": {
         "steps": [
@@ -1342,7 +1342,7 @@
           },
           {
             "question": "Will changing providers interrupt our work?",
-            "answer": "A planned handoff lowers the risk. Problems are more likely when no one knows what the old provider managed, so start with the list."
+            "answer": "A planned handoff lowers the risk. Problems are more likely when no one knows what the old provider managed, so start with the list. Little Fight NYC can build it with you."
           }
         ],
         "related": [
@@ -1374,7 +1374,7 @@
       "category": "it",
       "question": "What makes a home office ready for real work?",
       "answer": "A useful home office starts with the work you need to do, then matches the devices, connection, and account access to that job.",
-      "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a simple record of cables, the Wi-Fi name, and settings the owner may need later, with the Wi-Fi and router passwords in a password manager instead.",
+      "detail": "Test the laptop, monitor, printer, call platform, and work account together. Keep a record of cables, the Wi-Fi name, and settings the owner may need later, with the Wi-Fi and router passwords in a password manager instead. In New York, Little Fight NYC can help.",
       "nextStep": "List the programs, devices, and calls you need to handle from home.",
       "guide": {
         "steps": [
@@ -1427,7 +1427,7 @@
       "category": "consulting",
       "question": "What should we fix first?",
       "answer": "Start with what customers see, what the business pays for, and where work repeatedly gets stuck.",
-      "detail": "Rank the issues by customer impact, business risk, and the effort needed to check them. A short review can separate an urgent broken path from an annoyance that can wait.",
+      "detail": "Rank the issues by customer impact, business risk, and the effort needed to check them. A short review can separate an urgent broken path from an annoyance that can wait. Little Fight NYC can run that short review with you, starting with a free first look.",
       "nextStep": "Show us a task that keeps getting stuck."
     },
     {
@@ -1435,7 +1435,7 @@
       "category": "consulting",
       "question": "Which tools should we keep?",
       "answer": "Write down what each tool does, who uses it, and what it costs over a full year. Keep the ones that earn their place in a normal working week.",
-      "detail": "Compare the tool with the work it actually supports, not the sales pitch that brought it in. Keep what fits, connect what has a clear job, and leave a working system alone when change adds risk.",
+      "detail": "Compare the tool with the work it actually supports, not the sales pitch. Keep what fits, connect what has a clear job, and leave a working system alone when change adds risk. Little Fight NYC can review the list with you.",
       "nextStep": "Bring the tools your team uses in a normal week."
     },
     {
@@ -1443,7 +1443,7 @@
       "category": "consulting",
       "question": "Are we paying twice for the same thing?",
       "answer": "Compare your software bills with what the team actually uses, but check which records each tool holds before you cancel it.",
-      "detail": "Look for two tools doing one job, unused seats, or charges no one can explain. Save the records you need and test the next setup before you end a service.",
+      "detail": "Look for two tools doing one job, unused seats, or charges no one can explain. Save the records you need and test the next setup before you end a service. Little Fight NYC can compare the bills with the work.",
       "nextStep": "Bring recent bills and the person who knows what each tool does."
     },
     {
@@ -1451,15 +1451,15 @@
       "category": "consulting",
       "question": "Do we need a second opinion?",
       "answer": "A second opinion checks whether your tools still fit the business, the bills, and the way customers reach you.",
-      "detail": "Show us the task, the tools it uses, and the proposed change. We compare what you would gain with the cost and disruption. Sometimes one small fix is enough.",
+      "detail": "Show Little Fight NYC the task, the tools it uses, and the proposed change. We compare what you would gain with the cost and disruption. Sometimes one small fix is enough.",
       "nextStep": "Bring the decision you are about to make and the information behind it."
     },
     {
       "id": "consulting-vendor-quote",
       "category": "consulting",
       "question": "Does this vendor quote fit our business?",
-      "answer": "Compare the quote with the job you need done and the tools your team already uses. Check what is included, what costs extra, who owns the result, and what your team will have to change.",
-      "detail": "Ask what problem the quote solves, what changes for staff and customers, who owns the result, and what happens to your existing data. A proposal should answer those questions plainly.",
+      "answer": "Compare the quote with the job you need done and the tools your team already uses. Check what is included, what costs extra, and what your team will have to change.",
+      "detail": "Ask what problem the quote solves, what changes for staff and customers, who owns the result, and what happens to your existing data. A proposal should answer those questions plainly. Little Fight NYC can review it.",
       "nextStep": "Send the quote with the business problem it is meant to solve."
     },
     {
@@ -1467,7 +1467,7 @@
       "category": "consulting",
       "question": "How do we prepare for a technology review?",
       "answer": "Bring your services, account owners, renewal dates, current symptoms, and the business times when change would be risky.",
-      "detail": "A recent bill and one real example of the problem help us see where to start. Keep passwords and private customer records out of the first message.",
+      "detail": "A recent bill and one real example of the problem help Little Fight NYC see where to start. Keep passwords and private customer records out of the first message.",
       "nextStep": "Start with the customer-facing tool you worry about most."
     },
     {
@@ -1475,7 +1475,7 @@
       "category": "software",
       "question": "When is custom software worth building?",
       "answer": "Custom software earns its cost when a repeated process creates real errors or wasted effort and the existing tools cannot handle it well.",
-      "detail": "Map the task first. A spreadsheet, a better setting, or a connection between tools may solve the problem with less disruption than a new build.",
+      "detail": "Map the task first. A spreadsheet, a better setting, or a connection between tools may solve the problem with less disruption than a new build. Little Fight NYC maps the task with you first and builds only when a simpler fix will not do.",
       "nextStep": "Show us the repeated task from start to finish."
     },
     {
@@ -1483,7 +1483,7 @@
       "category": "software",
       "question": "Are we repeating the same task because of a process problem?",
       "answer": "Software will not settle a task when the people involved disagree about how the work should happen. First decide who does what, which details they need, and what to do when a request is unusual.",
-      "detail": "Write down the current handoff, name the owner at each step, and agree on the exception rules. Once the process is clear, the smallest useful tool becomes easier to see.",
+      "detail": "Write down the current handoff, name each step’s owner, and agree on the exception rules. Once the process is clear, the smallest useful tool becomes easier to see. Little Fight NYC can help map it.",
       "nextStep": "Bring one task your team repeats or redoes each week."
     },
     {
@@ -1491,7 +1491,7 @@
       "category": "software",
       "question": "When do approvals need a shared system?",
       "answer": "A shared system can help when people cannot tell who needs to approve a request or whether it has been approved. Start by writing down who makes each decision.",
-      "detail": "First map who starts the request, who decides, what evidence they need, and who acts next. Little Fight can turn that agreed sequence into a focused shared workflow.",
+      "detail": "First map who starts the request, who decides, what evidence they need, and who acts next. Little Fight NYC can turn that agreed sequence into a focused shared workflow.",
       "nextStep": "Walk us through one approval that got stuck."
     },
     {
@@ -1499,7 +1499,7 @@
       "category": "software",
       "question": "Why are we entering the same information twice?",
       "answer": "If staff type the same order into two tools, a small difference can become a problem. Follow one order through the business and check where the details are copied.",
-      "detail": "Follow where the information begins, where it needs to go, and who touches it in between. The answer may be a clearer workflow, a connection between existing tools, or a focused new tool.",
+      "detail": "Follow where the information begins, where it needs to go, and who touches it in between. The answer may be a clearer workflow, a connection between existing tools, or a focused new tool. Little Fight NYC can trace it.",
       "nextStep": "Show us one piece of information that gets copied more than once."
     },
     {
@@ -1507,7 +1507,7 @@
       "category": "software",
       "question": "Can our existing tools work together?",
       "answer": "Your current tools may be able to share the needed information once we know which step you want to stop doing by hand.",
-      "detail": "Check their settings and access rules first. Compare the cost of connecting them with a small custom tool. Include the fees, upkeep, and time the team needs to learn the change.",
+      "detail": "Check their settings and access rules first. Compare the cost of connecting them with a small custom tool. Include the fees, upkeep, and time the team needs to learn the change. Little Fight NYC can compare both options with you before anything is built.",
       "nextStep": "List the tools and the step you want to improve."
     },
     {
@@ -1515,7 +1515,7 @@
       "category": "software",
       "question": "Who owns the system we build?",
       "answer": "The written scope should say which custom files, data, accounts, and instructions your business gets when the work is done.",
-      "detail": "You should know where the system runs, who can change it, and how to regain access. A new support person should be able to use those notes. Paid platforms and licensed assets keep their own terms.",
+      "detail": "You should know where the system runs, who can change it, and how to regain access. A new support person should be able to use those notes. Paid platforms and licensed assets keep their own terms. When Little Fight NYC builds a system, the written scope names what the business keeps.",
       "nextStep": "Ask what the project hands over."
     },
     {
@@ -1523,7 +1523,7 @@
       "category": "software",
       "question": "How small can the first software change be?",
       "answer": "Start with one repeated task and a change that the people doing it can try for themselves. That might be a shared request form, an approval list, or a connection between two tools.",
-      "detail": "A first version should fit the real task and show the owner what changed. Once the business has used it, the next decision can come from evidence instead of a long feature list.",
+      "detail": "A first version should fit the real task and show the owner what changed. Once the business has used it, the next decision can come from evidence not a long feature list. Little Fight NYC starts this way.",
       "nextStep": "Name the handoff that causes the most repeat work."
     },
     {
@@ -1531,7 +1531,7 @@
       "category": "software",
       "question": "Can another qualified person take over the system later?",
       "answer": "Another person can take over more easily when the business has clear notes, the right files, and control of its accounts.",
-      "detail": "The notes should say where the system runs, who can change it, how to restore access, and what needs regular care. They should be useful to the person doing the next job.",
+      "detail": "The notes should say where the system runs, who can change it, how to restore access, and what needs regular care. They should be useful to the person doing the next job. Little Fight NYC writes these notes as part of the handoff.",
       "nextStep": "Include the handoff notes in the written project scope."
     }
   ],

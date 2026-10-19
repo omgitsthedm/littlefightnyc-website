@@ -1,7 +1,7 @@
 {
   "source": "Owner-approved October 8 homepage cuts; preserve the saved master layout and all direct destinations.",
   "baselineVisibleCount": 79,
-  "expectedVisibleCount": 58,
+  "expectedVisibleCount": 60,
   "hiddenTiles": [
     {
       "id": "web-homepage-priority",
@@ -158,6 +158,8 @@
     "google-review-4",
     "google-review-5",
     "google-review-6",
-    "google-review-7"
+    "google-review-7",
+    "google-review-8",
+    "google-review-9"
   ]
 }

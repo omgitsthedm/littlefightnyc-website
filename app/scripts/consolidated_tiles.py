@@ -176,7 +176,8 @@ def apply_homepage_groups(mosaic, groups, hidden):
     removed = set(hidden) | {identity for group in groups for identity in group['absorb']}
     before = [attributes(match.group()) for match in TILE.finditer(mosaic)]
     labs = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/labs.json').read_text())
-    expected = 129 + len(labs) - 9 + 1  # new Labs and the construction collection
+    reviews = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/reviews.json').read_text())['reviews']
+    expected = 129 + len(labs) - 9 + 1 + len(reviews) - 7  # new Labs, the construction collection, new Google reviews
     assert len(before) == expected, 'The source tile inventory changed unexpectedly'
     all_ids = {item['data-answer'] for item in before}
     assert set(by_id) | removed <= all_ids, 'Consolidation names a missing homepage tile'
@@ -228,7 +229,7 @@ def apply_homepage_groups(mosaic, groups, hidden):
         'hiddenHomeIds': sorted(hidden),
     }
     curation = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/homepage-curation.json').read_text())
-    assert len(visible) == curation['expectedVisibleCount'] == 58, 'The curated homepage must have exactly 58 tiles'
-    assert set(curation['retainedReviewIds']) <= {item['data-answer'] for item in visible}, 'Keep all seven authentic reviews'
+    assert len(visible) == curation['expectedVisibleCount'] == 60, 'The curated homepage must have exactly 60 tiles'
+    assert set(curation['retainedReviewIds']) <= {item['data-answer'] for item in visible}, 'Keep every authentic review'
     assert len(visible) == len(before) - len(removed)
     return combined, manifest

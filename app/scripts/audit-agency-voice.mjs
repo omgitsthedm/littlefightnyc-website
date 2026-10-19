@@ -12,7 +12,10 @@
  *     person can be presented as staff, author or reviewer by accident;
  *   - any publisher is the Little Fight NYC Organization, never a person;
  *   - any Article names David Marsh as author;
- *   - the About page shows David by name and carries his Person record.
+ *   - the About page shows David by name and carries his Person record;
+ *   - on indexable pages, FAQ answers name Little Fight NYC, so an answer quoted
+ *     on its own still says who does the work: every FAQPage names it at least
+ *     once, and at least 75% of all answers do.
  */
 import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
@@ -56,11 +59,16 @@ try {
 const problems = [];
 let checked = 0;
 let articles = 0;
+let faqAnswers = 0;
+let faqNamed = 0;
+const NAMED = /Little Fight NYC/;
+const MIN_NAMED_SHARE = 0.75;
 
 for (const file of files) {
   const html = readFileSync(file, "utf8");
   const route = `/${relative(DIST, file).replace(/index\.html$/, "")}`;
   checked += 1;
+  const indexable = !/<meta name="robots" content="[^"]*noindex/.test(html);
   for (const m of html.matchAll(/<script[^>]*(?:application\/ld\+json|data-seo)[^>]*>([\s\S]*?)<\/script>/g)) {
     let parsed;
     try {
@@ -79,6 +87,13 @@ for (const file of files) {
       if (publisher && !agency) {
         problems.push({ route, what: "publisher is not the Little Fight NYC Organization" });
       }
+      if (indexable && types(node).includes("FAQPage")) {
+        const answers = [].concat(node.mainEntity || []).map((q) => q?.acceptedAnswer?.text || "");
+        const named = answers.filter((text) => NAMED.test(text)).length;
+        faqAnswers += answers.length;
+        faqNamed += named;
+        if (answers.length && !named) problems.push({ route, what: "no FAQ answer on this page names Little Fight NYC" });
+      }
       if (types(node).includes("Article")) {
         articles += 1;
         if (ref(node.author) !== DAVID) problems.push({ route, what: "Article author is not David Marsh" });
@@ -93,10 +108,14 @@ if (!about.includes(`"@id": "${DAVID}"`) && !about.includes(`"@id":"${DAVID}"`))
   problems.push({ route: "/about/", what: "About is missing David's Person record" });
 }
 
+if (faqAnswers && faqNamed / faqAnswers < MIN_NAMED_SHARE) {
+  problems.push({ route: "(site)", what: `${faqNamed} of ${faqAnswers} FAQ answers name Little Fight NYC; at least ${Math.round(MIN_NAMED_SHARE * 100)}% must` });
+}
+
 if (problems.length) {
   console.error("FAIL agency-voice:\n");
   for (const p of problems.slice(0, 40)) console.error(`  ${p.route}\n    ${p.what}`);
   process.exit(1);
 }
 
-console.log(`PASS agency-voice — ${checked} pages: Little Fight NYC publishes, David Marsh is the only named person, ${articles} articles credit him.`);
+console.log(`PASS agency-voice — ${checked} pages: Little Fight NYC publishes, David Marsh is the only named person, ${articles} articles credit him, ${faqNamed} of ${faqAnswers} FAQ answers name Little Fight NYC.`);

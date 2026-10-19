@@ -25,7 +25,7 @@ const releaseFilename = productionMode ? 'tile-release.json' : 'preview-release.
 const reviewRecords = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'reviews.json'), 'utf8')).reviews;
 const verifiedReviewSources = new Set(reviewRecords.map(review => review.sourceUrl));
 const catalogLabs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.json'), 'utf8'));
-const expectedInventory = { total: 129 + catalogLabs.length - 9 + 1, originals: 106, groups: 19, reviews: 7 };
+const expectedInventory = { total: 129 + catalogLabs.length - 9 + 1 + reviewRecords.length - 7, originals: 106, groups: 19, reviews: reviewRecords.length };
 const report = {
   kind: 'tile-preview-browser-verification',
   base,
@@ -418,7 +418,7 @@ async function run() {
         source: tile.dataset.reviewSourceUrl || '',
         target: tile.getAttribute('target'),
       })));
-      assert.equal(reviewTiles.length, expectedInventory.reviews, 'homepage retains seven local review fronts');
+      assert.equal(reviewTiles.length, expectedInventory.reviews, 'homepage retains one local front per verified review');
       const expectedReviews = new Map(reviewRecords.map(review => [review.id, review]));
       assert.deepEqual(new Set(reviewTiles.map(tile => tile.id)), new Set(expectedReviews.keys()), 'homepage has every canonical review front exactly once');
       for (const tile of reviewTiles) {
