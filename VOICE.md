@@ -92,8 +92,12 @@ NYC blunt is *honest*, not *performative*.
 7. **No AI phone-agent language.** The phone is a normal call/text line. After hours, callers leave a message.
 8. **Care without sycophancy.** "If we can't help, we'll tell you who can."
 9. **No "we'd love to" / "we'd be happy to" / "feel free to" / "please don't hesitate."**
-10. **First-person plural** ("we") for public actions. Do not render a personal name or
-    Person schema; Little Fight speaks as the company.
+10. **First-person plural** ("we") for public actions; Little Fight NYC publishes. David
+    Marsh ("David") is the one named person: founder, article author, and the person who
+    answers. Owner decision, 2026-10-19: "if I have to be the face that's fine, David Marsh
+    or just David." Name no other staff, and add no bio facts (years, background) until the
+    owner supplies them. `app/scripts/people.py` holds his Person record;
+    `audit-agency-voice.mjs` enforces it.
 
 ## Forbidden phrases (extends AI-tell scrub)
 

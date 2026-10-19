@@ -59,8 +59,6 @@ const PLACEHOLDER_COPY = [
   { label: "FIXME", pattern: /\bFIXME\b/i },
   { label: "placeholder", pattern: /\b(?:copy )?placeholder\b/i },
   { label: "lorem ipsum", pattern: /\blorem ipsum\b/i },
-  { label: "Call David", pattern: /\bcall\s+(?:or\s+text\s+)?david\b/i },
-  { label: "personal name", pattern: /\bDavid(?:\s+Marsh)?\b(?!\s*(?:Bowie|Byrne))/i },
 ];
 
 const ACTION_HREF = /^(?:\/contact\/?(?:[?#].*)?|\/website-check\/?(?:[?#].*)?|\/tech-audit\/?(?:[?#].*)?|\/services\/[a-z0-9-]+\/?(?:[?#].*)?|mailto:|tel:|sms:)/i;

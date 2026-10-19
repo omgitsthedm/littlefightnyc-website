@@ -381,9 +381,9 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
     for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
         if phrase in copy:
             failures.append(f"rewrite guide {identity} contains prohibited copy: {phrase!r}")
-    # The site publishes no prices and speaks as the agency, never as one person.
-    if "$" in copy or re.search(r"\bdavid\b", copy):
-        failures.append(f"rewrite guide {identity} publishes a price or a personal name")
+    # Guides publish no prices (prices come only from the owner's approved list).
+    if "$" in copy:
+        failures.append(f"rewrite guide {identity} publishes a price")
 
 
 def reader_words(parser: StaticHTML) -> int:

@@ -31,6 +31,7 @@ from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
 from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library, png_image as clay_png_image, assets as clay_assets
 from article_visuals import article_topic, section_icon_html
+from people import DAVID_ID, DAVID_NAME, DAVID_URL, PORTRAIT_ALT, avatar as david_avatar, person_schema
 from social_cards import register as social_card, tags as social_tags, write_plan as write_social_plan
 
 APP = Path(__file__).resolve().parents[1]
@@ -230,7 +231,8 @@ def contact(path, prompt='Tell us what you need help with.'):
     intent=contact_intent(path)
     heading='Let’s make it yours.' if path=='/services/custom-local-websites/' else 'Talk to Little Fight.'
     introduction=prompt
-    hours = '' if path in ('/start/', '/trivia/1979/') else '<p class="contact-hours">9am–9pm Eastern. After hours, leave a message.</p>'
+    hours = '' if path in ('/start/', '/trivia/1979/') else ('<p class="contact-hours contact-person">' + david_avatar(44, 'contact-person-avatar')
+             + '<span><strong>David answers</strong> 9am–9pm Eastern. After hours, leave a message.</span></p>')
     return f'''<section class="story-contact" id="contact"><div><h2>{E(heading)}</h2><p>{E(introduction)}</p></div><div><nav class="contact-actions" aria-label="Contact Little Fight NYC">{channels(intent, path)}</nav>{hours}</div></section>'''
 
 def channels(intent='general', source=''):
@@ -288,7 +290,7 @@ def article_meta(path, q, body):
     words = len(unescape(re.sub(r'<[^>]+>', ' ', main)).split())
     minutes = max(2, -(-words // 230))
     hosts = {h for h in re.findall(r'href="(https://[^"]+)"', main) if urlsplit(h).hostname not in ('littlefightnyc.com', 'www.littlefightnyc.com')}
-    items = [('clock', f'{minutes} min read')]
+    items = [('author', f'By <a href="{DAVID_URL}">{DAVID_NAME}</a>'), ('clock', f'{minutes} min read')]
     if hosts:
         items.append(('book-open-text', f'{len(hosts)} cited source' + ('' if len(hosts) == 1 else 's')))
     updated = article_updated(path, q)
@@ -296,8 +298,12 @@ def article_meta(path, q, body):
         d = datetime.date.fromisoformat(updated)
         items.append(('calendar-check', f'Updated <time datetime="{updated}">{MONTHS[d.month - 1][:3]} {d.day}, {d.year}</time>'))
     icons = {'clock': 'clock-duotone.svg', 'book-open-text': 'book-open-text-duotone.svg', 'calendar-check': 'calendar-check-duotone.svg'}
+    def mark(k):
+        if k == 'author':
+            return david_avatar(28, 'article-meta-avatar')
+        return f'<span class="article-meta-icon" aria-hidden="true" style="--meta-icon:url(/assets/mineral/{icons[k]})"></span>'
     return ('<ul class="article-meta" aria-label="About this article">'
-            + ''.join(f'<li><span class="article-meta-icon" aria-hidden="true" style="--meta-icon:url(/assets/mineral/{icons[k]})"></span>{v}</li>' for k, v in items)
+            + ''.join(f'<li class="article-meta-{k}">{mark(k)}{v}</li>' for k, v in items)
             + '</ul>')
 
 
@@ -484,6 +490,9 @@ def article(p):
         # This visual belongs only to VERA's agency reader. The working app,
         # its records and its existing brand assets remain untouched.
         art='<div class="reader-context-visual" data-reader-family="brand"><img class="reader-context-icon" src="/assets/mineral/book-open-text-duotone.svg" width="64" height="64" alt=""><figure class="reader-context-figure"><img class="reader-context-image" src="/vera/assets/icons/vera-icon-512.png" width="512" height="512" alt="VERA’s original cream and green geometric mark" loading="eager"><figcaption><a href="#working-demo">VERA: explore NYC rentals and inspect the linked public records.</a></figcaption></figure></div>'
+    if path=='/about/':
+        art=('<figure class="reader-context-figure about-portrait">'+david_avatar(320,'reader-context-image about-portrait-image',PORTRAIT_ALT).replace(' loading="lazy"',' loading="eager"')
+             +'<figcaption>David Marsh, founder</figcaption></figure>')
     if not art: art=reader_visual(p,q,cases,albums)
     # The support tiles need their printer/router visible in the opening rail.
     # Group artwork is useful for the other condensed answers, but would
@@ -726,7 +735,7 @@ def head(q, home=False):
     card = social_card(q, reader_family(q), visual.get('desktop'),
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/1311467162048309', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path=='/':graph.append(LOCAL_BUSINESS)
     if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
     if q.get('_rewriteCategory'):
@@ -752,6 +761,7 @@ def head(q, home=False):
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     graph[2]['inLanguage'] = q.get('language', 'en')
+    graph.append(person_schema())
     if path in ARTICLE_UPDATES:
         graph[2]['dateModified'] = ARTICLE_UPDATES[path]
     graph[2]['primaryImageOfPage'] = {'@type':'ImageObject', 'url':ORIGIN+card['image'], 'width':card['width'], 'height':card['height'], 'caption':card['alt']}
@@ -769,7 +779,7 @@ def head(q, home=False):
                       **({'datePublished':published} if published else {}),
                       **({'articleSection':topic[0]} if topic else {}),
                       'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
-                      'author':{'@id':ORIGIN+'/#organization'},
+                      'author':{'@id':DAVID_ID},
                       'publisher':{'@id':ORIGIN+'/#organization'},
                       **({'dateModified':ARTICLE_UPDATES[path]} if path in ARTICLE_UPDATES else {}),
                       'inLanguage':q.get('language','en')})
@@ -937,7 +947,7 @@ def llms_text():
            'Based in New York City; website work is available across the United States. New York on-site help is subject to confirmed availability. '
            'Tech support for small businesses covers Mac and Windows computers, iPhone and iPad, Microsoft 365 and business email, Wi-Fi, printers, account ownership and backups. '
            'A free first look comes before any paid work, with a written scope before anything starts. '
-           'A person answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
+           'Founded and run by David Marsh, who answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
     start=('## Start here\n\n'+'\n'.join(line(p) for p in ['/','/how-we-help/','/reviews/','/contact/'] if p in pages)+'\n\n')
     sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
     tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'

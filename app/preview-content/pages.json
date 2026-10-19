@@ -425,8 +425,23 @@
     "description": "Little Fight NYC designs websites, helps with business technology, and builds software independent businesses can own. A real person answers 9am–9pm Eastern.",
     "eyebrow": "Little Fight NYC",
     "heading": "One studio. One accountable person.",
-    "summary": "We work directly with independent businesses on websites, everyday technology, clearer decisions, and software they can own.",
+    "summary": "Little Fight NYC is David Marsh’s studio for independent businesses: websites, everyday technology, clearer decisions, and software you can own.",
     "sections": [
+      {
+        "id": "david",
+        "heading": "Meet David.",
+        "paragraphs": [
+          "David Marsh founded Little Fight NYC and runs it. When you call or text between 9am and 9pm Eastern, David picks up. There is no account manager, no ticket queue, and no hand-off to a team you never meet.",
+          "He takes the free first look himself, writes the scope before any paid work starts, and leaves plain-language notes when the job is done. Your accounts stay in your business’s name.",
+          "Website and software work runs remotely for businesses anywhere in the United States. On-site tech help is a New York service, booked once the issue and location are clear."
+        ],
+        "links": [
+          {
+            "label": "Call or text David",
+            "href": "tel:+16463600318"
+          }
+        ]
+      },
       {
         "heading": "How we work.",
         "paragraphs": [
@@ -445,9 +460,9 @@
         ]
       },
       {
-        "heading": "A person, during real hours.",
+        "heading": "David, during real hours.",
         "paragraphs": [
-          "Call, text, email, or write to us. From 9am–9pm Eastern, a person answers. After hours, leave a message.",
+          "Call, text, email, or write. From 9am–9pm Eastern, David answers. After hours, leave a message.",
           "If we are not the right fit, we will say so plainly and point you toward the next useful move."
         ],
         "links": [

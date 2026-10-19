@@ -500,3 +500,13 @@ img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!import
 
 /* Section headings in articles carry a small icon in the article's accent colour. */
 .lf-reader .story-section h2 .section-icon{display:block;width:30px;height:30px;margin:0 0 12px;background:var(--reader-accent,#ff7839);-webkit-mask:var(--section-icon) center/contain no-repeat;mask:var(--section-icon) center/contain no-repeat}
+
+/* David Marsh, founder: author line, contact block and About portrait. */
+.lf-reader .article-meta .article-meta-avatar{flex:none;width:28px;height:28px;border-radius:50%;object-fit:cover}
+.lf-reader .article-meta .article-meta-author a{color:inherit;font-weight:700;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--article-accent) 60%,transparent);text-underline-offset:3px}
+.lf-reader .contact-person{display:flex;align-items:center;gap:12px}
+.lf-reader .contact-person .contact-person-avatar{flex:none;width:44px;height:44px;border-radius:50%;object-fit:cover}
+.lf-reader .story-art .about-portrait{display:grid;justify-items:start;gap:12px;background:transparent;outline:0;box-shadow:none;overflow:visible}
+.lf-reader .story-art .about-portrait{width:auto}
+.lf-reader .story-art .about-portrait .about-portrait-image{width:min(100%,220px);height:auto;aspect-ratio:1;border-radius:50%;object-fit:cover;background:transparent;outline:0}
+.lf-reader .story-art .about-portrait figcaption{color:color-mix(in srgb,var(--workbench-paper,#f6f3ec) 72%,transparent);font-size:14px}
