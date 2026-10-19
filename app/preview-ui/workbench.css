@@ -474,3 +474,6 @@
 .workbench-page .story-section h3:first-child{margin-top:0}
 :is(.workbench-page,#detail) .lf-reader .category-answer-more a{color:var(--workbench-accent,#ff7839);font-weight:600;text-decoration:none}
 .category-answer-more a::after{content:' +'}
+
+/* The Little Fight tugboat is always all orange: never tint it with a service colour. */
+img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!important}

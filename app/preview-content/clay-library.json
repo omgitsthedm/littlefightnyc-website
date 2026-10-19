@@ -90,28 +90,29 @@
     "symbol-tugboat": {
       "sourceWidth": 1536,
       "sourceHeight": 1024,
-      "sourceSha256": "93ebe6079e913a751b8d63f6a75760f2932164bd89a982d4542ea15d2e375bb0",
+      "sourceFile": "PNG/symbol-tugboat.png",
+      "sourceSha256": "51813983f7f5f1b9634af05531eea82dfbeef09fccbf316042c7181bfb410a57",
       "variants": [
         {
           "file": "symbol-tugboat-384.png",
           "width": 384,
           "height": 256,
-          "bytes": 85069,
-          "sha256": "0965fabba7a05b1eef76a94848eba47d7d8e535d5d9056fe275dd2b16eb9756d"
+          "bytes": 79711,
+          "sha256": "65fdbc78e7307cc10a5a7ea120805de29ecd1eccf9bd465ecde19b28e36b05cc"
         },
         {
           "file": "symbol-tugboat-768.png",
           "width": 768,
           "height": 512,
-          "bytes": 318851,
-          "sha256": "8911d17e5beb50cb5c1004b7210be8a493eacd61f21261e50c580d7aba4be3af"
+          "bytes": 293923,
+          "sha256": "a649476b98306977493cb7ee9ee4e662e4eacc6aa67b7729b633feb685fc762d"
         },
         {
           "file": "symbol-tugboat.png",
           "width": 1536,
           "height": 1024,
-          "bytes": 2033820,
-          "sha256": "93ebe6079e913a751b8d63f6a75760f2932164bd89a982d4542ea15d2e375bb0"
+          "bytes": 1839789,
+          "sha256": "51813983f7f5f1b9634af05531eea82dfbeef09fccbf316042c7181bfb410a57"
         }
       ],
       "webpVariants": [
@@ -119,29 +120,29 @@
           "file": "symbol-tugboat-384.webp",
           "width": 384,
           "height": 256,
-          "bytes": 12472,
-          "sha256": "7b0657ea7ce0e461e03dada7844d8581c323c69f58aab69006cb215b0db1072b"
+          "bytes": 14444,
+          "sha256": "20f36fc0349bbfce22250a7437700ffd60dc3a025372da18205007888219c3cd"
         },
         {
           "file": "symbol-tugboat-768.webp",
           "width": 768,
           "height": 512,
-          "bytes": 39714,
-          "sha256": "57721ba2982054f9309831489999dc12f4b847247dd56f5e41a8a246e88cb9ba"
+          "bytes": 51078,
+          "sha256": "d6482607678bd792ad384e289dcc7721d76409eeb723dd7c47f06b1d295a8ede"
         },
         {
           "file": "symbol-tugboat-1152.webp",
           "width": 1152,
           "height": 768,
-          "bytes": 105048,
-          "sha256": "291d75e577859442f538c763f4b28eef8c570305713e917484bc44f5bd9c5a8f"
+          "bytes": 165190,
+          "sha256": "c93d4d6e078c33181e24b108ba0739b199a9e20405689ae455f1a592dc497e25"
         },
         {
           "file": "symbol-tugboat.webp",
           "width": 1536,
           "height": 1024,
-          "bytes": 176994,
-          "sha256": "2cbbf8442ff6a4d4210d2c3beaee145169cefd5b1cc14407b338f9a2987d5c84"
+          "bytes": 280110,
+          "sha256": "361b167d37d4b7ba02db6e560da507dafff2e557ef161959c58879cc6f6d2af1"
         }
       ],
       "avifVariants": [
@@ -149,25 +150,25 @@
           "file": "symbol-tugboat-384.avif",
           "width": 384,
           "height": 256,
-          "bytes": 10797
+          "bytes": 11509
         },
         {
           "file": "symbol-tugboat-768.avif",
           "width": 768,
           "height": 512,
-          "bytes": 34398
+          "bytes": 40944
         },
         {
           "file": "symbol-tugboat-1152.avif",
           "width": 1152,
           "height": 768,
-          "bytes": 82236
+          "bytes": 96073
         },
         {
           "file": "symbol-tugboat.avif",
           "width": 1536,
           "height": 1024,
-          "bytes": 119959
+          "bytes": 161030
         }
       ]
     },
