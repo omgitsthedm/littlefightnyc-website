@@ -476,7 +476,7 @@
 .category-answer-more a::after{content:' +'}
 
 /* The Little Fight tugboat is always all orange: never tint it with a service colour. */
-img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"],img[src*="/assets/brand/tugboat-clay"]{filter:none!important}
+img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!important}
 
 /* Article opening: topic chip, reading line and the topic's clay object on a soft stage. */
 .lf-reader .article-hero{--article-accent:var(--reader-accent,#ff7839)}

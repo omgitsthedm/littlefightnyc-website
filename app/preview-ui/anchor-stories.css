@@ -92,6 +92,3 @@ body.no-motion .lf-reader .anchor-story-body :is(.anchor-figure,.anchor-signal-l
 .lf-reader .anchor-story-body .anchor-route-grid a:is(:hover,:focus-visible){border-color:var(--route-color);background:color-mix(in srgb,var(--route-color) 10%,transparent);outline-color:var(--route-color)}
 /* Four consulting steps keep one balanced row; three-step stories keep three. */
 @media(min-width:761px){.anchor-path-list:has(li:nth-child(4)){grid-template-columns:repeat(4,minmax(0,1fr))!important}}
-
-/* The clay tugboat mark keeps its proportions wherever it stands in for an icon. */
-.lf-reader .anchor-service-hero .story-kicker img[src*="/assets/brand/tugboat-clay"]{object-fit:contain}

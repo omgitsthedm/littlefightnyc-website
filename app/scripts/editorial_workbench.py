@@ -73,7 +73,7 @@ def header(*, family: str | None, contacts: str, dialog: bool = False) -> str:
         '<header class="workbench-chrome">'
         '<div class="workbench-chrome-top">'
         '<a class="workbench-brand" href="/" aria-label="Little Fight NYC homepage">'
-        '<img src="/assets/brand/tugboat-clay-96.webp" srcset="/assets/brand/tugboat-clay-96.webp 96w, /assets/brand/tugboat-clay-144.webp 144w, /assets/brand/tugboat-clay-192.webp 192w" sizes="43px" width="43" height="36" alt="" style="object-fit:contain">'
+        '<img src="/assets/boat-orange.svg" width="43" height="38" alt="">'
         '<span>Little Fight NYC</span></a>'
         f'<nav class="workbench-contacts direct-contact-rail contact-actions reader-rail" data-lf-contact-rail="true" aria-label="Quick contact">{contacts}</nav>'
         + ('<nav class="workbench-reader-controls" aria-label="Card controls">'

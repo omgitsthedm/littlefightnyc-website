@@ -208,7 +208,7 @@ const css = `
 *{box-sizing:border-box}html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#101515;color:#f5f3ec;font-family:Atkinson,sans-serif;-webkit-font-smoothing:antialiased}
 .card{position:relative;width:1200px;height:630px;background:#101515;isolation:isolate;overflow:hidden}
 .brand{position:absolute;left:56px;top:43px;display:flex;align-items:center;gap:12px;font-size:26px;font-weight:750;letter-spacing:-.6px}
-.brand img{width:54px;height:45px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}.category{position:absolute;left:58px;top:135px;max-width:525px;font-size:21px;font-weight:700;color:var(--accent);line-height:1.2}
+.brand img{width:49px;height:36px;object-fit:contain}.category{position:absolute;left:58px;top:135px;max-width:525px;font-size:21px;font-weight:700;color:var(--accent);line-height:1.2}
 .copy{position:absolute;left:56px;top:185px;width:536px;height:242px;display:flex;align-items:flex-start}
 h1{font-size:64px;line-height:1.02;font-weight:750;letter-spacing:-2.2px;margin:0;white-space:pre-line;text-wrap:balance;width:100%}
 .note{position:absolute;left:58px;top:451px;width:520px;max-height:99px;margin:0;font-size:24px;line-height:1.26;color:#c7ceca;white-space:pre-line;text-wrap:pretty}
@@ -237,7 +237,7 @@ try {
       `<div class="screen"><div class="chrome"><i></i><i></i><i></i></div><img src="${esc(spec.image)}" alt=""></div>` :
       `<div class="art"><img class="object" src="${esc(spec.image)}" alt=""></div>`;
     if (spec.mode === 'vera') await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${veraCSS}</style></head><body>${veraCardHTML(spec)}</body></html>`);
-    else await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${css}</style></head><body><main class="card ${route==='/'?'home':''}" style="--accent:${spec.color}"><div class="brand"><img src="/assets/brand/tugboat-clay-192.webp" alt="">little fight NYC</div><div class="category">${esc(spec.label)}</div><div class="copy"><h1>${esc(spec.headline)}</h1></div><p class="note">${esc(spec.note || spec.description)}</p>${art}<div class="url">littlefightnyc.com</div><div class="signal"></div></main></body></html>`);
+    else await page.setContent(`<!doctype html><html lang="en"><head><base href="${local}/"><meta charset="utf-8"><style>${css}</style></head><body><main class="card ${route==='/'?'home':''}" style="--accent:${spec.color}"><div class="brand"><img src="/assets/boat-orange.svg" alt="">little fight NYC</div><div class="category">${esc(spec.label)}</div><div class="copy"><h1>${esc(spec.headline)}</h1></div><p class="note">${esc(spec.note || spec.description)}</p>${art}<div class="url">littlefightnyc.com</div><div class="signal"></div></main></body></html>`);
     await page.evaluate(async () => {
       await document.fonts.ready;
       await Promise.all([...document.images].map(img => img.decode()));
