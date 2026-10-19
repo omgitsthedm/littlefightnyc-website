@@ -5060,21 +5060,21 @@
     "/markets/nyc/": {
       "path": "/markets/nyc/",
       "title": "New York City — Websites & Tech Questions | Little Fight NYC",
-      "description": "Plan around the way your New York business works. Start with customer questions and daily bottlenecks, then decide what needs a website change, a better tool, or tech support.",
+      "description": "Plan around how your New York business works. Start with customer questions and daily bottlenecks, then choose a website change, a better tool, or tech support.",
       "headline": "Websites and tech help for New York businesses.",
       "label": "Tech consulting",
       "color": "#a0df85",
       "mode": "clay",
-      "image": "/assets/social/clay/markets-nyc-8e24c628df88.jpg",
+      "image": "/assets/social/clay/markets-nyc-0b2bc05913e4.jpg",
       "artAlt": "A handmade clay notebook and pencil.",
       "artSource": "/assets/clay-png/object-notebook.png",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 247197,
+      "bytes": 242938,
       "alt": "A handmade clay notebook and pencil. Text: Websites and tech help for New York businesses. Little Fight NYC.",
-      "sha256": "5b621ad4d643e5dba9f5a2fc33a62155e5ba2507fc2e86f397322de9c460afd8",
-      "signature": "8e24c628df880579e439279b46c05be9963eb72bc9f564e5ea96e955ac0885cd"
+      "sha256": "23d00db84aa6a25665303cb9d6bc468a40b1acf8ed31d4bc6d354fd8856b9b27",
+      "signature": "0b2bc05913e43dcc6bc52ddd291e4a201a9ac714d1b65eac46ced105a6d882ce"
     },
     "/markets/nyc/answers/nyc-website-scope/": {
       "path": "/markets/nyc/answers/nyc-website-scope/",
@@ -5516,21 +5516,21 @@
     "/markets/arizona/": {
       "path": "/markets/arizona/",
       "title": "Arizona — Websites & Tech Questions | Little Fight NYC",
-      "description": "Choose the next useful change for your Arizona business. Review service areas, inquiries, and follow-up before deciding whether to repair a setup or build something new.",
+      "description": "Choose the next useful change for your Arizona business. Review service areas, inquiries, and follow-up, then repair a setup or build something new.",
       "headline": "A website that makes your Arizona business clear.",
       "label": "Tech consulting",
       "color": "#a0df85",
       "mode": "clay",
-      "image": "/assets/social/clay/markets-arizona-0897aba85275.jpg",
+      "image": "/assets/social/clay/markets-arizona-a459c0092ab1.jpg",
       "artAlt": "A handmade clay notebook and pencil.",
       "artSource": "/assets/clay-png/object-notebook.png",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 238734,
+      "bytes": 236238,
       "alt": "A handmade clay notebook and pencil. Text: A website that makes your Arizona business clear. Little Fight NYC.",
-      "sha256": "ca03df95fece020f2c1294a56f4d01daf7bd42abe8dddd841488fdd6721324cd",
-      "signature": "0897aba852754f6d7c94d4560f5d3d413b791b5822f95bd8d2b381e5fda3bb1d"
+      "sha256": "91c29214f839ae0dc3f993554b0078a0cc5bd6a3dd1b09f4b0f4d425dc1a80b4",
+      "signature": "a459c0092ab183b86e6730e64b1b951aae9b128be7973e3ccf1f997c16a21a5f"
     },
     "/markets/arizona/phoenix/": {
       "path": "/markets/arizona/phoenix/",
