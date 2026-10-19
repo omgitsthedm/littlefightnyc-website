@@ -81,7 +81,7 @@ async function snapshot(page, name) {
           const state = await page.evaluate(() => ({
             overflow: document.documentElement.scrollWidth > innerWidth + 1,
             heading: getComputedStyle(document.querySelector('h1')).fontFamily,
-            brand: !!document.querySelector('.workbench-brand img[src="/assets/boat-orange.svg"]'),
+            brand: !!document.querySelector('.workbench-brand img[src^="/assets/brand/tugboat-clay"]'),
             contacts: [...document.querySelectorAll('.workbench-chrome-top a[href^="tel:"],.workbench-chrome-top a[href^="sms:"],.workbench-chrome-top a[href^="mailto:"]')].filter(el => el.getClientRects().length).length,
           }));
           check(engine + ' ' + width + ' direct brand ' + route, !state.overflow && state.heading.includes('LFReader') && state.brand && state.contacts === 3, state);
