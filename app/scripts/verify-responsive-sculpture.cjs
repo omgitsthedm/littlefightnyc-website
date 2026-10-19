@@ -4,6 +4,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const assert=require('node:assert/strict');
 const {chromium,webkit}=require('@playwright/test');
+const expectedTiles=JSON.parse(fs.readFileSync(path.join(__dirname,'../preview-content/homepage-curation.json'),'utf8')).expectedVisibleCount;
 const base=process.env.PREVIEW_URL||'http://127.0.0.1:51944';
 assert.ok(['127.0.0.1','localhost'].includes(new URL(base).hostname));
 const out=path.resolve(__dirname,'../../.lifi/evidence/visual-overhaul');
@@ -122,7 +123,7 @@ async function main(){
     if(profile.touch){
      await page.setViewportSize({width:profile.height,height:profile.width});await settle(page);await heroGeometry(page,label+' landscape');
      const cards=await page.locator('#canvas .tile').evaluateAll(tiles=>({count:tiles.length,overflow:document.documentElement.scrollWidth>innerWidth+1}));
-     check(label+' orientation change retains all 58 curated tiles without overflow',cards.count===58&&!cards.overflow,cards);
+     check(label+' orientation change retains all '+expectedTiles+' curated tiles without overflow',cards.count===expectedTiles&&!cards.overflow,cards);
     }
     if(['small-phone','tablet','desktop'].includes(profile.name)){
      await page.setViewportSize({width:profile.width,height:profile.height});
