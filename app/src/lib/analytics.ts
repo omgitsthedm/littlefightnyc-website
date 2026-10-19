@@ -406,11 +406,11 @@ const GA_DISABLE_KEY = `ga-disable-${GA_MEASUREMENT_ID}`;
 const MEASUREMENT_TEST_STORAGE_KEY = "lfnyc_measurement_test";
 const MEASUREMENT_TEST_QUERY_KEY = "qa";
 type MeasurementTestMode = "qa" | "diagnostic";
-// No controlled Clarity project was handed off. Keep the dormant integration
-// incapable of activating from a stale or inherited build variable until the
-// destination account and data boundary are verified.
-const CLARITY_MEASUREMENT_AVAILABLE = false;
-const CLARITY_ID = import.meta.env.VITE_CLARITY_ID?.trim() ?? "";
+// Little Fight NYC's own Clarity project (hello@littlefightnyc.com). The ID is
+// public by design; it is pinned here so an inherited build variable can never
+// point heatmaps at another business's project.
+const CLARITY_MEASUREMENT_AVAILABLE = true;
+const CLARITY_ID = "z0b2pje3er";
 const CLARITY_SRC = `https://www.clarity.ms/tag/${encodeURIComponent(CLARITY_ID)}`;
 const configuredTikTokPixelId = import.meta.env.VITE_TIKTOK_PIXEL_ID?.trim();
 const TIKTOK_PIXEL_ID = configuredTikTokPixelId || "";
@@ -483,8 +483,7 @@ function hasRealClarityId() {
   return (
     CLARITY_MEASUREMENT_AVAILABLE &&
     isProdHost() &&
-    /^[a-z0-9]{6,}$/i.test(CLARITY_ID) &&
-    CLARITY_ID !== "CLARITY_ID"
+    /^[a-z0-9]{6,}$/i.test(CLARITY_ID)
   );
 }
 

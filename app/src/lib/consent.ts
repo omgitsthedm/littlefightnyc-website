@@ -91,14 +91,34 @@ function ensureGtagQueue() {
     };
 }
 
+// Visit counting follows the US opt-out norm: on until the visitor turns it
+// off in Privacy choices. Global Privacy Control turns it off, and visitors
+// whose browser clock is set to a European time zone keep the opt-in prompt,
+// because GDPR-style rules require a choice before any analytics cookie.
+// Advertising, Google Ads, and Meta are never defaulted on.
+function prefersOptInMeasurement() {
+  try {
+    const zone = Intl.DateTimeFormat().resolvedOptions().timeZone ?? "";
+    return zone.startsWith("Europe/") || zone === "Atlantic/Reykjavik" ||
+      zone === "Atlantic/Canary" || zone === "Atlantic/Madeira" || zone === "Atlantic/Azores";
+  } catch {
+    return true;
+  }
+}
+
+function defaultAnalyticsConsent(): AnalyticsConsent {
+  if ((navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl) return "denied";
+  return prefersOptInMeasurement() ? null : "granted";
+}
+
 export function getAnalyticsConsent(): AnalyticsConsent {
   if (typeof window === "undefined") return null;
 
   try {
     const value = window.localStorage.getItem(ANALYTICS_STORAGE_KEY);
-    return value === "granted" || value === "denied" ? value : null;
+    return value === "granted" || value === "denied" ? value : defaultAnalyticsConsent();
   } catch {
-    return null;
+    return defaultAnalyticsConsent();
   }
 }
 

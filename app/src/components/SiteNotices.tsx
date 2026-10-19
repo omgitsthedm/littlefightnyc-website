@@ -30,7 +30,7 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   en: {
     ariaLabel: "Privacy preferences",
     title: "Privacy choices",
-    body: "Choose optional Google visit counting. You can also allow Google Ads to connect ad clicks with inquiries, or Meta to measure Facebook and Instagram referrals. Google ad personalization stays off; Meta may use activity for personalized content and ads.",
+    body: "Google Analytics and Microsoft Clarity count visits and show where pages confuse people; “Essential only” turns that off. You can also allow Google Ads to connect ad clicks with inquiries, or Meta to measure Facebook and Instagram referrals. Google ad personalization stays off; Meta may use activity for personalized content and ads.",
     details: "Details",
     current: (analyticsOn, metaOn, googleAdsOn) =>
       `Current choice: visit counting ${analyticsOn ? "on" : "off"}; Meta ${metaOn ? "on" : "off"}; Google Ads ${googleAdsOn ? "on" : "off"}`,
@@ -42,7 +42,7 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   es: {
     ariaLabel: "Preferencias de privacidad",
     title: "Opciones de privacidad",
-    body: "Puedes permitir el conteo de visitas de Google. También puedes permitir que Google Ads relacione clics en anuncios con consultas, o que Meta mida las referencias de Facebook e Instagram. La personalización de anuncios de Google sigue desactivada; Meta puede usar la actividad para personalizar contenido y anuncios.",
+    body: "Google Analytics y Microsoft Clarity cuentan visitas y muestran dónde una página confunde; “Solo lo esencial” lo desactiva. También puedes permitir que Google Ads relacione clics en anuncios con consultas, o que Meta mida las referencias de Facebook e Instagram. La personalización de anuncios de Google sigue desactivada; Meta puede usar la actividad para personalizar contenido y anuncios.",
     details: "Detalles (en inglés)",
     current: (analyticsOn, metaOn, googleAdsOn) =>
       `Opción actual: conteo de visitas ${analyticsOn ? "activado" : "desactivado"}; Meta ${metaOn ? "activado" : "desactivado"}; Google Ads ${googleAdsOn ? "activado" : "desactivado"}`,
@@ -54,7 +54,7 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   zh: {
     ariaLabel: "隐私设置",
     title: "隐私选项",
-    body: "您可以允许 Google 访问统计，也可以允许 Google Ads 将广告点击与咨询关联，或允许 Meta 衡量 Facebook 和 Instagram 带来的访问。Google 广告个性化保持关闭；Meta 可能将活动用于个性化内容和广告。",
+    body: "Google Analytics 和 Microsoft Clarity 用于统计访问并发现页面中令人困惑的地方；选择“仅必要功能”即可关闭。您也可以允许 Google Ads 将广告点击与咨询关联，或允许 Meta 衡量 Facebook 和 Instagram 带来的访问。Google 广告个性化保持关闭；Meta 可能将活动用于个性化内容和广告。",
     details: "详细说明（英文）",
     current: (analyticsOn, metaOn, googleAdsOn) =>
       `当前选择：访问统计${analyticsOn ? "已开启" : "已关闭"}；Meta ${metaOn ? "已开启" : "已关闭"}；Google Ads ${googleAdsOn ? "已开启" : "已关闭"}`,

@@ -51,10 +51,7 @@ export default function Legal() {
             </p>
             <h2>Analytics</h2>
             <p>
-              Little Fight uses Google Analytics, after consent, to understand
-              which pages are useful and which contact paths work. Microsoft
-              Clarity and the TikTok Pixel are not active on this site. See
-              Google’s <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">privacy policy</a> for information about Google’s handling of data.
+              Little Fight NYC uses Google Analytics to see which pages are useful and which contact paths work, and Microsoft Clarity heatmaps and session recordings to see where a page confuses people. Clarity masks what you type into forms and search. The TikTok Pixel is not active on this site. See Google’s <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">privacy policy</a> for information about Google’s handling of data.
             </p>
             <p>
               These tools may record page views, approximate device/browser
@@ -93,18 +90,7 @@ export default function Legal() {
             </p>
             <h2>Cookies, pixels, and opt-outs</h2>
             <p>
-              Analytics is off by default for a first-time visitor. Google
-              Analytics loads after a visit-counting choice. Google Ads and
-              Meta each need their own explicit permission; allowing one does
-              not grant permission to the other. An existing permission for the
-              other service stays as you set it. “Allow visit counting” turns
-              both advertising choices off. “Essential only” keeps all optional
-              measurement off and the site still works. Global Privacy Control
-              keeps both advertising choices off. Withdrawing advertising
-              permission stops its measurement and removes the corresponding
-              first-party advertising cookies; it does not erase data already
-              received by a service. You can change your choice
-              at any time using the footer or the button below.
+              Visit counting (Google Analytics and Microsoft Clarity) is on by default for visitors in the United States. “Essential only” in Privacy choices turns it off and the site still works. If your browser sends Global Privacy Control, or its clock is set to a European time zone, visit counting stays off until you choose “Allow visit counting.” Google Ads and Meta each need their own explicit permission; allowing one does not grant permission to the other. An existing permission for the other service stays as you set it. “Allow visit counting” turns both advertising choices off. Global Privacy Control keeps both advertising choices off. Withdrawing a permission stops that measurement and removes the corresponding first-party cookies; it does not erase data already received by a service. You can change your choice at any time using the footer or the button below.
             </p>
             <p>
               <button type="button" className="lf-privacy-choice" onClick={openConsentPreferences}>

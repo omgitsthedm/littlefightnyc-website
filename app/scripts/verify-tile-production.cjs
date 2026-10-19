@@ -26,6 +26,7 @@ const allowedVendorHosts = new Set([
   'www.google-analytics.com',
   'analytics.google.com',
   'region1.google-analytics.com',
+  'www.clarity.ms',
   'connect.facebook.net',
   'www.facebook.com',
   'mpc2-prod-27-is5qnl632q-uk.a.run.app',
@@ -94,11 +95,14 @@ function tileEvents(commands) {
 }
 
 async function makeContext(browser, options = {}) {
-  const { viewport = { width: 1440, height: 900 }, ...initial } = options;
-  const context = await browser.newContext({ serviceWorkers: 'block', viewport });
+  // Visit counting defaults on for US visitors and stays opt-in for European
+  // time zones. Pin the zone so the gate never depends on the runner's clock.
+  const { viewport = { width: 1440, height: 900 }, timezoneId = 'America/New_York', ...initial } = options;
+  const context = await browser.newContext({ serviceWorkers: 'block', viewport, timezoneId });
   const state = { posts: [], externalHosts: new Set(), csp: [], errors: [], localFailures: [] };
   await context.addInitScript((initial) => {
-    if (initial.analytics) localStorage.setItem('lf_analytics_consent_v1', 'granted');
+    if (initial.analytics) localStorage.setItem('lf_analytics_consent_v1', initial.analytics === 'denied' ? 'denied' : 'granted');
+    if (initial.gpc) Object.defineProperty(Navigator.prototype, 'globalPrivacyControl', { get: () => true, configurable: true });
     if (initial.meta) localStorage.setItem('lf_meta_consent_v1', 'granted');
     if (initial.googleAds) localStorage.setItem('lf_google_ads_consent_v1', 'granted');
     // Contact links are checked for their bounded analytics events, but must
@@ -190,8 +194,39 @@ async function run() {
 
   const browser = await chromium.launch({ channel: 'chrome', headless: true });
   try {
-    await check('first visit keeps optional vendor requests off until a choice', async () => {
-      const { context, state } = await makeContext(browser, { viewport: { width: 390, height: 844 } });
+    await check('US first visit counts visits with advertising off', async () => {
+      const { context, state } = await makeContext(browser);
+      const page = await openPage(context, state, '/');
+      await page.waitForFunction(() => (window.dataLayer || []).some((row) => {
+        const values = Array.from(row);
+        return values[0] === 'event' && values[1] === 'page_view';
+      }), null, { timeout: 10_000 });
+      await page.waitForTimeout(200);
+      assert.ok(state.externalHosts.has('www.googletagmanager.com'), 'US default did not load Google Analytics');
+      assert.ok(state.externalHosts.has('www.clarity.ms'), 'US default did not load Microsoft Clarity');
+      assert.ok(!state.externalHosts.has('connect.facebook.net'), 'US default loaded Meta');
+      const commands = await eventCommands(page);
+      const updates = commands.filter((row) => row[0] === 'consent' && row[1] === 'update').map((row) => row[2]);
+      assert.ok(updates.some((choice) => choice?.analytics_storage === 'granted'), 'US default did not grant analytics storage');
+      assert.ok(!updates.some((choice) => choice?.ad_storage === 'granted' || choice?.ad_personalization === 'granted'), 'US default granted advertising');
+      assert.equal(await page.locator('dialog[data-production-consent]').count(), 0, 'US first visit mounted a consent overlay');
+      await closeContext(context, state);
+
+      for (const [label, options] of [
+        ['Global Privacy Control', { gpc: true }],
+        ['saved Essential only', { analytics: 'denied' }],
+      ]) {
+        const optedOut = await makeContext(browser, options);
+        const optedOutPage = await openPage(optedOut.context, optedOut.state, '/');
+        await optedOutPage.waitForTimeout(2500);
+        assert.deepEqual([...optedOut.state.externalHosts], [], `${label} still loaded a vendor`);
+        await closeContext(optedOut.context, optedOut.state);
+      }
+      return 'GA4 and Clarity load by default in the US; GPC and Essential only keep every vendor off';
+    });
+
+    await check('opt-in-region first visit keeps optional vendor requests off until a choice', async () => {
+      const { context, state } = await makeContext(browser, { viewport: { width: 390, height: 844 }, timezoneId: 'Europe/Berlin' });
       const page = await openPage(context, state, '/');
       assert.equal(await page.locator('dialog[data-production-consent]').count(), 0, 'first visit mounted a full consent overlay');
       await page.locator('[data-production-open-consent]:visible').click();
@@ -210,7 +245,7 @@ async function run() {
     });
 
     await check('visit counting, Google Ads, and Meta require distinct choices', async () => {
-      const { context, state } = await makeContext(browser);
+      const { context, state } = await makeContext(browser, { timezoneId: 'Europe/Berlin' });
       const page = await openPage(context, state, '/');
       await page.locator('[data-production-open-consent]:visible').click();
       await page.getByRole('button', { name: 'Allow visit counting', exact: true }).click();
@@ -232,7 +267,7 @@ async function run() {
     });
 
     await check('tile analytics uses a finite consented taxonomy without search or inquiry content', async () => {
-      const beforeConsent = await makeContext(browser);
+      const beforeConsent = await makeContext(browser, { timezoneId: 'Europe/Berlin' });
       const privatePage = await openPage(beforeConsent.context, beforeConsent.state, '/');
       const initialTile = privatePage.locator('a.tile[href]').first();
       await initialTile.click();

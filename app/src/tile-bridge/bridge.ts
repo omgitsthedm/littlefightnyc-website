@@ -135,9 +135,10 @@ function prepareAnalytics() {
 }
 
 function installMeasurement() {
-  // A static page remains static for a first-time visitor. Do not download the
-  // analytics/RUM code until the existing consent UI records a visit-counting
-  // opt-in; the listener below starts it in the same page after that choice.
+  // Visit counting starts after first paint when the effective choice is
+  // granted (the US default, or a saved opt-in). Opted-out, GPC, and opt-in
+  // region visitors stay static; the listener below starts measurement in the
+  // same page if they later choose "Allow visit counting".
   if (measurementStarted || getAnalyticsConsent() !== "granted") return;
   measurementStarted = true;
 
