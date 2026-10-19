@@ -67,9 +67,7 @@ def indexable(path):
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
-    # Lab reader pages are short companions to a working demo; the Lab hub and
-    # the Pool Room app carry Lab search. Keep the thin readers out of the index.
-    return path=='/' or path in ['/reviews/','/how-we-help/','/construction/'] or path.startswith('/industries/')
+    return path=='/' or path in ['/reviews/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
 
 def preserved(path):
     return PRODUCTION and path.startswith(STANDALONE) and (APP/'public'/path.lstrip('/')/'index.html').is_file()

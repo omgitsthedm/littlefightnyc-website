@@ -448,8 +448,7 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
-    # Lab readers are short demo companions and stay out of the index (2026-10-19).
-    return route == "/" or route in ("/reviews/", "/how-we-help/", "/construction/") or route.startswith("/industries/")
+    return route == "/" or route in ("/reviews/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
 
 
 def redirect_patterns() -> list[re.Pattern[str]]:
