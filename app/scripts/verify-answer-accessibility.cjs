@@ -74,12 +74,17 @@ const check = text => report.checks.push(text);
    await page.goto(base + route, { waitUntil: 'networkidle' });
    const main = page.locator('[data-page-content]');
    assert.equal(await main.locator('h1').count(), 1);
-   assert.equal(await main.locator('.story-hero .story-art').count(), route === '/answers/help/wifi/' ? 1 : 0, route + ': only the approved Wi-Fi subject illustration accompanies this answer');
+   // Every indexed article opens with its topic's clay object, after the answer itself.
+   const article = await main.locator('.story-hero.article-hero').count();
+   assert.equal(await main.locator('.story-hero .story-art').count(), article ? 1 : 0, route + ': one topic illustration for an article, none otherwise');
+   if (article) {
+    const art = main.locator('.story-hero .story-art img.reader-context-image');
+    assert.ok((await art.getAttribute('alt') || '').length > 12, route + ': the illustration has a descriptive text alternative');
+    assert.ok(await main.locator('.story-hero').evaluate(hero => hero.querySelector('.story-art').getBoundingClientRect().top >= hero.querySelector('.story-summary').getBoundingClientRect().bottom - 1), route + ': the answer precedes its illustration');
+   }
    if (route === '/answers/help/wifi/') {
-    const wifiArt = main.locator('.reader-support-opening img.reader-context-image');
+    const wifiArt = main.locator('.story-hero .story-art img.reader-context-image');
     assert.equal(await wifiArt.getAttribute('src'), '/assets/clay-webp/object-network-switch.webp', 'Wi-Fi help uses the same transparent equipment as its tile');
-    assert.ok(await wifiArt.getAttribute('alt'), 'network equipment keeps a descriptive text alternative');
-    assert.ok(await main.locator('.story-hero').evaluate(hero => hero.querySelector('.story-art').getBoundingClientRect().top >= hero.querySelector('.story-summary').getBoundingClientRect().bottom - 1), 'Wi-Fi diagnosis precedes its supporting illustration');
    }
    assert.ok((await main.locator('.story-summary').innerText()).length > 45, route + ': immediate substantive answer');
    assert.ok(await page.locator('.workbench-page > .workbench-chrome .direct-contact-rail a[href^="tel:"]').isVisible());
