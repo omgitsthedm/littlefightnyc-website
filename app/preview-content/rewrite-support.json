@@ -4,15 +4,15 @@
       "id": "it",
       "path": "/services/it-support/",
       "title": "IT support for New York small businesses.",
-      "summary": "The printer has vanished again. Email will not send. The Wi-Fi reaches the front desk but stops at the back room. Tell us what changed; we’ll work through the cause and confirm what help is available.",
+      "summary": "The printer has vanished again. Email will not send. The Wi-Fi reaches the front desk but stops at the back room. Tell us what changed; we’ll work through the cause and confirm what help is available. On-site support is $200 an hour, and the first 30 minutes of a consultation are free.",
       "metaTitle": "Small Business IT Support NYC | Little Fight NYC",
-      "metaDescription": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. Clear explanations and account ownership. New York visits subject to confirmed availability."
+      "metaDescription": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. On-site support in New York is $200 an hour; the first 30 minutes are free."
     },
     {
       "id": "consulting",
       "path": "/services/tech-consulting/",
       "title": "Know what to fix first.",
-      "summary": "A new tool looks useful. The bill says otherwise. Bring the quote, the monthly charges, or the task that keeps getting stuck. We help you decide what is worth changing.",
+      "summary": "A new tool looks useful. The bill says otherwise. Bring the quote, the monthly charges, or the task that keeps getting stuck. We help you decide what is worth changing. The first 30 minutes are free.",
       "metaTitle": "NYC Tech Consulting for Small Business | Little Fight NYC",
       "metaDescription": "Technology consulting for small businesses. Review software costs, compare vendor quotes, and decide what to fix before paying for a change."
     },
@@ -20,7 +20,7 @@
       "id": "software",
       "path": "/services/business-systems/",
       "title": "Give the busywork a better home.",
-      "summary": "The same order goes into two systems. An approval gets buried in a text. We look at the task, then decide whether your current tools can handle it or a small custom tool would help.",
+      "summary": "The same order goes into two systems. An approval gets buried in a text. We look at the task, then decide whether your current tools can handle it or a small custom tool would help. Every build is quoted on its written scope, and the first 30 minutes of a consultation are free.",
       "metaTitle": "Custom Business Software NYC | Little Fight NYC",
       "metaDescription": "Custom small-business software for bookings, approvals and repeated work. Explore real Little Fight products, a focused first build and clear ownership."
     }
@@ -55,7 +55,7 @@
       "category": "it",
       "question": "What happens during an on-site tech visit?",
       "answer": "An on-site visit starts with the symptom, the people affected, and the work that must keep moving.",
-      "detail": "At Little Fight NYC, we confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made.",
+      "detail": "At Little Fight NYC, we confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made. On-site support is $200 an hour.",
       "nextStep": "Share the location, the problem, and what work is blocked.",
       "guide": {
         "stepsHeading": "Before the visit",
@@ -74,12 +74,12 @@
         "weCheck": "We start with the work that is blocked, then check the equipment, connections, and accounts involved. Before changing anything, we explain what we found and agree on the next step. You get a plain note of what changed, what was left alone, and anything that needs a follow-up. For New York City businesses, we confirm visit availability once we know the issue and the location.",
         "faqs": [
           {
-            "question": "Can a problem be handled without a visit?",
-            "answer": "Sometimes. A call, text, or email with the symptom and a screenshot can show whether the cause is an account setting, a provider issue, or something that needs hands on the equipment. Little Fight NYC tells you which before anyone travels."
+            "question": "How much does on-site tech support cost in New York?",
+            "answer": "Little Fight NYC charges $200 an hour for on-site tech support in New York. The first 30 minutes of a consultation are free, so you know what a visit is for before it is booked. Larger projects get a written scope and quote before work starts."
           },
           {
-            "question": "What should be ready when the visit starts?",
-            "answer": "Access to the space and the equipment, a person who can approve changes, and the list of work that cannot stop. If an account owner needs to sign in, plan for them to be available."
+            "question": "Can a problem be handled without a visit?",
+            "answer": "Sometimes. A call, text, or email with the symptom and a screenshot can show whether the cause is an account setting, a provider issue, or something that needs hands on the equipment. Little Fight NYC tells you which before anyone travels."
           }
         ],
         "related": [
@@ -118,7 +118,7 @@
           },
           {
             "question": "Should we buy a new printer?",
-            "answer": "Not until the cause is clear. If one computer prints, the printer is working. The difference is usually in the other computer’s connection, settings, or saved printer entry."
+            "answer": "Not until the cause is clear. If one computer prints, the printer is working. The difference is usually in the other computer’s connection, settings, or saved printer entry. Little Fight NYC fixes office printer problems before anyone buys new hardware."
           }
         ],
         "related": [
@@ -184,7 +184,7 @@
         "faqs": [
           {
             "question": "Is cloud sync the same as a backup?",
-            "answer": "Not always. Sync keeps files the same across devices, so a deleted or damaged file can disappear everywhere. A backup keeps separate earlier copies you can restore. Some services do both, so check the version history and how far back it goes."
+            "answer": "Not always. Sync keeps files the same across devices, so a deleted or damaged file can disappear everywhere. A backup keeps separate earlier copies you can restore. Some services do both, so check the version history and how far back it goes. Little Fight NYC sets up and tests small business backups, including a real restore."
           },
           {
             "question": "How often should we test a restore?",
@@ -310,11 +310,11 @@
         "faqs": [
           {
             "question": "Can we keep our business phone number?",
-            "answer": "Usually, but it depends on the phone provider and the type of number. Ask the provider how to move or transfer the number, and keep the old service active until the number works at the new address. If you switch providers, the new provider starts the transfer. Moving out of the local area may mean you cannot keep the number."
+            "answer": "Usually, but it depends on the phone provider and the type of number. Ask the provider how to move or transfer the number, and keep the old service active until the number works at the new address. If you switch providers, the new provider starts the transfer. Moving out of the local area may mean you cannot keep the number. Little Fight NYC can help plan phones, internet, and Wi-Fi for an office move in New York."
           },
           {
             "question": "What should we test on the first day?",
-            "answer": "Test the work customers notice first: calls, card payments, email, and booking. Then check printing, shared files, and the Wi-Fi in each room people use."
+            "answer": "Test the work customers notice first: calls, card payments, email, and booking. Then check printing, shared files, and the Wi-Fi in each room people use. Little Fight NYC can run this first-day check with your team."
           }
         ],
         "related": [
@@ -362,7 +362,7 @@
         "faqs": [
           {
             "question": "Is a monthly plan required?",
-            "answer": "No. At Little Fight NYC, hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them."
+            "answer": "No. At Little Fight NYC, hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them. On-site visits in New York are $200 an hour."
           },
           {
             "question": "What does a regular check usually cover?",
@@ -404,7 +404,7 @@
           },
           {
             "question": "Will a guest network slow down our work?",
-            "answer": "Guests share the same internet connection. Many routers can limit guest speed so a busy room does not crowd out payments and calls."
+            "answer": "Guests share the same internet connection. Many routers can limit guest speed so a busy room does not crowd out payments and calls. Little Fight NYC sets up business and guest Wi-Fi for New York shops, offices, and restaurants."
           }
         ],
         "related": [
@@ -453,7 +453,7 @@
         "faqs": [
           {
             "question": "Why does restarting the router help for a while?",
-            "answer": "A restart clears temporary faults, but it can hide a pattern. If you restart often, note the time and what was happening. That record helps find an overheating device, a failing cable, or a provider problem."
+            "answer": "A restart clears temporary faults, but it can hide a pattern. If you restart often, note the time and what was happening. That record helps find an overheating device, a failing cable, or a provider problem. Little Fight NYC troubleshoots internet and Wi-Fi drops for New York small businesses."
           },
           {
             "question": "Should we buy a faster internet plan?",
@@ -513,7 +513,7 @@
         "faqs": [
           {
             "question": "Should we use a shared mailbox or forwarding?",
-            "answer": "It depends on how the team replies. A shared mailbox keeps messages and replies in one place that several people can open. Forwarding copies messages into personal inboxes, which can scatter the replies."
+            "answer": "It depends on how the team replies. A shared mailbox keeps messages and replies in one place that several people can open. Forwarding copies messages into personal inboxes, which can scatter the replies. Little Fight NYC sets up shared inboxes in Microsoft 365 and Google Workspace for small teams."
           },
           {
             "question": "Who should own a shared inbox?",
@@ -575,11 +575,11 @@
         "faqs": [
           {
             "question": "Should we delete their email account right away?",
-            "answer": "Not before the business has saved what it needs. Keeping or converting the mailbox for a set time can preserve customer messages. In Microsoft 365, a shared mailbox or mail forwarding only works while the old user account exists, so do not delete that account while you still need the mail. Remove their sign-in access first, then decide what happens to the mail."
+            "answer": "Not before the business has saved what it needs. Keeping or converting the mailbox for a set time can preserve customer messages. In Microsoft 365, a shared mailbox or mail forwarding only works while the old user account exists, so do not delete that account while you still need the mail. Remove their sign-in access first, then decide what happens to the mail. Little Fight NYC handles Microsoft 365 and Google Workspace offboarding for small teams without losing mail."
           },
           {
             "question": "What if they used a personal account for work tools?",
-            "answer": "Ask them to transfer ownership to a business account before they go. If that is not possible, contact the vendor with proof that the business owns the account."
+            "answer": "Ask them to transfer ownership to a business account before they go. If that is not possible, contact the vendor with proof that the business owns the account. Little Fight NYC can help document which accounts the business owns."
           }
         ],
         "related": [
@@ -648,7 +648,7 @@
           },
           {
             "question": "Do we need extra antivirus software?",
-            "answer": "Current Mac and Windows computers include built-in protection. Keeping them updated and using two-step sign-in matters more than adding another product. Some businesses need more, depending on the information they handle."
+            "answer": "Current Mac and Windows computers include built-in protection. Keeping them updated and using two-step sign-in matters more than adding another product. Some businesses need more, depending on the information they handle. Little Fight NYC sets up small business security basics: updates, two-step sign-in, and tested backups."
           }
         ],
         "related": [
@@ -723,11 +723,11 @@
         "faqs": [
           {
             "question": "Is it safe to cancel a tool nobody seems to use?",
-            "answer": "Check first. Look for files, contacts, forms, or automations that depend on it, and export what the business needs. Some tools delete data soon after an account is cancelled."
+            "answer": "Check first. Look for files, contacts, forms, or automations that depend on it, and export what the business needs. Some tools delete data soon after an account is cancelled. Little Fight NYC reviews software subscriptions and exports what you need before anything is cancelled."
           },
           {
             "question": "Who should receive renewal notices?",
-            "answer": "A business address that more than one person can read. Notices sent to one person’s inbox are easy to miss when that person is away or leaves."
+            "answer": "A business address that more than one person can read. Notices sent to one person’s inbox are easy to miss when that person is away or leaves. Little Fight NYC can set up a shared renewal inbox for your business."
           }
         ],
         "related": [
@@ -777,11 +777,11 @@
         "faqs": [
           {
             "question": "Do we need a dedicated room system?",
-            "answer": "Not always. A laptop with a good external microphone and camera can work for a small room. A room system helps when many people use the room and need the same setup every time."
+            "answer": "Not always. A laptop with a good external microphone and camera can work for a small room. A room system helps when many people use the room and need the same setup every time. Little Fight NYC sets up meeting rooms and video calls for small offices in New York."
           },
           {
             "question": "Why does the audio echo on calls?",
-            "answer": "Echo often comes from speakers feeding back into a microphone, or from two devices joined to the call in the same room. Use one device for audio, or a speakerphone with echo control."
+            "answer": "Echo often comes from speakers feeding back into a microphone, or from two devices joined to the call in the same room. Use one device for audio, or a speakerphone with echo control. Little Fight NYC can test a meeting room’s audio before an important call."
           }
         ],
         "related": [
@@ -830,7 +830,7 @@
         "faqs": [
           {
             "question": "Can online-only files free up space?",
-            "answer": "Yes. OneDrive, iCloud Drive, Google Drive, and Dropbox can keep files in the cloud and download them when opened. If your work happens offline, check that the files you need still open without a connection."
+            "answer": "Yes. OneDrive, iCloud Drive, Google Drive, and Dropbox can keep files in the cloud and download them when opened. If your work happens offline, check that the files you need still open without a connection. Little Fight NYC can set this up on Mac and Windows computers."
           },
           {
             "question": "Is it time for a new computer?",
@@ -894,11 +894,11 @@
         "faqs": [
           {
             "question": "Should we use Google Drive, OneDrive, or Dropbox?",
-            "answer": "Use the one that fits the tools you already pay for. Microsoft 365 Business Basic, Business Standard, and Business Premium include OneDrive, SharePoint, and Teams; Microsoft 365 Apps for business includes OneDrive but not SharePoint or Teams. Google Workspace includes Drive. Running two services for the same files usually causes confusion."
+            "answer": "Use the one that fits the tools you already pay for. Microsoft 365 Business Basic, Business Standard, and Business Premium include OneDrive, SharePoint, and Teams; Microsoft 365 Apps for business includes OneDrive but not SharePoint or Teams. Google Workspace includes Drive. Running two services for the same files usually causes confusion. Little Fight NYC helps small teams choose and set up shared files in Microsoft 365 or Google Workspace."
           },
           {
             "question": "How do we stop people deleting shared files by mistake?",
-            "answer": "Limit who can delete in key folders. In a Google shared drive, give most people Contributor access: they can add and edit files but cannot move them to the trash. Deleted files can only be brought back for a limited time: 30 days from a shared drive’s trash, and up to 93 days from the SharePoint recycle bin. Ask people to report a missing file right away, practice restoring one so the team knows how, and keep a separate backup of files you cannot afford to lose."
+            "answer": "Limit who can delete in key folders. In a Google shared drive, give most people Contributor access: they can add and edit files but cannot move them to the trash. Deleted files can only be brought back for a limited time: 30 days from a shared drive’s trash, and up to 93 days from the SharePoint recycle bin. Ask people to report a missing file right away, practice restoring one so the team knows how, and keep a separate backup of files you cannot afford to lose. Little Fight NYC can set these permissions up for you."
           }
         ],
         "related": [
@@ -953,11 +953,11 @@
         "faqs": [
           {
             "question": "Why does a business number not receive texts?",
-            "answer": "Some phone services do not turn on texting by default, and business texting in the United States can require registration. Ask the provider whether texts are enabled and what they need from you."
+            "answer": "Some phone services do not turn on texting by default, and business texting in the United States can require registration. Ask the provider whether texts are enabled and what they need from you. Little Fight NYC helps small businesses set up and test business phone numbers and texting."
           },
           {
             "question": "Should the website number match our Google listing?",
-            "answer": "Yes. Use one main number everywhere customers find you. Different numbers on different sites can confuse customers and search results."
+            "answer": "Yes. Use one main number everywhere customers find you. Different numbers on different sites can confuse customers and search results. Little Fight NYC checks that your number matches across your website and Google Business Profile."
           }
         ],
         "related": [
@@ -1009,11 +1009,11 @@
         "faqs": [
           {
             "question": "Should we delay updates?",
-            "answer": "Install security updates soon. A major version upgrade can wait a short time while you check that key apps support it. Avoid leaving devices without updates for months."
+            "answer": "Install security updates soon. A major version upgrade can wait a short time while you check that key apps support it. Avoid leaving devices without updates for months. Little Fight NYC can schedule updates around your business hours."
           },
           {
             "question": "What if a computer is too old for updates?",
-            "answer": "A device that no longer gets security updates becomes a growing risk, especially for email and payments. Plan to replace it, and move its files and work to a supported device first. Before the old one leaves the business, sign out of its accounts and erase it. In New York, computers cannot go in the trash, so recycle it through an e-waste program."
+            "answer": "A device that no longer gets security updates becomes a growing risk, especially for email and payments. Plan to replace it, and move its files and work to a supported device first. Before the old one leaves the business, sign out of its accounts and erase it. In New York, computers cannot go in the trash, so recycle it through an e-waste program. Little Fight NYC can move your files to a new computer and wipe the old one."
           }
         ],
         "related": [
@@ -1071,11 +1071,11 @@
         "faqs": [
           {
             "question": "Is turning off their email account enough?",
-            "answer": "No. Access to files, website builders, payment tools, and social accounts can continue without their work email. Check each tool’s user list."
+            "answer": "No. Access to files, website builders, payment tools, and social accounts can continue without their work email. Check each tool’s user list. Little Fight NYC runs access reviews for small businesses when a contractor leaves."
           },
           {
             "question": "What if we cannot get into an account they set up?",
-            "answer": "Ask the contractor to transfer ownership. If they will not or cannot, contact the provider with proof the business owns the account, such as invoices or domain records."
+            "answer": "Ask the contractor to transfer ownership. If they will not or cannot, contact the provider with proof the business owns the account, such as invoices or domain records. Little Fight NYC can help gather the ownership proof providers ask for."
           }
         ],
         "related": [
@@ -1130,11 +1130,11 @@
         "faqs": [
           {
             "question": "Should card readers use the guest Wi-Fi?",
-            "answer": "No. Keep card readers on the staff network, apart from guest devices, and follow your payment provider’s network guidance."
+            "answer": "No. Keep card readers on the staff network, apart from guest devices, and follow your payment provider’s network guidance. Little Fight NYC separates staff, guest, and payment devices on small business networks."
           },
           {
             "question": "What is the fallback if the reader fails during service?",
-            "answer": "Check whether your payment provider supports offline payments or a phone-based reader, and learn the limits before you need them."
+            "answer": "Check whether your payment provider supports offline payments or a phone-based reader, and learn the limits before you need them. Little Fight NYC can help test the backup plan before a busy service."
           }
         ],
         "related": [
@@ -1191,7 +1191,7 @@
         "faqs": [
           {
             "question": "Should new staff use their own devices?",
-            "answer": "It depends on the work. If they handle client information or payments, a business-owned device is easier to secure and recover. If personal devices are allowed, agree on basic rules such as a screen lock and updates."
+            "answer": "It depends on the work. If they handle client information or payments, a business-owned device is easier to secure and recover. If personal devices are allowed, agree on basic rules such as a screen lock and updates. Little Fight NYC sets simple device rules for small teams on Mac, Windows, and iPhone."
           },
           {
             "question": "What belongs on a first-day checklist?",
@@ -1242,7 +1242,7 @@
         "faqs": [
           {
             "question": "What happens if a domain expires?",
-            "answer": "Email and the website can stop working. Many registrars let you renew for a short time after expiry, sometimes for an extra fee, but depending on the registrar’s terms the name can be registered by or auctioned to someone else during that time. Renew as soon as you notice."
+            "answer": "Email and the website can stop working. Many registrars let you renew for a short time after expiry, sometimes for an extra fee, but depending on the registrar’s terms the name can be registered by or auctioned to someone else during that time. Renew as soon as you notice. Little Fight NYC can check your domain and email renewal settings before a notice is missed."
           },
           {
             "question": "Should the domain and email be with the same company?",
@@ -1300,11 +1300,11 @@
         "faqs": [
           {
             "question": "Where should support notes live?",
-            "answer": "In a shared place the owner controls, such as a business document or folder. Keep passwords, PINs, and two-step backup codes out of the notes, and record where they are kept instead, such as a password manager the business controls."
+            "answer": "In a shared place the owner controls, such as a business document or folder. Keep passwords, PINs, and two-step backup codes out of the notes, and record where they are kept instead, such as a password manager the business controls. Little Fight NYC leaves its support notes in a place the owner controls."
           },
           {
             "question": "How detailed should a note be?",
-            "answer": "Detailed enough for someone else to understand what happened and repeat the check. A few clear sentences usually beat a long technical log."
+            "answer": "Detailed enough for someone else to understand what happened and repeat the check. A few clear sentences usually beat a long technical log. That is the standard Little Fight NYC uses for its own tech support notes."
           }
         ],
         "related": [
@@ -1338,7 +1338,7 @@
         "faqs": [
           {
             "question": "Do we need the old provider’s cooperation?",
-            "answer": "It helps. Ask in writing for admin access and documentation. If they will not help, contact each vendor directly with proof that the business owns the account, such as bills or company records. Start with the domain registrar: Google and Microsoft may ask you to change your domain settings to prove ownership before they restore admin access. If the domain or accounts are in the provider’s name, this is harder, so start before the old contract ends."
+            "answer": "It helps. Ask in writing for admin access and documentation. If they will not help, contact each vendor directly with proof that the business owns the account, such as bills or company records. Start with the domain registrar: Google and Microsoft may ask you to change your domain settings to prove ownership before they restore admin access. If the domain or accounts are in the provider’s name, this is harder, so start before the old contract ends. Little Fight NYC can help with an IT provider handover for New York small businesses."
           },
           {
             "question": "Will changing providers interrupt our work?",
@@ -1393,11 +1393,11 @@
         "faqs": [
           {
             "question": "Should work and family use different Wi-Fi?",
-            "answer": "It helps. Many routers have a guest network. Put smart TVs and visiting guests on it, and keep work devices and the printer on the main network."
+            "answer": "It helps. Many routers have a guest network. Put smart TVs and visiting guests on it, and keep work devices and the printer on the main network. Little Fight NYC sets up home office Wi-Fi for New York small business owners."
           },
           {
             "question": "Is a mesh Wi-Fi system worth it?",
-            "answer": "When one router cannot reach the room where you work, a mesh system or a wired access point can help. Test the signal in that room first."
+            "answer": "When one router cannot reach the room where you work, a mesh system or a wired access point can help. Test the signal in that room first. Little Fight NYC can test Wi-Fi coverage room by room before you buy."
           }
         ],
         "related": [
@@ -1427,7 +1427,7 @@
       "category": "consulting",
       "question": "What should we fix first?",
       "answer": "Start with what customers see, what the business pays for, and where work repeatedly gets stuck.",
-      "detail": "Rank the issues by customer impact, business risk, and the effort needed to check them. A short review can separate an urgent broken path from an annoyance that can wait. Little Fight NYC can run that short review with you, starting with a free first look.",
+      "detail": "Rank the issues by customer impact, business risk, and the effort needed to check them. A short review can separate an urgent broken path from an annoyance that can wait. Little Fight NYC can run that short review with you, starting with a free first look. The first 30 minutes are free.",
       "nextStep": "Show us a task that keeps getting stuck."
     },
     {
@@ -1451,7 +1451,7 @@
       "category": "consulting",
       "question": "Do we need a second opinion?",
       "answer": "A second opinion checks whether your tools still fit the business, the bills, and the way customers reach you.",
-      "detail": "Show Little Fight NYC the task, the tools it uses, and the proposed change. We compare what you would gain with the cost and disruption. Sometimes one small fix is enough.",
+      "detail": "Show Little Fight NYC the task, the tools it uses, and the proposed change. We compare what you would gain with the cost and disruption. Sometimes one small fix is enough. The first 30 minutes of the consultation are free.",
       "nextStep": "Bring the decision you are about to make and the information behind it."
     },
     {

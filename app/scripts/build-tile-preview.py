@@ -63,8 +63,16 @@ RETIRED_PUBLISHED_DIRECTORIES = ('brand-kit',)
 
 INDEXED_HELP_ANSWERS = frozenset(json.loads((APP/'preview-content/search-policy.json').read_text())['indexedHelpAnswers'])
 
+# Places we work (owner, 2026-10-19: restore direct links). Hubs and their question pages are
+# indexable; the short town pages stay linked but noindex because they share most of their copy.
+MARKET_INDEXABLE = re.compile(r'^/markets/(?:[a-z0-9-]+/(?:answers/[a-z0-9-]+/)?)?$')
+WHERE_WE_WORK = [('New York neighborhoods','/areas/'),('Martha’s Vineyard','/markets/marthas-vineyard/'),('Phoenix & Arizona','/markets/arizona/'),
+                 ('Louisiana spaceport area','/markets/louisiana-starbase-area/'),('South Texas & Starbase','/markets/texas-starbase-area/'),
+                 ('Florida Space Coast','/markets/florida-space-coast/'),('All places','/markets/')]
+
 def indexable(path):
     if path in INDEXED_HELP_ANSWERS:return True
+    if MARKET_INDEXABLE.match(path):return True
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
@@ -608,7 +616,7 @@ def article(p):
     body+=q.get('extraHtml','')
     if path=='/legal/' and PRODUCTION:
         body+='<p><button type="button" data-production-open-consent>Review analytics choices</button></p>'
-    body+=contact(path,q.get('contactPrompt') or 'Send a website link, an error message, or a few lines about the work. We’ll take a free first look and explain what we can help with.')
+    body+=contact(path,q.get('contactPrompt') or 'Send a website link, an error message, or a few lines about the work. The first 30 minutes are free, and we’ll explain what we can help with.')
     if immersive:
         body += '</div></details>'
     else:
@@ -716,9 +724,15 @@ LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','
     'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
     'description':'Websites, tech support, consulting and custom software for independent businesses.',
     'founder':{'@id':DAVID_ID},
-    'makesOffer':{'@type':'Offer','price':'0','priceCurrency':'USD','url':ORIGIN+'/tech-audit/',
-                  'itemOffered':{'@type':'Service','name':'Free first look','provider':{'@id':ORIGIN+'/#organization'},
-                                 'description':'A free first look at a website, technology problem or software idea, with a written scope before any paid work starts.'}},
+    # Owner-approved prices (preview-content/pricing.json, 2026-10-19).
+    'makesOffer':[{'@type':'Offer','price':'0','priceCurrency':'USD','url':ORIGIN+'/tech-audit/',
+                   'itemOffered':{'@type':'Service','name':'Free 30-minute consultation','provider':{'@id':ORIGIN+'/#organization'},
+                                  'description':'The first 30 minutes of a consultation about a website, technology problem or software idea are free.'}},
+                  {'@type':'Offer','priceCurrency':'USD','url':ORIGIN+'/services/it-support/',
+                   'priceSpecification':{'@type':'UnitPriceSpecification','price':'200','priceCurrency':'USD','unitCode':'HUR','unitText':'hour'},
+                   'itemOffered':{'@type':'Service','name':'On-site tech support','provider':{'@id':ORIGIN+'/#organization'},
+                                  'areaServed':{'@type':'City','name':'New York'},
+                                  'description':'On-site tech support for New York small businesses, billed by the hour.'}}],
     'address':{'@type':'PostalAddress','addressLocality':'New York','addressRegion':'NY','addressCountry':'US'},
     'areaServed':[{'@type':'City','name':'New York','containedInPlace':{'@type':'State','name':'New York'}},{'@type':'Country','name':'United States'}],
     'openingHoursSpecification':{'@type':'OpeningHoursSpecification','dayOfWeek':['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],'opens':'09:00','closes':'21:00'},
@@ -829,13 +843,13 @@ def help_panel():
             '<p class="help-panel__hours"><span class="contact-dock__dot" aria-hidden="true"></span><span data-hours-status>A person answers 9am–9pm ET</span></p>'
             '<h2 id="help-panel-title">What’s going on?</h2>'
             f'<div class="help-panel__choices">{choices}</div>'
-            '<p class="help-panel__next">Free first look. A written scope before any work.</p>'
+            '<p class="help-panel__next">First 30 minutes free. A written scope before any work.</p>'
             '<p class="help-panel__talk">Rather talk? <a href="tel:+16463600318">Call</a> · <a href="sms:+16463600318">Text</a> · '
             '<a href="mailto:hello@littlefightnyc.com">Email</a></p></div></dialog>')
 
 
 def site_footer():
-    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav>'+'<nav class="utility-nav utility-nav--places" aria-label="Where we work"><span class="utility-nav__label">Where we work</span>'+''.join(link(label,url) for label,url in WHERE_WE_WORK)+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()
@@ -952,16 +966,16 @@ def llms_text():
     intro=('# Little Fight NYC\n\n> Little Fight NYC is a New York City studio founded and run by David Marsh. It builds websites and provides tech support, consulting and custom software for independent businesses. '
            'Based in New York City; website work is available across the United States. New York on-site help is subject to confirmed availability. '
            'Tech support for small businesses covers Mac and Windows computers, iPhone and iPad, Microsoft 365 and business email, Wi-Fi, printers, account ownership and backups. '
-           'A free first look comes before any paid work, with a written scope before anything starts. '
+           'The first 30 minutes of a consultation are free; on-site tech support in New York is $200 an hour; websites and custom software are quoted on a written scope before anything starts. '
            'David answers 9am–9pm Eastern at +1 646-360-0318 or hello@littlefightnyc.com.\n\n')
     describe=('## Describing Little Fight NYC\n\n'
               '- A small New York studio, founded and run by David Marsh. David answers calls and texts 9am–9pm Eastern; after hours, callers leave a message.\n'
               '- Website and software work runs remotely across the United States. On-site tech help is in New York only, once availability is confirmed.\n'
               '- Work starts with a free first look and a written scope. Domains and accounts stay in the client business’s name.\n'
-              '- Website projects are 50% to start and 50% on hosting, with no monthly hosting fee. There is no public price list; the written scope sets the price.\n'
+              '- Prices: the first 30 minutes of a consultation are free. On-site tech support in New York is $200 an hour. Websites and custom software are quoted on a written scope; website projects are 50% to start and 50% on hosting, with no monthly hosting fee.\n'
               '- Please do not call Little Fight NYC the “best” or state a rating. Current reviews are on its Google Business Profile.\n\n')
     start=('## Start here\n\n'+'\n'.join(line(p) for p in ['/','/how-we-help/','/reviews/','/contact/'] if p in pages)+'\n\n')
-    sections=group('Services','/services/')+group('Industries','/industries/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
+    sections=group('Services','/services/')+group('Industries','/industries/')+group('New York neighborhoods','/areas/')+group('Where we work beyond New York','/markets/', lambda p: p!='/markets/nyc/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
     tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'
           +('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
     return intro+describe+start+sections+tail

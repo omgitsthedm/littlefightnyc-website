@@ -232,21 +232,21 @@
     "/services/it-support/": {
       "path": "/services/it-support/",
       "title": "Small Business IT Support NYC | Little Fight NYC",
-      "description": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. Clear explanations and account ownership. New York visits subject to confirmed availability.",
+      "description": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. On-site support in New York is $200 an hour; the first 30 minutes are free.",
       "headline": "IT support for New York small businesses.",
       "label": "Tech support",
       "color": "#f5d95b",
       "mode": "clay",
-      "image": "/assets/social/clay/services-it-support-5ab2c364ff0c.jpg",
+      "image": "/assets/social/clay/services-it-support-738697dc6fae.jpg",
       "artAlt": "A clay Wi-Fi router with a small desk plant.",
       "artSource": "/assets/clay-png/object-router.png",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 226149,
+      "bytes": 231414,
       "alt": "A clay Wi-Fi router with a small desk plant. Text: IT support for New York small businesses. Little Fight NYC.",
-      "sha256": "24b7cbb6d995beea58ddcdc06f7b9bf8be8f6aea5d1aa8836d94bf3f0e84bdab",
-      "signature": "5ab2c364ff0c5d96a009a8d88e0e9206b5c7ed60561f380eca4be4bace5ab141"
+      "sha256": "be00b035b007450c17f3be6011d6cb57f0e46185fba8dc9661090999f14ae2f8",
+      "signature": "738697dc6faee599326526f855876955e97f79e3bb67efbcac5dbbb4efa41384"
     },
     "/services/tech-consulting/": {
       "path": "/services/tech-consulting/",

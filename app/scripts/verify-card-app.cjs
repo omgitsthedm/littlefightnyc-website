@@ -180,6 +180,8 @@ async function runRepresentativeInteraction(frame, slug) {
   }
   if (slug === 'growth-street') {
     await frame.locator('[data-ch="3"]').evaluate(node => window.scrollTo({ top:node.offsetTop, behavior:'instant' }));
+    // Scroll-driven chapters can take a few frames to settle when the machine is busy.
+    await frame.waitForFunction(() => Math.abs(document.querySelector('[data-ch="3"]').getBoundingClientRect().top) <= 2, null, { timeout: 10_000 }).catch(() => {});
     const chapter = await frame.locator('[data-ch="3"]').evaluate(node => ({ top:node.getBoundingClientRect().top, width:node.getBoundingClientRect().width }));
     assert.ok(Math.abs(chapter.top) <= 2 && chapter.width > 0, 'Growth Street can move through chapters inside the card');
     return 'third chapter reached through native scrolling';

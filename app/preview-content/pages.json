@@ -160,7 +160,7 @@
       },
       {
         "question": "How do we know if the site is helping?",
-        "answer": "Track the source of calls and estimate requests through your actual sales follow-up. Visits and clicks are not the same as booked jobs or paying customers."
+        "answer": "Track the source of calls and estimate requests through your actual sales follow-up. Visits and clicks are not the same as booked jobs or paying customers. Little Fight NYC can set up simple tracking so the website’s calls and requests can be counted."
       }
     ],
     "contactPrompt": "Tell us the plumbing work you want more people to understand. We will start with a free first look."
@@ -302,7 +302,7 @@
     "faqs": [
       {
         "question": "Do you work with businesses outside New York?",
-        "answer": "Yes. Website projects can run remotely across the United States."
+        "answer": "Yes. Little Fight NYC builds websites remotely for businesses across the United States."
       },
       {
         "question": "Can you use our project photography and press?",
@@ -382,7 +382,7 @@
     "faqs": [
       {
         "question": "Can you build a law-firm website outside New York?",
-        "answer": "Yes. Website projects can run remotely across the United States."
+        "answer": "Yes. Little Fight NYC builds websites remotely for businesses across the United States."
       },
       {
         "question": "Do you provide legal advice or review legal claims?",
@@ -432,7 +432,8 @@
         "heading": "Meet David.",
         "paragraphs": [
           "David Marsh founded Little Fight NYC and runs it. When you call or text between 9am and 9pm Eastern, David picks up. There is no account manager, no ticket queue, and no hand-off to a team you never meet.",
-          "He takes the free first look himself, writes the scope before any paid work starts, and leaves plain-language notes when the job is done. Your accounts stay in your business’s name.",
+          "He takes the free first look himself (the first 30 minutes of a consultation are free), writes the scope before any paid work starts, and leaves plain-language notes when the job is done. Your accounts stay in your business’s name.",
+          "On-site tech support in New York is $200 an hour. Websites and custom software are quoted on a written scope, so you see the price before any work begins.",
           "Website and software work runs remotely for businesses anywhere in the United States. On-site tech help is a New York service, booked once the issue and location are clear."
         ],
         "links": [

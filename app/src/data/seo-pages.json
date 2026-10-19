@@ -254,11 +254,11 @@
         },
         {
           "question": "What does the Website Check access?",
-          "answer": "Only the public website. It does not need a login, password, card, analytics account, or access to business systems."
+          "answer": "Only the public website. Little Fight NYC’s Website Check does not need a login, password, card, analytics account, or access to business systems."
         },
         {
           "question": "Why does the Audit Lab ask for an email?",
-          "answer": "The report is private and delivered by email. The address is used to deliver the report and follow up as disclosed in the Audit Lab privacy notice."
+          "answer": "The report is private and delivered by email. Little Fight NYC uses the address to deliver the report and follow up as disclosed in the Audit Lab privacy notice."
         }
       ]
     },

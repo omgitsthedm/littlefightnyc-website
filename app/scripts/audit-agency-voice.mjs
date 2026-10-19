@@ -15,7 +15,7 @@
  *   - the About page shows David by name and carries his Person record;
  *   - on indexable pages, FAQ answers name Little Fight NYC, so an answer quoted
  *     on its own still says who does the work: every FAQPage names it at least
- *     once, and at least 75% of all answers do.
+ *     once, and at least 95% of all answers do.
  */
 import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
@@ -62,7 +62,7 @@ let articles = 0;
 let faqAnswers = 0;
 let faqNamed = 0;
 const NAMED = /Little Fight NYC/;
-const MIN_NAMED_SHARE = 0.75;
+const MIN_NAMED_SHARE = 0.95;
 
 for (const file of files) {
   const html = readFileSync(file, "utf8");

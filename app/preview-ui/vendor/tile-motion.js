@@ -7,6 +7,10 @@
   const quiet=()=>reduce.matches||document.body.classList.contains('no-motion');
   const nextFrame=()=>new Promise(resolve=>requestAnimationFrame(resolve));
   const settled=animation=>animation.finished.catch(()=>{});
+  // A heavy embedded Lab (WebGL, video) can starve the compositor so an animation
+  // never reports finished. Never leave the reader stuck: give up waiting after 1.6s.
+  const SAFETY_MS=1600;
+  const landed=flight=>Promise.race([Promise.all(flight.animations.map(settled)),new Promise(resolve=>setTimeout(resolve,SAFETY_MS))]);
   function finish(flight){
     if(active!==flight)return;
     flight.animations.forEach(a=>a.cancel());
@@ -142,7 +146,7 @@
       animate(flight,flight.back,[{opacity:1},{opacity:0}],{duration:110,delay:duration,easing:'ease-out'});
       animate(flight,flight.panel,[{opacity:0},{opacity:1}],{duration:1,delay:duration});
     }
-    await Promise.all(flight.animations.map(settled));finish(flight);
+    await landed(flight);finish(flight);
   }
   async function close(options){
     if(active){cancel();options.panel.style.opacity='0';return;}
@@ -178,7 +182,7 @@
         ],{duration,easing:'cubic-bezier(.4,0,.2,1)'});
       }
     }
-    await Promise.all(flight.animations.map(settled));finish(flight);
+    await landed(flight);finish(flight);
   }
   const releasePress=()=>{pressed?.tile.classList.remove('is-pressed');pressed=null;};
   document.querySelectorAll('.tile').forEach(tile=>{

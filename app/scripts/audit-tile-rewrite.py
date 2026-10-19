@@ -67,6 +67,7 @@ WORD = re.compile(r"\b[\w’'-]+\b", re.UNICODE)
 INDEXED_HELP_ANSWERS = frozenset(json.loads((CONTENT / "search-policy.json").read_text())["indexedHelpAnswers"])
 SUPPORT_SOURCES = json.loads((CONTENT / "rewrite-support.json").read_text()).get("sources", {})
 COMPLETE_ANSWER_WORDS = 300
+APPROVED_PRICES = {float(amount) for amount in json.loads((CONTENT / "pricing.json").read_text())["approvedAmounts"]}
 
 
 class Node:
@@ -381,9 +382,12 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
     for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
         if phrase in copy:
             failures.append(f"rewrite guide {identity} contains prohibited copy: {phrase!r}")
-    # Guides publish no prices (prices come only from the owner's approved list).
-    if "$" in copy:
-        failures.append(f"rewrite guide {identity} publishes a price")
+    # Guides publish only the owner's approved prices (preview-content/pricing.json).
+    for amount in re.findall(r"\$\s*([\d,]+(?:\.\d+)?)", copy):
+        if float(amount.replace(",", "")) not in APPROVED_PRICES:
+            failures.append(f"rewrite guide {identity} publishes an unapproved price: ${amount}")
+    if "$" in re.sub(r"\$\s*[\d,]+(?:\.\d+)?", "", copy):
+        failures.append(f"rewrite guide {identity} uses a dollar sign outside an approved price")
 
 
 def reader_words(parser: StaticHTML) -> int:

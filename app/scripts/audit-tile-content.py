@@ -444,6 +444,9 @@ def route_meta() -> dict[str, dict]:
 def indexable(route: str, meta: dict[str, dict]) -> bool:
     if route in INDEXED_HELP_ANSWERS:
         return True
+    # Mirrors the compiler: market hubs and their question pages are indexable (2026-10-19).
+    if re.match(r"^/markets/(?:[a-z0-9-]+/(?:answers/[a-z0-9-]+/)?)?$", route):
+        return True
     if route in ("/thanks/", "/404/") or route.startswith(NOINDEX_PREFIXES):
         return False
     existing = meta.get(route)
