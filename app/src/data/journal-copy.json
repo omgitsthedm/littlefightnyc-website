@@ -156,7 +156,7 @@
     {
       "slug": "ada-website-lawsuits-nyc-small-business",
       "title": "Website Accessibility: Fix Barriers, Not Just Scores",
-      "description": "Keyboard access, headings, labels, contrast, zoom, captions, errors, and real manual testing matter. An overlay is not a legal shield.",
+      "description": "Keyboard access, labels, contrast, zoom, captions and manual testing matter. An overlay or a clean automated scan alone does not prove a site is accessible.",
       "answer": "Businesses open to the public should make their online goods and services accessible. Start by fixing real barriers and combine automated checks with manual testing.",
       "meaning": "The U.S. Department of Justice says inaccessible web content can deny people equal access and lists practical considerations such as contrast, headings, keyboard use, and meaningful error cues. This page is not legal advice.",
       "watch": ["Buttons or menus that need a mouse.", "Forms with missing labels or unclear errors.", "Text that cannot zoom or lacks contrast.", "A clean automated score treated as proof of full accessibility."],

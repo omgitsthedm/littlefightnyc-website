@@ -1752,21 +1752,21 @@
     "/journal/ada-website-lawsuits-nyc-small-business/": {
       "path": "/journal/ada-website-lawsuits-nyc-small-business/",
       "title": "ADA Website Accessibility for NYC Small Businesses",
-      "description": "Keyboard access, headings, labels, contrast, zoom, captions, errors, and real manual testing matter. An overlay or a clean automated scan alone does not prove a site is accessible.",
+      "description": "Keyboard access, labels, contrast, zoom, captions and manual testing matter. An overlay or a clean automated scan alone does not prove a site is accessible.",
       "headline": "Website Accessibility: Fix Barriers, Not Just Scores",
       "label": "Field notes",
       "color": "#92bfff",
       "mode": "browser",
-      "image": "/assets/social/clay/journal-ada-website-lawsuits-nyc-small-business-bb136bb4ea0c.jpg",
+      "image": "/assets/social/clay/journal-ada-website-lawsuits-nyc-small-business-bf5fd670021a.jpg",
       "artAlt": "A handmade clay browser frame displaying the Chromatic Painting and Design website.",
       "artSource": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 290982,
+      "bytes": 284865,
       "alt": "A handmade clay browser frame displaying the Chromatic Painting and Design website. Text: Website Accessibility: Fix Barriers, Not Just Scores Little Fight NYC.",
-      "sha256": "6d82e39a2016ffa5b5491f7201a412838e0261672b0b87f9c3ed7d163d62b977",
-      "signature": "bb136bb4ea0ce6dcdd6ee2abf2e82a9bc341a1269846d0ee29d45bd79b886bb2"
+      "sha256": "425aa5f79c3ee6183d8e5758c64c8de6313b9bb450b0b93c1e3bd0d81f4431ca",
+      "signature": "bf5fd670021a94dcf670ba3f2907d08b74a8561af712d05659c5fc4aa04648ec"
     },
     "/journal/how-to-stop-double-bookings-small-business/": {
       "path": "/journal/how-to-stop-double-bookings-small-business/",

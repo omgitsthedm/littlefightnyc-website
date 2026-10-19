@@ -111,7 +111,7 @@
     "slug": "ada-website-lawsuits-nyc-small-business",
     "category": "blog",
     "title": "Website Accessibility: Fix Barriers, Not Just Scores",
-    "description": "Keyboard access, headings, labels, contrast, zoom, captions, errors, and real manual testing matter. An overlay is not a legal shield.",
+    "description": "Keyboard access, labels, contrast, zoom, captions and manual testing matter. An overlay or a clean automated scan alone does not prove a site is accessible.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
     "wordCount": 187
