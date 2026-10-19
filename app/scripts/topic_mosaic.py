@@ -21,7 +21,7 @@ REVIEW_PLACEMENT = {
     'google-review-5': ('consulting', 'album-shops'),
     'google-review-7': ('consulting', 'consulting-second-opinion'),
     'google-review-6': ('software', 'software-repeat-work'),
-    'google-review-8': ('web', 'case-hair-by-rachel-charles'),
+    'google-review-8': ('web', 'case-clearhelp'),
     'google-review-9': ('it', 'printer'),
 }
 TILE = re.compile(r'<a\b[^>]*\bclass="[^"]*\btile\b[^"]*"[^>]*>.*?</a>', re.S)
