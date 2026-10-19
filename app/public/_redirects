@@ -129,6 +129,24 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /software-guides/square-appointments-vs-glossgenius-nyc-salons/*    /journal/square-appointments-vs-glossgenius-nyc-salons/    301
 /software-guides/square-vs-toast-manhattan-restaurants/*            /journal/square-vs-toast-manhattan-restaurants/            301
 /software-guides/webflow-vs-squarespace-manhattan-small-business/*  /journal/wordpress-vs-webflow-vs-custom-nyc/  301
+
+# --- Retired 2026 comparison ("battle") pages: Bing still crawls them as 404s.
+/vs-squarespace/*          /answers/squarespace-vs-hiring-a-web-designer/  301
+/vs-squarespace            /answers/squarespace-vs-hiring-a-web-designer/  301
+/vs-wix/*                  /answers/wix-vs-custom-website/  301
+/vs-wix                    /answers/wix-vs-custom-website/  301
+/vs-godaddy/*              /answers/how-to-choose-a-web-designer-nyc/  301
+/vs-godaddy                /answers/how-to-choose-a-web-designer-nyc/  301
+/vs-wordpress/*            /journal/wordpress-vs-webflow-vs-custom-nyc/  301
+/vs-wordpress              /journal/wordpress-vs-webflow-vs-custom-nyc/  301
+/vs-webflow-templates/*    /journal/wordpress-vs-webflow-vs-custom-nyc/  301
+/vs-webflow-templates      /journal/wordpress-vs-webflow-vs-custom-nyc/  301
+/vs-shopify-templates/*    /journal/shopify-vs-squarespace-nyc-retail/  301
+/vs-shopify-templates      /journal/shopify-vs-squarespace-nyc-retail/  301
+/vs-fiverr/*               /answers/how-to-choose-a-web-designer-nyc/  301
+/vs-fiverr                 /answers/how-to-choose-a-web-designer-nyc/  301
+/vs-geek-aid/*             /services/it-support/  301
+/vs-geek-aid               /services/it-support/  301
 /software-guides/*                                                  /journal/                                                  301
 
 # --- Legacy top-level long-form essays
