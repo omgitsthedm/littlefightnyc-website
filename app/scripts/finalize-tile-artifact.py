@@ -5,12 +5,13 @@ from html import escape
 import hashlib
 import json
 from urllib.parse import urlsplit
-from tile_rewrite import CONTENT_UPDATED, GUIDE_UPDATED, guided_paths, load_rewrite, rewritten_paths
+from tile_rewrite import CONTENT_UPDATED, GUIDE_UPDATED, article_updates, guided_paths, load_rewrite, rewritten_paths
 
 ROOT = Path(__file__).resolve().parents[1] / 'dist'
 ORIGIN = 'https://littlefightnyc.com'
 rewrite = load_rewrite(ROOT.parent / 'preview-content')
 updated = rewritten_paths(rewrite)
+articles = article_updates(ROOT.parent / 'preview-content')
 # The expanded answers and the category page that now links to each of them.
 guided = guided_paths(rewrite) | {path for path, category in rewrite['categories'].items()
                                   if any(item.get('guide') and item['category'] == category['id'] for item in rewrite['answers'].values())}
@@ -20,6 +21,8 @@ def lastmod(path):
     """Only pages whose copy changed on a recorded date carry one."""
     if path in guided:
         return '<lastmod>' + GUIDE_UPDATED + '</lastmod>'
+    if path in articles:
+        return '<lastmod>' + articles[path] + '</lastmod>'
     return '<lastmod>' + CONTENT_UPDATED + '</lastmod>' if path in updated else ''
 
 

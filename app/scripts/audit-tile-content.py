@@ -36,8 +36,9 @@ EXPECTED_REVIEW_DISTRIBUTION = {
     "topic-consulting": 2,
     "topic-software": 1,
 }
-# 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17).
-EXPECTED_ROUTE_COUNT = 402 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+# 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17);
+# 17 thin articles folded into deepened articles now 301 (2026-10-19).
+EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -1033,7 +1034,9 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
         rendered_parser.feed(target.read_text(errors="replace"))
         # Compare text nodes, rather than raw HTML, because the helper turns
         # source link labels into inline anchors without changing their words.
-        rendered = compact(" ".join(rendered_parser.text))
+        # Text nodes are joined with spaces, so "a link." reads as "a link ." here; close that gap on both sides.
+        tight = lambda value: re.sub(r"\s+([.,;:!?)\]’”])", r"\1", value)
+        rendered = tight(compact(" ".join(rendered_parser.text)))
         if "story-section--imported" not in target.read_text(errors="replace"):
             continue
         paragraph_blocks = [b for b in blocks if b.get("type") in ("p", "blockquote", "figcaption") and compact(b.get("text"))]
@@ -1041,7 +1044,7 @@ def audit(dist: Path, release: bool) -> tuple[list[str], dict[str, int]]:
             continue
         stats["imported_sources"] += 1
         for block in paragraph_blocks:
-            expected = compact(display(block["text"]))
+            expected = tight(compact(display(block["text"])))
             if expected not in rendered:
                 failures.append(f"{target_route}: imported paragraph was lost: {expected[:90]}")
         anchor_labels = {text for _, text in rendered_parser.anchors}

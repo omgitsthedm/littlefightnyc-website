@@ -374,7 +374,10 @@ def audit_guide_source(identity: str, item: dict[str, Any], raw_answers: list[di
             failures.append(f"rewrite guide {identity}: unknown source {key!r}")
         elif urlsplit(source["href"]).scheme != "https" or urlsplit(source["href"]).hostname not in OFFICIAL_SOURCE_HOSTS:
             failures.append(f"rewrite guide {identity}: source {key!r} is not an official https reference")
-    copy = normalized(" ".join([*guide_texts(guide), guide.get("metaDescription", "")]))
+    meta_title = guide.get("metaTitle", item["question"] + " | Little Fight NYC")
+    if len(meta_title) > 60:
+        failures.append(f"rewrite guide {identity}: document title is {len(meta_title)} characters (max 60); add metaTitle")
+    copy = normalized(" ".join([*guide_texts(guide), guide.get("metaDescription", ""), guide.get("metaTitle", "")]))
     for phrase in FORBIDDEN_COPY + FABRICATED_LITERAL_CLAIMS + FAQ_RICH_RESULT_CLAIMS:
         if phrase in copy:
             failures.append(f"rewrite guide {identity} contains prohibited copy: {phrase!r}")

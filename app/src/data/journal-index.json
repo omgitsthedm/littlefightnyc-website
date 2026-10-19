@@ -1,23 +1,5 @@
 [
   {
-    "slug": "nyc-small-business-digital",
-    "category": "blog",
-    "title": "What a NYC Business Actually Needs Online",
-    "description": "A clear Google profile, a useful website, and one working path to call, book, order, or visit. The rest is optional.",
-    "published": "",
-    "updated": "March 20, 2026",
-    "wordCount": 203
-  },
-  {
-    "slug": "protecting-kids-from-ai",
-    "category": "blog",
-    "title": "Set Safe AI Rules for Your Business",
-    "description": "Use AI for low-risk drafts. Keep private business information out, check important facts, and leave people in charge of customer promises.",
-    "published": "",
-    "updated": "March 20, 2026",
-    "wordCount": 227
-  },
-  {
     "slug": "airtable-vs-notion-vs-monday-small-business",
     "category": "guide",
     "title": "Airtable vs. Notion vs. monday.com: Pick the Job First",
@@ -25,15 +7,6 @@
     "published": "May 3, 2026",
     "updated": "May 3, 2026",
     "wordCount": 216
-  },
-  {
-    "slug": "custom-business-system-vs-saas-subscriptions",
-    "category": "guide",
-    "title": "Rent Software or Build Your Own? Use the Boring Math",
-    "description": "Keep rented software when it fits. Build only when repeated work, stacked subscriptions, or missing ownership justify it.",
-    "published": "May 3, 2026",
-    "updated": "May 3, 2026",
-    "wordCount": 148
   },
   {
     "slug": "shopify-vs-squarespace-nyc-retail",
@@ -63,90 +36,27 @@
     "wordCount": 213
   },
   {
-    "slug": "webflow-vs-squarespace-manhattan-small-business",
-    "category": "guide",
-    "title": "Webflow vs. Squarespace for a Small Business",
-    "description": "Squarespace favors a simpler owner-managed site. Webflow offers more structure and control with more setup and care.",
-    "published": "May 3, 2026",
-    "updated": "May 3, 2026",
-    "wordCount": 189
-  },
-  {
-    "slug": "ai-google-broke-the-internet-websites-survive",
-    "category": "essay",
-    "title": "Your Website Still Matters When AI Answers First",
-    "description": "Search may answer before the click. A clear, useful, readable by search website gives people and answer engines something trustworthy to use.",
-    "published": "February 7, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 214
-  },
-  {
     "slug": "what-google-looks-for-business-website",
     "category": "essay",
-    "title": "What Google Needs From a Business Website",
+    "title": "What does Google look for on a business website?",
     "description": "Clear purpose, useful original information, readable by search text, accurate business facts, sensible links, and a page that works well.",
     "published": "February 7, 2026",
     "updated": "March 20, 2026",
     "wordCount": 198
   },
   {
-    "slug": "why-business-websites-will-be-invisible",
-    "category": "essay",
-    "title": "Why a Vague Business Website Disappears",
-    "description": "If the page never gives a clear answer, current fact, original proof, or usable next step, people and search systems have little reason to choose it.",
-    "published": "February 7, 2026",
-    "updated": "March 20, 2026",
-    "wordCount": 196
-  },
-  {
-    "slug": "read-your-monthly-software-bill",
-    "category": "howto",
-    "title": "Audit the Monthly Software Bill Without Guessing",
-    "description": "List the tools, owners, users, renewal dates, and actual jobs. Then keep, connect, downgrade, replace, or cancel with proof.",
-    "published": "May 11, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 144
-  },
-  {
-    "slug": "set-up-google-business-profile-nyc",
-    "category": "howto",
-    "title": "Set Up a Google Business Profile the Safe Way",
-    "description": "Claim the right profile, verify it, enter accurate facts, choose honest categories, and keep the website and profile aligned.",
-    "published": "May 11, 2026",
-    "updated": "",
-    "wordCount": 168
-  },
-  {
     "slug": "migrate-off-squarespace-without-breaking-booking",
     "category": "howto",
-    "title": "Leave Squarespace Without Breaking Booking",
+    "title": "How do you move off Squarespace without breaking booking?",
     "description": "Inventory the live path, build the replacement, preserve the domain and web addresses, test every handoff, then switch with a rollback plan.",
     "published": "May 11, 2026",
     "updated": "August 18, 2026",
     "wordCount": 200
   },
   {
-    "slug": "keep-connect-replace-build-framework",
-    "category": "howto",
-    "title": "Keep, Connect, Replace, or Build: Use This Order",
-    "description": "Start with the least disruptive fix. Keep what works, connect real gaps, replace poor fit, and build only when the business case earns it.",
-    "published": "May 11, 2026",
-    "updated": "",
-    "wordCount": 154
-  },
-  {
-    "slug": "spot-developer-about-to-ghost",
-    "category": "howto",
-    "title": "Six Signs a Website Project Is Losing Its Owner",
-    "description": "Missing access, vague milestones, no working preview, unexplained silence, and no handoff plan are project risks. Secure the business first.",
-    "published": "May 11, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 183
-  },
-  {
     "slug": "how-to-own-your-domain-name-not-your-web-guy",
     "category": "howto",
-    "title": "Make Sure the Business Controls Its Domain",
+    "title": "How do you make sure your business owns its domain and website accounts?",
     "description": "The business should control the company where the domain is registered account, renewal, recovery, and authorized contacts. A developer can get access without owning the name.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
@@ -164,47 +74,11 @@
   {
     "slug": "how-to-get-your-business-into-chatgpt-answers",
     "category": "howto",
-    "title": "Help AI Search Understand Your Business",
+    "title": "Getting Into ChatGPT Answers: What You Can Control",
     "description": "Publish clear, readable by search, current facts and useful first-hand answers. Keep public profiles accurate. There is no guaranteed ChatGPT switch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",
     "wordCount": 217
-  },
-  {
-    "slug": "why-chains-always-show-up-first-on-google",
-    "category": "essay",
-    "title": "Why Chains Look Easier to Trust Online",
-    "description": "Chains maintain consistent locations, categories, hours, pages, links, and reviews at scale. A local shop can win on accuracy and usefulness nearby.",
-    "published": "July 12, 2026",
-    "updated": "July 12, 2026",
-    "wordCount": 191
-  },
-  {
-    "slug": "your-website-is-your-hardest-working-employee",
-    "category": "essay",
-    "title": "Give Your Website One Clear Job After Closing",
-    "description": "A website should answer ordinary questions and hand a customer to the right action when nobody is at the counter.",
-    "published": "July 12, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 139
-  },
-  {
-    "slug": "the-pen-and-paper-tax",
-    "category": "essay",
-    "title": "When Paper Starts Charging the Business in Time",
-    "description": "Paper is fine until information must be found, copied, shared, checked, or reported repeatedly. Measure the repeat work before buying software.",
-    "published": "July 12, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 148
-  },
-  {
-    "slug": "ai-is-already-answering-questions-about-your-business",
-    "category": "essay",
-    "title": "AI Can Describe Your Business. Check Its Sources.",
-    "description": "Search systems may summarize public information. Keep the sources you control accurate, useful, and easy to verify.",
-    "published": "July 12, 2026",
-    "updated": "August 18, 2026",
-    "wordCount": 191
   },
   {
     "slug": "why-small-business-tech-should-be-boring",
@@ -245,7 +119,7 @@
   {
     "slug": "how-to-stop-double-bookings-small-business",
     "category": "howto",
-    "title": "Stop Double Bookings by Choosing One Booking Door",
+    "title": "How do you stop double bookings without making customers work harder?",
     "description": "One system must own availability. Every website, profile, staff calendar, and manual exception should feed or respect it.",
     "published": "July 12, 2026",
     "updated": "August 18, 2026",
@@ -281,7 +155,7 @@
   {
     "slug": "wordpress-vs-webflow-vs-custom-nyc",
     "category": "guide",
-    "title": "WordPress vs. Webflow vs. Custom: Who Owns the Care?",
+    "title": "Should your business use WordPress, Webflow, or a custom website?",
     "description": "All three can build a serious site. Compare editing, connections between tools, updates, hosting, ownership, performance, and the person responsible after launch.",
     "published": "July 12, 2026",
     "updated": "July 12, 2026",

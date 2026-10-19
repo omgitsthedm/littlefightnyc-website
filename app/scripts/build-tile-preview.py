@@ -26,7 +26,7 @@ from clay_icons import ROUTES as CLAY_ROUTES, clay_figure
 from portfolio_media import apply_portfolio_media, rewrite_portfolio_media
 from consolidated_tiles import load_groups, home_contexts, source_routes, apply_readers, apply_homepage_groups, render_group_sections, group_hero
 from retained_answers import render_retained_answers
-from tile_rewrite import GUIDE_UPDATED, load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
+from tile_rewrite import GUIDE_UPDATED, article_updates, load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
 from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library
@@ -34,6 +34,7 @@ from social_cards import register as social_card, tags as social_tags, write_pla
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
+ARTICLE_UPDATES = article_updates(CONTENT)
 UI = APP / 'preview-ui'
 PRODUCTION = '--production' in sys.argv
 OUT = APP / ('dist' if PRODUCTION else 'preview-dist')
@@ -678,6 +679,8 @@ def head(q, home=False):
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     graph[2]['inLanguage'] = q.get('language', 'en')
+    if path in ARTICLE_UPDATES:
+        graph[2]['dateModified'] = ARTICLE_UPDATES[path]
     graph[2]['primaryImageOfPage'] = {'@type':'ImageObject', 'url':ORIGIN+card['image'], 'width':card['width'], 'height':card['height'], 'caption':card['alt']}
     if path.startswith('/journal/') and path != '/journal/':
         graph.append({'@type':'Article', '@id':ORIGIN+path+'#article',
@@ -686,6 +689,7 @@ def head(q, home=False):
                       'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
                       'author':{'@id':ORIGIN+'/#organization'},
                       'publisher':{'@id':ORIGIN+'/#organization'},
+                      **({'dateModified':ARTICLE_UPDATES[path]} if path in ARTICLE_UPDATES else {}),
                       'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'

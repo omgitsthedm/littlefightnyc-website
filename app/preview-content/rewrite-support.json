@@ -86,7 +86,8 @@
           "human",
           "it-support-notes",
           "care"
-        ]
+        ],
+        "metaTitle": "What Happens During an On-Site Tech Visit | Little Fight NYC"
       }
     },
     {
@@ -154,7 +155,8 @@
         "sources": [
           "ms-printer",
           "apple-printer"
-        ]
+        ],
+        "metaTitle": "Printer Only Works on One Computer? | Little Fight NYC"
       }
     },
     {
@@ -224,7 +226,8 @@
           "cisa-smb",
           "ms-file-history",
           "ms-onedrive-backup"
-        ]
+        ],
+        "metaTitle": "Check Your Business Backups Really Work | Little Fight NYC"
       }
     },
     {
@@ -278,7 +281,8 @@
         "sources": [
           "apple-iphone-screenshot",
           "apple-mac-screenshot"
-        ]
+        ],
+        "metaTitle": "What to Include in a Tech Help Request | Little Fight NYC"
       }
     },
     {
@@ -330,7 +334,8 @@
         "sources": [
           "fcc-porting",
           "fcc-voip-911"
-        ]
+        ],
+        "metaTitle": "Office Move Tech Checklist | Little Fight NYC"
       }
     },
     {
@@ -420,7 +425,8 @@
         "sources": [
           "apple-router",
           "google-guest-wifi"
-        ]
+        ],
+        "metaTitle": "Set Up Guest Wi-Fi for a Small Business | Little Fight NYC"
       }
     },
     {
@@ -478,7 +484,8 @@
         "sources": [
           "ms-wifi",
           "square-network"
-        ]
+        ],
+        "metaTitle": "Internet Down? Provider or Your Wi-Fi | Little Fight NYC"
       }
     },
     {
@@ -539,7 +546,8 @@
           "ms-convert-shared",
           "google-groups-settings",
           "ms-compromised"
-        ]
+        ],
+        "metaTitle": "Fix a Shared Inbox That Loses Replies | Little Fight NYC"
       }
     },
     {
@@ -608,7 +616,8 @@
           "ms-unlicensed-onedrive",
           "google-delete-user",
           "apple-activation-lock"
-        ]
+        ],
+        "metaTitle": "When Someone Leaves: Accounts and Devices | Little Fight NYC"
       }
     },
     {
@@ -678,7 +687,8 @@
           "google-2sv-deploy",
           "ms-compromised",
           "cisa-ransomware"
-        ]
+        ],
+        "metaTitle": "Small Business Security Basics | Little Fight NYC"
       }
     },
     {
@@ -739,7 +749,8 @@
           "ms-renewal",
           "google-renewal",
           "apple-subscriptions"
-        ]
+        ],
+        "metaTitle": "Track Software Subscriptions and Renewals | Little Fight NYC"
       }
     },
     {
@@ -791,7 +802,8 @@
         "sources": [
           "zoom-test",
           "ms-teams-test-call"
-        ]
+        ],
+        "metaTitle": "Test a Meeting Room Before a Video Call | Little Fight NYC"
       }
     },
     {
@@ -854,7 +866,8 @@
           "ms-storage",
           "apple-storage",
           "ms-storage-sense"
-        ]
+        ],
+        "metaTitle": "Computer Storage Full? Clear It Safely | Little Fight NYC"
       }
     },
     {
@@ -912,7 +925,8 @@
           "ms-sharing",
           "ms-onedrive-retention",
           "ms-plan-options"
-        ]
+        ],
+        "metaTitle": "Organize Shared Business Files | Little Fight NYC"
       }
     },
     {
@@ -967,7 +981,8 @@
         ],
         "sources": [
           "apple-business"
-        ]
+        ],
+        "metaTitle": "Test a New Business Phone Number | Little Fight NYC"
       }
     },
     {
@@ -1028,7 +1043,8 @@
         ],
         "sources": [
           "ms-win10"
-        ]
+        ],
+        "metaTitle": "Software Updates Without Disrupting Work | Little Fight NYC"
       }
     },
     {
@@ -1086,7 +1102,8 @@
           "ms-manage-sharing",
           "google-drive-sharing",
           "google-drive-owner"
-        ]
+        ],
+        "metaTitle": "Remove a Former Contractor’s Access | Little Fight NYC"
       }
     },
     {
@@ -1145,7 +1162,8 @@
         "sources": [
           "square-network",
           "square-offline"
-        ]
+        ],
+        "metaTitle": "Card Reader Keeps Dropping? What to Check | Little Fight NYC"
       }
     },
     {
@@ -1196,7 +1214,8 @@
         ],
         "sources": [
           "cisa-mfa"
-        ]
+        ],
+        "metaTitle": "New Hire Accounts and Access Checklist | Little Fight NYC"
       }
     },
     {
@@ -1252,7 +1271,8 @@
         "sources": [
           "icann-lookup",
           "icann-errp"
-        ]
+        ],
+        "metaTitle": "Domain and Email Renewals Without Outages | Little Fight NYC"
       }
     },
     {
@@ -1345,7 +1365,8 @@
           "cisa-msp",
           "ms-gdap-terminate",
           "google-admin-recovery"
-        ]
+        ],
+        "metaTitle": "Switch IT Providers Without Losing Access | Little Fight NYC"
       }
     },
     {
@@ -1397,7 +1418,8 @@
           "apple-router",
           "google-guest-wifi",
           "google-wifi-speed"
-        ]
+        ],
+        "metaTitle": "Set Up a Home Office for Work | Little Fight NYC"
       }
     },
     {

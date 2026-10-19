@@ -33,10 +33,10 @@ for (const source of ["/blog", "/blog/"]) {
 const blogArticleRedirects = [
   ["/blog/cybersecurity-for-small-business", "/answers/help/it-security-basics/", "301"],
   ["/blog/cybersecurity-for-small-business.html", "/answers/help/it-security-basics/", "301"],
-  ["/blog/nyc-small-business-digital", "/journal/nyc-small-business-digital/", "301"],
-  ["/blog/nyc-small-business-digital.html", "/journal/nyc-small-business-digital/", "301"],
-  ["/blog/protecting-kids-from-ai", "/journal/protecting-kids-from-ai/", "301"],
-  ["/blog/protecting-kids-from-ai.html", "/journal/protecting-kids-from-ai/", "301"],
+  ["/blog/nyc-small-business-digital", "/answers/does-my-small-business-need-a-website/", "301"],
+  ["/blog/nyc-small-business-digital.html", "/answers/does-my-small-business-need-a-website/", "301"],
+  ["/blog/protecting-kids-from-ai", "/journal/questions-nyc-owners-actually-ask-us-about-ai/", "301"],
+  ["/blog/protecting-kids-from-ai.html", "/journal/questions-nyc-owners-actually-ask-us-about-ai/", "301"],
 ];
 for (const expected of blogArticleRedirects) {
   const rule = rules.find(([from]) => from === expected[0]);
@@ -44,7 +44,7 @@ for (const expected of blogArticleRedirects) {
   assert.ok(rules.indexOf(rule) < blogWildcardIndex, `${expected[0]} must retain its article redirect`);
 }
 
-// Consolidated routes (2026-10-17) go straight to the page that now answers them.
+// Consolidated routes (2026-10-17, 2026-10-19) go straight to the page that now answers them.
 const consolidation = JSON.parse(await readFile(path.join(appRoot, "preview-content", "consolidation.json"), "utf8"));
 const consolidated = Object.entries({ ...consolidation.retired, ...consolidation.renamed })
   .flatMap(([from, to]) => [[from, to, "301"], [from.replace(/\/$/, ""), to, "301"]]);

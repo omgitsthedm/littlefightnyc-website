@@ -1,28 +1,6 @@
 {
   "posts": [
     {
-      "slug": "nyc-small-business-digital",
-      "title": "What a NYC Business Actually Needs Online",
-      "description": "A clear Google profile, a useful website, and one working path to call, book, order, or visit. The rest is optional.",
-      "answer": "You need three things to agree: your business details, your website, and the next action a customer should take. More channels do not fix a broken path.",
-      "meaning": "A neighbor should be able to find the right hours, understand what you sell, and act without hunting through five apps. Your website is the place you control; profiles and social pages point toward it.",
-      "watch": ["Different hours or phone numbers across listings.", "A homepage that never says what the business does.", "A booking, menu, or order link that disappears on a phone.", "A social account acting as the only source of truth."],
-      "next": ["Claim and verify the Google Business Profile.", "Make the name, address, phone, hours, and services match everywhere.", "Test the full customer path on a phone.", "Fix the first dead end before adding another channel."],
-      "fit": "We help when the website, listings, forms, bookings, and follow-up need to work together. If one wrong hour is the whole problem, fix the hour first. You do not need a big project for that.",
-      "sources": ["googleClaim", "googleHelpful"]
-    },
-    {
-      "slug": "protecting-kids-from-ai",
-      "title": "Set Safe AI Rules for Your Business",
-      "description": "Use AI for low-risk drafts. Keep private business information out, check important facts, and leave people in charge of customer promises.",
-      "answer": "Use AI for low-risk drafts and sorting. Keep private business information out. A person still checks important facts and every customer promise.",
-      "meaning": "The goal is not a magic policy. It is a small rule everyone can follow when they are busy: protect private information, check the result, and ask before sending something important.",
-      "watch": ["Customer, employee, payment, password, health, legal, or tax details pasted into a public AI tool.", "An AI answer copied into a customer message without a person checking it.", "A new paid tool bought before the business names the job it should help with.", "Nobody able to explain what information enters the tool or who approves the result."],
-      "next": ["Pick one low-risk task, such as a first draft or a list of public questions.", "Write down what information must stay out of the tool.", "Name the person who checks the result before it reaches a customer.", "Keep, change, or stop after a small trial based on time saved and mistakes found."],
-      "fit": "We can map a safe, useful use for AI around the tools you already have. We do not hand customer promises or important business decisions to a machine.",
-      "sources": ["cisaSmallBusiness"]
-    },
-    {
       "slug": "airtable-vs-notion-vs-monday-small-business",
       "title": "Airtable vs. Notion vs. monday.com: Pick the Job First",
       "description": "Airtable organizes records. Notion organizes knowledge. monday.com organizes assigned work. Your workflow decides the winner.",
@@ -37,17 +15,6 @@
         "href": "/journal/airtable-vs-notion-vs-monday-small-business/",
         "label": "Read the quick owner answer"
       }
-    },
-    {
-      "slug": "custom-business-system-vs-saas-subscriptions",
-      "title": "Rent Software or Build Your Own? Use the Boring Math",
-      "description": "Keep rented software when it fits. Build only when repeated work, stacked subscriptions, or missing ownership justify it.",
-      "answer": "Rent the tool when it already fits the job. Consider a custom system when the same workaround repeats, several subscriptions duplicate one workflow, or ownership matters enough to justify building and care.",
-      "meaning": "Custom is not automatically cheaper, and SaaS is not automatically wasteful. Compare total cost, staff time, switching risk, data access, and who keeps the system working.",
-      "watch": ["Paying for several tools to move one customer through one process.", "Copying the same information by hand.", "A must-have workflow blocked by the product roadmap.", "No clean export or unclear account ownership."],
-      "next": ["List every tool touching the workflow and its real annual cost.", "Count the repeated handoffs and corrections for one week.", "Ask what can be kept or connected before replacing anything.", "Price build, maintenance, migration, and exit together."],
-      "fit": "We use keep, connect, replace, or build in that order. A custom system fits when the business case survives the math. Sometimes the right answer is one better spreadsheet.",
-      "sources": []
     },
     {
       "slug": "shopify-vs-squarespace-nyc-retail",
@@ -98,28 +65,6 @@
       }
     },
     {
-      "slug": "webflow-vs-squarespace-manhattan-small-business",
-      "title": "Webflow vs. Squarespace for a Small Business",
-      "description": "Squarespace favors a simpler owner-managed site. Webflow offers more structure and control with more setup and care.",
-      "answer": "Choose Squarespace when the owner wants a straightforward all-in-one editor. Choose Webflow when the site needs more structured content or design control and someone will own the setup and care.",
-      "meaning": "Both can publish a serious business site. The real difference is who edits it, how often the structure changes, what integrations must work, and what leaving later looks like.",
-      "watch": ["A site too complicated for the person updating it.", "Plan, workspace, add-on, and scheduling costs mixed together.", "A migration promise that ignores forms, bookings, analytics, or redirects.", "Nobody named as the account and domain owner."],
-      "next": ["List the pages and repeated content you need.", "Have the future editor change a service, photo, and hour.", "Price the plan and add-ons needed for launch.", "Write down domain, export, redirect, and handoff requirements."],
-      "fit": "We build around the business, including custom work when a builder is the wrong fit. If either platform handles the job cleanly, we will say so.",
-      "sources": ["webflowPlans", "squarespaceCommerce"]
-    },
-    {
-      "slug": "ai-google-broke-the-internet-websites-survive",
-      "title": "Your Website Still Matters When AI Answers First",
-      "description": "Search may answer before the click. A clear, useful, crawlable website gives people and answer engines something trustworthy to use.",
-      "answer": "Your site still needs clear facts, useful answers, and a working customer path. AI answers did not make your website useless. They made vague, copied, hard-to-read websites easier to ignore.",
-      "meaning": "Search results can summarize information and show supporting links. The practical response is not secret AEO code. Publish original answers, keep business facts current, make important text crawlable, and give each page a real job.",
-      "watch": ["Pages written for every keyword variation instead of a person.", "Important facts hidden in images, video, or client-side widgets.", "Structured data that says more than the visible page.", "Old hours, services, names, or locations across the web."],
-      "next": ["Answer the customer question in the first paragraph.", "Add direct evidence and source links.", "Connect the answer to one sensible next action.", "Keep the website and Business Profile facts aligned."],
-      "fit": "We make the source clearer and the path work. Nobody can guarantee a ranking, an AI citation, or a particular answer.",
-      "sources": ["googleAi", "googleHelpful", "openAiSearch"]
-    },
-    {
       "slug": "what-google-looks-for-business-website",
       "title": "What Google Needs From a Business Website",
       "description": "Clear purpose, useful original information, crawlable text, accurate business facts, sensible links, and a page that works well.",
@@ -131,39 +76,6 @@
       "sources": ["googleHelpful", "googleAi"]
     },
     {
-      "slug": "why-business-websites-will-be-invisible",
-      "title": "Why a Vague Business Website Disappears",
-      "description": "If the page never gives a clear answer, current fact, original proof, or usable next step, people and search systems have little reason to choose it.",
-      "answer": "A business website becomes easy to ignore when it is generic, stale, or impossible to use. The fix is clearer information and better proof, not a louder marketing headline.",
-      "meaning": "People compare quickly. Search and AI systems also need accessible text and reliable sources. A page that could belong to any company has very little to contribute.",
-      "watch": ["Claims such as quality, innovation, and passion with no example.", "Services named but never explained.", "Old contact details or dead customer paths.", "Mass-produced pages that add no local or practical value."],
-      "next": ["Replace the first generic paragraph with a direct answer.", "Show a real process, artifact, or approved result.", "Cite outside facts beside the claim.", "Delete or combine pages that do not earn their own existence."],
-      "fit": "We turn the website into a useful source and connect it to the action the owner needs. If the existing site is already clear and healthy, we will not prescribe a rebuild.",
-      "sources": ["googleHelpful", "googleAi"]
-    },
-    {
-      "slug": "read-your-monthly-software-bill",
-      "title": "Audit the Monthly Software Bill Without Guessing",
-      "description": "List the tools, owners, users, renewal dates, and actual jobs. Then keep, connect, downgrade, replace, or cancel with proof.",
-      "answer": "Start by finding what the business pays for, who owns it, who uses it, and what stops if it disappears. Do not start by cancelling everything.",
-      "meaning": "The price on the credit card is only one cost. Staff time, duplicate entry, missing exports, switching, and forgotten annual renewals belong in the decision too.",
-      "watch": ["Two tools doing the same job.", "Former staff still holding paid seats.", "Annual renewals nobody can explain.", "A critical tool billed to a personal card or private email."],
-      "next": ["Export three months of card and bank charges.", "Add owner, users, renewal date, and business job for each tool.", "Mark keep, connect, downgrade, replace, cancel, or investigate.", "Cancel only after data, workflow, and account access are safe."],
-      "fit": "We can run the inventory and turn the pile into a smaller, connected system. The estimate must use your bills and your staff time; we will not invent a savings number.",
-      "sources": []
-    },
-    {
-      "slug": "set-up-google-business-profile-nyc",
-      "title": "Set Up a Google Business Profile the Safe Way",
-      "description": "Claim the right profile, verify it, enter accurate facts, choose honest categories, and keep the website and profile aligned.",
-      "answer": "Claim or add the real business, complete the official verification, and enter facts exactly as customers encounter them. Do not stuff the business name with services or neighborhoods.",
-      "meaning": "The profile can place your hours, phone, directions, photos, reviews, and website in Search and Maps. It must be controlled by the business and kept current.",
-      "watch": ["A profile already controlled by an old employee or vendor.", "A name that differs from the real-world business name.", "Wrong hours, phone, website, address, or service area.", "Duplicate profiles for one location."],
-      "next": ["Search the exact business name and city first.", "Claim an existing profile or add the business through Google.", "Complete the verification option Google provides.", "Match the website details and test call, directions, and link."],
-      "fit": "We can clean up the website and profile path. Google controls verification and display, so we cannot promise a method, completion time, or ranking.",
-      "sources": ["googleClaim"]
-    },
-    {
       "slug": "migrate-off-squarespace-without-breaking-booking",
       "title": "Leave Squarespace Without Breaking Booking",
       "description": "Inventory the live path, build the replacement, preserve the domain and URLs, test every handoff, then switch with a rollback plan.",
@@ -173,28 +85,6 @@
       "next": ["Inventory pages, URLs, forms, booking, domain, DNS, email, analytics, and assets.", "Build the new site without changing the live domain.", "Test every action on phone and desktop.", "Switch in a named window, watch errors, and keep a rollback."],
       "fit": "We handle the connected move and hand back the accounts, code, data, and instructions. If Squarespace still fits, staying put may be the safest answer.",
       "sources": ["squarespaceExport", "icannRegistrants"]
-    },
-    {
-      "slug": "keep-connect-replace-build-framework",
-      "title": "Keep, Connect, Replace, or Build: Use This Order",
-      "description": "Start with the least disruptive fix. Keep what works, connect real gaps, replace poor fit, and build only when the business case earns it.",
-      "answer": "Keep first. Connect second. Replace third. Build last. Each step costs more attention, so the bigger move needs better evidence.",
-      "meaning": "A tool can be imperfect and still be the correct tool. Change is justified when the present way of working causes enough cost, risk, or customer trouble to beat the work of changing it.",
-      "watch": ["A new tool proposed before the current job is mapped.", "A connection between tools that creates two places with different answers.", "A replacement with no way to take the business data out or train staff.", "Custom software built for a problem that happens twice a year."],
-      "next": ["Name the broken outcome, not the disliked tool.", "Measure one week of handoffs, delays, errors, and cost.", "Test the smallest move that fixes the outcome.", "Name ownership, maintenance, migration, and exit before buying."],
-      "fit": "This is how we scope every systems job. The answer can be no project. That is still a useful answer.",
-      "sources": []
-    },
-    {
-      "slug": "spot-developer-about-to-ghost",
-      "title": "Six Signs a Website Project Is Losing Its Owner",
-      "description": "Missing access, vague milestones, no working preview, unexplained silence, and no handoff plan are project risks. Secure the business first.",
-      "answer": "Secure your business assets now if you see a pattern: missed written milestones, missing access, no working evidence, and no recovery plan. One slow reply on its own is not proof.",
-      "meaning": "The goal is not to accuse someone. It is to make sure the business controls its domain, hosting, accounts, code, content, data, invoices, and current work if the relationship ends.",
-      "watch": ["The business cannot log in to the domain or hosting.", "Progress exists only in screenshots or promises.", "Dates move without a written new plan.", "No backup, project files, export, or handoff instructions."],
-      "next": ["Save the contract, invoices, messages, and latest working links.", "Confirm business-owned access to domain, hosting, analytics, forms, email, and payment tools.", "Request a written status, deliverables, blockers, and handoff date.", "Get technical or legal help before deleting access or starting a dispute."],
-      "fit": "We can inspect what exists and write a recovery map. We are not lawyers and will not diagnose intent from silence.",
-      "sources": ["icannRegistrants"]
     },
     {
       "slug": "how-to-own-your-domain-name-not-your-web-guy",
@@ -228,50 +118,6 @@
       "next": ["Write the exact owner or customer question at the top.", "Answer it plainly and add first-hand detail.", "Cite external facts and link the appropriate service or action.", "Keep public names, hours, locations, and offerings current."],
       "fit": "We handle crawlable content, structure, profiles, and the customer path. We cannot promise an AI answer, ranking, citation, traffic, or lead.",
       "sources": ["openAiSearch", "googleAi", "googleHelpful"]
-    },
-    {
-      "slug": "why-chains-always-show-up-first-on-google",
-      "title": "Why Chains Look Easier to Trust Online",
-      "description": "Chains maintain consistent locations, categories, hours, pages, links, and reviews at scale. A local shop can win on accuracy and usefulness nearby.",
-      "answer": "Chains often have people and systems constantly maintaining their public data and pages. A local business does not need their volume, but it does need accurate facts, useful local detail, and a working customer path.",
-      "meaning": "Search visibility is not a single contest you permanently win. Relevance, distance, prominence, website quality, profile accuracy, competition, and the query all affect what someone sees.",
-      "watch": ["Different hours and categories across profiles.", "One generic page trying to rank for every service and neighborhood.", "Reviews ignored or manipulated.", "A website that never proves the shop serves the requested need."],
-      "next": ["Fix the Business Profile and website facts.", "Create useful pages only for real services and questions.", "Ask for honest reviews without incentives and reply thoughtfully.", "Track calls, directions, and website actions without treating a click as a sale."],
-      "fit": "We make the local source clearer and more useful. We do not guarantee rank or pretend a neighborhood-name swap is local expertise.",
-      "sources": ["googleClaim", "googleReviews", "googleHelpful"]
-    },
-    {
-      "slug": "your-website-is-your-hardest-working-employee",
-      "title": "Give Your Website One Clear Job After Closing",
-      "description": "A website should answer ordinary questions and hand a customer to the right action when nobody is at the counter.",
-      "answer": "Your website can reliably answer known questions and route a customer to call, book, order, pay, or visit. It is not an employee: it cannot notice, improvise, or care.",
-      "meaning": "That narrower promise is useful. Write down the questions staff answer every day, put the stable answers online, and test what happens after the visitor chooses an action.",
-      "watch": ["Hours, prices, policies, or services staff keep correcting.", "A form that sends nowhere or asks for too much.", "Booking and payment links hidden behind design flourishes.", "Nobody assigned to review the site after business changes."],
-      "next": ["Collect the ten questions staff answer most.", "Answer the stable ones in plain text.", "Give each answer one useful next action.", "Review the path monthly and after every operational change."],
-      "fit": "We connect the website to the real business path and keep it cared for. It should reduce avoidable questions, not pretend to replace human judgment.",
-      "sources": []
-    },
-    {
-      "slug": "the-pen-and-paper-tax",
-      "title": "When Paper Starts Charging the Business in Time",
-      "description": "Paper is fine until information must be found, copied, shared, checked, or reported repeatedly. Measure the repeat work before buying software.",
-      "answer": "Measure the repeated searching, retyping, reconciling, and correcting with your own time and pay before calling paper a loss. Paper is not the enemy; the repeat work is the cost.",
-      "meaning": "A clipboard can be faster than a login. It becomes a problem when several people need the same current information or mistakes create customer and cash problems.",
-      "watch": ["The same fact copied into a calendar, spreadsheet, email, and invoice.", "Staff waiting for one notebook or one person’s memory.", "Double bookings, lost requests, or inconsistent totals.", "A weekly report rebuilt from scratch."],
-      "next": ["Pick one repeated task.", "Count minutes, repeats, corrections, and people for one week.", "Multiply by the hourly cost you choose, including the real cost of that person’s work.", "Fix the worst handoff with the smallest reliable tool."],
-      "fit": "We can build the measurement and connect or replace the workflow. We will label the result as an estimate, show the formula, and leave paper alone where paper wins.",
-      "sources": []
-    },
-    {
-      "slug": "ai-is-already-answering-questions-about-your-business",
-      "title": "AI Can Describe Your Business. Check Its Sources.",
-      "description": "Search systems may summarize public information. Keep the sources you control accurate, useful, and easy to verify.",
-      "answer": "You cannot control every AI answer, but you can improve the source: current website facts, clear service pages, reliable profiles, and evidence people can click. AI search may answer questions using public web sources.",
-      "meaning": "This is reputation maintenance, not an AI trick. When the official website is vague or stale, systems and customers must lean harder on third-party information.",
-      "watch": ["Outdated business descriptions repeated across old directories.", "No official page answering a common customer question.", "Different phone, hours, address, or service details.", "Claims that have no source or visible proof."],
-      "next": ["Search the business name and common customer questions.", "Record inaccurate or unclear answers and the sources shown.", "Correct the website and eligible public profiles.", "Publish a direct, useful answer instead of keyword filler."],
-      "fit": "We improve the public source and measure the customer path. Search and AI providers decide what they crawl, cite, and display.",
-      "sources": ["openAiSearch", "googleAi"]
     },
     {
       "slug": "why-small-business-tech-should-be-boring",

@@ -39,8 +39,7 @@ _GROUPS = (
         "paths": frozenset({
             "/answers/does-my-small-business-need-a-website/", "/answers/instagram-instead-of-a-website-nyc-shop/",
             "/answers/website-design-for-small-business-nyc/", "/answers/how-to-choose-a-web-designer-nyc/", "/answers/squarespace-vs-hiring-a-web-designer/",
-            "/answers/wix-vs-custom-website/", "/journal/nyc-small-business-digital/",
-            "/journal/webflow-vs-squarespace-manhattan-small-business/", "/journal/shopify-vs-squarespace-nyc-retail/",
+            "/answers/wix-vs-custom-website/", "/journal/shopify-vs-squarespace-nyc-retail/",
             "/journal/wordpress-vs-webflow-vs-custom-nyc/",
         }),
     },
@@ -51,9 +50,8 @@ _GROUPS = (
         "summary": "Fix the page, path, or handoff that is getting in the way.",
         "paths": frozenset({
             "/answers/website-form-not-working-small-business/", "/answers/website-down-emergency-nyc/",
-            "/answers/website-developer-disappeared/", "/answers/local-pharmacy-website-community-support/",
-            "/journal/migrate-off-squarespace-without-breaking-booking/", "/journal/spot-developer-about-to-ghost/",
-            "/journal/your-website-is-your-hardest-working-employee/", "/journal/ada-website-lawsuits-nyc-small-business/",
+            "/answers/website-developer-disappeared/",
+            "/journal/migrate-off-squarespace-without-breaking-booking/", "/journal/ada-website-lawsuits-nyc-small-business/",
             "/journal/how-to-stop-double-bookings-small-business/", "/journal/calendly-vs-square-appointments-nyc/",
         }),
     },
@@ -65,11 +63,8 @@ _GROUPS = (
         "paths": frozenset({
             "/answers/business-not-showing-on-google-maps/", "/answers/is-local-seo-worth-it/",
             "/answers/google-business-profile-tips/", "/answers/google-business-profile-suspended/",
-            "/answers/google-reviews-not-showing-up/", "/journal/set-up-google-business-profile-nyc/",
             "/journal/how-to-answer-google-reviews-nyc-business/", "/journal/how-to-get-your-business-into-chatgpt-answers/",
-            "/journal/ai-is-already-answering-questions-about-your-business/", "/journal/ai-google-broke-the-internet-websites-survive/",
-            "/journal/what-google-looks-for-business-website/", "/journal/why-business-websites-will-be-invisible/",
-            "/journal/why-chains-always-show-up-first-on-google/",
+            "/journal/what-google-looks-for-business-website/",
         }),
     },
     {
@@ -79,9 +74,7 @@ _GROUPS = (
         "summary": "Know what you are buying, keeping, and responsible for.",
         "paths": frozenset({
             "/answers/reduce-monthly-software-costs-small-business/", "/answers/when-custom-business-system-beats-saas/",
-            "/answers/airtable-vs-notion-vs-monday-small-business/", "/journal/read-your-monthly-software-bill/",
-            "/journal/keep-connect-replace-build-framework/", "/journal/how-to-own-your-domain-name-not-your-web-guy/",
-            "/journal/custom-business-system-vs-saas-subscriptions/", "/journal/what-a-free-tech-audit-actually-looks-like/",
+            "/answers/airtable-vs-notion-vs-monday-small-business/", "/journal/how-to-own-your-domain-name-not-your-web-guy/", "/journal/what-a-free-tech-audit-actually-looks-like/",
         }),
     },
     {
@@ -98,13 +91,10 @@ _GROUPS = (
         "eyebrow": "Systems",
         "title": "Choose or build a better system.",
         "summary": "Compare the tools, then decide what the business actually needs.",
-        "paths": frozenset({
-            "/answers/hair-salon-save-money-software/", "/answers/how-to-pick-a-pos-system/",
+        "paths": frozenset({ "/answers/how-to-pick-a-pos-system/",
             "/journal/airtable-vs-notion-vs-monday-small-business/",
-            "/journal/square-appointments-vs-glossgenius-nyc-salons/", "/journal/square-vs-toast-manhattan-restaurants/",
-            "/journal/the-pen-and-paper-tax/", "/journal/questions-nyc-owners-actually-ask-us-about-ai/",
+            "/journal/square-appointments-vs-glossgenius-nyc-salons/", "/journal/square-vs-toast-manhattan-restaurants/", "/journal/questions-nyc-owners-actually-ask-us-about-ai/",
             "/journal/quickbooks-vs-wave-small-business-nyc/", "/journal/toast-vs-clover-nyc-bars/",
-            "/journal/protecting-kids-from-ai/",
         }),
     },
 )
@@ -214,9 +204,10 @@ def render_retained_answers(
     answers = [path for path in paths if path.startswith("/answers/")]
     journals = [path for path in paths if path.startswith("/journal/")]
     # 2026-10-17 consolidation: 12 overlapping answers and 4 journal notes now
-    # 301 to the page that answers them (public/_redirects).
-    if len(answers) != 89 or len(journals) != 33:
-        raise ValueError(f"answer hub expected 89 answers and 33 journal notes, found {len(answers)} and {len(journals)}")
+    # 301 to the page that answers them; 2026-10-19: 3 more answers and 14 thin
+    # journal notes folded into deepened articles (public/_redirects).
+    if len(answers) != 86 or len(journals) != 19:
+        raise ValueError(f"answer hub expected 86 answers and 19 journal notes, found {len(answers)} and {len(journals)}")
     groups = _group_paths(paths)
     # The map starts compact. All links remain in the document, but a visitor
     # sees six recognizable decisions instead of an undifferentiated link wall.

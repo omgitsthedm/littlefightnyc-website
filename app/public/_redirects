@@ -113,10 +113,10 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 # --- Legacy article URLs — each legacy slug now lives at /journal/{slug}/
 /blog/cybersecurity-for-small-business       /answers/help/it-security-basics/  301
 /blog/cybersecurity-for-small-business.html  /answers/help/it-security-basics/  301
-/blog/nyc-small-business-digital             /journal/nyc-small-business-digital/        301
-/blog/nyc-small-business-digital.html        /journal/nyc-small-business-digital/        301
-/blog/protecting-kids-from-ai                /journal/protecting-kids-from-ai/           301
-/blog/protecting-kids-from-ai.html           /journal/protecting-kids-from-ai/           301
+/blog/nyc-small-business-digital             /answers/does-my-small-business-need-a-website/        301
+/blog/nyc-small-business-digital.html        /answers/does-my-small-business-need-a-website/        301
+/blog/protecting-kids-from-ai                /journal/questions-nyc-owners-actually-ask-us-about-ai/           301
+/blog/protecting-kids-from-ai.html           /journal/questions-nyc-owners-actually-ask-us-about-ai/           301
 # The retired blog hub has no destination of its own. Send it straight to the
 # consolidated Library; retain the specific article mappings above.
 /blog/                                       /library/                                   301
@@ -124,17 +124,17 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /blog/*                                      /library/                                   301
 
 /software-guides/airtable-vs-notion-vs-monday-small-business/*      /journal/airtable-vs-notion-vs-monday-small-business/      301
-/software-guides/custom-business-system-vs-saas-subscriptions/*     /journal/custom-business-system-vs-saas-subscriptions/     301
+/software-guides/custom-business-system-vs-saas-subscriptions/*     /answers/when-custom-business-system-beats-saas/     301
 /software-guides/shopify-vs-squarespace-nyc-retail/*                /journal/shopify-vs-squarespace-nyc-retail/                301
 /software-guides/square-appointments-vs-glossgenius-nyc-salons/*    /journal/square-appointments-vs-glossgenius-nyc-salons/    301
 /software-guides/square-vs-toast-manhattan-restaurants/*            /journal/square-vs-toast-manhattan-restaurants/            301
-/software-guides/webflow-vs-squarespace-manhattan-small-business/*  /journal/webflow-vs-squarespace-manhattan-small-business/  301
+/software-guides/webflow-vs-squarespace-manhattan-small-business/*  /journal/wordpress-vs-webflow-vs-custom-nyc/  301
 /software-guides/*                                                  /journal/                                                  301
 
 # --- Legacy top-level long-form essays
-/ai-google-broke-the-internet-websites-survive/*  /journal/ai-google-broke-the-internet-websites-survive/  301
+/ai-google-broke-the-internet-websites-survive/*  /journal/how-to-get-your-business-into-chatgpt-answers/  301
 /what-google-looks-for-business-website/*         /journal/what-google-looks-for-business-website/         301
-/why-business-websites-will-be-invisible/*        /journal/why-business-websites-will-be-invisible/        301
+/why-business-websites-will-be-invisible/*        /journal/how-to-get-your-business-into-chatgpt-answers/        301
 
 # --- Retired sections + legal file URLs
 /solutions/*     /services/   301
@@ -247,6 +247,43 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /journal/signs-your-pos-is-about-to-fail                           /answers/help/it-payment-device-check/                     301
 /journal/what-to-do-when-business-wifi-keeps-dropping/             /answers/help/wifi/                                        301
 /journal/what-to-do-when-business-wifi-keeps-dropping              /answers/help/wifi/                                        301
+
+# --- Content consolidation (2026-10-19): thin articles folded into the deepened
+# article that now answers them.
+/answers/google-reviews-not-showing-up/                            /journal/how-to-answer-google-reviews-nyc-business/        301
+/answers/google-reviews-not-showing-up                             /journal/how-to-answer-google-reviews-nyc-business/        301
+/answers/hair-salon-save-money-software/                           /journal/square-appointments-vs-glossgenius-nyc-salons/    301
+/answers/hair-salon-save-money-software                            /journal/square-appointments-vs-glossgenius-nyc-salons/    301
+/answers/local-pharmacy-website-community-support/                 /answers/does-my-small-business-need-a-website/            301
+/answers/local-pharmacy-website-community-support                  /answers/does-my-small-business-need-a-website/            301
+/journal/ai-google-broke-the-internet-websites-survive/            /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/ai-google-broke-the-internet-websites-survive             /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/ai-is-already-answering-questions-about-your-business/    /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/ai-is-already-answering-questions-about-your-business     /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/custom-business-system-vs-saas-subscriptions/             /answers/when-custom-business-system-beats-saas/           301
+/journal/custom-business-system-vs-saas-subscriptions              /answers/when-custom-business-system-beats-saas/           301
+/journal/keep-connect-replace-build-framework/                     /answers/when-custom-business-system-beats-saas/           301
+/journal/keep-connect-replace-build-framework                      /answers/when-custom-business-system-beats-saas/           301
+/journal/nyc-small-business-digital/                               /answers/does-my-small-business-need-a-website/            301
+/journal/nyc-small-business-digital                                /answers/does-my-small-business-need-a-website/            301
+/journal/protecting-kids-from-ai/                                  /journal/questions-nyc-owners-actually-ask-us-about-ai/    301
+/journal/protecting-kids-from-ai                                   /journal/questions-nyc-owners-actually-ask-us-about-ai/    301
+/journal/read-your-monthly-software-bill/                          /answers/reduce-monthly-software-costs-small-business/     301
+/journal/read-your-monthly-software-bill                           /answers/reduce-monthly-software-costs-small-business/     301
+/journal/set-up-google-business-profile-nyc/                       /answers/google-business-profile-tips/                     301
+/journal/set-up-google-business-profile-nyc                        /answers/google-business-profile-tips/                     301
+/journal/spot-developer-about-to-ghost/                            /answers/website-developer-disappeared/                    301
+/journal/spot-developer-about-to-ghost                             /answers/website-developer-disappeared/                    301
+/journal/the-pen-and-paper-tax/                                    /answers/when-custom-business-system-beats-saas/           301
+/journal/the-pen-and-paper-tax                                     /answers/when-custom-business-system-beats-saas/           301
+/journal/webflow-vs-squarespace-manhattan-small-business/          /journal/wordpress-vs-webflow-vs-custom-nyc/               301
+/journal/webflow-vs-squarespace-manhattan-small-business           /journal/wordpress-vs-webflow-vs-custom-nyc/               301
+/journal/why-business-websites-will-be-invisible/                  /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/why-business-websites-will-be-invisible                   /journal/how-to-get-your-business-into-chatgpt-answers/    301
+/journal/why-chains-always-show-up-first-on-google/                /answers/is-local-seo-worth-it/                            301
+/journal/why-chains-always-show-up-first-on-google                 /answers/is-local-seo-worth-it/                            301
+/journal/your-website-is-your-hardest-working-employee/            /answers/website-design-for-small-business-nyc/            301
+/journal/your-website-is-your-hardest-working-employee             /answers/website-design-for-small-business-nyc/            301
 
 # --- Unknown paths are a real 404, not a soft-404 SPA shell. KEEP LAST.
 /*  /404.html  404

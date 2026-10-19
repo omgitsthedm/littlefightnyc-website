@@ -1,6 +1,7 @@
 """One authored answer source for static readers, category Q&A and JSON-LD."""
 from html import escape
 import json
+from pathlib import Path
 from service_taxonomy import override_family
 
 CATEGORY_NAMES = {'web': 'Website', 'it': 'Tech support', 'consulting': 'Consulting', 'software': 'Custom software'}
@@ -105,6 +106,12 @@ def guide_sections(item, rewrite):
     return sections
 
 
+def article_updates(content_dir):
+    """Authored articles whose copy changed on a recorded date: sitemap lastmod and dateModified."""
+    f = Path(content_dir) / 'article-updates.json'
+    return json.loads(f.read_text())['updated'] if f.exists() else {}
+
+
 def guided_paths(rewrite):
     return {'/answers/help/' + identity + '/' for identity, item in rewrite['answers'].items() if item.get('guide')}
 
@@ -174,7 +181,7 @@ def apply_page_rewrite(pages, authored, rewrite):
         # The linked archive survives; the card now gives one complete answer.
         for key in ('answerContent', 'contentBlocks', 'sourceDepth', 'extraHtml'):
             p.pop(key, None)
-        p.update(heading=item['question'], title=item['question'] + ' | Little Fight NYC',
+        p.update(heading=item['question'], title=(item.get('guide') or {}).get('metaTitle') or item['question'] + ' | Little Fight NYC',
                  summary=item['answer'], description=(item.get('guide') or {}).get('metaDescription') or item['answer'],
                  family=item['category'],
                  sections=guide_sections(item, rewrite) if item.get('guide') else [{'heading': '', 'paragraphs': [item['detail']]}],

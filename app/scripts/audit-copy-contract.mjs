@@ -53,7 +53,8 @@ const BANNED_COPY = [
 const RETIRED_EMAILS = /(?:support|projects|billing)@littlefightnyc\.com/gi;
 
 const PLACEHOLDER_COPY = [
-  { label: "TODO", pattern: /\bTODO\b/i },
+  // Case-sensitive: Spanish copy uses "todo" ("all").
+  { label: "TODO", pattern: /\bTODO\b/ },
   { label: "TBD", pattern: /\bTBD\b/i },
   { label: "FIXME", pattern: /\bFIXME\b/i },
   { label: "placeholder", pattern: /\b(?:copy )?placeholder\b/i },
@@ -163,8 +164,8 @@ const answerPaths = new Set(
   seoPages.pages.filter((page) => page.path.startsWith("/answers/")).map((page) => page.path),
 );
 const renderedAnswerPaths = new Set([...routePaths].filter((routePath) => routePath.startsWith("/answers/")));
-if (answerPaths.size !== 19) {
-  failures.push(`answers source coverage: expected 19 guides, found ${answerPaths.size}`);
+if (answerPaths.size !== 16) {
+  failures.push(`answers source coverage: expected 16 guides, found ${answerPaths.size}`);
 }
 for (const routePath of setDifference(answerPaths, renderedAnswerPaths)) {
   failures.push(`${routePath}: answer exists in seo-pages.json but not rendered route metadata`);
@@ -181,8 +182,8 @@ if (!Array.isArray(journalCopyPosts)) {
 const journalCopySlugs = new Set((journalCopyPosts ?? []).map((post) => post.slug));
 const journalIndexSlugs = new Set(journal.map((post) => post.slug));
 const renderedJournalPaths = new Set([...routePaths].filter((routePath) => routePath.startsWith("/journal/")));
-if (journalIdentitySlugs.size !== 33) {
-  failures.push(`journal source coverage: expected 33 posts, found ${journalIdentitySlugs.size}`);
+if (journalIdentitySlugs.size !== 19) {
+  failures.push(`journal source coverage: expected 19 posts, found ${journalIdentitySlugs.size}`);
 }
 for (const [label, slugs] of [
   ["journal-copy.json", journalCopySlugs],

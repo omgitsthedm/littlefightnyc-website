@@ -1,6 +1,6 @@
 {
-  "note": "Content consolidation of 2026-10-17. Each old route 301s to its target (public/_redirects). Retired routes were thin or repeated another page; renamed routes moved off -reddit slugs. Tests treat these routes as deliberately removed.",
-  "date": "2026-10-17",
+  "note": "Content consolidation of 2026-10-17 and 2026-10-19. Each old route 301s to its target (public/_redirects). Retired routes were thin or repeated another page; renamed routes moved off -reddit slugs. Tests treat these routes as deliberately removed.",
+  "date": "2026-10-19",
   "retired": {
     "/answers/airtable-vs-notion-reddit-small-business/": "/journal/airtable-vs-notion-vs-monday-small-business/",
     "/answers/best-web-design-agency-nyc-reddit/": "/answers/how-to-choose-a-web-designer-nyc/",
@@ -18,7 +18,24 @@
     "/journal/how-do-i-back-up-my-business-data/": "/answers/help/backup/",
     "/journal/signs-your-pos-is-about-to-fail/": "/answers/help/it-payment-device-check/",
     "/journal/what-to-do-when-business-wifi-keeps-dropping/": "/answers/help/wifi/",
-    "/websites-for-your-business/": "/industries/"
+    "/websites-for-your-business/": "/industries/",
+    "/journal/set-up-google-business-profile-nyc/": "/answers/google-business-profile-tips/",
+    "/answers/google-reviews-not-showing-up/": "/journal/how-to-answer-google-reviews-nyc-business/",
+    "/journal/why-chains-always-show-up-first-on-google/": "/answers/is-local-seo-worth-it/",
+    "/journal/nyc-small-business-digital/": "/answers/does-my-small-business-need-a-website/",
+    "/answers/local-pharmacy-website-community-support/": "/answers/does-my-small-business-need-a-website/",
+    "/journal/ai-is-already-answering-questions-about-your-business/": "/journal/how-to-get-your-business-into-chatgpt-answers/",
+    "/journal/ai-google-broke-the-internet-websites-survive/": "/journal/how-to-get-your-business-into-chatgpt-answers/",
+    "/journal/why-business-websites-will-be-invisible/": "/journal/how-to-get-your-business-into-chatgpt-answers/",
+    "/journal/protecting-kids-from-ai/": "/journal/questions-nyc-owners-actually-ask-us-about-ai/",
+    "/journal/webflow-vs-squarespace-manhattan-small-business/": "/journal/wordpress-vs-webflow-vs-custom-nyc/",
+    "/journal/your-website-is-your-hardest-working-employee/": "/answers/website-design-for-small-business-nyc/",
+    "/journal/spot-developer-about-to-ghost/": "/answers/website-developer-disappeared/",
+    "/journal/read-your-monthly-software-bill/": "/answers/reduce-monthly-software-costs-small-business/",
+    "/journal/custom-business-system-vs-saas-subscriptions/": "/answers/when-custom-business-system-beats-saas/",
+    "/journal/keep-connect-replace-build-framework/": "/answers/when-custom-business-system-beats-saas/",
+    "/journal/the-pen-and-paper-tax/": "/answers/when-custom-business-system-beats-saas/",
+    "/answers/hair-salon-save-money-software/": "/journal/square-appointments-vs-glossgenius-nyc-salons/"
   },
   "renamed": {
     "/answers/best-pos-system-small-business-reddit/": "/answers/how-to-pick-a-pos-system/",
