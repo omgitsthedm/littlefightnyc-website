@@ -140,6 +140,8 @@ https://lab.littlefightnyc.com/*    https://littlefightnyc.com/examples/lab/  30
 /solutions/*     /services/   301
 /privacy.html    /legal/      301
 /terms.html      /legal/      301
+/terms/          /legal/      301
+/terms           /legal/      301
 /privacy/        /legal/      301
 /privacy         /legal/      301
 

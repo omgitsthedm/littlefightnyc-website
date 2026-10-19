@@ -138,6 +138,7 @@ if (functional) {
     "audit:legal-snapshot",
     "audit:meta-budget",
     "audit:claim-scope",
+    "audit:copy-contract",
   ]) run("npm", ["run", script]);
 
   run("node", ["scripts/verify-search-relevance.cjs"]);

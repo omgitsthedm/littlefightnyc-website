@@ -209,6 +209,15 @@ for (const routePath of renderedJournalPaths) {
   }
 }
 
+// Routes that 301 elsewhere, are kept out of search, or belong to a retired
+// product are not expected to have their own generated page.
+const redirectSources = new Set(
+  (await readFile(path.join(appRoot, "public", "_redirects"), "utf8"))
+    .split("\n").map((line) => line.trim().split(/\s+/)[0]).filter((source) => source && source.startsWith("/")),
+);
+const notGenerated = (page) => page.noindex || page.path.startsWith("/studio/")
+  || redirectSources.has(page.path) || redirectSources.has(page.path.replace(/\/$/, ""));
+
 let checked = 0;
 for (const page of pages) {
   const routePath = page.path;
@@ -216,7 +225,7 @@ for (const page of pages) {
   try {
     html = await readFile(routeFile(routePath), "utf8");
   } catch {
-    failures.push(`${routePath}: missing generated HTML`);
+    if (!notGenerated(page)) failures.push(`${routePath}: missing generated HTML`);
     continue;
   }
   checked += 1;
@@ -254,10 +263,14 @@ for (const page of pages) {
   }
 
   if (!NON_MARKETING_ROUTES.has(routePath)) {
-    if (!html.includes('data-lf-owner-intro="true"')) {
+    // The tile site states its plain promise in .story-summary (or the homepage hero);
+    // the retired React app marked the same opening with data-lf-owner-intro.
+    const ownerIntro = html.includes('data-lf-owner-intro="true"') || html.includes('data-production-island=') || /class="[^"]*\b(?:story-summary|case-deck|case-opening-bottom|mosaic-home)\b/.test(html);
+    if (!ownerIntro) {
       failures.push(`${routePath}: missing the owner-first opening contract`);
     }
-    if (!html.includes('data-lf-contact-rail="true"')) {
+    const contactRail = html.includes('data-lf-contact-rail="true"') || html.includes('direct-contact-rail') || html.includes('data-contact-dock');
+    if (!contactRail) {
       failures.push(`${routePath}: missing the first-screen contact rail`);
     }
 
