@@ -39,7 +39,7 @@ EXPECTED_REVIEW_DISTRIBUTION = {
 }
 # 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17);
 # 17 thin articles folded into deepened articles now 301 (2026-10-19).
-EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+EXPECTED_ROUTE_COUNT = 403 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed

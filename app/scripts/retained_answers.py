@@ -39,7 +39,8 @@ _GROUPS = (
         "paths": frozenset({
             "/answers/does-my-small-business-need-a-website/", "/answers/instagram-instead-of-a-website-nyc-shop/",
             "/answers/website-design-for-small-business-nyc/", "/answers/how-to-choose-a-web-designer-nyc/", "/answers/squarespace-vs-hiring-a-web-designer/",
-            "/answers/wix-vs-custom-website/", "/journal/shopify-vs-squarespace-nyc-retail/",
+            "/answers/wix-vs-custom-website/", "/answers/wordpress-vs-custom-website-small-business/",
+            "/journal/shopify-vs-squarespace-nyc-retail/",
             "/journal/wordpress-vs-webflow-vs-custom-nyc/",
         }),
     },
@@ -206,8 +207,8 @@ def render_retained_answers(
     # 2026-10-17 consolidation: 12 overlapping answers and 4 journal notes now
     # 301 to the page that answers them; 2026-10-19: 3 more answers and 14 thin
     # journal notes folded into deepened articles (public/_redirects).
-    if len(answers) != 86 or len(journals) != 19:
-        raise ValueError(f"answer hub expected 86 answers and 19 journal notes, found {len(answers)} and {len(journals)}")
+    if len(answers) != 87 or len(journals) != 19:
+        raise ValueError(f"answer hub expected 87 answers and 19 journal notes, found {len(answers)} and {len(journals)}")
     groups = _group_paths(paths)
     # The map starts compact. All links remain in the document, but a visitor
     # sees six recognizable decisions instead of an undifferentiated link wall.

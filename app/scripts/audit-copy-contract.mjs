@@ -162,8 +162,8 @@ const answerPaths = new Set(
   seoPages.pages.filter((page) => page.path.startsWith("/answers/")).map((page) => page.path),
 );
 const renderedAnswerPaths = new Set([...routePaths].filter((routePath) => routePath.startsWith("/answers/")));
-if (answerPaths.size !== 16) {
-  failures.push(`answers source coverage: expected 16 guides, found ${answerPaths.size}`);
+if (answerPaths.size !== 17) {
+  failures.push(`answers source coverage: expected 17 guides, found ${answerPaths.size}`);
 }
 for (const routePath of setDifference(answerPaths, renderedAnswerPaths)) {
   failures.push(`${routePath}: answer exists in seo-pages.json but not rendered route metadata`);

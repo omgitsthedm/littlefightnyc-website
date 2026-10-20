@@ -56,6 +56,7 @@ ARTICLES = {
     '/answers/squarespace-vs-hiring-a-web-designer/': ('Websites', 'object-homepage-sketchbook'),
     '/answers/website-design-for-small-business-nyc/': ('Websites', 'object-homepage-sketchbook'),
     '/answers/wix-vs-custom-website/': ('Websites', 'object-construction-plans'),
+    '/answers/wordpress-vs-custom-website-small-business/': ('Websites', 'object-construction-plans'),
     '/journal/wordpress-vs-webflow-vs-custom-nyc/': ('Websites', 'object-construction-plans'),
     '/answers/instagram-instead-of-a-website-nyc-shop/': ('Websites', 'object-content-camera'),
     '/answers/website-form-not-working-small-business/': ('Websites', 'object-mail'),

@@ -704,6 +704,25 @@
       "sha256": "ef63d69aab4f7c928c31724b3f2924d690f8ff8016b94c1ae7b24b126e1db454",
       "signature": "0e151c77973ec8d676a1dfb4444575cb6d3d0f6e3217600b0f7c5711479ffac0"
     },
+    "/answers/wordpress-vs-custom-website-small-business/": {
+      "path": "/answers/wordpress-vs-custom-website-small-business/",
+      "title": "WordPress vs Custom for Small Business | Little Fight NYC",
+      "description": "You can get a good site either way. The real question is who installs the updates and whose name the domain, code, and words are in.",
+      "headline": "WordPress or a custom website for my business?",
+      "label": "Websites · Answers",
+      "color": "#92bfff",
+      "mode": "clay",
+      "image": "/assets/social/clay/answers-wordpress-vs-custom-website-small-business-7a3410a638e1.jpg",
+      "artAlt": "A handmade clay hard hat, tape measure and building plans.",
+      "artSource": "/assets/clay-png/object-construction-plans.png",
+      "width": 2400,
+      "height": 1260,
+      "type": "image/jpeg",
+      "bytes": 254500,
+      "alt": "A handmade clay hard hat, tape measure and building plans. Text: WordPress or a custom website for my business? Little Fight NYC.",
+      "sha256": "795060800adf668dec08210495c6eb2084f59dfe3a514d107dd24d8b3a707003",
+      "signature": "7a3410a638e1aa8aaf093044db5e044da83f11066c0560eef036836df9f4c14b"
+    },
     "/about/": {
       "path": "/about/",
       "title": "About Little Fight NYC | Help for Small Businesses",

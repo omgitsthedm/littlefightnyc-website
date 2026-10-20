@@ -51,9 +51,9 @@
     },
     {
       "path": "/services/custom-local-websites/",
-      "updated": "2026-09-27",
+      "updated": "2026-10-20",
       "title": "Small Business Website Design NYC | Little Fight NYC",
-      "description": "Website design for small businesses in NYC and beyond: a custom site built around your business, so customers find you, see what you do, and book without calling. Free first look; a scoped website can be ready in six weeks or less.",
+      "description": "Website design for NYC small businesses and remote clients: a custom site built around your business, so customers find you, book, and call.",
       "h1": "Websites that make the next step obvious.",
       "shortAnswer": "Short answer: You get a custom website built around your business, so customers find you, see what you do, and book without calling. Built for one business, not a theme.",
       "type": "Service",
@@ -69,7 +69,7 @@
       "faq": [
         {
           "question": "Do I need a new website, or just a cleanup?",
-          "answer": "Often a cleanup. If the platform works and customers can use it, fix the message, mobile layout, and forms first. The free consult tells you which."
+          "answer": "Often a cleanup. Open your own site on a phone. Time how long it takes to book or call. If that takes more than 30 seconds, the path is the problem, not the platform. Fix the message, mobile layout, and forms first."
         },
         {
           "question": "Can you connect the site to booking or payments?",
@@ -647,6 +647,16 @@
       "shortAnswer": "Short answer: Keep the Instagram feed, but give customers one page you control for hours, address, and booking.",
       "type": "Article",
       "image": "/assets/figure-les-bottleshop.webp"
+    },
+    {
+      "path": "/answers/wordpress-vs-custom-website-small-business/",
+      "updated": "2026-10-20",
+      "title": "WordPress vs Custom for Small Business | Little Fight NYC",
+      "description": "You can get a good site either way. The real question is who installs the updates and whose name the domain, code, and words are in.",
+      "h1": "WordPress or a custom website for my business?",
+      "shortAnswer": "Short answer: You can get a good site either way. The real question is who installs the updates and whose name the domain, code, and words are in.",
+      "type": "Article",
+      "image": "/assets/hero-laptop.webp"
     },
     {
       "path": "/about/",

@@ -17,7 +17,7 @@ const expectedConsolidatedGroups = 19;
 // (two Google reviews added 2026-10-19).
 // 17 consolidated routes now 301 (public/_redirects, 2026-10-17); 17 more thin
 // articles folded into deepened articles (2026-10-19).
-const expectedRouteCount = 389;
+const expectedRouteCount = 390;
 
 function git(args, fallback = "") {
   try {
