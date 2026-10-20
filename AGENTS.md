@@ -28,6 +28,8 @@ Open only what the task needs:
 - Deployment or routing: `SOURCE_OF_TRUTH.md` and `netlify.toml`
 - Product or visual work: `app/DESIGN.md`, then `app/src/styles/editorial/tokens.css`
 - Voice or public claims: `VOICE.md` and the relevant business policy
+- Search content: `SEARCH-ACQUISITION-RUNBOOK.md`, including its manual-only rule,
+  existing-route and all-state PR checks before selecting a topic
 - Quality behavior: `.lifi/quality.yml`, the applicable package script, and the failing test
 
 Do not load history, recovery branches, evidence folders, or all Markdown at startup.
@@ -80,6 +82,10 @@ and implemented in `app/preview-ui/**`. Preserve Soft Mineral + Edge Light, all 
 tile identities, Atkinson Hyperlegible Next/Manrope typography, semantic service colors,
 physical card flips, accessibility, honest claims, and privacy boundaries. Older React
 styles serve retained intake islands; do not restore the former marketing layout.
+
+Search-content work requires an explicit current request. A scheduled firing or an older
+routine prompt does not override the manual-only runbook. Resume existing topic work and
+honor recorded consolidation decisions; an unmerged branch is not completed queue work.
 
 ## Git and production
 

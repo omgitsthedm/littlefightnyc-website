@@ -4,6 +4,10 @@
 
 Use `SOURCE_OF_TRUTH.md` for the current GitHub, Netlify, domain, branch, deploy, and recovery map. Load `app/DESIGN.md` and `app/src/styles/editorial/tokens.css` only for product or visual work. Load voice, evidence, acquisition, or brand documents only when the task needs them.
 
+For search-content work, follow the manual-only authorization and topic preflight in
+`SEARCH-ACQUISITION-RUNBOOK.md` before writing or opening a PR. Historical routine prompts
+do not supersede the current repository contract.
+
 Work from the canonical physical root:
 
 ```text

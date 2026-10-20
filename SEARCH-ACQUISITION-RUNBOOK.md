@@ -1,6 +1,6 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-10-05
+Last updated: 2026-10-20
 
 ## Current code readiness
 
@@ -132,27 +132,62 @@ Never combine impressions, clicks, form starts, and qualified leads into one per
 The former routine description is historical, not an active scheduling
 contract. Do not create or enable recurring automations. Use the queue below
 only during an explicitly requested content session; pending rows are ideas,
-not missing pages promised by this maintenance release.
+not missing pages promised by this maintenance release. A scheduled firing or
+an older routine prompt is not a new explicit request. If one fires, stop
+before changing content or opening a PR and report the scheduling conflict.
 
 Each requested content session:
 
-1. Takes the first `pending` row below, writes the page it names in the house
-   voice (VOICE.md, COPY-CONTRACT.md, EVIDENCE-CLAIM-LEDGER.md; no prices;
-   answer first, then 2–3 pillars, proof last; sources cited), registers it
-   everywhere the neighbours are registered (`site-answers.ts` guide +
-   OWNER_QUESTIONS + UPDATED_OVERRIDES + bridge; `answersArt.ts` cluster;
-   `seo-pages.json` entry; audit pins in `audit-visual-coverage.mjs`,
-   `audit-copy-contract.mjs`, `audit-release-readiness.mjs`,
-   `tests/quality-smoke.spec.ts` indexed-route count), and marks the row `done`
-   with the date and path.
-2. Refreshes ONE ranking page (rotate through the list below): a genuine content
-   touch — a sharper FAQ answer, an updated fact, a tighter dek — then bumps
-   that page's `updated` date. Never bump a date without a real change.
-3. Runs `npm ci` and `npm run quality:fast` in `app/` (Playwright browsers may
-   not exist in the cloud environment; if `quality:release` is possible, run
-   it), commits generated `route-meta.json` / `nav-index.json`, and opens a PR
-   titled `cadence: <query>` whose body pastes the gate summary and lists the
-   files touched.
+1. Reads current `main` and checks each candidate topic and path against the
+   published content, `app/preview-content/consolidation.json`,
+   `app/public/_redirects`, and GitHub PRs in **all states**. Search by query,
+   intent and route, then read relevant PR descriptions and closing comments.
+   An open PR reserves its topic even if this table still says `pending`.
+   Resume or consolidate that work; do not create a competing PR. A closed,
+   unmerged PR is not permission to restart: honor its closure decision.
+2. Selects the first eligible `pending` idea after that check. Prefer improving
+   an existing canonical page when it already answers the intent. Record the
+   selected path and any predecessor PRs in the working PR. If current PR or
+   route evidence is unavailable, leave the topic blocked rather than guess.
+   Write in the house voice (VOICE.md, COPY-CONTRACT.md,
+   EVIDENCE-CLAIM-LEDGER.md; no prices; answer first, then 2–3 pillars, proof
+   last; sources cited).
+3. Updates the actual rendered tile sources, following a current neighbouring
+   page: `app/preview-content/live-pages.json` and applicable
+   `answer-guides.json`, `article-updates.json` or page-body source; answer-hub membership in
+   `app/scripts/retained_answers.py`; relevant `article_visuals.py` treatment;
+   and `app/preview-content/social-cards.json` with its matching image asset.
+   Keep retained data in `app/src/data/site-answers.ts` (guide, owner question,
+   update date and service bridge), `answersArt.ts`, `seo-pages.json`, and
+   `site.ts` consistent where applicable. Regenerate and review route, nav and
+   measurement metadata; do not hand-patch generated entries to hide source
+   drift. Updating retained React data alone does not update the tile website.
+4. Refreshes ONE eligible page from the rotation with a genuine content change,
+   checking existing PRs and redirects first. Update the rendered source and
+   authored date together. Never bump a date without a real change or repeat
+   a refresh already awaiting integration.
+5. Installs dependencies at both root and `app/` and runs the root quality lanes
+   under Node 24, as required by `AGENTS.md`. Run `quality:fast` during work and
+   `quality:release` on the exact production candidate; a blocked browser or
+   other required gate leaves the release blocked, not validated. Reconcile
+   audit counts with actual generated routes and explicit consolidation policy,
+   including `audit-tile-content.py`, `retained_answers.py`, release readiness,
+   copy/visual coverage and browser assertions. Do not blindly add one to stale
+   counts or lower them merely to make a check pass.
+6. Opens or updates one PR titled `cadence: <query>` with the canonical path,
+   predecessor decisions, scoped diff and gate results. After safe integration
+   into `main` and exact-deploy verification, reconcile this queue and refresh
+   rotation. Close superseded PRs only after useful work is retained; keep their
+   branches and history. Record consolidation/closure decisions here so the
+   next session does not need to rediscover them.
+
+Queue states: `pending` is an unclaimed idea; `in review #N` reserves work to
+an open PR; `blocked #N` names work awaiting a specific gate or decision;
+`done DATE` means integrated and verified; `covered DATE` means an existing,
+verified canonical page satisfies the intent, with its path and decision link.
+A `done` edit on an unmerged branch is only a proposal. Main plus current PR
+state controls selection; preserve historical dates and map retired paths to
+their current canonical destination rather than reopening completed topics.
 
 Sourcing rule, learned on the 2026-08-25 run: "sources cited" is not satisfied
 by a help-centre root. Cite the exact page that carries the claim, and label it
@@ -187,7 +222,7 @@ assume a fixed daily allowance or repeat a queued request.
 | done 2026-08-18 | web design upper east side / soho / lower east side / east village | "Website design in {area}" blocks on those area pages |
 | done 2026-08-19 | web designer lenox hill | /areas/upper-east-side/ — Lenox Hill named in the web-design block, plus a "Do you build websites for Lenox Hill businesses?" FAQ |
 | done 2026-08-25 | do i need a website if i have instagram (nyc shop) | /answers/instagram-instead-of-a-website-nyc-shop/ |
-| pending | wordpress vs custom website small business | /answers/wordpress-vs-custom-website-small-business/ |
+| covered 2026-10-20 | wordpress vs custom website small business | /journal/wordpress-vs-webflow-vs-custom-nyc/ — [consolidation decision](https://github.com/omgitsthedm/littlefightnyc-website/pull/30#issuecomment-6262750124) |
 | pending | how much does a small business website cost nyc (no prices: what drives cost, how to compare quotes) | /answers/what-drives-the-cost-of-a-small-business-website-nyc/ |
 | pending | website redesign checklist small business | /answers/website-redesign-checklist-small-business/ |
 | pending | managed it services vs break fix small business | /answers/managed-it-vs-break-fix-small-business/ |
@@ -195,6 +230,17 @@ assume a fixed daily allowance or repeat a queued request.
 | pending | small business wifi keeps dropping (shop / restaurant) | /answers/small-business-wifi-keeps-dropping/ |
 | pending | it support brooklyn small business | /answers/it-support-brooklyn-small-business/ |
 | pending | web design brooklyn small business | /answers/web-design-brooklyn-small-business/ |
+
+WordPress comparison reconciliation, 2026-10-20: the canonical journal guide
+is already integrated in `main` at `09d877a15705f2fbaa1a14dbd44ee7237b2de32e`
+and verified on the matching ready production deploy. Its rendered comparison
+is self-canonical, indexable, and listed once in `sitemap.xml`. PR #30's
+October 19 closure deliberately retained this deeper guide. Do not recreate
+`/answers/wordpress-vs-custom-website-small-business/` from PR #27, #30 or #31.
+The `covered` state records that existing publication, not publication of any
+later draft improvements. Preserve useful draft material in the canonical guide
+only after its release gates pass. Other pending ideas still need the preflight
+above; their position in this table does not prove they need another page.
 
 ### Refresh rotation (pages that already earn impressions)
 
