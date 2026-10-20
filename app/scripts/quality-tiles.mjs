@@ -117,6 +117,8 @@ async function browserLanes() {
 run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? ["--release"] : [])]);
 run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
 run("python3", ["scripts/audit-social-cards.py", dist]);
+// Every lane: an indexable <title> over 70 characters is truncated in search results.
+run("node", ["scripts/audit-title-budget.mjs", "--dist", dist]);
 
 if (functional) {
   // Preserve real contracts: native inquiry delivery, consent/privacy,

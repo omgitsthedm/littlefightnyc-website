@@ -59,6 +59,7 @@
     "preview": "vite preview",
     "audit:legal-snapshot": "node scripts/audit-legal-snapshot.mjs",
     "audit:meta-budget": "node scripts/audit-meta-description-budget.mjs",
+    "audit:title-budget": "node scripts/audit-title-budget.mjs",
     "audit:external-links": "node scripts/audit-external-links.mjs",
     "audit:claim-scope": "node scripts/audit-claim-scope.mjs",
     "audit:typography": "node scripts/audit-typography.mjs",
