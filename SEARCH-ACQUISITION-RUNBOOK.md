@@ -231,16 +231,23 @@ assume a fixed daily allowance or repeat a queued request.
 | pending | it support brooklyn small business | /answers/it-support-brooklyn-small-business/ |
 | pending | web design brooklyn small business | /answers/web-design-brooklyn-small-business/ |
 
-WordPress comparison reconciliation, 2026-10-20: the canonical journal guide
-is already integrated in `main` at `09d877a15705f2fbaa1a14dbd44ee7237b2de32e`
-and verified on the matching ready production deploy. Its rendered comparison
+WordPress comparison reconciliation, 2026-10-20: before this review, the
+canonical journal guide was already integrated in `main` at
+`09d877a15705f2fbaa1a14dbd44ee7237b2de32e` and verified on its matching
+ready production deploy. Its rendered comparison
 is self-canonical, indexable, and listed once in `sitemap.xml`. PR #30's
 October 19 closure deliberately retained this deeper guide. Do not recreate
 `/answers/wordpress-vs-custom-website-small-business/` from PR #27, #30 or #31.
-The `covered` state records that existing publication, not publication of any
-later draft improvements. Preserve useful draft material in the canonical guide
-only after its release gates pass. Other pending ideas still need the preflight
-above; their position in this table does not prove they need another page.
+Useful draft improvements were consolidated into this journal guide and the
+website-service FAQ in [PR #32](https://github.com/omgitsthedm/littlefightnyc-website/pull/32).
+Production verification on 2026-10-20 confirmed revision
+`c3039a73b6761c99ac07b493b83b203b30500684`, the existing canonical route,
+and the absence of the competing answer route. The owner explicitly authorized
+this scoped publication after the full release-lane limitation was disclosed;
+the PR records the passing build, artifact, hosted-render and live checks and
+the incomplete full release lane. This does not change the gates for future
+releases. Other pending ideas still need the preflight above; their position
+in this table does not prove they need another page.
 
 ### Refresh rotation (pages that already earn impressions)
 
@@ -249,7 +256,11 @@ above; their position in this table does not prove they need another page.
 `/journal/cybersecurity-for-small-business/`, `/about/`.
 Rotate in that order; record the last refreshed page and date here:
 
-- last refreshed: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
+- last refreshed: `/services/custom-local-websites/` 2026-10-20
+  ([PR #32](https://github.com/omgitsthedm/littlefightnyc-website/pull/32):
+  added a phone-based cleanup-versus-rebuild check, named update and backup
+  responsibilities, and a dated WordPress source; authored date updated)
+- previously: `/services/` 2026-08-25 (hero dek now names the 9am–9pm Eastern
   response window the first screen was missing, replacing "No tech words needed";
   the quick answer moved from "We build…" to "You get…"; `updated` bumped with it)
 - previously: `/` 2026-08-19 (home quick answer rewritten in owner voice so it
