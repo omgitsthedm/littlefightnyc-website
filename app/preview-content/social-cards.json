@@ -1239,21 +1239,21 @@
     "/case-studies/after-hours-agenda/": {
       "path": "/case-studies/after-hours-agenda/",
       "title": "After Hours Agenda — Case Study | Little Fight NYC",
-      "description": "A brand-led streetwear storefront that keeps product, payment, and made-to-order fulfillment connected.",
+      "description": "A custom streetwear store built around the clothes. Product pages, size guidance, a shopping bag, and checkout.",
       "headline": "After Hours Agenda",
       "label": "Our work",
       "color": "#92bfff",
       "mode": "screen",
-      "image": "/assets/social/clay/case-studies-after-hours-agenda-1a009c77752f.jpg",
+      "image": "/assets/social/clay/case-studies-after-hours-agenda-dbfb5b75e2e8.jpg",
       "artAlt": "After Hours Agenda production homepage on desktop.",
-      "artSource": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+      "artSource": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
       "width": 2400,
       "height": 1260,
       "type": "image/jpeg",
-      "bytes": 219202,
+      "bytes": 252745,
       "alt": "After Hours Agenda production homepage on desktop. Text: After Hours Agenda Little Fight NYC.",
-      "sha256": "a2890e7bb9c6edf270baaa315b34bbe20823ec76ca4d252c5fc396a0b5ad6809",
-      "signature": "1a009c77752f0718dea144fa4e3ebc69170eda0fdf7fa916faa97d2b685e4de0"
+      "sha256": "d71f4d826457b4cddde3c4c507c97e93af69eed489458f180d44ee6266c704a6",
+      "signature": "dbfb5b75e2e8dfbf277a9fdd448ec41a7ad87a1f16b85310d1b38ae2e4176f6e"
     },
     "/case-studies/clearhelp/": {
       "path": "/case-studies/clearhelp/",

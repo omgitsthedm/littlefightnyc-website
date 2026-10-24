@@ -6,38 +6,38 @@
     "type": "Little Fight product — live website",
     "statusLabel": "OUR PRODUCT",
     "location": "Online",
-    "summary": "A brand-led streetwear website that keeps the story, lookbook, and contact path together while new orders are paused.",
+    "summary": "A custom streetwear store built around the clothes. Product pages, size guidance, a shopping bag, and checkout.",
     "challenge": [
-      "The brand needed a public home that kept its point of view intact without flattening it into a generic storefront.",
-      "Its current site needed to make the story, lookbook, and contact path clear while new orders remain paused."
+      "After Hours Agenda is Little Fight’s own independent clothing brand. Its store needed to keep that identity visible.",
+      "Customers need garment details, sizing, and clear steps to checkout. The lookbook should help them explore the clothes."
     ],
     "approach": [
-      "Built the live site around the brand story, lookbook, and a clear contact path.",
-      "Made the pause in new orders clear while keeping the lookbook and contact route open."
+      "Built connected paths through collections, product pages, and the shopping bag.",
+      "Placed size guidance, shipping details, returns, and contact options nearby."
     ],
     "delivered": [
-      "Live website with 16 editorial and support pages.",
-      "Responsive story, lookbook, and contact paths."
+      "Live online store with collections, product pages, and size selection.",
+      "Shopping bag, checkout, lookbook, and customer-support pages."
     ],
     "outcome": [
-      "Live at afterhoursagenda.com. New orders remain paused."
+      "Live at afterhoursagenda.com. Visitors can browse garments and choose sizes before checkout."
     ],
     "scope": [
       "Website design",
-      "Editorial storefront",
-      "Lookbook",
-      "Contact path"
+      "Custom storefront",
+      "Product pages",
+      "Shopping bag and checkout"
     ],
     "url": "https://littlefightnyc.com/case-studies/after-hours-agenda/",
     "publicUrl": "https://afterhoursagenda.com/",
-    "image": "assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "image": "assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "imageWidth": 1440,
     "imageHeight": 1000,
-    "imageAlt": "After Hours Agenda production homepage on desktop.",
+    "imageAlt": "After Hours Agenda storefront with priced garments and shopping links, October 23, 2026.",
     "sourceImage": "https://afterhoursagenda.com/",
     "narrative": [
-      "After Hours Agenda keeps its black-sheep mark, paper-white surfaces, and rose accent while putting the story and lookbook first.",
-      "The story and lookbook remain available while new orders are paused. Visitors can contact the brand from the site."
+      "The store keeps the black-sheep mark and rose accent. Clothing leads the page, with prices and shopping links visible.",
+      "Product pages bring garment views, size choices, and measurements together. The lookbook and support pages sit alongside the shopping path."
     ],
     "publicType": "Website design"
   },

@@ -6,25 +6,25 @@
   "media": {
     "after-hours-agenda": {
       "desktop": {
-        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+        "src": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
         "width": 1440,
         "height": 1000,
         "alt": "After Hours Agenda production homepage on desktop."
       },
       "mobile": {
-        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
+        "src": "/assets/portfolio-upgrade-20261023/after-hours-agenda-phone.webp",
         "width": 390,
         "height": 844,
         "alt": "After Hours Agenda production homepage on a phone."
       },
       "social": {
-        "src": "/assets/portfolio-upgrade-20261009/share-after-hours-agenda.jpg",
+        "src": "/assets/portfolio-upgrade-20261023/share-after-hours-agenda.jpg",
         "width": 1200,
         "height": 630,
         "alt": "After Hours Agenda production homepage on desktop."
       },
       "screen": {
-        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+        "src": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
         "width": 1440,
         "height": 1000,
         "alt": "After Hours Agenda production homepage on desktop."
@@ -446,10 +446,10 @@
     }
   },
   "replacements": {
-    "/assets/proof/editorial/case-after-hours-agenda-desktop-960.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
-    "/assets/proof/editorial/case-after-hours-agenda-mobile-390.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
-    "/assets/proof/case-after-hours-agenda.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
-    "/assets/case-after-hours-agenda.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/proof/editorial/case-after-hours-agenda-desktop-960.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
+    "/assets/proof/editorial/case-after-hours-agenda-mobile-390.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-phone.webp",
+    "/assets/proof/case-after-hours-agenda.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/proof/case-army-navy-bags.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
     "/assets/case-army-navy-bags.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
     "/assets/proof/case-brothers-pizzeria.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
@@ -550,7 +550,7 @@
     "/assets/proof/optimized/tile-the-break-room-480.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
     "/assets/proof/optimized/tile-cc-films-480.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
     "/assets/proof/optimized/tile-army-navy-bags-480.webp": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
-    "/assets/proof/optimized/tile-after-hours-agenda-480.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/proof/optimized/tile-after-hours-agenda-480.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/proof/optimized/tile-logan-loans-480.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
     "/assets/proof/optimized/website-rachel-services-960.webp": "/assets/portfolio-20261007/rachel-services-desktop.webp",
     "/assets/proof/optimized/case-easy-tiger-960.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
@@ -572,7 +572,7 @@
     "/assets/case-grand-funding-llc-mobile-390.webp": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
     "/assets/case-the-break-room-explore-mobile.webp": "/assets/portfolio-20261007/the-break-room-phone.webp",
     "/assets/case-chromatic-painting-design.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
-    "/assets/case-after-hours-agenda-explore.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda-explore.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/case-grand-funding-llc.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
     "/assets/case-deckspace.webp": "/assets/portfolio-20261007/deckspace-desktop.webp",
     "/assets/case-easy-tiger-900.webp": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
@@ -584,13 +584,13 @@
     "/assets/case-legacy-music-group-explore-mobile.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
     "/assets/case-cc-films-640.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
     "/assets/case-logan-loans-mobile-390.webp": "/assets/portfolio-20261007/logan-loans-phone.webp",
-    "/assets/case-after-hours-agenda-900.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda-900.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/case-venuecircuit-640.webp": "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
     "/assets/case-legacy-music-group-640.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
     "/assets/case-cc-films-desktop-1440.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
     "/assets/case-clearhelp-900.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
     "/assets/case-logan-loans-640.webp": "/assets/portfolio-20261007/logan-loans-desktop.webp",
-    "/assets/case-after-hours-agenda-explore-mobile.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
+    "/assets/case-after-hours-agenda-explore-mobile.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-phone.webp",
     "/assets/case-grand-funding-llc-640.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
     "/assets/case-the-break-room-desktop-1440.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
     "/assets/case-cc-films-mobile-390.webp": "/assets/portfolio-20261007/cc-films-phone.webp",
@@ -617,7 +617,7 @@
     "/assets/case-the-break-room-explore-tablet.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
     "/assets/case-brothers-pizzeria-explore.webp": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
     "/assets/case-clearhelp-desktop-1440.webp": "/assets/portfolio-20261007/clearhelp-desktop.webp",
-    "/assets/case-after-hours-agenda-480.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda-480.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/case-the-break-room-explore.webp": "/assets/portfolio-20261007/the-break-room-desktop.webp",
     "/assets/case-grand-funding-llc-tablet-1024.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
     "/assets/case-venuecircuit-explore.webp": "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
@@ -653,7 +653,7 @@
     "/assets/case-deckspace-explore-mobile.webp": "/assets/portfolio-20261007/deckspace-phone.webp",
     "/assets/case-easy-tiger-explore-mobile.webp": "/assets/portfolio-20261007/easy-tiger-phone.webp",
     "/assets/case-cc-films.webp": "/assets/portfolio-20261007/cc-films-desktop.webp",
-    "/assets/case-after-hours-agenda-640.webp": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+    "/assets/case-after-hours-agenda-640.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
     "/assets/case-venuecircuit-900.webp": "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
     "/assets/case-legacy-music-group-900.webp": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
     "/assets/case-chromatic-painting-design-tablet-1024.webp": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
@@ -693,8 +693,11 @@
     "/assets/case-clearhelp-explore-mobile.webp": "/assets/portfolio-20261007/clearhelp-phone.webp",
     "/assets/case-grand-funding-llc-480.webp": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
     "/assets/social/og-tiles.jpg": "/assets/portfolio-20261007/share-little-fight-nyc-master-reference-20261008.jpg",
-    "/assets/social/og-case-after-hours-agenda.jpg": "/assets/portfolio-upgrade-20261009/share-after-hours-agenda.jpg",
-    "/assets/social/og-case-venuecircuit.jpg": "/assets/portfolio-upgrade-20261009/share-venuecircuit.jpg"
+    "/assets/social/og-case-after-hours-agenda.jpg": "/assets/portfolio-upgrade-20261023/share-after-hours-agenda.jpg",
+    "/assets/social/og-case-venuecircuit.jpg": "/assets/portfolio-upgrade-20261009/share-venuecircuit.jpg",
+    "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
+    "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp": "/assets/portfolio-upgrade-20261023/after-hours-agenda-phone.webp",
+    "/assets/portfolio-upgrade-20261009/share-after-hours-agenda.jpg": "/assets/portfolio-upgrade-20261023/share-after-hours-agenda.jpg"
   },
   "outputs": [
     {

@@ -4,26 +4,26 @@
   "cases": {
     "after-hours-agenda": {
       "desktop": {
-        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+        "src": "/assets/portfolio-upgrade-20261023/after-hours-agenda-desktop.webp",
         "width": 1440,
         "height": 1000,
         "alt": "After Hours Agenda production homepage on desktop."
       },
       "mobile": {
-        "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
+        "src": "/assets/portfolio-upgrade-20261023/after-hours-agenda-phone.webp",
         "width": 390,
         "height": 844,
         "alt": "After Hours Agenda production homepage on a phone."
       },
-      "caption": "Production website, shown on desktop and phone. New orders remain paused.",
+      "caption": "Live storefront, shown on desktop and phone. Captured October 23, 2026.",
       "source": {
         "kind": "Verified production capture",
         "publicUrl": "https://afterhoursagenda.com/",
-        "captureDate": "2026-10-09",
-        "status": "Production live; new orders remain paused."
+        "captureDate": "2026-10-23",
+        "status": "Live storefront with product pages, a shopping bag, and checkout."
       },
       "social": {
-        "src": "/assets/portfolio-upgrade-20261009/share-after-hours-agenda.jpg",
+        "src": "/assets/portfolio-upgrade-20261023/share-after-hours-agenda.jpg",
         "width": 1200,
         "height": 630,
         "alt": "After Hours Agenda production homepage on desktop."
