@@ -140,12 +140,13 @@ if (sitePolicy && veraPolicy) {
 
   // GA4's gtag sends a copy of each hit to www.google.com/g/collect. The site
   // policy allows that exact path only, never the whole www.google.com origin.
-  const siteConnect = site["connect-src"] ?? [];
-  if (!siteConnect.includes("https://www.google.com/g/collect")) {
+  // Compare whole source tokens, never substrings.
+  const siteConnect = new Set(site["connect-src"] ?? []);
+  if (!siteConnect.has("https://www.google.com/g/collect")) {
     failures.push("netlify.toml: site connect-src must allow https://www.google.com/g/collect for GA4's secondary hit");
   }
   for (const broad of ["https://www.google.com", "https://www.google.com/", "https://*.google.com", "https://www.google.com/g/"]) {
-    if (siteConnect.includes(broad)) {
+    if (siteConnect.has(broad)) {
       failures.push(`netlify.toml: site connect-src must not allow ${broad}; allow only https://www.google.com/g/collect`);
     }
   }
