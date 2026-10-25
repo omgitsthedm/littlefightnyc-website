@@ -155,11 +155,11 @@ critical_journeys:
   - id: "consent-control"
     audience: "Any visitor"
     path:
-      - "Essential-only first visit"
+      - "First visit: visit counting on by default in the US; off with Global Privacy Control or a European time zone"
       - "Open analytics choices"
       - "Grant or deny"
       - "Reopen and change choice"
-    success: "No optional vendor starts before opt-in; changing back to essential-only stops new app events."
+    success: "Visit counting (GA4, Clarity, RUM) is on by default for US visitors and stays off with Global Privacy Control, a saved Essential only, or a European time zone until the visitor allows it; Google Ads and Meta never start without their own opt-in; changing back to essential-only stops new app events."
   - id: "mobile-update-resilience"
     audience: "Mobile visitor during or after a deploy"
     path:
@@ -245,7 +245,7 @@ lifecycle_states:
   - surface: "Website Audit job"
     states: ["queued", "analyzing", "generating", "finishing", "complete", "error", "expired"]
   - surface: "analytics consent"
-    states: ["unset-essential-only", "granted", "denied", "changed"]
+    states: ["unset-us-default-on", "unset-gpc-or-europe-off", "granted", "denied", "changed"]
   - surface: "service worker"
     states: ["installing", "waiting until tabs close", "active", "offline network-first fallback"]
   - surface: "proof"
@@ -298,7 +298,7 @@ integrations:
     direction: "consented browser -> Google Analytics"
     data: "sanitized events, performance/error summaries, route and device buckets"
     required: false
-    consent: "denied by default"
+    consent: "on by default for US visitors; off with Global Privacy Control, a saved Essential only, or a European time zone"
   - name: "Weather.gov"
     direction: "browser -> public weather endpoint"
     data: "latest KNYC observation; no visitor identity intended"
@@ -334,7 +334,7 @@ data_boundaries:
     rule: "Raw IP is not stored by application code; stored view history is capped."
   - id: "consented-analytics"
     classification: "sanitized behavioral and reliability telemetry"
-    flow: "browser -> Google Analytics 4 only after explicit opt-in"
+    flow: "browser -> Google Analytics 4 and Microsoft Clarity while visit counting is on (US default; off with Global Privacy Control, a saved Essential only, or a European time zone)"
     rule: "Form values, names, emails, phone numbers, full query URLs, and stack traces are excluded."
   - id: "consented-meta"
     classification: "pseudonymous social measurement"

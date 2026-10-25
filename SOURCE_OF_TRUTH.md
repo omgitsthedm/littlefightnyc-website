@@ -47,6 +47,7 @@ For an authorized application release:
 3. Push the exact authorized commit to `main`.
 4. Wait for that exact commit to reach a ready production deploy.
 5. Run `npm run quality:live` to verify the exact revision and representative public routes.
+6. Run `npm run indexnow` after each production deploy: it notifies IndexNow of the added and removed public URLs from the plan `npm run indexnow:plan` recorded before step 3, plus any `-- --changed /path/` page revisions. Record the plan from the final candidate once it is up to date with `main`; a PR merge or squash then deploys the same Git tree, which the plan matches. Before submitting, rebuild `app/dist` at the deployed `main` commit.
 
 Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, build settings, environment variables, or the production branch as part of routine work.
 

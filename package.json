@@ -23,6 +23,8 @@
     "quality:release": "npm run typecheck:functions && npm run test:acquisition && npm --prefix app run quality:release",
     "quality:live": "npm --prefix app run quality:live",
     "quality:maintenance": "npm run typecheck:functions && npm --prefix app run quality:maintenance",
+    "indexnow:plan": "node app/scripts/indexnow-release.mjs --dry-run",
+    "indexnow": "node app/scripts/indexnow-release.mjs --submit --confirm-production",
     "typecheck:functions": "./app/node_modules/.bin/tsc -p tsconfig.functions.json",
     "test:acquisition": "vitest run app/src/lib/techAuditContact.test.ts app/src/lib/attribution.test.ts app/src/lib/socialCampaign.test.ts app/src/lib/firstLookWebMcp.test.ts app/src/lib/rum.test.ts netlify/functions/_shared/public-audit/intake.test.ts netlify/functions/_shared/public-audit/cleanup-expired.test.ts && npm run leads:test",
     "leads:test": "node --test app/scripts/lead-reconciliation.test.mjs",

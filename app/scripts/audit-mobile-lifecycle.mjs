@@ -69,10 +69,28 @@ assert.match(
   /ADVERTISING_MEASUREMENT_AVAILABLE = false/,
   "advertising measurement must stay disabled until the destination account is verified",
 );
+// Clarity is live on Little Fight NYC's own project. Keep the ID pinned in
+// source (never a build variable) and keep both the production-host and the
+// visit-counting consent gates in front of it.
 assert.match(
   analyticsSource,
-  /CLARITY_MEASUREMENT_AVAILABLE = false/,
-  "Clarity must stay disabled until the destination account and data boundary are verified",
+  /CLARITY_MEASUREMENT_AVAILABLE = true;\s*const CLARITY_ID = "z0b2pje3er";/,
+  "Clarity must use Little Fight NYC's own pinned project ID",
+);
+assert.doesNotMatch(
+  analyticsSource,
+  /VITE_CLARITY_ID/,
+  "Clarity must not read its project from an inheritable build variable",
+);
+assert.match(
+  analyticsSource,
+  /function hasRealClarityId\(\) \{\s*return \(\s*CLARITY_MEASUREMENT_AVAILABLE &&\s*isProdHost\(\) &&/,
+  "Clarity must load only on the production host",
+);
+assert.match(
+  analyticsSource,
+  /function bootClarity\(\) \{\s*if \(getAnalyticsConsent\(\) !== "granted" \|\|/,
+  "Clarity must follow the visit-counting privacy choice",
 );
 assert.doesNotMatch(
   analyticsSource,

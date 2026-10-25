@@ -24,12 +24,16 @@ Profile hides the street address and uses NYC service areas.
 
 ## Measurement contract
 
-- Google Analytics is **Basic Consent Mode**: denied by default and the Google
-  tag does not load until the visitor chooses `Allow visit counting`.
+- Google Analytics is **Basic Consent Mode**: the Google tag loads only while
+  visit counting is on. That is the default for visitors in the United States;
+  Global Privacy Control, a saved `Essential only`, or a European browser time
+  zone keeps the tag unloaded until the visitor chooses `Allow visit counting`.
+- gtag also sends a copy of each GA4 hit to `https://www.google.com/g/collect`.
+  The production CSP allows that exact path only, not the whole origin.
 - Choosing `Essential only` sets Google’s property-level disable switch before
   cleanup, so a tag loaded earlier cannot send later cookieless pings.
 - Advertising storage and user data are denied by default and require a separate fresh Google Ads choice plus analytics consent. Advertising personalization, Google Signals, and ad-personalization signals stay denied/off. Meta has its own separate opt-in. This release changes none of these permissions.
-- The site loads the owned GA4 stream directly after consent. The previous GTM
+- The site loads the owned GA4 stream directly once visit counting is on. The previous GTM
   container delivered page views but did not forward the site’s allowlisted
   custom events.
 - React Router sends the initial and later SPA page views; Google tag config
@@ -131,9 +135,9 @@ campaign attribution keys intact.
 
 For every measurement release:
 
-1. Prove no Google request occurs before a visitor choice.
+1. Prove Global Privacy Control or a European browser time zone makes no Google request before a visitor choice.
 2. Prove `Essential only` remains vendor-free.
-3. Prove consent loads only `G-0Q1TGWH0HL` and sends one page view.
+3. Prove visit counting (the US default or `Allow visit counting`) loads only `G-0Q1TGWH0HL` and sends one page view.
 4. Prove a bounded CTA event reaches GA4, not merely `dataLayer`.
 5. With explicit approval to submit synthetic data, prove a successful Tech
    Audit test reaches Netlify, the staffed inbox, `/thanks/`, and one

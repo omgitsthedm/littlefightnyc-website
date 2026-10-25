@@ -64,6 +64,7 @@ const VERA_ONLY_REMOVALS = {
     "https://*.google-analytics.com",
     "https://*.analytics.google.com",
     "https://*.googletagmanager.com",
+    "https://www.google.com/g/collect",
     "https://*.clarity.ms",
     "https://c.bing.com",
     "https://www.facebook.com",
@@ -136,6 +137,19 @@ if (sitePolicy && veraPolicy) {
 
   const site = directives(sitePolicy);
   const vera = directives(veraPolicy);
+
+  // GA4's gtag sends a copy of each hit to www.google.com/g/collect. The site
+  // policy allows that exact path only, never the whole www.google.com origin.
+  // Compare whole source tokens, never substrings.
+  const siteConnect = new Set(site["connect-src"] ?? []);
+  if (!siteConnect.has("https://www.google.com/g/collect")) {
+    failures.push("netlify.toml: site connect-src must allow https://www.google.com/g/collect for GA4's secondary hit");
+  }
+  for (const broad of ["https://www.google.com", "https://www.google.com/", "https://*.google.com", "https://www.google.com/g/"]) {
+    if (siteConnect.has(broad)) {
+      failures.push(`netlify.toml: site connect-src must not allow ${broad}; allow only https://www.google.com/g/collect`);
+    }
+  }
 
   const names = new Set([
     ...Object.keys(site),
