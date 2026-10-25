@@ -141,6 +141,7 @@ if (functional) {
     "audit:meta-budget",
     "audit:claim-scope",
     "audit:copy-contract",
+    "audit:mobile-lifecycle",
   ]) run("npm", ["run", script]);
 
   run("node", ["scripts/verify-search-relevance.cjs"]);

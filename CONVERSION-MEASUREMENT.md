@@ -1,18 +1,19 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-10-05. Resolve production revision from `/release.json`;
+Last updated: 2026-10-24. Resolve production revision from `/release.json`;
 account configuration is dated evidence, separate from code publication.
 
 ## Privacy boundary
 
-- Analytics is denied by default.
-- Google Analytics and real-user monitoring start only after `Allow visit counting`.
-- Microsoft Clarity and TikTok remain inactive. Google Ads and Meta have separate, fresh opt-in choices; visit counting alone grants neither. Ad personalization stays denied. This release does not change those choices or start campaigns.
+- Visit counting is on by default for visitors in the United States. Global Privacy Control, a saved `Essential only`, or a European browser time zone keeps it off until the visitor chooses `Allow visit counting`.
+- Google Analytics, Microsoft Clarity and real-user monitoring all follow that one visit-counting choice.
+- Microsoft Clarity uses Little Fight NYC's own project `z0b2pje3er`, pinned in `app/src/lib/analytics.ts`, for heatmaps and session recordings. Clarity masks form input, and the production form islands carry `data-clarity-mask="true"`.
+- TikTok remains inactive. Google Ads and Meta have separate, fresh opt-in choices; visit counting alone grants neither. Ad personalization stays denied. This release does not change those choices or start campaigns.
 - `Essential only` loads none of those vendors. The Tech Audit, phone, text, email, navigation, and service worker still work.
 - The footer and Privacy page reopen the same choice at any time.
 - RUM sends coarse route/browser/device/network buckets, Core Web Vitals, and sanitized error summaries. It does not send form values, URLs with query strings, stack traces, email addresses, phone numbers, or names.
 - Vendor scripts load only on `littlefightnyc.com` or `www.littlefightnyc.com`. Local, branch, and deploy-preview builds can exercise the event contract without sending to the production properties.
-- The standalone Audit Lab uses the same consent choice. Its funnel events never include the submitted website, email address, audit ID, report URL, or provider error text.
+- The standalone Audit Lab reads the same stored choice but measures only after an explicit `Allow visit counting`; it does not apply the US default. Its funnel events never include the submitted website, email address, audit ID, report URL, or provider error text.
 - Automatic GA4 outbound-click collection is off. The site records a bounded
   `external_link_click` with destination domain and path only, so external URL
   query strings do not enter the property.
@@ -229,11 +230,11 @@ the new tab mode.
 
 For a production release, verify:
 
-- no analytics vendor request before a choice;
+- with no saved choice, a US visit loads Google Analytics and Clarity, while Global Privacy Control or a European browser time zone makes no analytics vendor request before a choice;
 - `Essential only` keeps vendor requests at zero after navigation and contact clicks;
-- `Allow visit counting` loads only the configured measurement vendor and persists after reload;
+- `Allow visit counting` loads only the visit-counting vendors (Google Analytics and Clarity), never Google Ads or Meta, and persists after reload;
 - changing back to `Essential only` sends vendor consent revocation and prevents new app events;
-- a pending service-worker update never reloads the page until `Refresh now` is pressed.
+- a pending service-worker update waits for every tab to close and never reloads the page.
 
 ## Acquisition experiment queue
 

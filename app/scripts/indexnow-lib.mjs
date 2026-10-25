@@ -1,3 +1,5 @@
+import { execFileSync } from "node:child_process";
+
 const PRODUCTION_ORIGIN = "https://littlefightnyc.com";
 const PRIVATE_PATHS = new Set(["/app", "/dakota.html"]);
 const PRIVATE_PREFIXES = ["/app/", "/api/", "/dakota/", "/_", "/examples/audit/"];
@@ -76,6 +78,83 @@ export function changedUrlManifest({ previousUrls, candidateUrls, changed = [], 
   };
 }
 
+// A post-deploy run cannot see what the release added or removed: by then the
+// live sitemap already is the candidate sitemap. The dry run records the
+// outgoing production URL set (keyed to the candidate revision) before the
+// push, and the submission compares against that record.
+//
+// A GitHub merge, squash, or rebase gives main a new commit ID for the same
+// source, so the plan also records the candidate's Git tree ID, which names
+// the source itself. A plan applies to the deployed commit when either its
+// commit or its tree matches.
+export const RELEASE_PLAN_SCHEMA = "lfnyc.indexnow-plan.v1";
+const GIT_OBJECT_ID = /^(?:[0-9a-f]{40}|[0-9a-f]{64})$/;
+
+function isTreeId(value) {
+  return typeof value === "string" && GIT_OBJECT_ID.test(value);
+}
+
+// The live revision comes from the public /release.json, so only a plain hex
+// commit ID reaches Git. A commit that is not in this clone has no known tree.
+export function gitTreeId(revision, cwd) {
+  if (typeof revision !== "string" || !/^[0-9a-f]{12,64}$/i.test(revision)) return null;
+  try {
+    const tree = execFileSync("git", ["rev-parse", "--verify", "--quiet", `${revision}^{tree}`], {
+      cwd,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    return isTreeId(tree) ? tree : null;
+  } catch {
+    return null;
+  }
+}
+
+export function createReleasePlan({ candidateRelease, liveRelease, previousUrls, candidateTree, liveTree = null, createdAt = new Date().toISOString() }) {
+  const revision = candidateRelease?.revision;
+  if (typeof revision !== "string" || revision.length < 12 || candidateRelease.source_dirty !== false) {
+    throw new Error("Record an IndexNow plan only from a clean, committed candidate build.");
+  }
+  if (revision === liveRelease?.revision) {
+    throw new Error("Production already serves this candidate; record the IndexNow plan before pushing it.");
+  }
+  if (!isTreeId(candidateTree)) {
+    throw new Error("Record an IndexNow plan only where Git can resolve the candidate's source tree.");
+  }
+  if (candidateTree === liveTree) {
+    throw new Error("Production already serves this candidate's source under another commit; record the IndexNow plan before pushing it.");
+  }
+  return {
+    schema: RELEASE_PLAN_SCHEMA,
+    candidate_revision: revision,
+    candidate_tree: candidateTree,
+    previous_revision: typeof liveRelease?.revision === "string" ? liveRelease.revision : null,
+    created_at: createdAt,
+    previous_urls: [...new Set(previousUrls.map((url) => canonicalPublicUrl(url)))].sort(),
+  };
+}
+
+export function previousUrlsFromPlan(plan, candidateRevision, candidateTree = null) {
+  if (!plan || plan.schema !== RELEASE_PLAN_SCHEMA || !Array.isArray(plan.previous_urls)) return null;
+  const revisionMatches = typeof candidateRevision === "string" && plan.candidate_revision === candidateRevision;
+  const treeMatches = isTreeId(candidateTree) && plan.candidate_tree === candidateTree;
+  if (!revisionMatches && !treeMatches) return null;
+  return plan.previous_urls.map((url) => canonicalPublicUrl(url));
+}
+
+// An exact commit match wins. Otherwise the newest plan for the same tree was
+// recorded against the most recent outgoing production release.
+export function selectReleasePlan(plans, { revision, tree = null }) {
+  const matching = plans
+    .map((plan) => ({ plan, previousUrls: previousUrlsFromPlan(plan, revision, tree) }))
+    .filter((entry) => entry.previousUrls);
+  if (!matching.length) return null;
+  const exact = matching.filter((entry) => entry.plan.candidate_revision === revision);
+  const pool = exact.length ? exact : matching;
+  const [chosen] = pool.toSorted((a, b) => String(b.plan.created_at).localeCompare(String(a.plan.created_at)));
+  return { ...chosen, match: exact.length ? "commit" : "tree" };
+}
+
 export function releaseMatchesCandidate(candidateRelease, liveRelease) {
   if (!candidateRelease || !liveRelease) return false;
   return (
@@ -102,11 +181,17 @@ export async function submitIndexNow({ urls, key, keyLocation, fetchImpl = fetch
   }
   const safeKeyLocation = keyUrl.href;
 
-  const response = await fetchImpl("https://api.indexnow.org/IndexNow", {
-    method: "POST",
-    headers: { "content-type": "application/json; charset=utf-8" },
-    body: JSON.stringify({ host: "littlefightnyc.com", key, keyLocation: safeKeyLocation, urlList: safeUrls }),
-  });
+  let response;
+  try {
+    response = await fetchImpl("https://api.indexnow.org/IndexNow", {
+      method: "POST",
+      headers: { "content-type": "application/json; charset=utf-8" },
+      signal: AbortSignal.timeout(20_000),
+      body: JSON.stringify({ host: "littlefightnyc.com", key, keyLocation: safeKeyLocation, urlList: safeUrls }),
+    });
+  } catch (error) {
+    throw new Error(`IndexNow request failed before a response was received (${error?.name ?? "error"}). Nothing is known to be submitted.`);
+  }
   if (response.status !== 200 && response.status !== 202) {
     throw new Error(`IndexNow rejected the manifest with HTTP ${response.status}. No indexing result is implied by a successful submission.`);
   }
