@@ -3,14 +3,16 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const {chromium} = require('@playwright/test');
+const {chromium, webkit} = require('@playwright/test');
 const {default:AxeBuilder} = require('@axe-core/playwright');
 const base = (process.env.PREVIEW_URL || 'http://127.0.0.1:4464').replace(/\/$/, '');
 assert.ok(['127.0.0.1', 'localhost'].includes(new URL(base).hostname), 'Local candidate required');
-const out = path.resolve(__dirname, '../../.lifi/evidence/steam-acquisition');
+const isWebKit = process.argv.includes('--webkit');
+const out = path.resolve(__dirname, '../../.lifi/evidence/steam-acquisition' + (isWebKit ? '-webkit' : ''));
 fs.mkdirSync(out, {recursive: true});
 const config = require('../preview-content/steam-mark.json');
-const report = {browser:'Installed Google Chrome', physicalDevices:false, base, checks:[], errors:[], localFailures:[], blockedMutations:0};
+const profiles = require('../preview-content/business-profiles.json');
+const report = {browser:isWebKit ? 'WebKit' : 'Installed Google Chrome', physicalDevices:false, base, checks:[], errors:[], localFailures:[], blockedMutations:0};
 const check = (name, value) => { assert.ok(value, name); report.checks.push(name); };
 const mark = '[data-steam-mark="header"]';
 async function context(browser, options={}) {
@@ -32,7 +34,8 @@ async function staticMark(page, name) {
   assert.deepEqual(await page.locator(mark).first().locator('path').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('d'))), config.paths);
 }
 async function main() {
-  const browser = await chromium.launch({channel:'chrome',headless:true});
+  const browser = isWebKit ? await webkit.launch({headless:true}) : await chromium.launch({channel:'chrome',headless:true});
+  report.version = browser.version();
   try {
     for (const width of [320,390,1440]) {
       const ctx = await context(browser,{viewport:{width,height:900},reducedMotion:'reduce'}), page=await ctx.newPage();
@@ -40,6 +43,8 @@ async function main() {
         await page.goto(base+route); await page.evaluate(()=>document.fonts.ready);
         check(`${width} ${route} readable without horizontal overflow`, await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
         check(`${width} ${route} one primary heading`, await page.locator('h1').count()===1);
+        const profileLinks = page.locator('footer nav[aria-label="Little Fight NYC profiles"] a');
+        check(`${width} ${route} all verified profiles are visible links`, await profileLinks.evaluateAll((links, expected) => links.length === expected.length && links.every((link, index) => link.href === expected[index].url && link.getBoundingClientRect().height >= 44 && link.target === '_blank' && link.rel.includes('noopener') && link.getAttribute('aria-label').includes(expected[index].platform)), profiles));
         await staticMark(page, `${width} ${route} complete static mark for reduced motion`);
         if (width===390 || (width===1440 && route==='/')) await page.screenshot({path:path.join(out, `${width}-${route==='/'?'home':route.split('/').filter(Boolean).pop()}.png`),fullPage:route!=='/'});
         if (width===390 && route.startsWith('/markets/')) {
@@ -84,7 +89,15 @@ async function main() {
     await staticMark(p,'header does not autoplay again in the same session');
     await p.locator('.wordmark').hover();
     check('deliberate hover replays without intercepting navigation',await p.locator(mark).first().getAttribute('data-steam-state')==='playing' && await p.locator('.wordmark').getAttribute('href')==='/');
-    await p.emulateMedia({reducedMotion:'reduce'}); await p.waitForTimeout(50);
+    await p.emulateMedia({reducedMotion:'reduce'});
+    // WebKit delivers the media change and style update on separate frames.
+    // Observe the actual stopped/static state instead of assuming 50ms is enough.
+    await p.waitForFunction(s => {
+      const el = document.querySelector(s);
+      return matchMedia('(prefers-reduced-motion: reduce)').matches && el?.dataset.steamState === 'static'
+        && getComputedStyle(el.querySelector('svg')).visibility === 'visible'
+        && getComputedStyle(el.querySelector('canvas')).visibility === 'hidden';
+    }, mark, {timeout:1000});
     await staticMark(p,'changing reduced motion mid-play restores the complete tugboat');
     await ctx.close();
 
@@ -119,6 +132,7 @@ async function main() {
       await p.goto(base+'/'); await p.waitForTimeout(200);
       await staticMark(p,`${mode}: complete recognizable mark remains`);
       check(`${mode}: home navigation remains a link`,await p.locator('.wordmark').getAttribute('href')==='/');
+      check(`${mode}: social profiles remain usable`,await p.locator('footer nav[aria-label="Little Fight NYC profiles"] a').count()===profiles.length);
       await ctx.close();
     }
     const thanksContext=await context(browser), thanks=await thanksContext.newPage();

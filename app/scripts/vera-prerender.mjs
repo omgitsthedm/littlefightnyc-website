@@ -12,6 +12,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const APP = join(here, '..');
 const DIST_VERA = join(APP, 'dist', 'vera');
 const socialCards = JSON.parse(readFileSync(join(APP, 'preview-content', 'social-cards.json'), 'utf8')).cards;
+const businessProfiles = JSON.parse(readFileSync(join(APP, 'preview-content', 'business-profiles.json'), 'utf8'));
 const VERA_ENGINE_REPOSITORY = 'omgitsthedm/vera-apartment-search';
 // Pin the public archive to this release; runtime freshness stays first-party/live.
 const publicFeedPin = JSON.parse(readFileSync(join(APP, 'preview-content', 'vera-feed.json'), 'utf8'));
@@ -54,6 +55,13 @@ function page(title, lede, body) {
   const canonical = `https://littlefightnyc.com/vera/${slug}/`;
   const share = socialCards[`/vera/${slug}/`] || socialCards['/vera/'];
   const shareImage = 'https://littlefightnyc.com' + share.image;
+  const origin = 'https://littlefightnyc.com';
+  const schema = JSON.stringify({ '@context': 'https://schema.org', '@graph': [
+    { '@type': 'Organization', '@id': origin + '/#organization', name: 'Little Fight NYC', url: origin + '/', sameAs: businessProfiles.map(profile => profile.url) },
+    { '@type': 'WebPage', '@id': canonical + '#webpage', url: canonical, name: title + ' — VERA', description: lede, inLanguage: 'en',
+      isPartOf: { '@id': origin + '/#website' }, publisher: { '@id': origin + '/#organization' },
+      primaryImageOfPage: { '@type': 'ImageObject', url: shareImage, width: share.width, height: share.height, caption: share.alt } },
+  ] }).replace(/</g, '\\u003c');
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -65,6 +73,7 @@ function page(title, lede, body) {
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="${canonical}">
+<script type="application/ld+json">${schema}</script>
 <meta property="og:title" content="${esc(title)} — VERA">
 <meta property="og:description" content="${esc(lede)}">
 <meta property="og:type" content="website">

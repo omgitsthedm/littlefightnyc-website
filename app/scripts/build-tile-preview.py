@@ -734,7 +734,9 @@ for path, family in anchor_paths.items():
 # match the public contact line ("9am–9pm Eastern"), every day.
 # The verified Google Business Profile recorded with the review excerpts.
 REVIEWS_PROFILE = json.loads((CONTENT/'reviews.json').read_text())['profileUrl']
-LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
+BUSINESS_PROFILES = load('business-profiles.json')
+PROFILE_URLS = [profile['url'] for profile in BUSINESS_PROFILES]
+LOCAL_BUSINESS = {'@type':'LocalBusiness','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
     'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
     'description':'Websites, tech support, consulting and custom software for independent businesses.',
     'founder':{'@id':DAVID_ID},
@@ -753,7 +755,7 @@ LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','
     'knowsAbout':['small business websites','small business IT support','Mac and Windows computers','Microsoft 365','business email','Wi-Fi networks','printers','data backup','tech consulting','custom business software','Google Business Profile'],
     'hasMap':REVIEWS_PROFILE,
     'parentOrganization':{'@id':ORIGIN+'/#organization'},
-    'sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/','https://www.facebook.com/littlefightnyc','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
+    'sameAs':PROFILE_URLS}
 
 def hero_preload():
     """Preload the diorama in the format and size the hero <picture> will choose."""
@@ -769,7 +771,7 @@ def head(q, home=False):
     card = social_card(q, reader_family(q), visual.get('desktop'),
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/littlefightnyc', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':PROFILE_URLS}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/', 'publisher':{'@id':ORIGIN+'/#organization'}},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path=='/':graph.append(LOCAL_BUSINESS)
     website_project = (q.get('marketContent') or {}).get('websiteProject')
     if path.startswith('/industries/') or path=='/services/custom-local-websites/' or website_project:
@@ -790,7 +792,7 @@ def head(q, home=False):
         family=q['_rewriteCategory']
         graph.append(category_schema(rewrite,family,ORIGIN,path))
         if family!='web':
-            graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':q['heading'],'description':q['description'],
+            graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':{'it':'Tech support','consulting':'Technology consulting','software':'Custom business software'}[family],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
                           'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'},
                           # On-site tech support is a New York service; advice and software travel.
@@ -884,7 +886,8 @@ def help_panel():
 
 
 def site_footer():
-    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.instagram.com/littlefightnyc/" target="_blank" rel="noopener noreferrer" aria-label="Little Fight NYC on Instagram (opens in a new tab)">Instagram @littlefightnyc</a><a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav>'+'<nav class="utility-nav utility-nav--places" aria-label="Where we work"><span class="utility-nav__label">Where we work</span>'+''.join(link(label,url) for label,url in WHERE_WE_WORK)+'</nav></footer>'
+    profiles = ''.join(f'<a href="{E(p["url"])}" target="_blank" rel="noopener noreferrer" aria-label="Little Fight NYC on {E(p["platform"])} (opens in a new tab)">{E(p["label"])}</a>' for p in BUSINESS_PROFILES)
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav>'+'<nav class="utility-nav" aria-label="Little Fight NYC profiles">'+profiles+'</nav><nav class="utility-nav utility-nav--places" aria-label="Where we work"><span class="utility-nav__label">Where we work</span>'+''.join(link(label,url) for label,url in WHERE_WE_WORK)+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()

@@ -7742,27 +7742,27 @@
     "vera/brand/index.html": {
       "baselineSha256": "77a1c188c1cb0c7d1345f6755534effc0d8373427bc19f84714b98b6b7a2b403",
       "bodySha256": "c65899640214388a111779f68748ed1a52e27d80ba9ac2a0a1cf4113eccdc02b",
-      "sha256": "77a1c188c1cb0c7d1345f6755534effc0d8373427bc19f84714b98b6b7a2b403"
+      "sha256": "ed30883a36ae0db0806fd9268e95f9f8af08c7a0d7a6359087ee3641c47e4a0c"
     },
     "vera/corrections/index.html": {
       "baselineSha256": "3d4b8de5b7dc5e863b3a8021951648b8308546944700514a43d85e4997ee20d9",
       "bodySha256": "46242dce6bfbce08026ec5a8507279e1f66d76bb7c6025cd9d5e02dc2f09c6e3",
-      "sha256": "3d4b8de5b7dc5e863b3a8021951648b8308546944700514a43d85e4997ee20d9"
+      "sha256": "fc5f71494e25d5cbb0e203c14548be894026005001a3f276259ccd5031cebfca"
     },
     "vera/index.html": {
       "baselineSha256": "f894ad39016a0ed028f9f56d8980ad119eba3ee732dd9b6e356d34d1e7260cc1",
       "bodySha256": "6f862f5b6032af01db0094600a8e94ed46f58de8bc822880887abf616d266b2c",
-      "sha256": "f894ad39016a0ed028f9f56d8980ad119eba3ee732dd9b6e356d34d1e7260cc1"
+      "sha256": "27c8849cfc741d7467f1d2d56e74c2a3717be8b0b8431f117ca4ceb21f5ce976"
     },
     "vera/privacy/index.html": {
       "baselineSha256": "0fbacfacd00da1f4f4b5b4f56a766e3f5f3266f032483bddf977df74f30f6ba4",
       "bodySha256": "ab0138f717f1b4113503b3feba21367c4dee5c5fcd71c1f1b20806a066923a5c",
-      "sha256": "0fbacfacd00da1f4f4b5b4f56a766e3f5f3266f032483bddf977df74f30f6ba4"
+      "sha256": "0c2d8658602bad269f989149233f39182ab863a32dadb8845d99042723f78ea3"
     },
     "vera/terms/index.html": {
       "baselineSha256": "b2a5bdf3fc7e6ffcd4d496d530a722d527292fa77901c965876ec1ed1d615c37",
       "bodySha256": "2ccfde55ec3d4f13bdc2352d8ca303873a86d5e231907f7aac9a9cd1ee1b5b8d",
-      "sha256": "b2a5bdf3fc7e6ffcd4d496d530a722d527292fa77901c965876ec1ed1d615c37"
+      "sha256": "d48d03f2d2000ea014b8dcdce02bdd36ba5d94ab9460d5318e033dbeb1b8aea2"
     }
   }
 }

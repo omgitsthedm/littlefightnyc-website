@@ -676,7 +676,10 @@ def review_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]
         missing.append("whole sourced review text")
     if not quote and '<blockquote>' in document:
         missing.append("quote-free rating-only review")
-    google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', document, re.I)
+    # Count the review's citation within its reader, not the shared business
+    # profile navigation. A rating-only review may use that same profile URL.
+    reader = re.search(r'<section\b[^>]*class="review-reader"[^>]*>.*?</section>', document, re.S)
+    google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', reader.group(0) if reader else '', re.I)
     if len(google_links) != 1:
         missing.append("exactly one direct Google source link")
     elif not re.search(r'\btarget=["\']_blank["\']', google_links[0], re.I) or not re.search(r'\brel=["\'][^"\']*\bnoopener\b', google_links[0], re.I):

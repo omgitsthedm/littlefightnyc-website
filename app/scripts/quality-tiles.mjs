@@ -109,6 +109,7 @@ async function browserLanes() {
     run("node", ["scripts/verify-case-editorial.cjs"], env);
     run("node", ["scripts/verify-inquiry-enhancement.cjs"], env);
     run("node", ["scripts/verify-steam-acquisition.cjs"], env);
+    if (!chromeOnly) run("node", ["scripts/verify-steam-acquisition.cjs", "--webkit"], env);
     run("node", ["scripts/verify-reader-audit.cjs"], { ...env, READER_AUDIT_URL: url });
     run("node", ["scripts/verify-card-interiors.cjs"], { ...env, CARD_INTERIORS_URL: url });
     run("node", ["scripts/verify-anchor-readers.cjs"], { ...env, ANCHOR_READER_URL: url });
@@ -124,6 +125,7 @@ run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? [
 run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
 run("python3", ["scripts/audit-social-cards.py", dist]);
 run("python3", ["scripts/audit-website-markets.py", dist]);
+run("python3", ["scripts/audit-schema-profiles.py", dist]);
 // Every lane: an indexable <title> over 70 characters is truncated in search results.
 run("node", ["scripts/audit-title-budget.mjs", "--dist", dist]);
 
