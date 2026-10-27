@@ -11,6 +11,10 @@ import process from "node:process";
 
 const release = process.argv.includes("--release");
 const functional = release || process.argv.includes("--functional");
+// A local review can follow an installed-Chrome-only workstation policy.
+// Release validation must still cover every configured browser.
+const chromeOnly = process.env.TILE_QUALITY_BROWSER === "chrome";
+if (release && chromeOnly) throw new Error("Chrome-only coverage is local review only; release requires the complete browser lane.");
 const distIndex = process.argv.indexOf("--dist");
 const dist = distIndex >= 0 ? process.argv[distIndex + 1] : "dist";
 if (distIndex >= 0 && !dist) {
@@ -92,7 +96,8 @@ async function browserLanes() {
     // contract replaces the previous 6x3-anchor/editorial-collage snapshots.
     run("node", [presentation === "sculpture-clay-2026-10-07" ? "scripts/verify-sculpture.cjs" : "scripts/verify-topic-mosaic.cjs"], env);
     if (presentation === "sculpture-clay-2026-10-07") {
-      run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
+      if (!chromeOnly) run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
+      else console.log("COVERAGE: WebKit omitted from this local Chrome-only review; release gate unchanged.");
       run("node", ["scripts/verify-responsive-sculpture.cjs"], env);
       run("node", ["scripts/verify-clay-hero.cjs"], env);
     }
@@ -103,6 +108,7 @@ async function browserLanes() {
     run("node", ["scripts/verify-vera-freshness.cjs"], env);
     run("node", ["scripts/verify-case-editorial.cjs"], env);
     run("node", ["scripts/verify-inquiry-enhancement.cjs"], env);
+    run("node", ["scripts/verify-steam-acquisition.cjs"], env);
     run("node", ["scripts/verify-reader-audit.cjs"], { ...env, READER_AUDIT_URL: url });
     run("node", ["scripts/verify-card-interiors.cjs"], { ...env, CARD_INTERIORS_URL: url });
     run("node", ["scripts/verify-anchor-readers.cjs"], { ...env, ANCHOR_READER_URL: url });
@@ -117,6 +123,7 @@ async function browserLanes() {
 run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? ["--release"] : [])]);
 run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
 run("python3", ["scripts/audit-social-cards.py", dist]);
+run("python3", ["scripts/audit-website-markets.py", dist]);
 // Every lane: an indexable <title> over 70 characters is truncated in search results.
 run("node", ["scripts/audit-title-budget.mjs", "--dist", dist]);
 
@@ -155,7 +162,7 @@ if (release) {
   run("npm", ["run", "audit:release"]);
   console.log("\nPASS tile release gate.");
 } else if (functional) {
-  console.log("\nPASS tile functional gate (local Chrome and an isolated local server).");
+  console.log(`\nPASS tile functional gate (${chromeOnly ? "installed Chrome only; WebKit not assessed" : "Chrome and WebKit"}; isolated local server).`);
 } else {
   console.log("\nPASS tile artifact gate.");
 }

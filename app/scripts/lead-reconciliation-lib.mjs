@@ -44,17 +44,25 @@ function intentBucket(value) {
   return new Set(["website", "support", "consulting", "systems", "general"]).has(intent) ? intent : "unknown";
 }
 
+function sourceLabel(value) {
+  const normalized = text(value, 100).toLowerCase();
+  if (!normalized) return "unknown";
+  const labels = {
+    google: "google", bing: "bing", duckduckgo: "duckduckgo", yahoo: "yahoo",
+    chatgpt: "chatgpt", openai: "chatgpt", "chatgpt.com": "chatgpt", "chat.openai.com": "chatgpt",
+    "claude.ai": "claude", "perplexity.ai": "perplexity", "gemini.google.com": "gemini",
+    "copilot.microsoft.com": "copilot", "meta.ai": "meta_ai", "muse.ai": "muse",
+    instagram: "instagram", ig: "instagram", facebook: "facebook", youtube: "youtube", linktree: "linktree",
+    referral: "referral", partner: "referral", client: "referral", social: "social", other_ai: "other_ai",
+    direct: "direct", "(direct)": "direct", prefer_not_to_say: "prefer_not_to_say",
+  };
+  return Object.hasOwn(labels, normalized) ? labels[normalized] : "other";
+}
+
 function sourceBucket(lead) {
-  const values = [lead.context.discovery_source, lead.attribution.utm_source, lead.context.source]
-    .map((value) => text(value, 100).toLowerCase());
-  if (values.some((value) => value === "google")) return "google";
-  if (values.some((value) => value === "bing")) return "bing";
-  if (values.some((value) => value === "chatgpt" || value === "openai")) return "chatgpt";
-  if (values.some((value) => value === "instagram" || value === "ig")) return "instagram";
-  if (values.some((value) => value === "referral" || value === "partner" || value === "client")) return "referral";
-  if (values.some((value) => value === "direct" || value === "(direct)")) return "direct";
-  if (values.every((value) => !value)) return "unknown";
-  return "other";
+  // The visitor's answer and observed arrival are different evidence. Prefer
+  // an explicit answer here, and expose both separately in the summary.
+  return sourceLabel(lead.context.discovery_source || lead.attribution.utm_source || lead.context.source);
 }
 
 function submissionId(submission, data) {
@@ -239,6 +247,9 @@ export function leadSummary(ledger) {
   const stages = Object.fromEntries(LEAD_STAGES.map((stage) => [stage, 0]));
   const origins = {};
   const sources = {};
+  const reportedSources = {};
+  const observedSources = {};
+  const sourceOutcomes = {};
   const intents = {};
   for (const lead of included) {
     stages[lead.stage] += 1;
@@ -247,6 +258,14 @@ export function leadSummary(ledger) {
     const source = sourceBucket(lead);
     const intent = intentBucket(lead.context.intent);
     sources[source] = (sources[source] || 0) + 1;
+    const reported = sourceLabel(lead.context.discovery_source);
+    const observed = sourceLabel(lead.attribution.utm_source);
+    reportedSources[reported] = (reportedSources[reported] || 0) + 1;
+    observedSources[observed] = (observedSources[observed] || 0) + 1;
+    const outcome = sourceOutcomes[source] ??= { received: 0, qualifiedEver: 0, won: 0, wonValue: 0 };
+    outcome.received += 1;
+    if (lead.stageHistory.some(entry => entry.stage === "qualified")) outcome.qualifiedEver += 1;
+    if (lead.stage === "won") { outcome.won += 1; outcome.wonValue += lead.knownValue || 0; }
     intents[intent] = (intents[intent] || 0) + 1;
   }
   const wonValue = included.filter((lead) => lead.stage === "won").reduce((sum, lead) => sum + (lead.knownValue || 0), 0);
@@ -257,6 +276,9 @@ export function leadSummary(ledger) {
     stages,
     origins,
     sources,
+    reportedSources,
+    observedSources,
+    sourceOutcomes,
     intents,
     wonValue,
   };

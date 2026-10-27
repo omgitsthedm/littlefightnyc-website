@@ -220,10 +220,10 @@ def clay_hero():
     return (
         '<section class="sculpture-hero" data-hero="clay-neighborhood" data-clay-version="5" aria-labelledby="home-title">'
         '<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1>'
-        '<p>Websites, tech support, and custom software for the independent businesses '
-        'that make <span class="hero-ending">New York, New York.</span></p>'
-        '<div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/" data-reader-link>'
-        '<span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link>'
+        '<p>Custom websites for small and medium businesses in '
+        'New York City, Phoenix and <span class="hero-ending">Martha’s Vineyard.</span></p>'
+        '<div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/?intent=website&amp;source=%2F" data-reader-link>'
+        '<span>Plan my website</span><span class="help-button__plus" aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link>'
         '<span>Explore our work <span aria-hidden="true">+</span></span></a></div></div>'
         '<div class="sculpture-hero-stage clay-neighborhood">'
         + prop('environment-cloud-cumulus', 'clay-cloud clay-cloud-one')

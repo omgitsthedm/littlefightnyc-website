@@ -78,6 +78,9 @@ test("provider quarantines stay visible but outside the sales funnel", () => {
     stages: { new: 0, contacted: 0, qualified: 0, proposal: 0, won: 0, lost: 0 },
     origins: {},
     sources: {},
+    reportedSources: {},
+    observedSources: {},
+    sourceOutcomes: {},
     intents: {},
     wonValue: 0,
   });
@@ -210,6 +213,30 @@ test("summary groups arbitrary raw source strings into a bounded other bucket", 
   const lead = createManualLead({ channel: "call", context: { source: "owner@example.com" } });
   ledger.leads.push(lead);
   assert.deepEqual(leadSummary(ledger).sources, { other: 1 });
+});
+
+test("reported discovery and observed arrival remain separate through qualified and won outcomes", () => {
+  const ledger = emptyLedger();
+  const lead = createManualLead({ channel: "email", context: { discovery_source: "chatgpt" }, attribution: { utm_source: "google", utm_medium: "organic" } });
+  ledger.leads.push(lead);
+  updateLeadStage(ledger, lead.id, "qualified", "2026-10-25T20:00:00.000Z");
+  updateLeadStage(ledger, lead.id, "won", "2026-10-25T21:00:00.000Z", "1800");
+  const summary = leadSummary(ledger);
+  assert.deepEqual(summary.sources, { chatgpt: 1 });
+  assert.deepEqual(summary.reportedSources, { chatgpt: 1 });
+  assert.deepEqual(summary.observedSources, { google: 1 });
+  assert.deepEqual(summary.sourceOutcomes, { chatgpt: { received: 1, qualifiedEver: 1, won: 1, wonValue: 1800 } });
+  setLeadExclusion(ledger, lead.id, "duplicate");
+  assert.deepEqual(leadSummary(ledger).sourceOutcomes, {});
+});
+
+test("assistant domains are recognized without trusting lookalike or arbitrary source text", () => {
+  const ledger = emptyLedger();
+  for (const source of ["chatgpt.com", "claude.ai", "perplexity.ai", "gemini.google.com", "copilot.microsoft.com", "meta.ai", "muse.ai", "chatgpt.com.evil.invalid", "constructor"]) {
+    ledger.leads.push(createManualLead({ channel: "email", attribution: { utm_source: source } }));
+  }
+  assert.deepEqual(leadSummary(ledger).sources, { chatgpt: 1, claude: 1, perplexity: 1, gemini: 1, copilot: 1, meta_ai: 1, muse: 1, other: 2 });
+  assert.equal(JSON.stringify(leadSummary(ledger)).includes("evil.invalid"), false);
 });
 
 test("legacy form fields map into a private receipt without inventing a sales stage", () => {

@@ -124,7 +124,7 @@ async function checkRotation(browser) {
     assert.equal(await page.locator('.hero-work-index').count(), 0);
     assert.equal(await page.locator('.clay-hero-project').count(), 2);
     assert.equal(await page.locator('.clay-room-link').count(), 4);
-    assert.deepEqual(await page.locator('.sculpture-hero-actions a').evaluateAll(links => links.map(a => a.getAttribute('href'))), ['/tech-audit/', '/examples/']);
+    assert.deepEqual(await page.locator('.sculpture-hero-actions a').evaluateAll(links => links.map(a => a.getAttribute('href'))), ['/tech-audit/?intent=website&source=%2F', '/examples/']);
     await page.locator('#explore-toggle').click();
     await page.locator('#motion-toggle').click();
     await page.locator('#explore-menu .menu-close').click();

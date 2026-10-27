@@ -1,7 +1,37 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-10-24. Resolve production revision from `/release.json`;
+Last updated: 2026-10-25. Resolve production revision from `/release.json`;
 account configuration is dated evidence, separate from code publication.
+
+## Local acquisition repair, not yet published
+
+The October 25 candidate preserves source-only ChatGPT links and fixed labels
+for Claude, Perplexity, Gemini, Copilot, Meta AI and Muse. Known search and
+social referrers also survive navigation into the inquiry form. Only bounded
+source/medium labels enter attribution; conversation paths, search queries,
+arbitrary campaigns and click IDs are excluded. Existing approved paid
+campaigns and their separate advertising consent remain unchanged.
+
+Attribution follows the existing visit-counting choice. Withdrawal clears its
+session record, and the form rechecks that choice when constructing the POST;
+stale or tampered hidden inputs cannot override it. An unrecognized new
+campaign clears the old campaign instead of assigning it another source's lead.
+
+`tech_audit_failed` is diagnostic, never a key event. Its fixed categories are
+`validation`, `offline`, `network`, `timeout` and `rejected`. Validation may
+include one field name from the form's fixed schema, never the field's value.
+Compare distinct affected users and subsequent successful retries; raw failures
+are attempts, not a count of lost customers. Internal fixture inquiries remain
+excluded. `tech_audit_submit` now includes the resolved service intent.
+
+The private `leads:summary` command now separates `reportedSources` (the optional
+visitor answer) from `observedSources` (the captured arrival). Its primary
+`sources` breakdown prefers an explicit visitor answer, then observed source,
+then existing context. `sourceOutcomes` counts received inquiries, records that
+actually reached qualified, current won records and their operator-recorded
+value. Won value is not proof of collected payment. Excluded and quarantined
+records remain outside every outcome count. The ledger stays private and local;
+this work does not import, modify or invent any customer or sales records.
 
 ## Privacy boundary
 
@@ -29,7 +59,7 @@ Use this common funnel, with **active users** beside raw event counts:
 
 1. `page_view` on `/tech-audit/` — the inquiry page was viewed.
 2. `tech_audit_started` — a field received non-empty input, or a valid submission began.
-3. `tech_audit_submit` — validation allowed the native POST to begin.
+3. `tech_audit_submit` — the hydrated form endpoint returned a successful response; a no-JavaScript native submission is outside this browser event.
 4. `generate_lead` with `method=tech_audit_form` — `/thanks/` rendered with a submission marker.
 
 `first_look_opened`, `website_plan_intent`, `human_review_requested`,
@@ -40,7 +70,7 @@ not emit a preceding CTA click. Do not require `intake_step_1` or
 the current form starts at step 3.
 
 The success-page marker is browser evidence, not a provider receipt. Only
-the same-tab session marker written after native form validation qualifies;
+the same-tab session marker written during the validated submission qualifies;
 a query-only confirmation URL cannot emit `generate_lead`. The marker is
 consumed to prevent ordinary reload duplicates, and marked internal tests
 are excluded. Deliberately altered browser storage can still forge browser
@@ -60,7 +90,7 @@ limitation above. The authenticated GA4 UI confirmed it is a key event on
 2026-09-29. The standard `purchase` definition also exists; it is not evidence
 of a purchase or a website sales funnel. The Tech Audit form
 does not also emit generic `form_submit`. Its submit event carries
-`form_name` and `page_path`, but not `intent` or `placement`; do not assume
+`form_name`, `page_path` and `intent`, but not `placement`; do not assume
 every event has every breakdown dimension. `tech_audit_started` and the
 thanks-page event carry the resolved intent.
 

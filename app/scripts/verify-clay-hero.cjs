@@ -30,7 +30,8 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
         data.readUInt32BE(20) === variant.height && variant.width <= asset.sourceWidth && hash(file) === variant.sha256);
     }
   }
-  for (const [engine, type] of [['chrome', chromium], ['webkit', webkit]]) {
+  const engines = process.env.TILE_QUALITY_BROWSER === 'chrome' ? [['chrome', chromium]] : [['chrome', chromium], ['webkit', webkit]];
+  for (const [engine, type] of engines) {
     const browser = await type.launch(engine === 'chrome' ? { channel: 'chrome', headless: true } : { headless: true });
     try {
       for (const width of [320, 393, 768, 1440, 2560]) {
@@ -48,20 +49,21 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
           motion: hero.dataset.motion,
           buttons: [...document.querySelectorAll('.primary-nav .start-button,.sculpture-help')].filter(a => a.getClientRects().length).map(a => {
             const r = a.getBoundingClientRect();
-            return { width: r.width, height: r.height, text: a.textContent, href: a.getAttribute('href'), surface: getComputedStyle(a, '::before').backgroundImage };
+            return { width: r.width, height: r.height, primary: a.classList.contains('sculpture-help'), text: a.textContent, href: a.getAttribute('href'), surface: getComputedStyle(a, '::before').backgroundImage };
           }),
         }));
         pass(engine + ' ' + width + ' approved scene fits', state.design === 'clay-neighborhood' && !state.overflow && state.rooms === 4 && state.projects === 2 && state.rachel && state.building.visible);
-        pass(engine + ' ' + width + ' accessible handmade Get help buttons', state.buttons.length >= 1 && state.buttons.every(b => b.width >= 44 && b.height >= 44 && b.text.includes('Get help') && b.href === '/tech-audit/' && /help-button-orange(-\d+)?\.webp/.test(b.surface)));
+        pass(engine + ' ' + width + ' accessible handmade website and help buttons', state.buttons.length >= 1 && state.buttons.every(b => b.width >= 44 && b.height >= 44 && (b.primary ? b.text.includes('Plan my website') && b.href === '/tech-audit/?intent=website&source=%2F' : b.text.includes('Get help') && b.href === '/tech-audit/') && /help-button-orange(-\d+)?\.webp/.test(b.surface)));
         pass(engine + ' ' + width + ' respects reduced motion', state.motion === 'paused');
         if (width === 2560) pass(engine + ' Retina desktop receives the native diorama', /\/hero-diorama-clean\.(avif|webp)$/.test(state.building.source));
         else if (width <= 393) pass(engine + ' phones receive responsive diorama artwork', /\/hero-diorama-clean-384\.(avif|webp)$/.test(state.building.source));
-        // Get help opens the one-tap chooser; closing it returns focus to the button.
+        // The primary offer now opens the website inquiry in one step.
         await page.locator('.sculpture-help').click();
-        await page.waitForFunction(() => document.querySelector('#get-help-panel')?.open && document.querySelectorAll('#get-help-panel [data-help-choice]').length === 4);
+        await page.waitForFunction(() => document.querySelector('#detail')?.open && document.querySelector('#detail-body [name="intent"]')?.value === 'website');
+        pass(engine + ' ' + width + ' website inquiry skips the service chooser', !await page.locator('#get-help-panel').evaluate(panel => panel.open));
         await page.keyboard.press('Escape');
-        await page.waitForFunction(() => !document.querySelector('#get-help-panel').open && document.activeElement === document.querySelector('.sculpture-help'));
-        pass(engine + ' ' + width + ' Get help chooser opens and restores focus', true);
+        await page.waitForFunction(() => !document.querySelector('#detail').open && document.activeElement === document.querySelector('.sculpture-help'));
+        pass(engine + ' ' + width + ' website inquiry restores focus', true);
         for (const selector of ['.hero-main', '.hero-secondary', '.clay-room-home', '.clay-room-studio', '.clay-room-meeting', '.clay-room-shop', '.clay-review-sticker']) {
           const link = page.locator(selector), href = await link.getAttribute('href');
           await link.click();
@@ -97,6 +99,6 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
       await nojs.close();
     } finally { await browser.close(); }
   }
-  fs.writeFileSync(path.join(evidence, 'verification.json'), JSON.stringify({ passed: true, checks }, null, 2));
+  fs.writeFileSync(path.join(evidence, 'verification.json'), JSON.stringify({ passed: true, browsers: engines.map(([name]) => name), checks }, null, 2));
   console.log('Passed ' + checks.length + ' clay artwork and hero checks.');
 })().catch(error => { console.error(error); process.exitCode = 1; });

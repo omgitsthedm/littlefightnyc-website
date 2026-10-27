@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { leadCampaignParameters, publicCampaignParameters } from "./socialCampaign";
+import { leadCampaignParameters, publicCampaignParameters, publicReferralParameters } from "./socialCampaign";
 
 const searchCampaign = {
   utm_source: "google",
@@ -9,6 +9,37 @@ const searchCampaign = {
 };
 
 describe("public campaign attribution", () => {
+  it.each(["chatgpt.com", "claude.ai", "perplexity.ai", "gemini.google.com", "copilot.microsoft.com", "meta.ai", "muse.ai"])(
+    "retains the fixed %s source without private prompt or campaign values", (source) => {
+      const input = new URLSearchParams({ utm_source: source, prompt: "private-fixture", utm_campaign: "private-fixture", utm_content: "private-fixture" });
+      const expected = { utm_source: source, utm_medium: "referral" };
+      expect(Object.fromEntries(publicCampaignParameters(input)!)).toEqual(expected);
+      expect(Object.fromEntries(leadCampaignParameters(input)!)).toEqual(expected);
+    },
+  );
+
+  it.each([
+    "utm_source=chatgpt.com&utm_medium=cpc",
+    "utm_source=chatgpt.com&gclid=private-fixture",
+    "utm_source=chatgpt.com&msclkid=private-fixture",
+    "utm_source=chatgpt.com&utm_source=private-fixture",
+    "utm_source=chatgpt.com&utm_medium=referral&utm_medium=cpc",
+    "utm_source=chatgpt.com.evil.invalid",
+  ])("rejects a paid, ambiguous or invented assistant arrival: %s", query => {
+    expect(publicCampaignParameters(new URLSearchParams(query))).toBeNull();
+    expect(leadCampaignParameters(new URLSearchParams(query))).toBeNull();
+  });
+
+  it.each(["https://chatgpt.com.evil.invalid/", "https://constructor/", "https://private-fixture.invalid/", "file://chatgpt.com/private", "not a URL"])(
+    "rejects an unknown referring address: %s", referrer => expect(publicReferralParameters(referrer)).toBeNull(),
+  );
+
+  it("classifies a recognized referrer without retaining its private path or query", () => {
+    expect(publicReferralParameters("https://chat.openai.com/c/private-fixture?prompt=private-fixture")?.toString())
+      .toBe("utm_source=chatgpt.com&utm_medium=referral");
+    expect(publicReferralParameters("https://www.google.com/search?q=private-fixture")?.toString())
+      .toBe("utm_source=google&utm_medium=organic");
+  });
   it.each(["search_human_help", "search_owner_control", "search_sitelink"])(
     "retains the fixed Google creative %s without private query values",
     (utm_content) => {

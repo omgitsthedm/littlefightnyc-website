@@ -120,6 +120,63 @@ const INSTAGRAM_BIO_SOURCE = "ig";
 const INSTAGRAM_BIO_MEDIUM = "social";
 const INSTAGRAM_BIO_CONTENT = "link_in_bio";
 
+const AI_SOURCES = new Set([
+  "chatgpt.com", "claude.ai", "perplexity.ai", "gemini.google.com",
+  "copilot.microsoft.com", "meta.ai", "muse.ai",
+]);
+
+// Public assistant links can contain only a source label. Keep that label,
+// never a conversation URL, prompt, arbitrary campaign, or advertising ID.
+function aiCampaignParameters(search: URLSearchParams): URLSearchParams | null {
+  const source = search.get("utm_source");
+  if (!source || !AI_SOURCES.has(source) || search.getAll("utm_source").length !== 1 ||
+      search.getAll("utm_medium").length > 1 ||
+      ![null, "", "referral", "ai-assistant"].includes(search.get("utm_medium")) ||
+      ["gclid", "gbraid", "wbraid", "msclkid"].some(key => search.has(key))) return null;
+  return new URLSearchParams({ utm_source: source, utm_medium: "referral" });
+}
+
+const REFERRAL_HOSTS: Readonly<Record<string, readonly [string, string]>> = {
+  "chatgpt.com": ["chatgpt.com", "referral"],
+  "www.chatgpt.com": ["chatgpt.com", "referral"],
+  "chat.openai.com": ["chatgpt.com", "referral"],
+  "claude.ai": ["claude.ai", "referral"],
+  "perplexity.ai": ["perplexity.ai", "referral"],
+  "www.perplexity.ai": ["perplexity.ai", "referral"],
+  "gemini.google.com": ["gemini.google.com", "referral"],
+  "copilot.microsoft.com": ["copilot.microsoft.com", "referral"],
+  "meta.ai": ["meta.ai", "referral"],
+  "www.meta.ai": ["meta.ai", "referral"],
+  "muse.ai": ["muse.ai", "referral"],
+  "www.muse.ai": ["muse.ai", "referral"],
+  "google.com": ["google", "organic"],
+  "www.google.com": ["google", "organic"],
+  "bing.com": ["bing", "organic"],
+  "www.bing.com": ["bing", "organic"],
+  "duckduckgo.com": ["duckduckgo", "organic"],
+  "search.yahoo.com": ["yahoo", "organic"],
+  "instagram.com": ["instagram", "social"],
+  "www.instagram.com": ["instagram", "social"],
+  "l.instagram.com": ["instagram", "social"],
+  "facebook.com": ["facebook", "social"],
+  "www.facebook.com": ["facebook", "social"],
+  "m.facebook.com": ["facebook", "social"],
+  "l.facebook.com": ["facebook", "social"],
+  "lm.facebook.com": ["facebook", "social"],
+  "linktr.ee": ["linktree", "referral"],
+  "youtube.com": ["youtube", "referral"],
+  "www.youtube.com": ["youtube", "referral"],
+};
+
+export function publicReferralParameters(referrer: string): URLSearchParams | null {
+  try {
+    const url = new URL(referrer);
+    if (!["https:", "http:"].includes(url.protocol) || !Object.hasOwn(REFERRAL_HOSTS, url.hostname)) return null;
+    const [source, medium] = REFERRAL_HOSTS[url.hostname];
+    return new URLSearchParams({ utm_source: source, utm_medium: medium });
+  } catch { return null; }
+}
+
 export function socialCampaignParameters(search: URLSearchParams): URLSearchParams | null {
   const source = search.get("utm_source");
   const content = search.get("utm_content");
@@ -134,6 +191,8 @@ export function socialCampaignParameters(search: URLSearchParams): URLSearchPara
 }
 
 export function publicCampaignParameters(search: URLSearchParams): URLSearchParams | null {
+  const assistant = aiCampaignParameters(search);
+  if (assistant) return assistant;
   const social = socialCampaignParameters(search);
   if (social) return social;
   const content = search.get("utm_content");
@@ -189,6 +248,13 @@ export function publicCampaignParameters(search: URLSearchParams): URLSearchPara
 export function leadCampaignParameters(search: URLSearchParams): URLSearchParams | null {
   const publicCampaign = publicCampaignParameters(search);
   if (publicCampaign) return publicCampaign;
+  if (search.getAll("utm_source").length === 1 && search.getAll("utm_medium").length === 1 &&
+      !search.has("utm_campaign") && !search.has("utm_content") &&
+      !["gclid", "gbraid", "wbraid", "msclkid"].some(key => search.has(key)) &&
+      Object.values(REFERRAL_HOSTS).some(([source, medium]) =>
+        source === search.get("utm_source") && medium === search.get("utm_medium"))) {
+    return new URLSearchParams({ utm_source: search.get("utm_source")!, utm_medium: search.get("utm_medium")! });
+  }
   if (search.get("utm_source") === "google" && search.get("utm_medium") === "organic" &&
       search.get("utm_campaign") === BUSINESS_PROFILE_CAMPAIGN) {
     const content = search.get("utm_content");

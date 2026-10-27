@@ -1,9 +1,11 @@
 import { installMetaMeasurement, trackMetaEvent, trackMetaPageView } from "./metaMeasurement";
 import measurementPaths from "@/data/measurement-paths.json" with { type: "json" };
 import { publicCampaignParameters } from "./socialCampaign";
+import { clearAttribution } from "./attribution";
 import {
   isInternalTechAuditTest,
   normalizeTechAuditDiscoverySource,
+  techAuditFailureParameters,
   TECH_AUDIT_SESSION_KEYS,
 } from "./techAuditContact";
 import {
@@ -152,6 +154,7 @@ const ANALYTICS_EVENT_NAMES = new Set([
   "sms_click",
   "tech_audit_intent",
   "tech_audit_started",
+  "tech_audit_failed",
   "tech_audit_submit",
   "tile_exposure",
   "tile_open",
@@ -174,6 +177,7 @@ const ANALYTICS_PARAMETER_KEYS = new Set([
   "entry_point",
   "entry_source",
   "failure_category",
+  "field_name",
   "form_name",
   "funnel_stage",
   "intent",
@@ -837,6 +841,11 @@ function funnelStage(eventName: string) {
 
 function track(eventName: string, parameters: Record<string, unknown> = {}, deferVendorBoot = false) {
   if (!ANALYTICS_EVENT_NAMES.has(eventName)) return;
+  if (eventName === "tech_audit_failed") {
+    const failure = techAuditFailureParameters(parameters);
+    if (!failure) return;
+    parameters = failure;
+  }
   const testMode = measurementTestMode();
   if (!testMode) trackMetaEvent(eventName);
   const analyticsAllowed = getAnalyticsConsent() === "granted";
@@ -1030,6 +1039,7 @@ function trackFirstPartyElementEvent(target: HTMLElement) {
 }
 
 export function installAnalyticsHooks() {
+  if (getAnalyticsConsent() !== "granted") clearAttribution();
   const removeMetaMeasurement = measurementTestMode()
     ? () => {}
     : installMetaMeasurement();
@@ -1180,6 +1190,7 @@ export function installAnalyticsHooks() {
     }
 
     setGoogleAnalyticsDisabled(true);
+    clearAttribution();
     pendingGaEvents = [];
     lastTrackedPageViewSignature = "";
     if (vendorBootTimer !== undefined && getAdvertisingConsent() !== "granted") {

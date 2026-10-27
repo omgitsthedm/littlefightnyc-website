@@ -1,5 +1,5 @@
 {
-  "note": "Reader answers under /answers/help/ stay noindex unless they carry a complete answer. The 24 expanded tech support answers (rewrite-support.json \"guide\") qualify: each renders a direct answer, checks, signs to get help, what we check, related questions and 300+ reader words (audit-tile-rewrite.py enforces it). Neighborhood pages follow their original route-meta policy: the 19 neighborhood overviews are indexable; neighborhood x service pages stay noindex.",
+  "note": "Reader answers under /answers/help/ stay noindex unless they carry a complete answer. The 24 expanded tech support answers (rewrite-support.json \"guide\") qualify: each renders a direct answer, checks, signs to get help, what we check, related questions and 300+ reader words (audit-tile-rewrite.py enforces it). Neighborhood pages follow their original route-meta policy: the 19 neighborhood overviews are indexable; neighborhood x service pages stay noindex. The three website-development market offers have distinct local context, real work, a project inquiry and reciprocal Service schema. Only these named routes qualify for the town-page exception.",
   "indexedHelpAnswers": [
     "/answers/help/backup/",
     "/answers/help/care/",
@@ -36,5 +36,10 @@
     "/answers/help/web-content-collection/",
     "/answers/help/web-homepage-priority/",
     "/answers/help/wifi/"
+  ],
+  "indexedWebsiteMarkets": [
+    "/markets/arizona/phoenix/",
+    "/markets/marthas-vineyard/",
+    "/markets/nyc/"
   ]
 }

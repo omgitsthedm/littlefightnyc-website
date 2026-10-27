@@ -56,6 +56,7 @@ NOINDEX_PREFIXES = ("/markets/", "/photos/", "/answers/help/", "/_readers/")
 # Mirrors the compiler: complete help answers are indexable; neighborhood
 # pages follow their original route-meta policy.
 INDEXED_HELP_ANSWERS = frozenset(json.loads((APP / "preview-content/search-policy.json").read_text())["indexedHelpAnswers"])
+INDEXED_WEBSITE_MARKETS = frozenset(json.loads((APP / "preview-content/search-policy.json").read_text())["indexedWebsiteMarkets"])
 # Dedicated VERA documents are rendered after the marketing compiler from its
 # protected core and pinned public archive. Preserve their existing policy.
 VERA_DOCUMENTS = ("/vera/manual/", "/vera/archive/")
@@ -443,6 +444,8 @@ def route_meta() -> dict[str, dict]:
 
 def indexable(route: str, meta: dict[str, dict]) -> bool:
     if route in INDEXED_HELP_ANSWERS:
+        return True
+    if route in INDEXED_WEBSITE_MARKETS:
         return True
     # Mirrors the compiler: market hubs and their question pages are indexable (2026-10-19).
     if re.match(r"^/markets/(?:[a-z0-9-]+/(?:answers/[a-z0-9-]+/)?)?$", route):

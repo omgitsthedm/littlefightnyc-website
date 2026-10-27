@@ -10,7 +10,7 @@ import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { auditRoutes } from "@/data/site";
 import { useHaptic } from "@/hooks/useHaptic";
 import { trackEvent } from "@/lib/analyticsClient";
-import { readAttribution } from "@/lib/attribution";
+import { applyCurrentAttribution, readAttribution } from "@/lib/attribution";
 import { safeTechAuditLeadOrigin } from "@/lib/techAuditOrigin";
 import { registerFirstLookWebMcp, type FirstLookStageStatus } from "@/lib/firstLookWebMcp";
 import { skelImg } from "@/lib/imgSkeleton";
@@ -153,7 +153,7 @@ function urlEncodedFormBody(form: HTMLFormElement): URLSearchParams {
   new FormData(form).forEach((value, key) => {
     if (typeof value === "string") body.append(key, value);
   });
-  return body;
+  return applyCurrentAttribution(body);
 }
 
 type ContactFields = {
@@ -482,6 +482,15 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     });
   }
 
+  function trackAuditFailure(category: string, field?: string) {
+    if (isInternalTechAuditTest(fields.contact, message)) return;
+    trackEvent("tech_audit_failed", {
+      intent: leadIntent,
+      failure_category: category,
+      ...(field ? { field_name: field } : {}),
+    });
+  }
+
   /* Inline validation (§6.2): check a required field when the user leaves it,
    * and clear its error the moment they fix it — never wait for submit. */
   function validateField(name: FieldName, value: string) {
@@ -625,6 +634,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
 
     if (Object.keys(nextErrors).length > 0) {
       event.preventDefault();
+      trackAuditFailure("validation", Object.keys(nextErrors)[0]);
       setSubmitIssue("");
       setShowContactFallback(false);
       setErrors(nextErrors);
@@ -644,6 +654,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     // tracking so a request that never left the device is not counted.
     if (typeof navigator !== "undefined" && navigator.onLine === false) {
       event.preventDefault();
+      trackAuditFailure("offline");
       writeDraft({ intent: intentMode, step, symptom, urgency, message, messageDirty, fields });
       setSubmitting(false);
       setSubmitIssue("Your request was not sent because you’re offline. Your answers are still here.");
@@ -736,6 +747,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     const submitAction = form.action;
     const requestBody = urlEncodedFormBody(form);
     const requestController = new AbortController();
+    let responseStatus = 0;
     submissionControllerRef.current = requestController;
     const requestTimeout = window.setTimeout(() => requestController.abort(), 20_000);
     void fetch(submitAction, {
@@ -747,18 +759,21 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       signal: requestController.signal,
     }).then((response) => {
       if (submissionAttempt !== submissionAttemptRef.current) return;
+      responseStatus = response.status;
       if (!response.ok) throw new Error(`Form request returned ${response.status}`);
       hapticSubmit();
       if (!submittedInternalTest) {
         trackEvent("tech_audit_submit", {
           form_name: "tech-audit-scratch",
           page_path: "/tech-audit/",
+          intent: leadIntent,
           ...(submittedDiscoverySource ? { discovery_source: submittedDiscoverySource } : {}),
         });
       }
       window.location.assign(submitAction);
     }).catch(() => {
       if (submissionAttempt !== submissionAttemptRef.current) return;
+      trackAuditFailure(requestController.signal.aborted ? "timeout" : responseStatus ? "rejected" : "network");
       submissionInFlightRef.current = false;
       submissionControllerRef.current = null;
       setSubmitting(false);
@@ -1207,8 +1222,9 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                       }
                     />
                     <p className="lf-audit__note" id={messageNoteId}>
-                      No passwords or private customer data. A short sentence is enough. If helpful,
-                      add your city, social page, or how customers find you.
+                      {websiteIntent
+                        ? "A short brief is enough. If known, add your city, website or social link, budget and launch date. No passwords or private customer data."
+                        : "No passwords or private customer data. A short sentence is enough. If helpful, add your city, social page, or how customers find you."}
                     </p>
                     {errors.message && (
                       <p className="lf-audit__error" role="alert" id={messageErrorId}>

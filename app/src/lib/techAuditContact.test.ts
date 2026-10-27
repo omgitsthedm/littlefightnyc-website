@@ -13,6 +13,7 @@ import {
   techAuditContactProblem,
   techAuditContactRoute,
   techAuditFollowUpProblem,
+  techAuditFailureParameters,
   techAuditPreferredRoute,
   techAuditReplyLanguage,
   type TechAuditContactRoute,
@@ -21,6 +22,20 @@ import {
 } from "./techAuditContact";
 
 describe("Tech Audit contact contract", () => {
+  it.each(["validation", "offline", "network", "timeout", "rejected"])(
+    "measures %s without sending visitor fields or provider errors", failure_category => {
+      const result = techAuditFailureParameters({ failure_category, intent: "website", field_name: "contact", contact: "private-fixture@example.com", message: "private-fixture", response_status: "private-fixture" });
+      expect(result).toMatchObject({ failure_category, intent: "website", form_name: "tech-audit-scratch", page_path: "/tech-audit/" });
+      expect(JSON.stringify(result)).not.toContain("private-fixture");
+      expect(result?.field_name).toBe(failure_category === "validation" ? "contact" : undefined);
+    },
+  );
+
+  it("rejects unapproved failure labels and removes unapproved field and intent values", () => {
+    expect(techAuditFailureParameters({ failure_category: "private-fixture" })).toBeNull();
+    expect(techAuditFailureParameters({ failure_category: "validation", field_name: "private-fixture", intent: "private-fixture" }))
+      .toEqual({ form_name: "tech-audit-scratch", page_path: "/tech-audit/", intent: "general", failure_category: "validation" });
+  });
   it.each([
     ["owner@example.com", "email"],
     ["JEN@SHOP.COM", "email"],

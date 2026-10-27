@@ -189,10 +189,16 @@
   },
   "markets": {
     "/markets/nyc/": {
-      "summary": "Plan around how your New York business works. Start with customer questions and daily bottlenecks, then choose a website change, a better tool, or tech support."
+      "summary": "Make it easy for the right customer to understand your business and get in touch. We design and build custom websites for New York City small and medium businesses, from service teams and shops to growing brands.",
+      "metaDescription": "Custom website design and development for New York City businesses. Service pages, real project work and clear inquiry paths. First 30 minutes free.",
+      "family": "web",
+      "eyebrow": "Website design & development"
     },
     "/markets/marthas-vineyard/": {
-      "summary": "Plan the season before it gets busy. Work through opening dates, booking, customer replies, and the tools your team needs to keep the details current."
+      "summary": "Give island residents and visitors a clear way to choose your business. We build custom websites for Martha’s Vineyard shops, hospitality businesses and service teams, with current details and an easy next step.",
+      "metaDescription": "Website design and development for Martha’s Vineyard businesses. Clear services, seasonal information and booking paths, built remotely by Little Fight NYC.",
+      "family": "web",
+      "eyebrow": "Website design & development"
     },
     "/markets/arizona/": {
       "summary": "Choose the next useful change for your Arizona business. Review service areas, inquiries, and follow-up, then repair a setup or build something new."
