@@ -16,8 +16,9 @@ const expectedConsolidatedGroups = 19;
 // The nine source-faithful review backs each retain their own static URL
 // (two Google reviews added 2026-10-19).
 // 17 consolidated routes now 301 (public/_redirects, 2026-10-17); 17 more thin
-// articles folded into deepened articles (2026-10-19).
-const expectedRouteCount = 389;
+// articles folded into deepened articles (2026-10-19). Two client case studies
+// added (Stephenie Powers, Hiraya Group, 2026-10-27).
+const expectedRouteCount = 391;
 
 function git(args, fallback = "") {
   try {

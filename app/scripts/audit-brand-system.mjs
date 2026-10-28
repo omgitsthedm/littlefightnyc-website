@@ -196,6 +196,7 @@ const claimFiles = [
   "src/pages/Zhongwen.tsx",
   "src/data/site-cases.ts",
   "scripts/prerender-seo.mjs",
+  "preview-content/cases.json",
 ];
 for (const relativePath of claimFiles) {
   const source = await read(relativePath);

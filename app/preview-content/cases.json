@@ -129,22 +129,23 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Dallas, Texas",
-    "summary": "An official film home that gives fans, press, and premiere guests direct paths to what each needs.",
+    "summary": "Fans get the trailer in one tap, press gets reviews and coverage, and anyone can ask about a screening, all on the film’s official home.",
     "challenge": [
-      "Marrow needed one official online home without losing the film’s mood.",
-      "Fans, press, and premiere guests each needed different material."
+      "Marrow needed one official home without losing the film’s mood.",
+      "Fans, press and festival guests each arrive wanting something different."
     ],
     "approach": [
-      "Built responsive film pages around the client’s poster, material, and credits.",
-      "Gave the trailer, press sources, credits, contact choices, and premiere archive distinct routes."
+      "The official trailer at the top of the page, one tap away.",
+      "Reviews, press coverage and film databases gathered in one section.",
+      "A contact form sorted by press, distribution, collaboration and viewing questions, plus a 224-photo premiere archive."
     ],
     "delivered": [
       "Film website and responsive layouts.",
-      "Premiere photo archive with event context and photographer credit.",
-      "Connected press and contact paths."
+      "Premiere photo archive with photographer credit.",
+      "Press, review and screening-inquiry paths."
     ],
     "outcome": [
-      "Live at ccfilms.net with separate routes for viewers, press, and premiere guests."
+      "Live at ccfilms.net, with separate paths for viewers, press and screening questions."
     ],
     "scope": [
       "Website design",
@@ -159,10 +160,58 @@
     "imageAlt": "CC Films website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-cc-films-desktop-1440.webp",
     "narrative": [
-      "CC Films needed atmosphere and clear facts at the same time. The site makes the trailer, press sources, credits, and archive legible without asking each audience to navigate through another audience’s task.",
-      "The client supplied the film material. Film credits and premiere photography remain with their original creators; Little Fight built the website, gallery, and connected paths."
+      "CC Films needed atmosphere and clear facts at the same time. The trailer, reviews, credits and archive each have their own place.",
+      "Film credits and premiere photography stay with their original creators. We built the website, gallery and connected paths."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://ccfilms.net/",
+    "metaDescription": "CC Films case study: the official website for Marrow, with the trailer up front, press and reviews in one place and a path to ask about screenings.",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/cc-films-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "CC Films live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/cc-films-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "CC Films live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Watch the trailer",
+        "href": "https://ccfilms.net/",
+        "detail": "The live film home, with the trailer and the screening inquiry form."
+      },
+      "schema": "Movie, VideoObject and Review details, so the film, trailer and press read as one title",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://ccfilms.net/",
+        "performance": 97,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "Organization",
+      "name": "CC Films",
+      "url": "https://ccfilms.net/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dallas",
+        "addressRegion": "TX",
+        "addressCountry": "US"
+      }
+    }
   },
   {
     "id": "chromatic-painting-design",
@@ -171,22 +220,23 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Greater Phoenix, Arizona",
-    "summary": "One studio identity with distinct paths for painting projects and mural commissions.",
+    "summary": "Homeowners see the finished work first, then ask for a painting estimate in one form, with a separate path for mural commissions.",
     "challenge": [
-      "Painting and mural work share craft but begin with different customer questions.",
-      "The site had to show both without splitting the studio into two brands."
+      "Painting and mural work share the craft but start with different questions.",
+      "An estimate request had to collect enough to quote without feeling like paperwork."
     ],
     "approach": [
-      "Built work pages and layouts around client project images.",
-      "Separated painting and mural routes and placed relevant inquiry choices beside each."
+      "Project photos lead, ahead of any service list.",
+      "One estimate form with seven required answers: name, city, how to reply, project type, what needs paint, timing and details. A photo is optional.",
+      "A separate commission path for murals, under the same studio name."
     ],
     "delivered": [
       "Website and project portfolio.",
-      "Distinct painting and mural service paths.",
-      "Project-specific inquiry links."
+      "A painting estimate form and a mural commission path.",
+      "Contact paths by call, text or email."
     ],
     "outcome": [
-      "Live at chromaticaz.com with distinct customer paths for painting and murals."
+      "Live at chromaticaz.com, with separate estimate and mural commission paths."
     ],
     "scope": [
       "Website design",
@@ -201,10 +251,64 @@
     "imageAlt": "Chromatic Painting & Design website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp",
     "narrative": [
-      "The design puts project work ahead of a generic service list. Painting and mural pages retain one studio identity while giving visitors the right question and inquiry route for the job they have.",
-      "The studio supplies its work and business facts; Little Fight gives that information a clear home."
+      "The design puts finished work ahead of a generic service list, so a visitor sees the quality before they are asked for anything.",
+      "Painting and mural pages keep one studio identity while giving each customer the right question for their job."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://chromaticaz.com/",
+    "metaDescription": "Chromatic Painting & Design case study: a Phoenix painter and muralist portfolio with a short estimate form and a separate mural commission path.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/chromatic-painting-design-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Chromatic Painting & Design live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/chromatic-painting-design-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Chromatic Painting & Design live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Request an estimate",
+        "href": "https://chromaticaz.com/estimate/",
+        "detail": "The live estimate form: location, surface, timing and an optional photo."
+      },
+      "schema": "HousePainter details with a published license credential and an FAQ",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://chromaticaz.com/",
+        "performance": 98,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "HousePainter",
+      "name": "Chromatic Painting & Design",
+      "url": "https://chromaticaz.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      },
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "Greater Phoenix"
+        }
+      ]
+    }
   },
   {
     "id": "clearhelp",
@@ -256,21 +360,22 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Glendale, Arizona",
-    "summary": "A neighborhood-bar site with a readable menu, event paths, visit details, and a separate editing flow for upkeep.",
+    "summary": "Tonight’s menu, upcoming events and a photo journal of the bar, readable on a phone, with one QR menu address that stays current.",
     "challenge": [
-      "Guests needed current menu, events, and directions.",
-      "The bar also needed a practical way to prepare updates without exposing drafts to guests."
+      "Guests want the current menu, what’s on this week and directions, usually from a phone at the door.",
+      "The bar needed to update menus and event posters without guests seeing a half-finished draft."
     ],
     "approach": [
-      "Built menu, events, gallery, and visit pages around supplied bar photography.",
-      "Created a focused menu-and-event-poster editing flow and one maintained QR menu destination."
+      "The menu as real text, on the homepage and at one QR address that never changes.",
+      "Upcoming events with dates and times, linked to the bar’s Eventbrite page.",
+      "A photo journal of 39 photos, sorted by people, drinks and the room."
     ],
     "delivered": [
-      "Guest website, readable text menu, gallery, events, and visit paths.",
-      "Menu QR page and a separate draft-to-publication editing flow."
+      "Guest website, text menu, events and gallery.",
+      "A QR menu page and a draft-to-publish editing flow."
     ],
     "outcome": [
-      "Live at easytigerglendale.com with one maintained menu address and a draft-to-publication editing flow."
+      "Live at easytigerglendale.com, with one maintained menu address for the website and the QR code."
     ],
     "scope": [
       "Website design",
@@ -285,10 +390,59 @@
     "imageAlt": "Easy Tiger Bar website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-easy-tiger-desktop-1440.webp",
     "narrative": [
-      "The guest-facing experience lets people see the room, read the menu as text, check events, and choose a map route. The same maintained menu page supports navigation and QR use.",
-      "On the owner side, the flow separates saved menu drafts from publication so a change can be prepared before guests see it."
+      "The guest side shows the room, the drinks and what’s on, then hands over directions and hours.",
+      "On the owner side, menu and poster changes are saved as drafts first, so a change can be prepared before guests see it."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://easytigerglendale.com/",
+    "metaDescription": "Easy Tiger case study: a Glendale neighborhood bar site with a text menu, upcoming events, a photo journal and one QR menu address.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/easy-tiger-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Easy Tiger Bar live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/easy-tiger-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Easy Tiger Bar live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "See the menu",
+        "href": "https://easytigerglendale.com/menu/",
+        "detail": "The live menu page, the same address the table QR code opens."
+      },
+      "schema": "BarOrPub details with opening hours and the town",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://easytigerglendale.com/",
+        "performance": 100,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "BarOrPub",
+      "name": "Easy Tiger Bar",
+      "url": "https://easytigerglendale.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Glendale",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    }
   },
   {
     "id": "grand-funding-llc",
@@ -297,22 +451,23 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Arizona and California",
-    "summary": "A real-estate funding site that separates project education and planning examples from a transaction-specific review.",
+    "summary": "Investors land on the loan they need, by deal type and city, and every page says terms come only after a real review.",
     "challenge": [
-      "Home purchase, repair, and new-build projects each raise different questions.",
-      "The site needed useful planning paths without implying an automatic loan decision."
+      "An investor searching for a bridge or fix-and-flip loan in a specific city needs a page that answers that search, not a general homepage.",
+      "Grand Funding focuses on business-purpose real estate financing and sets terms deal by deal, so no page could imply a standard offer."
     ],
     "approach": [
-      "Created separate project and loan-topic pages.",
-      "Connected planning inputs, an explained example, and a deal-review contact route."
+      "A page for each loan type: fix-and-flip, bridge, construction, cash-out refinance, second position and land.",
+      "City pages for Phoenix, Scottsdale, Los Angeles and San Diego, plus side-by-side comparisons and a glossary of lending terms.",
+      "The same boundary everywhere: business-purpose focus, terms set after a transaction review, and no commitment to lend."
     ],
     "delivered": [
-      "Responsive website and project-type paths.",
-      "Funding-information pages and a planning panel.",
-      "Contact choices for transaction-specific review."
+      "Loan-type, city, comparison and glossary pages.",
+      "A quote request that asks for the deal basics.",
+      "Lending disclosures for Arizona and California."
     ],
     "outcome": [
-      "Live at grandfundingllc.com. Planning figures are examples, not offers or approvals."
+      "Live at grandfundingllc.com. Every loan page leads to a quote request or a call."
     ],
     "scope": [
       "Website design",
@@ -326,10 +481,63 @@
     "imageAlt": "Grand Funding LLC website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-grand-funding-llc-desktop-1440.webp",
     "narrative": [
-      "Each project type gets a clear starting route, then gives a visitor room to understand the relevant topic and prepare basic facts for a conversation.",
-      "The planning panel can explain inputs, but Grand Funding reviews the deal and sets loan terms."
+      "Each page answers one search an investor actually makes, then asks for the deal basics: loan type, property location and target close.",
+      "Terms are never published. Grand Funding reviews the deal and provides them in writing."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://www.grandfundingllc.com/",
+    "metaDescription": "Grand Funding case study: business-purpose loan pages by deal type and city for Arizona and California investors, built to be found and honest about terms.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/grand-funding-llc-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Grand Funding LLC live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/grand-funding-llc-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Grand Funding LLC live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Request a quote",
+        "href": "https://www.grandfundingllc.com/apply",
+        "detail": "The live quote path: send the deal basics for a transaction review."
+      },
+      "schema": "Organization, WebPage and BreadcrumbList details, so each loan page is read as part of one lender",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://www.grandfundingllc.com/",
+        "performance": 99,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "FinancialService",
+      "name": "Grand Funding LLC",
+      "url": "https://www.grandfundingllc.com/",
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "Arizona"
+        },
+        {
+          "@type": "Place",
+          "name": "California"
+        }
+      ]
+    }
   },
   {
     "id": "hair-by-rachel-charles",
@@ -338,21 +546,23 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Phoenix, Arizona",
-    "summary": "A salon site that helps a visitor understand services before booking, while keeping Square in the booking path.",
+    "summary": "Every item on Rachel’s menu has its own Book button, each main service has a page, and AI assistants get a plain guide to the studio.",
     "challenge": [
-      "A new client needs to know what to choose, what it may cost, and how to book.",
-      "Not every visitor is ready to select a service immediately."
+      "A new color client needs to know what to book first, what it may cost, and that Rachel approves each request before it is confirmed.",
+      "Search engines and AI assistants can only recommend what they can read: the services, the studio, and how to book."
     ],
     "approach": [
-      "Built service paths and phone views around Rachel’s work and portrait.",
-      "Connected prices, first-visit guidance, and the Hair Brief before the Square booking handoff."
+      "A page for each main service: balayage, color correction, blonde, extensions and curly hair, each leading to booking.",
+      "A booking page that explains the Square handoff, the card hold and Rachel’s approval before the calendar opens.",
+      "Business details written for machines too: structured data in every page and a plain-text guide for AI assistants at /llms.txt."
     ],
     "delivered": [
-      "Website design, service pages, and Hair Brief experience.",
-      "Public booking path that retains Square."
+      "Website design, service pages, consultation and first-visit guides, and Spanish pages.",
+      "A Square booking path with the policy explained up front.",
+      "Structured data and an llms.txt guide for AI assistants."
     ],
     "outcome": [
-      "Live at hairbyrachelcharles.com with service guidance, the Hair Brief, and a Square booking path."
+      "Live at hairbyrachelcharles.com. Every service on the menu leads to a booking path."
     ],
     "scope": [
       "Website design",
@@ -368,10 +578,65 @@
     "imageAlt": "Hair By Rachel website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp",
     "narrative": [
-      "The site makes room for two kinds of visitor: someone ready to book and someone who only knows their hair goal. The Hair Brief offers the second visitor a separate place to start.",
-      "Square was retained instead of replaced. Service details, pricing, and first-visit context precede the booking calendar."
+      "The site makes room for two kinds of visitor: someone ready to book, and someone who only knows their hair goal. The consultation and first-visit pages give the second visitor a place to start.",
+      "Square stays the booking system. Each service, its starting price and the first-visit context come before the calendar."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://hairbyrachelcharles.com/",
+    "metaDescription": "Hair By Rachel Charles case study: a Phoenix stylist site with a page for each main service, a clear Square booking path and details AI assistants can read.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/hair-by-rachel-charles-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Hair By Rachel live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/hair-by-rachel-charles-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Hair By Rachel live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Book with Rachel",
+        "href": "https://hairbyrachelcharles.com/booking/",
+        "detail": "The live booking page: choose a service, then continue to Square."
+      },
+      "schema": "HairSalon, an OfferCatalog of services and a ReserveAction for booking",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://hairbyrachelcharles.com/",
+        "performance": 91,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": [
+        {
+          "icon": "database-duotone",
+          "label": "Lower running cost",
+          "text": "We reworked how the site reads its booking data. Database compute fell 89%, from 23.3 to 2.5 GB-hours a day. That is our own hosting measurement, not a client sales figure."
+        }
+      ]
+    },
+    "schemaAbout": {
+      "@type": "HairSalon",
+      "name": "Hair By Rachel Charles",
+      "url": "https://hairbyrachelcharles.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Phoenix",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    }
   },
   {
     "id": "legacy-music-group",
@@ -458,20 +723,23 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Glendale, Arizona",
-    "summary": "A pool-hall site that pairs venue character with readable games, menu, directions, and contact details.",
+    "summary": "People searching for pool or darts in Glendale land on a page about exactly that, and groups send their night plan in one form.",
     "challenge": [
-      "Visitors need the feeling of the venue alongside practical choices about games, food, and a visit.",
-      "The site needed to distinguish campaign artwork from photographs of the actual room."
+      "Someone nearby searches for a pool hall or darts in Glendale and needs the tables, the boards and the way in, fast, on a phone.",
+      "Groups needed a simple way to share a plan, without a form that pretends to reserve the room."
     ],
     "approach": [
-      "Built a responsive venue site with named activity sections, text menu content, and map/contact paths.",
-      "Kept real room photography distinct and labelled separately from campaign artwork."
+      "Pages that match what people search: a pool hall in Glendale, darts in Glendale, food and drinks, and what’s on.",
+      "A group request form: occasion, date, guest count and what the night should include, then a call to confirm.",
+      "Real room photos labeled as real, kept separate from the campaign artwork."
     ],
     "delivered": [
-      "Venue website, game and menu sections, and paths to visit information."
+      "Venue website with pool, darts, menu and events pages.",
+      "A group and private-event request form.",
+      "Map, call and directions paths on every page."
     ],
     "outcome": [
-      "Live at thebreakroompoolhall.com with games, menu, directions, and contact paths in one public home."
+      "Live at thebreakroompoolhall.com, with a group request path and a call button within reach."
     ],
     "scope": [
       "Website design",
@@ -486,10 +754,59 @@
     "imageAlt": "The Break Room website capture published in the Little Fight NYC case study.",
     "sourceImage": "https://littlefightnyc.com/assets/cases/2026-09-29/case-the-break-room-desktop-1440.webp",
     "narrative": [
-      "The site helps a visitor explore the room, activities, menu, and visit details from one public home. Its opening visual sets a campaign tone, while labeled room photography supplies factual venue context.",
-      "When event or visit information needs current confirmation, the site gives a direct contact route rather than making up an answer."
+      "The opening says what the room has: 13 pool tables, 8 dart boards, food and sports. Menu, events and directions are one tap away.",
+      "The group form says plainly that a request is not a reservation. The room confirms by phone."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://thebreakroompoolhall.com/",
+    "metaDescription": "The Break Room case study: Glendale pool hall and darts pages built for “near me” searches, a readable menu and a group request form.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/the-break-room-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "The Break Room live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/the-break-room-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "The Break Room live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Plan a group night",
+        "href": "https://thebreakroompoolhall.com/groups-events/",
+        "detail": "The live group request: send the plan, then call the room to confirm."
+      },
+      "schema": "LocalBusiness details for the room, its town and its phone",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://thebreakroompoolhall.com/",
+        "performance": 99,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "EntertainmentBusiness",
+      "name": "The Break Room",
+      "url": "https://thebreakroompoolhall.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Glendale",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    }
   },
   {
     "id": "the-tarot-hotline",
@@ -498,20 +815,22 @@
     "type": "Client work — public work, live",
     "statusLabel": "CLIENT WORK",
     "location": "Online and by appointment",
-    "summary": "A personal-service website that explains reading choices before a visitor books.",
+    "summary": "Booking comes first: pick a reading, share your question, and see current prices from Square before you pay.",
     "challenge": [
-      "Visitors may know their question but not which reading format fits.",
-      "The site needed to explain each format clearly before its booking step."
+      "Visitors may know their question but not which reading fits it.",
+      "Prices and openings change, so the site could not show a number that might be stale."
     ],
     "approach": [
-      "Built the visual system around the established hotline identity and clear service-choice pages.",
-      "Kept first-reading guidance and the Square booking path easy to find."
+      "Three readings with clear formats: a voice-note reading within 24 hours, a 30-minute session and a 60-minute session.",
+      "A five-step booking flow: your reading, your question, about you, time and format, then review.",
+      "Current prices load from Square, and payment happens on Square’s secure page."
     ],
     "delivered": [
-      "Website, reading-format pages, first-reading guidance, and a native Square booking path."
+      "Website, reading pages and first-reading guidance.",
+      "A five-step booking flow connected to Square."
     ],
     "outcome": [
-      "Live at thetarothotline.com with clear reading-format choices and a Square booking path."
+      "Live at thetarothotline.com, with booking as the main path on every page."
     ],
     "scope": [
       "Website design",
@@ -526,10 +845,59 @@
     "imageAlt": "The Tarot Hotline production homepage on desktop.",
     "sourceImage": "https://thetarothotline.com/",
     "narrative": [
-      "The Tarot Hotline makes the reading format and next step clear before a visitor books.",
-      "Reading-format pages and first-reading guidance lead into the existing Square booking experience."
+      "The Tarot Hotline makes the reading format and the next step clear before anyone pays.",
+      "First-reading guidance sits beside the booking flow for people who have never had a reading."
     ],
-    "publicType": "Website design"
+    "publicType": "Website design",
+    "publicUrl": "https://thetarothotline.com/",
+    "metaDescription": "The Tarot Hotline case study: a booking-first site where visitors choose a reading, share their question and see current Square prices before paying.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/the-tarot-hotline-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "The Tarot Hotline live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/the-tarot-hotline-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "The Tarot Hotline live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Start a reading",
+        "href": "https://thetarothotline.com/booking/",
+        "detail": "The live booking flow: choose a reading, then review before Square checkout."
+      },
+      "schema": "Service and Offer details with a ReserveAction for booking",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://thetarothotline.com/",
+        "performance": 99,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "Organization",
+      "name": "The Tarot Hotline",
+      "url": "https://thetarothotline.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Phoenix",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    }
   },
   {
     "id": "venuecircuit",
@@ -571,6 +939,187 @@
       "The demo uses sourced listings and fictional operations. It does not represent a deployed venue account."
     ],
     "publicType": "Public platform"
+  },
+  {
+    "id": "stephenie-powers",
+    "slug": "stephenie-powers",
+    "name": "Stephenie Powers",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "Phoenix, Arizona",
+    "summary": "Every service on Stephenie’s menu has its own Book button into Square, with a guide page for each kind of appointment.",
+    "challenge": [
+      "A new client choosing between a cut, color, highlights or extensions needs to see the options and book the right one.",
+      "A long salon menu is hard to use on a phone, and the wrong booking costs everyone time."
+    ],
+    "approach": [
+      "Guide pages for haircuts, men’s cuts, color, blonde and highlights, color correction and extensions.",
+      "A booking page where every service has its own Book button into Square.",
+      "First-visit, pricing and FAQ pages for the questions people ask before they book."
+    ],
+    "delivered": [
+      "Website design and service guide pages.",
+      "A booking page with a Square link for each service.",
+      "First-visit, pricing, FAQ and portfolio pages."
+    ],
+    "outcome": [
+      "Live at stepheniepowershair.com. Every service on the menu leads to its own booking button."
+    ],
+    "scope": [
+      "Website design",
+      "Salon website",
+      "Service menu",
+      "Square booking"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/stephenie-powers/",
+    "image": "assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1111,
+    "imageAlt": "Stephenie Powers website capture published in the Little Fight NYC case study.",
+    "publicType": "Website design",
+    "narrative": [
+      "The opening shows Stephenie’s style and puts Book with Stephenie on the first screen.",
+      "The service menu is grouped the way clients think about it, so the right appointment is one tap from its guide."
+    ],
+    "publicUrl": "https://stepheniepowershair.com/",
+    "metaDescription": "Stephenie Powers case study: an Uptown Phoenix stylist site where every service on the menu leads straight to its own Square booking button.",
+    "marketPath": "/markets/arizona/phoenix/",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Stephenie Powers live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/stephenie-powers-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Stephenie Powers live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Book with Stephenie",
+        "href": "https://stepheniepowershair.com/booking/",
+        "detail": "The live booking page: each service opens its own Square booking."
+      },
+      "schema": "HairSalon and Service details for the studio and its menu",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://stepheniepowershair.com/",
+        "performance": 93,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "HairSalon",
+      "name": "Stephenie Powers",
+      "url": "https://stepheniepowershair.com/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Phoenix",
+        "addressRegion": "AZ",
+        "addressCountry": "US"
+      }
+    }
+  },
+  {
+    "id": "hiraya-group",
+    "slug": "hiraya-group",
+    "name": "Hiraya Group",
+    "type": "Client work — public work, live",
+    "statusLabel": "CLIENT WORK",
+    "location": "United States",
+    "summary": "Contractors and restoration teams find the estimating help they need and start a file, with a separate plain-language page for property owners.",
+    "challenge": [
+      "Roofers, restoration crews and builders each arrive with a different job: a new repair estimate, a missed item, or a bid to write.",
+      "Property owners with an insurance claim needed their own starting point, not a page written for contractors."
+    ],
+    "approach": [
+      "A page for each service: Xactimate estimating, supplement support, construction bids and estimating partnerships.",
+      "Guides and a document checklist that help a team gather the right files before the first conversation.",
+      "A separate page for property owners that explains the service and asks where the property is first."
+    ],
+    "delivered": [
+      "Website design and service pages.",
+      "Resource guides and a document checklist.",
+      "A contact path for estimate and claim questions."
+    ],
+    "outcome": [
+      "Live at hirayagroup.net, with a separate starting point for contractors and for property owners."
+    ],
+    "scope": [
+      "Website design",
+      "Estimating services",
+      "Service pages",
+      "Resource guides"
+    ],
+    "url": "https://littlefightnyc.com/case-studies/hiraya-group/",
+    "image": "assets/case-evidence-20261027/hiraya-group-desktop.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1111,
+    "imageAlt": "Hiraya Group website capture published in the Little Fight NYC case study.",
+    "publicType": "Website design",
+    "narrative": [
+      "The opening speaks to the person with photos on their phone and a deadline, then sorts them by the work in front of them.",
+      "Fees and the first step are explained before a visitor is asked to get in touch."
+    ],
+    "publicUrl": "https://www.hirayagroup.net/",
+    "metaDescription": "Hiraya Group case study: an insurance estimating site with a page for each service, file-prep guides and a separate page for property owners.",
+    "proof": {
+      "captureDate": "2026-10-27",
+      "captures": {
+        "desktop": {
+          "src": "/assets/case-evidence-20261027/hiraya-group-desktop.webp",
+          "width": 1600,
+          "height": 1111,
+          "alt": "Hiraya Group live website on desktop, captured October 27, 2026."
+        },
+        "phone": {
+          "src": "/assets/case-evidence-20261027/hiraya-group-phone.webp",
+          "width": 780,
+          "height": 1688,
+          "alt": "Hiraya Group live website on a phone, captured October 27, 2026."
+        }
+      },
+      "action": {
+        "label": "Discuss an estimate",
+        "href": "https://www.hirayagroup.net/contact/",
+        "detail": "The live contact page for estimate questions."
+      },
+      "schema": "Organization and FAQPage details",
+      "lighthouse": {
+        "date": "2026-10-27",
+        "formFactor": "mobile",
+        "version": "13.6.0",
+        "url": "https://www.hirayagroup.net/",
+        "performance": 98,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100,
+        "evidence": ".lifi/evidence/lighthouse/client-case-studies-2026-10-27.md"
+      },
+      "extra": []
+    },
+    "schemaAbout": {
+      "@type": "Organization",
+      "name": "Hiraya Group",
+      "url": "https://www.hirayagroup.net/",
+      "areaServed": [
+        {
+          "@type": "Place",
+          "name": "United States"
+        }
+      ]
+    }
   },
   {
     "id": "deckspace",

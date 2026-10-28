@@ -3,19 +3,22 @@
     "question": "One studio.\nTwo starting points.",
     "approach": "Put the craft\nin the foreground.",
     "mobile": "The studio,\nwithin reach.",
-    "handoff": "From seeing the work\nto starting a project."
+    "handoff": "From seeing the work\nto starting a project.",
+    "proof": "Check it\nyourself."
   },
   "hair-by-rachel-charles": {
     "question": "A new client needs\na little guidance.",
     "approach": "The right service.\nThen the calendar.",
     "mobile": "Make room for\nthe first visit.",
-    "handoff": "Meet Rachel.\nFind your next step."
+    "handoff": "Meet Rachel.\nFind your next step.",
+    "proof": "Check it\nyourself."
   },
   "cc-films": {
     "question": "The film has a mood.\nThe site should, too.",
     "approach": "One film.\nDifferent audiences.",
     "mobile": "The story travels\nwith you.",
-    "handoff": "Fans, press, guests.\nA path for each."
+    "handoff": "Fans, press, guests.\nA path for each.",
+    "proof": "Check it\nyourself."
   },
   "after-hours-agenda": {
     "question": "The clothes lead.\nThe brand stays visible.",
@@ -33,13 +36,15 @@
     "question": "Before the first drink,\na few practical details.",
     "approach": "The room. The menu.\nThe way there.",
     "mobile": "The neighborhood bar,\nin your pocket.",
-    "handoff": "One menu address.\nA way to keep it current."
+    "handoff": "One menu address.\nA way to keep it current.",
+    "proof": "Check it\nyourself."
   },
   "grand-funding-llc": {
     "question": "Different projects.\nDifferent questions.",
     "approach": "Make room\nto understand the deal.",
     "mobile": "The next conversation\nstarts with context.",
-    "handoff": "Useful preparation.\nA specific review."
+    "handoff": "Useful preparation.\nA specific review.",
+    "proof": "Check it\nyourself."
   },
   "logan-loans": {
     "question": "A first home is not\nan investor’s question.",
@@ -51,13 +56,15 @@
     "question": "Feel the room.\nThen plan the visit.",
     "approach": "Give the atmosphere\nsome practical company.",
     "mobile": "Your next night out,\nwithin reach.",
-    "handoff": "Games, food, directions.\nOne place to begin."
+    "handoff": "Games, food, directions.\nOne place to begin.",
+    "proof": "Check it\nyourself."
   },
   "the-tarot-hotline": {
     "question": "A reading starts\nwith the question.",
     "approach": "Make the format\nclear before booking.",
     "mobile": "A real voice.\nA clear next step.",
-    "handoff": "Choose a format.\nThen book."
+    "handoff": "Choose a format.\nThen book.",
+    "proof": "Check it\nyourself."
   },
   "venuecircuit": {
     "question": "One shared show.\nEvery side in view.",
@@ -70,5 +77,17 @@
     "approach": "Set the mood.\nShow the next step.",
     "mobile": "The same signal.\nAny screen.",
     "handoff": "The studio, the team,\nand the booking page."
+  },
+  "stephenie-powers": {
+    "question": "A long menu.\nOne right appointment.",
+    "approach": "Every service.\nIts own Book button.",
+    "handoff": "From the menu\nto the chair.",
+    "proof": "Check it\nyourself."
+  },
+  "hiraya-group": {
+    "question": "Every file starts\ndifferently.",
+    "approach": "Sort by the job\nin front of you.",
+    "handoff": "From the photos\nto the estimate.",
+    "proof": "Check it\nyourself."
   }
 }

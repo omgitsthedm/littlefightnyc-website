@@ -43,3 +43,39 @@
 .lf-reader .case-mobile-capture{display:block;text-decoration:none;border-radius:24px;outline-offset:8px!important}
 .lf-reader .case-mobile-capture img{aspect-ratio:390/844;object-fit:cover;object-position:top}
 .lf-reader .case-mobile-capture+figcaption{margin-top:12px}
+/* Check it yourself: dated captures and checks from the live client site. */
+.lf-reader .case-proof .case-chapter-copy>p{font-size:18px;line-height:1.55}
+.lf-reader .case-proof-shots{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,24%);gap:clamp(14px,2.4vw,28px);align-items:end;margin:28px 0 8px}
+.lf-reader .case-proof-shots figure{margin:0;min-width:0}
+.lf-reader .case-proof-shots img{display:block;width:100%;height:auto;border-radius:10px;outline:1px solid rgb(246 243 236 / .2)}
+.lf-reader .case-proof-phone img{border-radius:18px}
+.lf-reader .case-proof-shots figcaption{margin-top:12px;color:var(--workbench-prose,#d9d8d4);font-size:16px;line-height:1.45}
+.lf-reader .case-proof-list{list-style:none;margin:30px 0 0;padding:0}
+.lf-reader .case-proof-list>li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;padding:22px 0;border-top:1px solid var(--workbench-rule,rgb(246 243 236 / .24))}
+.lf-reader .case-proof-icon{width:32px;height:32px;margin-top:2px}
+.lf-reader .case-proof-list h3{margin:0 0 8px;color:var(--workbench-paper,#f6f3ec);font-size:20px;line-height:1.3}
+.lf-reader .case-proof-list p{margin:0 0 12px;color:var(--workbench-prose,#d9d8d4);font-size:17px;line-height:1.55}
+.lf-reader .case-proof-list p:last-child{margin-bottom:0}
+.lf-reader .case-proof-list a:not(.case-text-link){color:var(--workbench-paper,#f6f3ec);text-decoration:underline;text-underline-offset:3px}
+.lf-reader .case-proof-scores{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 16px}
+.lf-reader .case-proof-scores div{padding:12px 12px 10px;border:1px solid var(--workbench-rule,rgb(246 243 236 / .24));border-radius:10px}
+.lf-reader .case-proof-scores dt{color:var(--workbench-prose,#d9d8d4);font-size:16px;line-height:1.3}
+.lf-reader .case-proof-scores dd{margin:4px 0 0;color:#ff7839;font-size:32px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.lf-reader .case-proof .case-text-link{color:var(--workbench-paper,#f6f3ec);font-size:17px}
+.lf-reader .case-proof .case-chapter-copy>p:has(.case-text-link){margin:18px 0 0}
+@media (max-width:620px){
+  .lf-reader .case-proof-shots{grid-template-columns:1fr}
+  .lf-reader .case-proof-phone{width:min(240px,70%)}
+  .lf-reader .case-proof-scores{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+.lf-reader .case-proof-icon{filter:invert(94%) sepia(6%) saturate(180%)}
+/* 16px reading floor for every client story, including facts and captions. */
+.workbench-page .lf-reader .case-story :is(.case-back,.case-primary,.case-text-link,.case-label,.case-facts dt,.case-facts dd,.case-scope span,figcaption),
+#detail .lf-reader .case-story :is(.case-back,.case-primary,.case-text-link,.case-label,.case-facts dt,.case-facts dd,.case-scope span,figcaption),
+.workbench-page .lf-reader .case-workbench-layout .case-story figcaption,
+#detail .lf-reader .case-workbench-layout .case-stage figcaption,
+.workbench-page .lf-reader .case-workbench-layout .case-stage figcaption,
+.workbench-page .lf-reader .case-workbench-layout .case-mobile-story figcaption,
+#detail .lf-reader .case-workbench-layout .case-mobile-story figcaption{font-size:16px;line-height:1.45}
+body .workbench-page main[data-content-id^="case-"] .contact-hours :is(span,strong),body .workbench-page main[data-content-id="page-examples"] .contact-hours :is(span,strong){font-size:16px;line-height:1.45}
+.workbench-page .lf-reader .work-collection :is(.work-jump a,.work-records small),#detail .lf-reader .work-collection :is(.work-jump a,.work-records small){font-size:16px}

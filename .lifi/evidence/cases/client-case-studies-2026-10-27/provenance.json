@@ -1,0 +1,432 @@
+{
+  "kind": "client-case-study-live-captures",
+  "captureDate": "2026-10-27",
+  "browser": "Google Chrome (installed) via Playwright channel chrome",
+  "note": "Analytics consent declined before capture where a banner appeared; no forms submitted; non-GET requests aborted.",
+  "label": "Each image is the live client website as published on the capture date: the site we shipped. No unlaunched branch work is shown.",
+  "captures": [
+    {
+      "slug": "cc-films",
+      "kind": "desktop",
+      "url": "https://ccfilms.net/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:39:53.646Z",
+      "sourceSha256": "d652a2e9ffd825aaaff1dd8f4ecbbf793293ec849a733d64414a305563c2cf78",
+      "file": "app/public/assets/case-evidence-20261027/cc-films-desktop.webp",
+      "sha256": "41e471ad43a95fb11416bca85f2bc210bec58f0f5786b4466e565e04b8500d28",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "cc-films",
+      "kind": "phone",
+      "url": "https://ccfilms.net/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:39:58.338Z",
+      "sourceSha256": "31de5571949aac8aa0a0cbdaa1636f235a723ca64b0da8686b7149113e316f8d",
+      "file": "app/public/assets/case-evidence-20261027/cc-films-phone.webp",
+      "sha256": "726c64479e9db0f83b4530fd6443f48cde21b71c13bbfdb8efdd0ccb23546490",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "chromatic-painting-design",
+      "kind": "desktop",
+      "url": "https://chromaticaz.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:42:00.693Z",
+      "sourceSha256": "74b998ecfde22b0941d9af3dc3375832f76930028eee169c0c4a9ce81b2c9192",
+      "file": "app/public/assets/case-evidence-20261027/chromatic-painting-design-desktop.webp",
+      "sha256": "c2f48839018e26e59392a5bcf6c060ec3661641ca7fc5f11d0c3bbccf776d351",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "chromatic-painting-design",
+      "kind": "phone",
+      "url": "https://chromaticaz.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:42:12.505Z",
+      "sourceSha256": "67dc1ebba9c5b4358a1773663b90a235c307537a4f6560d785aa5ca27afebafc",
+      "file": "app/public/assets/case-evidence-20261027/chromatic-painting-design-phone.webp",
+      "sha256": "26ff71b62427fa68c18579e0759761afd126380f0c9df85c981e3a982f5edbad",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "easy-tiger",
+      "kind": "desktop",
+      "url": "https://easytigerglendale.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:39:20.400Z",
+      "sourceSha256": "246bd703462ec7a5ada56feb3a8123e2c2fda22dd9021fe2a1ad1d7e170b4a79",
+      "file": "app/public/assets/case-evidence-20261027/easy-tiger-desktop.webp",
+      "sha256": "18111d27fa2fe1b3dbce17fa02f6053dda435ad5dcbcd1a537ac029914ea690e",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "easy-tiger",
+      "kind": "phone",
+      "url": "https://easytigerglendale.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:39:26.106Z",
+      "sourceSha256": "a1d267dd5b7573cce23f26b23ac56e09b488aeb6be12a14e2ca01f55012b31e9",
+      "file": "app/public/assets/case-evidence-20261027/easy-tiger-phone.webp",
+      "sha256": "dd7f48f06922a8f74dabe6fbe05c9c3a907da4cd2640310fd558d278785cc25e",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "grand-funding-llc",
+      "kind": "desktop",
+      "url": "https://www.grandfundingllc.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:41:43.142Z",
+      "sourceSha256": "1a318b000fa6780c762ffbfaaadba24c39eb367e75ce5c17933959d848a9f013",
+      "file": "app/public/assets/case-evidence-20261027/grand-funding-llc-desktop.webp",
+      "sha256": "0782b615f3b45c3b02e11e9159fbaabf57e1274a600653cbaa48834a19cd0b2d",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "grand-funding-llc",
+      "kind": "phone",
+      "url": "https://www.grandfundingllc.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:41:50.793Z",
+      "sourceSha256": "0daa97d22e68b2b5a9706b7d3ac86f76cb64b0247b9b41ed6030b8c1b863d187",
+      "file": "app/public/assets/case-evidence-20261027/grand-funding-llc-phone.webp",
+      "sha256": "816e6942255c74c8631c7d10fc1a850b13e42dfaa3473ce303b324c49713f19e",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "hair-by-rachel-charles",
+      "kind": "desktop",
+      "url": "https://hairbyrachelcharles.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:38:48.271Z",
+      "sourceSha256": "a5908baa4fa2a854cf1a95fb2d9a8c9663821abaae54899a3e625b0a3ebb8955",
+      "file": "app/public/assets/case-evidence-20261027/hair-by-rachel-charles-desktop.webp",
+      "sha256": "db61d9ebda350752c0c9241105161b3edc1e8b6ce5187bc24f729629ce9a6329",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "hair-by-rachel-charles",
+      "kind": "phone",
+      "url": "https://hairbyrachelcharles.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:38:53.260Z",
+      "sourceSha256": "4f2d1ad587f7bd47aae24c35620c71157e4790b79f23e4b1684f45a2e99555b3",
+      "file": "app/public/assets/case-evidence-20261027/hair-by-rachel-charles-phone.webp",
+      "sha256": "1aefd8ba750e14cde651fb2c80750e88f4c0bbaaa9d4dbb757980bc642df7231",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "hiraya-group",
+      "kind": "desktop",
+      "url": "https://www.hirayagroup.net/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:40:13.625Z",
+      "sourceSha256": "53687b48470bc3206bf2e4e5f63876ef543edf21e0ef83a48c18e1373555b260",
+      "file": "app/public/assets/case-evidence-20261027/hiraya-group-desktop.webp",
+      "sha256": "50e99b50d5a32f439c3182ae0e111baf504eab2342d77a0c053dfae962aa6672",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "hiraya-group",
+      "kind": "phone",
+      "url": "https://www.hirayagroup.net/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:40:19.229Z",
+      "sourceSha256": "fbd5629b97c05d78005a00f9ed77c9303c33f7f612c039b1fc527062d45f7f06",
+      "file": "app/public/assets/case-evidence-20261027/hiraya-group-phone.webp",
+      "sha256": "b98f95b1fa728febe1c35f717fdd4bc6a596dbb25d50e7d674adcd0ab44c55e0",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "stephenie-powers",
+      "kind": "desktop",
+      "url": "https://stepheniepowershair.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:39:32.030Z",
+      "sourceSha256": "b60d217424e6f5faa3defcf1d27bc7491d149267c40fe4474bb9386be45f9da7",
+      "file": "app/public/assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+      "sha256": "ea55b06b69937740545515691658b15ec83792a4593a0db6b05a65244fcfdf7a",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "stephenie-powers",
+      "kind": "phone",
+      "url": "https://stepheniepowershair.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:39:36.896Z",
+      "sourceSha256": "5f08be78837b3c7abe5b01078497550f4fe52cdf2a3ac0082825cee80c28dcf7",
+      "file": "app/public/assets/case-evidence-20261027/stephenie-powers-phone.webp",
+      "sha256": "fb4775a40dd2712739c1df229bca67341ddaf44d0703af5aa565bce6a8ee1748",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "the-break-room",
+      "kind": "desktop",
+      "url": "https://thebreakroompoolhall.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:39:09.372Z",
+      "sourceSha256": "2b9100002207fdedc972c98db5f2b5dd9dd7ee1134001a6d048b9363d0a86555",
+      "file": "app/public/assets/case-evidence-20261027/the-break-room-desktop.webp",
+      "sha256": "fca38d6bb3b9b9de53adb1f891d5a0d0048898a118f101f88540e1e4af0a1d70",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "the-break-room",
+      "kind": "phone",
+      "url": "https://thebreakroompoolhall.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:39:14.487Z",
+      "sourceSha256": "340a2ccde3738f7a7e047160b85a62e762f20052ba65f39482c911d0496b36d1",
+      "file": "app/public/assets/case-evidence-20261027/the-break-room-phone.webp",
+      "sha256": "4834afb8923c6afc71c5f69907ac4cbf6636ca96a78cc9334e97edb4bac6874e",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "the-tarot-hotline",
+      "kind": "desktop",
+      "url": "https://thetarothotline.com/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "dpr": 1.1111111111111112,
+      "capturedAt": "2026-10-27T23:40:03.565Z",
+      "sourceSha256": "07cfe69d11bd88c25013c097c5e25b6d36d0b70f59d619f0a042142cd2027766",
+      "file": "app/public/assets/case-evidence-20261027/the-tarot-hotline-desktop.webp",
+      "sha256": "1bf3de5c96f20e546efcb8c18fa15ca2ccea371c03e9580b0af050ff087f9010",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "the-tarot-hotline",
+      "kind": "phone",
+      "url": "https://thetarothotline.com/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "dpr": 2,
+      "capturedAt": "2026-10-27T23:40:08.679Z",
+      "sourceSha256": "d0073aae66de68508e7c2856a85b2ee17b5dee42f8a2eb0e00ea0e25eb6f305f",
+      "file": "app/public/assets/case-evidence-20261027/the-tarot-hotline-phone.webp",
+      "sha256": "06fcfecafb41acd345410978dac32c682fcc426c5719c0520b501f7916b344bd",
+      "method": "cwebp -q 86 of the unmodified viewport screenshot"
+    },
+    {
+      "slug": "stephenie-powers",
+      "kind": "share",
+      "file": "app/public/assets/case-evidence-20261027/share-stephenie-powers.jpg",
+      "sha256": "44b397485742550b2751e7e634042bb1e1469a4aac0f174c6f70be15f11801b8",
+      "method": "Desktop capture resized to 1060px wide, centered on a #07090c 1200x630 canvas; no pixels altered."
+    },
+    {
+      "slug": "hiraya-group",
+      "kind": "share",
+      "file": "app/public/assets/case-evidence-20261027/share-hiraya-group.jpg",
+      "sha256": "b435f0f0d1e5df4f347cdbb3c3d0150333a2a984722714c1b728ac2adcecbce6",
+      "method": "Desktop capture resized to 1060px wide, centered on a #07090c 1200x630 canvas; no pixels altered."
+    }
+  ],
+  "homepageStructuredData": {
+    "https://hairbyrachelcharles.com/": {
+      "title": "\n      Phoenix Balayage &amp; Color Specialist | Hair By Rachel Charles\n    ",
+      "types": [
+        "BreadcrumbList",
+        "City",
+        "EducationalOccupationalCredential",
+        "EntryPoint",
+        "GeoCoordinates",
+        "HairSalon",
+        "ImageObject",
+        "ListItem",
+        "OfferCatalog",
+        "Person",
+        "PostalAddress",
+        "Reservation",
+        "ReserveAction",
+        "SpeakableSpecification",
+        "State",
+        "WebPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 5
+    },
+    "https://www.grandfundingllc.com/": {
+      "title": "Grand Funding LLC | Hard Money Loans AZ &amp; CA | 24hr Approval",
+      "types": [
+        "BreadcrumbList",
+        "ImageObject",
+        "ListItem",
+        "Organization",
+        "State",
+        "WebPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    },
+    "https://thebreakroompoolhall.com/": {
+      "title": "The Break Room \u2014 Pool, Darts, Food &amp; Sports in Glendale",
+      "types": [
+        "LocalBusiness",
+        "PostalAddress"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    },
+    "https://easytigerglendale.com/": {
+      "title": "Easy Tiger Bar | Glendale Neighborhood Dive",
+      "types": [
+        "BarOrPub",
+        "OpeningHoursSpecification",
+        "PostalAddress"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    },
+    "https://stepheniepowershair.com/": {
+      "title": "Stephenie Powers | Uptown Phoenix Hair Stylist",
+      "types": [
+        "GeoCoordinates",
+        "HairSalon",
+        "PostalAddress",
+        "Service",
+        "WebPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    },
+    "https://chromaticaz.com/": {
+      "title": "Chromatic Painting &amp; Design | Phoenix painting and murals",
+      "types": [
+        "Answer",
+        "City",
+        "ContactPoint",
+        "EducationalOccupationalCredential",
+        "FAQPage",
+        "GovernmentOrganization",
+        "HousePainter",
+        "ImageObject",
+        "OpeningHoursSpecification",
+        "Question"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 2
+    },
+    "https://ccfilms.net/": {
+      "title": "Marrow (2026) \u2014 Official Trailer, Cast &amp; Film | CC Films",
+      "types": [
+        "ImageObject",
+        "Movie",
+        "Organization",
+        "Person",
+        "PostalAddress",
+        "Rating",
+        "Review",
+        "VideoObject",
+        "WebPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 3
+    },
+    "https://thetarothotline.com/": {
+      "title": "Tarot Readings in Phoenix &amp; by Phone | The Tarot Hotline",
+      "types": [
+        "City",
+        "ContactPoint",
+        "ImageObject",
+        "Offer",
+        "Organization",
+        "Person",
+        "ReserveAction",
+        "Service",
+        "ServiceChannel",
+        "State",
+        "WebPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    },
+    "https://www.hirayagroup.net/": {
+      "title": "Remote Estimating &amp; Public Adjusting | Hiraya Group",
+      "types": [
+        "Answer",
+        "Country",
+        "ImageObject",
+        "Organization",
+        "Question",
+        "WebPage/FAQPage",
+        "WebSite"
+      ],
+      "ldErrors": 0,
+      "ldBlocks": 1
+    }
+  }
+}

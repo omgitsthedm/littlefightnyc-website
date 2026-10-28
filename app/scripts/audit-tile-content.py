@@ -39,7 +39,8 @@ EXPECTED_REVIEW_DISTRIBUTION = {
 }
 # 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17);
 # 17 thin articles folded into deepened articles now 301 (2026-10-19).
-EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+# Two client case studies added: Stephenie Powers and Hiraya Group (2026-10-27).
+EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT + 2
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -455,6 +456,11 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
+    if route.startswith("/case-studies/"):
+        # Mirrors the compiler: a live public client story added after the
+        # imported route metadata is indexable.
+        record = next((c for c in json.loads((CONTENT / "cases.json").read_text()) if c["slug"] == route.strip("/").split("/")[-1]), None)
+        return bool(record and record.get("publicType") == "Website design" and "live" in record.get("type", "").lower())
     return route == "/" or route in ("/reviews/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
 
 

@@ -78,6 +78,11 @@ def indexable(path):
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
+    if path.startswith('/case-studies/'):
+        # A client story added after the imported route metadata is indexable
+        # when it is live, public client work.
+        record = cases.get(path.strip('/').split('/')[-1])
+        return bool(record and record.get('publicType') == 'Website design' and 'live' in record.get('type', '').lower())
     return path=='/' or path in ['/reviews/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
 
 def preserved(path):
@@ -201,11 +206,11 @@ INDUSTRY_PROOF = {
     '/industries/medical-wellness-practices/': [('hair-by-rachel-charles', 'An appointment-based salon website example: Hair By Rachel.')],
     '/industries/plumbers/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/professional-services/': [('logan-loans', 'A professional-services website example: Logan Loans.')],
-    '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.')],
+    '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.'), ('the-break-room', 'A pool hall website example: The Break Room.')],
     '/industries/retail-ecommerce/': [('after-hours-agenda', 'A Little Fight storefront example: After Hours Agenda.')],
     '/industries/roofing/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/luxury-home-services/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
-    '/industries/salons-wellness/': [('hair-by-rachel-charles', 'A salon website example: Hair By Rachel.')],
+    '/industries/salons-wellness/': [('hair-by-rachel-charles', 'A salon website example: Hair By Rachel.'), ('stephenie-powers', 'A stylist website example: Stephenie Powers.')],
 }
 _industry_routes = {path for path in pages if path.startswith('/industries/') and path != '/industries/'}
 _missing_industry_proof = _industry_routes - set(INDUSTRY_PROOF)
@@ -333,7 +338,7 @@ def sections_html(sections):
         if s.get('bullets'): body+='<ul>'+''.join(f'<li>{E(display(b))}</li>' for b in s['bullets'])+'</ul>'
         if s.get('qa'): body+=''.join(f'<h3>{E(display(x["question"]))}</h3><p>{E(display(x["answer"]))}</p>' for x in s['qa'])
         if s.get('groups'): body+=''.join(f'<h3>{E(display(g["label"]))}</h3><ol>'+''.join(f'<li>{E(display(b))}</li>' for b in g['steps'])+'</ol>' for g in s['groups'])
-        if s.get('links'):body+='<nav class="story-related">'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
+        if s.get('links'):body+='<nav class="story-related"'+(f' aria-label="{E(display(s["heading"]))}"' if s.get('heading') else '')+'>'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
         heading=display(s.get('heading',''))
         plain=heading in ('','The details','Start here','A useful starting point')
         heading_html='' if plain else f'<h2>{E(heading)}</h2>'
@@ -436,6 +441,7 @@ def normalize(p):
     slug=p['path'].strip('/').split('/')[-1]
     if p['path'].startswith('/case-studies/') and slug in cases:
         c=cases[slug];q.update(heading=display(c['name']),eyebrow=c.get('publicType', 'Selected work'),summary=c['summary'],heroSlugs=[] if 'pending' in c['type'].lower() else [slug])
+        if c.get('metaDescription'):q['description']=display(c['metaDescription'])
         q['sections']=[{'heading':heading,'paragraphs':c.get(key,[])} for heading,key in [('The question','challenge'),('What we built','approach'),('Delivered','delivered'),('What changed','outcome')]]
     if p['path'] in lab_by_path:
         lab=lab_by_path[p['path']]
@@ -817,6 +823,26 @@ def head(q, home=False):
             service['mainEntityOfPage'] = {'@id':ORIGIN+path+'#webpage'}
             service['availableChannel'] = {'@type':'ServiceChannel',
                 'serviceUrl':ORIGIN+'/tech-audit/?intent='+contact_intent(path)+'&source='+quote(path,safe='')}
+    case_record = cases.get(path.strip('/').split('/')[-1]) if path.startswith('/case-studies/') else None
+    if case_record and case_record.get('schemaAbout'):
+        # A client case study is an article about the client's business and
+        # the website we shipped for it. Only dated, public facts appear here.
+        proof = case_record.get('proof') or {}
+        shots = proof.get('captures', {})
+        about = dict(case_record['schemaAbout'], **{'@id': ORIGIN+path+'#client'})
+        work = {'@type':'WebSite','@id':ORIGIN+path+'#client-website','name':about['name'],'url':about['url'],
+                'creator':{'@id':ORIGIN+'/#organization'},'about':{'@id':about['@id']}}
+        graph.append(about)
+        graph.append(work)
+        graph.append({'@type':'Article','@id':ORIGIN+path+'#case-study','headline':q.get('heading'),
+                      'description':q.get('description'),'articleSection':'Case studies',
+                      'about':[{'@id':about['@id']},{'@id':work['@id']}],
+                      'image':[{'@type':'ImageObject','url':ORIGIN+shot['src'],'width':shot['width'],'height':shot['height'],'caption':shot['alt']} for shot in shots.values()],
+                      'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
+                      'author':{'@id':ORIGIN+'/#organization'},'publisher':{'@id':ORIGIN+'/#organization'},
+                      **({'dateModified':ARTICLE_UPDATES[path]} if path in ARTICLE_UPDATES else {}),
+                      'inLanguage':q.get('language','en')})
+        graph[2]['mainEntity'] = {'@id':ORIGIN+path+'#case-study'}
     graph[2]['inLanguage'] = q.get('language', 'en')
     graph.append(person_schema())
     if path in ARTICLE_UPDATES:

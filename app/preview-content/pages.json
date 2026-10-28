@@ -543,5 +543,25 @@
       }
     ],
     "contactPrompt": "Tell us what you need to get back to work."
+  },
+  {
+    "id": "case-stephenie-powers",
+    "path": "/case-studies/stephenie-powers/",
+    "category": "case-studies",
+    "language": "en",
+    "title": "Stephenie Powers Website Case Study | Little Fight NYC",
+    "heading": "Stephenie Powers",
+    "description": "Stephenie Powers case study: an Uptown Phoenix stylist site where every service on the menu leads straight to its own Square booking button.",
+    "summary": "Every service on Stephenie’s menu has its own Book button into Square, with a guide page for each kind of appointment."
+  },
+  {
+    "id": "case-hiraya-group",
+    "path": "/case-studies/hiraya-group/",
+    "category": "case-studies",
+    "language": "en",
+    "title": "Hiraya Group Website Case Study | Little Fight NYC",
+    "heading": "Hiraya Group",
+    "description": "Hiraya Group case study: an insurance estimating site with a page for each service, file-prep guides and a separate page for property owners.",
+    "summary": "Contractors and restoration teams find the estimating help they need and start a file, with a separate plain-language page for property owners."
   }
 ]
