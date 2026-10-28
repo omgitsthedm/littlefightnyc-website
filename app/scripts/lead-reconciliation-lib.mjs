@@ -59,10 +59,26 @@ function sourceLabel(value) {
   return Object.hasOwn(labels, normalized) ? labels[normalized] : "other";
 }
 
+// Answers that carry no channel evidence. They stay visible in
+// reportedSources but never hide a captured arrival source.
+const UNINFORMATIVE_SOURCES = new Set(["unknown", "other", "prefer_not_to_say"]);
+// Stages at or beyond qualification. A lead an operator moved straight to
+// proposal or won was qualified even when no "qualified" entry was recorded.
+const QUALIFIED_OR_LATER = new Set(["qualified", "proposal", "won"]);
+
 function sourceBucket(lead) {
   // The visitor's answer and observed arrival are different evidence. Prefer
-  // an explicit answer here, and expose both separately in the summary.
-  return sourceLabel(lead.context.discovery_source || lead.attribution.utm_source || lead.context.source);
+  // an informative answer, then the observed arrival, then existing context,
+  // and expose the answer and arrival separately in the summary.
+  const candidates = [lead.context.discovery_source, lead.attribution.utm_source, lead.context.source].map(sourceLabel);
+  return candidates.find((label) => !UNINFORMATIVE_SOURCES.has(label))
+    || candidates.find((label) => label !== "unknown")
+    || "unknown";
+}
+
+function reachedQualified(lead) {
+  return QUALIFIED_OR_LATER.has(lead.stage)
+    || (Array.isArray(lead.stageHistory) && lead.stageHistory.some((entry) => QUALIFIED_OR_LATER.has(entry?.stage)));
 }
 
 function submissionId(submission, data) {
@@ -264,7 +280,7 @@ export function leadSummary(ledger) {
     observedSources[observed] = (observedSources[observed] || 0) + 1;
     const outcome = sourceOutcomes[source] ??= { received: 0, qualifiedEver: 0, won: 0, wonValue: 0 };
     outcome.received += 1;
-    if (lead.stageHistory.some(entry => entry.stage === "qualified")) outcome.qualifiedEver += 1;
+    if (reachedQualified(lead)) outcome.qualifiedEver += 1;
     if (lead.stage === "won") { outcome.won += 1; outcome.wonValue += lead.knownValue || 0; }
     intents[intent] = (intents[intent] || 0) + 1;
   }

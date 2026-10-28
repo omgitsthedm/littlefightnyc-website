@@ -230,6 +230,41 @@ test("reported discovery and observed arrival remain separate through qualified 
   assert.deepEqual(leadSummary(ledger).sourceOutcomes, {});
 });
 
+test("Other and Prefer not to say answers never hide an observed arrival source", () => {
+  const ledger = emptyLedger();
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "other" }, attribution: { utm_source: "chatgpt.com" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "prefer_not_to_say" }, attribution: { utm_source: "google" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "prefer_not_to_say" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "other", source: "referral" } }));
+  const summary = leadSummary(ledger);
+  assert.deepEqual(summary.sources, { chatgpt: 1, google: 1, prefer_not_to_say: 1, referral: 1 });
+  assert.deepEqual(summary.reportedSources, { other: 2, prefer_not_to_say: 2 });
+  assert.deepEqual(summary.observedSources, { chatgpt: 1, google: 1, unknown: 2 });
+});
+
+test("an informative visitor answer still outranks the observed arrival", () => {
+  const ledger = emptyLedger();
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "referral" }, attribution: { utm_source: "google" } }));
+  assert.deepEqual(leadSummary(ledger).sources, { referral: 1 });
+});
+
+test("leads moved straight to proposal or won count as qualified; lost after qualification still counts", () => {
+  const ledger = emptyLedger();
+  const direct = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const proposal = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const lostAfter = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const lostEarly = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const fresh = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  ledger.leads.push(direct, proposal, lostAfter, lostEarly, fresh);
+  updateLeadStage(ledger, direct.id, "won", "2026-10-26T10:00:00.000Z", "2400");
+  updateLeadStage(ledger, proposal.id, "proposal", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostAfter.id, "proposal", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostAfter.id, "lost", "2026-10-26T11:00:00.000Z");
+  updateLeadStage(ledger, lostEarly.id, "contacted", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostEarly.id, "lost", "2026-10-26T11:00:00.000Z");
+  assert.deepEqual(leadSummary(ledger).sourceOutcomes, { google: { received: 5, qualifiedEver: 3, won: 1, wonValue: 2400 } });
+});
+
 test("assistant domains are recognized without trusting lookalike or arbitrary source text", () => {
   const ledger = emptyLedger();
   for (const source of ["chatgpt.com", "claude.ai", "perplexity.ai", "gemini.google.com", "copilot.microsoft.com", "meta.ai", "muse.ai", "chatgpt.com.evil.invalid", "constructor"]) {

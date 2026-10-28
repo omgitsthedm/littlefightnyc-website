@@ -26,10 +26,11 @@ excluded. `tech_audit_submit` now includes the resolved service intent.
 
 The private `leads:summary` command now separates `reportedSources` (the optional
 visitor answer) from `observedSources` (the captured arrival). Its primary
-`sources` breakdown prefers an explicit visitor answer, then observed source,
-then existing context. `sourceOutcomes` counts received inquiries, records that
-actually reached qualified, current won records and their operator-recorded
-value. Won value is not proof of collected payment. Excluded and quarantined
+`sources` breakdown prefers an informative visitor answer, then observed source,
+then existing context; `Other` and `Prefer not to say` never hide a captured
+arrival. `sourceOutcomes` counts received inquiries, records that reached
+qualified or any later stage (including a lead moved straight to proposal or
+won), current won records and their operator-recorded value. Won value is not proof of collected payment. Excluded and quarantined
 records remain outside every outcome count. The ledger stays private and local;
 this work does not import, modify or invent any customer or sales records.
 
