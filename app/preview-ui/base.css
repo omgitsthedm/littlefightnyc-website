@@ -128,7 +128,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 
 /* Where we work (2026-10-19): direct links to every place Little Fight serves. */
 .site-footer .utility-nav--places{border-top:1px solid rgb(255 255 255 / .1);margin-top:4px;padding-top:4px}
-.site-footer .utility-nav__label{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;color:#a9a9b2;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+.site-footer .utility-nav__label{display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;color:#a9a9b2;font-size:16px;letter-spacing:.04em;text-transform:uppercase}
 
 /* Approved Steam Assembly: static inline vector is always the fallback. */
 .steam-mark{position:relative;display:inline-block;flex:none;width:44px;height:38px;vertical-align:middle}

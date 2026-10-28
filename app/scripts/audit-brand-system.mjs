@@ -429,13 +429,22 @@ const veraPreviewName = "examples-vera-field-manual-5b845af5.webp";
 const veraShareName = "og-vera-34d78811.jpg";
 for (const [relativePath, expectedName] of [
   ["src/pages/FieldGuide.tsx", veraPreviewName],
-  ["scripts/generate-social-cards.mjs", veraShareName],
   ["scripts/prerender-seo.mjs", veraShareName],
-  ["public/vera/index.html", veraShareName],
 ]) {
   const source = await read(relativePath);
   if (!source.includes(expectedName)) {
     fail(`${relativePath}: must reference fingerprinted VERA asset ${expectedName}`);
+  }
+}
+// The public VERA page now shares the fingerprinted clay card generated from
+// preview-content/social-cards.json; require that exact card to exist.
+{
+  const veraPage = await read("public/vera/index.html");
+  const clayCards = [...new Set(veraPage.match(/\/assets\/social\/clay\/vera-[0-9a-f]{12}\.jpg/g) || [])];
+  if (clayCards.length !== 1) {
+    fail(`public/vera/index.html: must share exactly one fingerprinted clay VERA card (found ${clayCards.length})`);
+  } else {
+    await requireFile(path.join(appRoot, "public", ...clayCards[0].split("/").filter(Boolean)), `public${clayCards[0]}`, 50_000);
   }
 }
 await requireFile(

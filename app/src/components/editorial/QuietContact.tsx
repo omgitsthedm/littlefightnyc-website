@@ -5,6 +5,9 @@ import {
   techAuditHref,
   type AcquisitionIntent,
 } from "@/lib/acquisitionIntent";
+// The static-site Thanks island loads this component without the app entry,
+// so the component must carry its own styles.
+import "./QuietContact.css";
 
 const PLAN_COPY: Record<AcquisitionIntent, {
   label: string;

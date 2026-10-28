@@ -186,7 +186,7 @@
 .lf-answer-page__sources {
   grid-column: 1 / -1;
   color: var(--lf-bone-soft);
-  font: 400 0.94rem / 1.5 var(--lf-body);
+  font: 400 1rem / 1.5 var(--lf-body);
 }
 
 .lf-answer-page__sources {

@@ -352,7 +352,7 @@ body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animatio
 .clay-open-sign{transition:filter 1.2s ease}
 [data-nyc-open=false] .clay-open-sign{filter:grayscale(1) brightness(.62);animation:none}
 .clay-hero-note{display:grid;gap:4px}
-.clay-hero-footer .clay-hours{font-size:15px;color:#a8adaa;max-width:none}
+.clay-hero-footer .clay-hours{font-size:16px;color:#a8adaa;max-width:none}
 .clay-hours::before{content:'';display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;background:#6f7572;vertical-align:.08em}
 [data-nyc-open=true] .clay-hours::before{background:#9bd8a6;box-shadow:0 0 0 3px rgb(155 216 166 / .18)}
 @media(prefers-reduced-motion:reduce){.clay-window-glow,.clay-neighborhood .clay-cloud,.clay-open-sign,.clay-building>g>foreignObject,.clay-equipment{transition:none}}
@@ -403,12 +403,13 @@ body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animatio
 .help-choice strong{font-size:18px;line-height:1.2}
 .help-choice small{color:#bfc2c0;font-size:14px;line-height:1.35}
 .help-panel__next{margin:16px 0 6px;color:#dddcd8;font-size:16px}
-.help-panel__talk{margin:0;color:#b4b8b5;font-size:15px}
+.help-panel__talk{margin:0;color:#b4b8b5;font-size:16px}
 .help-panel__talk a{color:#ff7839;font-weight:700;text-underline-offset:3px}
 
 .clay-review-sticker{position:absolute;left:55.5%;top:55%;z-index:8;display:grid;justify-items:center;align-content:center;gap:2px;min-width:44px;min-height:44px;padding:5px 8px 4px;border-radius:9px 12px 8px 11px;background:#f7ecd2;color:#2a1d12;line-height:1;text-decoration:none;transform:rotate(-6deg);box-shadow:0 2px 0 #d6c398,0 7px 14px rgb(0 0 0 / .38);pointer-events:auto;transition:transform .2s cubic-bezier(.22,1,.36,1)}
-.clay-review-sticker__stars{color:#e0a22b;font-size:clamp(10px,1.15vw,15px);letter-spacing:-.03em;text-shadow:0 1px 0 #93640f}
-.clay-review-sticker__score{font-size:clamp(9px,.95vw,12px);font-weight:800;white-space:nowrap}
+.clay-review-sticker__stars{color:#e0a22b;font-size:clamp(12px,1.15vw,15px);letter-spacing:-.03em;text-shadow:0 1px 0 #93640f}
+.clay-review-sticker__score{font-size:16px;font-weight:800;white-space:nowrap}
+@media(max-width:480px){.clay-review-sticker{left:46%}}
 .clay-review-sticker:hover{transform:rotate(-2deg) scale(1.07)}
 .clay-review-sticker:focus-visible{outline:3px solid #92bfff;outline-offset:3px}
 
