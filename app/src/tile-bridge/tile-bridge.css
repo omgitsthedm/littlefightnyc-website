@@ -510,7 +510,7 @@ dialog.production-island--consent::backdrop {
 /* Website Check island: the editorial button styles are scoped to
    .lf-editorial, which islands never have. Give the primary action a real
    button and every other action a 44px target. */
-.production-island .lf-website-check__start {
+.production-island .lf-website-check__intro-note a.lf-website-check__start {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -524,7 +524,7 @@ dialog.production-island--consent::backdrop {
   font-weight: 750;
   text-decoration: none;
 }
-.production-island .lf-website-check__start:hover { background: #ffac85; }
+.production-island .lf-website-check__intro-note a.lf-website-check__start:hover { background: #ffac85; color: #1b100a; }
 .production-island .lf-website-check__contact {
   display: flex;
   flex-wrap: wrap;

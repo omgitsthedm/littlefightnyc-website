@@ -50,7 +50,7 @@
 #detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail a{background:transparent!important;color:#ff7839!important}
 #detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail .contact-plan{display:none!important}
 .workbench-tabs{display:flex;align-items:stretch;gap:clamp(18px,4vw,62px);min-height:58px;margin-top:12px;padding:0 0 0 max(0px,clamp(0px,4vw,64px));border-bottom:1px solid var(--workbench-rule)}
-.workbench-tab{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:9px 0;color:var(--workbench-paper);font-size:clamp(15px,1.4vw,18px);line-height:1.1;text-decoration:none;white-space:nowrap;opacity:.9;transition-property:color,opacity;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.workbench-tab{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:9px 0;color:var(--workbench-paper);font-size:clamp(16px,1.4vw,18px);line-height:1.1;text-decoration:none;white-space:nowrap;opacity:.9;transition-property:color,opacity;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .workbench-tab::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;background:var(--workbench-accent);content:"";opacity:0;transform:scaleX(.4);transform-origin:center;transition-property:opacity,transform;transition-duration:180ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .workbench-tab:hover{color:var(--workbench-accent);opacity:1}.workbench-tab:focus-visible{outline-color:var(--workbench-accent)}
 .workbench-tab-icon{display:block;width:25px;height:25px;background:currentColor;mask:var(--workbench-icon) center/contain no-repeat;-webkit-mask:var(--workbench-icon) center/contain no-repeat}
@@ -527,7 +527,7 @@ img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!import
    links keep their typesetting; vertical padding on an inline box enlarges
    the hit area without moving the line box. */
 .lf-reader .article-meta-author a{display:inline-flex;align-items:center;min-height:44px}
-.lf-reader :is(.story-list li,.category-answer-more,.rw-selected-work-all,.rw-scene--ownership p,.story-section--imported p,.rw-selected-work h3,.story-art figcaption)>a:only-child{padding-block:10px}
+.lf-reader :is(.story-list li,.category-answer-more,.rw-selected-work-all,.rw-scene--ownership p,.story-section--imported p,.rw-selected-work h3,.story-art figcaption)>a:only-child{padding-block:11px}
 .lf-reader .workbench-reading-column p>button{min-height:44px}
 .lf-reader .story-hero a.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:28px;padding:12px 22px;border-radius:999px;background:#ff7839;color:#1b100a;font:750 1rem/1.2 LFAtkinson,Arial,sans-serif;text-decoration:none}
 .lf-reader .story-hero a.button:hover{background:#ffac85}
