@@ -58,7 +58,7 @@ export function renderAuditEmail(input: AuditEmailInput) {
 <tr><td style="padding:0 32px 24px"><p style="margin:0;font-size:18px;line-height:1.6;color:#FFFFFF">${escape(intro)}</p></td></tr>
 ${score}
 <tr><td style="padding:0 32px 28px"><p style="margin:0;font-size:18px;line-height:1.6;color:#A1A1AA">${escape(body)}</p></td></tr>
-<tr><td style="padding:0 32px 28px"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#F97316" style="border-radius:32px"><a href="${escape(ctaHref)}" style="display:inline-block;padding:16px 24px;color:#050507;font-size:16px;font-weight:700;line-height:1.3;text-decoration:none">${escape(ctaLabel)} &rarr;</a></td></tr></table></td></tr>
+<tr><td style="padding:0 32px 28px"><table role="presentation" cellspacing="0" cellpadding="0"><tr><td bgcolor="#F97316" style="border-radius:32px"><a href="${escape(ctaHref)}" style="display:inline-block;padding:16px 24px;color:#050507;font-size:16px;font-weight:700;line-height:1.3;text-decoration:none">${escape(ctaLabel)}</a></td></tr></table></td></tr>
 <tr><td style="padding:0 32px 32px"><p style="margin:0;font-size:16px;line-height:1.6;color:#A1A1AA">${secondary}</p></td></tr>
 <tr><td style="padding:24px 32px;border-top:1px solid #27272A"><p style="margin:0;font-size:16px;line-height:1.6;color:#A1A1AA">A real person replies, 9am–9pm Eastern.<br><a href="mailto:hello@littlefightnyc.com" style="color:#FFFFFF;text-decoration:none">hello@littlefightnyc.com</a></p></td></tr>
 </table></td></tr></table></body></html>`;
