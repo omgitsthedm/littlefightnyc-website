@@ -264,7 +264,11 @@ try {
   const jsonLd = JSON.parse(
     poolHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/i)?.[1] || "{}",
   );
-  if (jsonLd["@type"] !== "VideoObject" || jsonLd.duration !== "PT30S") {
+  // The page may publish a single VideoObject or an @graph that contains one.
+  const video = [jsonLd, ...(Array.isArray(jsonLd["@graph"]) ? jsonLd["@graph"] : [])].find(
+    (node) => node?.["@type"] === "VideoObject",
+  );
+  if (!video || video.duration !== "PT30S") {
     failures.push(`${poolPath}: VideoObject data is missing or incomplete`);
   }
 } catch {

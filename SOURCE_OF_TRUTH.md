@@ -1,6 +1,6 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-10-09 (owner-approved editorial Workbench release candidate)
+Last source verification: 2026-10-28 (production deploy `6ae1a142fc86d536f78ea9e9` from merge `662754f2`, PR #35; rollback `6ade5f637dc745ffae7c92d2`)
 
 This file routes agents to the current website source. The marketing site and
 public VERA browser product use one public website repository, one build, and
