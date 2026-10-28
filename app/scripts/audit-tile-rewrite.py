@@ -31,7 +31,7 @@ CATEGORY_ROUTES = {
     "software": "/services/business-systems/",
 }
 EXPECTED_ANSWER_COUNTS = {"web": 18, "it": 32, "consulting": 11, "software": 8}
-EXPECTED_HOOK_COUNTS = {"cases": 15, "albums": 8, "markets": 6}
+EXPECTED_HOOK_COUNTS = {"cases": 17, "albums": 8, "markets": 6}
 FORBIDDEN_COPY = (
     "solutions",
     "streamline",

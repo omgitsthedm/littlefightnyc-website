@@ -78,6 +78,9 @@ test("provider quarantines stay visible but outside the sales funnel", () => {
     stages: { new: 0, contacted: 0, qualified: 0, proposal: 0, won: 0, lost: 0 },
     origins: {},
     sources: {},
+    reportedSources: {},
+    observedSources: {},
+    sourceOutcomes: {},
     intents: {},
     wonValue: 0,
   });
@@ -210,6 +213,65 @@ test("summary groups arbitrary raw source strings into a bounded other bucket", 
   const lead = createManualLead({ channel: "call", context: { source: "owner@example.com" } });
   ledger.leads.push(lead);
   assert.deepEqual(leadSummary(ledger).sources, { other: 1 });
+});
+
+test("reported discovery and observed arrival remain separate through qualified and won outcomes", () => {
+  const ledger = emptyLedger();
+  const lead = createManualLead({ channel: "email", context: { discovery_source: "chatgpt" }, attribution: { utm_source: "google", utm_medium: "organic" } });
+  ledger.leads.push(lead);
+  updateLeadStage(ledger, lead.id, "qualified", "2026-10-25T20:00:00.000Z");
+  updateLeadStage(ledger, lead.id, "won", "2026-10-25T21:00:00.000Z", "1800");
+  const summary = leadSummary(ledger);
+  assert.deepEqual(summary.sources, { chatgpt: 1 });
+  assert.deepEqual(summary.reportedSources, { chatgpt: 1 });
+  assert.deepEqual(summary.observedSources, { google: 1 });
+  assert.deepEqual(summary.sourceOutcomes, { chatgpt: { received: 1, qualifiedEver: 1, won: 1, wonValue: 1800 } });
+  setLeadExclusion(ledger, lead.id, "duplicate");
+  assert.deepEqual(leadSummary(ledger).sourceOutcomes, {});
+});
+
+test("Other and Prefer not to say answers never hide an observed arrival source", () => {
+  const ledger = emptyLedger();
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "other" }, attribution: { utm_source: "chatgpt.com" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "prefer_not_to_say" }, attribution: { utm_source: "google" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "prefer_not_to_say" } }));
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "other", source: "referral" } }));
+  const summary = leadSummary(ledger);
+  assert.deepEqual(summary.sources, { chatgpt: 1, google: 1, prefer_not_to_say: 1, referral: 1 });
+  assert.deepEqual(summary.reportedSources, { other: 2, prefer_not_to_say: 2 });
+  assert.deepEqual(summary.observedSources, { chatgpt: 1, google: 1, unknown: 2 });
+});
+
+test("an informative visitor answer still outranks the observed arrival", () => {
+  const ledger = emptyLedger();
+  ledger.leads.push(createManualLead({ channel: "email", context: { discovery_source: "referral" }, attribution: { utm_source: "google" } }));
+  assert.deepEqual(leadSummary(ledger).sources, { referral: 1 });
+});
+
+test("leads moved straight to proposal or won count as qualified; lost after qualification still counts", () => {
+  const ledger = emptyLedger();
+  const direct = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const proposal = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const lostAfter = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const lostEarly = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  const fresh = createManualLead({ channel: "call", attribution: { utm_source: "google" } });
+  ledger.leads.push(direct, proposal, lostAfter, lostEarly, fresh);
+  updateLeadStage(ledger, direct.id, "won", "2026-10-26T10:00:00.000Z", "2400");
+  updateLeadStage(ledger, proposal.id, "proposal", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostAfter.id, "proposal", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostAfter.id, "lost", "2026-10-26T11:00:00.000Z");
+  updateLeadStage(ledger, lostEarly.id, "contacted", "2026-10-26T10:00:00.000Z");
+  updateLeadStage(ledger, lostEarly.id, "lost", "2026-10-26T11:00:00.000Z");
+  assert.deepEqual(leadSummary(ledger).sourceOutcomes, { google: { received: 5, qualifiedEver: 3, won: 1, wonValue: 2400 } });
+});
+
+test("assistant domains are recognized without trusting lookalike or arbitrary source text", () => {
+  const ledger = emptyLedger();
+  for (const source of ["chatgpt.com", "claude.ai", "perplexity.ai", "gemini.google.com", "copilot.microsoft.com", "meta.ai", "muse.ai", "chatgpt.com.evil.invalid", "constructor"]) {
+    ledger.leads.push(createManualLead({ channel: "email", attribution: { utm_source: source } }));
+  }
+  assert.deepEqual(leadSummary(ledger).sources, { chatgpt: 1, claude: 1, perplexity: 1, gemini: 1, copilot: 1, meta_ai: 1, muse: 1, other: 2 });
+  assert.equal(JSON.stringify(leadSummary(ledger)).includes("evil.invalid"), false);
 });
 
 test("legacy form fields map into a private receipt without inventing a sales stage", () => {

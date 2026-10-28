@@ -50,7 +50,7 @@
 #detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail a{background:transparent!important;color:#ff7839!important}
 #detail .workbench-chrome .workbench-contacts.direct-contact-rail.contact-actions.reader-rail .contact-plan{display:none!important}
 .workbench-tabs{display:flex;align-items:stretch;gap:clamp(18px,4vw,62px);min-height:58px;margin-top:12px;padding:0 0 0 max(0px,clamp(0px,4vw,64px));border-bottom:1px solid var(--workbench-rule)}
-.workbench-tab{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:9px 0;color:var(--workbench-paper);font-size:clamp(15px,1.4vw,18px);line-height:1.1;text-decoration:none;white-space:nowrap;opacity:.9;transition-property:color,opacity;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
+.workbench-tab{position:relative;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:9px 0;color:var(--workbench-paper);font-size:clamp(16px,1.4vw,18px);line-height:1.1;text-decoration:none;white-space:nowrap;opacity:.9;transition-property:color,opacity;transition-duration:160ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .workbench-tab::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;background:var(--workbench-accent);content:"";opacity:0;transform:scaleX(.4);transform-origin:center;transition-property:opacity,transform;transition-duration:180ms;transition-timing-function:cubic-bezier(.2,0,0,1)}
 .workbench-tab:hover{color:var(--workbench-accent);opacity:1}.workbench-tab:focus-visible{outline-color:var(--workbench-accent)}
 .workbench-tab-icon{display:block;width:25px;height:25px;background:currentColor;mask:var(--workbench-icon) center/contain no-repeat;-webkit-mask:var(--workbench-icon) center/contain no-repeat}
@@ -72,7 +72,8 @@
 #detail[data-reader-family=software] .workbench-tab[data-family=software]::after{opacity:1;transform:scaleX(1)}
 .workbench-backlinks{display:none}
 .workbench-backlink>span{font-size:0}
-.workbench-backlink>span::before{content:'←';font-size:1.35rem;line-height:1}
+/* Lucide arrow-left (ISC, lucide.dev; already a site dependency), drawn in the link colour. */
+.workbench-backlink>span::before{content:'';display:inline-block;width:20px;height:20px;margin-right:6px;vertical-align:-4px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 19-7-7 7-7'/%3E%3Cpath d='M19 12H5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 19-7-7 7-7'/%3E%3Cpath d='M19 12H5'/%3E%3C/svg%3E") center/contain no-repeat}
 
 /* The enhanced reader is a full editorial surface, not a second small modal. */
 #detail{padding:0;background:var(--workbench-ink)}
@@ -118,7 +119,7 @@
 .workbench-page .lf-reader .story-hero,
 #detail .lf-reader .story-hero{display:grid;grid-template-columns:minmax(0,.88fr) minmax(280px,.54fr);gap:clamp(30px,6vw,112px);align-items:end;min-height:0;padding:clamp(46px,5vw,72px) 0 clamp(34px,4vw,56px);background:transparent;overflow:visible}
 .workbench-page .lf-reader .story-kicker,
-#detail .lf-reader .story-kicker{margin:0 0 18px;color:var(--workbench-accent);font-size:14px;font-weight:750;letter-spacing:.17em;line-height:1.2;text-transform:uppercase}
+#detail .lf-reader .story-kicker{margin:0 0 18px;color:var(--workbench-accent);font-size:16px;font-weight:750;letter-spacing:.17em;line-height:1.2;text-transform:uppercase}
 .workbench-page .lf-reader .story-title,
 #detail .lf-reader .story-title{max-width:16ch;margin:0;color:var(--workbench-accent);font-size:clamp(36px,3.2vw,44px);line-height:1.02}
 .workbench-page .lf-reader .story-summary,
@@ -132,7 +133,7 @@
 .workbench-page .lf-reader .story-art img,
 #detail .lf-reader .story-art img{width:100%;height:auto;max-height:330px;aspect-ratio:auto;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 18px 18px rgb(0 0 0 / .34))}
 .workbench-page .lf-reader .story-art figcaption,
-#detail .lf-reader .story-art figcaption{padding:10px 0 0;color:var(--workbench-dim);font-size:13px;line-height:1.4}
+#detail .lf-reader .story-art figcaption{padding:10px 0 0;color:var(--workbench-dim);font-size:16px;line-height:1.4}
 
 .workbench-page .lf-reader .story-section,
 #detail .lf-reader .story-section{grid-template-columns:minmax(180px,.39fr) minmax(0,.61fr);gap:clamp(34px,7vw,132px);padding:clamp(36px,5vw,80px) 0;border-top:1px solid var(--workbench-rule);background:transparent}
@@ -226,7 +227,7 @@
   .workbench-brand{font-size:clamp(17px,5vw,21px)}
   .workbench-brand img{width:40px;height:35px}
   .workbench-contacts{display:flex;justify-content:flex-start;gap:18px;width:100%;margin:0;padding:5px 0 0}
-  .workbench-contacts a{min-height:44px;font-size:15px}
+  .workbench-contacts a{min-height:44px;font-size:16px}
   .workbench-tabs{display:none}
   .workbench-backlinks{display:flex;min-height:44px;margin-top:12px;border-top:1px solid var(--workbench-rule)}
   .workbench-backlink{display:none;align-items:center;min-height:44px;color:var(--workbench-accent);font-size:17px;text-decoration:none}
@@ -509,7 +510,7 @@ img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!import
 .lf-reader .story-art .about-portrait{display:grid;justify-items:start;gap:12px;background:transparent;outline:0;box-shadow:none;overflow:visible}
 .lf-reader .story-art .about-portrait{width:auto}
 .lf-reader .story-art .about-portrait .about-portrait-image{width:min(100%,220px);height:auto;aspect-ratio:1;border-radius:50%;object-fit:cover;background:transparent;outline:0}
-.lf-reader .story-art .about-portrait figcaption{color:color-mix(in srgb,var(--workbench-paper,#f6f3ec) 72%,transparent);font-size:14px}
+.lf-reader .story-art .about-portrait figcaption{color:color-mix(in srgb,var(--workbench-paper,#f6f3ec) 72%,transparent);font-size:16px}
 
 /* Whole Google reviews (2026-10-19). Short reviews keep headline type; long ones read as
    text. The /reviews/ page flows cards into balanced columns so long and short sit together. */
@@ -521,3 +522,13 @@ img[src$="/mineral/tugboat.svg"],img[src$="/boat-orange.svg"]{filter:none!import
 :is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--full blockquote::first-line{color:var(--workbench-accent,#ff7839);font-weight:700}
 @media(max-width:600px){:is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--wide blockquote{font-size:clamp(28px,8.4vw,36px)}
   :is(#detail,.workbench-page) .lf-reader .review-reader .review-reader-quote--full blockquote{font-size:18px}}
+
+/* Release audit 2026-10-27: 44px touch floor for standalone links. Inline
+   links keep their typesetting; vertical padding on an inline box enlarges
+   the hit area without moving the line box. */
+.lf-reader .article-meta-author a{display:inline-flex;align-items:center;min-height:44px}
+.lf-reader :is(.story-list li,.category-answer-more,.rw-selected-work-all,.rw-scene--ownership p,.story-section--imported p,.rw-selected-work h3,.story-art figcaption)>a:only-child{padding-block:11px}
+.lf-reader .workbench-reading-column p>button{min-height:44px}
+.lf-reader .story-hero a.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:28px;padding:12px 22px;border-radius:999px;background:#ff7839;color:#1b100a;font:750 1rem/1.2 LFAtkinson,Arial,sans-serif;text-decoration:none}
+.lf-reader .story-hero a.button:hover{background:#ffac85}
+.lf-reader .story-hero a.button:focus-visible{outline:3px solid #f6f3ec;outline-offset:3px}

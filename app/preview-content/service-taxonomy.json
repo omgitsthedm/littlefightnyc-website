@@ -33,13 +33,14 @@
   },
   "pathFamilies": {
     "/vera/": "software",
-    "/markets/nyc/": "consulting",
-    "/markets/marthas-vineyard/": "consulting",
+    "/markets/nyc/": "web",
+    "/markets/marthas-vineyard/": "web",
     "/markets/arizona/": "consulting",
     "/markets/louisiana-starbase-area/": "consulting",
     "/markets/texas-starbase-area/": "consulting",
     "/markets/florida-space-coast/": "consulting",
-    "/case-studies/after-hours-agenda/": "software"
+    "/case-studies/after-hours-agenda/": "software",
+    "/markets/arizona/phoenix/": "web"
   },
   "pathPrefixFamilies": {}
 }

@@ -443,6 +443,58 @@
       "src": "/assets/portfolio-20261007/share-little-fight-nyc-master-reference-20261008.jpg",
       "width": 1200,
       "height": 630
+    },
+    "stephenie-powers": {
+      "desktop": {
+        "src": "/assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Stephenie Powers salon website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/case-evidence-20261027/stephenie-powers-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Stephenie Powers salon website on a phone."
+      },
+      "social": {
+        "src": "/assets/case-evidence-20261027/share-stephenie-powers.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Stephenie Powers salon website on desktop."
+      },
+      "screen": {
+        "src": "/assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Stephenie Powers salon website on desktop."
+      }
+    },
+    "hiraya-group": {
+      "desktop": {
+        "src": "/assets/case-evidence-20261027/hiraya-group-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Hiraya Group estimating website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/case-evidence-20261027/hiraya-group-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Hiraya Group estimating website on a phone."
+      },
+      "social": {
+        "src": "/assets/case-evidence-20261027/share-hiraya-group.jpg",
+        "width": 1200,
+        "height": 630,
+        "alt": "Hiraya Group estimating website on desktop."
+      },
+      "screen": {
+        "src": "/assets/case-evidence-20261027/hiraya-group-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Hiraya Group estimating website on desktop."
+      }
     }
   },
   "replacements": {

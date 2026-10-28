@@ -39,7 +39,8 @@ EXPECTED_REVIEW_DISTRIBUTION = {
 }
 # 17 consolidated routes (16 answers and journal notes, /websites-for-your-business/) now 301 (2026-10-17);
 # 17 thin articles folded into deepened articles now 301 (2026-10-19).
-EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT
+# Two client case studies added: Stephenie Powers and Hiraya Group (2026-10-27).
+EXPECTED_ROUTE_COUNT = 402 - 17 - 17 + len(LAB_CATALOG) + 1 + EXPECTED_REVIEW_TILE_COUNT + 2
 EXPECTED_CONSOLIDATED_GROUP_COUNT = 19
 NAVIGATION_AFFORDANCE = re.compile(r"[↗↘↙↖→←↑↓➜➔⤴]")
 # Credits are public attribution, not imported source markup.  A malformed
@@ -56,6 +57,7 @@ NOINDEX_PREFIXES = ("/markets/", "/photos/", "/answers/help/", "/_readers/")
 # Mirrors the compiler: complete help answers are indexable; neighborhood
 # pages follow their original route-meta policy.
 INDEXED_HELP_ANSWERS = frozenset(json.loads((APP / "preview-content/search-policy.json").read_text())["indexedHelpAnswers"])
+INDEXED_WEBSITE_MARKETS = frozenset(json.loads((APP / "preview-content/search-policy.json").read_text())["indexedWebsiteMarkets"])
 # Dedicated VERA documents are rendered after the marketing compiler from its
 # protected core and pinned public archive. Preserve their existing policy.
 VERA_DOCUMENTS = ("/vera/manual/", "/vera/archive/")
@@ -444,6 +446,8 @@ def route_meta() -> dict[str, dict]:
 def indexable(route: str, meta: dict[str, dict]) -> bool:
     if route in INDEXED_HELP_ANSWERS:
         return True
+    if route in INDEXED_WEBSITE_MARKETS:
+        return True
     # Mirrors the compiler: market hubs and their question pages are indexable (2026-10-19).
     if re.match(r"^/markets/(?:[a-z0-9-]+/(?:answers/[a-z0-9-]+/)?)?$", route):
         return True
@@ -452,6 +456,11 @@ def indexable(route: str, meta: dict[str, dict]) -> bool:
     existing = meta.get(route)
     if existing:
         return not existing.get("noindex", False) and existing.get("canonical", route) in (route, ORIGIN + route)
+    if route.startswith("/case-studies/"):
+        # Mirrors the compiler: a live public client story added after the
+        # imported route metadata is indexable.
+        record = next((c for c in json.loads((CONTENT / "cases.json").read_text()) if c["slug"] == route.strip("/").split("/")[-1]), None)
+        return bool(record and record.get("publicType") == "Website design" and "live" in record.get("type", "").lower())
     return route == "/" or route in ("/reviews/", "/how-we-help/", "/construction/") or route.startswith(("/industries/", "/labs/"))
 
 
@@ -673,7 +682,10 @@ def review_reader_contract(dist: Path, tile: dict[str, str], failures: list[str]
         missing.append("whole sourced review text")
     if not quote and '<blockquote>' in document:
         missing.append("quote-free rating-only review")
-    google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', document, re.I)
+    # Count the review's citation within its reader, not the shared business
+    # profile navigation. A rating-only review may use that same profile URL.
+    reader = re.search(r'<section\b[^>]*class="review-reader"[^>]*>.*?</section>', document, re.S)
+    google_links = re.findall(r'<a\b[^>]*href=["\']'+re.escape(source["sourceUrl"])+r'["\'][^>]*>', reader.group(0) if reader else '', re.I)
     if len(google_links) != 1:
         missing.append("exactly one direct Google source link")
     elif not re.search(r'\btarget=["\']_blank["\']', google_links[0], re.I) or not re.search(r'\brel=["\'][^"\']*\bnoopener\b', google_links[0], re.I):

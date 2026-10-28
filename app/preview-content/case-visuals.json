@@ -284,6 +284,48 @@
         "height": 630,
         "alt": "VenueCircuit public owner-demo workspace on desktop."
       }
+    },
+    "stephenie-powers": {
+      "desktop": {
+        "src": "/assets/case-evidence-20261027/stephenie-powers-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Stephenie Powers salon website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/case-evidence-20261027/stephenie-powers-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Stephenie Powers salon website on a phone."
+      },
+      "caption": "The site we shipped, live today. Captured October 27, 2026.",
+      "source": {
+        "kind": "Verified production capture",
+        "publicUrl": "https://stepheniepowershair.com/",
+        "captureDate": "2026-10-27",
+        "status": "Live client website."
+      }
+    },
+    "hiraya-group": {
+      "desktop": {
+        "src": "/assets/case-evidence-20261027/hiraya-group-desktop.webp",
+        "width": 1600,
+        "height": 1111,
+        "alt": "Hiraya Group estimating website on desktop."
+      },
+      "mobile": {
+        "src": "/assets/case-evidence-20261027/hiraya-group-phone.webp",
+        "width": 780,
+        "height": 1688,
+        "alt": "Hiraya Group estimating website on a phone."
+      },
+      "caption": "The site we shipped, live today. Captured October 27, 2026.",
+      "source": {
+        "kind": "Verified production capture",
+        "publicUrl": "https://www.hirayagroup.net/",
+        "captureDate": "2026-10-27",
+        "status": "Live client website."
+      }
     }
   }
 }

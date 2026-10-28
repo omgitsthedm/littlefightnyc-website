@@ -281,11 +281,11 @@
   },
   "case-chromatic-painting-design": {
     "title": "Chromatic Painting & Design",
-    "summary": "One studio identity with separate paths for painting projects and mural commissions."
+    "summary": "Homeowners see the finished work first, then ask for a painting estimate in one form, with a separate path for mural commissions."
   },
   "case-hair-by-rachel-charles": {
     "title": "Hair By Rachel",
-    "summary": "A salon website that explains services before booking while keeping Square in the booking path."
+    "summary": "Every item on Rachel’s menu has its own Book button, each main service has a page, and AI assistants get a plain guide to the studio."
   },
   "page-areas": {
     "title": "Help that knows your block",
@@ -293,7 +293,7 @@
   },
   "case-cc-films": {
     "title": "CC Films",
-    "summary": "An official film home with direct paths for fans, press, and premiere guests."
+    "summary": "Fans get the trailer in one tap, press gets reviews and coverage, and anyone can ask about a screening, all on the film’s official home."
   },
   "album-hospitality": {
     "title": "Hospitality, ready for the next guest",
@@ -301,11 +301,11 @@
   },
   "case-easy-tiger": {
     "title": "Easy Tiger Bar",
-    "summary": "A neighborhood-bar site with a readable menu, event paths, visit details, and a separate editing flow for upkeep."
+    "summary": "Tonight’s menu, upcoming events and a photo journal of the bar, readable on a phone, with one QR menu address that stays current."
   },
   "case-the-break-room": {
     "title": "The Break Room",
-    "summary": "A pool-hall site that pairs venue character with readable games, menu, directions, and contact details."
+    "summary": "People searching for pool or darts in Glendale land on a page about exactly that, and groups send their night plan in one form."
   },
   "case-clearhelp": {
     "title": "ClearHelp",
@@ -329,7 +329,7 @@
   },
   "case-grand-funding-llc": {
     "title": "Grand Funding LLC",
-    "summary": "A real-estate funding site that separates project education and planning examples from a transaction-specific review."
+    "summary": "Investors land on the loan they need, by deal type and city, and every page says terms come only after a real review."
   },
   "case-logan-loans": {
     "title": "Logan Loans",
@@ -345,7 +345,7 @@
   },
   "case-the-tarot-hotline": {
     "title": "The Tarot Hotline",
-    "summary": "A personal-service site that explains voice notes, live talks, and a question-first path before someone chooses a paid next step."
+    "summary": "Booking comes first: pick a reading, share your question, and see current prices from Square before you pay."
   },
   "lab-pool-room": {
     "title": "The Pool Room",
@@ -396,12 +396,12 @@
     "summary": "Explore websites and practical technology help shaped around the way your business works."
   },
   "market-nyc": {
-    "title": "Websites and tech help for New York businesses.",
-    "summary": "A customer checks your hours while your team is opening up. Make the answer easy to find. We build websites around those everyday questions and help with the tools behind the counter or desk."
+    "title": "Websites for New York City businesses.",
+    "summary": "Make it easy for the right customer to understand your business and get in touch. We design and build custom websites for New York City small and medium businesses, from service teams and shops to growing brands."
   },
   "market-marthas-vineyard": {
-    "title": "Keep your website ready for the season.",
-    "summary": "Opening dates, hours, and booking details can change with the season. Give customers one current place to check before they make the trip. We build websites remotely and help plan how those details stay up to date."
+    "title": "Websites for Martha’s Vineyard businesses.",
+    "summary": "Give island residents and visitors a clear way to choose your business. We build custom websites for Martha’s Vineyard shops, hospitality businesses and service teams, with current details and an easy next step."
   },
   "market-arizona": {
     "title": "A website that makes your Arizona business clear.",

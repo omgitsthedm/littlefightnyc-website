@@ -10,22 +10,22 @@
       "summary": "A design concept that puts a neighborhood pizzeria’s history, menu, and phone ordering in the same easy path."
     },
     "cc-films": {
-      "summary": "The official film home for viewers, press, and premiere guests who each need a different way in."
+      "summary": "Fans get the trailer in one tap, press gets reviews and coverage, and anyone can ask about a screening, all on the film’s official home."
     },
     "chromatic-painting-design": {
-      "summary": "One studio with clear paths for a painting project or a mural commission."
+      "summary": "Homeowners see the finished work first, then ask for a painting estimate in one form, with a separate path for mural commissions."
     },
     "clearhelp": {
       "summary": "A production resource-finding site that starts with people’s situations and locations, with a separate route for offering help."
     },
     "easy-tiger": {
-      "summary": "Tonight’s plan, the menu, and the way to the bar, together on a phone."
+      "summary": "Tonight’s menu, upcoming events and a photo journal of the bar, readable on a phone, with one QR menu address that stays current."
     },
     "grand-funding-llc": {
-      "summary": "A real-estate funding site that helps people understand the options before they ask about their own project."
+      "summary": "Investors land on the loan they need, by deal type and city, and every page says terms come only after a real review."
     },
     "hair-by-rachel-charles": {
-      "summary": "See the services, get a feel for Rachel’s work, and book through Square."
+      "summary": "Every item on Rachel’s menu has its own Book button, each main service has a page, and AI assistants get a plain guide to the studio."
     },
     "legacy-music-group": {
       "summary": "A Dallas recording studio’s original website, restored with its look and motion intact."
@@ -34,16 +34,22 @@
       "summary": "A mortgage-information site that gives buyers, homeowners, investors, and realtors the route that fits their question."
     },
     "the-break-room": {
-      "summary": "Find the games, the menu, the room, and the way there before you head out."
+      "summary": "People searching for pool or darts in Glendale land on a page about exactly that, and groups send their night plan in one form."
     },
     "the-tarot-hotline": {
-      "summary": "A personal-service website that explains reading choices before a visitor books."
+      "summary": "Booking comes first: pick a reading, share your question, and see current prices from Square before you pay."
     },
     "venuecircuit": {
       "summary": "A live venue-operations demo with a shared show record, role-specific workspaces, and nightly close-out tools."
     },
     "deckspace": {
       "summary": "A design concept for finding events, places, and people during a cruise without digging through a dashboard."
+    },
+    "stephenie-powers": {
+      "summary": "Every service on Stephenie’s menu has its own Book button into Square, with a guide page for each kind of appointment."
+    },
+    "hiraya-group": {
+      "summary": "Contractors and restoration teams find the estimating help they need and start a file, with a separate plain-language page for property owners."
     }
   },
   "labs": {
@@ -189,10 +195,16 @@
   },
   "markets": {
     "/markets/nyc/": {
-      "summary": "Plan around how your New York business works. Start with customer questions and daily bottlenecks, then choose a website change, a better tool, or tech support."
+      "summary": "Make it easy for the right customer to understand your business and get in touch. We design and build custom websites for New York City small and medium businesses, from service teams and shops to growing brands.",
+      "metaDescription": "Custom website design and development for New York City businesses. Service pages, real project work and clear inquiry paths. First 30 minutes free.",
+      "family": "web",
+      "eyebrow": "Website design & development"
     },
     "/markets/marthas-vineyard/": {
-      "summary": "Plan the season before it gets busy. Work through opening dates, booking, customer replies, and the tools your team needs to keep the details current."
+      "summary": "Give island residents and visitors a clear way to choose your business. We build custom websites for Martha’s Vineyard shops, hospitality businesses and service teams, with current details and an easy next step.",
+      "metaDescription": "Website design and development for Martha’s Vineyard businesses. Clear services, seasonal information and booking paths, built remotely by Little Fight NYC.",
+      "family": "web",
+      "eyebrow": "Website design & development"
     },
     "/markets/arizona/": {
       "summary": "Choose the next useful change for your Arizona business. Review service areas, inquiries, and follow-up, then repair a setup or build something new."

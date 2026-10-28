@@ -161,9 +161,12 @@ export default async (req: Request, context: Context) => {
   let fullUrl: string;
   try {
     const cleaned = url.trim().replace(/\/+$/, "").slice(0, 2048);
-    fullUrl = cleaned.startsWith("http") ? cleaned : `https://${cleaned}`;
+    // Respect an explicit scheme so the protocol check below can reject it;
+    // "ftp://x" must not become "https://ftp://x" with hostname "ftp".
+    fullUrl = /^[a-z][a-z0-9+.-]*:\/\//i.test(cleaned) ? cleaned : `https://${cleaned}`;
     const parsed = new URL(fullUrl);
     domain = parsed.hostname.replace(/^www\./, "");
+    if (!parsed.hostname.includes(".")) throw new Error("Public hostnames need a dot");
 
     // Block private/internal IPs (SSRF protection)
     if (isPrivateIP(parsed.hostname)) {

@@ -50,7 +50,7 @@ async function heroGeometry(page,label){
  check(label+' readable hero, 44px actions, undistorted responsive artwork and no overflow',!result.overflow&&result.imageLoaded&&!result.issues.length,result);
 }
 async function main(){
- for(const [engine,type] of [['chrome',chromium],['webkit',webkit]]){
+ for(const [engine,type] of (process.env.TILE_QUALITY_BROWSER==='chrome'?[['chrome',chromium]]:[['chrome',chromium],['webkit',webkit]])){
   const browser=await type.launch(engine==='chrome'?{channel:'chrome',headless:true}:{headless:true});
   report.engines[engine]=browser.version();
   try{
@@ -63,14 +63,6 @@ async function main(){
     await page.goto(base+'/?qa=1');await settle(page);
     for(const action of ['.hero-main','.hero-secondary','.sculpture-help']){
      const link=page.locator(action),href=await link.getAttribute('href');await link.scrollIntoViewIfNeeded();await link.tap();
-     if(action==='.sculpture-help'){
-      // Get help opens the one-tap chooser; closing it returns focus to the button.
-      await page.waitForFunction(()=>document.querySelector('#get-help-panel')?.open&&document.querySelectorAll('#get-help-panel [data-help-choice]').length===4);
-      await page.locator('#get-help-panel [data-help-close]').click();
-      await page.waitForFunction(action=>!document.querySelector('#get-help-panel').open&&document.activeElement===document.querySelector(action),action,{timeout:1500});
-      check(engine+' cold visit '+visit+' Get help chooser opens and returns focus',true);
-      continue;
-     }
      await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
      await page.locator('#close-detail').click();
      await page.waitForFunction(action=>!document.querySelector('#detail').open&&document.activeElement===document.querySelector(action),action,{timeout:1500});
@@ -92,19 +84,14 @@ async function main(){
     for(const action of ['.sculpture-help','.sculpture-work','.hero-main','.hero-secondary']){
      const link=page.locator(action);await link.scrollIntoViewIfNeeded();const scroll=await page.evaluate(()=>scrollY),href=await link.getAttribute('href');
      if(profile.touch)await link.tap();else await link.click();
-     if(action==='.sculpture-help'){
-      // Get help opens the chooser first; a website choice starts the inquiry reader.
-      await page.waitForFunction(()=>document.querySelector('#get-help-panel')?.open);
-      const choice=page.locator('#get-help-panel [data-help-choice="website"]');
-      if(profile.touch)await choice.tap();else await choice.click();
-      await page.waitForFunction(()=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath?.startsWith('/tech-audit/'));
-     }else await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
+     await page.waitForFunction(href=>document.querySelector('#detail')?.open&&document.querySelector('#detail-body')?.dataset.readerPath===href,href);
      await settle(page);
      const reader=await page.locator('#detail-body').evaluate(body=>({overflow:body.scrollWidth>body.clientWidth+1}));
      const close=page.locator('#close-detail');
      const hit=await close.evaluate(el=>{const r=el.getBoundingClientRect();return {width:r.width,height:r.height,hit:document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===el}});
      check(label+' '+href+' reader fits with reachable 44px close',!reader.overflow&&hit.hit&&hit.width>=44&&hit.height>=44,{reader,hit});
      if(action==='.sculpture-help'){
+      check(label+' website action skips the chooser and keeps intent',!await page.locator('#get-help-panel').evaluate(el=>el.open)&&await page.locator('#detail-body [name="intent"]').inputValue()==='website');
       const field=page.locator('#detail-body [name="name"]');
       await field.fill('Local layout check');
       check(label+' inquiry accepts input without mobile auto-zoom sizing',await field.evaluate(el=>el.value==='Local layout check'&&parseFloat(getComputedStyle(el).fontSize)>=16));

@@ -38,5 +38,20 @@ export default defineConfig({
       channel: "chrome",
       viewport: { width: 393, height: 852 },
     },
-  }],
+  }, ...(process.env.TILE_QUALITY_BROWSER === "chrome" ? [] : [{
+    name: "webkit-support-form",
+    grep: /support intake|BFCache-restored support form/,
+    use: {
+      ...devices["Desktop Safari"],
+      browserName: "webkit" as const,
+      viewport: { width: 1440, height: 900 },
+    },
+  }, {
+    name: "webkit-support-form-phone",
+    grep: /support intake|BFCache-restored support form/,
+    use: {
+      ...devices["iPhone 13"],
+      browserName: "webkit" as const,
+    },
+  }])],
 });

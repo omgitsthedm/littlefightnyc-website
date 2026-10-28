@@ -113,6 +113,37 @@ export async function mountProductionIsland(host: HTMLElement, kind: IslandKind)
       host.tabIndex = -1;
     }
   });
+  if (!host.closest("#detail")) revealIslandHashTarget(host);
+}
+
+/**
+ * The browser resolves a page's #fragment against the static fallback, before
+ * the island exists. A stable link such as /website-check/#website-check-url
+ * targets a field the island renders, so finish that jump once it mounts and
+ * put the cursor in a targeted form control (the app router's behavior).
+ */
+function revealIslandHashTarget(host: HTMLElement) {
+  let targetId: string;
+  try {
+    targetId = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    targetId = window.location.hash.slice(1);
+  }
+  if (!targetId) return;
+  let attempts = 0;
+  const reveal = () => {
+    const target = document.getElementById(targetId);
+    if (!target || !host.contains(target)) {
+      attempts += 1;
+      if (attempts < 16 && host.isConnected) window.setTimeout(reveal, 80);
+      return;
+    }
+    target.scrollIntoView({ block: "start", behavior: "auto" });
+    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+      target.focus({ preventScroll: true });
+    }
+  };
+  window.requestAnimationFrame(reveal);
 }
 
 export async function openConsentNotices() {

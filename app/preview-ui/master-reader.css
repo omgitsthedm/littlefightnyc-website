@@ -47,3 +47,13 @@
  .lf-reader .reference-story h2{font-size:24px}.lf-reader .reference-story p{font-size:16px;line-height:1.35}
  .reference-story>img{height:160px}.reference-story:last-child>img{height:180px}
 }
+
+/* Project proof explains the work before asking an owner to start a brief. */
+.reference-work a{text-decoration:none}
+.reference-work a>span{display:block;padding:8px 8px 0;font-size:1rem;line-height:1.5;color:var(--lf-muted)}
+.reference-work a:hover>span,.reference-work a:focus-visible>span{text-decoration:underline;text-underline-offset:3px}
+.website-first-look{font-size:1rem!important;line-height:1.5!important;color:var(--lf-muted)}
+.website-project-action{margin-block:20px 8px}
+
+/* Market proof captions remain comfortable separate touch targets. */
+.story-hero.website-market figcaption a{display:inline-flex;align-items:center;min-height:44px;padding-block:4px}

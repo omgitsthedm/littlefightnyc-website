@@ -33,7 +33,7 @@ async function snapshot(page, name) {
   await page.screenshot({path: path.join(out, name + '.png')});
 }
 (async () => {
-  for (const [engine, type] of [['chrome', chromium], ['webkit', webkit]]) {
+  for (const [engine, type] of (process.env.TILE_QUALITY_BROWSER === 'chrome' ? [['chrome', chromium]] : [['chrome', chromium], ['webkit', webkit]])) {
     const browser = await type.launch(engine === 'chrome' ? {channel: 'chrome', headless: true} : {headless: true});
     try {
       for (const width of [320, 393, 820, 1024, 1440, 1920]) {
@@ -81,7 +81,7 @@ async function snapshot(page, name) {
           const state = await page.evaluate(() => ({
             overflow: document.documentElement.scrollWidth > innerWidth + 1,
             heading: getComputedStyle(document.querySelector('h1')).fontFamily,
-            brand: !!document.querySelector('.workbench-brand img[src="/assets/boat-orange.svg"]'),
+            brand: !!document.querySelector('.workbench-brand img[src="/assets/boat-orange.svg"]') || (document.querySelector('.workbench-brand [data-steam-mark] svg')?.getAttribute('viewBox') === '0 0 838.016418 562.406218' && document.querySelector('.workbench-brand [data-steam-mark] svg')?.querySelectorAll('path').length === 3),
             contacts: [...document.querySelectorAll('.workbench-chrome-top a[href^="tel:"],.workbench-chrome-top a[href^="sms:"],.workbench-chrome-top a[href^="mailto:"]')].filter(el => el.getClientRects().length).length,
           }));
           check(engine + ' ' + width + ' direct brand ' + route, !state.overflow && state.heading.includes('LFReader') && state.brand && state.contacts === 3, state);
@@ -128,5 +128,5 @@ async function snapshot(page, name) {
   } finally { await browser.close(); }
   check('No page JavaScript errors', errors.length === 0, errors);
   fs.writeFileSync(path.join(out, 'checks.json'), JSON.stringify({checks, errors, physicalDevices: false}, null, 2));
-  console.log('PASS UI consistency: ' + checks.length + ' checks across installed Chrome and WebKit.');
+  console.log('PASS UI consistency: ' + checks.length + ' checks across ' + (process.env.TILE_QUALITY_BROWSER === 'chrome' ? 'installed Chrome only; WebKit not assessed' : 'installed Chrome and WebKit') + '.');
 })().catch(error => { fs.writeFileSync(path.join(out, 'checks.json'), JSON.stringify({checks, errors, failure: error.message}, null, 2)); console.error(error); process.exitCode = 1; });

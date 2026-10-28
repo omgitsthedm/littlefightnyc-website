@@ -187,6 +187,10 @@
       const label = motionToggle.querySelector('.motion-label');
       if (label) label.textContent = enabled ? 'Pause motion & slideshows' : 'Resume motion & slideshows';
     }
+    document.dispatchEvent(new CustomEvent('lf:motion-change', { detail: { enabled } }));
+    if (announce) {
+      try { sessionStorage.setItem('lf-motion-paused', enabled ? '0' : '1'); } catch { /* Respect the current page choice. */ }
+    }
     if (announce) interaction(enabled ? 'motion_on' : 'motion_off', 'mosaic', 'controls');
   }
 
@@ -798,7 +802,12 @@
   prefersReducedMotion.addEventListener('change', () => {
     if (prefersReducedMotion.matches) setMotionState(false);
   });
-  setMotionState(!prefersReducedMotion.matches && !document.body.classList.contains('no-motion'), { announce: false });
+  document.addEventListener('lf:motion-request', event => {
+    if (typeof event.detail?.enabled === 'boolean') setMotionState(event.detail.enabled && !prefersReducedMotion.matches);
+  });
+  let savedMotionPaused = false;
+  try { savedMotionPaused = sessionStorage.getItem('lf-motion-paused') === '1'; } catch { /* Use the system preference. */ }
+  setMotionState(!prefersReducedMotion.matches && !savedMotionPaused && !document.body.classList.contains('no-motion'), { announce: false });
 
   async function loadSearchIndex() {
     if (!indexPromise) {
@@ -970,7 +979,7 @@
   if (helpPanel && typeof helpPanel.showModal === 'function') {
     let helpSource = null;
     document.addEventListener('click', event => {
-      const trigger = event.target.closest?.('.sculpture-help, .topbar .start-button, [data-get-help]');
+      const trigger = event.target.closest?.('.topbar .start-button, [data-get-help]');
       if (!trigger || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.preventDefault();
       event.stopImmediatePropagation();

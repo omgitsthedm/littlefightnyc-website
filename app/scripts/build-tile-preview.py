@@ -28,6 +28,7 @@ from consolidated_tiles import load_groups, home_contexts, source_routes, apply_
 from retained_answers import render_retained_answers
 from tile_rewrite import GUIDE_UPDATED, article_updates, load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
+from steam_mark import steam_mark
 from review_readers import review_reader_pages, render_review_reader
 from clay_library import ENABLED as CLAY_LIBRARY, copy_assets as copy_clay_library, png_image as clay_png_image, assets as clay_assets
 from article_visuals import article_topic, section_icon_html
@@ -62,20 +63,26 @@ RETIRED_PUBLISHED_ASSETS = (
 RETIRED_PUBLISHED_DIRECTORIES = ('brand-kit',)
 
 INDEXED_HELP_ANSWERS = frozenset(json.loads((APP/'preview-content/search-policy.json').read_text())['indexedHelpAnswers'])
+INDEXED_WEBSITE_MARKETS = frozenset(json.loads((APP/'preview-content/search-policy.json').read_text())['indexedWebsiteMarkets'])
 
 # Places we work (owner, 2026-10-19: restore direct links). Hubs and their question pages are
-# indexable; the short town pages stay linked but noindex because they share most of their copy.
+# indexable; short town pages stay noindex unless replaced by a reviewed, distinct website offer.
 MARKET_INDEXABLE = re.compile(r'^/markets/(?:[a-z0-9-]+/(?:answers/[a-z0-9-]+/)?)?$')
-WHERE_WE_WORK = [('New York neighborhoods','/areas/'),('Martha’s Vineyard','/markets/marthas-vineyard/'),('Phoenix & Arizona','/markets/arizona/'),
-                 ('Louisiana spaceport area','/markets/louisiana-starbase-area/'),('South Texas & Starbase','/markets/texas-starbase-area/'),
-                 ('Florida Space Coast','/markets/florida-space-coast/'),('All places','/markets/')]
+WHERE_WE_WORK = [('New York City','/markets/nyc/'),('Martha’s Vineyard','/markets/marthas-vineyard/'),
+                 ('Phoenix','/markets/arizona/phoenix/'),('All places','/markets/')]
 
 def indexable(path):
     if path in INDEXED_HELP_ANSWERS:return True
+    if path in INDEXED_WEBSITE_MARKETS:return True
     if MARKET_INDEXABLE.match(path):return True
     if path in ['/thanks/','/404/'] or path.startswith(('/markets/','/photos/','/answers/help/','/_readers/')):return False
     old = OLD_META.get(path)
     if old:return not old.get('noindex',False) and old.get('canonical',path) in [path,ORIGIN+path]
+    if path.startswith('/case-studies/'):
+        # A client story added after the imported route metadata is indexable
+        # when it is live, public client work.
+        record = cases.get(path.strip('/').split('/')[-1])
+        return bool(record and record.get('publicType') == 'Website design' and 'live' in record.get('type', '').lower())
     return path=='/' or path in ['/reviews/','/how-we-help/','/construction/'] or path.startswith(('/industries/','/labs/'))
 
 def preserved(path):
@@ -199,11 +206,11 @@ INDUSTRY_PROOF = {
     '/industries/medical-wellness-practices/': [('hair-by-rachel-charles', 'An appointment-based salon website example: Hair By Rachel.')],
     '/industries/plumbers/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/professional-services/': [('logan-loans', 'A professional-services website example: Logan Loans.')],
-    '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.')],
+    '/industries/restaurants-bars/': [('easy-tiger', 'A bar website example: Easy Tiger Bar.'), ('the-break-room', 'A pool hall website example: The Break Room.')],
     '/industries/retail-ecommerce/': [('after-hours-agenda', 'A Little Fight storefront example: After Hours Agenda.')],
     '/industries/roofing/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
     '/industries/luxury-home-services/': [('chromatic-painting-design', 'A home-services website example: Chromatic Painting & Design.')],
-    '/industries/salons-wellness/': [('hair-by-rachel-charles', 'A salon website example: Hair By Rachel.')],
+    '/industries/salons-wellness/': [('hair-by-rachel-charles', 'A salon website example: Hair By Rachel.'), ('stephenie-powers', 'A stylist website example: Stephenie Powers.')],
 }
 _industry_routes = {path for path in pages if path.startswith('/industries/') and path != '/industries/'}
 _missing_industry_proof = _industry_routes - set(INDUSTRY_PROOF)
@@ -331,7 +338,7 @@ def sections_html(sections):
         if s.get('bullets'): body+='<ul>'+''.join(f'<li>{E(display(b))}</li>' for b in s['bullets'])+'</ul>'
         if s.get('qa'): body+=''.join(f'<h3>{E(display(x["question"]))}</h3><p>{E(display(x["answer"]))}</p>' for x in s['qa'])
         if s.get('groups'): body+=''.join(f'<h3>{E(display(g["label"]))}</h3><ol>'+''.join(f'<li>{E(display(b))}</li>' for b in g['steps'])+'</ol>' for g in s['groups'])
-        if s.get('links'):body+='<nav class="story-related">'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
+        if s.get('links'):body+='<nav class="story-related"'+(f' aria-label="{E(display(s["heading"]))}"' if s.get('heading') else '')+'>'+''.join(link(l.get('label',l.get('text','Learn more')),l['href']) for l in s['links'])+'</nav>'
         heading=display(s.get('heading',''))
         plain=heading in ('','The details','Start here','A useful starting point')
         heading_html='' if plain else f'<h2>{E(heading)}</h2>'
@@ -425,10 +432,16 @@ def normalize(p):
             q['sections'] += [{'heading':t.get('question') or t.get('outcome','Your next step'),'paragraphs':[t.get('answer','')],'bullets':t.get('checklist',[]),'links':[{'label':t.get('question') or 'Read the full answer','href':'/markets/'+m.get('id',p.get('marketId',''))+'/answers/'+t['id']+'/'}] if '/markets/'+m.get('id',p.get('marketId',''))+'/answers/'+t['id']+'/' in pages else []} for t in topics]
         elif m.get('steps'):
             q['sections'] += [{'heading':s['title'],'paragraphs':[s['body']]} for s in m['steps']]
+        if m.get('websiteProject'):
+            # These existing market routes have a focused website offer. Their
+            # authored sections retain links to the supporting local guides.
+            q['sections'] = p['sections']
+            q['heroSlugs'] = m['websiteProject']['proofSlugs']
         q['faqs']=m.get('faqs',[])
     slug=p['path'].strip('/').split('/')[-1]
     if p['path'].startswith('/case-studies/') and slug in cases:
         c=cases[slug];q.update(heading=display(c['name']),eyebrow=c.get('publicType', 'Selected work'),summary=c['summary'],heroSlugs=[] if 'pending' in c['type'].lower() else [slug])
+        if c.get('metaDescription'):q['description']=display(c['metaDescription'])
         q['sections']=[{'heading':heading,'paragraphs':c.get(key,[])} for heading,key in [('The question','challenge'),('What we built','approach'),('Delivered','delivered'),('What changed','outcome')]]
     if p['path'] in lab_by_path:
         lab=lab_by_path[p['path']]
@@ -512,6 +525,7 @@ def article(p):
     if path == '/industries/': art = clay_figure(CLAY_ROUTES[path])
     answer_first = path.startswith('/answers/')
     demo = embedded_demo(path, q)
+    website_project = (q.get('marketContent') or {}).get('websiteProject')
     primary_action='<a href="#contact">Tell us what you need +</a>'
     if demo:
         primary_action='<a href="#working-demo">Try the working demo +</a>'
@@ -524,9 +538,13 @@ def article(p):
         if external:primary_action='<a href="'+E(external[0])+'" target="_blank" rel="noopener noreferrer">Visit the live website +</a>'
     quiet_labels={'A useful answer','Website help, wherever you work','Real work','Selected work','Little Fight NYC'}
     kicker=f'<p class="story-kicker">{E(q["eyebrow"])}</p>' if q['eyebrow'] not in quiet_labels else ''
-    hero_action=f'<nav class="contact-actions" aria-label="Your next step">{primary_action}</nav>' if demo else ''
+    if website_project:
+        primary_action='<a data-reader-link href="/tech-audit/?intent=website&amp;source='+quote(path, safe='')+'">Talk about your website</a>'
+    hero_action=f'<nav class="contact-actions" aria-label="Your next step">{primary_action}</nav>' if demo or website_project else ''
     support_opening_art = art if path in {'/answers/help/printer/', '/answers/help/wifi/'} else ''
     hero=f'<header class="story-hero"><div>{kicker}<h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{hero_action}</div><div class="story-art">{art}</div></header>'
+    if website_project:
+        hero = hero.replace('class="story-hero"', 'class="story-hero website-market"', 1)
     if path in lab_by_path:
         hero += lab_share_controls(lab_by_path[path])
     if p.get('_answerGuide') or path.startswith('/answers/') or path=='/library/':
@@ -536,7 +554,7 @@ def article(p):
     if path=='/services/custom-local-websites/':
         headline=E(q['heading']).replace('feels like', 'feels<br> like')
         benefits=''.join(f'<li><a href="{href}"><span class="reference-benefit-icon" aria-hidden="true" style="--benefit-asset:url(/assets/mineral/{icon}-duotone.svg)"></span><strong>{label}</strong></a></li>' for href,icon,label in [('#reader-compare','browser','Designed around your business.'),('#reader-ownership','database','Your site. Your domain. Your code.'),('#reader-plan','tag','No monthly hosting fee.')])
-        hero=f'<header class="story-hero rw-scene rw-scene--hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker">Websites</p><h1 class="story-title" id="detail-title" tabindex="-1">{headline}</h1></div><div class="rw-hero-promise"><p class="story-summary">Show people what you do.<br> Make it easy to choose you.</p><ul class="rw-benefits" aria-label="Why choose a custom Little Fight website">{benefits}</ul></div></header>'
+        hero=f'<header class="story-hero rw-scene rw-scene--hero" data-rw-scene="opening"><div class="rw-hero-intro"><p class="story-kicker">Websites</p><h1 class="story-title" id="detail-title" tabindex="-1">{headline}</h1></div><div class="rw-hero-promise"><p class="story-summary">Show people what you do.<br> Make it easy to choose you.</p><nav class="contact-actions website-project-action" aria-label="Start your website project"><a data-reader-link href="/tech-audit/?intent=website&amp;source=%2Fservices%2Fcustom-local-websites%2F">Talk about your website</a></nav><p class="website-first-look">First 30 minutes free. A written scope before paid work.</p><ul class="rw-benefits" aria-label="Why choose a custom Little Fight website">{benefits}</ul></div></header>'
     elif path in anchor_paths:
         family = anchor_paths[path]
         anchor = anchor_bodies[family]
@@ -633,6 +651,8 @@ def article(p):
             fallback=f'<section class="story-hero"><div><p class="story-kicker" data-inquiry-eyebrow>{E(general["eyebrow"])}</p><h1 id="detail-title" class="story-title" data-inquiry-title>{E(general["title"])}</h1><p data-inquiry-summary>{E(general["summary"])}</p><nav class="contact-actions">{channels(contact_intent(path),path)}</nav></div></section>'
             fallback+='<script type="application/json" data-inquiry-copy>'+json.dumps(inquiry_copy,ensure_ascii=False).replace('<','\\u003c')+'</script>'
             fallback+='''<form class="static-inquiry" name="tech-audit-scratch" method="POST" action="/thanks/" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="tech-audit-scratch"><input type="hidden" name="source" value="/tech-audit/"><p hidden><label>Leave this empty<input name="bot-field"></label></p><label>Your name<input name="name" autocomplete="name" required maxlength="150"></label><label>Business name (optional)<input name="business" autocomplete="organization" maxlength="150"></label><label>Website or business profile link <span>(optional)</span><input name="website_url" type="text" inputmode="url" autocomplete="url" autocapitalize="none" spellcheck="false" maxlength="2048" placeholder="yourbusiness.com" aria-describedby="static-website-url-hint"><small id="static-website-url-hint">A website, Google profile, or social link. Leave blank if you’re starting fresh.</small></label><label>Phone or email<input name="contact" type="text" inputmode="text" autocomplete="off" required maxlength="250" aria-describedby="static-contact-hint"><small id="static-contact-hint">Use a phone number for a call or text, or an email address for an email reply.</small></label><label>What do you need help with?<select name="intent" required><option value="" selected disabled>Choose a service</option><option value="general">General question</option><option value="website">Website</option><option value="support">Tech support</option><option value="consulting">Tech consulting</option><option value="systems">Custom software</option></select></label><label>How should we reply?<select name="follow_up"><option value="fastest" selected>Whatever is fastest</option><option value="text">Text me</option><option value="phone">Call me</option><option value="email">Email me</option></select></label><label><span data-inquiry-message-label>What would you like to change?</span><textarea name="message" required maxlength="4000"></textarea></label><button type="submit" data-inquiry-submit>Send your inquiry +</button><p>Your message goes to Little Fight. <a href="/legal/">Privacy and terms</a>.</p></form>'''
+        if path=='/thanks/':
+            fallback=steam_mark('static', 'steam-mark--thanks')+fallback
         if path=='/website-check/':
             fallback+='<section class="story-faq"><h2>Questions about the Website Check</h2>'+''.join(f'<h3>{E(x["question"])}</h3><p>{E(x["answer"])}</p>' for x in WEBSITE_CHECK_FAQ)+'</section>'
         body=f'<div data-production-island="{ISLANDS[path]}" data-production-path="{path}" data-clarity-mask="true">{fallback}</div>'
@@ -720,7 +740,9 @@ for path, family in anchor_paths.items():
 # match the public contact line ("9am–9pm Eastern"), every day.
 # The verified Google Business Profile recorded with the review excerpts.
 REVIEWS_PROFILE = json.loads((CONTENT/'reviews.json').read_text())['profileUrl']
-LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
+BUSINESS_PROFILES = load('business-profiles.json')
+PROFILE_URLS = [profile['url'] for profile in BUSINESS_PROFILES]
+LOCAL_BUSINESS = {'@type':'LocalBusiness','@id':ORIGIN+'/#localbusiness','name':'Little Fight NYC','url':ORIGIN+'/',
     'telephone':'+16463600318','email':'hello@littlefightnyc.com','image':ORIGIN+'/icon-512.png','logo':ORIGIN+'/icon-512.png',
     'description':'Websites, tech support, consulting and custom software for independent businesses.',
     'founder':{'@id':DAVID_ID},
@@ -739,7 +761,7 @@ LOCAL_BUSINESS = {'@type':'ProfessionalService','@id':ORIGIN+'/#localbusiness','
     'knowsAbout':['small business websites','small business IT support','Mac and Windows computers','Microsoft 365','business email','Wi-Fi networks','printers','data backup','tech consulting','custom business software','Google Business Profile'],
     'hasMap':REVIEWS_PROFILE,
     'parentOrganization':{'@id':ORIGIN+'/#organization'},
-    'sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/','https://www.facebook.com/littlefightnyc','https://www.pinterest.com/littlefightn/','https://www.yelp.com/biz/little-fight-nyc-new-york']}
+    'sameAs':PROFILE_URLS}
 
 def hero_preload():
     """Preload the diorama in the format and size the hero <picture> will choose."""
@@ -755,14 +777,28 @@ def head(q, home=False):
     card = social_card(q, reader_family(q), visual.get('desktop'),
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':[REVIEWS_PROFILE,'https://www.instagram.com/littlefightnyc/', 'https://www.facebook.com/littlefightnyc', 'https://www.pinterest.com/littlefightn/', 'https://www.yelp.com/biz/little-fight-nyc-new-york']}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/'},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':PROFILE_URLS}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/', 'publisher':{'@id':ORIGIN+'/#organization'}},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path=='/':graph.append(LOCAL_BUSINESS)
-    if path.startswith('/industries/') or path=='/services/custom-local-websites/':graph.append({'@type':'Service','name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),'description':q.get('description'),'serviceType':'Custom website design','url':ORIGIN+path,'areaServed':{'@type':'Country','name':'United States'},'provider':{'@id':ORIGIN+'/#organization'}})
+    website_project = (q.get('marketContent') or {}).get('websiteProject')
+    if path.startswith('/industries/') or path=='/services/custom-local-websites/' or website_project:
+        service = {'@type':'Service','@id':ORIGIN+path+'#service',
+                   'name':'Custom small business website design' if path=='/services/custom-local-websites/' else q.get('heading'),
+                   'description':q.get('description'),'serviceType':'Website design and development',
+                   'url':ORIGIN+path,'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
+                   'areaServed':website_project['areaServed'] if website_project else {'@type':'Country','name':'United States'},
+                   'provider':{'@id':ORIGIN+'/#organization'}}
+        graph[2]['mainEntity'] = {'@id':service['@id']}
+        if website_project:
+            service['isRelatedTo'] = {'@id':ORIGIN+'/services/custom-local-websites/#service'}
+        elif path=='/services/custom-local-websites/':
+            service['subjectOf'] = [{'@id':ORIGIN+p['path']+'#webpage','@type':'WebPage','url':ORIGIN+p['path']}
+                                    for p in pages.values() if (p.get('marketContent') or {}).get('websiteProject')]
+        graph.append(service)
     if q.get('_rewriteCategory'):
         family=q['_rewriteCategory']
         graph.append(category_schema(rewrite,family,ORIGIN,path))
         if family!='web':
-            graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':q['heading'],'description':q['description'],
+            graph.append({'@type':'Service','@id':ORIGIN+path+'#service','name':{'it':'Tech support','consulting':'Technology consulting','software':'Custom business software'}[family],'description':q['description'],
                           'serviceType':{'it':'IT support','consulting':'Technology consulting','software':'Custom business software'}[family],
                           'url':ORIGIN+path,'provider':{'@id':ORIGIN+'/#organization'},
                           # On-site tech support is a New York service; advice and software travel.
@@ -780,6 +816,33 @@ def head(q, home=False):
         graph.append({'@type':'FAQPage', '@id':ORIGIN+path+'#questions',
                       'mainEntity':[{'@type':'Question', 'name':item['question'],
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
+    # Keep every actual service attached to its page and usable contact route.
+    for service in graph:
+        if service.get('@type') == 'Service' and service.get('@id') == ORIGIN+path+'#service':
+            graph[2]['mainEntity'] = {'@id':service['@id']}
+            service['mainEntityOfPage'] = {'@id':ORIGIN+path+'#webpage'}
+            service['availableChannel'] = {'@type':'ServiceChannel',
+                'serviceUrl':ORIGIN+'/tech-audit/?intent='+contact_intent(path)+'&source='+quote(path,safe='')}
+    case_record = cases.get(path.strip('/').split('/')[-1]) if path.startswith('/case-studies/') else None
+    if case_record and case_record.get('schemaAbout'):
+        # A client case study is an article about the client's business and
+        # the website we shipped for it. Only dated, public facts appear here.
+        proof = case_record.get('proof') or {}
+        shots = proof.get('captures', {})
+        about = dict(case_record['schemaAbout'], **{'@id': ORIGIN+path+'#client'})
+        work = {'@type':'WebSite','@id':ORIGIN+path+'#client-website','name':about['name'],'url':about['url'],
+                'creator':{'@id':ORIGIN+'/#organization'},'about':{'@id':about['@id']}}
+        graph.append(about)
+        graph.append(work)
+        graph.append({'@type':'Article','@id':ORIGIN+path+'#case-study','headline':q.get('heading'),
+                      'description':q.get('description'),'articleSection':'Case studies',
+                      'about':[{'@id':about['@id']},{'@id':work['@id']}],
+                      'image':[{'@type':'ImageObject','url':ORIGIN+shot['src'],'width':shot['width'],'height':shot['height'],'caption':shot['alt']} for shot in shots.values()],
+                      'mainEntityOfPage':{'@id':ORIGIN+path+'#webpage'},
+                      'author':{'@id':ORIGIN+'/#organization'},'publisher':{'@id':ORIGIN+'/#organization'},
+                      **({'dateModified':ARTICLE_UPDATES[path]} if path in ARTICLE_UPDATES else {}),
+                      'inLanguage':q.get('language','en')})
+        graph[2]['mainEntity'] = {'@id':ORIGIN+path+'#case-study'}
     graph[2]['inLanguage'] = q.get('language', 'en')
     graph.append(person_schema())
     if path in ARTICLE_UPDATES:
@@ -805,12 +868,12 @@ def head(q, home=False):
                       'inLanguage':q.get('language','en')})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839">{'<meta name="p:domain_verify" content="f52fa32a67054314cc05deefc672b8db">' if home else ''}<link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/{'home' if home else 'site'}.css">{hero_preload() if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"{' data-home-boot' if home else ''}><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839">{'<meta name="p:domain_verify" content="f52fa32a67054314cc05deefc672b8db">' if home else ''}<link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}">{share_meta}<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{'<script src="/site-boot.js"></script>' if home else ''}<link rel="stylesheet" href="/{'home' if home else 'site'}.css">{hero_preload() if home and os.environ.get("LFNYC_CLAY_HERO_PREVIEW", "1") == "1" else ""}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/clay-icons.js"></script>{'<script defer src="/clay-cutouts.js"></script>' if CLAY_LIBRARY else ''}{'<script defer src="/clay-hero.js"></script>' if home and os.environ.get('LFNYC_CLAY_HERO_PREVIEW', '1') == '1' else ''}<script defer src="/search-relevance.js"></script><script defer src="/site.js"></script><script defer src="/steam-mark.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/" data-reader-link><span>Get help</span><span class="help-button__plus" aria-hidden="true">+</span></a>'
     services=''  # The current master has Websites and Our work in the header.
-    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
+    return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage">'+steam_mark()+'<span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
 
 def contact_dock():
     """Call, Text and Get help stay within reach once the hero's buttons scroll away (site.js)."""
@@ -849,7 +912,8 @@ def help_panel():
 
 
 def site_footer():
-    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav>'+'<nav class="utility-nav utility-nav--places" aria-label="Where we work"><span class="utility-nav__label">Where we work</span>'+''.join(link(label,url) for label,url in WHERE_WE_WORK)+'</nav></footer>'
+    profiles = ''.join(f'<a href="{E(p["url"])}" target="_blank" rel="noopener noreferrer" aria-label="Little Fight NYC on {E(p["platform"])} (opens in a new tab)">{E(p["label"])}</a>' for p in BUSINESS_PROFILES)
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/industries/'),('Reviews','/reviews/'),('About','/about/')])+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav>'+'<nav class="utility-nav" aria-label="Little Fight NYC profiles">'+profiles+'</nav><nav class="utility-nav utility-nav--places" aria-label="Where we work"><span class="utility-nav__label">Where we work</span>'+''.join(link(label,url) for label,url in WHERE_WE_WORK)+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()
@@ -933,7 +997,7 @@ mosaic,homepage_inventory=apply_homepage_groups(mosaic,home_groups,hidden_home_i
 mosaic,sculpture_inventory=sculptural_mosaic(mosaic)
 write('sculpture-inventory.json',json.dumps(sculpture_inventory,ensure_ascii=False,indent=2)+'\n')
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
-q={'path':'/','title':'Little Fight NYC | Websites, Tech Support & Software','description':'Websites, tech support, and custom software for independent businesses. Based in New York, building websites nationwide. Start with a free first look.'}
+q={'path':'/','title':'Small Business Website Design | Little Fight NYC','description':'Custom websites for small and medium businesses in New York City, Phoenix and Martha’s Vineyard. See real client work. First 30 minutes free.'}
 # The homepage paints immediately; only the tile canvas waits for its layout (site-boot.css).
 boot=''
 home=head(q,True)+'<body class="mosaic-home">'+boot+'<a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+contact_dock()+'</div>'+shell_end(True)+help_panel()
@@ -978,7 +1042,8 @@ def llms_text():
     sections=group('Services','/services/')+group('Industries','/industries/')+group('New York neighborhoods','/areas/')+group('Where we work beyond New York','/markets/', lambda p: p!='/markets/nyc/')+group('Work','/case-studies/')+group('Tech support answers','/answers/help/',support)+group('Website, consulting and software answers','/answers/help/',lambda p: not support(p))+group('New York neighborhoods','/areas/')
     tail=('## Policies\n\n- [Privacy and written scope]('+ORIGIN+'/legal/)\n\n'
           +('Information is page-specific. Search rankings, AI recommendations and business outcomes are not guaranteed.\n' if PRODUCTION else 'This host is a noindex review preview. The canonical business website is '+ORIGIN+'.\n'))
-    return intro+describe+start+sections+tail
+    website_markets='## Website development markets\n\n'+'\n'.join(line(p) for p in sorted(INDEXED_WEBSITE_MARKETS))+'\n\n'
+    return intro+describe+start+website_markets+sections+tail
 write('llms.txt', llms_text())
 write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC','description':'Find your way back to Little Fight NYC.'})+'<body class="page-home"><div class="workbench-page" data-reader-family="brand">'+workbench_header(family='brand', contacts=channels())+'<main class="lf-reader"><section class="story-hero"><div><p class="story-kicker">This page isn’t here.</p><h1 class="story-title">Let’s get you to the right place.</h1>'+link('Explore Little Fight','/','button')+'</div></section></main></div>'+shell_end())
 
@@ -989,7 +1054,7 @@ write_stylesheets(APP, UI, css_files, ['site-boot.css'] + (['clay-library.css'] 
 shutil.copy2(UI/'vendor/sculpture-static.css', OUT/'sculpture-static.css')
 # Ship the hand-written browser scripts minified; the readable sources stay in preview-ui.
 script_sources = {name: UI/'vendor'/name for name in ['tile-motion.js', 'mosaic-layout.js']}
-script_sources.update({name: UI/name for name in ['site.js', 'site-boot.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js']})
+script_sources.update({name: UI/name for name in ['site.js', 'site-boot.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js', 'clay-icons.js', 'steam-mark.js']})
 for name, source in script_sources.items():
     write(name, subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=js', '--minify', '--target=es2020'],
                                input=source.read_text(), text=True, capture_output=True, check=True).stdout)

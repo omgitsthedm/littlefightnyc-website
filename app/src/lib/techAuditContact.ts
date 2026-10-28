@@ -20,6 +20,20 @@ export const TECH_AUDIT_LEAD_INTENTS = [
 
 export type TechAuditLeadIntent = (typeof TECH_AUDIT_LEAD_INTENTS)[number];
 
+export function techAuditFailureParameters(input: Record<string, unknown>) {
+  const categories = ["validation", "offline", "network", "timeout", "rejected"];
+  const fields = ["name", "business", "contact", "follow_up", "message"];
+  if (typeof input.failure_category !== "string" || !categories.includes(input.failure_category)) return null;
+  return {
+    form_name: "tech-audit-scratch",
+    page_path: "/tech-audit/",
+    intent: parseTechAuditLeadIntent(typeof input.intent === "string" ? input.intent : null) ?? "general",
+    failure_category: input.failure_category,
+    ...(input.failure_category === "validation" && typeof input.field_name === "string" && fields.includes(input.field_name)
+      ? { field_name: input.field_name } : {}),
+  };
+}
+
 export const TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS = [
   { value: "google", label: "Google" },
   { value: "chatgpt", label: "ChatGPT" },

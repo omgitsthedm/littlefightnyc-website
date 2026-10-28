@@ -242,7 +242,7 @@
 .production-island .lf-website-check__limits,
 .production-island .lf-website-check__status {
   color: #d4cec2;
-  font-size: 0.94rem;
+  font-size: 1rem;
 }
 
 .production-island .lf-audit__error {
@@ -254,9 +254,27 @@
 .production-island .lf-audit-intro,
 .production-island .lf-website-check__intro,
 .production-island .lf-contact-page > :first-child,
-.production-island .lf-thanks > :first-child {
+.production-island .lf-thanks > .lf-pagehero {
   background: #211f1a;
   border-bottom: 1px solid var(--tile-rim);
+}
+
+/* The confirmation steam mark sits above the hero card, aligned with the
+   hero's text column rather than the card edge. */
+.production-island .lf-thanks > .steam-mark--thanks {
+  --thanks-hero-pad: var(--lf-margin-mobile, 20px);
+  margin: var(--lf-space-6, 32px) 0 var(--lf-space-5, 24px)
+    calc(var(--thanks-hero-pad) + max(16px, (100% - 2 * var(--thanks-hero-pad) - 1120px) / 2));
+  background: transparent;
+  border: 0;
+}
+
+@media (min-width: 48rem) {
+  .production-island .lf-thanks > .steam-mark--thanks { --thanks-hero-pad: var(--lf-margin-tablet, 48px); }
+}
+
+@media (min-width: 80rem) {
+  .production-island .lf-thanks > .steam-mark--thanks { --thanks-hero-pad: var(--lf-margin-desktop, 64px); }
 }
 
 .production-island .lf-audit-intro__inner,
@@ -337,7 +355,7 @@
   gap: 8px;
   color: var(--tile-orange);
   font-family: Manrope, "Atkinson Hyperlegible Next", sans-serif;
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -476,4 +494,47 @@ dialog.production-island--consent::backdrop {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
+}
+
+/* The Thanks island's closing doors are cards, not running-text links. */
+.production-island .lf-contact-block__door,
+.production-island .lf-contact-block__door * {
+  text-decoration: none;
+}
+.production-island .lf-contact-block__door:hover strong,
+.production-island .lf-contact-block__door:focus-visible strong {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+/* Website Check island: the editorial button styles are scoped to
+   .lf-editorial, which islands never have. Give the primary action a real
+   button and every other action a 44px target. */
+.production-island .lf-website-check__intro-note a.lf-website-check__start {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  margin-block: 8px 4px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--tile-orange, #ff7839);
+  color: #1b100a;
+  font-weight: 750;
+  text-decoration: none;
+}
+.production-island .lf-website-check__intro-note a.lf-website-check__start:hover { background: #ffac85; color: #1b100a; }
+.production-island .lf-website-check__contact {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 16px;
+}
+.production-island .lf-website-check__contact a,
+.production-island .lf-website-check__choice > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 44px;
 }

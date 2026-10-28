@@ -61,6 +61,8 @@ __pycache__/
 .lifi/evidence/tile-production/
 .lifi/evidence/case-editorial/
 .lifi/evidence/inquiry-enhancement/
+.lifi/evidence/steam-acquisition/
+.lifi/evidence/steam-acquisition-webkit/
 .lifi/evidence/reader-audit/
 .lifi/evidence/topic-mosaic/
 .lifi/evidence/card-app/

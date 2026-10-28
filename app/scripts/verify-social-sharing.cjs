@@ -11,7 +11,7 @@ fs.mkdirSync(evidence, { recursive: true });
 
 (async () => {
   const checks = [];
-  for (const engine of ['chrome', 'webkit']) {
+  for (const engine of (process.env.TILE_QUALITY_BROWSER === 'chrome' ? ['chrome'] : ['chrome', 'webkit'])) {
     const browser = await (engine === 'chrome' ? chromium.launch({ channel: 'chrome' }) : webkit.launch());
     try {
       const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
@@ -78,5 +78,5 @@ fs.mkdirSync(evidence, { recursive: true });
     } finally { await browser.close(); }
   }
   fs.writeFileSync(path.join(evidence,'browser-checks.json'),JSON.stringify({checks},null,2)+'\n');
-  console.log(`PASS ${checks.length} social sharing browser checks (Chrome and WebKit).`);
+  console.log(`PASS ${checks.length} social sharing browser checks (${process.env.TILE_QUALITY_BROWSER === 'chrome' ? 'installed Chrome only; WebKit not assessed' : 'Chrome and WebKit'}).`);
 })().catch(error => { console.error(error);process.exitCode=1; });

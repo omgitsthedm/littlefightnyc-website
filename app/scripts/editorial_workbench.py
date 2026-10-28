@@ -7,6 +7,7 @@ useful without the flip enhancement.
 """
 
 from html import escape
+from steam_mark import steam_mark
 
 
 CATEGORIES = (
@@ -73,7 +74,7 @@ def header(*, family: str | None, contacts: str, dialog: bool = False) -> str:
         '<header class="workbench-chrome">'
         '<div class="workbench-chrome-top">'
         '<a class="workbench-brand" href="/" aria-label="Little Fight NYC homepage">'
-        '<img src="/assets/boat-orange.svg" width="43" height="38" alt="">'
+        + steam_mark() +
         '<span>Little Fight NYC</span></a>'
         f'<nav class="workbench-contacts direct-contact-rail contact-actions reader-rail" data-lf-contact-rail="true" aria-label="Quick contact">{contacts}</nav>'
         + ('<nav class="workbench-reader-controls" aria-label="Card controls">'

@@ -244,6 +244,8 @@
 .lf-editorial .lf-website-check__contact a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: var(--lf-control-min);
   min-height: var(--lf-control-min);
   color: var(--lf-bone);
   font-size: var(--lf-text-2xs);

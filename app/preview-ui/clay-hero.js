@@ -48,8 +48,7 @@
   pointer.addEventListener('change', resetDepth);
 
   toggle.addEventListener('click', () => {
-    paused = !paused;
-    sync();
+    document.dispatchEvent(new CustomEvent('lf:motion-request', { detail: { enabled: paused } }));
   });
   pigeon.addEventListener('click', () => {
     clearTimeout(surpriseTimer);
@@ -95,6 +94,10 @@
     sync();
   }, {threshold: 0.1});
   observer.observe(stage);
+  document.addEventListener('lf:motion-change', event => {
+    paused = !event.detail.enabled;
+    sync();
+  });
   motion.addEventListener('change', sync);
   document.addEventListener('visibilitychange', sync);
   document.addEventListener('lf:site-ready', sync);

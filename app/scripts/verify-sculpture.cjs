@@ -159,7 +159,10 @@ async function main(){
  const merged=new Set([...Object.keys(consolidation.retired),...Object.keys(consolidation.renamed)]);
  const kept=Object.entries(baseline.routes).filter(([route])=>!merged.has(route));
  const added=Object.values(consolidation.renamed).filter(route=>!(route in baseline.routes)).length;
- check('All '+kept.length+' prior reader mappings outside the consolidation retained with one review back per verified review',kept.every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===kept.length+added+reviewSources.length&&[...reviewPaths.values()].every(route=>routes[route]===route));
+ // Case studies published after the baseline (preview-content/cases.json) are
+// self-mapped reader routes; every other new route still fails the contract.
+const newCaseRoutes=JSON.parse(fs.readFileSync(path.join(app,'preview-content/cases.json'))).map(c=>`/case-studies/${c.slug}/`).filter(route=>!(route in baseline.routes));
+check('All '+kept.length+' prior reader mappings outside the consolidation retained with one review back per verified review',kept.every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===kept.length+added+reviewSources.length+newCaseRoutes.length&&[...reviewPaths.values()].every(route=>routes[route]===route)&&newCaseRoutes.every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
  check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
  const approved=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/clay-release.json')));

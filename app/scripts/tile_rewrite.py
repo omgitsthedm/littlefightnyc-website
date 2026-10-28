@@ -214,9 +214,9 @@ def apply_page_rewrite(pages, authored, rewrite):
     for path, item in rewrite['hooks']['markets'].items():
         p = pages[path]
         p['summary'] = item['summary']
-        p['description'] = item['summary']
-        p['eyebrow'] = 'Local business guide'
-        p['family'] = 'consulting'
+        p['description'] = item.get('metaDescription', item['summary'])
+        p['eyebrow'] = item.get('eyebrow', 'Local business guide')
+        p['family'] = item.get('family', 'consulting')
         if p.get('marketContent'):
             p['marketContent']['introduction'] = item['summary']
         authored[path] = p

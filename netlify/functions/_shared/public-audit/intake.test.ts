@@ -131,6 +131,65 @@ describe("public audit operation after private application retirement", () => {
     expect((await runAudit(auditRequest(), context)).status).toBe(429);
     expect(fetch).toHaveBeenCalledTimes(3);
   });
+  it("records a network failure or timeout of the background trigger as an error", async () => {
+    vi.mocked(fetch).mockRejectedValueOnce(new DOMException("The operation timed out.", "TimeoutError"));
+    const response = await runAudit(auditRequest(), context);
+    expect(response.status).toBe(200);
+    const { id } = await response.json();
+    expect(store("audit-status").entries.get(id)).toMatchObject({ status: "error", message: "Failed to start the audit. Please try again." });
+    expect(store("audit-jobs").entries.has(id)).toBe(false);
+  });
+  it("gives a double submit two independent jobs, each counted against the limit", async () => {
+    const [first, second] = await Promise.all([runAudit(auditRequest(), context), runAudit(auditRequest(), context)]);
+    const ids = [(await first.json()).id, (await second.json()).id];
+    expect(new Set(ids).size).toBe(2);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    const [rate] = [...store("rate-limits").entries.values()] as { count: number }[];
+    expect(rate.count).toBeGreaterThanOrEqual(1);
+  });
+  it("continues when the rate-limit store is unavailable", async () => {
+    vi.mocked(getStore).mockImplementation((options: unknown) => {
+      const name = typeof options === "string" ? options : (options as { name: string }).name;
+      if (name === "rate-limits") return { get: async () => { throw new Error("blobs down"); }, setJSON: async () => { throw new Error("blobs down"); } } as never;
+      return store(name) as never;
+    });
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    expect((await runAudit(auditRequest(), context)).status).toBe(200);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    error.mockRestore();
+  });
+  it.each(["example.com", "www.example.com/path/", "HTTP://Example.com"])("still queues a scheme-less or upper-case URL %s", async (url) => {
+    expect((await runAudit(auditRequest(url), context)).status).toBe(200);
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
+  it("answers honeypot submissions with a fake id and no stores or background work", async () => {
+    const response = await runAudit(new Request("https://littlefightnyc.com/examples/audit/api/run-audit", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ url: "https://example.com", email: "owner@example.com", honeypot: "x" }),
+    }), context);
+    expect(response.status).toBe(200);
+    expect((await response.json()).id).toMatch(/^audit-[a-f0-9]{8}$/);
+    expect(stores.size).toBe(0);
+    expect(fetch).not.toHaveBeenCalled();
+  });
+  it.each([
+    ["OPTIONS", undefined, 204],
+    ["GET", undefined, 405],
+    ["POST", "{not json", 400],
+    ["POST", "[]", 400],
+    ["POST", JSON.stringify({ url: "https://example.com", email: "not-an-email" }), 400],
+    ["POST", JSON.stringify({ url: "ftp://example.com", email: "owner@example.com" }), 400],
+    ["POST", JSON.stringify({ url: "javascript://example.com", email: "owner@example.com" }), 400],
+    ["POST", JSON.stringify({ url: "intranet", email: "owner@example.com" }), 400],
+    ["POST", JSON.stringify({ url: "https://example.com", email: "owner@example.com", pad: "x".repeat(11_000) }), 413],
+  ])("%s with body %s returns %i without side effects", async (method, body, status) => {
+    const response = await runAudit(new Request("https://littlefightnyc.com/examples/audit/api/run-audit", {
+      method, headers: { "content-type": "application/json" }, body,
+    }), context);
+    expect(response.status).toBe(status);
+    expect(stores.size).toBe(0);
+    expect(fetch).not.toHaveBeenCalled();
+  });
   it("rejects private targets without dispatching background work", async () => {
     expect((await runAudit(auditRequest("http://127.0.0.1"), context)).status).toBe(400);
     expect(fetch).not.toHaveBeenCalled();

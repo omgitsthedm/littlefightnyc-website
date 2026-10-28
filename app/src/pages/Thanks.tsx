@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CalendarDays, CheckCircle2, ExternalLink } from "lucide-react";
 import PageHero from "@/components/editorial/PageHero";
 import QuietContact from "@/components/editorial/QuietContact";
-import TugAvatar from "@/components/editorial/TugAvatar";
+import SteamMark from "@/components/editorial/SteamMark";
 import { trackEvent } from "@/lib/analyticsClient";
 import "@/styles/editorial/thanks.css";
 import { BOOKING_HREF, PHONE_DISPLAY } from "@/data/contact";
@@ -126,6 +126,7 @@ export default function Thanks() {
 
   return (
     <div className="lf-thanks">
+      <SteamMark play={hasSubmissionContext} />
       <PageHero
         eyebrow={hasSubmissionContext ? "Message received" : "Talk with Little Fight"}
         icon={CheckCircle2}
@@ -205,9 +206,6 @@ export default function Thanks() {
         </section>
       )}
 
-      {/* The tug, underway — the "help is on the way" beat. You just asked a
-          stranger for help; this is the answer to that. */}
-      <TugAvatar />
 
       <QuietContact showBooking={!websiteIntent} />
     </div>

@@ -28,7 +28,8 @@ const labs = JSON.parse(fs.readFileSync(path.join(app, 'preview-content', 'labs.
 // case cards without treating their dedicated public routes as missing.
 const workIndexClientSlugs = [
   'easy-tiger', 'hair-by-rachel-charles', 'the-tarot-hotline', 'grand-funding-llc',
-  'the-break-room', 'clearhelp', 'logan-loans', 'cc-films', 'chromatic-painting-design',
+  'the-break-room', 'stephenie-powers', 'clearhelp', 'logan-loans', 'cc-films',
+  'chromatic-painting-design', 'hiraya-group',
 ];
 const workIndexConceptSlugs = ['army-navy-bags', 'brothers-pizzeria', 'deckspace'];
 const workIndexProductSlugs = [];
@@ -182,7 +183,7 @@ async function verifyPublicCaseShareCards(page) {
   const publicClients = cases.filter(caseStudy =>
     caseStudy.type.startsWith('Client work') && caseStudy.type.toLowerCase().includes('public work, live')
   );
-  assert.equal(publicClients.length, 10, 'Expected ten public client cases for dedicated share cards');
+  assert.equal(publicClients.length, 12, 'Expected twelve public client cases for dedicated share cards');
   for (const caseStudy of publicClients) {
     const social = JSON.parse(fs.readFileSync(path.join(__dirname, '../preview-content/social-cards.json'), 'utf8')).cards[`/case-studies/${caseStudy.slug}/`];
     assert.equal(social.artSource, portfolioDelivery.media[caseStudy.slug]?.desktop?.src, `${caseStudy.slug}: share card must use the verified client screenshot`);
@@ -322,7 +323,7 @@ async function run() {
         }
         return '15 public stories use curated facts and plain public labels';
       });
-      await check('ten public client cases have case-specific social cards that resolve locally', () => verifyPublicCaseShareCards(page));
+      await check('twelve public client cases have case-specific social cards that resolve locally', () => verifyPublicCaseShareCards(page));
 
       await go(page, '/examples/');
       await check('work index passes full Axe including color contrast', () => auditAxe(page, '/examples/'));

@@ -27,13 +27,13 @@
 .lf-reader .anchor-story-body .anchor-scene{--rw-progress:1;padding:clamp(42px,6vw,76px) clamp(22px,5vw,72px);border-top:1px solid rgb(255 255 255 / .1)}
 .lf-reader .anchor-story-body .anchor-scene__heading{display:grid;gap:20px;max-width:64rem}
 .lf-reader .anchor-story-body .anchor-scene__copy{display:grid;align-content:center;gap:20px}
-.lf-reader .anchor-story-body .anchor-eyebrow{color:var(--anchor-accent);font-size:.95rem;font-weight:700;letter-spacing:.035em;text-transform:uppercase}
+.lf-reader .anchor-story-body .anchor-eyebrow{color:var(--anchor-accent);font-size:1rem;font-weight:700;letter-spacing:.035em;text-transform:uppercase}
 .lf-reader .anchor-story-body .anchor-scene--image,.lf-reader .anchor-story-body .anchor-scene--proof{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
 .lf-reader .anchor-story-body .anchor-scene--image .anchor-figure,.lf-reader .anchor-story-body .anchor-scene--proof .anchor-figure{order:2}
 .lf-reader .anchor-story-body .anchor-figure{margin:0}
 .lf-reader .anchor-story-body .anchor-figure>a{display:block;border-radius:18px}
 .lf-reader .anchor-story-body .anchor-figure img{display:block;width:100%;height:auto;border:1px solid rgb(255 255 255 / .16);border-radius:18px;background:#0a0b0d;box-shadow:0 22px 48px rgb(0 0 0 / .24)}
-.lf-reader .anchor-story-body .anchor-figure figcaption{margin-top:12px;color:var(--anchor-muted);font-size:.95rem;line-height:1.45}
+.lf-reader .anchor-story-body .anchor-figure figcaption{margin-top:12px;color:var(--anchor-muted);font-size:1rem;line-height:1.45}
 .lf-reader .anchor-story-body .anchor-inline-link{display:inline-flex;align-items:center;min-height:44px;width:fit-content;color:var(--anchor-ink);font-size:1.1rem;font-weight:700;text-decoration-color:var(--anchor-accent);text-decoration-thickness:2px;text-underline-offset:6px}
 .lf-reader .anchor-story-body .anchor-inline-link:is(:hover,:focus-visible){color:var(--anchor-accent)}
 .lf-reader .anchor-story-body .anchor-signal-list,.lf-reader .anchor-story-body .anchor-path-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;list-style:none;padding:0;margin-top:42px}
@@ -67,7 +67,7 @@
 .lf-reader .anchor-story-body .anchor-route-grid a{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:14px;align-items:center;min-height:110px;padding:20px;border:1px solid var(--anchor-line);border-radius:18px;background:rgb(255 255 255 / .025);color:var(--anchor-ink);text-decoration:none}
 .lf-reader .anchor-story-body .anchor-route-grid img{width:40px;height:40px;filter:var(--anchor-icon-filter,none)}
 .lf-reader .anchor-story-body .anchor-route-grid strong{font-size:1.18rem;line-height:1.2}
-.lf-reader .anchor-story-body .anchor-route-grid span{grid-column:2;color:var(--anchor-muted);font-size:.98rem;line-height:1.35}
+.lf-reader .anchor-story-body .anchor-route-grid span{grid-column:2;color:var(--anchor-muted);font-size:1rem;line-height:1.35}
 .lf-reader .anchor-story-body .anchor-route-grid b{grid-column:3;grid-row:1/3;color:var(--anchor-accent);font:400 2rem/1 LFAtkinson,Arial,sans-serif}
 .lf-reader .anchor-story-body .anchor-route-grid a:is(:hover,:focus-visible){border-color:var(--anchor-accent);background:color-mix(in srgb,var(--anchor-accent) 10%,transparent)}
 .lf-reader .anchor-story-body--it{--anchor-accent:#f5d95b;--anchor-icon-filter:invert(86%) sepia(41%) saturate(504%) hue-rotate(354deg) brightness(101%) contrast(92%)}
