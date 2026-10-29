@@ -53,6 +53,15 @@ Do not use `netlify deploy --prod`, relink the site, or change domains, DNS, bui
 
 ## Current source
 
+October 29 follow-through is local on `codex/lfnyc-followthrough-20261029`,
+based on `11002e62`; it has not been pushed or deployed. The inquiry candidate
+gates confirmation tracking on HTTP acceptance and keeps the Nextdoor canonical
+profile consistent across generated and retained schema. GA4's approved
+contact-click key-event and default-value corrections are saved in the account;
+see `CONVERSION-MEASUREMENT.md` for the distinction. Live application source
+remained `662754f2` during this check. Search Console showed the three focused
+market pages as discovered, not indexed; local validation does not change that.
+
 - Static tile website: `app/preview-content/**`, `app/preview-ui/**`, `app/scripts/build-tile-preview.py`
 - Progressive intake, contact and consent islands: `app/src/tile-bridge/**`
 - Preserved applications and supporting source: `app/public/**`, `app/src/**`

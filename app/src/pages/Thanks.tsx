@@ -13,6 +13,7 @@ import {
   readTechAuditConfirmation,
   safeTechAuditReportId,
   TECH_AUDIT_SESSION_KEYS,
+  TECH_AUDIT_ACCEPTED_MARKER,
   techAuditReplyLanguage,
 } from "@/lib/techAuditContact";
 
@@ -25,7 +26,7 @@ export default function Thanks() {
     let storedDiscoverySource = "";
     let storedSubmission = false;
     try {
-      storedSubmission = window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.submitted) === "true";
+      storedSubmission = window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.submitted) === TECH_AUDIT_ACCEPTED_MARKER;
       storedIntent = parseTechAuditLeadIntent(
         window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.intent),
       );
@@ -67,7 +68,7 @@ export default function Thanks() {
     try {
       storedSubmission = window.sessionStorage.getItem(
         TECH_AUDIT_SESSION_KEYS.submitted,
-      ) === "true";
+      ) === TECH_AUDIT_ACCEPTED_MARKER;
       internalTest ||= window.sessionStorage.getItem(TECH_AUDIT_SESSION_KEYS.internalTest) === "true";
     } catch {
       // A redirect query can keep the confirmation copy accurate when storage
@@ -94,9 +95,9 @@ export default function Thanks() {
       }
     }
 
-    // Only the same-tab marker written after Tech Audit validation represents
-    // a hydrated native-submit attempt. A query-only /thanks/ URL is display
-    // context, not a lead. This does not claim that the server delivered it.
+    // Only the same-tab marker written after an accepted HTTP response can
+    // qualify. Legacy attempt markers and query-only confirmation URLs cannot.
+    // HTTP acceptance still does not establish inbox delivery or qualification.
     if (!storedSubmission) return;
     trackedRef.current = true;
 

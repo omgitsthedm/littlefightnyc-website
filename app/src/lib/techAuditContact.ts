@@ -57,6 +57,22 @@ export const TECH_AUDIT_SESSION_KEYS = {
   internalTest: "lf_tech_audit_internal_test",
 } as const;
 
+// Older releases wrote "true" before the POST completed. Do not let that
+// attempt marker qualify as an accepted request after an upgrade.
+export const TECH_AUDIT_ACCEPTED_MARKER = "accepted-v1";
+
+export function recordTechAuditAcceptance(
+  storage: Pick<Storage, "setItem">,
+  response: Pick<Response, "ok" | "status">,
+  internalTest: boolean,
+): void {
+  if (!response.ok || response.status < 200 || response.status >= 300) return;
+  // Write the exclusion first so an interrupted storage write cannot turn an
+  // internal check into a lead. No contact details enter this marker.
+  storage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(internalTest));
+  storage.setItem(TECH_AUDIT_SESSION_KEYS.submitted, TECH_AUDIT_ACCEPTED_MARKER);
+}
+
 export type TechAuditConfirmationState = {
   submitted: boolean;
   internalTest: boolean;

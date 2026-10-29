@@ -121,8 +121,8 @@ assert.ok(
 );
 assert.match(
   techAuditBranch[1],
-  /track\("tech_audit_submit"/u,
-  "the Tech Audit form must retain its dedicated submit event",
+  /track\("tech_audit_started"/u,
+  "the native Tech Audit fallback can measure an attempt, not acceptance",
 );
 assert.match(
   techAuditBranch[1],
@@ -131,8 +131,8 @@ assert.match(
 );
 assert.doesNotMatch(
   techAuditBranch[1],
-  /track\("form_submit"/u,
-  "the Tech Audit branch must never emit generic form_submit too",
+  /track\("(?:form_submit|tech_audit_submit|generate_lead)"|sessionStorage\.setItem/u,
+  "a native submit has no response evidence and must not count or mark acceptance",
 );
 assert.match(
   thanks,
@@ -144,6 +144,18 @@ assert.doesNotMatch(
   /trackEvent\("lead_success"/u,
   "a confirmed Tech Audit handoff must not duplicate generate_lead with lead_success",
 );
+const inquiry = await read("src/pages/TechAudit.tsx");
+const responseAcceptedAt = inquiry.indexOf('if (!response.ok) throw');
+const acceptanceMarkedAt = inquiry.indexOf('recordTechAuditAcceptance(window.sessionStorage, response, submittedInternalTest)');
+assert.ok(responseAcceptedAt >= 0 && acceptanceMarkedAt > responseAcceptedAt,
+  "only an accepted HTTP response may write the confirmation marker");
+const pendingClearedAt = inquiry.indexOf('removeItem(TECH_AUDIT_SESSION_KEYS.submitted)');
+assert.ok(pendingClearedAt >= 0 && pendingClearedAt < inquiry.indexOf('void fetch(submitAction'),
+  "a pending request must clear any old acceptance before sending");
+assert.doesNotMatch(inquiry, /setItem\(TECH_AUDIT_SESSION_KEYS\.submitted/u,
+  "submission code must use the response-gated acceptance writer");
+assert.equal((thanks.match(/=== TECH_AUDIT_ACCEPTED_MARKER/gu) || []).length, 2,
+  "confirmation copy and conversion must both reject old attempt markers");
 assert.match(
   analytics,
   /function sendGaEvent\([\s\S]{0,220}?eventName: string[\s\S]{0,220}?parameters: Record<string, unknown>[\s\S]{0,360}?hasRealGaMeasurementId\(\)[\s\S]{0,600}?window\.gtag\("event", eventName, parameters\)/u,

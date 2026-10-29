@@ -6,7 +6,6 @@ import {
   isInternalTechAuditTest,
   normalizeTechAuditDiscoverySource,
   techAuditFailureParameters,
-  TECH_AUDIT_SESSION_KEYS,
 } from "./techAuditContact";
 import {
   getAdvertisingConsent,
@@ -1129,19 +1128,15 @@ export function installAnalyticsHooks() {
     if (formName === "tech-audit-scratch") {
       const data = new FormData(form);
       const internalTest = isInternalTechAuditTest(String(data.get("contact") ?? ""), String(data.get("message") ?? ""));
-      try {
-        window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.submitted, "true");
-        window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(internalTest));
-      } catch {
-        // Storage can be unavailable in hardened browsers; the generic submit event still fires.
-      }
-
       if (internalTest) return;
 
+      // The native fallback has no response observer. Measure the attempt,
+      // never a successful submit or a marker that /thanks/ can count as a lead.
       const discoverySource = safeDiscoverySource(data.get("discovery_source"));
-      track("tech_audit_submit", {
+      track("tech_audit_started", {
         form_name: formName,
         page_path: window.location.pathname,
+        entry_point: "native_submit",
         ...(discoverySource ? { discovery_source: discoverySource } : {}),
       });
       return;

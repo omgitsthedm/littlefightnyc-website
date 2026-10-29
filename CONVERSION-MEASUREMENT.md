@@ -1,9 +1,30 @@
 # Little Fight NYC Conversion Measurement
 
-Last updated: 2026-10-25. Resolve production revision from `/release.json`;
+Last updated: 2026-10-29. Resolve production revision from `/release.json`;
 account configuration is dated evidence, separate from code publication.
 
-## Local acquisition repair, not yet published
+## October 29 follow-through: account corrected; code local
+
+GA4 property `524790284`, stream `13610127545` (`G-0Q1TGWH0HL`) was checked
+against the current website. With David's explicit approval, the four
+`contact_call`, `contact_text`, `contact_email` and `human_review_requested`
+key-event flags were removed, and `generate_lead`'s invented USD 1 default
+was cleared. Contact-event creation rules remain available as observations.
+The standard `purchase` definition remains; its existence is not a sale.
+These account changes also affect associated conversions in linked accounts;
+no campaign, bid, budget or advertising consent was changed.
+
+The separate local code candidate writes an `accepted-v1` session marker only
+after the form POST returns HTTP success. Pending, rejected and legacy `true`
+attempt markers cannot create a lead on `/thanks/`. Native form attempts emit
+`tech_audit_started`, never acceptance. The existing failure recovery, internal
+test exclusion, consent controls and one-time confirmation consumption remain.
+HTTP success is browser evidence of acceptance, not delivery, qualification or
+revenue. Storage-blocked and no-JavaScript requests can still work without a
+GA4 lead event. The code candidate remains on its separate local branch,
+unpushed and undeployed.
+
+## Acquisition measurement contract
 
 The October 25 candidate preserves source-only ChatGPT links and fixed labels
 for Claude, Perplexity, Gemini, Copilot, Meta AI and Muse. Known search and
@@ -61,7 +82,7 @@ Use this common funnel, with **active users** beside raw event counts:
 1. `page_view` on `/tech-audit/` — the inquiry page was viewed.
 2. `tech_audit_started` — a field received non-empty input, or a valid submission began.
 3. `tech_audit_submit` — the hydrated form endpoint returned a successful response; a no-JavaScript native submission is outside this browser event.
-4. `generate_lead` with `method=tech_audit_form` — `/thanks/` rendered with a submission marker.
+4. `generate_lead` with `method=tech_audit_form` — `/thanks/` rendered with an accepted-response marker (October 29 local candidate).
 
 `first_look_opened`, `website_plan_intent`, `human_review_requested`,
 `service_inquiry` and the legacy `tech_audit_intent` describe entry actions.
@@ -71,7 +92,7 @@ not emit a preceding CTA click. Do not require `intake_step_1` or
 the current form starts at step 3.
 
 The success-page marker is browser evidence, not a provider receipt. Only
-the same-tab session marker written during the validated submission qualifies;
+the same-tab session marker written after the successful HTTP response qualifies;
 a query-only confirmation URL cannot emit `generate_lead`. The marker is
 consumed to prevent ordinary reload duplicates, and marked internal tests
 are excluded. Deliberately altered browser storage can still forge browser
@@ -87,8 +108,8 @@ Every tracked event carries `funnel_stage`. Break the funnel down by:
 - default channel group / source / medium
 
 Use `generate_lead` as the **lead key event**, retaining the browser-evidence
-limitation above. The authenticated GA4 UI confirmed it is a key event on
-2026-09-29. The standard `purchase` definition also exists; it is not evidence
+limitation above. The authenticated GA4 UI and Admin API confirmed it remains a key event,
+with no default monetary value, on 2026-10-29. The standard `purchase` definition also exists; it is not evidence
 of a purchase or a website sales funnel. The Tech Audit form
 does not also emit generic `form_submit`. Its submit event carries
 `form_name`, `page_path` and `intent`, but not `placement`; do not assume
@@ -100,7 +121,7 @@ observation events until a call or reply is reconciled outside GA4. Those
 events include `placement` and `page_path`. `booking_started` measures
 scheduling intent only; it does not prove that a meeting was booked or held.
 
-The public site loads the owned GA4 stream directly after consent with `send_page_view: false`; React Router sends the one canonical page view for the initial route and each later route. The direct transport is intentional: the prior GTM container delivered page views but had no allowlisted custom-event mapping, so conversion events stopped in the data layer. Advertising signals and ad personalization stay disabled.
+The public site loads the owned GA4 stream directly after consent with `send_page_view: false`; the static tile bridge sends the canonical page view for each document or reader route. The direct transport is intentional: the prior GTM container delivered page views but had no allowlisted custom-event mapping, so conversion events stopped in the data layer. Advertising signals and ad personalization stay disabled.
 
 The standalone Audit Lab has a separate diagnostic funnel:
 
@@ -116,7 +137,9 @@ writes a durable follow-up ingress receipt; non-production and programmatic
 flows do not establish that private record. Acceptance does not prove later
 report generation, reconciliation or email delivery. It is the same key-event name, not
 another key-event definition. Separate Audit Lab and human inquiries by
-`page_path`, method and available placement before comparing them.
+page path and available placement before comparing them. The payload's `method`
+is not a registered custom reporting dimension as of October 29; do not promise
+a method breakdown in processed reports without configuring it separately.
 
 `website_check_started` occurs at both the `/website-check/` handoff and the
 Lab's actual request start; those are two stages, not necessarily two owners

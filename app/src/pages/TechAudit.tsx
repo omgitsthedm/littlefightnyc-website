@@ -20,6 +20,7 @@ import {
   normalizeTechAuditDiscoverySource,
   normalizeTechAuditFollowUpPreference,
   parseTechAuditLeadIntent,
+  recordTechAuditAcceptance,
   safeTechAuditReportId,
   TECH_AUDIT_SESSION_KEYS,
   TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS,
@@ -709,11 +710,10 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     submissionAttemptRef.current = submissionAttempt;
     setErrors({});
     try {
-      // This marker is the client-side proof used by /thanks/ that a hydrated,
-      // validated native-submit attempt happened in this tab. It is not a
-      // server-delivery receipt.
-      window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.submitted, "true");
-      window.sessionStorage.setItem(TECH_AUDIT_SESSION_KEYS.internalTest, String(submittedInternalTest));
+      // A pending request is not an accepted inquiry. Clear any previous
+      // attempt before starting; /thanks/ must wait for a successful response.
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.submitted);
+      window.sessionStorage.removeItem(TECH_AUDIT_SESSION_KEYS.internalTest);
       window.sessionStorage.setItem(
         TECH_AUDIT_SESSION_KEYS.intent,
         leadIntent,
@@ -761,6 +761,11 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       if (submissionAttempt !== submissionAttemptRef.current) return;
       responseStatus = response.status;
       if (!response.ok) throw new Error(`Form request returned ${response.status}`);
+      try {
+        recordTechAuditAcceptance(window.sessionStorage, response, submittedInternalTest);
+      } catch {
+        // Storage is optional; acceptance and navigation must still succeed.
+      }
       hapticSubmit();
       if (!submittedInternalTest) {
         trackEvent("tech_audit_submit", {

@@ -7,6 +7,9 @@ import {
   parseTechAuditLeadIntent,
   parseTechAuditPreferredRoute,
   readTechAuditConfirmation,
+  recordTechAuditAcceptance,
+  TECH_AUDIT_ACCEPTED_MARKER,
+  TECH_AUDIT_SESSION_KEYS,
   safeTechAuditReportId,
   techAuditConfirmationPath,
   techAuditBusinessProblem,
@@ -22,6 +25,36 @@ import {
 } from "./techAuditContact";
 
 describe("Tech Audit contact contract", () => {
+  it.each([200, 201, 204])("records HTTP %s acceptance without visitor details", status => {
+    const values = new Map<string, string>();
+    recordTechAuditAcceptance({ setItem: (key, value) => { values.set(key, value); } }, { ok: true, status }, false);
+    expect([...values.entries()]).toEqual([
+      [TECH_AUDIT_SESSION_KEYS.internalTest, "false"],
+      [TECH_AUDIT_SESSION_KEYS.submitted, TECH_AUDIT_ACCEPTED_MARKER],
+    ]);
+    expect(TECH_AUDIT_ACCEPTED_MARKER).not.toBe("true");
+  });
+
+  it.each([0, 302, 400, 429, 500, 503])("does not turn HTTP %s into an accepted inquiry", status => {
+    const values = new Map<string, string>();
+    recordTechAuditAcceptance({ setItem: (key, value) => { values.set(key, value); } }, { ok: false, status }, false);
+    expect(values.size).toBe(0);
+  });
+
+  it("retains the internal-test exclusion before writing acceptance", () => {
+    const writes: string[][] = [];
+    recordTechAuditAcceptance({ setItem: (key, value) => { writes.push([key, value]); } }, { ok: true, status: 200 }, true);
+    expect(writes[0]).toEqual([TECH_AUDIT_SESSION_KEYS.internalTest, "true"]);
+    expect(writes[1]).toEqual([TECH_AUDIT_SESSION_KEYS.submitted, TECH_AUDIT_ACCEPTED_MARKER]);
+  });
+
+  it("cannot create an acceptance marker when storage rejects the exclusion", () => {
+    const writes: string[] = [];
+    expect(() => recordTechAuditAcceptance({ setItem: key => { writes.push(key); throw new Error("Storage unavailable"); } },
+      { ok: true, status: 200 }, true)).toThrow("Storage unavailable");
+    expect(writes).toEqual([TECH_AUDIT_SESSION_KEYS.internalTest]);
+  });
+
   it.each(["validation", "offline", "network", "timeout", "rejected"])(
     "measures %s without sending visitor fields or provider errors", failure_category => {
       const result = techAuditFailureParameters({ failure_category, intent: "website", field_name: "contact", contact: "private-fixture@example.com", message: "private-fixture", response_status: "private-fixture" });
