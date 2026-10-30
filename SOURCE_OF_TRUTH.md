@@ -1,6 +1,15 @@
 # Little Fight NYC source of truth
 
-Last source verification: 2026-10-28 (production deploy `6ae1a142fc86d536f78ea9e9` from merge `662754f2`, PR #35; rollback `6ade5f637dc745ffae7c92d2`)
+## Published follow-through — October 29, 2026 (Arizona)
+
+- David authorized publication: ‘clean it all up and push it all live’. The tested candidate is now live at https://littlefightnyc.com.
+- Exact Netlify site `0907d8fe-7018-48db-a6be-1f906e4b2619`; production deploy `6ae3ff11073ac3afe34941cb`, published `2026-10-30T02:22:26.961Z`; application source `241d592576eff288d65f5c955ba2fde951c4a855`. Search, social-link, inquiry and consent-safe analytics follow-through.
+- One successful production release; expected deployment cost 15 credits (billing usage has not been reconciled). The subsequent documentation-only commit uses `[skip ci] [skip netlify]` and must not republish the website.
+- Live custom-domain pages, canonical URLs, structured data, social cards and sampled first-party assets matched the reviewed artifact. Desktop/mobile inquiry or booking entry points were checked; no real request, booking, payment, email or customer-record read was made. Registered form metadata and applicable safe booking configuration/endpoint guards passed.
+- Saved analytics and HTTP acceptance are not proof of inbox delivery, a qualified inquiry or revenue. Existing owner-access, business-fact and provider-indexing follow-ups remain separate. Earlier ‘local’ or ‘undeployed’ statements below record the pre-release state and are superseded here.
+
+
+Last production verification: 2026-10-29 (deploy `6ae3ff11073ac3afe34941cb`, application `241d592576eff288d65f5c955ba2fde951c4a855`).
 
 This file routes agents to the current website source. The marketing site and
 public VERA browser product use one public website repository, one build, and
