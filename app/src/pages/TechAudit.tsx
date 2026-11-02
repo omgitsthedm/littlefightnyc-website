@@ -5,6 +5,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import FaqList from "@/components/editorial/FaqList";
 import FirstLookScope from "@/components/editorial/FirstLookScope";
 import techAuditContent from "@/data/tech-audit-content.json";
+import clientReviews from "../../preview-content/reviews.json";
 import PhoneAction from "@/components/editorial/PhoneAction";
 import TimelineStrip from "@/components/dataviz/TimelineStrip";
 import { auditRoutes } from "@/data/site";
@@ -40,6 +41,8 @@ import { HELLO_EMAIL, PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact
 type FieldName = "name" | "business" | "contact" | "follow_up" | "message";
 type Step = 1 | 2 | 3;
 type TechAuditProps = { idPrefix?: string };
+
+const websiteReview = clientReviews.reviews.find((review) => review.id === "google-review-8")!;
 
 const REQUIRED_FIELDS: { name: Exclude<FieldName, "follow_up">; message: string }[] = [
   { name: "name", message: "Tell us who you are." },
@@ -299,6 +302,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
   // Keep a shared site URL visible and editable. A bare domain, Google Business
   // Profile, or social URL are all useful context, so this is intentionally a
   // plain text field rather than a type=url control that rejects domain-only input.
+  const replyOptionsRef = useRef<HTMLDetailsElement>(null);
   const [fields, setFields] = useState<ContactFields>(() => ({
     ...EMPTY_FIELDS,
     ...activeDraft?.fields,
@@ -639,6 +643,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
       setSubmitIssue("");
       setShowContactFallback(false);
       setErrors(nextErrors);
+      if (nextErrors.follow_up && replyOptionsRef.current) replyOptionsRef.current.open = true;
       hapticError();
       const first = form.elements.namedItem(
         Object.keys(nextErrors)[0],
@@ -689,7 +694,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     const subjectInput = form.elements.namedItem("subject") as HTMLInputElement | null;
     if (subjectInput) subjectInput.value = submittedInternalTest
       ? "Internal Little Fight NYC test — not a lead"
-      : "New Little Fight NYC Tech Audit";
+      : websiteIntent ? "New Little Fight NYC website project" : "New Little Fight NYC Tech Audit";
     // Re-resolve from the submitted DOM values so the native redirect always
     // carries the exact, consented response route even before React re-renders.
     form.setAttribute("action", techAuditConfirmationPath({
@@ -799,6 +804,58 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
     });
   }
 
+  const replyFields = (
+    <>
+      <div className={`lf-audit__field${errors.follow_up ? " is-error" : ""}`}>
+        <label htmlFor={followUpId}>Best way to reach you</label>
+        <select
+          id={followUpId}
+          name="follow_up"
+          value={fields.follow_up}
+          onChange={(e) => setFollowUpPreference(e.target.value)}
+          aria-invalid={errors.follow_up ? true : undefined}
+          aria-describedby={
+            errors.follow_up
+              ? `${followUpNoteId} ${followUpErrorId}`
+              : followUpNoteId
+          }
+        >
+          <option value="fastest">Whatever’s fastest</option>
+          <option value="text">Text me</option>
+          <option value="phone">Call me</option>
+          <option value="email">Email me</option>
+        </select>
+        <p className="lf-audit__note" id={followUpNoteId}>
+          We use only the route you choose. Text and phone need a phone number;
+          email needs an email address.
+        </p>
+        {errors.follow_up && (
+          <p className="lf-audit__error" role="alert" id={followUpErrorId}>
+            {errors.follow_up}
+          </p>
+        )}
+      </div>
+      {supportIntent ? (
+        <input type="hidden" name="discovery_source" value="" />
+      ) : (
+        <div className="lf-audit__field lf-audit__field--full">
+          <label htmlFor={discoverySourceId}>How did you first hear about us? <span>(optional)</span></label>
+          <select
+            id={discoverySourceId}
+            name="discovery_source"
+            value={fields.discovery_source}
+            onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
+          >
+            <option value="">Choose one</option>
+            {TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
+          </select>
+        </div>
+      )}
+    </>
+  );
+
   return (
     <>
       <section
@@ -818,9 +875,16 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
             )}
             <h1 id={detailTitleId}>{inquiryCopy.title}</h1>
             <p>{inquiryCopy.summary}</p>
+            {websiteIntent && <p className="lf-audit-intro__assurance">{inquiryCopy.assurance}</p>}
+            {websiteIntent && (
+              <figure className="lf-audit-intro__quote">
+                <blockquote>“{websiteReview.excerpt}”</blockquote>
+                <figcaption>Rachel · Hair By Rachel, Phoenix · <Link to="/reviews/google-review-8/">Read her Google review</Link></figcaption>
+              </figure>
+            )}
             {!supportIntent && (
               <>
-                <FirstLookScope compact />
+                {!websiteIntent && <FirstLookScope compact />}
                 <div className="lf-audit-intro__reach" data-lf-contact-rail="true">
                   <div className="lf-audit-intro__channels" aria-label="Reach Little Fight NYC now">
                     <a href={PHONE_HREF} data-lf-label="audit_intro_phone">
@@ -836,7 +900,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                       Email
                     </a>
                     <a href={`#${stepTitleId}`} data-lf-label="audit_intro_form">
-                      Write your message +
+                      {websiteIntent ? "Start my brief +" : "Write your message +"}
                     </a>
                   </div>
                   <p className="lf-audit-intro__hours">
@@ -1007,7 +1071,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                   tabIndex={-1}
                   ref={headingRef}
                 >
-                  Where should we respond?
+                  {websiteIntent ? "Tell us about your project" : "Where should we respond?"}
                 </h2>
 
                 <form
@@ -1021,7 +1085,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                   noValidate={typeof window !== "undefined"}
                 >
                   <input type="hidden" name="form-name" value="tech-audit-scratch" />
-                  <input type="hidden" name="subject" value={internalTest ? "Internal Little Fight NYC test — not a lead" : "New Little Fight NYC Tech Audit"} />
+                  <input type="hidden" name="subject" value={internalTest ? "Internal Little Fight NYC test — not a lead" : websiteIntent ? "New Little Fight NYC website project" : "New Little Fight NYC Tech Audit"} />
                   <input type="hidden" name="source" value="littlefightnyc.com/tech-audit" />
                   <input type="hidden" name="intent" value={leadIntent} />
                   <input type="hidden" name="lead_origin" value={leadOrigin} />
@@ -1046,7 +1110,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                         {errorEntries.map(([name, problem]) => (
                           <li key={name}>
                             <a href={`#${fieldIds[name]}`}>
-                              {FIELD_LABELS[name]}: {problem}
+                              {name === "message" && websiteIntent ? inquiryCopy.messageLabel : FIELD_LABELS[name]}: {problem}
                             </a>
                           </li>
                         ))}
@@ -1171,35 +1235,6 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                     )}
                   </div>
 
-                  <div className={`lf-audit__field${errors.follow_up ? " is-error" : ""}`}>
-                    <label htmlFor={followUpId}>Best way to reach you</label>
-                    <select
-                      id={followUpId}
-                      name="follow_up"
-                      value={fields.follow_up}
-                      onChange={(e) => setFollowUpPreference(e.target.value)}
-                      aria-invalid={errors.follow_up ? true : undefined}
-                      aria-describedby={
-                        errors.follow_up
-                          ? `${followUpNoteId} ${followUpErrorId}`
-                          : followUpNoteId
-                      }
-                    >
-                      <option value="fastest">Whatever’s fastest</option>
-                      <option value="text">Text me</option>
-                      <option value="phone">Call me</option>
-                      <option value="email">Email me</option>
-                    </select>
-                    <p className="lf-audit__note" id={followUpNoteId}>
-                      We use only the route you choose. Text and phone need a phone number;
-                      email needs an email address.
-                    </p>
-                    {errors.follow_up && (
-                      <p className="lf-audit__error" role="alert" id={followUpErrorId}>
-                        {errors.follow_up}
-                      </p>
-                    )}
-                  </div>
 
                   <div
                     className={`lf-audit__field lf-audit__field--full${
@@ -1238,24 +1273,15 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
                     )}
                   </div>
 
-                  {supportIntent ? (
-                    <input type="hidden" name="discovery_source" value="" />
-                  ) : (
-                    <div className="lf-audit__field lf-audit__field--full">
-                      <label htmlFor={discoverySourceId}>How did you first hear about us? <span>(optional)</span></label>
-                      <select
-                        id={discoverySourceId}
-                        name="discovery_source"
-                        value={fields.discovery_source}
-                        onChange={(e) => setField("discovery_source", normalizeTechAuditDiscoverySource(e.target.value))}
-                      >
-                        <option value="">Choose one</option>
-                        {TECH_AUDIT_DISCOVERY_SOURCE_OPTIONS.map((option) => (
-                          <option key={option.value} value={option.value}>{option.label}</option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
+                  {websiteIntent ? (
+                    <details
+                      className="lf-audit__preferences"
+                      ref={replyOptionsRef}
+                    >
+                      <summary>Reply preference &amp; how you found us <span>(optional)</span></summary>
+                      <div className="lf-audit__preferences-fields">{replyFields}</div>
+                    </details>
+                  ) : replyFields}
 
                   <button
                     className="lf-audit__submit"
@@ -1365,7 +1391,7 @@ export function TechAudit({ idPrefix = "" }: TechAuditProps) {
         </div>
       </section>
       <div className="lf-audit__questions">
-        <FaqList title="Questions before you send" items={techAuditContent.faq} />
+        <FaqList title="Questions before you send" items={inquiryCopy.faq ?? techAuditContent.faq} />
       </div>
     </>
   );

@@ -48,7 +48,13 @@ async function main() {
         await staticMark(page, `${width} ${route} complete static mark for reduced motion`);
         if (width===390 || (width===1440 && route==='/')) await page.screenshot({path:path.join(out, `${width}-${route==='/'?'home':route.split('/').filter(Boolean).pop()}.png`),fullPage:route!=='/'});
         if (width===390 && route.startsWith('/markets/')) {
-          check(`${route} proof captions are 44px touch targets`, await page.locator('.website-market figcaption a').evaluateAll(links=>links.length===2 && links.every(link=>link.getBoundingClientRect().height>=44)));
+          const expectedProofCaptions = {
+            '/markets/nyc/': ['/reviews/google-review-8/', '/case-studies/chromatic-painting-design/', '/case-studies/hair-by-rachel-charles/'],
+            '/markets/marthas-vineyard/': ['/reviews/google-review-8/', '/case-studies/easy-tiger/', '/case-studies/hair-by-rachel-charles/'],
+            '/markets/arizona/phoenix/': ['/reviews/google-review-8/', '/case-studies/hair-by-rachel-charles/', '/case-studies/chromatic-painting-design/'],
+          };
+          check(`${route} proof captions are 44px touch targets`, await page.locator('.website-market figcaption a').evaluateAll((links, expected) =>
+            links.length === expected.length && links.every((link, index) => link.getAttribute('href') === expected[index] && link.getBoundingClientRect().height >= 44), expectedProofCaptions[route]));
           const accessibility=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
           check(`${route} no detected automated accessibility violations`, accessibility.violations.length===0);
         }

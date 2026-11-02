@@ -379,6 +379,11 @@ async function run() {
       await form.locator('[name="name"]').fill('Local production verifier');
       await form.locator('[name="business"]').fill('Local verifier business');
       await form.locator('[name="contact"]').fill('verifier@example.test');
+      const optionalPreferences = form.locator('details.lf-audit__preferences');
+      assert.equal(await optionalPreferences.count(), 1, 'website inquiry must retain its optional reply/discovery disclosure');
+      assert.equal(await optionalPreferences.evaluate(node => node.open), false, 'website inquiry keeps optional preferences closed by default');
+      await optionalPreferences.locator('summary').click();
+      await form.locator('[name="follow_up"]').waitFor({ state: 'visible' });
       await form.locator('[name="follow_up"]').selectOption('email');
       await form.locator('[name="discovery_source"]').selectOption('chatgpt');
       await form.locator('[name="message"]').fill('Local browser verification only.');

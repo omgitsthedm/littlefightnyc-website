@@ -84,14 +84,14 @@ export async function mountProductionIsland(host: HTMLElement, kind: IslandKind)
   const root = createRoot(host);
   roots.set(host, root);
   host.dataset.productionIslandMode = "enhanced";
-  // A direct /tech-audit/ page can remain enhanced behind an inquiry opened in
-  // the reader. Prefix only that nested instance; the ordinary homepage flow
-  // retains its stable IDs and test-facing fragment targets.
-  const duplicateTechAuditInReader = kind === "tech-audit"
+  // A standalone market page can also keep its detail-title behind the
+  // reader. Prefix the inquiry whenever a background title exists, so its
+  // region label and fragment links resolve inside the active dialog.
+  const duplicateTitleInReader = kind === "tech-audit"
     && Boolean(host.closest("#detail"))
-    && [...document.querySelectorAll<HTMLElement>('[data-production-island="tech-audit"][data-production-island-mode="enhanced"]')]
-      .some(candidate => candidate !== host && !host.contains(candidate));
-  const idPrefix = duplicateTechAuditInReader ? "reader-" : "";
+    && [...document.querySelectorAll<HTMLElement>('[id="detail-title"]')]
+      .some(candidate => !host.contains(candidate));
+  const idPrefix = duplicateTitleInReader ? "reader-" : "";
   const application = (
     <BrowserRouter>
       <div className={`production-island production-island--${kind}`} onClickCapture={preserveDocumentNavigation}>

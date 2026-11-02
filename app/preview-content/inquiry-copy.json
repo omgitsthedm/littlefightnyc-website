@@ -1,12 +1,27 @@
 {
   "website": {
     "accent": "#92BFFF",
-    "eyebrow": "Websites · a first look",
-    "title": "Make your business easy to choose.",
-    "summary": "Share your site, or tell us you need your first one. What should a customer be able to find or do there? We’ll review it and explain where to start.",
-    "messageLabel": "What should your website make easier?",
-    "placeholder": "A few lines about your business, city and what customers should be able to do. If known, add your budget range and target date.",
-    "submit": "Send my website request"
+    "eyebrow": "Your website project",
+    "title": "Let’s build your next website.",
+    "summary": "A first website, a rebuild or a better path from followers to customers. Tell David what your business needs; we’ll talk through the scope, timing and cost before you commit.",
+    "messageLabel": "What are you looking to build or improve?",
+    "placeholder": "What does your business do, where are your customers, and what should the website help them do? Budget and launch date are helpful if you know them.",
+    "submit": "Send my website brief",
+    "assurance": "First 30 minutes free. No obligation. A written scope before paid work.",
+    "faq": [
+      {
+        "question": "What happens after I send my brief?",
+        "answer": "David reviews your project and replies using the contact details you provide. We discuss what the site needs to do, your timing and your budget. The first 30 minutes are free; any paid work starts with an agreed written scope and price."
+      },
+      {
+        "question": "Do I need a website, a finished brief or a set budget?",
+        "answer": "No. Start with your business and what you want customers to do. A website or social profile helps if you have one. Share a budget range or target date if known; we can discuss the options together."
+      },
+      {
+        "question": "Can we keep our booking system and existing accounts?",
+        "answer": "We review your current tools before recommending changes. Your scope identifies what stays, what connects to the website and any separate provider costs. Keep passwords and private customer information out of this form."
+      }
+    ]
   },
   "support": {
     "accent": "#F5D95B",

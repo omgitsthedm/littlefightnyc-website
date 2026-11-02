@@ -1206,3 +1206,14 @@
   .lf-audit { padding-top: var(--lf-space-4); }
   .lf-audit__step { gap: var(--lf-space-4); }
 }
+
+/* Website buyers can send a short brief without opening optional questions. */
+.lf-audit__preferences { grid-column: 1 / -1; border-block: 1px solid var(--lf-hairline); }
+.lf-audit__preferences > summary { cursor: pointer; padding-block: 14px; min-height: 44px; font-size: 1rem; line-height: 1.5; }
+.lf-audit__preferences > summary span { color: var(--lf-bone-dim); }
+.lf-audit__preferences-fields { display: grid; gap: 1.25rem; padding-block: 8px 20px; }
+.lf-audit-intro__quote { margin: 20px 0; padding-left: 18px; border-left: 2px solid var(--lf-audit-intent); }
+.lf-audit-intro__quote blockquote { margin: 0 0 8px; font-size: clamp(1.125rem, 2vw, 1.375rem); line-height: 1.4; }
+.lf-audit-intro__quote figcaption { font-size: 1rem; line-height: 1.5; color: var(--lf-bone-soft); }
+.lf-audit-intro__quote a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 3px; }
+.lf-audit-intro__copy .lf-audit-intro__assurance { font-size: 1rem; line-height: 1.5; }

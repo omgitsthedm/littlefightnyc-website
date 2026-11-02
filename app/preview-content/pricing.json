@@ -1,17 +1,12 @@
 {
-  "approvedAt": "2026-10-19",
+  "approvedAt": "2026-11-01",
   "approvedBy": "David Marsh, owner",
-  "note": "The only prices the site may publish. Audits allow a dollar figure only if it is listed in approvedAmounts.",
-  "approvedAmounts": [
-    200
-  ],
+  "note": "Current owner instruction: no public paid prices. Confirm scope and price privately before work. The free first 30 minutes remain the public offer.",
+  "approvedAmounts": [],
   "consultation": "The first 30 minutes of a consultation are free.",
   "onsiteSupport": {
-    "amount": 200,
-    "currency": "USD",
-    "unit": "hour",
     "area": "New York",
-    "text": "On-site tech support in New York is $200 an hour."
+    "text": "New York on-site support is scoped and priced before booking."
   },
   "websites": "Quoted on a written scope. Website projects are 50% to start and 50% on hosting, with no monthly hosting fee.",
   "customSoftware": "Quoted on a written scope."

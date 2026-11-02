@@ -2,6 +2,8 @@ import type { TechAuditLeadIntent } from "@/lib/techAuditContact";
 import copy from "../../preview-content/inquiry-copy.json";
 
 export type InquiryCopy = {
+  assurance?: string;
+  faq?: { question: string; answer: string }[];
   accent: string;
   eyebrow: string;
   title: string;
@@ -12,6 +14,8 @@ export type InquiryCopy = {
 };
 
 type RawInquiryCopy = {
+  assurance?: string;
+  faq?: { question: string; answer: string }[];
   accent: string;
   eyebrow: string;
   title: string;

@@ -538,3 +538,16 @@ dialog.production-island--consent::backdrop {
   min-width: 44px;
   min-height: 44px;
 }
+
+/* A website inquiry is a short task, not another oversized landing page. */
+.production-island .lf-audit-intro[data-lf-intent="website"] { padding-block: 24px; }
+.production-island .lf-audit-intro[data-lf-intent="website"] .lf-audit-intro__inner { padding-block: 0; gap: 32px; }
+.production-island .lf-audit-intro[data-lf-intent="website"] h1 { max-width: 20ch; font-size: clamp(2rem, 3.5vw, 3.4rem); line-height: 1.08; }
+.production-island .lf-audit-intro[data-lf-intent="website"] .lf-audit-intro__copy > p { font-size: 1rem; line-height: 1.5; }
+.production-island .lf-audit-intro[data-lf-intent="website"] .lf-audit-intro__reach { margin-top: 12px; }
+.production-island .lf-audit-intro[data-lf-intent="website"] .lf-audit-intro__quote { margin-block: 16px 8px; }
+
+/* Keep the first question visible below the sticky contact header. */
+.production-island :is(.lf-audit__step-title, .lf-audit__field input, .lf-audit__field textarea, .lf-audit__field select) {
+  scroll-margin-block-start: calc(180px + env(safe-area-inset-top));
+}

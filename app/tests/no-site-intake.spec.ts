@@ -13,8 +13,8 @@ test(
     await firstLook.click();
 
     await expect(page).toHaveURL(/\/tech-audit\/\?intent=website&source=no_website_check$/);
-    await expect(page.getByRole("heading", { name: "Get a clear next step." })).toBeVisible();
-    await expect(page.getByText("Tell us what you want to improve or fix. Website, social page, everyday tools, or something broken. We’ll tell you what to keep, change, or leave alone.")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Let’s build your next website." })).toBeVisible();
+    await expect(page.getByText("A first website, a rebuild or a better path from followers to customers. Tell David what your business needs; we’ll talk through the scope, timing and cost before you commit.")).toBeVisible();
     const firstLookExample = page.locator('[data-lf-first-look-example="hair-by-rachel-charles"]');
     await expect(firstLookExample).toBeVisible();
     await expect(firstLookExample).toHaveJSProperty("open", false);
@@ -27,10 +27,10 @@ test(
       "href",
       "/case-studies/hair-by-rachel-charles/",
     );
-    await expect(page.getByLabel("What would you like to improve or fix?")).toBeVisible();
-    await expect(page.getByText("No passwords or private customer data. A short sentence is enough. If helpful, add your city, social page, or how customers find you.")).toBeVisible();
+    await expect(page.getByLabel("What are you looking to build or improve?")).toBeVisible();
+    await expect(page.getByText("A short brief is enough. If known, add your city, website or social link, budget and launch date. No passwords or private customer data.")).toBeVisible();
     await expect(page.locator('textarea[name="message"]')).toHaveValue("");
-    await expect(page.getByRole("button", { name: "Send my first-look request" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Send my website brief" })).toBeVisible();
   },
 );
 
@@ -216,7 +216,7 @@ test(
   async ({ page }) => {
     await page.goto("/website-check/#website-check-url");
 
-    await expect(page.getByLabel("Website URL")).toBeVisible();
+    await expect(page.locator("form.lf-website-check__form").getByLabel("Website URL")).toBeVisible();
     await expect(page.getByRole("button", { name: "Check my website" })).toBeVisible();
   },
 );
@@ -248,9 +248,9 @@ test(
     const note = "Customers find us through referrals and Instagram; we need appointment requests.";
 
     await page.goto(noSitePath);
-    const mount = page.locator("[data-lf-route-mount]");
-    await expect(mount).not.toHaveAttribute("hidden", "");
-    await mount.locator('textarea[name="message"]').fill(note);
+    const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+    await expect(form).toBeVisible();
+    await form.locator('textarea[name="message"]').fill(note);
     await expect.poll(() => page.evaluate(() => {
       const raw = window.sessionStorage.getItem("lf_tech_audit_draft");
       return raw ? JSON.parse(raw).messageDirty : false;
@@ -263,43 +263,24 @@ test(
 );
 
 test(
-  "a note typed into the first-paint form moves into the live no-site form @chromium-desktop @chromium-mobile @webkit-mobile",
+  "a typed no-site note survives a reload of the current standalone form @chromium-desktop @chromium-mobile @webkit-mobile",
   async ({ page }) => {
     const noSitePath = "/tech-audit/?intent=website&source=no_website_check";
     const note = "Customers find us through referrals and Instagram; we need appointment requests.";
-    let releaseChunk = () => {};
-    const chunkReleased = new Promise<void>((resolve) => {
-      releaseChunk = resolve;
-    });
-    let requestedChunk = () => {};
-    const chunkRequested = new Promise<void>((resolve) => {
-      requestedChunk = resolve;
-    });
-    await page.route("**/assets/TechAudit-*.js", async (route) => {
-      requestedChunk();
-      await chunkReleased;
-      await route.continue();
-    });
-
-    await page.goto(noSitePath, { waitUntil: "domcontentloaded" });
-    await chunkRequested;
-
-    const snapshot = page.locator('[data-lf-route-snapshot="initial"]');
-    await expect(snapshot).toBeVisible();
-    await snapshot.locator('input[name="name"]').fill("Alex Owner");
-    await snapshot.locator('input[name="contact"]').fill("alex@example.com");
-    await snapshot.locator('textarea[name="message"]').fill(note);
-    releaseChunk();
-
-    const mount = page.locator("[data-lf-route-mount]");
-    await expect(snapshot).toHaveCount(0);
-    await expect(mount.locator('input[name="name"]')).toHaveValue("Alex Owner");
-    await expect(mount.locator('input[name="contact"]')).toHaveValue("alex@example.com");
-    await expect(mount.locator('textarea[name="message"]')).toHaveValue(note);
+    await page.goto(noSitePath);
+    const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
+    await expect(form).toBeVisible();
+    await form.locator('input[name="name"]').fill("Alex Owner");
+    await form.locator('input[name="contact"]').fill("alex@example.com");
+    await form.locator('textarea[name="message"]').fill(note);
     await expect.poll(() => page.evaluate(() => {
       const raw = window.sessionStorage.getItem("lf_tech_audit_draft");
       return raw ? JSON.parse(raw).messageDirty : false;
     })).toBe(true);
+    await page.reload();
+    await expect(form.locator('input[name="name"]')).toHaveValue("Alex Owner");
+    await expect(form.locator('input[name="contact"]')).toHaveValue("alex@example.com");
+    await expect(form.locator('textarea[name="message"]')).toHaveValue(note);
   },
 );
 
@@ -314,21 +295,23 @@ test("human first-look promises reach the intake once with truthful context @all
     } else await route.continue();
   });
   for (const entry of [
-    { path: "/", selector: ".lf-wall__check", intent: "website", source: "home" },
-    { path: "/services/custom-local-websites/", selector: ".lf-pagehero__decision--primary", intent: "website", source: "page_hero" },
-    { path: "/services/", selector: ".lf-pagehero__decision--primary", intent: "general", source: "page_hero" },
+    { path: "/", selector: 'a[href="/tech-audit/?intent=website&source=%2F"]', intent: "website", source: "/" },
+    { path: "/services/custom-local-websites/", selector: 'a[href="/tech-audit/?intent=website&source=%2Fservices%2Fcustom-local-websites%2F"]', intent: "website", source: "/services/custom-local-websites/" },
+    { path: "/services/", selector: 'a[href="/tech-audit/?intent=general&source=%2Fservices%2F"]', intent: "general", source: "/services/" },
   ]) {
     await page.goto(entry.path);
-    await page.locator(entry.selector).click();
+    await page.locator(entry.selector).filter({ visible: true }).first().click();
     await expect(page).toHaveURL(/\/tech-audit\//);
-    const form = page.locator('[data-lf-route-mount] form[name="tech-audit-scratch"]');
+    const form = page.locator('form[name="tech-audit-scratch"].lf-audit__form');
     await expect(form.locator('[name="intent"]')).toHaveValue(entry.intent);
     await expect(form.locator('[name="lead_origin"]')).toHaveValue(entry.source);
     await expect(form.locator('[name="message"]')).toHaveValue("");
-    await expect(form.locator('[name="website_url"], [name="symptom"]')).toHaveCount(0);
+    await expect(form.locator('[name="website_url"]')).toHaveValue("");
+    await expect(form.locator('[name="symptom"]')).toHaveCount(0);
     const business = form.getByLabel("Business or idea", { exact: true });
-    await expect(business).toHaveAttribute("aria-describedby", "fit-business-hint");
-    await expect(page.locator("#fit-business-hint")).toHaveText("No name yet? Tell us what you are starting.");
+    const businessHintId = await business.getAttribute("aria-describedby");
+    expect(businessHintId).toMatch(/(?:^|\s)(?:reader-)?fit-business-hint$/);
+    await expect(page.locator(`#${businessHintId}`)).toHaveText("No name yet? Tell us what you are starting.");
     await business.fill("A neighborhood repair shop, name undecided");
     await business.blur();
     await expect(business).not.toHaveAttribute("aria-invalid", "true");
@@ -342,7 +325,7 @@ test("the four service choices fit one comparison on desktop and phone @all-proj
   for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 844 });
     await page.goto("/services/", { waitUntil: "networkidle" });
-    const chooser = page.getByRole("navigation", { name: "Start from the symptom" });
+    const chooser = page.locator('nav[aria-label="Service categories"]').filter({ visible: true }).first();
     const links = chooser.getByRole("link");
     await expect(links).toHaveCount(4);
     const box = await chooser.boundingBox();

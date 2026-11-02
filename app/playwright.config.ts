@@ -43,6 +43,7 @@ export default defineConfig({
       grep: /@chromium-desktop|@all-projects|@pool-room-all|@vera-all-platforms|@vera-desktop/,
       use: {
         ...devices["Desktop Chrome"],
+        channel: "chrome",
         viewport: { width: 1440, height: 900 },
       },
     },

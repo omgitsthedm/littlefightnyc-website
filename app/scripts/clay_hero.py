@@ -221,7 +221,7 @@ def clay_hero():
         '<section class="sculpture-hero" data-hero="clay-neighborhood" data-clay-version="5" aria-labelledby="home-title">'
         '<div class="sculpture-hero-copy"><h1 id="home-title">A little fight.<br>A big difference.</h1>'
         '<p>Custom websites for small and medium businesses in '
-        'New York City, Phoenix and <span class="hero-ending">Martha’s Vineyard.</span></p>'
+        '<a href="/markets/nyc/" data-reader-link>New York City</a>, <a href="/markets/arizona/phoenix/" data-reader-link>Phoenix</a> and <a href="/markets/marthas-vineyard/" data-reader-link>Martha’s Vineyard</a>.</p>'
         '<div class="sculpture-hero-actions"><a class="sculpture-help" href="/tech-audit/?intent=website&amp;source=%2F" data-reader-link>'
         '<span>Plan my website</span><span class="help-button__plus" aria-hidden="true">+</span></a><a class="sculpture-work" href="/examples/" data-reader-link>'
         '<span>Explore our work <span aria-hidden="true">+</span></span></a></div></div>'

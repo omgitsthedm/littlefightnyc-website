@@ -95,7 +95,22 @@ const evidence = path.join(root, '.lifi/evidence/clay-release');
       await page.close();
       const nojs = await browser.newPage({ javaScriptEnabled: false, viewport: { width: 393, height: 852 } });
       await nojs.goto(base + '/');
-      pass(engine + ' native links and artwork survive without JavaScript', await nojs.locator('.sculpture-hero a[href]').count() === 11 && await nojs.locator('.clay-building img').count() > 0);
+      // The opening offer includes three crawlable market destinations in
+      // addition to the existing primary actions and illustrated links. Check
+      // their exact no-JS destinations and visible hit areas, not only a count.
+      const expectedNoJsHrefs = [
+        '/markets/nyc/', '/markets/arizona/phoenix/', '/markets/marthas-vineyard/',
+        '/tech-audit/?intent=website&source=%2F', '/examples/',
+        '/case-studies/chromatic-painting-design/', '/case-studies/hair-by-rachel-charles/',
+        '/answers/help/printer/', '/answers/help/wifi/',
+        '/services/it-support/', '/services/custom-local-websites/', '/services/tech-consulting/',
+        '/services/business-systems/', '/reviews/',
+      ];
+      const noJsLinks = nojs.locator('.sculpture-hero a[href]');
+      const noJsHrefs = await noJsLinks.evaluateAll(links => links.map(link => link.getAttribute('href')));
+      const noJsVisibility = await Promise.all(Array.from({ length: await noJsLinks.count() }, (_, index) => noJsLinks.nth(index).isVisible()));
+      pass(engine + ' native links and artwork survive without JavaScript',
+        noJsHrefs.length === 14 && expectedNoJsHrefs.every(href => noJsHrefs.includes(href)) && noJsVisibility.every(Boolean) && await nojs.locator('.clay-building img').count() > 0);
       await nojs.close();
     } finally { await browser.close(); }
   }

@@ -57,3 +57,9 @@
 
 /* Market proof captions remain comfortable separate touch targets. */
 .story-hero.website-market figcaption a{display:inline-flex;align-items:center;min-height:44px;padding-block:4px}
+
+.website-client-quote{margin:20px 0 0;padding-left:18px;border-left:2px solid var(--lf-blue)}
+.website-client-quote blockquote{margin:0;font-size:clamp(18px,2vw,22px);line-height:1.4;color:var(--lf-paper)}
+.website-client-quote figcaption{margin-top:8px;font-size:1rem;line-height:1.5;color:var(--lf-muted)}
+.website-markets{display:flex;flex-wrap:wrap;gap:4px 22px;margin-block:12px 4px}
+.website-markets a{display:inline-flex;align-items:center;min-height:44px;font-size:1rem;text-underline-offset:4px}

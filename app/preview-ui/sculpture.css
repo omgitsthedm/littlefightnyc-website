@@ -421,3 +421,9 @@ body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animatio
 @keyframes lf-arrive-glow{from{opacity:0}}
 @keyframes lf-sign-on{0%{opacity:.15}35%{opacity:1}45%{opacity:.35}60%{opacity:1}70%{opacity:.5}80%,100%{opacity:1}}
 @media(prefers-reduced-motion:reduce){.contact-dock,.contact-dock a,.help-choice,.clay-review-sticker{transition:none}.help-panel[open] .help-panel__card,.sculpture-hero.is-arriving *{animation:none!important}}
+
+/* Real market links belong in the opening offer, not only the footer. Keep
+   each inline destination as a genuine, keyboard-friendly tap target. */
+.sculpture-hero-copy>p a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:underline;text-decoration-color:color-mix(in srgb,currentColor 45%,transparent);text-underline-offset:4px;vertical-align:middle}
+.sculpture-hero-copy>p a:hover{color:var(--lf-blue)}
+.sculpture-hero-copy>p a:focus-visible{outline:2px solid var(--lf-blue);outline-offset:4px;border-radius:3px}

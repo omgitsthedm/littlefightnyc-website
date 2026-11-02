@@ -275,6 +275,14 @@
   .workbench-page .lf-reader[data-reader-template=website-service] .reference-story{grid-template-columns:1fr;gap:22px}
 }
 
+@media (max-width:600px){
+  /* Keep every core service reachable on a phone. The previous desktop-tab
+     concealment left /services/ with no visible route into its four offers. */
+  .workbench-page--services > .workbench-chrome{position:relative}
+  .workbench-page--services > .workbench-chrome .workbench-tabs{display:flex;flex-wrap:wrap;gap:0 18px;min-height:0;margin-top:0;padding:8px 18px}
+  .workbench-page--services > .workbench-chrome .workbench-tab{min-height:44px}
+}
+
 @media (prefers-reduced-motion:reduce){
   .workbench-page *,#detail .detail-window *{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }

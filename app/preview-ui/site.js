@@ -167,10 +167,15 @@
       for (const [attribute, field] of [
         ['title', 'title'], ['summary', 'summary'], ['eyebrow', 'eyebrow'],
         ['message-label', 'messageLabel'], ['submit', 'submit'],
+        ['assurance', 'assurance'],
       ]) {
         const target = host.querySelector(`[data-inquiry-${attribute}]`);
-        if (target && typeof copy[field] === 'string') target.textContent = copy[field];
+        if (target) target.textContent = typeof copy[field] === 'string' ? copy[field] : '';
       }
+      const business = form.elements.namedItem('business');
+      const businessLabel = host.querySelector('[data-inquiry-business-label]');
+      if (business instanceof HTMLInputElement) business.required = selector.value === 'website';
+      if (businessLabel) businessLabel.textContent = selector.value === 'website' ? 'Business or idea' : 'Business name (optional)';
       const message = form.elements.namedItem('message');
       if (message && typeof copy.placeholder === 'string') message.placeholder = copy.placeholder;
     };

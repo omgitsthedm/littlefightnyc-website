@@ -4,9 +4,9 @@
       "id": "it",
       "path": "/services/it-support/",
       "title": "IT support for New York small businesses.",
-      "summary": "The printer has vanished again. Email will not send. The Wi-Fi reaches the front desk but stops at the back room. Tell us what changed; we’ll work through the cause and confirm what help is available. On-site support is $200 an hour, and the first 30 minutes of a consultation are free.",
+      "summary": "The printer has vanished again. Email will not send. The Wi-Fi reaches the front desk but stops at the back room. Tell us what changed; we’ll work through the cause and confirm what help is available. The first 30 minutes of a consultation are free. We confirm the scope and price before paid work.",
       "metaTitle": "Small Business IT Support NYC | Little Fight NYC",
-      "metaDescription": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. On-site support in New York is $200 an hour; the first 30 minutes are free."
+      "metaDescription": "Help with Mac, Windows, Microsoft 365, Wi-Fi and everyday tech. Ask about New York on-site availability. The first 30 minutes of a consultation are free."
     },
     {
       "id": "consulting",
@@ -55,7 +55,7 @@
       "category": "it",
       "question": "What happens during an on-site tech visit?",
       "answer": "An on-site visit starts with the symptom, the people affected, and the work that must keep moving.",
-      "detail": "At Little Fight NYC, we confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made. On-site support is $200 an hour.",
+      "detail": "At Little Fight NYC, we confirm New York availability after the issue and location are known. The visit focuses on what can be checked safely, what needs a follow-up, and a plain note of the changes made. We agree on the scope and price before a visit.",
       "nextStep": "Share the location, the problem, and what work is blocked.",
       "guide": {
         "stepsHeading": "Before the visit",
@@ -75,7 +75,7 @@
         "faqs": [
           {
             "question": "How much does on-site tech support cost in New York?",
-            "answer": "Little Fight NYC charges $200 an hour for on-site tech support in New York. The first 30 minutes of a consultation are free, so you know what a visit is for before it is booked. Larger projects get a written scope and quote before work starts."
+            "answer": "Little Fight NYC confirms the scope, price and availability before a New York visit. The first 30 minutes of a consultation are free, so you know what a visit is for before it is booked. Larger projects get a written scope and quote before work starts."
           },
           {
             "question": "Can a problem be handled without a visit?",
@@ -362,7 +362,7 @@
         "faqs": [
           {
             "question": "Is a monthly plan required?",
-            "answer": "No. At Little Fight NYC, hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them. On-site visits in New York are $200 an hour."
+            "answer": "No. At Little Fight NYC, hourly, scoped, written work is normal, and regular check-ins are there if you want them. Many problems can be handled as a single piece of work with a clear note. A regular plan makes sense when the business has recurring tasks or risks that need someone to watch them. On-site visits in New York are scoped and priced before booking."
           },
           {
             "question": "What does a regular check usually cover?",
