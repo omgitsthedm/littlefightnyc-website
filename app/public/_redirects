@@ -7,6 +7,12 @@
 # catch-all LAST. netlify.toml carries no [[redirects]] anymore.
 # ============================================================
 
+# --- Vanity domain: preserve each path and query on the canonical site.
+http://littlefight.com/*       https://littlefightnyc.com/:splat  301!
+https://littlefight.com/*      https://littlefightnyc.com/:splat  301!
+http://www.littlefight.com/*   https://littlefightnyc.com/:splat  301!
+https://www.littlefight.com/*  https://littlefightnyc.com/:splat  301!
+
 # --- Canonical host: www goes straight to the apex in one hop (http or https).
 http://www.littlefightnyc.com/*   https://littlefightnyc.com/:splat   301!
 https://www.littlefightnyc.com/*  https://littlefightnyc.com/:splat   301!
