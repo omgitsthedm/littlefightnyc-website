@@ -113,3 +113,7 @@ approves that release candidate; approval is not permission for later iterations
 4. If pushed, verify GitHub and production parity as applicable.
 
 Update `SOURCE_OF_TRUTH.md` only when its facts change. Git history is the work log.
+
+## Homepage tile rule
+
+- Never restore the “Hard to use on a phone?” tile (id `speed`) to the homepage. Keep its existing answer page available. The featured review fills the space beside Our work.

@@ -612,8 +612,8 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
         ids = [item.get("id") for item in visible if isinstance(item, dict)]
         if len(ids) != len(set(ids)):
             failures.append("homepage visible tiles must have unique ids")
-        if expected_visible != 60 or len(curation['hiddenTiles']) != 21:
-            failures.append("homepage must honor the approved 21 cuts and 60 remaining fronts")
+        if expected_visible != 59 or len(curation['hiddenTiles']) != 22:
+            failures.append("homepage must honor the approved 22 cuts and 59 remaining fronts")
         if set(ids).intersection(tile['id'] for tile in curation['hiddenTiles']):
             failures.append("an approved homepage cut remains visible")
         if not set(curation['retainedReviewIds']).issubset(ids):

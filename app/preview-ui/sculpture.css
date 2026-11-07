@@ -190,14 +190,12 @@
 .sculpture-tile[data-sculpture-kind=review] .sculpture-title{font-size:clamp(19px,7.8cqw,25px)}
 .sculpture-tile[data-sculpture-kind=review] .sculpture-description{color:#ffb47e}
 .sculpture-lab-action{font-size:16px;color:var(--tile-pop);line-height:1.25}
-.mosaic-home #canvas .sculpture-featured[data-topic-grid]{grid-template-columns:1.5fr .85fr 1fr}
+.mosaic-home #canvas .sculpture-featured[data-topic-grid]{grid-template-columns:1.5fr 1.85fr}
 .mosaic-home #canvas .sculpture-featured>.tile{min-height:clamp(132px,12.4vw,168px)}
 #canvas .sculpture-featured .sculpture-copy{height:100%;justify-content:center;padding:13px 16px;gap:5px}
 #canvas .sculpture-featured [data-featured=work] .sculpture-copy{width:40%}
 #canvas .sculpture-featured [data-featured=work] .sculpture-title{color:#ff8b43;font-size:clamp(24px,5.8cqw,34px)}
 #canvas .sculpture-featured .sculpture-symbol{width:clamp(32px,10cqw,50px);height:clamp(32px,10cqw,50px)}
-#canvas .sculpture-featured [data-featured=phone] .sculpture-copy{width:60%}
-#canvas .sculpture-featured [data-featured=phone] .sculpture-title{font-size:clamp(18px,6.4cqw,26px);font-weight:400}
 #canvas .sculpture-featured [data-featured=review] .sculpture-symbol{position:absolute;right:9px;bottom:8px;top:auto;width:28px;height:28px;opacity:.2}
 #canvas .sculpture-featured [data-featured=review] .review-source{display:none}
 #canvas .sculpture-featured [data-featured=review] .sculpture-title{font-size:clamp(16px,6.9cqw,23px);line-height:1.15}
@@ -207,7 +205,6 @@
 #canvas .sculpture-featured [data-featured=work] .sculpture-plus{display:none}
 #canvas .sculpture-featured .sculpture-art{position:absolute!important;inset:0 0 0 auto!important;width:64%!important;height:100%!important;margin:0!important}
 #canvas .sculpture-featured [data-featured=work] .sculpture-art img{object-fit:cover;object-position:center;filter:none}
-#canvas .sculpture-featured [data-featured=phone] .sculpture-art{width:42%!important;inset:5px 5px 4px auto!important;height:auto!important}
 .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{top:var(--sculpture-art-top,40%);height:auto;bottom:5px}
 .mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]){display:flex;flex-direction:column}
 .mosaic-home #canvas .sculpture-tile:not([data-sculpture-kind=service]):not([data-sculpture-kind=brand]) .sculpture-art{position:relative;inset:auto;flex:1;min-height:0;height:auto;width:calc(100% - 12px);margin:5px 6px 4px}
@@ -281,10 +278,6 @@
  #canvas .sculpture-featured [data-featured=work] .sculpture-title{font-size:18px}.sculpture-featured [data-featured=work] .sculpture-copy{width:57%!important}
  #canvas .sculpture-featured [data-featured=review] .sculpture-copy{padding:10px;gap:5px}
  #canvas .sculpture-featured [data-featured=review] .sculpture-title{font-size:16px}
- .mosaic-home #canvas .sculpture-featured>[data-featured=phone]{grid-column:1/-1!important;min-height:104px}
- #canvas .sculpture-featured [data-featured=phone] .sculpture-copy{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px;width:76%}
- #canvas .sculpture-featured [data-featured=phone] .sculpture-title{font-size:16px}
- #canvas .sculpture-featured [data-featured=phone] .sculpture-art{width:26%!important}
 }
 .sculpture-tile[data-wrap-word] :is(.sculpture-title,.sculpture-description){overflow-wrap:anywhere;hyphens:auto}
 /* Wide answers retain a deliberate two-part composition after packing. */
@@ -302,7 +295,6 @@
 #canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-copy{width:100%;min-height:0;height:auto;padding-right:38px}
 #canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-art{position:relative!important;inset:auto!important;width:calc(100% - 24px)!important;height:120px!important;min-height:120px!important;flex:0 0 120px!important;margin:4px 12px 12px!important}
 #canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-description{max-width:none}
-#canvas .sculpture-featured [data-featured=phone] .sculpture-title{flex:1;min-width:0}
 /* One small, finite movement gives each material weight. No screen pixels
    animate independently, and copy is already readable at the first paint. */
 .sculpture-tile[data-sculpture-motion=frame]{--sculpture-settle:sculpture-frame-settle}

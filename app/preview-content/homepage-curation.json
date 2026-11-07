@@ -1,8 +1,15 @@
 {
   "source": "Owner-approved October 8 homepage cuts; preserve the saved master layout and all direct destinations.",
   "baselineVisibleCount": 79,
-  "expectedVisibleCount": 60,
+  "expectedVisibleCount": 59,
   "hiddenTiles": [
+    {
+      "id": "speed",
+      "path": "/answers/help/speed/",
+      "title": "Hard to use on a phone?",
+      "family": "web",
+      "homepageCategory": "web"
+    },
     {
       "id": "web-homepage-priority",
       "path": "/answers/help/web-homepage-priority/",

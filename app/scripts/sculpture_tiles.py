@@ -263,7 +263,6 @@ def sculptural_mosaic(markup):
         assert art or kind=='review', f'Missing unique artwork: {identity}'
         attrs['data-sculpture-kind']=modifier
         if identity=='google-review-1': attrs['data-featured']='review'
-        if identity=='speed': attrs['data-featured']='phone'
         if art:
             attrs['data-sculpture-art']=art
             if asset := art_asset(art):
@@ -313,7 +312,7 @@ def sculptural_mosaic(markup):
             return ''
         return result
     markup=TILES.sub(tile,markup)
-    intro='<section id="sculpture-services" class="topic-section sculpture-services" aria-labelledby="sculpture-services-heading"><header class="topic-heading"><h2 id="sculpture-services-heading">Problems? Solved.</h2></header><div data-topic-grid="services" data-sculpture-layout="compact">'+''.join(services)+'</div><div class="sculpture-featured" data-topic-grid="featured" data-sculpture-layout="compact" aria-label="Our work and what clients say">'+''.join(featured[key] for key in ('work','review','phone'))+'</div></section>'
+    intro='<section id="sculpture-services" class="topic-section sculpture-services" aria-labelledby="sculpture-services-heading"><header class="topic-heading"><h2 id="sculpture-services-heading">Problems? Solved.</h2></header><div data-topic-grid="services" data-sculpture-layout="compact">'+''.join(services)+'</div><div class="sculpture-featured" data-topic-grid="featured" data-sculpture-layout="compact" aria-label="Our work and what clients say">'+''.join(featured[key] for key in ('work','review'))+'</div></section>'
     assert len(services)==4, 'All four service anchors must remain visible'
     assert len(records)==EXPECTED_VISIBLE_COUNT, f'{EXPECTED_VISIBLE_COUNT} curated homepage tiles must remain visible'
     art_names=[record['art'] for record in records if record['art']]

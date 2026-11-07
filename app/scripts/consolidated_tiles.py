@@ -48,7 +48,7 @@ def load_groups(content):
     # Curating a front never removes its authored combined reader or routes.
     curation = json.loads((content / 'homepage-curation.json').read_text())
     curated_ids = [tile['id'] for tile in curation['hiddenTiles']]
-    assert len(curated_ids) == len(set(curated_ids)) == 21, 'Preserve the 21 named homepage cuts'
+    assert len(curated_ids) == len(set(curated_ids)) == 22, 'Preserve the 22 named homepage cuts'
     assert not set(curated_ids).intersection(absorbed + list(hidden)), 'A curated cut must be a visible baseline tile'
     hidden.update(curated_ids)
     return groups, hidden
@@ -229,7 +229,7 @@ def apply_homepage_groups(mosaic, groups, hidden):
         'hiddenHomeIds': sorted(hidden),
     }
     curation = json.loads((Path(__file__).resolve().parents[1] / 'preview-content/homepage-curation.json').read_text())
-    assert len(visible) == curation['expectedVisibleCount'] == 60, 'The curated homepage must have exactly 60 tiles'
+    assert len(visible) == curation['expectedVisibleCount'] == 59, 'The curated homepage must have exactly 59 tiles'
     assert set(curation['retainedReviewIds']) <= {item['data-answer'] for item in visible}, 'Keep every authentic review'
     assert len(visible) == len(before) - len(removed)
     return combined, manifest
