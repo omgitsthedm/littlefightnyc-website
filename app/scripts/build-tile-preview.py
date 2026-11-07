@@ -780,7 +780,7 @@ def head(q, home=False):
     card = social_card(q, reader_family(q), visual.get('desktop'),
                        {'src':lab_tile_image(lab), 'alt':lab.get('tileImageAlt') or lab['name']} if lab else None)
     share_meta = social_tags(q, card)
-    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','sameAs':PROFILE_URLS}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/', 'publisher':{'@id':ORIGIN+'/#organization'}},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
+    graph=[{'@type':'Organization','@id':ORIGIN+'/#organization','name':'Little Fight NYC','founder':{'@id':DAVID_ID},'url':ORIGIN+'/', 'telephone':'+16463600318','email':'hello@littlefightnyc.com','logo':ORIGIN+'/icon-512.png','image':ORIGIN+'/icon-512.png','sameAs':PROFILE_URLS}, {'@type':'WebSite','@id':ORIGIN+'/#website','name':'Little Fight NYC','url':ORIGIN+'/', 'publisher':{'@id':ORIGIN+'/#organization'}},{'@type':'WebPage','@id':ORIGIN+path+'#webpage','url':ORIGIN+path,'name':q.get('title'),'description':q.get('description'),'isPartOf':{'@id':ORIGIN+'/#website'},'publisher':{'@id':ORIGIN+'/#organization'}}]
     if path=='/':graph.append(LOCAL_BUSINESS)
     website_project = (q.get('marketContent') or {}).get('websiteProject')
     if path.startswith('/industries/') or path=='/services/custom-local-websites/' or website_project:
