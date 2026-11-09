@@ -416,3 +416,7 @@
     transition: none;
   }
 }
+.lf-offer-line {
+  display: block;
+  margin-block: var(--lf-space-3);
+}

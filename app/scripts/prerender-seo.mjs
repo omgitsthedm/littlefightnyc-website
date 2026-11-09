@@ -1364,10 +1364,23 @@ function paragraphsHtml(items) {
   return (items ?? []).filter(Boolean).map((p) => `<p>${escapeHtml(p)}</p>`).join("\n");
 }
 
+function serviceOfferHtml(slug) {
+  const offer = siteContent.serviceOffers[slug];
+  return `<p><strong>What it is:</strong> ${escapeHtml(offer.what)}</p>
+    <p><strong>Who it is for:</strong> ${escapeHtml(offer.who)}</p>
+    <p><strong>What you get:</strong> ${escapeHtml(offer.get)}</p>`;
+}
+
 // The real authored writing, emitted as crawler-visible HTML per page type.
 // Before this, GPTBot/ClaudeBot/PerplexityBot saw only a shortAnswer + stock
 // boilerplate on every route — the site’s best content was JS-gated.
 function authoredContentHtml(page) {
+  if (page.path === "/services/") {
+    return Object.keys(siteContent.serviceOffers).map((slug) => {
+      const service = siteContent.services.find((item) => item.slug === slug);
+      return `<section><h2><a href="/services/${slug}/">${escapeHtml(service?.eyebrow ?? (slug === "new-business-launch" ? "New business launch" : "Ongoing care"))}</a></h2>${serviceOfferHtml(slug)}</section>`;
+    }).join("\n");
+  }
   if (page.path === "/areas/") {
     const links = siteContent.areaPages
       .map((a) => `<li><a href="/areas/${a.slug}/">${escapeHtml(a.name)}</a> — ${escapeHtml(a.localPattern)}</li>`)
@@ -2002,13 +2015,17 @@ function snapshot(page) {
     <p>Every project is meant to leave the business clearer than it was found: documented fixes, plain-English tradeoffs, safer account handoffs, and no silent guesses moving toward a quote.</p>
     <p>Owners call when email stops landing, a booking link goes quiet, Google shows the wrong signal, software bills creep up, or the website no longer explains the business. The work is local, practical, and built around the day the team actually has.</p>
     ${methodBlock(page)}
+    <section aria-labelledby="why-real-website">
+      <h2 id="why-real-website">Why a real website</h2>
+      ${siteContent.whyWebsiteArguments.map((argument) => `<article><h3>${escapeHtml(argument.title)}</h3><p>${escapeHtml(argument.body)}</p></article>`).join("\n")}
+    </section>
     <h2>Four ways to get unstuck</h2>
     <p>The homepage explains four services, and each one leads with what the owner ends up with rather than how the work is delivered.</p>
     <ul class="lf-seo__home-four">
-      <li><a href="/services/custom-local-websites/"><strong>Websites</strong></a> — your front door stays open 24/7, even at 2am and on a Sunday. Customers can find you and book without calling.</li>
-      <li><a href="/services/it-support/"><strong>On-site tech support</strong></a> — urgent New York jobs are usually on site within 24 hours, and a person answers 9am–9pm Eastern. You call, we come, and we fix it or tell you who can.</li>
-      <li><a href="/services/business-systems/"><strong>Software you own</strong></a> — your clients, files, and jobs live in one place, built around how you already work. You own it; the data and the accounts stay yours.</li>
-      <li><a href="/services/tech-consulting/"><strong>Free second opinion</strong></a> — the first read costs nothing, whether you hire us or not. You leave knowing what to fix first.</li>
+      <li><a href="/services/custom-local-websites/"><strong>Websites</strong></a>${serviceOfferHtml("custom-local-websites")}</li>
+      <li><a href="/services/it-support/"><strong>On-site tech support</strong></a>${serviceOfferHtml("it-support")}</li>
+      <li><a href="/services/business-systems/"><strong>Software you own</strong></a>${serviceOfferHtml("business-systems")}</li>
+      <li><a href="/services/tech-consulting/"><strong>Free second opinion</strong></a>${serviceOfferHtml("tech-consulting")}</li>
     </ul>
     <p>The first look is free. We return missed calls within 2 hours, 9am–9pm Eastern. Written website plans carry their own timing terms, including which jobs qualify and what you receive if our work is late — those terms live on the <a href="/services/custom-local-websites/">websites page</a>, where you can read them in full.</p>
     <h2>What we fix</h2>

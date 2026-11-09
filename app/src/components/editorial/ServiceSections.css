@@ -16,6 +16,17 @@
   border-top: 1px solid var(--lf-hairline);
 }
 
+.lf-editorial .lf-svc__offer p {
+  margin: 0 0 var(--lf-space-3);
+  font-size: var(--lf-text-base);
+  line-height: 1.5;
+  color: var(--lf-bone-soft);
+}
+
+.lf-svc__offer strong {
+  color: var(--lf-bone);
+}
+
 .lf-editorial .lf-svcs__title {
   width: min(100%, var(--lf-max-w));
   margin: 0 auto;

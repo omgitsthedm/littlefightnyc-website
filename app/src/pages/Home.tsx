@@ -11,6 +11,7 @@ import QuietFooter from "@/components/editorial/QuietFooter";
 import StickyHelpBar from "@/components/editorial/StickyHelpBar";
 import CommandPalette from "@/components/editorial/CommandPalette";
 import { watchListReveals } from "@/lib/listReveal";
+import { whyWebsiteArguments } from "@/data/pitch-arguments";
 import "./Home.css";
 
 /**
@@ -37,6 +38,19 @@ export default function Home() {
       <QuietNav />
       <main id="main-content" className="lf-home-main">
         <HomeWall />
+        <section className="lf-website-reasons" aria-labelledby="why-real-website">
+          <div className="lf-container">
+            <h2 id="why-real-website">Why a real website</h2>
+            <div className="lf-website-reasons__list">
+              {whyWebsiteArguments.map((argument) => (
+                <article key={argument.title}>
+                  <h3>{argument.title}</h3>
+                  <p>{argument.body}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
         <ServiceSections />
         <QuietContact intent="website" />
       </main>

@@ -483,7 +483,7 @@ export const caseStudies: CaseStudy[] = [
         "The live site shows the stylist's work, answers service questions, and sends a ready visitor into Square Appointments.",
     },
     showcase: {
-      label: "A bright editorial chair in Chelsea",
+      label: "A bright editorial chair in Phoenix",
       kind: "Website",
       context: "Independent stylist",
       availability: "public",
