@@ -19,7 +19,7 @@ export default function ClientContinuity() {
           You still own the code, domain, content, and data.
         </p>
         <div className="lf-continuity__lead-actions">
-          <Link to="/services/ongoing-care/">See ongoing care</Link>
+          <Link to="/services/ongoing-care/">See In Your Corner</Link>
           <a href={BOOKING_HREF} target="_blank" rel="noopener noreferrer" data-lf-event="booking_started" data-lf-label="home_care">
             Book a check-in
             <ExternalLink size={15} strokeWidth={1.8} aria-hidden="true" />

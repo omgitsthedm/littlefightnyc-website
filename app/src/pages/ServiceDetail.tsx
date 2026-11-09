@@ -150,7 +150,7 @@ function WebsiteAcquisitionBlock() {
             </li>
             <li>
               <h3>A written plan and exact price</h3>
-              <p>Before work starts, the plan names the scope, who does what, review rounds, launch timing and care. The 14-day promise applies only to qualifying written scopes.</p>
+              <p>Before work starts, the plan names the scope, who does what, review rounds, launch timing, and ongoing website support. The 14-day promise applies only to qualifying written scopes.</p>
             </li>
             <li>
               <h3>Build, review, then launch</h3>
@@ -158,8 +158,8 @@ function WebsiteAcquisitionBlock() {
               <p>You provide one decision-maker, accurate services and hours, usable photos or logos, and access to the website address and business tools. Never send passwords through the form.</p>
             </li>
             <li>
-              <h3>Your website, with care agreed</h3>
-              <p>One person stays with the job. You own the code, website address and content. The written plan sets out ongoing care, so you know who handles the next change.</p>
+              <h3>Your website, with support agreed</h3>
+              <p>One person stays with the job. You own the code, website address and content. The written plan sets out ongoing website support, so you know who handles the next change.</p>
             </li>
           </ol>
         </div>

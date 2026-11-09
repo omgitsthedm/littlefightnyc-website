@@ -39,8 +39,8 @@ const STAGES = [
     signal: "Stay",
     title: "Keep the customer path working.",
     detail:
-      "Hours change. Staff change. Booking links and forms break. Ongoing care keeps the front door current. The business keeps the code, domain, and data.",
-    action: "See ongoing care",
+      "Hours change. Staff change. Booking links and forms break. In Your Corner keeps the agreed customer path current, while the business keeps the code, domain, and data.",
+    action: "See In Your Corner",
     href: "/services/ongoing-care/",
     external: false,
   },

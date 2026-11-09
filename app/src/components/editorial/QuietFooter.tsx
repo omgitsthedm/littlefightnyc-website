@@ -23,7 +23,7 @@ const footerGroups: Array<{
       { label: "Free second opinion", to: "/services/tech-consulting/" },
       { label: "Software You Own", to: "/services/business-systems/" },
       { label: "New business launch", to: "/services/new-business-launch/" },
-      { label: "Ongoing care", to: "/services/ongoing-care/" },
+      { label: "In Your Corner", to: "/services/ongoing-care/" },
     ],
   },
   {
