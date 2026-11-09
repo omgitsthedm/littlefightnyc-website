@@ -1,0 +1,100 @@
+{
+  "direct": [
+    {
+      "width": 390,
+      "rail": {
+        "rect": {
+          "x": 12,
+          "y": 124,
+          "w": 366,
+          "h": 69
+        },
+        "background": "rgb(16, 17, 19)",
+        "position": "sticky",
+        "opacity": "1"
+      },
+      "anchors": [
+        {
+          "text": "Call",
+          "rect": {
+            "x": 24,
+            "y": 136,
+            "w": 91.328125,
+            "h": 44
+          },
+          "hit": true
+        },
+        {
+          "text": "Text",
+          "rect": {
+            "x": 123.328125,
+            "y": 136,
+            "w": 91.34375,
+            "h": 44
+          },
+          "hit": true
+        },
+        {
+          "text": "Email",
+          "rect": {
+            "x": 222.671875,
+            "y": 136,
+            "w": 91.328125,
+            "h": 44
+          },
+          "hit": true
+        }
+      ],
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    {
+      "width": 1440,
+      "rail": {
+        "rect": {
+          "x": 94,
+          "y": 96,
+          "w": 1252,
+          "h": 69
+        },
+        "background": "rgb(16, 17, 19)",
+        "position": "sticky",
+        "opacity": "1"
+      },
+      "anchors": [
+        {
+          "text": "Call",
+          "rect": {
+            "x": 580.125,
+            "y": 108,
+            "w": 65.390625,
+            "h": 44
+          },
+          "hit": true
+        },
+        {
+          "text": "Text",
+          "rect": {
+            "x": 653.515625,
+            "y": 108,
+            "w": 68.09375,
+            "h": 44
+          },
+          "hit": true
+        },
+        {
+          "text": "Email",
+          "rect": {
+            "x": 729.609375,
+            "y": 108,
+            "w": 78.25,
+            "h": 44
+          },
+          "hit": true
+        }
+      ],
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ]
+}

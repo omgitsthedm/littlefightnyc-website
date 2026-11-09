@@ -1,0 +1,1936 @@
+{
+  "url": "http://127.0.0.1:4399/",
+  "output": "/tmp/lf-anchor-final-geometry",
+  "chromeChannel": "installed Chrome",
+  "results": [
+    {
+      "width": 320,
+      "height": 256,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": -0.640625,
+            "right": 308,
+            "bottom": 295.296875,
+            "width": 296,
+            "height": 295.9375
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 23.75,
+              "right": 83,
+              "bottom": 79.75,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 91.75,
+              "right": 159.359375,
+              "bottom": 125.34375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 137.34375,
+              "right": 159.359375,
+              "bottom": 204.515625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 172.7615966796875,
+              "top": 0.18925601243972778,
+              "right": 308.17425537109375,
+              "bottom": 294.9281476140022,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 173.39170837402344,
+              "top": 104.63479614257812,
+              "right": 295.54437255859375,
+              "bottom": 190.55508422851562,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": -0.640625,
+            "right": 308,
+            "bottom": 649.890625,
+            "width": 296,
+            "height": 650.53125
+          },
+          "rows": "13",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 32.4375,
+              "right": 83,
+              "bottom": 88.4375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 100.4375,
+              "right": 293,
+              "bottom": 167.625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 179.625,
+              "right": 293,
+              "bottom": 314.015625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 12.933175086975098,
+              "top": 438.65484619140625,
+              "right": 307.1915674209595,
+              "bottom": 637.0386962890625,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 30.93316078186035,
+              "top": 438.6783447265625,
+              "right": 289.1680545806885,
+              "bottom": 619.0151977539062,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 75,
+              "height": 44,
+              "left": 15,
+              "right": 90,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 75,
+              "height": 44,
+              "left": 98,
+              "right": 173,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 75,
+              "height": 44,
+              "left": 181,
+              "right": 256,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 4810.984375,
+            "clientHeight": 4811,
+            "scrollHeight": 4811,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 116.5,
+              "height": 54,
+              "left": 15,
+              "right": 131.5,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Text",
+              "width": 116.5,
+              "height": 54,
+              "left": 139.5,
+              "right": 256,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Email",
+              "width": 241,
+              "height": 54,
+              "left": 15,
+              "right": 256,
+              "top": 194,
+              "bottom": 248
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 9915.421875,
+            "clientHeight": 9915,
+            "scrollHeight": 9915,
+            "visible": true
+          }
+        },
+        "shortReader": [
+          {
+            "selector": "#detail .story-hero h1",
+            "width": 280,
+            "height": 351.953125
+          },
+          {
+            "selector": "#detail #contact a[href^=\"tel:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail #contact a[href^=\"sms:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail #contact a[href^=\"mailto:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail .story-bottom a:last-child",
+            "width": 115.59375,
+            "height": 58
+          }
+        ]
+      }
+    },
+    {
+      "width": 320,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 308,
+            "bottom": 475.296875,
+            "width": 296,
+            "height": 295.9375
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 203.75,
+              "right": 83,
+              "bottom": 259.75,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 271.75,
+              "right": 159.359375,
+              "bottom": 305.34375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 317.34375,
+              "right": 159.359375,
+              "bottom": 384.515625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 172.635009765625,
+              "top": 180.15382385253906,
+              "right": 308.4232177734375,
+              "bottom": 475.0614776611328,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 173.3988800048828,
+              "top": 284.6138610839844,
+              "right": 295.6596984863281,
+              "bottom": 370.6893005371094,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 308,
+            "bottom": 829.890625,
+            "width": 296,
+            "height": 650.53125
+          },
+          "rows": "13",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 212.4375,
+              "right": 83,
+              "bottom": 268.4375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 280.4375,
+              "right": 293,
+              "bottom": 347.625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 359.625,
+              "right": 293,
+              "bottom": 494.015625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 12.914665222167969,
+              "top": 618.6154174804688,
+              "right": 307.24471282958984,
+              "bottom": 817.1058349609375,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 30.914640426635742,
+              "top": 618.6454467773438,
+              "right": 289.21471977233887,
+              "bottom": 799.0758056640625,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 75,
+              "height": 44,
+              "left": 15,
+              "right": 90,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 75,
+              "height": 44,
+              "left": 98,
+              "right": 173,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 75,
+              "height": 44,
+              "left": 181,
+              "right": 256,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 719,
+            "clientHeight": 719,
+            "scrollHeight": 4811,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 272,
+            "height": 189
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 116.5,
+              "height": 54,
+              "left": 15,
+              "right": 131.5,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Text",
+              "width": 116.5,
+              "height": 54,
+              "left": 139.5,
+              "right": 256,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Email",
+              "width": 241,
+              "height": 54,
+              "left": 15,
+              "right": 256,
+              "top": 194,
+              "bottom": 248
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 501.40625,
+            "clientHeight": 501,
+            "scrollHeight": 9915,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 390,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 377.984375,
+            "bottom": 483,
+            "width": 365.984375,
+            "height": 303.640625
+          },
+          "rows": "5",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 218.796875,
+              "right": 83,
+              "bottom": 274.796875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 286.796875,
+              "right": 197.53125,
+              "bottom": 320.390625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 332.390625,
+              "right": 197.53125,
+              "bottom": 377.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 210.7787322998047,
+              "top": 180.03741455078125,
+              "right": 378.4205322265625,
+              "bottom": 482.88134765625,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 211.49026489257812,
+              "top": 277.2945556640625,
+              "right": 365.7091979980469,
+              "bottom": 385.69647216796875,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 377.984375,
+            "bottom": 856.96875,
+            "width": 365.984375,
+            "height": 677.609375
+          },
+          "rows": "11",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 27,
+              "top": 226.828125,
+              "right": 83,
+              "bottom": 282.828125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 27,
+              "top": 294.828125,
+              "right": 362.984375,
+              "bottom": 362.015625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 27,
+              "top": 374.015625,
+              "right": 362.984375,
+              "bottom": 463.609375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 12.892589569091797,
+              "top": 588.17822265625,
+              "right": 377.2329521179199,
+              "bottom": 829.8253173828125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 34.8769416809082,
+              "top": 588.2107543945312,
+              "right": 355.20634841918945,
+              "bottom": 811.7928466796875,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 98.328125,
+              "height": 44,
+              "left": 15,
+              "right": 113.328125,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 98.34375,
+              "height": 44,
+              "left": 121.328125,
+              "right": 219.671875,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 98.328125,
+              "height": 44,
+              "left": 227.671875,
+              "right": 326,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 390,
+            "height": 719,
+            "clientHeight": 719,
+            "scrollHeight": 4599,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 342,
+            "height": 237
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 151.5,
+              "height": 54,
+              "left": 15,
+              "right": 166.5,
+              "top": 75,
+              "bottom": 129
+            },
+            {
+              "text": "Text",
+              "width": 151.5,
+              "height": 54,
+              "left": 174.5,
+              "right": 326,
+              "top": 75,
+              "bottom": 129
+            },
+            {
+              "text": "Email",
+              "width": 311,
+              "height": 54,
+              "left": 15,
+              "right": 326,
+              "top": 137,
+              "bottom": 191
+            }
+          ],
+          "body": {
+            "width": 390,
+            "height": 558.40625,
+            "clientHeight": 558,
+            "scrollHeight": 8686,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 768,
+      "height": 1000,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 201.59375,
+            "right": 756,
+            "bottom": 569.578125,
+            "width": 744,
+            "height": 367.984375
+          },
+          "rows": "3",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 38.96875,
+              "top": 286,
+              "right": 94.96875,
+              "bottom": 342,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 110.96875,
+              "top": 292.578125,
+              "right": 367.078125,
+              "bottom": 335.421875,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 38.96875,
+              "top": 358,
+              "right": 367.078125,
+              "bottom": 421.15625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 391.96417236328125,
+              "top": 201.4504852294922,
+              "right": 756.851318359375,
+              "bottom": 570.3362884521484,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 392.4721374511719,
+              "top": 264.70269775390625,
+              "right": 738.3438110351562,
+              "bottom": 507.2133483886719,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 201.59375,
+            "right": 756,
+            "bottom": 820.234375,
+            "width": 744,
+            "height": 618.640625
+          },
+          "rows": "5",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 38.96875,
+              "top": 229.921875,
+              "right": 94.96875,
+              "bottom": 285.921875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 38.96875,
+              "top": 301.921875,
+              "right": 729.03125,
+              "bottom": 387.625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 38.96875,
+              "top": 403.625,
+              "right": 729.03125,
+              "bottom": 466.78125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 12.91656494140625,
+              "top": 576.3675537109375,
+              "right": 755.1932373046875,
+              "bottom": 818.3296508789062,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 223.9164276123047,
+              "top": 576.610107421875,
+              "right": 544.1726531982422,
+              "bottom": 800.087158203125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 442.234375,
+              "right": 505.625,
+              "top": 39.53125,
+              "bottom": 83.53125
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 514.625,
+              "right": 580.71875,
+              "top": 39.53125,
+              "bottom": 83.53125
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 589.71875,
+              "right": 665.96875,
+              "top": 39.53125,
+              "bottom": 83.53125
+            }
+          ],
+          "body": {
+            "width": 719.9375,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 2987,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 338.53125,
+              "right": 431.296875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 440.296875,
+              "right": 538.46875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 547.46875,
+              "right": 665.96875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            }
+          ],
+          "body": {
+            "width": 719.9375,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5876,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "front": {
+          "card": {
+            "left": 25.59375,
+            "top": 158.390625,
+            "right": 670.125,
+            "bottom": 474.703125,
+            "width": 644.53125,
+            "height": 316.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 50.59375,
+              "top": 223.671875,
+              "right": 106.59375,
+              "bottom": 279.671875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 120.59375,
+              "top": 233.109375,
+              "right": 331.6875,
+              "bottom": 270.21875,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 50.59375,
+              "top": 293.671875,
+              "right": 331.6875,
+              "bottom": 347.421875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 354.8907470703125,
+              "top": 158.5272216796875,
+              "right": 670.605224609375,
+              "bottom": 475.12579345703125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 355.27691650390625,
+              "top": 211.3782958984375,
+              "right": 656.2192993164062,
+              "bottom": 422.361572265625,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "front": {
+          "card": {
+            "left": 25.59375,
+            "top": 158.390625,
+            "right": 670.125,
+            "bottom": 803.015625,
+            "width": 644.53125,
+            "height": 644.625
+          },
+          "rows": "8",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 50.59375,
+              "top": 213.171875,
+              "right": 106.59375,
+              "bottom": 269.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 50.59375,
+              "top": 283.171875,
+              "right": 645.125,
+              "bottom": 357.375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 50.59375,
+              "top": 371.375,
+              "right": 645.125,
+              "bottom": 425.125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 26.520540237426758,
+              "top": 530.8397827148438,
+              "right": 669.2944049835205,
+              "bottom": 772.5966186523438,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 187.7860870361328,
+              "top": 531.0023193359375,
+              "right": 508.01075744628906,
+              "bottom": 754.43408203125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 56,
+            "height": 56
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 690.546875,
+              "right": 753.9375,
+              "top": 47.21875,
+              "bottom": 91.21875
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 762.9375,
+              "right": 829.03125,
+              "top": 47.21875,
+              "bottom": 91.21875
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 838.03125,
+              "right": 914.28125,
+              "top": 47.21875,
+              "bottom": 91.21875
+            }
+          ],
+          "body": {
+            "width": 960.5625,
+            "height": 687.5625,
+            "clientHeight": 688,
+            "scrollHeight": 3189,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 586.84375,
+              "right": 679.609375,
+              "top": 43.71875,
+              "bottom": 103.71875
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 688.609375,
+              "right": 786.78125,
+              "top": 43.71875,
+              "bottom": 103.71875
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 795.78125,
+              "right": 914.28125,
+              "top": 43.71875,
+              "bottom": 103.71875
+            }
+          ],
+          "body": {
+            "width": 960.5625,
+            "height": 669.765625,
+            "clientHeight": 670,
+            "scrollHeight": 5464,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "front": {
+          "card": {
+            "left": 34,
+            "top": 171.03125,
+            "right": 944.65625,
+            "bottom": 620.34375,
+            "width": 910.65625,
+            "height": 449.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 66.796875,
+              "top": 301.765625,
+              "right": 138.796875,
+              "bottom": 373.765625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 154.796875,
+              "top": 312.5625,
+              "right": 468.609375,
+              "bottom": 362.953125,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 66.796875,
+              "top": 389.765625,
+              "right": 468.609375,
+              "bottom": 425.59375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 499.12420654296875,
+              "top": 170.6942901611328,
+              "right": 945.621826171875,
+              "bottom": 621.2401275634766,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 499.6771240234375,
+              "top": 246.33969116210938,
+              "right": 927.0692749023438,
+              "bottom": 545.7108154296875,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 72,
+            "height": 72
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "front": {
+          "card": {
+            "left": 34,
+            "top": 171.03125,
+            "right": 944.65625,
+            "bottom": 851,
+            "width": 910.65625,
+            "height": 679.96875
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 66.796875,
+              "top": 210.21875,
+              "right": 138.796875,
+              "bottom": 282.21875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 66.796875,
+              "top": 298.21875,
+              "right": 911.859375,
+              "bottom": 399.015625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 66.796875,
+              "top": 415.015625,
+              "right": 911.859375,
+              "bottom": 486.6875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 34.95173263549805,
+              "top": 602.2078857421875,
+              "right": 943.7680168151855,
+              "bottom": 843.9210205078125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 329.27978515625,
+              "top": 602.4034423828125,
+              "right": 649.427978515625,
+              "bottom": 825.7254028320312,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 72,
+            "height": 72
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 1007.265625,
+              "right": 1070.65625,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 1079.65625,
+              "right": 1145.75,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 1154.75,
+              "right": 1231,
+              "top": 50.5,
+              "bottom": 94.5
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 3457,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 903.5625,
+              "right": 996.328125,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 1005.328125,
+              "right": 1103.5,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 1112.5,
+              "right": 1231,
+              "top": 47,
+              "bottom": 107
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5431,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "front": {
+          "card": {
+            "left": 214,
+            "top": 171.03125,
+            "right": 1204.65625,
+            "bottom": 660.34375,
+            "width": 990.65625,
+            "height": 489.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 249,
+              "top": 321.765625,
+              "right": 321,
+              "bottom": 393.765625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 337,
+              "top": 332.5625,
+              "right": 687.375,
+              "bottom": 382.953125,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 249,
+              "top": 409.765625,
+              "right": 687.375,
+              "bottom": 445.59375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 720.077392578125,
+              "top": 170.6868896484375,
+              "right": 1205.5889892578125,
+              "bottom": 661.1961669921875,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 720.622314453125,
+              "top": 252.74227905273438,
+              "right": 1187.0443115234375,
+              "bottom": 579.244873046875,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 72,
+            "height": 72
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "front": {
+          "card": {
+            "left": 214,
+            "top": 171.03125,
+            "right": 1204.65625,
+            "bottom": 911,
+            "width": 990.65625,
+            "height": 739.96875
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 249,
+              "top": 240.21875,
+              "right": 321,
+              "bottom": 312.21875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 249,
+              "top": 328.21875,
+              "right": 1169.65625,
+              "bottom": 429.015625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 249,
+              "top": 445.015625,
+              "right": 1169.65625,
+              "bottom": 516.6875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 214.9695587158203,
+              "top": 634.49658203125,
+              "right": 1203.7266998291016,
+              "bottom": 876.019775390625,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 549.2976684570312,
+              "top": 634.6365356445312,
+              "right": 869.3910522460938,
+              "bottom": 857.8798217773438,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "hierarchy": {
+          "text": "Websites Help customers choose you. See what’s included +",
+          "expected": true,
+          "inkInside": true,
+          "icon": {
+            "width": 72,
+            "height": 72
+          },
+          "iconParity": true,
+          "imageInside": true,
+          "textImageOverlap": false,
+          "firstPosition": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 1247.265625,
+              "right": 1310.65625,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 1319.65625,
+              "right": 1385.75,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 1394.75,
+              "right": 1471,
+              "top": 50.5,
+              "bottom": 94.5
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 3457,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 1143.5625,
+              "right": 1236.328125,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 1245.328125,
+              "right": 1343.5,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 1352.5,
+              "right": 1471,
+              "top": 47,
+              "bottom": 107
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5436,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    }
+  ],
+  "reducedMotion": {
+    "reduced": true,
+    "transitionDuration": "0s",
+    "transform": "none",
+    "activeAnimations": 0
+  }
+}

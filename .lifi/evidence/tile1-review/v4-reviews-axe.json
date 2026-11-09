@@ -1,0 +1,25 @@
+{
+  "violations": [
+    {
+      "id": "color-contrast",
+      "impact": "serious",
+      "nodes": [
+        {
+          "target": [
+            ".contact-plan"
+          ],
+          "html": "<a class=\"contact-plan\" href=\"/tech-audit/?intent=general\" data-reader-link=\"\">Write to us +</a>",
+          "summary": "Fix any of the following:\n  Element has insufficient color contrast of 2.62 (foreground color: #ffffff, background color: #ff7839, font size: 12.0pt (16px), font weight: bold). Expected contrast ratio of 4.5:1"
+        }
+      ]
+    }
+  ],
+  "facts": {
+    "tiles": 7,
+    "googleVisible": 0,
+    "overflow": [
+      390,
+      390
+    ]
+  }
+}

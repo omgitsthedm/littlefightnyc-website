@@ -1,0 +1,128 @@
+{
+  "all_public_html": {
+    "files": 436,
+    "visible_body": {
+      "plumber_or_plumbers": 11,
+      "plumbing": 8
+    },
+    "raw_html": {
+      "plumber_or_plumbers": 38,
+      "plumbing": 16
+    },
+    "term_routes": {
+      "plumber_or_plumbers": [
+        "/",
+        "/industries/",
+        "/websites-for-your-business/",
+        "/nationwide/",
+        "/photos/trades/",
+        "/glossary/business-system/"
+      ],
+      "plumbing": [
+        "/",
+        "/photos/trades/",
+        "/industries/plumbers/"
+      ]
+    }
+  },
+  "generated_reader_routes": {
+    "files": 399,
+    "visible_body": {
+      "plumber_or_plumbers": 11,
+      "plumbing": 8
+    },
+    "raw_html": {
+      "plumber_or_plumbers": 38,
+      "plumbing": 16
+    },
+    "term_routes": {
+      "plumber_or_plumbers": [
+        "/",
+        "/industries/",
+        "/websites-for-your-business/",
+        "/nationwide/",
+        "/photos/trades/",
+        "/glossary/business-system/"
+      ],
+      "plumbing": [
+        "/",
+        "/photos/trades/",
+        "/industries/plumbers/"
+      ]
+    }
+  },
+  "generated_marketing_excluding_subapps": {
+    "files": 377,
+    "visible_body": {
+      "plumber_or_plumbers": 11,
+      "plumbing": 8
+    },
+    "raw_html": {
+      "plumber_or_plumbers": 38,
+      "plumbing": 16
+    },
+    "term_routes": {
+      "plumber_or_plumbers": [
+        "/",
+        "/industries/",
+        "/websites-for-your-business/",
+        "/nationwide/",
+        "/photos/trades/",
+        "/glossary/business-system/"
+      ],
+      "plumbing": [
+        "/",
+        "/photos/trades/",
+        "/industries/plumbers/"
+      ]
+    }
+  },
+  "excluded_generated_subapp_routes": [
+    "/examples/audit/",
+    "/examples/audit/about/",
+    "/examples/audit/contact/",
+    "/examples/audit/privacy/",
+    "/examples/lab/",
+    "/examples/lab/concepts/aha-laser/",
+    "/examples/lab/concepts/goliath/",
+    "/examples/lab/concepts/growth-street/",
+    "/examples/lab/concepts/micro-animations/",
+    "/examples/lab/concepts/pill-scroll/",
+    "/examples/lab/concepts/pool-room/",
+    "/examples/lab/concepts/studio-engine/",
+    "/examples/lab/concepts/terminal-3d/",
+    "/examples/lab/concepts/walkup-3d/",
+    "/myspace-demo/",
+    "/vera/",
+    "/vera/archive/",
+    "/vera/brand/",
+    "/vera/corrections/",
+    "/vera/manual/",
+    "/vera/privacy/",
+    "/vera/terms/"
+  ],
+  "tile1_websites": {
+    "route": "/services/custom-local-websites/",
+    "file": "services/custom-local-websites/index.html",
+    "body": {
+      "plumber_or_plumbers": 0,
+      "plumbing": 0
+    },
+    "raw": {
+      "plumber_or_plumbers": 0,
+      "plumbing": 0
+    }
+  },
+  "homepage": {
+    "route": "/",
+    "file": "index.html",
+    "body": {
+      "plumber_or_plumbers": 1,
+      "plumbing": 1
+    },
+    "raw": {
+      "plumber_or_plumbers": 4,
+      "plumbing": 1
+    }
+  }
+}

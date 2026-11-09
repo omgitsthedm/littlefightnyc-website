@@ -1,0 +1,1866 @@
+{
+  "url": "http://127.0.0.1:4399/",
+  "output": "/tmp/lf-tile1-accessibility-footerfix",
+  "chromeChannel": "installed Chrome",
+  "results": [
+    {
+      "width": 320,
+      "height": 256,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 62.359375,
+            "right": 308,
+            "bottom": 256.984375,
+            "width": 296,
+            "height": 194.625
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 98.171875,
+              "right": 81,
+              "bottom": 154.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 116.96875,
+              "right": 151,
+              "bottom": 135.359375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 158.171875,
+              "right": 151,
+              "bottom": 221.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 159.67849731445312,
+              "top": 63.126617431640625,
+              "right": 307.9568786621094,
+              "bottom": 256.72540283203125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 159.909912109375,
+              "top": 97.9736328125,
+              "right": 297.544677734375,
+              "bottom": 194.74241638183594,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 270,
+              "top": 72.359375,
+              "right": 298,
+              "bottom": 100.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 62.359375,
+            "right": 308,
+            "bottom": 358.296875,
+            "width": 296,
+            "height": 295.9375
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 96.328125,
+              "right": 81,
+              "bottom": 152.328125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 105.921875,
+              "right": 151,
+              "bottom": 142.71875,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 156.328125,
+              "right": 151,
+              "bottom": 324.328125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 159.85337829589844,
+              "top": 63.30733871459961,
+              "right": 307.2878112792969,
+              "bottom": 357.4618492126465,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 159.9617462158203,
+              "top": 136.60809326171875,
+              "right": 304.43896484375,
+              "bottom": 237.7744903564453,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 270,
+              "top": 72.359375,
+              "right": 298,
+              "bottom": 100.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 75,
+              "height": 44,
+              "left": 15,
+              "right": 90,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 75,
+              "height": 44,
+              "left": 98,
+              "right": 173,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 75,
+              "height": 44,
+              "left": 181,
+              "right": 256,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 4810.984375,
+            "clientHeight": 4811,
+            "scrollHeight": 4811,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 116.5,
+              "height": 54,
+              "left": 15,
+              "right": 131.5,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Text",
+              "width": 116.5,
+              "height": 54,
+              "left": 139.5,
+              "right": 256,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Email",
+              "width": 241,
+              "height": 54,
+              "left": 15,
+              "right": 256,
+              "top": 194,
+              "bottom": 248
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 9915.421875,
+            "clientHeight": 9915,
+            "scrollHeight": 9915,
+            "visible": true
+          }
+        },
+        "shortReader": [
+          {
+            "selector": "#detail .story-hero h1",
+            "width": 280,
+            "height": 351.953125
+          },
+          {
+            "selector": "#detail #contact a[href^=\"tel:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail #contact a[href^=\"sms:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail #contact a[href^=\"mailto:\"]",
+            "width": 280,
+            "height": 68
+          },
+          {
+            "selector": "#detail .story-bottom a:last-child",
+            "width": 115.59375,
+            "height": 58
+          }
+        ]
+      }
+    },
+    {
+      "width": 320,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 308,
+            "bottom": 373.984375,
+            "width": 296,
+            "height": 194.625
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 215.171875,
+              "right": 81,
+              "bottom": 271.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 233.96875,
+              "right": 151,
+              "bottom": 252.359375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 275.171875,
+              "right": 151,
+              "bottom": 338.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 159.67843627929688,
+              "top": 180.1265869140625,
+              "right": 307.95703125,
+              "bottom": 373.72552490234375,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 159.90989685058594,
+              "top": 214.97360229492188,
+              "right": 297.5447692871094,
+              "bottom": 311.7425537109375,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 270,
+              "top": 189.359375,
+              "right": 298,
+              "bottom": 217.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 308,
+            "bottom": 475.296875,
+            "width": 296,
+            "height": 295.9375
+          },
+          "rows": "6",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 213.328125,
+              "right": 81,
+              "bottom": 269.328125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 222.921875,
+              "right": 151,
+              "bottom": 259.71875,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 273.328125,
+              "right": 151,
+              "bottom": 441.328125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 159.87051391601562,
+              "top": 180.3134002685547,
+              "right": 307.2541809082031,
+              "bottom": 474.4425506591797,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 159.96621704101562,
+              "top": 253.61370849609375,
+              "right": 304.426025390625,
+              "bottom": 354.75518798828125,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 270,
+              "top": 189.359375,
+              "right": 298,
+              "bottom": 217.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 75,
+              "height": 44,
+              "left": 15,
+              "right": 90,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 75,
+              "height": 44,
+              "left": 98,
+              "right": 173,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 75,
+              "height": 44,
+              "left": 181,
+              "right": 256,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 719,
+            "clientHeight": 719,
+            "scrollHeight": 4811,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 272,
+            "height": 189
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 320,
+          "viewport": 320
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 116.5,
+              "height": 54,
+              "left": 15,
+              "right": 131.5,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Text",
+              "width": 116.5,
+              "height": 54,
+              "left": 139.5,
+              "right": 256,
+              "top": 132,
+              "bottom": 186
+            },
+            {
+              "text": "Email",
+              "width": 241,
+              "height": 54,
+              "left": 15,
+              "right": 256,
+              "top": 194,
+              "bottom": 248
+            }
+          ],
+          "body": {
+            "width": 320,
+            "height": 501.40625,
+            "clientHeight": 501,
+            "scrollHeight": 9915,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 390,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 377.984375,
+            "bottom": 358.34375,
+            "width": 365.984375,
+            "height": 178.984375
+          },
+          "rows": "3",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 215.921875,
+              "right": 81,
+              "bottom": 271.921875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 234.71875,
+              "right": 185.984375,
+              "bottom": 253.109375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 275.921875,
+              "right": 185.984375,
+              "bottom": 321.765625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 194.68849182128906,
+              "top": 179.9751434326172,
+              "right": 377.97943115234375,
+              "bottom": 358.2873229980469,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 194.7968292236328,
+              "top": 194.8448486328125,
+              "right": 367.67230224609375,
+              "bottom": 316.3040771484375,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 339.984375,
+              "top": 189.359375,
+              "right": 367.984375,
+              "bottom": 217.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 179.359375,
+            "right": 377.984375,
+            "bottom": 483,
+            "width": 365.984375,
+            "height": 303.640625
+          },
+          "rows": "5",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 25,
+              "top": 209.484375,
+              "right": 81,
+              "bottom": 265.484375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 85,
+              "top": 219.078125,
+              "right": 185.984375,
+              "bottom": 255.875,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 25,
+              "top": 269.484375,
+              "right": 185.984375,
+              "bottom": 452.859375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 194.83203125,
+              "top": 180.2814483642578,
+              "right": 377.2779235839844,
+              "bottom": 482.19093322753906,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 194.931884765625,
+              "top": 247.81179809570312,
+              "right": 367.1094665527344,
+              "bottom": 368.2691650390625,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 339.984375,
+              "top": 189.359375,
+              "right": 367.984375,
+              "bottom": 217.359375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 98.328125,
+              "height": 44,
+              "left": 15,
+              "right": 113.328125,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Text",
+              "width": 98.34375,
+              "height": 44,
+              "left": 121.328125,
+              "right": 219.671875,
+              "top": 62,
+              "bottom": 106
+            },
+            {
+              "text": "Email",
+              "width": 98.328125,
+              "height": 44,
+              "left": 227.671875,
+              "right": 326,
+              "top": 62,
+              "bottom": 106
+            }
+          ],
+          "body": {
+            "width": 390,
+            "height": 719,
+            "clientHeight": 719,
+            "scrollHeight": 4599,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 342,
+            "height": 237
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390
+        },
+        "controls": {
+          "close": {
+            "width": 44,
+            "height": 44
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 151.5,
+              "height": 54,
+              "left": 15,
+              "right": 166.5,
+              "top": 75,
+              "bottom": 129
+            },
+            {
+              "text": "Text",
+              "width": 151.5,
+              "height": 54,
+              "left": 174.5,
+              "right": 326,
+              "top": 75,
+              "bottom": 129
+            },
+            {
+              "text": "Email",
+              "width": 311,
+              "height": 54,
+              "left": 15,
+              "right": 326,
+              "top": 137,
+              "bottom": 191
+            }
+          ],
+          "body": {
+            "width": 390,
+            "height": 558.40625,
+            "clientHeight": 558,
+            "scrollHeight": 8686,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 768,
+      "height": 1000,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 201.59375,
+            "right": 505.328125,
+            "bottom": 444.25,
+            "width": 493.328125,
+            "height": 242.65625
+          },
+          "rows": "2",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 31,
+              "top": 260.265625,
+              "right": 87,
+              "bottom": 316.265625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 95,
+              "top": 279.0625,
+              "right": 246.65625,
+              "bottom": 297.453125,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 31,
+              "top": 324.265625,
+              "right": 246.65625,
+              "bottom": 385.578125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 258.07598876953125,
+              "top": 201.91636657714844,
+              "right": 505.6770324707031,
+              "bottom": 444.54229736328125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 258.27874755859375,
+              "top": 227.1996307373047,
+              "right": 493.2557067871094,
+              "bottom": 392.15338134765625,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 467.328125,
+              "top": 211.59375,
+              "right": 495.328125,
+              "bottom": 239.59375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "front": {
+          "card": {
+            "left": 12,
+            "top": 201.59375,
+            "right": 505.328125,
+            "bottom": 569.578125,
+            "width": 493.328125,
+            "height": 367.984375
+          },
+          "rows": "3",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 31,
+              "top": 230.984375,
+              "right": 87,
+              "bottom": 286.984375,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 95,
+              "top": 240.578125,
+              "right": 246.65625,
+              "bottom": 277.375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 31,
+              "top": 294.984375,
+              "right": 246.65625,
+              "bottom": 540.171875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 258.5008544921875,
+              "top": 202.49656677246094,
+              "right": 504.59332275390625,
+              "bottom": 568.7631072998047,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 258.5908203125,
+              "top": 280.76031494140625,
+              "right": 492.45001220703125,
+              "bottom": 444.1069641113281,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 467.328125,
+              "top": 211.59375,
+              "right": 495.328125,
+              "bottom": 239.59375,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 442.234375,
+              "right": 505.625,
+              "top": 39.53125,
+              "bottom": 83.53125
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 514.625,
+              "right": 580.71875,
+              "top": 39.53125,
+              "bottom": 83.53125
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 589.71875,
+              "right": 665.96875,
+              "top": 39.53125,
+              "bottom": 83.53125
+            }
+          ],
+          "body": {
+            "width": 719.9375,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 2987,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 338.53125,
+              "right": 431.296875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 440.296875,
+              "right": 538.46875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 547.46875,
+              "right": 665.96875,
+              "top": 36.03125,
+              "bottom": 96.03125
+            }
+          ],
+          "body": {
+            "width": 719.9375,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5876,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "front": {
+          "card": {
+            "left": 25.59375,
+            "top": 158.390625,
+            "right": 341.859375,
+            "bottom": 310.546875,
+            "width": 316.265625,
+            "height": 152.15625
+          },
+          "rows": "2",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 38.59375,
+              "top": 171.71875,
+              "right": 94.59375,
+              "bottom": 227.71875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 98.59375,
+              "top": 190.515625,
+              "right": 175.71875,
+              "bottom": 208.90625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 38.59375,
+              "top": 231.71875,
+              "right": 175.71875,
+              "bottom": 297.203125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 183.4801788330078,
+              "top": 159.03663635253906,
+              "right": 341.94219970703125,
+              "bottom": 310.5762939453125,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 183.56886291503906,
+              "top": 169.15589904785156,
+              "right": 331.613525390625,
+              "bottom": 273.3590087890625,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 303.859375,
+              "top": 168.390625,
+              "right": 331.859375,
+              "bottom": 196.390625,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "front": {
+          "card": {
+            "left": 25.59375,
+            "top": 158.390625,
+            "right": 341.859375,
+            "bottom": 474.703125,
+            "width": 316.265625,
+            "height": 316.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 38.59375,
+              "top": 199.203125,
+              "right": 94.59375,
+              "bottom": 255.203125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 98.59375,
+              "top": 208.796875,
+              "right": 175.71875,
+              "bottom": 245.59375,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 38.59375,
+              "top": 259.203125,
+              "right": 175.71875,
+              "bottom": 433.890625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 183.57594299316406,
+              "top": 159.33802795410156,
+              "right": 341.12689208984375,
+              "bottom": 473.85548400878906,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 183.68368530273438,
+              "top": 241.85101318359375,
+              "right": 330.95855712890625,
+              "bottom": 344.9493408203125,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 303.859375,
+              "top": 168.390625,
+              "right": 331.859375,
+              "bottom": 196.390625,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 690.546875,
+              "right": 753.9375,
+              "top": 47.21875,
+              "bottom": 91.21875
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 762.9375,
+              "right": 829.03125,
+              "top": 47.21875,
+              "bottom": 91.21875
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 838.03125,
+              "right": 914.28125,
+              "top": 47.21875,
+              "bottom": 91.21875
+            }
+          ],
+          "body": {
+            "width": 960.5625,
+            "height": 687.5625,
+            "clientHeight": 688,
+            "scrollHeight": 3189,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1024,
+          "viewport": 1024
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 586.84375,
+              "right": 679.609375,
+              "top": 43.71875,
+              "bottom": 103.71875
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 688.609375,
+              "right": 786.78125,
+              "top": 43.71875,
+              "bottom": 103.71875
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 795.78125,
+              "right": 914.28125,
+              "top": 43.71875,
+              "bottom": 103.71875
+            }
+          ],
+          "body": {
+            "width": 960.5625,
+            "height": 669.765625,
+            "clientHeight": 670,
+            "scrollHeight": 5464,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "front": {
+          "card": {
+            "left": 34,
+            "top": 171.03125,
+            "right": 483.328125,
+            "bottom": 389.6875,
+            "width": 449.328125,
+            "height": 218.65625
+          },
+          "rows": "2",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 53,
+              "top": 212.453125,
+              "right": 125,
+              "bottom": 284.453125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 133,
+              "top": 239.25,
+              "right": 246.65625,
+              "bottom": 257.640625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 53,
+              "top": 292.453125,
+              "right": 246.65625,
+              "bottom": 348.265625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 258.25567626953125,
+              "top": 171.5437469482422,
+              "right": 483.36395263671875,
+              "bottom": 389.6832275390625,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 258.39434814453125,
+              "top": 192.4668731689453,
+              "right": 471.0447082519531,
+              "bottom": 341.65301513671875,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 445.328125,
+              "top": 181.03125,
+              "right": 473.328125,
+              "bottom": 209.03125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "front": {
+          "card": {
+            "left": 34,
+            "top": 171.03125,
+            "right": 483.328125,
+            "bottom": 620.34375,
+            "width": 449.328125,
+            "height": 449.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 53,
+              "top": 244.0625,
+              "right": 125,
+              "bottom": 316.0625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 133,
+              "top": 261.65625,
+              "right": 246.65625,
+              "bottom": 298.453125,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 53,
+              "top": 324.0625,
+              "right": 246.65625,
+              "bottom": 547.3125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 258.55548095703125,
+              "top": 171.98910522460938,
+              "right": 482.48358154296875,
+              "bottom": 619.4296875,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 258.62799072265625,
+              "top": 298.5584716796875,
+              "right": 470.3844909667969,
+              "bottom": 446.4609375,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 445.328125,
+              "top": 181.03125,
+              "right": 473.328125,
+              "bottom": 209.03125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 1007.265625,
+              "right": 1070.65625,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 1079.65625,
+              "right": 1145.75,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 1154.75,
+              "right": 1231,
+              "top": 50.5,
+              "bottom": 94.5
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 3457,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1440,
+          "viewport": 1440
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 903.5625,
+              "right": 996.328125,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 1005.328125,
+              "right": 1103.5,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 1112.5,
+              "right": 1231,
+              "top": 47,
+              "bottom": 107
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5431,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "normal": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "front": {
+          "card": {
+            "left": 214,
+            "top": 171.03125,
+            "right": 703.328125,
+            "bottom": 409.6875,
+            "width": 489.328125,
+            "height": 238.65625
+          },
+          "rows": "2",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 233,
+              "top": 219.96875,
+              "right": 305,
+              "bottom": 291.96875,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 313,
+              "top": 246.765625,
+              "right": 446.65625,
+              "bottom": 265.15625,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 233,
+              "top": 299.96875,
+              "right": 446.65625,
+              "bottom": 360.75,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 458.0923767089844,
+              "top": 171.3622283935547,
+              "right": 703.6602783203125,
+              "bottom": 409.97113037109375,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 458.2845764160156,
+              "top": 195.34861755371094,
+              "right": 691.2496948242188,
+              "bottom": 358.8946533203125,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 665.328125,
+              "top": 181.03125,
+              "right": 693.328125,
+              "bottom": 209.03125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          }
+        ]
+      },
+      "text200": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "front": {
+          "card": {
+            "left": 214,
+            "top": 171.03125,
+            "right": 703.328125,
+            "bottom": 660.34375,
+            "width": 489.328125,
+            "height": 489.3125
+          },
+          "rows": "4",
+          "parts": [
+            {
+              "name": "mineral-icon topic-anchor-icon",
+              "left": 233,
+              "top": 254.0625,
+              "right": 305,
+              "bottom": 326.0625,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-label",
+              "left": 313,
+              "top": 271.65625,
+              "right": 446.65625,
+              "bottom": 308.453125,
+              "inside": true
+            },
+            {
+              "name": "STRONG",
+              "left": 233,
+              "top": 334.0625,
+              "right": 446.65625,
+              "bottom": 577.3125,
+              "inside": true
+            },
+            {
+              "name": "topic-anchor-art",
+              "left": 458.4836120605469,
+              "top": 171.95762634277344,
+              "right": 702.5849609375,
+              "bottom": 659.4847259521484,
+              "inside": true
+            },
+            {
+              "name": "IMG",
+              "left": 458.606689453125,
+              "top": 311.5775146484375,
+              "right": 690.4210205078125,
+              "bottom": 473.46917724609375,
+              "inside": true
+            },
+            {
+              "name": "anchor-go",
+              "left": 665.328125,
+              "top": 181.03125,
+              "right": 693.328125,
+              "bottom": 209.03125,
+              "inside": true
+            }
+          ],
+          "contained": true
+        }
+      },
+      "reader": {
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 63.390625,
+              "height": 44,
+              "left": 1247.265625,
+              "right": 1310.65625,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Text",
+              "width": 66.09375,
+              "height": 44,
+              "left": 1319.65625,
+              "right": 1385.75,
+              "top": 50.5,
+              "bottom": 94.5
+            },
+            {
+              "text": "Email",
+              "width": 76.25,
+              "height": 44,
+              "left": 1394.75,
+              "right": 1471,
+              "top": 50.5,
+              "bottom": 94.5
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 749,
+            "clientHeight": 749,
+            "scrollHeight": 3457,
+            "visible": true
+          }
+        },
+        "images": [
+          {
+            "src": "http://127.0.0.1:4399/assets/boat-orange.svg",
+            "complete": true,
+            "width": 224,
+            "height": 150
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+            "complete": true,
+            "width": 460,
+            "height": 319
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-hair-by-rachel-charles-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 445
+          },
+          {
+            "src": "http://127.0.0.1:4399/assets/proof/optimized/case-easy-tiger-640.webp",
+            "complete": true,
+            "width": 640,
+            "height": 444
+          }
+        ]
+      },
+      "readerText200": {
+        "overflow": {
+          "scrollWidth": 1920,
+          "viewport": 1920
+        },
+        "controls": {
+          "close": {
+            "width": 48,
+            "height": 48
+          },
+          "contacts": [
+            {
+              "text": "Call",
+              "width": 92.765625,
+              "height": 60,
+              "left": 1143.5625,
+              "right": 1236.328125,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Text",
+              "width": 98.171875,
+              "height": 60,
+              "left": 1245.328125,
+              "right": 1343.5,
+              "top": 47,
+              "bottom": 107
+            },
+            {
+              "text": "Email",
+              "width": 118.5,
+              "height": 60,
+              "left": 1352.5,
+              "right": 1471,
+              "top": 47,
+              "bottom": 107
+            }
+          ],
+          "body": {
+            "width": 1178,
+            "height": 731.203125,
+            "clientHeight": 731,
+            "scrollHeight": 5436,
+            "visible": true
+          }
+        },
+        "shortReader": []
+      }
+    }
+  ],
+  "reducedMotion": {
+    "reduced": true,
+    "transitionDuration": "0s",
+    "transform": "none",
+    "activeAnimations": 0
+  }
+}

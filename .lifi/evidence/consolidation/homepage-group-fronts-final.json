@@ -1,0 +1,296 @@
+{
+  "artifact": "98bfd77613aa8092190970407dbe29818e67e843e33e66a245db70113cc7d917",
+  "method": "Chrome channel, isolated temporary profile. Six rebuilt home-group icon fronts checked at 320x720, 390x844, 768x1024, 1440x940. A separate stress pass at 320 and 390 doubles direct visible front-text computed font sizes inline, observes the tile with ResizeObserver, and rechecks word bounds, icon, plus, and no overflow.",
+  "passes": [
+    {
+      "label": "maps 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "page-industries 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "it-password-ownership 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "computer 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "consulting-second-opinion 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "software-business-ownership 320",
+      "tile": [
+        144,
+        143.96875
+      ],
+      "resize": 0
+    },
+    {
+      "label": "maps 390",
+      "tile": [
+        179,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "page-industries 390",
+      "tile": [
+        179,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "it-password-ownership 390",
+      "tile": [
+        178.984375,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "computer 390",
+      "tile": [
+        178.984375,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "consulting-second-opinion 390",
+      "tile": [
+        179,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "software-business-ownership 390",
+      "tile": [
+        179,
+        178.984375
+      ],
+      "resize": 0
+    },
+    {
+      "label": "maps 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "page-industries 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "it-password-ownership 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "computer 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "consulting-second-opinion 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "software-business-ownership 768",
+      "tile": [
+        368,
+        242.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "maps 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "page-industries 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "it-password-ownership 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "computer 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "consulting-second-opinion 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "software-business-ownership 1440",
+      "tile": [
+        334,
+        218.65625
+      ],
+      "resize": 0
+    },
+    {
+      "label": "maps 320 text2x",
+      "tile": [
+        144,
+        245.28125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "page-industries 320 text2x",
+      "tile": [
+        194.65625,
+        245.28125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "it-password-ownership 320 text2x",
+      "tile": [
+        194.65625,
+        295.9375
+      ],
+      "resize": 2
+    },
+    {
+      "label": "computer 320 text2x",
+      "tile": [
+        245.328125,
+        194.625
+      ],
+      "resize": 3
+    },
+    {
+      "label": "consulting-second-opinion 320 text2x",
+      "tile": [
+        194.65625,
+        245.28125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "software-business-ownership 320 text2x",
+      "tile": [
+        194.65625,
+        194.625
+      ],
+      "resize": 3
+    },
+    {
+      "label": "maps 390 text2x",
+      "tile": [
+        179,
+        241.3125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "page-industries 390 text2x",
+      "tile": [
+        241.328125,
+        241.3125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "it-password-ownership 390 text2x",
+      "tile": [
+        178.984375,
+        303.640625
+      ],
+      "resize": 2
+    },
+    {
+      "label": "computer 390 text2x",
+      "tile": [
+        241.328125,
+        178.984375
+      ],
+      "resize": 3
+    },
+    {
+      "label": "consulting-second-opinion 390 text2x",
+      "tile": [
+        179,
+        241.3125
+      ],
+      "resize": 2
+    },
+    {
+      "label": "software-business-ownership 390 text2x",
+      "tile": [
+        179,
+        178.984375
+      ],
+      "resize": 1
+    }
+  ],
+  "failures": [],
+  "screenshot": ".lifi/evidence/consolidation/home-1440-final-settled.png"
+}

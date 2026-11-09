@@ -1,0 +1,363 @@
+{
+  "base": "http://127.0.0.1:4399",
+  "browser": "installed Google Chrome via Playwright channel:chrome; isolated temporary context",
+  "native": [
+    {
+      "key": "website",
+      "details": 11,
+      "summaries": 11,
+      "keyboardDisclosure": true
+    }
+  ],
+  "responsive": [
+    {
+      "key": "website",
+      "width": 320,
+      "answers": 27,
+      "pageWidth": 320,
+      "viewport": 320,
+      "overflow": [
+        {
+          "text": "Weeks 1–2Find the shape.",
+          "tag": "SUMMARY",
+          "scroll": [
+            221,
+            113
+          ],
+          "client": [
+            210,
+            113
+          ]
+        }
+      ],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 68,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Email",
+          "width": 68,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Call",
+          "width": 252,
+          "height": 46,
+          "y": 10017
+        },
+        {
+          "text": "Text",
+          "width": 252,
+          "height": 46,
+          "y": 10072
+        },
+        {
+          "text": "Email",
+          "width": 252,
+          "height": 46,
+          "y": 10127
+        }
+      ],
+      "font": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(246, 243, 236)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "website",
+      "width": 390,
+      "answers": 27,
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [
+        {
+          "text": "Weeks 1–2Find the shape.",
+          "tag": "SUMMARY",
+          "scroll": [
+            291,
+            83
+          ],
+          "client": [
+            280,
+            83
+          ]
+        }
+      ],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 91,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Text",
+          "width": 91,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Email",
+          "width": 91,
+          "height": 44,
+          "y": 136
+        },
+        {
+          "text": "Call",
+          "width": 74,
+          "height": 92,
+          "y": 7691
+        },
+        {
+          "text": "Text",
+          "width": 74,
+          "height": 92,
+          "y": 7691
+        },
+        {
+          "text": "Email",
+          "width": 74,
+          "height": 92,
+          "y": 7691
+        }
+      ],
+      "font": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(246, 243, 236)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "website",
+      "width": 768,
+      "answers": 27,
+      "pageWidth": 768,
+      "viewport": 768,
+      "overflow": [
+        {
+          "text": "Weeks 1–2Find the shape.",
+          "tag": "SUMMARY",
+          "scroll": [
+            314,
+            83
+          ],
+          "client": [
+            303,
+            83
+          ]
+        }
+      ],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 160
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 160
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 160
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 5538
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 5538
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 5538
+        }
+      ],
+      "font": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(246, 243, 236)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "website",
+      "width": 1440,
+      "answers": 27,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "overflow": [
+        {
+          "text": "Weeks 1–2Find the shape.",
+          "tag": "SUMMARY",
+          "scroll": [
+            573,
+            83
+          ],
+          "client": [
+            562,
+            83
+          ]
+        }
+      ],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 106
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 106
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 106
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 5129
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 5129
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 5129
+        }
+      ],
+      "font": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(246, 243, 236)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    }
+  ],
+  "text200": [
+    {
+      "key": "website",
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [
+        {
+          "text": "Weeks 1–2Find the shape.",
+          "tag": "SUMMARY",
+          "scroll": [
+            291,
+            83
+          ],
+          "client": [
+            280,
+            83
+          ]
+        },
+        {
+          "text": "Website questions+",
+          "tag": "SUMMARY",
+          "scroll": [
+            318,
+            125
+          ],
+          "client": [
+            318,
+            120
+          ]
+        }
+      ],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 91,
+          "height": 60,
+          "y": 152
+        },
+        {
+          "text": "Text",
+          "width": 91,
+          "height": 60,
+          "y": 152
+        },
+        {
+          "text": "Email",
+          "width": 91,
+          "height": 60,
+          "y": 152
+        },
+        {
+          "text": "Call",
+          "width": 74,
+          "height": 308,
+          "y": 15789
+        },
+        {
+          "text": "Text",
+          "width": 74,
+          "height": 308,
+          "y": 15789
+        },
+        {
+          "text": "Email",
+          "width": 74,
+          "height": 308,
+          "y": 15789
+        }
+      ],
+      "font": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(246, 243, 236)",
+      "background": "rgb(3, 3, 5)"
+    }
+  ],
+  "journey": {},
+  "console": [],
+  "failures": [
+    "native website: Enter did not open disclosure",
+    "website@320: keyboard summary did not open",
+    "website@320: clipped text [{\"text\":\"Weeks 1–2Find the shape.\",\"tag\":\"SUMMARY\",\"scroll\":[221,113],\"client\":[210,113]}]",
+    "website@320: expected Atkinson headline font, got LFReader, LFAtkinson, Arial, sans-serif",
+    "website@390: keyboard summary did not open",
+    "website@390: clipped text [{\"text\":\"Weeks 1–2Find the shape.\",\"tag\":\"SUMMARY\",\"scroll\":[291,83],\"client\":[280,83]}]",
+    "website@390: expected Atkinson headline font, got LFReader, LFAtkinson, Arial, sans-serif",
+    "website@768: keyboard summary did not open",
+    "website@768: clipped text [{\"text\":\"Weeks 1–2Find the shape.\",\"tag\":\"SUMMARY\",\"scroll\":[314,83],\"client\":[303,83]}]",
+    "website@768: expected Atkinson headline font, got LFReader, LFAtkinson, Arial, sans-serif",
+    "website@1440: keyboard summary did not open",
+    "website@1440: clipped text [{\"text\":\"Weeks 1–2Find the shape.\",\"tag\":\"SUMMARY\",\"scroll\":[573,83],\"client\":[562,83]}]",
+    "website@1440: expected Atkinson headline font, got LFReader, LFAtkinson, Arial, sans-serif",
+    "website@390 200% computed text: clipped text [{\"text\":\"Weeks 1–2Find the shape.\",\"tag\":\"SUMMARY\",\"scroll\":[291,83],\"client\":[280,83]},{\"text\":\"Website questions+\",\"tag\":\"SUMMARY\",\"scroll\":[318,125],\"client\":[318,120]}]"
+  ]
+}

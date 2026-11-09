@@ -1,0 +1,920 @@
+{
+  "views": [
+    {
+      "width": 320,
+      "height": 900,
+      "overflow": {
+        "document": [
+          320,
+          320
+        ],
+        "reader": [
+          320,
+          320
+        ],
+        "body": [
+          320,
+          320
+        ]
+      },
+      "scrollBoxes": [
+        {
+          "className": "detail-body",
+          "tag": "DIV",
+          "scrollHeight": 12439,
+          "clientHeight": 719,
+          "overflowY": "auto"
+        },
+        {
+          "className": "detail-window lf-reader reader-longform",
+          "tag": "SECTION",
+          "scrollHeight": 900,
+          "clientHeight": 900,
+          "overflowY": "hidden"
+        },
+        {
+          "className": "",
+          "tag": "DIALOG",
+          "scrollHeight": 900,
+          "clientHeight": 900,
+          "overflowY": "hidden"
+        }
+      ],
+      "sections": [
+        {
+          "id": "reader-work",
+          "scene": "different-worlds",
+          "top": 1402.046875,
+          "bottom": 5167.359375,
+          "height": 3765.3125,
+          "bad": []
+        },
+        {
+          "id": "reader-compare",
+          "scene": "your-business-not-template",
+          "top": 5167.359375,
+          "bottom": 6164.328125,
+          "height": 996.96875,
+          "bad": []
+        },
+        {
+          "id": "reader-search",
+          "scene": "a-question-needs-an-answer",
+          "top": 6164.328125,
+          "bottom": 7673.765625,
+          "height": 1509.4375,
+          "bad": []
+        },
+        {
+          "id": "reader-launch",
+          "scene": "six-weeks-from-brief",
+          "top": 7673.765625,
+          "bottom": 8712.8125,
+          "height": 1039.046875,
+          "bad": []
+        },
+        {
+          "id": "reader-ownership",
+          "scene": "you-keep-the-keys",
+          "top": 8712.8125,
+          "bottom": 10005.890625,
+          "height": 1293.078125,
+          "bad": []
+        }
+      ],
+      "gallery": {
+        "count": 9,
+        "dataRwItems": 9,
+        "records": [
+          {
+            "className": "rw-client-project rw-client-project--easy-tiger",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Easy Tiger Bar website on desktop."
+            },
+            "href": "/case-studies/easy-tiger/",
+            "caption": "Neighborhood bar\nEasy Tiger Bar +\n\nFind tonight’s plan, explore the menu, and get through the door.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--hair",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 453,
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path."
+            },
+            "href": "/case-studies/hair-by-rachel-charles/",
+            "caption": "Salon\nHair By Rachel +\n\nFind your service, feel ready for your first visit, and book with Rachel.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--tarot",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Tarot Hotline website on desktop."
+            },
+            "href": "/case-studies/the-tarot-hotline/",
+            "caption": "Personal service\nThe Tarot Hotline +\n\nA personal world that makes choosing a reading feel natural.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--grand",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Grand Funding LLC website on desktop."
+            },
+            "href": "/case-studies/grand-funding-llc/",
+            "caption": "Private lending\nGrand Funding LLC +\n\nUnderstand the options, try a planning tool, and talk through a project.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--break-room",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Break Room website on desktop."
+            },
+            "href": "/case-studies/the-break-room/",
+            "caption": "Pool hall\nThe Break Room +\n\nGet a feel for the room before you pick up a cue.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--clearhelp",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "ClearHelp resource-finding website on desktop."
+            },
+            "href": "/case-studies/clearhelp/",
+            "caption": "Resource finding\nClearHelp +\n\nFind help by what you need, in words you do not need to decode.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--logan",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Logan Loans website on desktop."
+            },
+            "href": "/case-studies/logan-loans/",
+            "caption": "Mortgage information\nLogan Loans +\n\nExplore the next move, from a first home to an investment.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--cc-films",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "CC Films official film website on desktop."
+            },
+            "href": "/case-studies/cc-films/",
+            "caption": "Film company\nCC Films +\n\nMeet the film, watch the trailer, and explore its story.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--chromatic",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Chromatic Painting and Design project website on desktop."
+            },
+            "href": "/case-studies/chromatic-painting-design/",
+            "caption": "Painting and murals\nChromatic Painting & Design +\n\nSee the work. Picture what your own space could become.",
+            "overlaps": false
+          }
+        ]
+      },
+      "focusReturn": true
+    },
+    {
+      "width": 390,
+      "height": 900,
+      "overflow": {
+        "document": [
+          390,
+          390
+        ],
+        "reader": [
+          390,
+          390
+        ],
+        "body": [
+          390,
+          390
+        ]
+      },
+      "scrollBoxes": [
+        {
+          "className": "detail-body",
+          "tag": "DIV",
+          "scrollHeight": 11956,
+          "clientHeight": 719,
+          "overflowY": "auto"
+        },
+        {
+          "className": "detail-window lf-reader reader-longform",
+          "tag": "SECTION",
+          "scrollHeight": 900,
+          "clientHeight": 900,
+          "overflowY": "hidden"
+        },
+        {
+          "className": "",
+          "tag": "DIALOG",
+          "scrollHeight": 900,
+          "clientHeight": 900,
+          "overflowY": "hidden"
+        }
+      ],
+      "sections": [
+        {
+          "id": "reader-work",
+          "scene": "different-worlds",
+          "top": 1374.015625,
+          "bottom": 5379.328125,
+          "height": 4005.3125,
+          "bad": []
+        },
+        {
+          "id": "reader-compare",
+          "scene": "your-business-not-template",
+          "top": 5379.328125,
+          "bottom": 6322.296875,
+          "height": 942.96875,
+          "bad": []
+        },
+        {
+          "id": "reader-search",
+          "scene": "a-question-needs-an-answer",
+          "top": 6322.296875,
+          "bottom": 7698.234375,
+          "height": 1375.9375,
+          "bad": []
+        },
+        {
+          "id": "reader-launch",
+          "scene": "six-weeks-from-brief",
+          "top": 7698.234375,
+          "bottom": 8604.359375,
+          "height": 906.125,
+          "bad": []
+        },
+        {
+          "id": "reader-ownership",
+          "scene": "you-keep-the-keys",
+          "top": 8604.359375,
+          "bottom": 9753.265625,
+          "height": 1148.90625,
+          "bad": []
+        }
+      ],
+      "gallery": {
+        "count": 9,
+        "dataRwItems": 9,
+        "records": [
+          {
+            "className": "rw-client-project rw-client-project--easy-tiger",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Easy Tiger Bar website on desktop."
+            },
+            "href": "/case-studies/easy-tiger/",
+            "caption": "Neighborhood bar\nEasy Tiger Bar +\n\nFind tonight’s plan, explore the menu, and get through the door.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--hair",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 453,
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path."
+            },
+            "href": "/case-studies/hair-by-rachel-charles/",
+            "caption": "Salon\nHair By Rachel +\n\nFind your service, feel ready for your first visit, and book with Rachel.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--tarot",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Tarot Hotline website on desktop."
+            },
+            "href": "/case-studies/the-tarot-hotline/",
+            "caption": "Personal service\nThe Tarot Hotline +\n\nA personal world that makes choosing a reading feel natural.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--grand",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Grand Funding LLC website on desktop."
+            },
+            "href": "/case-studies/grand-funding-llc/",
+            "caption": "Private lending\nGrand Funding LLC +\n\nUnderstand the options, try a planning tool, and talk through a project.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--break-room",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Break Room website on desktop."
+            },
+            "href": "/case-studies/the-break-room/",
+            "caption": "Pool hall\nThe Break Room +\n\nGet a feel for the room before you pick up a cue.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--clearhelp",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "ClearHelp resource-finding website on desktop."
+            },
+            "href": "/case-studies/clearhelp/",
+            "caption": "Resource finding\nClearHelp +\n\nFind help by what you need, in words you do not need to decode.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--logan",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Logan Loans website on desktop."
+            },
+            "href": "/case-studies/logan-loans/",
+            "caption": "Mortgage information\nLogan Loans +\n\nExplore the next move, from a first home to an investment.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--cc-films",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "CC Films official film website on desktop."
+            },
+            "href": "/case-studies/cc-films/",
+            "caption": "Film company\nCC Films +\n\nMeet the film, watch the trailer, and explore its story.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--chromatic",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Chromatic Painting and Design project website on desktop."
+            },
+            "href": "/case-studies/chromatic-painting-design/",
+            "caption": "Painting and murals\nChromatic Painting & Design +\n\nSee the work. Picture what your own space could become.",
+            "overlaps": false
+          }
+        ]
+      },
+      "text200": {
+        "before": [
+          [
+            ".rw-scene-heading",
+            32
+          ],
+          [
+            ".rw-gallery-intro > p",
+            19
+          ],
+          [
+            ".rw-client-project figcaption p",
+            17
+          ],
+          [
+            ".rw-insight summary",
+            18
+          ],
+          [
+            ".rw-launch-stop summary strong",
+            25.6
+          ]
+        ],
+        "after": [
+          [
+            ".rw-scene-heading",
+            64
+          ],
+          [
+            ".rw-gallery-intro > p",
+            38
+          ],
+          [
+            ".rw-client-project figcaption p",
+            34
+          ],
+          [
+            ".rw-insight summary",
+            36
+          ],
+          [
+            ".rw-launch-stop summary strong",
+            51.2
+          ]
+        ],
+        "overflowIssue": null,
+        "offenders": []
+      },
+      "focusReturn": true
+    },
+    {
+      "width": 768,
+      "height": 1000,
+      "overflow": {
+        "document": [
+          768,
+          768
+        ],
+        "reader": [
+          720,
+          720
+        ],
+        "body": [
+          720,
+          720
+        ]
+      },
+      "scrollBoxes": [
+        {
+          "className": "detail-body",
+          "tag": "DIV",
+          "scrollHeight": 9121,
+          "clientHeight": 749,
+          "overflowY": "auto"
+        },
+        {
+          "className": "detail-window lf-reader reader-longform",
+          "tag": "SECTION",
+          "scrollHeight": 898,
+          "clientHeight": 898,
+          "overflowY": "hidden"
+        },
+        {
+          "className": "",
+          "tag": "DIALOG",
+          "scrollHeight": 1000,
+          "clientHeight": 1000,
+          "overflowY": "hidden"
+        }
+      ],
+      "sections": [
+        {
+          "id": "reader-work",
+          "scene": "different-worlds",
+          "top": 1040.578125,
+          "bottom": 4222.296875,
+          "height": 3181.71875,
+          "bad": []
+        },
+        {
+          "id": "reader-compare",
+          "scene": "your-business-not-template",
+          "top": 4222.296875,
+          "bottom": 4956.078125,
+          "height": 733.78125,
+          "bad": []
+        },
+        {
+          "id": "reader-search",
+          "scene": "a-question-needs-an-answer",
+          "top": 4956.078125,
+          "bottom": 5915.15625,
+          "height": 959.078125,
+          "bad": []
+        },
+        {
+          "id": "reader-launch",
+          "scene": "six-weeks-from-brief",
+          "top": 5915.15625,
+          "bottom": 6592.234375,
+          "height": 677.078125,
+          "bad": []
+        },
+        {
+          "id": "reader-ownership",
+          "scene": "you-keep-the-keys",
+          "top": 6592.234375,
+          "bottom": 7377.359375,
+          "height": 785.125,
+          "bad": []
+        }
+      ],
+      "gallery": {
+        "count": 9,
+        "dataRwItems": 9,
+        "records": [
+          {
+            "className": "rw-client-project rw-client-project--easy-tiger",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Easy Tiger Bar website on desktop."
+            },
+            "href": "/case-studies/easy-tiger/",
+            "caption": "Neighborhood bar\nEasy Tiger Bar +\n\nFind tonight’s plan, explore the menu, and get through the door.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--hair",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 453,
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path."
+            },
+            "href": "/case-studies/hair-by-rachel-charles/",
+            "caption": "Salon\nHair By Rachel +\n\nFind your service, feel ready for your first visit, and book with Rachel.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--tarot",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Tarot Hotline website on desktop."
+            },
+            "href": "/case-studies/the-tarot-hotline/",
+            "caption": "Personal service\nThe Tarot Hotline +\n\nA personal world that makes choosing a reading feel natural.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--grand",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Grand Funding LLC website on desktop."
+            },
+            "href": "/case-studies/grand-funding-llc/",
+            "caption": "Private lending\nGrand Funding LLC +\n\nUnderstand the options, try a planning tool, and talk through a project.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--break-room",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Break Room website on desktop."
+            },
+            "href": "/case-studies/the-break-room/",
+            "caption": "Pool hall\nThe Break Room +\n\nGet a feel for the room before you pick up a cue.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--clearhelp",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "ClearHelp resource-finding website on desktop."
+            },
+            "href": "/case-studies/clearhelp/",
+            "caption": "Resource finding\nClearHelp +\n\nFind help by what you need, in words you do not need to decode.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--logan",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Logan Loans website on desktop."
+            },
+            "href": "/case-studies/logan-loans/",
+            "caption": "Mortgage information\nLogan Loans +\n\nExplore the next move, from a first home to an investment.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--cc-films",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "CC Films official film website on desktop."
+            },
+            "href": "/case-studies/cc-films/",
+            "caption": "Film company\nCC Films +\n\nMeet the film, watch the trailer, and explore its story.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--chromatic",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Chromatic Painting and Design project website on desktop."
+            },
+            "href": "/case-studies/chromatic-painting-design/",
+            "caption": "Painting and murals\nChromatic Painting & Design +\n\nSee the work. Picture what your own space could become.",
+            "overlaps": false
+          }
+        ]
+      },
+      "focusReturn": true
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "overflow": {
+        "document": [
+          1440,
+          1440
+        ],
+        "reader": [
+          1178,
+          1178
+        ],
+        "body": [
+          1178,
+          1178
+        ]
+      },
+      "scrollBoxes": [
+        {
+          "className": "detail-body",
+          "tag": "DIV",
+          "scrollHeight": 9531,
+          "clientHeight": 749,
+          "overflowY": "auto"
+        },
+        {
+          "className": "detail-window lf-reader reader-longform",
+          "tag": "SECTION",
+          "scrollHeight": 898,
+          "clientHeight": 898,
+          "overflowY": "hidden"
+        },
+        {
+          "className": "",
+          "tag": "DIALOG",
+          "scrollHeight": 1000,
+          "clientHeight": 1000,
+          "overflowY": "hidden"
+        }
+      ],
+      "sections": [
+        {
+          "id": "reader-work",
+          "scene": "different-worlds",
+          "top": 1017.03125,
+          "bottom": 5127.828125,
+          "height": 4110.796875,
+          "bad": []
+        },
+        {
+          "id": "reader-compare",
+          "scene": "your-business-not-template",
+          "top": 5127.828125,
+          "bottom": 5828.15625,
+          "height": 700.328125,
+          "bad": []
+        },
+        {
+          "id": "reader-search",
+          "scene": "a-question-needs-an-answer",
+          "top": 5828.15625,
+          "bottom": 6718.203125,
+          "height": 890.046875,
+          "bad": []
+        },
+        {
+          "id": "reader-launch",
+          "scene": "six-weeks-from-brief",
+          "top": 6718.203125,
+          "bottom": 7338.859375,
+          "height": 620.65625,
+          "bad": []
+        },
+        {
+          "id": "reader-ownership",
+          "scene": "you-keep-the-keys",
+          "top": 7338.859375,
+          "bottom": 7957.5625,
+          "height": 618.703125,
+          "bad": []
+        }
+      ],
+      "gallery": {
+        "count": 9,
+        "dataRwItems": 9,
+        "records": [
+          {
+            "className": "rw-client-project rw-client-project--easy-tiger",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Easy Tiger Bar website on desktop."
+            },
+            "href": "/case-studies/easy-tiger/",
+            "caption": "Neighborhood bar\nEasy Tiger Bar +\n\nFind tonight’s plan, explore the menu, and get through the door.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--hair",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 453,
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path."
+            },
+            "href": "/case-studies/hair-by-rachel-charles/",
+            "caption": "Salon\nHair By Rachel +\n\nFind your service, feel ready for your first visit, and book with Rachel.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--tarot",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Tarot Hotline website on desktop."
+            },
+            "href": "/case-studies/the-tarot-hotline/",
+            "caption": "Personal service\nThe Tarot Hotline +\n\nA personal world that makes choosing a reading feel natural.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--grand",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Grand Funding LLC website on desktop."
+            },
+            "href": "/case-studies/grand-funding-llc/",
+            "caption": "Private lending\nGrand Funding LLC +\n\nUnderstand the options, try a planning tool, and talk through a project.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--break-room",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "The Break Room website on desktop."
+            },
+            "href": "/case-studies/the-break-room/",
+            "caption": "Pool hall\nThe Break Room +\n\nGet a feel for the room before you pick up a cue.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--clearhelp",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "ClearHelp resource-finding website on desktop."
+            },
+            "href": "/case-studies/clearhelp/",
+            "caption": "Resource finding\nClearHelp +\n\nFind help by what you need, in words you do not need to decode.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--logan",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Logan Loans website on desktop."
+            },
+            "href": "/case-studies/logan-loans/",
+            "caption": "Mortgage information\nLogan Loans +\n\nExplore the next move, from a first home to an investment.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--cc-films",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "CC Films official film website on desktop."
+            },
+            "href": "/case-studies/cc-films/",
+            "caption": "Film company\nCC Films +\n\nMeet the film, watch the trailer, and explore its story.",
+            "overlaps": false
+          },
+          {
+            "className": "rw-client-project rw-client-project--chromatic",
+            "dataItem": true,
+            "img": {
+              "complete": true,
+              "width": 960,
+              "height": 667,
+              "alt": "Chromatic Painting and Design project website on desktop."
+            },
+            "href": "/case-studies/chromatic-painting-design/",
+            "caption": "Painting and murals\nChromatic Painting & Design +\n\nSee the work. Picture what your own space could become.",
+            "overlaps": false
+          }
+        ]
+      },
+      "focusReturn": true
+    }
+  ],
+  "startedAt": "2026-10-03T07:43:52.714Z",
+  "noJs": {
+    "main": true,
+    "gallery": 9,
+    "scenes": [
+      "different-worlds",
+      "your-business-not-template",
+      "a-question-needs-an-answer",
+      "six-weeks-from-brief",
+      "you-keep-the-keys"
+    ],
+    "scroll": [
+      12399,
+      900
+    ],
+    "overflow": [
+      390,
+      390
+    ]
+  },
+  "reducedMotion": {
+    "checked": 16
+  },
+  "coldMobile": [
+    {
+      "iteration": 1,
+      "lcp": 80,
+      "cls": 0
+    },
+    {
+      "iteration": 2,
+      "lcp": 80,
+      "cls": 0
+    },
+    {
+      "iteration": 3,
+      "lcp": 48,
+      "cls": 0.0016051985371063728
+    }
+  ]
+}

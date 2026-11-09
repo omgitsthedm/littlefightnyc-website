@@ -1,0 +1,16 @@
+{
+  "siteId": "0907d8fe-7018-48db-a6be-1f906e4b2619",
+  "site": "littlefightnyc",
+  "commit": "9ea0848dbd271254cdd7a3c1104f64d3fcac3568",
+  "artifactSha256": "6eadb5060b2fffee85c4df3590bbf08527ea66626a99e9822e43d729734bccbd",
+  "deployId": "6ac0eec02df2c6000828f635",
+  "deployUrl": "https://main--littlefightnyc.netlify.app",
+  "productionUrl": "https://littlefightnyc.com",
+  "publishedAt": "2026-10-03T12:03:11.672Z",
+  "reason": "Publish the consolidated tile hub, service regrouping, uniform distributed reviews, gap-free packing, rewritten service answers, and reader exposure correction.",
+  "releaseGate": "passed",
+  "liveGate": "passed",
+  "liveTopicAssertions": 35,
+  "artifactParity": "exact local/live SHA256 match",
+  "creditEffect": "One successful production deployment; no hosted preview created in this release. Exact credit billing not queried."
+}

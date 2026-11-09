@@ -1,0 +1,539 @@
+{
+  "base": "http://127.0.0.1:4399",
+  "browser": "installed Google Chrome via Playwright channel:chrome; isolated temporary context",
+  "native": [
+    {
+      "key": "consulting",
+      "details": 1,
+      "summaries": 1,
+      "keyboardDisclosure": true
+    },
+    {
+      "key": "software",
+      "details": 1,
+      "summaries": 1,
+      "keyboardDisclosure": true
+    }
+  ],
+  "responsive": [
+    {
+      "key": "consulting",
+      "width": 320,
+      "answers": 6,
+      "pageWidth": 320,
+      "viewport": 320,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 260,
+          "height": 46,
+          "y": 3852
+        },
+        {
+          "text": "Text",
+          "width": 260,
+          "height": 46,
+          "y": 3907
+        },
+        {
+          "text": "Email",
+          "width": 260,
+          "height": 46,
+          "y": 3962
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(160, 223, 133)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "software",
+      "width": 320,
+      "answers": 8,
+      "pageWidth": 320,
+      "viewport": 320,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 90,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 260,
+          "height": 46,
+          "y": 4979
+        },
+        {
+          "text": "Text",
+          "width": 260,
+          "height": 46,
+          "y": 5034
+        },
+        {
+          "text": "Email",
+          "width": 260,
+          "height": 46,
+          "y": 5089
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(240, 155, 221)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "consulting",
+      "width": 390,
+      "answers": 6,
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 73,
+          "height": 92,
+          "y": 3428
+        },
+        {
+          "text": "Text",
+          "width": 73,
+          "height": 92,
+          "y": 3428
+        },
+        {
+          "text": "Email",
+          "width": 73,
+          "height": 92,
+          "y": 3428
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(160, 223, 133)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "software",
+      "width": 390,
+      "answers": 8,
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 113,
+          "height": 44,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 73,
+          "height": 92,
+          "y": 4422
+        },
+        {
+          "text": "Text",
+          "width": 73,
+          "height": 92,
+          "y": 4422
+        },
+        {
+          "text": "Email",
+          "width": 73,
+          "height": 92,
+          "y": 4422
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(240, 155, 221)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "consulting",
+      "width": 768,
+      "answers": 6,
+      "pageWidth": 768,
+      "viewport": 768,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 2534
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 2534
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 2534
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(160, 223, 133)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "software",
+      "width": 768,
+      "answers": 8,
+      "pageWidth": 768,
+      "viewport": 768,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 3101
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 3101
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 3101
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(240, 155, 221)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "consulting",
+      "width": 1440,
+      "answers": 6,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 2581
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 2581
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 2581
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(160, 223, 133)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    },
+    {
+      "key": "software",
+      "width": 1440,
+      "answers": 8,
+      "pageWidth": 1440,
+      "viewport": 1440,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 65,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Text",
+          "width": 68,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Email",
+          "width": 78,
+          "height": 44,
+          "y": 18
+        },
+        {
+          "text": "Call",
+          "width": 63,
+          "height": 46,
+          "y": 3245
+        },
+        {
+          "text": "Text",
+          "width": 66,
+          "height": 46,
+          "y": 3245
+        },
+        {
+          "text": "Email",
+          "width": 76,
+          "height": 46,
+          "y": 3245
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(240, 155, 221)",
+      "background": "rgb(3, 3, 5)",
+      "consoleErrors": 0
+    }
+  ],
+  "text200": [
+    {
+      "key": "consulting",
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 73,
+          "height": 308,
+          "y": 11729
+        },
+        {
+          "text": "Text",
+          "width": 73,
+          "height": 308,
+          "y": 11729
+        },
+        {
+          "text": "Email",
+          "width": 73,
+          "height": 308,
+          "y": 11729
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(160, 223, 133)",
+      "background": "rgb(3, 3, 5)"
+    },
+    {
+      "key": "software",
+      "pageWidth": 390,
+      "viewport": 390,
+      "overflow": [],
+      "outOfViewport": [],
+      "contacts": [
+        {
+          "text": "Call",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Text",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Email",
+          "width": 113,
+          "height": 60,
+          "y": 17
+        },
+        {
+          "text": "Call",
+          "width": 73,
+          "height": 308,
+          "y": 15363
+        },
+        {
+          "text": "Text",
+          "width": 73,
+          "height": 308,
+          "y": 15363
+        },
+        {
+          "text": "Email",
+          "width": 73,
+          "height": 308,
+          "y": 15363
+        }
+      ],
+      "bodyFont": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+      "headingFont": "LFReader, LFAtkinson, Arial, sans-serif",
+      "color": "rgb(240, 155, 221)",
+      "background": "rgb(3, 3, 5)"
+    }
+  ],
+  "journey": {},
+  "console": [],
+  "failures": []
+}

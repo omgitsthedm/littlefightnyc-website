@@ -1,0 +1,10 @@
+{
+  "lcp": 968,
+  "cls": 0,
+  "resources": 27,
+  "resourceBytes": 537909,
+  "storyImagesLoaded": 4,
+  "storyImageCount": 20,
+  "errors": [],
+  "conditions": "Local Chrome, 390px, DPR2, 1.6Mbps, 150ms latency, 4x CPU slowdown, cold cache"
+}

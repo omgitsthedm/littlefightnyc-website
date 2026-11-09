@@ -1,0 +1,178 @@
+{
+  "lcp": 1000,
+  "cls": 0,
+  "longTasks": [
+    182
+  ],
+  "resources": [
+    {
+      "name": "/assets/mineral/atkinson-hyperlegible-next-latin.woff2",
+      "bytes": 34324,
+      "duration": 776.4000000059605
+    },
+    {
+      "name": "/mosaic-layout.js",
+      "bytes": 3577,
+      "duration": 258.59999999403954
+    },
+    {
+      "name": "/site.css",
+      "bytes": 19329,
+      "duration": 568.1999999880791
+    },
+    {
+      "name": "/tile-motion.js",
+      "bytes": 3119,
+      "duration": 268
+    },
+    {
+      "name": "/assets/tile-bridge-DE3gdq86.js",
+      "bytes": 3320,
+      "duration": 253.30000001192093
+    },
+    {
+      "name": "/assets/boat-orange.svg",
+      "bytes": 1672,
+      "duration": 506.90000000596046
+    },
+    {
+      "name": "/tile-effects.js",
+      "bytes": 2573,
+      "duration": 523.7000000178814
+    },
+    {
+      "name": "/site.js",
+      "bytes": 7726,
+      "duration": 612.5
+    },
+    {
+      "name": "/assets/proof/optimized/case-chromatic-painting-design-640.webp",
+      "bytes": 29160,
+      "duration": 923.5999999940395
+    },
+    {
+      "name": "/assets/albums/optimized/food-extra-01-640.webp",
+      "bytes": 28968,
+      "duration": 755.5
+    },
+    {
+      "name": "/assets/mineral/browser-duotone.svg",
+      "bytes": 551,
+      "duration": 163.89999997615814
+    },
+    {
+      "name": "/assets/mineral/tugboat.svg",
+      "bytes": 1697,
+      "duration": 193.80000001192093
+    },
+    {
+      "name": "/assets/mineral/wifi-high-bold.svg",
+      "bytes": 620,
+      "duration": 170.09999999403954
+    },
+    {
+      "name": "/assets/mineral/sliders-horizontal-duotone.svg",
+      "bytes": 608,
+      "duration": 264.59999999403954
+    },
+    {
+      "name": "/assets/mineral/chats-circle-duotone.svg",
+      "bytes": 771,
+      "duration": 278.7999999821186
+    },
+    {
+      "name": "/assets/mineral/book-open-text-duotone.svg",
+      "bytes": 660,
+      "duration": 297.59999999403954
+    },
+    {
+      "name": "/assets/mineral/desktop-tower-duotone.svg",
+      "bytes": 667,
+      "duration": 432.19999998807907
+    },
+    {
+      "name": "/assets/mineral/app-window-duotone.svg",
+      "bytes": 581,
+      "duration": 448.90000000596046
+    },
+    {
+      "name": "/assets/mineral/sliders-horizontal-bold.svg",
+      "bytes": 567,
+      "duration": 462
+    },
+    {
+      "name": "/assets/proof/optimized/tile-hair-by-rachel-charles-480.webp",
+      "bytes": 12446,
+      "duration": 352.7000000178814
+    },
+    {
+      "name": "/assets/proof/optimized/tile-chromatic-painting-design-480.webp",
+      "bytes": 13840,
+      "duration": 381.2000000178814
+    },
+    {
+      "name": "/assets/illustrations/story-platform-640.webp",
+      "bytes": 90546,
+      "duration": 2078.9000000059605
+    },
+    {
+      "name": "/assets/illustrations/story-ownership-640.webp",
+      "bytes": 114008,
+      "duration": 2399.2000000178814
+    },
+    {
+      "name": "/assets/illustrations/story-mobile-640.webp",
+      "bytes": 40252,
+      "duration": 1553.7999999821186
+    },
+    {
+      "name": "/assets/illustrations/booking-640.webp",
+      "bytes": 65634,
+      "duration": 2017.3999999761581
+    },
+    {
+      "name": "/assets/illustrations/story-cost-640.webp",
+      "bytes": 88638,
+      "duration": 2286.399999976158
+    },
+    {
+      "name": "/assets/boat-orange.svg",
+      "bytes": 1672,
+      "duration": 169
+    }
+  ],
+  "navigation": [
+    {
+      "domContentLoaded": 925,
+      "load": 3343.800000011921
+    }
+  ],
+  "totalTransferred": 567526,
+  "illustrations": [
+    {
+      "name": "/assets/illustrations/story-platform-640.webp",
+      "bytes": 90546,
+      "duration": 2078.9000000059605
+    },
+    {
+      "name": "/assets/illustrations/story-ownership-640.webp",
+      "bytes": 114008,
+      "duration": 2399.2000000178814
+    },
+    {
+      "name": "/assets/illustrations/story-mobile-640.webp",
+      "bytes": 40252,
+      "duration": 1553.7999999821186
+    },
+    {
+      "name": "/assets/illustrations/booking-640.webp",
+      "bytes": 65634,
+      "duration": 2017.3999999761581
+    },
+    {
+      "name": "/assets/illustrations/story-cost-640.webp",
+      "bytes": 88638,
+      "duration": 2286.399999976158
+    }
+  ]
+}

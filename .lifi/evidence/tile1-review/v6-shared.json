@@ -1,0 +1,408 @@
+[
+  {
+    "route": "/industries/",
+    "w": 390,
+    "ok": true,
+    "overflow": [
+      390,
+      390
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "Help for your kind of business",
+        "box": [
+          318,
+          92.65625
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          318,
+          90.71875
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 31,
+    "words": 89
+  },
+  {
+    "route": "/industries/plumbers/",
+    "w": 390,
+    "ok": true,
+    "overflow": [
+      390,
+      390
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "When the pipe is leaking, the next step has to be obvious.",
+        "box": [
+          318,
+          185.3125
+        ]
+      },
+      {
+        "text": "A plumbing problem is not one kind of call.",
+        "box": [
+          318,
+          73.4375
+        ]
+      },
+      {
+        "text": "Keep what works. Fix what gets in the way.",
+        "box": [
+          318,
+          73.4375
+        ]
+      },
+      {
+        "text": "We show the method without making up plumbing clients.",
+        "box": [
+          318,
+          110.15625
+        ]
+      },
+      {
+        "text": "Before we begin.",
+        "box": [
+          318,
+          35.625
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          318,
+          90.71875
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 28,
+    "words": 385
+  },
+  {
+    "route": "/answers/help/wifi/",
+    "w": 390,
+    "ok": true,
+    "overflow": [
+      390,
+      390
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "Fix Wi-Fi where work happens",
+        "box": [
+          318,
+          92.65625
+        ]
+      },
+      {
+        "text": "What this means for your business",
+        "box": [
+          318,
+          73.4375
+        ]
+      },
+      {
+        "text": "What to watch",
+        "box": [
+          318,
+          36.71875
+        ]
+      },
+      {
+        "text": "Do this next",
+        "box": [
+          318,
+          36.71875
+        ]
+      },
+      {
+        "text": "When Little Fight fits",
+        "box": [
+          318,
+          36.71875
+        ]
+      },
+      {
+        "text": "Sources and further reading",
+        "box": [
+          318,
+          73.4375
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          318,
+          90.71875
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 28,
+    "words": 320
+  },
+  {
+    "route": "/clients/",
+    "w": 390,
+    "ok": true,
+    "overflow": [
+      390,
+      390
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "One inbox for support, projects, and billing.",
+        "box": [
+          318,
+          185.3125
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          318,
+          90.71875
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 26,
+    "words": 130
+  },
+  {
+    "route": "/industries/",
+    "w": 1440,
+    "ok": true,
+    "overflow": [
+      1440,
+      1440
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "Help for your kind of business",
+        "box": [
+          527.078125,
+          246.234375
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          557.765625,
+          71.265625
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 31,
+    "words": 89
+  },
+  {
+    "route": "/industries/plumbers/",
+    "w": 1440,
+    "ok": true,
+    "overflow": [
+      1440,
+      1440
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "When the pipe is leaking, the next step has to be obvious.",
+        "box": [
+          527.078125,
+          328.3125
+        ]
+      },
+      {
+        "text": "A plumbing problem is not one kind of call.",
+        "box": [
+          400,
+          158.71875
+        ]
+      },
+      {
+        "text": "Keep what works. Fix what gets in the way.",
+        "box": [
+          400,
+          158.71875
+        ]
+      },
+      {
+        "text": "We show the method without making up plumbing clients.",
+        "box": [
+          400,
+          211.625
+        ]
+      },
+      {
+        "text": "Before we begin.",
+        "box": [
+          534.140625,
+          56.15625
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          557.765625,
+          71.265625
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 28,
+    "words": 385
+  },
+  {
+    "route": "/answers/help/wifi/",
+    "w": 1440,
+    "ok": true,
+    "overflow": [
+      1440,
+      1440
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "Fix Wi-Fi where work happens",
+        "box": [
+          527.078125,
+          164.15625
+        ]
+      },
+      {
+        "text": "What this means for your business",
+        "box": [
+          400,
+          105.8125
+        ]
+      },
+      {
+        "text": "What to watch",
+        "box": [
+          400,
+          52.90625
+        ]
+      },
+      {
+        "text": "Do this next",
+        "box": [
+          400,
+          52.90625
+        ]
+      },
+      {
+        "text": "When Little Fight fits",
+        "box": [
+          400,
+          105.8125
+        ]
+      },
+      {
+        "text": "Sources and further reading",
+        "box": [
+          400,
+          105.8125
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          557.765625,
+          71.265625
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 28,
+    "words": 320
+  },
+  {
+    "route": "/clients/",
+    "w": 1440,
+    "ok": true,
+    "overflow": [
+      1440,
+      1440
+    ],
+    "forbidden": false,
+    "headings": [
+      {
+        "text": "One inbox for support, projects, and billing.",
+        "box": [
+          527.078125,
+          328.3125
+        ]
+      },
+      {
+        "text": "Talk to Little Fight.",
+        "box": [
+          557.765625,
+          71.265625
+        ]
+      },
+      {
+        "text": "What brings you here?",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "refs": 26,
+    "words": 130
+  }
+]

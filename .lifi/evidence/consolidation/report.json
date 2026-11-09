@@ -1,0 +1,722 @@
+{
+  "base": "http://127.0.0.1:4399",
+  "artifact": "d8af9b73a570b115d7c0fa624a03932175a13a29637b697abaf23802463ee800",
+  "browser": "Google Chrome via Playwright channel chrome; isolated temporary persistent profile",
+  "method": "Normal checks use 320x720, 390x844, 768x1024, and 1440x940 CSS-pixel viewports. The enlarged-text check uses 390x844 with an ephemeral `html { font-size: 200% !important; }` style injected before opening each reader. This doubles rem/em-derived text only; browser zoom and device pixel ratio remain unchanged.",
+  "passes": [
+    {
+      "label": "page-services-custom-local-websites at 320px",
+      "scrollHeight": 9470,
+      "imageCount": 15,
+      "contacts": 3
+    },
+    {
+      "label": "maps at 320px",
+      "scrollHeight": 3718,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "ownership at 320px",
+      "scrollHeight": 3942,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "speed at 320px",
+      "scrollHeight": 3559,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "booking at 320px",
+      "scrollHeight": 3314,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-homepage-priority at 320px",
+      "scrollHeight": 3598,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-content-collection at 320px",
+      "scrollHeight": 3991,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "web-redesign-decision at 320px",
+      "scrollHeight": 3462,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "page-industries at 320px",
+      "scrollHeight": 4071,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "wifi at 320px",
+      "scrollHeight": 2771,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "email at 320px",
+      "scrollHeight": 2909,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "it-password-ownership at 320px",
+      "scrollHeight": 2883,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "computer at 320px",
+      "scrollHeight": 3111,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-it-support at 320px",
+      "scrollHeight": 3229,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-tool-choice at 320px",
+      "scrollHeight": 2730,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-second-opinion at 320px",
+      "scrollHeight": 2927,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-business-systems at 320px",
+      "scrollHeight": 3056,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "software-repeat-work at 320px",
+      "scrollHeight": 2743,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "software-business-ownership at 320px",
+      "scrollHeight": 3197,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-custom-local-websites at 390px",
+      "scrollHeight": 7235,
+      "imageCount": 15,
+      "contacts": 3
+    },
+    {
+      "label": "maps at 390px",
+      "scrollHeight": 3251,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "ownership at 390px",
+      "scrollHeight": 3328,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "speed at 390px",
+      "scrollHeight": 2869,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "booking at 390px",
+      "scrollHeight": 2968,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-homepage-priority at 390px",
+      "scrollHeight": 3080,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-content-collection at 390px",
+      "scrollHeight": 3188,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "web-redesign-decision at 390px",
+      "scrollHeight": 3001,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "page-industries at 390px",
+      "scrollHeight": 3523,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "wifi at 390px",
+      "scrollHeight": 2412,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "email at 390px",
+      "scrollHeight": 2496,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "it-password-ownership at 390px",
+      "scrollHeight": 2446,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "computer at 390px",
+      "scrollHeight": 2564,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-it-support at 390px",
+      "scrollHeight": 2571,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-tool-choice at 390px",
+      "scrollHeight": 2358,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-second-opinion at 390px",
+      "scrollHeight": 2503,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-business-systems at 390px",
+      "scrollHeight": 2631,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "software-repeat-work at 390px",
+      "scrollHeight": 2356,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "software-business-ownership at 390px",
+      "scrollHeight": 2526,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-custom-local-websites at 768px",
+      "scrollHeight": 5278,
+      "imageCount": 15,
+      "contacts": 3
+    },
+    {
+      "label": "maps at 768px",
+      "scrollHeight": 2980,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "ownership at 768px",
+      "scrollHeight": 3128,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "speed at 768px",
+      "scrollHeight": 2758,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "booking at 768px",
+      "scrollHeight": 2802,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-homepage-priority at 768px",
+      "scrollHeight": 2923,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-content-collection at 768px",
+      "scrollHeight": 3013,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "web-redesign-decision at 768px",
+      "scrollHeight": 2874,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "page-industries at 768px",
+      "scrollHeight": 3129,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "wifi at 768px",
+      "scrollHeight": 2318,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "email at 768px",
+      "scrollHeight": 2318,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "it-password-ownership at 768px",
+      "scrollHeight": 2318,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "computer at 768px",
+      "scrollHeight": 2258,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-it-support at 768px",
+      "scrollHeight": 2467,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-tool-choice at 768px",
+      "scrollHeight": 2199,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-second-opinion at 768px",
+      "scrollHeight": 2318,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-business-systems at 768px",
+      "scrollHeight": 2328,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "software-repeat-work at 768px",
+      "scrollHeight": 2169,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "software-business-ownership at 768px",
+      "scrollHeight": 2348,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-custom-local-websites at 1440px",
+      "scrollHeight": 4921,
+      "imageCount": 15,
+      "contacts": 3
+    },
+    {
+      "label": "maps at 1440px",
+      "scrollHeight": 2976,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "ownership at 1440px",
+      "scrollHeight": 3116,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "speed at 1440px",
+      "scrollHeight": 2608,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "booking at 1440px",
+      "scrollHeight": 2706,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-homepage-priority at 1440px",
+      "scrollHeight": 2802,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-content-collection at 1440px",
+      "scrollHeight": 2872,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "web-redesign-decision at 1440px",
+      "scrollHeight": 2816,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "page-industries at 1440px",
+      "scrollHeight": 2950,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "wifi at 1440px",
+      "scrollHeight": 2202,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "email at 1440px",
+      "scrollHeight": 2295,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "it-password-ownership at 1440px",
+      "scrollHeight": 2168,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "computer at 1440px",
+      "scrollHeight": 2151,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-it-support at 1440px",
+      "scrollHeight": 2353,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-tool-choice at 1440px",
+      "scrollHeight": 2199,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-second-opinion at 1440px",
+      "scrollHeight": 2186,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-business-systems at 1440px",
+      "scrollHeight": 2253,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "software-repeat-work at 1440px",
+      "scrollHeight": 2089,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "software-business-ownership at 1440px",
+      "scrollHeight": 2151,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-custom-local-websites at 390px 200% text",
+      "scrollHeight": 17018,
+      "imageCount": 15,
+      "contacts": 3
+    },
+    {
+      "label": "maps at 390px 200% text",
+      "scrollHeight": 6612,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "ownership at 390px 200% text",
+      "scrollHeight": 7242,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "speed at 390px 200% text",
+      "scrollHeight": 6370,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "booking at 390px 200% text",
+      "scrollHeight": 6550,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-homepage-priority at 390px 200% text",
+      "scrollHeight": 6690,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "web-content-collection at 390px 200% text",
+      "scrollHeight": 6743,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "web-redesign-decision at 390px 200% text",
+      "scrollHeight": 6529,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "page-industries at 390px 200% text",
+      "scrollHeight": 7271,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "wifi at 390px 200% text",
+      "scrollHeight": 5083,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "email at 390px 200% text",
+      "scrollHeight": 5360,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "it-password-ownership at 390px 200% text",
+      "scrollHeight": 5227,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "computer at 390px 200% text",
+      "scrollHeight": 5319,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-it-support at 390px 200% text",
+      "scrollHeight": 5878,
+      "imageCount": 3,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-tool-choice at 390px 200% text",
+      "scrollHeight": 4919,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "consulting-second-opinion at 390px 200% text",
+      "scrollHeight": 5340,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "page-services-business-systems at 390px 200% text",
+      "scrollHeight": 5262,
+      "imageCount": 2,
+      "contacts": 3
+    },
+    {
+      "label": "software-repeat-work at 390px 200% text",
+      "scrollHeight": 4905,
+      "imageCount": 1,
+      "contacts": 3
+    },
+    {
+      "label": "software-business-ownership at 390px 200% text",
+      "scrollHeight": 5379,
+      "imageCount": 3,
+      "contacts": 3
+    }
+  ],
+  "failures": [],
+  "hiddenChecks": [
+    {
+      "member": "website",
+      "path": "/answers/help/website/",
+      "group": "page-services-custom-local-websites",
+      "passed": true
+    },
+    {
+      "member": "web-local-facts",
+      "path": "/answers/help/web-local-facts/",
+      "group": "maps",
+      "passed": true
+    },
+    {
+      "member": "platform",
+      "path": "/answers/help/platform/",
+      "group": "ownership",
+      "passed": true
+    },
+    {
+      "member": "mobile",
+      "path": "/answers/help/mobile/",
+      "group": "speed",
+      "passed": true
+    },
+    {
+      "member": "forms",
+      "path": "/answers/help/forms/",
+      "group": "booking",
+      "passed": true
+    },
+    {
+      "member": "web-proof-before-pitch",
+      "path": "/answers/help/web-proof-before-pitch/",
+      "group": "web-homepage-priority",
+      "passed": true
+    },
+    {
+      "member": "web-photos-with-purpose",
+      "path": "/answers/help/web-photos-with-purpose/",
+      "group": "web-content-collection",
+      "passed": true
+    },
+    {
+      "member": "web-launch-checklist",
+      "path": "/answers/help/web-launch-checklist/",
+      "group": "web-redesign-decision",
+      "passed": true
+    },
+    {
+      "member": "buyer-plumbers",
+      "path": "/industries/plumbers/",
+      "group": "page-industries",
+      "passed": true
+    },
+    {
+      "member": "it-internet-outage",
+      "path": "/answers/help/it-internet-outage/",
+      "group": "wifi",
+      "passed": true
+    },
+    {
+      "member": "it-shared-inbox-owner",
+      "path": "/answers/help/it-shared-inbox-owner/",
+      "group": "email",
+      "passed": true
+    },
+    {
+      "member": "it-permission-review",
+      "path": "/answers/help/it-permission-review/",
+      "group": "it-password-ownership",
+      "passed": true
+    },
+    {
+      "member": "move",
+      "path": "/answers/help/move/",
+      "group": "computer",
+      "passed": true
+    },
+    {
+      "member": "human",
+      "path": "/answers/help/human/",
+      "group": "page-services-it-support",
+      "passed": true
+    },
+    {
+      "member": "consulting-unused-subscriptions",
+      "path": "/answers/help/consulting-unused-subscriptions/",
+      "group": "consulting-tool-choice",
+      "passed": true
+    },
+    {
+      "member": "consulting-vendor-quote",
+      "path": "/answers/help/consulting-vendor-quote/",
+      "group": "consulting-second-opinion",
+      "passed": true
+    },
+    {
+      "member": "software",
+      "path": "/answers/help/software/",
+      "group": "page-services-business-systems",
+      "passed": true
+    },
+    {
+      "member": "software-duplicate-entry",
+      "path": "/answers/help/software-duplicate-entry/",
+      "group": "software-repeat-work",
+      "passed": true
+    },
+    {
+      "member": "software-handoff-notes",
+      "path": "/answers/help/software-handoff-notes/",
+      "group": "software-business-ownership",
+      "passed": true
+    }
+  ],
+  "resourceFailures": [],
+  "pageErrors": [],
+  "screenshots": [
+    ".lifi/evidence/consolidation/home-320.png",
+    ".lifi/evidence/consolidation/home-390.png",
+    ".lifi/evidence/consolidation/home-768.png",
+    ".lifi/evidence/consolidation/home-1440.png",
+    ".lifi/evidence/consolidation/reader-page-services-custom-local-websites-390.png",
+    ".lifi/evidence/consolidation/reader-maps-390.png",
+    ".lifi/evidence/consolidation/reader-ownership-390.png",
+    ".lifi/evidence/consolidation/reader-speed-390.png",
+    ".lifi/evidence/consolidation/reader-booking-390.png",
+    ".lifi/evidence/consolidation/reader-web-homepage-priority-390.png",
+    ".lifi/evidence/consolidation/reader-web-content-collection-390.png",
+    ".lifi/evidence/consolidation/reader-web-redesign-decision-390.png",
+    ".lifi/evidence/consolidation/reader-page-industries-390.png",
+    ".lifi/evidence/consolidation/reader-wifi-390.png",
+    ".lifi/evidence/consolidation/reader-email-390.png",
+    ".lifi/evidence/consolidation/reader-it-password-ownership-390.png",
+    ".lifi/evidence/consolidation/reader-computer-390.png",
+    ".lifi/evidence/consolidation/reader-page-services-it-support-390.png",
+    ".lifi/evidence/consolidation/reader-consulting-tool-choice-390.png",
+    ".lifi/evidence/consolidation/reader-consulting-second-opinion-390.png",
+    ".lifi/evidence/consolidation/reader-page-services-business-systems-390.png",
+    ".lifi/evidence/consolidation/reader-software-repeat-work-390.png",
+    ".lifi/evidence/consolidation/reader-software-business-ownership-390.png"
+  ]
+}

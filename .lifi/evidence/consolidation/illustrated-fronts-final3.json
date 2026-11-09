@@ -1,0 +1,221 @@
+{
+  "artifact": "3b665a6d2b10893e68d0a905434b9bf0def864b4871d1912162fbd6d5df92157",
+  "method": "Chrome channel with isolated temporary profile. At 1024px, every homepage tile with data-editorial-story is inspected after scroll-into-view. Each visible caption word range and its scroll dimensions must stay inside its originating tile.",
+  "tiles": [
+    {
+      "id": "speed",
+      "path": "/answers/help/speed/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        142.6875,
+        733.9375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "ownership",
+      "path": "/answers/help/ownership/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        388.890625,
+        733.9375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "booking",
+      "path": "/answers/help/booking/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        635.09375,
+        733.9375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "web-homepage-priority",
+      "path": "/answers/help/web-homepage-priority/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        881.296875,
+        733.9375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "web-redesign-decision",
+      "path": "/answers/help/web-redesign-decision/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        142.6875,
+        750.09375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "web-content-collection",
+      "path": "/answers/help/web-content-collection/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        717.15625,
+        750.09375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "wifi",
+      "path": "/answers/help/wifi/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        799.21875,
+        375.28125,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "email",
+      "path": "/answers/help/email/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        142.6875,
+        539.4375,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "backup",
+      "path": "/answers/help/backup/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        168.234375,
+        703.59375,
+        90.546875,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "it-shared-files",
+      "path": "/answers/help/it-shared-files/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        765.203125,
+        749.671875,
+        90.546875,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "consulting-first-priority",
+      "path": "/answers/help/consulting-first-priority/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        742.703125,
+        374.53125,
+        90.546875,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "consulting-tool-choice",
+      "path": "/answers/help/consulting-tool-choice/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        142.6875,
+        538.6875,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "software-repeat-work",
+      "path": "/answers/help/software-repeat-work/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        799.21875,
+        375.3125,
+        116.109375,
+        150.15625
+      ],
+      "pass": true
+    },
+    {
+      "id": "software-approval-path",
+      "path": "/answers/help/software-approval-path/",
+      "tile": [
+        234.203125,
+        152.15625
+      ],
+      "caption": [
+        26.59375,
+        457.390625,
+        90.546875,
+        150.15625
+      ],
+      "pass": true
+    }
+  ],
+  "failures": [],
+  "screenshots": [
+    ".lifi/evidence/consolidation/home-1440-final3-top-settled.png",
+    ".lifi/evidence/consolidation/home-1440-final3-combined-illustrated-settled.png"
+  ]
+}

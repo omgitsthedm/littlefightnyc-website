@@ -1,0 +1,22 @@
+{
+  "method": "Ephemeral computed-font stress test, not browser zoom: after the reader settles, every visible element with a direct text node inside #detail-body receives an inline font-size equal to exactly 2x its pre-change computed pixel size. A ResizeObserver watches #detail-body. The test then checks each sampled changed font, horizontal overflow, reader bottom, and close target.",
+  "readers": [
+    {
+      "id": "maps",
+      "path": "/answers/help/maps/",
+      "changedTextElements": 32,
+      "resizeObserverCallbacks": 1,
+      "pass": true,
+      "screenshot": ".lifi/evidence/consolidation/reader-maps-390-computed-text-2x.png"
+    },
+    {
+      "id": "ownership",
+      "path": "/answers/help/ownership/",
+      "changedTextElements": 31,
+      "resizeObserverCallbacks": 1,
+      "pass": true,
+      "screenshot": ".lifi/evidence/consolidation/reader-ownership-390-computed-text-2x.png"
+    }
+  ],
+  "failures": []
+}

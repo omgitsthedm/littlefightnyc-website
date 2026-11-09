@@ -1,0 +1,604 @@
+{
+  "artifact": "d8af9b73a570b115d7c0fa624a03932175a13a29637b697abaf23802463ee800",
+  "browser": "Google Chrome via Playwright channel chrome; isolated temporary persistent profile",
+  "method": "Each card was opened from its homepage tile, then explicitly awaited the end of the physical tile-flight transition (`.lf-tile-flight` absent) before layout, scroll, image, contact, close, and screenshot checks. Viewports: 320x720, 390x844, 768x1024, 1440x940. Enlarged text: ephemeral `html { font-size: 200% !important; }` at 390x844; CSS-pixel viewport and browser zoom unchanged.",
+  "passes": [
+    {
+      "label": "page-services-custom-local-websites 320",
+      "scrollHeight": 9470,
+      "images": 15
+    },
+    {
+      "label": "maps 320",
+      "scrollHeight": 3718,
+      "images": 2
+    },
+    {
+      "label": "ownership 320",
+      "scrollHeight": 3942,
+      "images": 2
+    },
+    {
+      "label": "speed 320",
+      "scrollHeight": 3559,
+      "images": 2
+    },
+    {
+      "label": "booking 320",
+      "scrollHeight": 3314,
+      "images": 1
+    },
+    {
+      "label": "web-homepage-priority 320",
+      "scrollHeight": 3598,
+      "images": 1
+    },
+    {
+      "label": "web-content-collection 320",
+      "scrollHeight": 3991,
+      "images": 3
+    },
+    {
+      "label": "web-redesign-decision 320",
+      "scrollHeight": 3462,
+      "images": 1
+    },
+    {
+      "label": "page-industries 320",
+      "scrollHeight": 4071,
+      "images": 3
+    },
+    {
+      "label": "wifi 320",
+      "scrollHeight": 2771,
+      "images": 1
+    },
+    {
+      "label": "email 320",
+      "scrollHeight": 2909,
+      "images": 1
+    },
+    {
+      "label": "it-password-ownership 320",
+      "scrollHeight": 2883,
+      "images": 2
+    },
+    {
+      "label": "computer 320",
+      "scrollHeight": 3111,
+      "images": 3
+    },
+    {
+      "label": "page-services-it-support 320",
+      "scrollHeight": 3229,
+      "images": 3
+    },
+    {
+      "label": "consulting-tool-choice 320",
+      "scrollHeight": 2730,
+      "images": 1
+    },
+    {
+      "label": "consulting-second-opinion 320",
+      "scrollHeight": 2927,
+      "images": 2
+    },
+    {
+      "label": "page-services-business-systems 320",
+      "scrollHeight": 3056,
+      "images": 2
+    },
+    {
+      "label": "software-repeat-work 320",
+      "scrollHeight": 2743,
+      "images": 1
+    },
+    {
+      "label": "software-business-ownership 320",
+      "scrollHeight": 3197,
+      "images": 3
+    },
+    {
+      "label": "page-services-custom-local-websites 390",
+      "scrollHeight": 7235,
+      "images": 15
+    },
+    {
+      "label": "maps 390",
+      "scrollHeight": 3251,
+      "images": 2
+    },
+    {
+      "label": "ownership 390",
+      "scrollHeight": 3328,
+      "images": 2
+    },
+    {
+      "label": "speed 390",
+      "scrollHeight": 2869,
+      "images": 2
+    },
+    {
+      "label": "booking 390",
+      "scrollHeight": 2968,
+      "images": 1
+    },
+    {
+      "label": "web-homepage-priority 390",
+      "scrollHeight": 3080,
+      "images": 1
+    },
+    {
+      "label": "web-content-collection 390",
+      "scrollHeight": 3188,
+      "images": 3
+    },
+    {
+      "label": "web-redesign-decision 390",
+      "scrollHeight": 3001,
+      "images": 1
+    },
+    {
+      "label": "page-industries 390",
+      "scrollHeight": 3523,
+      "images": 3
+    },
+    {
+      "label": "wifi 390",
+      "scrollHeight": 2412,
+      "images": 1
+    },
+    {
+      "label": "email 390",
+      "scrollHeight": 2496,
+      "images": 1
+    },
+    {
+      "label": "it-password-ownership 390",
+      "scrollHeight": 2446,
+      "images": 2
+    },
+    {
+      "label": "computer 390",
+      "scrollHeight": 2564,
+      "images": 3
+    },
+    {
+      "label": "page-services-it-support 390",
+      "scrollHeight": 2571,
+      "images": 3
+    },
+    {
+      "label": "consulting-tool-choice 390",
+      "scrollHeight": 2358,
+      "images": 1
+    },
+    {
+      "label": "consulting-second-opinion 390",
+      "scrollHeight": 2503,
+      "images": 2
+    },
+    {
+      "label": "page-services-business-systems 390",
+      "scrollHeight": 2631,
+      "images": 2
+    },
+    {
+      "label": "software-repeat-work 390",
+      "scrollHeight": 2356,
+      "images": 1
+    },
+    {
+      "label": "software-business-ownership 390",
+      "scrollHeight": 2526,
+      "images": 3
+    },
+    {
+      "label": "page-services-custom-local-websites 768",
+      "scrollHeight": 5278,
+      "images": 15
+    },
+    {
+      "label": "maps 768",
+      "scrollHeight": 2980,
+      "images": 2
+    },
+    {
+      "label": "ownership 768",
+      "scrollHeight": 3128,
+      "images": 2
+    },
+    {
+      "label": "speed 768",
+      "scrollHeight": 2758,
+      "images": 2
+    },
+    {
+      "label": "booking 768",
+      "scrollHeight": 2802,
+      "images": 1
+    },
+    {
+      "label": "web-homepage-priority 768",
+      "scrollHeight": 2923,
+      "images": 1
+    },
+    {
+      "label": "web-content-collection 768",
+      "scrollHeight": 3013,
+      "images": 3
+    },
+    {
+      "label": "web-redesign-decision 768",
+      "scrollHeight": 2874,
+      "images": 1
+    },
+    {
+      "label": "page-industries 768",
+      "scrollHeight": 3129,
+      "images": 3
+    },
+    {
+      "label": "wifi 768",
+      "scrollHeight": 2318,
+      "images": 1
+    },
+    {
+      "label": "email 768",
+      "scrollHeight": 2318,
+      "images": 1
+    },
+    {
+      "label": "it-password-ownership 768",
+      "scrollHeight": 2318,
+      "images": 2
+    },
+    {
+      "label": "computer 768",
+      "scrollHeight": 2258,
+      "images": 3
+    },
+    {
+      "label": "page-services-it-support 768",
+      "scrollHeight": 2467,
+      "images": 3
+    },
+    {
+      "label": "consulting-tool-choice 768",
+      "scrollHeight": 2199,
+      "images": 1
+    },
+    {
+      "label": "consulting-second-opinion 768",
+      "scrollHeight": 2318,
+      "images": 2
+    },
+    {
+      "label": "page-services-business-systems 768",
+      "scrollHeight": 2328,
+      "images": 2
+    },
+    {
+      "label": "software-repeat-work 768",
+      "scrollHeight": 2169,
+      "images": 1
+    },
+    {
+      "label": "software-business-ownership 768",
+      "scrollHeight": 2348,
+      "images": 3
+    },
+    {
+      "label": "page-services-custom-local-websites 1440",
+      "scrollHeight": 4921,
+      "images": 15
+    },
+    {
+      "label": "maps 1440",
+      "scrollHeight": 2976,
+      "images": 2
+    },
+    {
+      "label": "ownership 1440",
+      "scrollHeight": 3116,
+      "images": 2
+    },
+    {
+      "label": "speed 1440",
+      "scrollHeight": 2608,
+      "images": 2
+    },
+    {
+      "label": "booking 1440",
+      "scrollHeight": 2706,
+      "images": 1
+    },
+    {
+      "label": "web-homepage-priority 1440",
+      "scrollHeight": 2802,
+      "images": 1
+    },
+    {
+      "label": "web-content-collection 1440",
+      "scrollHeight": 2872,
+      "images": 3
+    },
+    {
+      "label": "web-redesign-decision 1440",
+      "scrollHeight": 2816,
+      "images": 1
+    },
+    {
+      "label": "page-industries 1440",
+      "scrollHeight": 2950,
+      "images": 3
+    },
+    {
+      "label": "wifi 1440",
+      "scrollHeight": 2202,
+      "images": 1
+    },
+    {
+      "label": "email 1440",
+      "scrollHeight": 2295,
+      "images": 1
+    },
+    {
+      "label": "it-password-ownership 1440",
+      "scrollHeight": 2168,
+      "images": 2
+    },
+    {
+      "label": "computer 1440",
+      "scrollHeight": 2151,
+      "images": 3
+    },
+    {
+      "label": "page-services-it-support 1440",
+      "scrollHeight": 2353,
+      "images": 3
+    },
+    {
+      "label": "consulting-tool-choice 1440",
+      "scrollHeight": 2199,
+      "images": 1
+    },
+    {
+      "label": "consulting-second-opinion 1440",
+      "scrollHeight": 2186,
+      "images": 2
+    },
+    {
+      "label": "page-services-business-systems 1440",
+      "scrollHeight": 2253,
+      "images": 2
+    },
+    {
+      "label": "software-repeat-work 1440",
+      "scrollHeight": 2089,
+      "images": 1
+    },
+    {
+      "label": "software-business-ownership 1440",
+      "scrollHeight": 2151,
+      "images": 3
+    },
+    {
+      "label": "page-services-custom-local-websites 390 zoom200",
+      "scrollHeight": 17018,
+      "images": 15
+    },
+    {
+      "label": "maps 390 zoom200",
+      "scrollHeight": 6612,
+      "images": 2
+    },
+    {
+      "label": "ownership 390 zoom200",
+      "scrollHeight": 7242,
+      "images": 2
+    },
+    {
+      "label": "speed 390 zoom200",
+      "scrollHeight": 6370,
+      "images": 2
+    },
+    {
+      "label": "booking 390 zoom200",
+      "scrollHeight": 6550,
+      "images": 1
+    },
+    {
+      "label": "web-homepage-priority 390 zoom200",
+      "scrollHeight": 6690,
+      "images": 1
+    },
+    {
+      "label": "web-content-collection 390 zoom200",
+      "scrollHeight": 6743,
+      "images": 3
+    },
+    {
+      "label": "web-redesign-decision 390 zoom200",
+      "scrollHeight": 6529,
+      "images": 1
+    },
+    {
+      "label": "page-industries 390 zoom200",
+      "scrollHeight": 7271,
+      "images": 3
+    },
+    {
+      "label": "wifi 390 zoom200",
+      "scrollHeight": 5083,
+      "images": 1
+    },
+    {
+      "label": "email 390 zoom200",
+      "scrollHeight": 5360,
+      "images": 1
+    },
+    {
+      "label": "it-password-ownership 390 zoom200",
+      "scrollHeight": 5227,
+      "images": 2
+    },
+    {
+      "label": "computer 390 zoom200",
+      "scrollHeight": 5319,
+      "images": 3
+    },
+    {
+      "label": "page-services-it-support 390 zoom200",
+      "scrollHeight": 5878,
+      "images": 3
+    },
+    {
+      "label": "consulting-tool-choice 390 zoom200",
+      "scrollHeight": 4919,
+      "images": 1
+    },
+    {
+      "label": "consulting-second-opinion 390 zoom200",
+      "scrollHeight": 5340,
+      "images": 2
+    },
+    {
+      "label": "page-services-business-systems 390 zoom200",
+      "scrollHeight": 5262,
+      "images": 2
+    },
+    {
+      "label": "software-repeat-work 390 zoom200",
+      "scrollHeight": 4905,
+      "images": 1
+    },
+    {
+      "label": "software-business-ownership 390 zoom200",
+      "scrollHeight": 5379,
+      "images": 3
+    }
+  ],
+  "failures": [],
+  "hiddenChecks": [
+    {
+      "id": "website",
+      "path": "/answers/help/website/",
+      "pass": true
+    },
+    {
+      "id": "web-local-facts",
+      "path": "/answers/help/web-local-facts/",
+      "pass": true
+    },
+    {
+      "id": "platform",
+      "path": "/answers/help/platform/",
+      "pass": true
+    },
+    {
+      "id": "mobile",
+      "path": "/answers/help/mobile/",
+      "pass": true
+    },
+    {
+      "id": "forms",
+      "path": "/answers/help/forms/",
+      "pass": true
+    },
+    {
+      "id": "web-proof-before-pitch",
+      "path": "/answers/help/web-proof-before-pitch/",
+      "pass": true
+    },
+    {
+      "id": "web-photos-with-purpose",
+      "path": "/answers/help/web-photos-with-purpose/",
+      "pass": true
+    },
+    {
+      "id": "web-launch-checklist",
+      "path": "/answers/help/web-launch-checklist/",
+      "pass": true
+    },
+    {
+      "id": "buyer-plumbers",
+      "path": "/industries/plumbers/",
+      "pass": true
+    },
+    {
+      "id": "it-internet-outage",
+      "path": "/answers/help/it-internet-outage/",
+      "pass": true
+    },
+    {
+      "id": "it-shared-inbox-owner",
+      "path": "/answers/help/it-shared-inbox-owner/",
+      "pass": true
+    },
+    {
+      "id": "it-permission-review",
+      "path": "/answers/help/it-permission-review/",
+      "pass": true
+    },
+    {
+      "id": "move",
+      "path": "/answers/help/move/",
+      "pass": true
+    },
+    {
+      "id": "human",
+      "path": "/answers/help/human/",
+      "pass": true
+    },
+    {
+      "id": "consulting-unused-subscriptions",
+      "path": "/answers/help/consulting-unused-subscriptions/",
+      "pass": true
+    },
+    {
+      "id": "consulting-vendor-quote",
+      "path": "/answers/help/consulting-vendor-quote/",
+      "pass": true
+    },
+    {
+      "id": "software",
+      "path": "/answers/help/software/",
+      "pass": true
+    },
+    {
+      "id": "software-duplicate-entry",
+      "path": "/answers/help/software-duplicate-entry/",
+      "pass": true
+    },
+    {
+      "id": "software-handoff-notes",
+      "path": "/answers/help/software-handoff-notes/",
+      "pass": true
+    }
+  ],
+  "resourceFailures": [],
+  "pageErrors": [],
+  "screenshots": [
+    ".lifi/evidence/consolidation/home-1440-settled.png",
+    ".lifi/evidence/consolidation/reader-page-services-custom-local-websites-390-settled.png",
+    ".lifi/evidence/consolidation/reader-maps-390-settled.png",
+    ".lifi/evidence/consolidation/reader-ownership-390-settled.png",
+    ".lifi/evidence/consolidation/reader-speed-390-settled.png",
+    ".lifi/evidence/consolidation/reader-booking-390-settled.png",
+    ".lifi/evidence/consolidation/reader-web-homepage-priority-390-settled.png",
+    ".lifi/evidence/consolidation/reader-web-content-collection-390-settled.png",
+    ".lifi/evidence/consolidation/reader-web-redesign-decision-390-settled.png",
+    ".lifi/evidence/consolidation/reader-page-industries-390-settled.png",
+    ".lifi/evidence/consolidation/reader-wifi-390-settled.png",
+    ".lifi/evidence/consolidation/reader-email-390-settled.png",
+    ".lifi/evidence/consolidation/reader-it-password-ownership-390-settled.png",
+    ".lifi/evidence/consolidation/reader-computer-390-settled.png",
+    ".lifi/evidence/consolidation/reader-page-services-it-support-390-settled.png",
+    ".lifi/evidence/consolidation/reader-consulting-tool-choice-390-settled.png",
+    ".lifi/evidence/consolidation/reader-consulting-second-opinion-390-settled.png",
+    ".lifi/evidence/consolidation/reader-page-services-business-systems-390-settled.png",
+    ".lifi/evidence/consolidation/reader-software-repeat-work-390-settled.png",
+    ".lifi/evidence/consolidation/reader-software-business-ownership-390-settled.png"
+  ]
+}

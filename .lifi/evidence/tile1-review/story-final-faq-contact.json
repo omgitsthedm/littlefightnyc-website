@@ -1,0 +1,170 @@
+{
+  "faq": [
+    {
+      "width": 320,
+      "report": {
+        "overflow": [
+          320,
+          320
+        ],
+        "listStyle": "none",
+        "marker": "normal",
+        "after": "\"+\"",
+        "hit": true,
+        "rect": {
+          "x": 20,
+          "y": 344.828125,
+          "w": 280,
+          "h": 270
+        },
+        "text": "Can you build a website outside New York?"
+      },
+      "open": true,
+      "closed": true
+    },
+    {
+      "width": 390,
+      "report": {
+        "overflow": [
+          390,
+          390
+        ],
+        "listStyle": "none",
+        "marker": "normal",
+        "after": "\"+\"",
+        "hit": true,
+        "rect": {
+          "x": 20,
+          "y": 288.46875,
+          "w": 350,
+          "h": 162
+        },
+        "text": "Can you build a website outside New York?"
+      },
+      "open": true,
+      "closed": true
+    },
+    {
+      "width": 1440,
+      "report": {
+        "overflow": [
+          1440,
+          1440
+        ],
+        "listStyle": "none",
+        "marker": "normal",
+        "after": "\"+\"",
+        "hit": true,
+        "rect": {
+          "x": 187,
+          "y": 140.375,
+          "w": 800,
+          "h": 108
+        },
+        "text": "Can you build a website outside New York?"
+      },
+      "open": true,
+      "closed": true
+    }
+  ],
+  "direct": [
+    {
+      "width": 390,
+      "scrollY": 1300,
+      "rail": {
+        "top": 0,
+        "bottom": 69,
+        "w": 366,
+        "h": 69,
+        "position": "sticky",
+        "background": "rgb(16, 17, 19)",
+        "opacity": "1"
+      },
+      "anchors": [
+        {
+          "text": "Call",
+          "hit": true,
+          "rect": {
+            "x": 24,
+            "y": 12,
+            "w": 91.328125,
+            "h": 44
+          }
+        },
+        {
+          "text": "Text",
+          "hit": true,
+          "rect": {
+            "x": 123.328125,
+            "y": 12,
+            "w": 91.34375,
+            "h": 44
+          }
+        },
+        {
+          "text": "Email",
+          "hit": true,
+          "rect": {
+            "x": 222.671875,
+            "y": 12,
+            "w": 91.328125,
+            "h": 44
+          }
+        }
+      ],
+      "overflow": [
+        390,
+        390
+      ]
+    },
+    {
+      "width": 1440,
+      "scrollY": 1300,
+      "rail": {
+        "top": 0,
+        "bottom": 69,
+        "w": 1252,
+        "h": 69,
+        "position": "sticky",
+        "background": "rgb(16, 17, 19)",
+        "opacity": "1"
+      },
+      "anchors": [
+        {
+          "text": "Call",
+          "hit": true,
+          "rect": {
+            "x": 580.125,
+            "y": 12,
+            "w": 65.390625,
+            "h": 44
+          }
+        },
+        {
+          "text": "Text",
+          "hit": true,
+          "rect": {
+            "x": 653.515625,
+            "y": 12,
+            "w": 68.09375,
+            "h": 44
+          }
+        },
+        {
+          "text": "Email",
+          "hit": true,
+          "rect": {
+            "x": 729.609375,
+            "y": 12,
+            "w": 78.25,
+            "h": 44
+          }
+        }
+      ],
+      "overflow": [
+        1440,
+        1440
+      ]
+    }
+  ]
+}

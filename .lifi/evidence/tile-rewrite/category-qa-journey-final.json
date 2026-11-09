@@ -1,0 +1,18 @@
+{
+  "base": "http://127.0.0.1:4399",
+  "browser": "installed Google Chrome via Playwright channel:chrome; isolated temporary context",
+  "native": [],
+  "responsive": [],
+  "text200": [],
+  "journey": {
+    "openedHeading": "Make your business easy to choose.",
+    "detailOpened": true,
+    "readerScrollTop": 6555,
+    "beforeCloseY": 0,
+    "afterCloseY": 0,
+    "focus": "page-services-custom-local-websites",
+    "consoleErrors": []
+  },
+  "console": [],
+  "failures": []
+}

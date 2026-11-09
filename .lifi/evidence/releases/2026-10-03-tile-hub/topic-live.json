@@ -1,0 +1,2231 @@
+{
+  "kind": "topic-mosaic-browser-verification",
+  "base": "https://littlefightnyc.com",
+  "startedAt": "2026-10-03T12:04:09.027Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "homepage inventory preserves every route while consolidating the hub",
+      "passed": true,
+      "detail": "77 visible of 129; 19 groups"
+    },
+    {
+      "name": "all retained tile destinations have non-empty local readers and search records",
+      "passed": true,
+      "detail": "129 inventory destinations retain non-empty local readers and searchable records"
+    },
+    {
+      "name": "edge light clears after rapid pointer movement and preserves keyboard focus",
+      "passed": true,
+      "detail": "real pointer sweep clears all four tiles; keyboard focus retains its separate visible cue"
+    },
+    {
+      "name": "release marker and grouped homepage preserve all content",
+      "passed": true,
+      "detail": "77 visible links; 129 retained routes; 19 consolidated groups; four service groups each interleave reviews; seven reviews"
+    },
+    {
+      "name": "Problems? Solved. leads visually above the Websites anchor",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "tile geometry preserves anchors, photographs, and original variety",
+      "passed": true,
+      "detail": "large Website anchor; 4x2 service anchors; seven individually styled compact reviews; 8 source-4x4 photos that can grow whole units; visible bento sizes 4x2, 8x4, 4x4, 4x3, 3x2, 5x2, 5x3, 3x3, 12x2, 1x1, 3x1, 2x1, 3x4, 5x4, 2x2, 2x3, 6x3"
+    },
+    {
+      "name": "visible tile labels meet the 16px accessibility floor",
+      "passed": true,
+      "detail": "Atkinson Hyperlegible Next across homepage copy and navigation; four service icons; all visible tile labels are at least 16px; icon-only tiles retain their accessible names"
+    },
+    {
+      "name": "icon-only desktop cards visibly contain their familiar symbol",
+      "passed": true,
+      "detail": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            81.328125,
+            81.328125
+          ],
+          "graphic": [
+            65.0625,
+            65.0625
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            81.34375,
+            81.328125
+          ],
+          "graphic": [
+            65.0625,
+            65.0625
+          ]
+        }
+      ]
+    },
+    {
+      "name": "desktop tile words stay inside their fronts",
+      "passed": true,
+      "detail": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "name": "review cards expose attributable five-star evidence",
+      "passed": true,
+      "detail": "six exact first-name-only source quotes plus Emilee’s quote-free rating card, each with five SVG stars and matching credit"
+    },
+    {
+      "name": "header and footer use the requested document structure",
+      "passed": true,
+      "detail": "top primary nav and full-content-width normal-flow footer"
+    },
+    {
+      "name": "navigation uses plus marks instead of arrows",
+      "passed": true,
+      "detail": "77 plus navigation marks; no arrow navigation glyphs"
+    },
+    {
+      "name": "each topic uses a distinct colored tile back and opens accessibly",
+      "passed": true,
+      "detail": "four distinct topic-back colors: #92bfff, #f5d95b, #a0df85, #f09bdd"
+    },
+    {
+      "name": "reclassified cards use their correct homepage section, family, material, and accent",
+      "passed": true,
+      "detail": "22 preserved cards sit in their intended topic sections with matching family and accent semantics"
+    },
+    {
+      "name": "representative reclassified readers keep their category and return to the app hub",
+      "passed": true,
+      "detail": "software Lab, geographic album, moved answer, and VERA wrapper retain reader category and app-like close/focus return"
+    },
+    {
+      "name": "Little Fight brand, case, and review cards retain orange material",
+      "passed": true,
+      "detail": "22 remaining Little Fight brand, case, and review cards retain orange material"
+    },
+    {
+      "name": "320px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "320px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "320px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "390px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "390px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "390px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "600px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "600px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "600px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "768px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "768px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "768px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "1024px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "1024px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "1024px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "1440px Problems? Solved. stays above Websites",
+      "passed": true,
+      "detail": "Problems? Solved. occupies a complete grid row above the Websites service anchor"
+    },
+    {
+      "name": "1440px story artwork stays whole and clear of its caption",
+      "passed": true,
+      "detail": "1440px: 14 drawings fit their frames without caption overlap"
+    },
+    {
+      "name": "homepage accepts real desktop wheel and keyboard input, mobile touch input, and resumes after a reader closes",
+      "passed": true,
+      "detail": "desktop wheel and PageDown scroll, reader close resumes wheel scrolling, and mobile CDP touch scrolls"
+    },
+    {
+      "name": "Website anchor photos and equal icon frames remain visible at phone sizes with six columns through 1000px",
+      "passed": true,
+      "detail": "Website anchor photo is visible at phone/desktop; equal icon frames; six-column layout through 1000px (1440px, 320px, 390px)"
+    },
+    {
+      "name": "review micro-interactions remain finite, source-faithful, and reduced-motion-safe",
+      "passed": true,
+      "detail": "seven coherent review hover responses complete finitely without changing source text; reduced motion disables them"
+    },
+    {
+      "name": "390px review text enlargement relayouts complete square units without clipping",
+      "passed": true,
+      "detail": "390px reduced-motion review quote and credit text can double, relayout in whole grid units, and retain every word/star without overlap"
+    },
+    {
+      "name": "no-JavaScript homepage remains a complete readable document",
+      "passed": true,
+      "detail": "77 readable links, four headings, and footer without JavaScript"
+    },
+    {
+      "name": "ordinary readers and the VERA companion keep useful contextual figures",
+      "passed": true,
+      "detail": "context figures stay useful at 1440/768px: website answer 365px, software answer 365px, IT answer 365px, VERA companion 365px, website answer 180px, software answer 180px, IT answer 180px, VERA companion 180px"
+    },
+    {
+      "name": "local test used no form submission or review-site request",
+      "passed": true,
+      "detail": ""
+    }
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "height": 720,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 41,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 33,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 51,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 32,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 245.28125,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 144,
+          "height": 194.625,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            20.65625,
+            20.65625
+          ],
+          "graphic": [
+            16.515625,
+            16.515625
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            40,
+            40
+          ],
+          "graphic": [
+            40,
+            40
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 39,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 31,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 49,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 30,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 179,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 179,
+          "height": 241.3125,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 179,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 179,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 179,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 179,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 178.984375,
+          "height": 178.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            },
+            {
+              "width": 18,
+              "height": 18,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            32.328125,
+            32.328125
+          ],
+          "graphic": [
+            25.859375,
+            25.859375
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            40,
+            40
+          ],
+          "graphic": [
+            40,
+            40
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "width": 600,
+      "height": 940,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 39,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 31,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 49,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 30,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 381.3125,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 284,
+          "height": 283.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            },
+            {
+              "width": 20,
+              "height": 20,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            67.328125,
+            67.328125
+          ],
+          "graphic": [
+            53.859375,
+            53.859375
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            40,
+            40
+          ],
+          "graphic": [
+            40,
+            40
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 31,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 15,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 42,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 6,
+            "maxRow": 21,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 368,
+          "height": 242.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            95.328125,
+            72
+          ],
+          "graphic": [
+            76.25,
+            61
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            95.34375,
+            72
+          ],
+          "graphic": [
+            76.265625,
+            61
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "width": 1024,
+      "height": 940,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 24,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 9,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 17,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 12,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 316.3125,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 234.203125,
+          "height": 234.234375,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            48.0625,
+            48.078125
+          ],
+          "graphic": [
+            38.4375,
+            38.453125
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            48.0625,
+            48.078125
+          ],
+          "graphic": [
+            38.4375,
+            38.453125
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    },
+    {
+      "width": 1440,
+      "height": 940,
+      "groups": [
+        {
+          "id": "topic-web",
+          "topic": "web",
+          "tileCount": 21,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 17,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-it",
+          "topic": "it",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 8,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-consulting",
+          "topic": "consulting",
+          "tileCount": 16,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 16,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        },
+        {
+          "id": "topic-software",
+          "topic": "software",
+          "tileCount": 20,
+          "hidden": [],
+          "overlaps": [],
+          "occupancy": {
+            "maxColumn": 12,
+            "maxRow": 11,
+            "invalidPositions": [],
+            "vacancies": [],
+            "lastRowVacancies": [],
+            "packVacancies": "false"
+          }
+        }
+      ],
+      "reviewTiles": [
+        {
+          "width": 334,
+          "height": 218.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 333.984375,
+          "columns": 3,
+          "visible": true,
+          "topic": "web",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 218.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 218.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "it",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 449.3125,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 218.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "consulting",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        },
+        {
+          "width": 334,
+          "height": 218.65625,
+          "columns": 3,
+          "visible": true,
+          "topic": "software",
+          "stars": [
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            },
+            {
+              "width": 28,
+              "height": 28,
+              "contained": true
+            }
+          ]
+        }
+      ],
+      "reviewSections": 0,
+      "documentOverflow": 0,
+      "bodyOverflow": 0,
+      "iconOnly": [
+        {
+          "id": "printer",
+          "visible": true,
+          "art": [
+            81.328125,
+            81.328125
+          ],
+          "graphic": [
+            65.0625,
+            65.0625
+          ]
+        },
+        {
+          "id": "it-security-basics",
+          "visible": true,
+          "art": [
+            81.34375,
+            81.328125
+          ],
+          "graphic": [
+            65.0625,
+            65.0625
+          ]
+        }
+      ],
+      "textFit": "all visible words and front compositions fit their tile bounds"
+    }
+  ],
+  "blockedMutations": [],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "completedAt": "2026-10-03T12:04:59.444Z",
+  "passed": true
+}

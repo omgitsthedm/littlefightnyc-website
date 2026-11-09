@@ -1,0 +1,784 @@
+{
+  "time": "2026-10-03T08:05:47.242Z",
+  "views": [
+    {
+      "w": 320,
+      "h": 900,
+      "overflow": {
+        "document": [
+          320,
+          320
+        ],
+        "detail": [
+          320,
+          320
+        ],
+        "body": [
+          320,
+          320
+        ]
+      },
+      "frames": [
+        {
+          "i": 1,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 2,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 3,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 4,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 5,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 6,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 7,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 8,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 9,
+          "frame": [
+            276,
+            192
+          ],
+          "image": [
+            274,
+            190
+          ],
+          "loaded": true,
+          "caption": true
+        }
+      ],
+      "heroImages": 1,
+      "reviews": {
+        "valid": false,
+        "items": [
+          {
+            "href": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“built us a beautiful site”\nJenna\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“Clear communication, expectations and timelines!”\nJonathon\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“easy to work with”\nSusanna\n+\nGoogle review",
+            "forbidden": true
+          }
+        ]
+      },
+      "fonts": {
+        "brand": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+        "nyc": null,
+        "small": 0
+      },
+      "focus": true
+    },
+    {
+      "w": 390,
+      "h": 900,
+      "overflow": {
+        "document": [
+          390,
+          390
+        ],
+        "detail": [
+          390,
+          390
+        ],
+        "body": [
+          390,
+          390
+        ]
+      },
+      "frames": [
+        {
+          "i": 1,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 2,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 3,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 4,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 5,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 6,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 7,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 8,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 9,
+          "frame": [
+            165,
+            115
+          ],
+          "image": [
+            163,
+            113
+          ],
+          "loaded": true,
+          "caption": true
+        }
+      ],
+      "heroImages": 1,
+      "reviews": {
+        "valid": false,
+        "items": [
+          {
+            "href": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“built us a beautiful site”\nJenna\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“Clear communication, expectations and timelines!”\nJonathon\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“easy to work with”\nSusanna\n+\nGoogle review",
+            "forbidden": true
+          }
+        ]
+      },
+      "fonts": {
+        "brand": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+        "nyc": null,
+        "small": 0
+      },
+      "text200": {
+        "checked": 51
+      },
+      "focus": true
+    },
+    {
+      "w": 768,
+      "h": 1000,
+      "overflow": {
+        "document": [
+          768,
+          768
+        ],
+        "detail": [
+          768,
+          768
+        ],
+        "body": [
+          720,
+          720
+        ]
+      },
+      "frames": [
+        {
+          "i": 1,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 2,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 3,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 4,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 5,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 6,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 7,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 8,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 9,
+          "frame": [
+            204,
+            141
+          ],
+          "image": [
+            202,
+            139
+          ],
+          "loaded": true,
+          "caption": true
+        }
+      ],
+      "heroImages": 1,
+      "reviews": {
+        "valid": false,
+        "items": [
+          {
+            "href": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“built us a beautiful site”\nJenna\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“Clear communication, expectations and timelines!”\nJonathon\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“easy to work with”\nSusanna\n+\nGoogle review",
+            "forbidden": true
+          }
+        ]
+      },
+      "fonts": {
+        "brand": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+        "nyc": null,
+        "small": 0
+      },
+      "focus": true
+    },
+    {
+      "w": 1440,
+      "h": 1000,
+      "overflow": {
+        "document": [
+          1440,
+          1440
+        ],
+        "detail": [
+          1440,
+          1440
+        ],
+        "body": [
+          1178,
+          1178
+        ]
+      },
+      "frames": [
+        {
+          "i": 1,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 2,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 3,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 4,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 5,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 6,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 7,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 8,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        },
+        {
+          "i": 9,
+          "frame": [
+            339,
+            236
+          ],
+          "image": [
+            337,
+            234
+          ],
+          "loaded": true,
+          "caption": true
+        }
+      ],
+      "heroImages": 1,
+      "reviews": {
+        "valid": false,
+        "items": [
+          {
+            "href": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“built us a beautiful site”\nJenna\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“Clear communication, expectations and timelines!”\nJonathon\n+\nGoogle review",
+            "forbidden": true
+          },
+          {
+            "href": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+            "stars": "★★★★★",
+            "text": "★★★★★\n“easy to work with”\nSusanna\n+\nGoogle review",
+            "forbidden": true
+          }
+        ]
+      },
+      "fonts": {
+        "brand": "\"Atkinson Hyperlegible Next\", LFAtkinson, Arial, sans-serif",
+        "nyc": null,
+        "small": 0
+      },
+      "focus": true
+    }
+  ],
+  "reduced": [
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    },
+    {
+      "a": "none",
+      "t": "none"
+    }
+  ],
+  "noJs": {
+    "main": true,
+    "gallery": 9,
+    "scroll": [
+      7635,
+      900
+    ],
+    "over": [
+      390,
+      390
+    ]
+  },
+  "shells": [
+    {
+      "route": "/examples/",
+      "reader": true,
+      "storyBottom": 0,
+      "readerNav": 1,
+      "boiler": []
+    },
+    {
+      "route": "/case-studies/easy-tiger/",
+      "reader": true,
+      "storyBottom": 0,
+      "readerNav": 1,
+      "boiler": []
+    },
+    {
+      "route": "/answers/help/website/",
+      "reader": true,
+      "storyBottom": 0,
+      "readerNav": 1,
+      "boiler": []
+    },
+    {
+      "route": "/examples/lab/",
+      "reader": false,
+      "storyBottom": 0,
+      "readerNav": 0,
+      "boiler": []
+    }
+  ]
+}

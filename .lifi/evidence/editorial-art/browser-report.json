@@ -1,0 +1,4472 @@
+{
+  "front": {
+    "320": {
+      "ids": [
+        "platform",
+        "ownership",
+        "cost",
+        "mobile",
+        "forms",
+        "web-redesign-decision",
+        "web-accessibility-basics",
+        "web-content-collection",
+        "web-service-page",
+        "web-photos-with-purpose",
+        "web-menu-and-hours",
+        "web-ecommerce-inventory",
+        "wifi",
+        "email",
+        "backup",
+        "it-shared-files",
+        "consulting-first-priority",
+        "consulting-tool-choice",
+        "software-repeat-work",
+        "software-approval-path"
+      ],
+      "cards": [
+        {
+          "id": "platform",
+          "title": "Choose a website platform",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-320.webp",
+          "art": {
+            "left": 13,
+            "top": 304.140625,
+            "right": 155,
+            "bottom": 438.765625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 304.140625,
+            "right": 155,
+            "bottom": 438.765625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 304.140625,
+            "bottom": 438.765625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "ownership",
+          "title": "Own your website",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-320.webp",
+          "art": {
+            "left": 165,
+            "top": 304.140625,
+            "right": 307,
+            "bottom": 438.765625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 304.140625,
+            "right": 307,
+            "bottom": 438.765625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 304.140625,
+            "bottom": 438.765625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "cost",
+          "title": "Understand the website quote",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-320.webp",
+          "art": {
+            "left": 165,
+            "top": 506.765625,
+            "right": 307,
+            "bottom": 641.390625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 506.765625,
+            "right": 307,
+            "bottom": 641.390625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 506.765625,
+            "bottom": 641.390625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "mobile",
+          "title": "Make a website work on a phone",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-320.webp",
+          "art": {
+            "left": 13,
+            "top": 607.390625,
+            "right": 155,
+            "bottom": 742.015625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 607.390625,
+            "right": 155,
+            "bottom": 742.015625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 607.390625,
+            "bottom": 742.015625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "forms",
+          "title": "Make it easy to send an inquiry",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-320.webp",
+          "art": {
+            "left": 165,
+            "top": 607.359375,
+            "right": 307,
+            "bottom": 741.984375,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 607.359375,
+            "right": 307,
+            "bottom": 741.984375,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 607.359375,
+            "bottom": 741.984375,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-redesign-decision",
+          "title": "Refresh or rebuild a website",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-320.webp",
+          "art": {
+            "left": 13,
+            "top": 607.015625,
+            "right": 155,
+            "bottom": 741.640625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 607.015625,
+            "right": 155,
+            "bottom": 741.640625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 607.015625,
+            "bottom": 741.640625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-accessibility-basics",
+          "title": "Make a website easier to use",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-320.webp",
+          "art": {
+            "left": 13,
+            "top": 303.265625,
+            "right": 155,
+            "bottom": 437.890625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 303.265625,
+            "right": 155,
+            "bottom": 437.890625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 303.265625,
+            "bottom": 437.890625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-content-collection",
+          "title": "Gather what a website needs",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-320.webp",
+          "art": {
+            "left": 13,
+            "top": 505.890625,
+            "right": 155,
+            "bottom": 640.515625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 505.890625,
+            "right": 155,
+            "bottom": 640.515625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 505.890625,
+            "bottom": 640.515625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-service-page",
+          "title": "Explain the services clearly",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-320.webp",
+          "art": {
+            "left": 165,
+            "top": 607.203125,
+            "right": 307,
+            "bottom": 741.828125,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 607.203125,
+            "right": 307,
+            "bottom": 741.828125,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 607.203125,
+            "bottom": 741.828125,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-photos-with-purpose",
+          "title": "Choose useful business photographs",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-320.webp",
+          "art": {
+            "left": 13,
+            "top": 303.453125,
+            "right": 155,
+            "bottom": 426.296875,
+            "width": 142,
+            "height": 122.84375
+          },
+          "image": {
+            "left": 13,
+            "top": 303.453125,
+            "right": 155,
+            "bottom": 426.296875,
+            "width": 142,
+            "height": 122.84375
+          },
+          "pixels": {
+            "left": 22.578125,
+            "right": 145.421875,
+            "top": 303.453125,
+            "bottom": 426.296875,
+            "width": 122.84375,
+            "height": 122.84375
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-menu-and-hours",
+          "title": "Keep hours easy to find",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-320.webp",
+          "art": {
+            "left": 165,
+            "top": 303.453125,
+            "right": 307,
+            "bottom": 438.078125,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 303.453125,
+            "right": 307,
+            "bottom": 438.078125,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 303.453125,
+            "bottom": 438.078125,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-ecommerce-inventory",
+          "title": "Sell what is actually in stock",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+          "art": {
+            "left": 165,
+            "top": 506.078125,
+            "right": 307,
+            "bottom": 640.703125,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 506.078125,
+            "right": 307,
+            "bottom": 640.703125,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 506.078125,
+            "bottom": 640.703125,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "wifi",
+          "title": "Reach the rooms where work happens",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-320.webp",
+          "art": {
+            "left": 13,
+            "top": 303.5,
+            "right": 155,
+            "bottom": 426.34375,
+            "width": 142,
+            "height": 122.84375
+          },
+          "image": {
+            "left": 13,
+            "top": 303.5,
+            "right": 155,
+            "bottom": 426.34375,
+            "width": 142,
+            "height": 122.84375
+          },
+          "pixels": {
+            "left": 22.578125,
+            "right": 145.421875,
+            "top": 303.5,
+            "bottom": 426.34375,
+            "width": 122.84375,
+            "height": 122.84375
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "email",
+          "title": "Help business email reach people",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-email-320.webp",
+          "art": {
+            "left": 165,
+            "top": 303.5,
+            "right": 307,
+            "bottom": 426.34375,
+            "width": 142,
+            "height": 122.84375
+          },
+          "image": {
+            "left": 165,
+            "top": 303.5,
+            "right": 307,
+            "bottom": 426.34375,
+            "width": 142,
+            "height": 122.84375
+          },
+          "pixels": {
+            "left": 174.578125,
+            "right": 297.421875,
+            "top": 303.5,
+            "bottom": 426.34375,
+            "width": 122.84375,
+            "height": 122.84375
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "backup",
+          "title": "Keep a second safe copy",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-320.webp",
+          "art": {
+            "left": 13,
+            "top": 607.09375,
+            "right": 155,
+            "bottom": 741.71875,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 607.09375,
+            "right": 155,
+            "bottom": 741.71875,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 607.09375,
+            "bottom": 741.71875,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "it-shared-files",
+          "title": "Find the right shared file",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-320.webp",
+          "art": {
+            "left": 13,
+            "top": 303.59375,
+            "right": 155,
+            "bottom": 438.21875,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 303.59375,
+            "right": 155,
+            "bottom": 438.21875,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 303.59375,
+            "bottom": 438.21875,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-first-priority",
+          "title": "Choose what to fix first",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-320.webp",
+          "art": {
+            "left": 165,
+            "top": 304.046875,
+            "right": 307,
+            "bottom": 438.671875,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 304.046875,
+            "right": 307,
+            "bottom": 438.671875,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 304.046875,
+            "bottom": 438.671875,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-tool-choice",
+          "title": "Keep the tools that help",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-320.webp",
+          "art": {
+            "left": 13,
+            "top": 405.359375,
+            "right": 155,
+            "bottom": 539.984375,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 13,
+            "top": 405.359375,
+            "right": 155,
+            "bottom": 539.984375,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 16.6875,
+            "right": 151.3125,
+            "top": 405.359375,
+            "bottom": 539.984375,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-repeat-work",
+          "title": "Stop entering the same thing repeatedly",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-320.webp",
+          "art": {
+            "left": 13,
+            "top": 303.875,
+            "right": 155,
+            "bottom": 426.71875,
+            "width": 142,
+            "height": 122.84375
+          },
+          "image": {
+            "left": 13,
+            "top": 303.875,
+            "right": 155,
+            "bottom": 426.71875,
+            "width": 142,
+            "height": 122.84375
+          },
+          "pixels": {
+            "left": 22.578125,
+            "right": 145.421875,
+            "top": 303.875,
+            "bottom": 426.71875,
+            "width": 122.84375,
+            "height": 122.84375
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-approval-path",
+          "title": "Make approvals clear",
+          "decoded": true,
+          "natural": [
+            142,
+            142
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-320.webp",
+          "art": {
+            "left": 165,
+            "top": 354.53125,
+            "right": 307,
+            "bottom": 489.15625,
+            "width": 142,
+            "height": 134.625
+          },
+          "image": {
+            "left": 165,
+            "top": 354.53125,
+            "right": 307,
+            "bottom": 489.15625,
+            "width": 142,
+            "height": 134.625
+          },
+          "pixels": {
+            "left": 168.6875,
+            "right": 303.3125,
+            "top": 354.53125,
+            "bottom": 489.15625,
+            "width": 134.625,
+            "height": 134.625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        }
+      ]
+    },
+    "390": {
+      "ids": [
+        "platform",
+        "ownership",
+        "cost",
+        "mobile",
+        "forms",
+        "web-redesign-decision",
+        "web-accessibility-basics",
+        "web-content-collection",
+        "web-service-page",
+        "web-photos-with-purpose",
+        "web-menu-and-hours",
+        "web-ecommerce-inventory",
+        "wifi",
+        "email",
+        "backup",
+        "it-shared-files",
+        "consulting-first-priority",
+        "consulting-tool-choice",
+        "software-repeat-work",
+        "software-approval-path"
+      ],
+      "cards": [
+        {
+          "id": "platform",
+          "title": "Choose a website platform",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-320.webp",
+          "art": {
+            "left": 13,
+            "top": 301.921875,
+            "right": 189.984375,
+            "bottom": 475.234375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 301.921875,
+            "right": 189.984375,
+            "bottom": 475.234375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 301.921875,
+            "bottom": 475.234375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "ownership",
+          "title": "Own your website",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 301.921875,
+            "right": 376.984375,
+            "bottom": 475.234375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 301.921875,
+            "right": 376.984375,
+            "bottom": 475.234375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 301.921875,
+            "bottom": 475.234375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "cost",
+          "title": "Understand the website quote",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 551.234375,
+            "right": 376.984375,
+            "bottom": 724.546875,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 551.234375,
+            "right": 376.984375,
+            "bottom": 724.546875,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 551.234375,
+            "bottom": 724.546875,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "mobile",
+          "title": "Make a website work on a phone",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-320.webp",
+          "art": {
+            "left": 13,
+            "top": 604.21875,
+            "right": 189.984375,
+            "bottom": 777.53125,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 604.21875,
+            "right": 189.984375,
+            "bottom": 777.53125,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 604.21875,
+            "bottom": 777.53125,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "forms",
+          "title": "Make it easy to send an inquiry",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.53125,
+            "right": 189.984375,
+            "bottom": 475.84375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 302.53125,
+            "right": 189.984375,
+            "bottom": 475.84375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 302.53125,
+            "bottom": 475.84375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-redesign-decision",
+          "title": "Refresh or rebuild a website",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 302.53125,
+            "right": 376.984375,
+            "bottom": 475.84375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 302.53125,
+            "right": 376.984375,
+            "bottom": 475.84375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 302.53125,
+            "bottom": 475.84375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-accessibility-basics",
+          "title": "Make a website easier to use",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-320.webp",
+          "art": {
+            "left": 13,
+            "top": 605.15625,
+            "right": 189.984375,
+            "bottom": 778.46875,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 605.15625,
+            "right": 189.984375,
+            "bottom": 778.46875,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 605.15625,
+            "bottom": 778.46875,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-content-collection",
+          "title": "Gather what a website needs",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.46875,
+            "right": 189.984375,
+            "bottom": 475.78125,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 302.46875,
+            "right": 189.984375,
+            "bottom": 475.78125,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 302.46875,
+            "bottom": 475.78125,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-service-page",
+          "title": "Explain the services clearly",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 427.125,
+            "right": 376.984375,
+            "bottom": 600.4375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 427.125,
+            "right": 376.984375,
+            "bottom": 600.4375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 427.125,
+            "bottom": 600.4375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-photos-with-purpose",
+          "title": "Choose useful business photographs",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.75,
+            "right": 189.984375,
+            "bottom": 465.5,
+            "width": 176.984375,
+            "height": 162.75
+          },
+          "image": {
+            "left": 13,
+            "top": 302.75,
+            "right": 189.984375,
+            "bottom": 465.5,
+            "width": 176.984375,
+            "height": 162.75
+          },
+          "pixels": {
+            "left": 20.1171875,
+            "right": 182.8671875,
+            "top": 302.75,
+            "bottom": 465.5,
+            "width": 162.75,
+            "height": 162.75
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-menu-and-hours",
+          "title": "Keep hours easy to find",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 302.75,
+            "right": 376.984375,
+            "bottom": 476.0625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 302.75,
+            "right": 376.984375,
+            "bottom": 476.0625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 302.75,
+            "bottom": 476.0625,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-ecommerce-inventory",
+          "title": "Sell what is actually in stock",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 552.0625,
+            "right": 376.984375,
+            "bottom": 725.375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 552.0625,
+            "right": 376.984375,
+            "bottom": 725.375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 552.0625,
+            "bottom": 725.375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "wifi",
+          "title": "Reach the rooms where work happens",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.125,
+            "right": 189.984375,
+            "bottom": 464.875,
+            "width": 176.984375,
+            "height": 162.75
+          },
+          "image": {
+            "left": 13,
+            "top": 302.125,
+            "right": 189.984375,
+            "bottom": 464.875,
+            "width": 176.984375,
+            "height": 162.75
+          },
+          "pixels": {
+            "left": 20.1171875,
+            "right": 182.8671875,
+            "top": 302.125,
+            "bottom": 464.875,
+            "width": 162.75,
+            "height": 162.75
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "email",
+          "title": "Help business email reach people",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-email-320.webp",
+          "art": {
+            "left": 199.984375,
+            "top": 302.125,
+            "right": 376.984375,
+            "bottom": 475.4375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 199.984375,
+            "top": 302.125,
+            "right": 376.984375,
+            "bottom": 475.4375,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.828125,
+            "right": 375.140625,
+            "top": 302.125,
+            "bottom": 475.4375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "backup",
+          "title": "Keep a second safe copy",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-320.webp",
+          "art": {
+            "left": 13,
+            "top": 604.421875,
+            "right": 189.984375,
+            "bottom": 777.734375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 604.421875,
+            "right": 189.984375,
+            "bottom": 777.734375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 604.421875,
+            "bottom": 777.734375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "it-shared-files",
+          "title": "Find the right shared file",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.671875,
+            "right": 189.984375,
+            "bottom": 475.984375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 302.671875,
+            "right": 189.984375,
+            "bottom": 475.984375,
+            "width": 176.984375,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.8359375,
+            "right": 188.1484375,
+            "top": 302.671875,
+            "bottom": 475.984375,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-first-priority",
+          "title": "Choose what to fix first",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-320.webp",
+          "art": {
+            "left": 200,
+            "top": 302.25,
+            "right": 377,
+            "bottom": 475.5625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 200,
+            "top": 302.25,
+            "right": 377,
+            "bottom": 475.5625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.84375,
+            "right": 375.15625,
+            "top": 302.25,
+            "bottom": 475.5625,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-tool-choice",
+          "title": "Keep the tools that help",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-320.webp",
+          "art": {
+            "left": 13,
+            "top": 426.90625,
+            "right": 190,
+            "bottom": 600.21875,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 13,
+            "top": 426.90625,
+            "right": 190,
+            "bottom": 600.21875,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 14.84375,
+            "right": 188.15625,
+            "top": 426.90625,
+            "bottom": 600.21875,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-repeat-work",
+          "title": "Stop entering the same thing repeatedly",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-320.webp",
+          "art": {
+            "left": 13,
+            "top": 302.515625,
+            "right": 190,
+            "bottom": 465.265625,
+            "width": 177,
+            "height": 162.75
+          },
+          "image": {
+            "left": 13,
+            "top": 302.515625,
+            "right": 190,
+            "bottom": 465.265625,
+            "width": 177,
+            "height": 162.75
+          },
+          "pixels": {
+            "left": 20.125,
+            "right": 182.875,
+            "top": 302.515625,
+            "bottom": 465.265625,
+            "width": 162.75,
+            "height": 162.75
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-approval-path",
+          "title": "Make approvals clear",
+          "decoded": true,
+          "natural": [
+            177,
+            177
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-320.webp",
+          "art": {
+            "left": 200,
+            "top": 364.84375,
+            "right": 377,
+            "bottom": 538.15625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "image": {
+            "left": 200,
+            "top": 364.84375,
+            "right": 377,
+            "bottom": 538.15625,
+            "width": 177,
+            "height": 173.3125
+          },
+          "pixels": {
+            "left": 201.84375,
+            "right": 375.15625,
+            "top": 364.84375,
+            "bottom": 538.15625,
+            "width": 173.3125,
+            "height": 173.3125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        }
+      ]
+    },
+    "768": {
+      "ids": [
+        "platform",
+        "ownership",
+        "cost",
+        "mobile",
+        "forms",
+        "web-redesign-decision",
+        "web-accessibility-basics",
+        "web-content-collection",
+        "web-service-page",
+        "web-photos-with-purpose",
+        "web-menu-and-hours",
+        "web-ecommerce-inventory",
+        "wifi",
+        "email",
+        "backup",
+        "it-shared-files",
+        "consulting-first-priority",
+        "consulting-tool-choice",
+        "software-repeat-work",
+        "software-approval-path"
+      ],
+      "cards": [
+        {
+          "id": "platform",
+          "title": "Choose a website platform",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-320.webp",
+          "art": {
+            "left": 13,
+            "top": 329.859375,
+            "right": 236.25,
+            "bottom": 570.515625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 13,
+            "top": 329.859375,
+            "right": 236.25,
+            "bottom": 570.515625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 13,
+            "right": 236.25,
+            "top": 338.5625,
+            "bottom": 561.8125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "ownership",
+          "title": "Own your website",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-320.webp",
+          "art": {
+            "left": 531.734375,
+            "top": 329.859375,
+            "right": 755,
+            "bottom": 570.515625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 531.734375,
+            "top": 329.859375,
+            "right": 755,
+            "bottom": 570.515625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 531.734375,
+            "right": 755,
+            "top": 338.5546875,
+            "bottom": 561.8203125,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "cost",
+          "title": "Understand the website quote",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-320.webp",
+          "art": {
+            "left": 13,
+            "top": 659.171875,
+            "right": 236.25,
+            "bottom": 899.828125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 13,
+            "top": 659.171875,
+            "right": 236.25,
+            "bottom": 899.828125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 13,
+            "right": 236.25,
+            "top": 667.875,
+            "bottom": 891.125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "mobile",
+          "title": "Make a website work on a phone",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-320.webp",
+          "art": {
+            "left": 531.734375,
+            "top": 659.171875,
+            "right": 755,
+            "bottom": 899.828125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 531.734375,
+            "top": 659.171875,
+            "right": 755,
+            "bottom": 899.828125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 531.734375,
+            "right": 755,
+            "top": 667.8671875,
+            "bottom": 891.1328125,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "forms",
+          "title": "Make it easy to send an inquiry",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-320.webp",
+          "art": {
+            "left": 389,
+            "top": 329.828125,
+            "right": 612.25,
+            "bottom": 570.484375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 389,
+            "top": 329.828125,
+            "right": 612.25,
+            "bottom": 570.484375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 389,
+            "right": 612.25,
+            "top": 338.53125,
+            "bottom": 561.78125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-redesign-decision",
+          "title": "Refresh or rebuild a website",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-320.webp",
+          "art": {
+            "left": 155.734375,
+            "top": 455.15625,
+            "right": 379,
+            "bottom": 695.8125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 155.734375,
+            "top": 455.15625,
+            "right": 379,
+            "bottom": 695.8125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 155.734375,
+            "right": 379,
+            "top": 463.8515625,
+            "bottom": 687.1171875,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-accessibility-basics",
+          "title": "Make a website easier to use",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-320.webp",
+          "art": {
+            "left": 13,
+            "top": 330.125,
+            "right": 236.25,
+            "bottom": 570.78125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 13,
+            "top": 330.125,
+            "right": 236.25,
+            "bottom": 570.78125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 13,
+            "right": 236.25,
+            "top": 338.828125,
+            "bottom": 562.078125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-content-collection",
+          "title": "Gather what a website needs",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-320.webp",
+          "art": {
+            "left": 531.734375,
+            "top": 455.453125,
+            "right": 755,
+            "bottom": 696.109375,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 531.734375,
+            "top": 455.453125,
+            "right": 755,
+            "bottom": 696.109375,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 531.734375,
+            "right": 755,
+            "top": 464.1484375,
+            "bottom": 687.4140625,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-service-page",
+          "title": "Explain the services clearly",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-320.webp",
+          "art": {
+            "left": 13,
+            "top": 580.78125,
+            "right": 236.25,
+            "bottom": 821.4375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 13,
+            "top": 580.78125,
+            "right": 236.25,
+            "bottom": 821.4375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 13,
+            "right": 236.25,
+            "top": 589.484375,
+            "bottom": 812.734375,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-photos-with-purpose",
+          "title": "Choose useful business photographs",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-320.webp",
+          "art": {
+            "left": 155.734375,
+            "top": 329.75,
+            "right": 379,
+            "bottom": 570.40625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 155.734375,
+            "top": 329.75,
+            "right": 379,
+            "bottom": 570.40625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 155.734375,
+            "right": 379,
+            "top": 338.4453125,
+            "bottom": 561.7109375,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-menu-and-hours",
+          "title": "Keep hours easy to find",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-320.webp",
+          "art": {
+            "left": 389,
+            "top": 329.75,
+            "right": 612.25,
+            "bottom": 570.40625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 389,
+            "top": 329.75,
+            "right": 612.25,
+            "bottom": 570.40625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 389,
+            "right": 612.25,
+            "top": 338.453125,
+            "bottom": 561.703125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-ecommerce-inventory",
+          "title": "Sell what is actually in stock",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+          "art": {
+            "left": 155.734375,
+            "top": 580.40625,
+            "right": 379,
+            "bottom": 821.0625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 155.734375,
+            "top": 580.40625,
+            "right": 379,
+            "bottom": 821.0625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 155.734375,
+            "right": 379,
+            "top": 589.1015625,
+            "bottom": 812.3671875,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "wifi",
+          "title": "Reach the rooms where work happens",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-320.webp",
+          "art": {
+            "left": 13,
+            "top": 330.125,
+            "right": 236.25,
+            "bottom": 570.78125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 13,
+            "top": 330.125,
+            "right": 236.25,
+            "bottom": 570.78125,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 13,
+            "right": 236.25,
+            "top": 338.828125,
+            "bottom": 562.078125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "email",
+          "title": "Help business email reach people",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-email-320.webp",
+          "art": {
+            "left": 531.734375,
+            "top": 330.125,
+            "right": 755,
+            "bottom": 570.78125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 531.734375,
+            "top": 330.125,
+            "right": 755,
+            "bottom": 570.78125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 531.734375,
+            "right": 755,
+            "top": 338.8203125,
+            "bottom": 562.0859375,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "backup",
+          "title": "Keep a second safe copy",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-320.webp",
+          "art": {
+            "left": 389,
+            "top": 580.78125,
+            "right": 612.25,
+            "bottom": 821.4375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 389,
+            "top": 580.78125,
+            "right": 612.25,
+            "bottom": 821.4375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 389,
+            "right": 612.25,
+            "top": 589.484375,
+            "bottom": 812.734375,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "it-shared-files",
+          "title": "Find the right shared file",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-320.webp",
+          "art": {
+            "left": 531.734375,
+            "top": 329.421875,
+            "right": 755,
+            "bottom": 570.078125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 531.734375,
+            "top": 329.421875,
+            "right": 755,
+            "bottom": 570.078125,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 531.734375,
+            "right": 755,
+            "top": 338.1171875,
+            "bottom": 561.3828125,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-first-priority",
+          "title": "Choose what to fix first",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-320.webp",
+          "art": {
+            "left": 389,
+            "top": 329.953125,
+            "right": 612.25,
+            "bottom": 570.609375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 389,
+            "top": 329.953125,
+            "right": 612.25,
+            "bottom": 570.609375,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 389,
+            "right": 612.25,
+            "top": 338.65625,
+            "bottom": 561.90625,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-tool-choice",
+          "title": "Keep the tools that help",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-320.webp",
+          "art": {
+            "left": 155.734375,
+            "top": 580.609375,
+            "right": 379,
+            "bottom": 821.265625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 155.734375,
+            "top": 580.609375,
+            "right": 379,
+            "bottom": 821.265625,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 155.734375,
+            "right": 379,
+            "top": 589.3046875,
+            "bottom": 812.5703125,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-repeat-work",
+          "title": "Stop entering the same thing repeatedly",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-320.webp",
+          "art": {
+            "left": 389,
+            "top": 329.5,
+            "right": 612.25,
+            "bottom": 570.15625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 389,
+            "top": 329.5,
+            "right": 612.25,
+            "bottom": 570.15625,
+            "width": 223.25,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 389,
+            "right": 612.25,
+            "top": 338.203125,
+            "bottom": 561.453125,
+            "width": 223.25,
+            "height": 223.25
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-approval-path",
+          "title": "Make approvals clear",
+          "decoded": true,
+          "natural": [
+            210,
+            210
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-320.webp",
+          "art": {
+            "left": 155.734375,
+            "top": 454.828125,
+            "right": 379,
+            "bottom": 695.484375,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "image": {
+            "left": 155.734375,
+            "top": 454.828125,
+            "right": 379,
+            "bottom": 695.484375,
+            "width": 223.265625,
+            "height": 240.65625
+          },
+          "pixels": {
+            "left": 155.734375,
+            "right": 379,
+            "top": 463.5234375,
+            "bottom": 686.7890625,
+            "width": 223.265625,
+            "height": 223.265625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        }
+      ]
+    },
+    "1024": {
+      "ids": [
+        "platform",
+        "ownership",
+        "cost",
+        "mobile",
+        "forms",
+        "web-redesign-decision",
+        "web-accessibility-basics",
+        "web-content-collection",
+        "web-service-page",
+        "web-photos-with-purpose",
+        "web-menu-and-hours",
+        "web-ecommerce-inventory",
+        "wifi",
+        "email",
+        "backup",
+        "it-shared-files",
+        "consulting-first-priority",
+        "consulting-tool-choice",
+        "software-repeat-work",
+        "software-approval-path"
+      ],
+      "cards": [
+        {
+          "id": "platform",
+          "title": "Choose a website platform",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-320.webp",
+          "art": {
+            "left": 683.125,
+            "top": 569.78125,
+            "right": 824.765625,
+            "bottom": 719.9375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 683.125,
+            "top": 569.78125,
+            "right": 824.765625,
+            "bottom": 719.9375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 683.125,
+            "right": 824.765625,
+            "top": 574.0390625,
+            "bottom": 715.6796875,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "ownership",
+          "title": "Own your website",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-320.webp",
+          "art": {
+            "left": 281.265625,
+            "top": 651.859375,
+            "right": 422.921875,
+            "bottom": 802.015625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 281.265625,
+            "top": 651.859375,
+            "right": 422.921875,
+            "bottom": 802.015625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 281.265625,
+            "right": 422.921875,
+            "top": 656.109375,
+            "bottom": 797.765625,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "cost",
+          "title": "Understand the website quote",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-320.webp",
+          "art": {
+            "left": 683.125,
+            "top": 733.9375,
+            "right": 824.765625,
+            "bottom": 884.09375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 683.125,
+            "top": 733.9375,
+            "right": 824.765625,
+            "bottom": 884.09375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 683.125,
+            "right": 824.765625,
+            "top": 738.1953125,
+            "bottom": 879.8359375,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "mobile",
+          "title": "Make a website work on a phone",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-320.webp",
+          "art": {
+            "left": 117.140625,
+            "top": 750.015625,
+            "right": 258.796875,
+            "bottom": 900.171875,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 117.140625,
+            "top": 750.015625,
+            "right": 258.796875,
+            "bottom": 900.171875,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 117.140625,
+            "right": 258.796875,
+            "top": 754.265625,
+            "bottom": 895.921875,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "forms",
+          "title": "Make it easy to send an inquiry",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-320.webp",
+          "art": {
+            "left": 519,
+            "top": 750.09375,
+            "right": 660.640625,
+            "bottom": 900.25,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 519,
+            "top": 750.09375,
+            "right": 660.640625,
+            "bottom": 900.25,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 519,
+            "right": 660.640625,
+            "top": 754.3515625,
+            "bottom": 895.9921875,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-redesign-decision",
+          "title": "Refresh or rebuild a website",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-320.webp",
+          "art": {
+            "left": 855.75,
+            "top": 750.09375,
+            "right": 997.40625,
+            "bottom": 900.25,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 855.75,
+            "top": 750.09375,
+            "right": 997.40625,
+            "bottom": 900.25,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 855.75,
+            "right": 997.40625,
+            "top": 754.34375,
+            "bottom": 896,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-accessibility-basics",
+          "title": "Make a website easier to use",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-320.webp",
+          "art": {
+            "left": 354.859375,
+            "top": 375.25,
+            "right": 496.5,
+            "bottom": 525.40625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 354.859375,
+            "top": 375.25,
+            "right": 496.5,
+            "bottom": 525.40625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 354.859375,
+            "right": 496.5,
+            "top": 379.5078125,
+            "bottom": 521.1484375,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-content-collection",
+          "title": "Gather what a website needs",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-320.webp",
+          "art": {
+            "left": 691.609375,
+            "top": 539.40625,
+            "right": 833.265625,
+            "bottom": 689.5625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 691.609375,
+            "top": 539.40625,
+            "right": 833.265625,
+            "bottom": 689.5625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 691.609375,
+            "right": 833.265625,
+            "top": 543.65625,
+            "bottom": 685.3125,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-service-page",
+          "title": "Explain the services clearly",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-320.webp",
+          "art": {
+            "left": 26.59375,
+            "top": 621.484375,
+            "right": 168.234375,
+            "bottom": 771.640625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 26.59375,
+            "top": 621.484375,
+            "right": 168.234375,
+            "bottom": 771.640625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 26.59375,
+            "right": 168.234375,
+            "top": 625.7421875,
+            "bottom": 767.3828125,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-photos-with-purpose",
+          "title": "Choose useful business photographs",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-320.webp",
+          "art": {
+            "left": 691.609375,
+            "top": 703.5625,
+            "right": 833.265625,
+            "bottom": 853.71875,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 691.609375,
+            "top": 703.5625,
+            "right": 833.265625,
+            "bottom": 853.71875,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 691.609375,
+            "right": 833.265625,
+            "top": 707.8125,
+            "bottom": 849.46875,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-menu-and-hours",
+          "title": "Keep hours easy to find",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-320.webp",
+          "art": {
+            "left": 26.59375,
+            "top": 749.640625,
+            "right": 168.234375,
+            "bottom": 899.796875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 26.59375,
+            "top": 749.640625,
+            "right": 168.234375,
+            "bottom": 899.796875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 26.59375,
+            "right": 168.234375,
+            "top": 753.8984375,
+            "bottom": 895.5390625,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-ecommerce-inventory",
+          "title": "Sell what is actually in stock",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+          "art": {
+            "left": 117.140625,
+            "top": 374.796875,
+            "right": 258.796875,
+            "bottom": 524.953125,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 117.140625,
+            "top": 374.796875,
+            "right": 258.796875,
+            "bottom": 524.953125,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 117.140625,
+            "right": 258.796875,
+            "top": 379.046875,
+            "bottom": 520.703125,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "wifi",
+          "title": "Reach the rooms where work happens",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-320.webp",
+          "art": {
+            "left": 683.125,
+            "top": 374.828125,
+            "right": 824.765625,
+            "bottom": 524.984375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 683.125,
+            "top": 374.828125,
+            "right": 824.765625,
+            "bottom": 524.984375,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 683.125,
+            "right": 824.765625,
+            "top": 379.0859375,
+            "bottom": 520.7265625,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "email",
+          "title": "Help business email reach people",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-email-320.webp",
+          "art": {
+            "left": 117.140625,
+            "top": 538.984375,
+            "right": 258.796875,
+            "bottom": 689.140625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 117.140625,
+            "top": 538.984375,
+            "right": 258.796875,
+            "bottom": 689.140625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 117.140625,
+            "right": 258.796875,
+            "top": 543.234375,
+            "bottom": 684.890625,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "backup",
+          "title": "Keep a second safe copy",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-320.webp",
+          "art": {
+            "left": 26.59375,
+            "top": 703.140625,
+            "right": 168.234375,
+            "bottom": 853.296875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 26.59375,
+            "top": 703.140625,
+            "right": 168.234375,
+            "bottom": 853.296875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 26.59375,
+            "right": 168.234375,
+            "top": 707.3984375,
+            "bottom": 849.0390625,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "it-shared-files",
+          "title": "Find the right shared file",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-320.webp",
+          "art": {
+            "left": 363.34375,
+            "top": 375.375,
+            "right": 505,
+            "bottom": 525.53125,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 363.34375,
+            "top": 375.375,
+            "right": 505,
+            "bottom": 525.53125,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 363.34375,
+            "right": 505,
+            "top": 379.625,
+            "bottom": 521.28125,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-first-priority",
+          "title": "Choose what to fix first",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-320.webp",
+          "art": {
+            "left": 601.0625,
+            "top": 375.3125,
+            "right": 742.703125,
+            "bottom": 525.46875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 601.0625,
+            "top": 375.3125,
+            "right": 742.703125,
+            "bottom": 525.46875,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 601.0625,
+            "right": 742.703125,
+            "top": 379.5703125,
+            "bottom": 521.2109375,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-tool-choice",
+          "title": "Keep the tools that help",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-320.webp",
+          "art": {
+            "left": 117.140625,
+            "top": 539.46875,
+            "right": 258.796875,
+            "bottom": 689.625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 117.140625,
+            "top": 539.46875,
+            "right": 258.796875,
+            "bottom": 689.625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 117.140625,
+            "right": 258.796875,
+            "top": 543.71875,
+            "bottom": 685.375,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-repeat-work",
+          "title": "Stop entering the same thing repeatedly",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-320.webp",
+          "art": {
+            "left": 26.59375,
+            "top": 375.25,
+            "right": 168.234375,
+            "bottom": 525.40625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 26.59375,
+            "top": 375.25,
+            "right": 168.234375,
+            "bottom": 525.40625,
+            "width": 141.640625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 26.59375,
+            "right": 168.234375,
+            "top": 379.5078125,
+            "bottom": 521.1484375,
+            "width": 141.640625,
+            "height": 141.640625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-approval-path",
+          "title": "Make approvals clear",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-320.webp",
+          "art": {
+            "left": 773.671875,
+            "top": 375.25,
+            "right": 915.328125,
+            "bottom": 525.40625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "image": {
+            "left": 773.671875,
+            "top": 375.25,
+            "right": 915.328125,
+            "bottom": 525.40625,
+            "width": 141.65625,
+            "height": 150.15625
+          },
+          "pixels": {
+            "left": 773.671875,
+            "right": 915.328125,
+            "top": 379.5,
+            "bottom": 521.15625,
+            "width": 141.65625,
+            "height": 141.65625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        }
+      ]
+    },
+    "1440": {
+      "ids": [
+        "platform",
+        "ownership",
+        "cost",
+        "mobile",
+        "forms",
+        "web-redesign-decision",
+        "web-accessibility-basics",
+        "web-content-collection",
+        "web-service-page",
+        "web-photos-with-purpose",
+        "web-menu-and-hours",
+        "web-ecommerce-inventory",
+        "wifi",
+        "email",
+        "backup",
+        "it-shared-files",
+        "consulting-first-priority",
+        "consulting-tool-choice",
+        "software-repeat-work",
+        "software-approval-path"
+      ],
+      "cards": [
+        {
+          "id": "platform",
+          "title": "Choose a website platform",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-320.webp",
+          "art": {
+            "left": 727,
+            "top": 733.671875,
+            "right": 929.515625,
+            "bottom": 950.328125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 727,
+            "top": 733.671875,
+            "right": 929.515625,
+            "bottom": 950.328125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 727,
+            "right": 929.515625,
+            "top": 740.7421875,
+            "bottom": 943.2578125,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "ownership",
+          "title": "Own your website",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-320.webp",
+          "art": {
+            "left": 164.46875,
+            "top": 733,
+            "right": 367,
+            "bottom": 949.65625,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 164.46875,
+            "top": 733,
+            "right": 367,
+            "bottom": 949.65625,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 164.46875,
+            "right": 367,
+            "top": 740.0625,
+            "bottom": 942.59375,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "cost",
+          "title": "Understand the website quote",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-320.webp",
+          "art": {
+            "left": 1073,
+            "top": 733,
+            "right": 1275.515625,
+            "bottom": 949.65625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 1073,
+            "top": 733,
+            "right": 1275.515625,
+            "bottom": 949.65625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 1073,
+            "right": 1275.515625,
+            "top": 740.0703125,
+            "bottom": 942.5859375,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "mobile",
+          "title": "Make a website work on a phone",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-320.webp",
+          "art": {
+            "left": 856.46875,
+            "top": 733.328125,
+            "right": 1059,
+            "bottom": 949.984375,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 856.46875,
+            "top": 733.328125,
+            "right": 1059,
+            "bottom": 949.984375,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 856.46875,
+            "right": 1059,
+            "top": 740.390625,
+            "bottom": 942.921875,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "forms",
+          "title": "Make it easy to send an inquiry",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-320.webp",
+          "art": {
+            "left": 381,
+            "top": 733.65625,
+            "right": 583.515625,
+            "bottom": 950.3125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 381,
+            "top": 733.65625,
+            "right": 583.515625,
+            "bottom": 950.3125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 381,
+            "right": 583.515625,
+            "top": 740.7265625,
+            "bottom": 943.2421875,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-redesign-decision",
+          "title": "Refresh or rebuild a website",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-320.webp",
+          "art": {
+            "left": 1202.46875,
+            "top": 733.65625,
+            "right": 1405,
+            "bottom": 950.3125,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 1202.46875,
+            "top": 733.65625,
+            "right": 1405,
+            "bottom": 950.3125,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 1202.46875,
+            "right": 1405,
+            "top": 740.71875,
+            "bottom": 943.25,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-accessibility-basics",
+          "title": "Make a website easier to use",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-320.webp",
+          "art": {
+            "left": 727,
+            "top": 732.984375,
+            "right": 929.515625,
+            "bottom": 949.640625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 727,
+            "top": 732.984375,
+            "right": 929.515625,
+            "bottom": 949.640625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 727,
+            "right": 929.515625,
+            "top": 740.0546875,
+            "bottom": 942.5703125,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-content-collection",
+          "title": "Gather what a website needs",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-320.webp",
+          "art": {
+            "left": 625.796875,
+            "top": 366.640625,
+            "right": 828.328125,
+            "bottom": 583.296875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 625.796875,
+            "top": 366.640625,
+            "right": 828.328125,
+            "bottom": 583.296875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 625.796875,
+            "right": 828.328125,
+            "top": 373.703125,
+            "bottom": 576.234375,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-service-page",
+          "title": "Explain the services clearly",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-320.webp",
+          "art": {
+            "left": 842.328125,
+            "top": 366.640625,
+            "right": 1044.84375,
+            "bottom": 583.296875,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 842.328125,
+            "top": 366.640625,
+            "right": 1044.84375,
+            "bottom": 583.296875,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 842.328125,
+            "right": 1044.84375,
+            "top": 373.7109375,
+            "bottom": 576.2265625,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-photos-with-purpose",
+          "title": "Choose useful business photographs",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-320.webp",
+          "art": {
+            "left": 1087.125,
+            "top": 597.296875,
+            "right": 1289.65625,
+            "bottom": 813.953125,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 1087.125,
+            "top": 597.296875,
+            "right": 1289.65625,
+            "bottom": 813.953125,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 1087.125,
+            "right": 1289.65625,
+            "top": 604.359375,
+            "bottom": 806.890625,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-menu-and-hours",
+          "title": "Keep hours easy to find",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-320.webp",
+          "art": {
+            "left": 35,
+            "top": 712.625,
+            "right": 237.515625,
+            "bottom": 929.28125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 35,
+            "top": 712.625,
+            "right": 237.515625,
+            "bottom": 929.28125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 35,
+            "right": 237.515625,
+            "top": 719.6953125,
+            "bottom": 922.2109375,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "web-ecommerce-inventory",
+          "title": "Sell what is actually in stock",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-320.webp",
+          "art": {
+            "left": 164.46875,
+            "top": 733.28125,
+            "right": 367,
+            "bottom": 949.9375,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 164.46875,
+            "top": 733.28125,
+            "right": 367,
+            "bottom": 949.9375,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 164.46875,
+            "right": 367,
+            "top": 740.34375,
+            "bottom": 942.875,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "wifi",
+          "title": "Reach the rooms where work happens",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-320.webp",
+          "art": {
+            "left": 957.65625,
+            "top": 366.5625,
+            "right": 1160.171875,
+            "bottom": 583.21875,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 957.65625,
+            "top": 366.5625,
+            "right": 1160.171875,
+            "bottom": 583.21875,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 957.65625,
+            "right": 1160.171875,
+            "top": 373.6328125,
+            "bottom": 576.1484375,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "email",
+          "title": "Help business email reach people",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-email-320.webp",
+          "art": {
+            "left": 164.46875,
+            "top": 597.21875,
+            "right": 367,
+            "bottom": 813.875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 164.46875,
+            "top": 597.21875,
+            "right": 367,
+            "bottom": 813.875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 164.46875,
+            "right": 367,
+            "top": 604.28125,
+            "bottom": 806.8125,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "backup",
+          "title": "Keep a second safe copy",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-320.webp",
+          "art": {
+            "left": 35,
+            "top": 732.875,
+            "right": 237.515625,
+            "bottom": 949.53125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 35,
+            "top": 732.875,
+            "right": 237.515625,
+            "bottom": 949.53125,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 35,
+            "right": 237.515625,
+            "top": 739.9453125,
+            "bottom": 942.4609375,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "it-shared-files",
+          "title": "Find the right shared file",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-320.webp",
+          "art": {
+            "left": 856.46875,
+            "top": 366.53125,
+            "right": 1059,
+            "bottom": 583.1875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 856.46875,
+            "top": 366.53125,
+            "right": 1059,
+            "bottom": 583.1875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 856.46875,
+            "right": 1059,
+            "top": 373.59375,
+            "bottom": 576.125,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-first-priority",
+          "title": "Choose what to fix first",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-320.webp",
+          "art": {
+            "left": 842.328125,
+            "top": 366.859375,
+            "right": 1044.84375,
+            "bottom": 583.515625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 842.328125,
+            "top": 366.859375,
+            "right": 1044.84375,
+            "bottom": 583.515625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 842.328125,
+            "right": 1044.84375,
+            "top": 373.9296875,
+            "bottom": 576.4453125,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "consulting-tool-choice",
+          "title": "Keep the tools that help",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-320.webp",
+          "art": {
+            "left": 164.46875,
+            "top": 597.515625,
+            "right": 367,
+            "bottom": 814.171875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 164.46875,
+            "top": 597.515625,
+            "right": 367,
+            "bottom": 814.171875,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 164.46875,
+            "right": 367,
+            "top": 604.578125,
+            "bottom": 807.109375,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-repeat-work",
+          "title": "Stop entering the same thing repeatedly",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-320.webp",
+          "art": {
+            "left": 35,
+            "top": 366.859375,
+            "right": 237.515625,
+            "bottom": 583.515625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 35,
+            "top": 366.859375,
+            "right": 237.515625,
+            "bottom": 583.515625,
+            "width": 202.515625,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 35,
+            "right": 237.515625,
+            "top": 373.9296875,
+            "bottom": 576.4453125,
+            "width": 202.515625,
+            "height": 202.515625
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        },
+        {
+          "id": "software-approval-path",
+          "title": "Make approvals clear",
+          "decoded": true,
+          "natural": [
+            220,
+            220
+          ],
+          "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-320.webp",
+          "art": {
+            "left": 510.46875,
+            "top": 366.859375,
+            "right": 713,
+            "bottom": 583.515625,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "image": {
+            "left": 510.46875,
+            "top": 366.859375,
+            "right": 713,
+            "bottom": 583.515625,
+            "width": 202.53125,
+            "height": 216.65625
+          },
+          "pixels": {
+            "left": 510.46875,
+            "right": 713,
+            "top": 373.921875,
+            "bottom": 576.453125,
+            "width": 202.53125,
+            "height": 202.53125
+          },
+          "insideArt": true,
+          "titlePixelOverlap": 0
+        }
+      ]
+    }
+  },
+  "readers": {
+    "platform": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-platform-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 252.125,
+        "right": 1206,
+        "bottom": 581.59375,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 252.125,
+        "right": 1206,
+        "bottom": 614.78125,
+        "width": 329.46875,
+        "height": 362.65625
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 591.59375,
+        "right": 1206,
+        "bottom": 614.78125,
+        "width": 329.46875,
+        "height": 23.1875
+      },
+      "captionText": "Choose the foundation that fits the work.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "ownership": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-ownership-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 587.25,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 597.25,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Keep the website and its accounts in your control.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "cost": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-cost-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 216.75,
+        "right": 1206,
+        "bottom": 546.21875,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 216.75,
+        "right": 1206,
+        "bottom": 602.59375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 556.21875,
+        "right": 1206,
+        "bottom": 602.59375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "A useful quote starts with the work the site needs to do.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "mobile": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-mobile-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 587.25,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 597.25,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Make the customer’s next step just as clear on a phone.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "forms": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-forms-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 269.375,
+        "right": 1206,
+        "bottom": 598.84375,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 269.375,
+        "right": 1206,
+        "bottom": 632.03125,
+        "width": 329.46875,
+        "height": 362.65625
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 608.84375,
+        "right": 1206,
+        "bottom": 632.03125,
+        "width": 329.46875,
+        "height": 23.1875
+      },
+      "captionText": "An inquiry should have a clear place to go.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-redesign-decision": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-redesign-decision-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Start by deciding what needs care and what needs replacing.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-accessibility-basics": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-accessibility-basics-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 298.828125,
+        "right": 1206,
+        "bottom": 628.296875,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 298.828125,
+        "right": 1206,
+        "bottom": 684.671875,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 638.296875,
+        "right": 1206,
+        "bottom": 684.671875,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Make the first path easier for more people to use.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-content-collection": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-content-collection-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 212,
+        "right": 1206,
+        "bottom": 541.46875,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 212,
+        "right": 1206,
+        "bottom": 597.84375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 551.46875,
+        "right": 1206,
+        "bottom": 597.84375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Gather the real details customers need before the build begins.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-service-page": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-service-page-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 252.125,
+        "right": 1206,
+        "bottom": 581.59375,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 252.125,
+        "right": 1206,
+        "bottom": 614.78125,
+        "width": 329.46875,
+        "height": 362.65625
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 591.59375,
+        "right": 1206,
+        "bottom": 614.78125,
+        "width": 329.46875,
+        "height": 23.1875
+      },
+      "captionText": "Give each service a clear way to explain itself.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-photos-with-purpose": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-photos-with-purpose-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Choose photographs that help someone understand the work.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-menu-and-hours": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-menu-and-hours-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Make the details of a visit easy to find at the right moment.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "web-ecommerce-inventory": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-web-ecommerce-inventory-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "A shop should show what customers can actually buy.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "wifi": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-wifi-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 587.25,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 257.78125,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 597.25,
+        "right": 1206,
+        "bottom": 643.625,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Place the connection where the work actually happens.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "email": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-email-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Help important messages reach the people waiting for them.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "backup": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-backup-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "A second copy is most useful when it is kept somewhere separate.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "it-shared-files": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-it-shared-files-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Put the needed file where the next person can find it.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "consulting-first-priority": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-first-priority-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 228.34375,
+        "right": 1206,
+        "bottom": 557.8125,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 228.34375,
+        "right": 1206,
+        "bottom": 591,
+        "width": 329.46875,
+        "height": 362.65625
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 567.8125,
+        "right": 1206,
+        "bottom": 591,
+        "width": 329.46875,
+        "height": 23.1875
+      },
+      "captionText": "Start with the work that needs attention first.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "consulting-tool-choice": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-consulting-tool-choice-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 216.75,
+        "right": 1206,
+        "bottom": 546.21875,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 216.75,
+        "right": 1206,
+        "bottom": 602.59375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 556.21875,
+        "right": 1206,
+        "bottom": 602.59375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Keep the tools that help and question the duplicates.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "software-repeat-work": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-software-repeat-work-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 570,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 240.53125,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 580,
+        "right": 1206,
+        "bottom": 626.375,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Let one clear action replace work that gets repeated.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    },
+    "software-approval-path": {
+      "decoded": true,
+      "natural": [
+        864,
+        864
+      ],
+      "source": "http://127.0.0.1:4399/assets/illustrations/story-software-approval-path-960.webp",
+      "image": {
+        "left": 876.53125,
+        "top": 281.578125,
+        "right": 1206,
+        "bottom": 611.046875,
+        "width": 329.46875,
+        "height": 329.46875
+      },
+      "figure": {
+        "left": 876.53125,
+        "top": 281.578125,
+        "right": 1206,
+        "bottom": 667.421875,
+        "width": 329.46875,
+        "height": 385.84375
+      },
+      "caption": {
+        "left": 876.53125,
+        "top": 621.046875,
+        "right": 1206,
+        "bottom": 667.421875,
+        "width": 329.46875,
+        "height": 46.375
+      },
+      "captionText": "Make the next decision and its owner easy to see.",
+      "imageInsideFigure": true,
+      "captionInsideFigure": true,
+      "captionImageOverlap": 0
+    }
+  },
+  "axe": [
+    {
+      "name": "home-320",
+      "violations": []
+    },
+    {
+      "name": "reader-platform-320",
+      "violations": []
+    }
+  ],
+  "screenshots": [
+    "/tmp/lf20-artifact-final/mosaic-web-320.png",
+    "/tmp/lf20-artifact-final/mosaic-web-1440.png",
+    "/tmp/lf20-artifact-final/reader-platform-320.png",
+    "/tmp/lf20-artifact-final/reader-ownership-1440.png"
+  ]
+}

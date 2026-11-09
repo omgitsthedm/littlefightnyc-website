@@ -1,0 +1,824 @@
+{
+  "views": [
+    {
+      "width": 320,
+      "height": 900,
+      "normal": [
+        320,
+        320
+      ],
+      "header": {
+        "rail": [
+          {
+            "w": 75,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 75,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 75,
+            "h": 44,
+            "hit": true
+          }
+        ],
+        "close": {
+          "w": 44,
+          "h": 44,
+          "hit": true
+        },
+        "benefits": [
+          {
+            "text": "Built around your business.Your brand, your services, and your customer’s next step.",
+            "href": "#reader-compare",
+            "target": true
+          },
+          {
+            "text": "Built for search and marketing.Useful pages, fast code, and clear ways to contact you.",
+            "href": "#reader-search",
+            "target": true
+          },
+          {
+            "text": "You own your website.The code, domain, and content stay yours.",
+            "href": "#reader-ownership",
+            "target": true
+          },
+          {
+            "text": "We handle the technical work.Design, writing, setup, launch, and monthly care.",
+            "href": "#reader-launch",
+            "target": true
+          },
+          {
+            "text": "No monthly hosting fee.A custom quote. No builder subscription.",
+            "href": "#reader-plan",
+            "target": true
+          },
+          {
+            "text": "Live in six weeks or less.From an agreed brief and ready materials.",
+            "href": "#reader-launch",
+            "target": true
+          }
+        ]
+      },
+      "heroLink": {
+        "open": true,
+        "path": "/services/custom-local-websites/",
+        "targetTop": 188.859375
+      },
+      "journey": {
+        "result": {
+          "hidden": false,
+          "role": "tablist",
+          "tabs": [
+            {
+              "id": "rw-tab-inquiry",
+              "choice": "inquiry",
+              "controls": "rw-panel-inquiry",
+              "selected": "true"
+            },
+            {
+              "id": "rw-tab-booking",
+              "choice": "booking",
+              "controls": "rw-panel-booking",
+              "selected": "false"
+            },
+            {
+              "id": "rw-tab-visit",
+              "choice": "visit",
+              "controls": "rw-panel-visit",
+              "selected": "false"
+            }
+          ],
+          "panels": [
+            {
+              "id": "rw-panel-inquiry",
+              "hidden": false
+            },
+            {
+              "id": "rw-panel-booking",
+              "hidden": true
+            },
+            {
+              "id": "rw-panel-visit",
+              "hidden": true
+            }
+          ]
+        },
+        "click": {
+          "selected": [
+            "inquiry:false",
+            "booking:true",
+            "visit:false"
+          ],
+          "visible": [
+            "booking"
+          ]
+        },
+        "right": {
+          "active": "visit",
+          "visible": [
+            "visit"
+          ]
+        },
+        "home": "inquiry",
+        "end": "visit"
+      },
+      "images": [
+        {
+          "choice": "inquiry",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Chromatic Painting and Design website showing painting and mural work.",
+              "naturalWidth": 272,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/chromatic-painting-design/",
+            "/case-studies/chromatic-painting-design/"
+          ]
+        },
+        {
+          "choice": "booking",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path.",
+              "naturalWidth": 272,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/hair-by-rachel-charles/",
+            "/case-studies/hair-by-rachel-charles/"
+          ]
+        },
+        {
+          "choice": "visit",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Easy Tiger Bar website showing menu, events, and visit choices.",
+              "naturalWidth": 272,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/easy-tiger/",
+            "/case-studies/easy-tiger/"
+          ]
+        }
+      ],
+      "paused": {
+        "before": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ],
+        "after": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ]
+      },
+      "a11y": {
+        "skipped": "run at 1440 only"
+      },
+      "text200": [
+        320,
+        320
+      ]
+    },
+    {
+      "width": 390,
+      "height": 900,
+      "normal": [
+        390,
+        390
+      ],
+      "header": {
+        "rail": [
+          {
+            "w": 98.328125,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 98.34375,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 98.328125,
+            "h": 44,
+            "hit": true
+          }
+        ],
+        "close": {
+          "w": 44,
+          "h": 44,
+          "hit": true
+        },
+        "benefits": [
+          {
+            "text": "Built around your business.Your brand, your services, and your customer’s next step.",
+            "href": "#reader-compare",
+            "target": true
+          },
+          {
+            "text": "Built for search and marketing.Useful pages, fast code, and clear ways to contact you.",
+            "href": "#reader-search",
+            "target": true
+          },
+          {
+            "text": "You own your website.The code, domain, and content stay yours.",
+            "href": "#reader-ownership",
+            "target": true
+          },
+          {
+            "text": "We handle the technical work.Design, writing, setup, launch, and monthly care.",
+            "href": "#reader-launch",
+            "target": true
+          },
+          {
+            "text": "No monthly hosting fee.A custom quote. No builder subscription.",
+            "href": "#reader-plan",
+            "target": true
+          },
+          {
+            "text": "Live in six weeks or less.From an agreed brief and ready materials.",
+            "href": "#reader-launch",
+            "target": true
+          }
+        ]
+      },
+      "heroLink": {
+        "open": true,
+        "path": "/services/custom-local-websites/",
+        "targetTop": 136.5625
+      },
+      "journey": {
+        "result": {
+          "hidden": false,
+          "role": "tablist",
+          "tabs": [
+            {
+              "id": "rw-tab-inquiry",
+              "choice": "inquiry",
+              "controls": "rw-panel-inquiry",
+              "selected": "true"
+            },
+            {
+              "id": "rw-tab-booking",
+              "choice": "booking",
+              "controls": "rw-panel-booking",
+              "selected": "false"
+            },
+            {
+              "id": "rw-tab-visit",
+              "choice": "visit",
+              "controls": "rw-panel-visit",
+              "selected": "false"
+            }
+          ],
+          "panels": [
+            {
+              "id": "rw-panel-inquiry",
+              "hidden": false
+            },
+            {
+              "id": "rw-panel-booking",
+              "hidden": true
+            },
+            {
+              "id": "rw-panel-visit",
+              "hidden": true
+            }
+          ]
+        },
+        "click": {
+          "selected": [
+            "inquiry:false",
+            "booking:true",
+            "visit:false"
+          ],
+          "visible": [
+            "booking"
+          ]
+        },
+        "right": {
+          "active": "visit",
+          "visible": [
+            "visit"
+          ]
+        },
+        "home": "inquiry",
+        "end": "visit"
+      },
+      "images": [
+        {
+          "choice": "inquiry",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Chromatic Painting and Design website showing painting and mural work.",
+              "naturalWidth": 342,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/chromatic-painting-design/",
+            "/case-studies/chromatic-painting-design/"
+          ]
+        },
+        {
+          "choice": "booking",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path.",
+              "naturalWidth": 342,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/hair-by-rachel-charles/",
+            "/case-studies/hair-by-rachel-charles/"
+          ]
+        },
+        {
+          "choice": "visit",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Easy Tiger Bar website showing menu, events, and visit choices.",
+              "naturalWidth": 342,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/easy-tiger/",
+            "/case-studies/easy-tiger/"
+          ]
+        }
+      ],
+      "paused": {
+        "before": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ],
+        "after": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ]
+      },
+      "a11y": {
+        "skipped": "run at 1440 only"
+      },
+      "text200": [
+        390,
+        390
+      ]
+    },
+    {
+      "width": 768,
+      "height": 1000,
+      "normal": [
+        768,
+        768
+      ],
+      "header": {
+        "rail": [
+          {
+            "w": 63.390625,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 66.09375,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 76.25,
+            "h": 44,
+            "hit": true
+          }
+        ],
+        "close": {
+          "w": 48,
+          "h": 48,
+          "hit": true
+        },
+        "benefits": [
+          {
+            "text": "Built around your business.Your brand, your services, and your customer’s next step.",
+            "href": "#reader-compare",
+            "target": true
+          },
+          {
+            "text": "Built for search and marketing.Useful pages, fast code, and clear ways to contact you.",
+            "href": "#reader-search",
+            "target": true
+          },
+          {
+            "text": "You own your website.The code, domain, and content stay yours.",
+            "href": "#reader-ownership",
+            "target": true
+          },
+          {
+            "text": "We handle the technical work.Design, writing, setup, launch, and monthly care.",
+            "href": "#reader-launch",
+            "target": true
+          },
+          {
+            "text": "No monthly hosting fee.A custom quote. No builder subscription.",
+            "href": "#reader-plan",
+            "target": true
+          },
+          {
+            "text": "Live in six weeks or less.From an agreed brief and ready materials.",
+            "href": "#reader-launch",
+            "target": true
+          }
+        ]
+      },
+      "heroLink": {
+        "open": true,
+        "path": "/services/custom-local-websites/",
+        "targetTop": 120.421875
+      },
+      "journey": {
+        "result": {
+          "hidden": false,
+          "role": "tablist",
+          "tabs": [
+            {
+              "id": "rw-tab-inquiry",
+              "choice": "inquiry",
+              "controls": "rw-panel-inquiry",
+              "selected": "true"
+            },
+            {
+              "id": "rw-tab-booking",
+              "choice": "booking",
+              "controls": "rw-panel-booking",
+              "selected": "false"
+            },
+            {
+              "id": "rw-tab-visit",
+              "choice": "visit",
+              "controls": "rw-panel-visit",
+              "selected": "false"
+            }
+          ],
+          "panels": [
+            {
+              "id": "rw-panel-inquiry",
+              "hidden": false
+            },
+            {
+              "id": "rw-panel-booking",
+              "hidden": true
+            },
+            {
+              "id": "rw-panel-visit",
+              "hidden": true
+            }
+          ]
+        },
+        "click": {
+          "selected": [
+            "inquiry:false",
+            "booking:true",
+            "visit:false"
+          ],
+          "visible": [
+            "booking"
+          ]
+        },
+        "right": {
+          "active": "visit",
+          "visible": [
+            "visit"
+          ]
+        },
+        "home": "inquiry",
+        "end": "visit"
+      },
+      "images": [
+        {
+          "choice": "inquiry",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Chromatic Painting and Design website showing painting and mural work.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/chromatic-painting-design/",
+            "/case-studies/chromatic-painting-design/"
+          ]
+        },
+        {
+          "choice": "booking",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/hair-by-rachel-charles/",
+            "/case-studies/hair-by-rachel-charles/"
+          ]
+        },
+        {
+          "choice": "visit",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Easy Tiger Bar website showing menu, events, and visit choices.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/easy-tiger/",
+            "/case-studies/easy-tiger/"
+          ]
+        }
+      ],
+      "paused": {
+        "before": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ],
+        "after": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ]
+      },
+      "a11y": {
+        "skipped": "run at 1440 only"
+      },
+      "text200": [
+        768,
+        768
+      ]
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "normal": [
+        1440,
+        1440
+      ],
+      "header": {
+        "rail": [
+          {
+            "w": 63.390625,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 66.09375,
+            "h": 44,
+            "hit": true
+          },
+          {
+            "w": 76.25,
+            "h": 44,
+            "hit": true
+          }
+        ],
+        "close": {
+          "w": 48,
+          "h": 48,
+          "hit": true
+        },
+        "benefits": [
+          {
+            "text": "Built around your business.Your brand, your services, and your customer’s next step.",
+            "href": "#reader-compare",
+            "target": true
+          },
+          {
+            "text": "Built for search and marketing.Useful pages, fast code, and clear ways to contact you.",
+            "href": "#reader-search",
+            "target": true
+          },
+          {
+            "text": "You own your website.The code, domain, and content stay yours.",
+            "href": "#reader-ownership",
+            "target": true
+          },
+          {
+            "text": "We handle the technical work.Design, writing, setup, launch, and monthly care.",
+            "href": "#reader-launch",
+            "target": true
+          },
+          {
+            "text": "No monthly hosting fee.A custom quote. No builder subscription.",
+            "href": "#reader-plan",
+            "target": true
+          },
+          {
+            "text": "Live in six weeks or less.From an agreed brief and ready materials.",
+            "href": "#reader-launch",
+            "target": true
+          }
+        ]
+      },
+      "heroLink": {
+        "open": true,
+        "path": "/services/custom-local-websites/",
+        "targetTop": 130.578125
+      },
+      "journey": {
+        "result": {
+          "hidden": false,
+          "role": "tablist",
+          "tabs": [
+            {
+              "id": "rw-tab-inquiry",
+              "choice": "inquiry",
+              "controls": "rw-panel-inquiry",
+              "selected": "true"
+            },
+            {
+              "id": "rw-tab-booking",
+              "choice": "booking",
+              "controls": "rw-panel-booking",
+              "selected": "false"
+            },
+            {
+              "id": "rw-tab-visit",
+              "choice": "visit",
+              "controls": "rw-panel-visit",
+              "selected": "false"
+            }
+          ],
+          "panels": [
+            {
+              "id": "rw-panel-inquiry",
+              "hidden": false
+            },
+            {
+              "id": "rw-panel-booking",
+              "hidden": true
+            },
+            {
+              "id": "rw-panel-visit",
+              "hidden": true
+            }
+          ]
+        },
+        "click": {
+          "selected": [
+            "inquiry:false",
+            "booking:true",
+            "visit:false"
+          ],
+          "visible": [
+            "booking"
+          ]
+        },
+        "right": {
+          "active": "visit",
+          "visible": [
+            "visit"
+          ]
+        },
+        "home": "inquiry",
+        "end": "visit"
+      },
+      "images": [
+        {
+          "choice": "inquiry",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Chromatic Painting and Design website showing painting and mural work.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/chromatic-painting-design/",
+            "/case-studies/chromatic-painting-design/"
+          ]
+        },
+        {
+          "choice": "booking",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Hair By Rachel services page showing service choices and a clear booking path.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/hair-by-rachel-charles/",
+            "/case-studies/hair-by-rachel-charles/"
+          ]
+        },
+        {
+          "choice": "visit",
+          "hidden": false,
+          "images": [
+            {
+              "alt": "Easy Tiger Bar website showing menu, events, and visit choices.",
+              "naturalWidth": 640,
+              "complete": true
+            }
+          ],
+          "links": [
+            "/case-studies/easy-tiger/",
+            "/case-studies/easy-tiger/"
+          ]
+        }
+      ],
+      "paused": {
+        "before": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ],
+        "after": [
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000",
+          "1.0000"
+        ]
+      },
+      "a11y": {
+        "violations": 0
+      },
+      "text200": [
+        1440,
+        1440
+      ]
+    }
+  ],
+  "noJs": {
+    "canonical": "https://littlefightnyc.com/services/custom-local-websites/",
+    "main": true,
+    "seo": true,
+    "panels": [
+      {
+        "panel": "inquiry",
+        "hidden": false
+      },
+      {
+        "panel": "booking",
+        "hidden": false
+      },
+      {
+        "panel": "visit",
+        "hidden": false
+      }
+    ],
+    "tabs": true,
+    "overflow": [
+      390,
+      390
+    ]
+  }
+}

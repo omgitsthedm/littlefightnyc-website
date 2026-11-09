@@ -1,0 +1,194 @@
+[
+  {
+    "width": 390,
+    "data": [
+      {
+        "style": "spotlight",
+        "ratingOnly": false,
+        "quote": "“built us a beautiful site”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 178.984375,
+          "height": 178.984375
+        },
+        "overflow": true
+      },
+      {
+        "style": "frame",
+        "ratingOnly": false,
+        "quote": "“Clear communication, expectations and timelines!”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 178.984375,
+          "height": 241.3125
+        },
+        "overflow": false
+      },
+      {
+        "style": "spark",
+        "ratingOnly": false,
+        "quote": "“Quick to respond”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 178.984375,
+          "height": 178.984375
+        },
+        "overflow": false
+      },
+      {
+        "style": "ribbon",
+        "ratingOnly": false,
+        "quote": "“easy to work with”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 178.984375,
+          "height": 178.984375
+        },
+        "overflow": false
+      },
+      {
+        "style": "echo",
+        "ratingOnly": false,
+        "quote": "“Absolutely love love love!”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 179,
+          "height": 178.984375
+        },
+        "overflow": true
+      },
+      {
+        "style": "constellation",
+        "ratingOnly": true,
+        "quote": "",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": null,
+        "rect": {
+          "width": 179,
+          "height": 178.984375
+        },
+        "overflow": false
+      },
+      {
+        "style": "orbit",
+        "ratingOnly": false,
+        "quote": "“ensuring a painless experience.”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 18,
+        "rect": {
+          "width": 178.984375,
+          "height": 178.984375
+        },
+        "overflow": false
+      }
+    ]
+  },
+  {
+    "width": 1440,
+    "data": [
+      {
+        "style": "spotlight",
+        "ratingOnly": false,
+        "quote": "“built us a beautiful site”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": true
+      },
+      {
+        "style": "frame",
+        "ratingOnly": false,
+        "quote": "“Clear communication, expectations and timelines!”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": false
+      },
+      {
+        "style": "spark",
+        "ratingOnly": false,
+        "quote": "“Quick to respond”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": false
+      },
+      {
+        "style": "ribbon",
+        "ratingOnly": false,
+        "quote": "“easy to work with”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": false
+      },
+      {
+        "style": "echo",
+        "ratingOnly": false,
+        "quote": "“Absolutely love love love!”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": true
+      },
+      {
+        "style": "constellation",
+        "ratingOnly": true,
+        "quote": "",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": null,
+        "rect": {
+          "width": 218.671875,
+          "height": 218.65625
+        },
+        "overflow": false
+      },
+      {
+        "style": "orbit",
+        "ratingOnly": false,
+        "quote": "“ensuring a painless experience.”",
+        "stars": 5,
+        "starPx": 18,
+        "quotePx": 22,
+        "rect": {
+          "width": 334,
+          "height": 218.65625
+        },
+        "overflow": false
+      }
+    ]
+  }
+]
