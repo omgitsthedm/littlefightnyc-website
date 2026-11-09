@@ -1,0 +1,114 @@
+[
+  {
+    "key": "clearhelp-tablet-20261008",
+    "project": "clearhelp",
+    "url": "https://clearhelp.org/",
+    "profile": "tablet",
+    "kind": "fresh-public-capture",
+    "file": "clearhelp/clearhelp-tablet-20261008.png",
+    "sha256": "bfa63b6da86e268e559f972e5c9574ad420d246991d72365ad13c14428d887d0",
+    "viewport": {
+      "width": 834,
+      "height": 1112
+    },
+    "deviceScaleFactor": 2,
+    "width": 1668,
+    "height": 2224,
+    "capturedAt": "2026-10-08T17:51:10.648Z",
+    "browser": "installed Google Chrome",
+    "state": "Public opening, fonts settled; no submission",
+    "observed": {
+      "url": "https://clearhelp.org/",
+      "title": "Find Free Help Near You — Food, Shelter & Health | ClearHelp",
+      "heading": "Find real help near you.",
+      "scrollY": 0,
+      "brokenVisibleImages": []
+    },
+    "pageErrors": [],
+    "review": "pending"
+  },
+  {
+    "key": "the-break-room-duo-20261008",
+    "project": "the-break-room",
+    "url": "https://thebreakroompoolhall.com/",
+    "profile": "duo",
+    "kind": "fresh-public-capture",
+    "file": "the-break-room/the-break-room-duo-20261008.png",
+    "sha256": "a458fadf8889a1d492bfa43cc431f1e9beea379b0f332497b6dec99472d36c95",
+    "viewport": {
+      "width": 900,
+      "height": 632
+    },
+    "deviceScaleFactor": 2,
+    "width": 1800,
+    "height": 1264,
+    "capturedAt": "2026-10-08T17:51:19.242Z",
+    "browser": "installed Google Chrome",
+    "state": "Public opening, fonts settled; no submission",
+    "observed": {
+      "url": "https://thebreakroompoolhall.com/",
+      "title": "The Break Room — Pool, Darts, Food & Sports in Glendale",
+      "heading": "BreakTheRoutine.",
+      "scrollY": 0,
+      "brokenVisibleImages": []
+    },
+    "pageErrors": [],
+    "review": "pending"
+  },
+  {
+    "key": "the-tarot-hotline-duo-20261008",
+    "project": "the-tarot-hotline",
+    "url": "https://thetarothotline.com/",
+    "profile": "duo",
+    "kind": "fresh-public-capture",
+    "file": "the-tarot-hotline/the-tarot-hotline-duo-20261008.png",
+    "sha256": "d79a7867575df252a99ad826dd785cdaa418dd9517cf9522cbd49f0c34714a15",
+    "viewport": {
+      "width": 900,
+      "height": 632
+    },
+    "deviceScaleFactor": 2,
+    "width": 1800,
+    "height": 1264,
+    "capturedAt": "2026-10-08T17:51:23.042Z",
+    "browser": "installed Google Chrome",
+    "state": "Public opening, fonts settled; no submission",
+    "observed": {
+      "url": "https://thetarothotline.com/",
+      "title": "Tarot Readings for the Curious | The Tarot Hotline",
+      "heading": "Clarity iscalling.",
+      "scrollY": 0,
+      "brokenVisibleImages": []
+    },
+    "pageErrors": [],
+    "review": "pending"
+  },
+  {
+    "key": "grand-funding-llc-tablet-20261008",
+    "project": "grand-funding-llc",
+    "url": "https://www.grandfundingllc.com/",
+    "profile": "tablet",
+    "kind": "fresh-public-capture",
+    "file": "grand-funding-llc/grand-funding-llc-tablet-20261008.png",
+    "sha256": "d00f176354f3cf7e24399b93df879f31d07582160fc4e03aaadb43a78fb3b8e2",
+    "viewport": {
+      "width": 834,
+      "height": 1112
+    },
+    "deviceScaleFactor": 2,
+    "width": 1668,
+    "height": 2224,
+    "capturedAt": "2026-10-08T17:54:25.317Z",
+    "browser": "installed Google Chrome",
+    "state": "Public opening, fonts settled; no submission",
+    "observed": {
+      "url": "https://www.grandfundingllc.com/",
+      "title": "Grand Funding LLC | Hard Money Loans AZ & CA | 24hr Approval",
+      "heading": "Fast Hard Money Loans for Arizona & California Investors",
+      "scrollY": 0,
+      "brokenVisibleImages": []
+    },
+    "pageErrors": [],
+    "review": "pending"
+  }
+]

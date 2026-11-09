@@ -26,7 +26,7 @@ reset, clean, or stash it.
 Open only what the task needs:
 
 - Deployment or routing: `SOURCE_OF_TRUTH.md` and `netlify.toml`
-- Product or visual work: `app/DESIGN.md`, then `app/src/styles/editorial/tokens.css`
+- Product or visual work: `app/DESIGN.md` and the working agreement in `design-qa.md`, then the presentation files named there. `app/src/styles/editorial/tokens.css` governs retained React intake screens, not the sculpture marketing gallery.
 - Voice or public claims: `VOICE.md` and the relevant business policy
 - Quality behavior: `.lifi/quality.yml`, the applicable package script, and the failing test
 

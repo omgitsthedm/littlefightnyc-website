@@ -1,0 +1,136 @@
+[
+  {
+    "name": "hero-master-desktop",
+    "frame": "master-hero",
+    "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+    "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+    "sources": [
+      {
+        "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+        "sha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6"
+      },
+      {
+        "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-hero-photo.png",
+        "sha256": "d6f257f87a7b92435da472519866bda93e0b07ed1d5f7d138ced2afe73b81d2d"
+      }
+    ],
+    "portraitCrop": [
+      1560,
+      400,
+      2784,
+      2000
+    ],
+    "portraitMask": "Apple Vision person segmentation; alpha only, original RGB retained",
+    "screenQuadrilaterals": {
+      "rear": [
+        [
+          369,
+          249
+        ],
+        [
+          1180,
+          298
+        ],
+        [
+          1180,
+          620
+        ],
+        [
+          369,
+          665
+        ]
+      ],
+      "front": [
+        [
+          814,
+          484
+        ],
+        [
+          1325,
+          484
+        ],
+        [
+          1325,
+          735
+        ],
+        [
+          814,
+          735
+        ]
+      ]
+    },
+    "outputSize": [
+      1881,
+      836
+    ],
+    "outputSha256": "6b82e5156314b7306d52b8ade6fb81b1e217a2fd6484031ed779001908fd0581",
+    "method": "Approved source pixels in the master-derived physical stage; real navigation, real original building photo, and original portrait on its existing website yellow. No generated client imagery survives in the visible display interiors."
+  },
+  {
+    "name": "hero-master-mobile",
+    "frame": "master-hero",
+    "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+    "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+    "sources": [
+      {
+        "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+        "sha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6"
+      },
+      {
+        "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-hero-photo.png",
+        "sha256": "d6f257f87a7b92435da472519866bda93e0b07ed1d5f7d138ced2afe73b81d2d"
+      }
+    ],
+    "portraitCrop": [
+      1560,
+      400,
+      2784,
+      2000
+    ],
+    "portraitMask": "Apple Vision person segmentation; alpha only, original RGB retained",
+    "screenQuadrilaterals": {
+      "rear": [
+        [
+          229,
+          221
+        ],
+        [
+          993,
+          272
+        ],
+        [
+          993,
+          650
+        ],
+        [
+          229,
+          692
+        ]
+      ],
+      "front": [
+        [
+          625,
+          459
+        ],
+        [
+          1160,
+          459
+        ],
+        [
+          1160,
+          782
+        ],
+        [
+          625,
+          782
+        ]
+      ]
+    },
+    "outputSize": [
+      1634,
+      963
+    ],
+    "outputSha256": "da46664055a4959650b4e00054e34f7915936bcd8f2ff98d791fff6a915385d5",
+    "method": "Approved source pixels in the master-derived physical stage; real navigation, real original building photo, and original portrait on its existing website yellow. No generated client imagery survives in the visible display interiors."
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "tiles": 79,
+  "tileInventoryIdentical": true,
+  "heroHtmlIdentical": true,
+  "heroHtmlSha256": "cadee91a263fd5ae75f45f401bbc2beaf7c0f88af08d1f39aa28a6521639fe00",
+  "finalArtifactSha256": "9d4ebbbe0056d950fa52bc8ad573e9684d7f4ea8d7d260ceceddfa8bcb2e8482",
+  "servedArtifactMatches": true,
+  "reviewUrl": "http://127.0.0.1:65031/?qa=1&v=mixed-tile-rhythm#topic-web"
+}

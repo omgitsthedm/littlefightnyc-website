@@ -1,0 +1,23 @@
+{
+  "asset": "mobile-v1.png",
+  "source": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "source_region": "MOBILE panel miniature artwork, approximately x=820..1109, y=295..481",
+  "method": "OpenAI built-in image generation edit",
+  "prompt": "Extract and clean up the exact master mobile miniature scene into an opaque 1.55:1 hero image: orange tugboat, Chromatic screen, yellow Hair By Rachel portrait screen, cream storefront/tree, shared warm floor. Remove pointer and project captions; exclude all page UI, text, panel border, and tile content.",
+  "invariants": [
+    "keep mobile-master relative object order and warm claymation materials",
+    "opaque deep near-black stage",
+    "no pointer/cursor",
+    "no captions or page text"
+  ],
+  "dimensions": {
+    "width": 1561,
+    "height": 1008
+  },
+  "sha256": "29f7b863bd7842a5ed8125d021c57310e26e607ee978c04d692b0e511dc283f7",
+  "known_deviations": [
+    "The generative cleanup re-rendered the browser chrome and building facade rather than preserving every source pixel.",
+    "The generated storefront and tree are slightly larger and farther right than the narrow mobile reference grouping.",
+    "The source's exact individual caption pixels were removed as requested."
+  ]
+}

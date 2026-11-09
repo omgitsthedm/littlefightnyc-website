@@ -1,0 +1,285 @@
+[
+  {
+    "id": "brand-brief",
+    "art": "boat",
+    "size": [
+      1306,
+      207.65625
+    ],
+    "image": [
+      547.671875,
+      205.65625
+    ],
+    "geometry": [
+      "12",
+      "2"
+    ],
+    "title": "Little Fight NYC"
+  },
+  {
+    "id": "case-hair-by-rachel-charles",
+    "art": "browser-hair-by-rachel-charles",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Hair By Rachel"
+  },
+  {
+    "id": "booking",
+    "art": "booking-calendar",
+    "size": [
+      317.5,
+      317.484375
+    ],
+    "image": [
+      303.5,
+      195.046875
+    ],
+    "geometry": [
+      "3",
+      "3"
+    ],
+    "title": "Bookings, calls and messages."
+  },
+  {
+    "id": "web-homepage-priority",
+    "art": "homepage-sketchbook",
+    "size": [
+      317.5,
+      317.484375
+    ],
+    "image": [
+      303.5,
+      195.046875
+    ],
+    "geometry": [
+      "3",
+      "3"
+    ],
+    "title": "Why aren’t visitors contacting you?"
+  },
+  {
+    "id": "google-review-4",
+    "size": [
+      317.5,
+      427.3125
+    ],
+    "geometry": [
+      "3",
+      "4"
+    ]
+  },
+  {
+    "id": "web-content-collection",
+    "art": "content-camera",
+    "size": [
+      317.5,
+      317.484375
+    ],
+    "image": [
+      303.5,
+      195.046875
+    ],
+    "geometry": [
+      "3",
+      "3"
+    ],
+    "title": "What we need to get started."
+  },
+  {
+    "id": "case-cc-films",
+    "art": "browser-cc-films",
+    "size": [
+      537.171875,
+      427.3125
+    ],
+    "image": [
+      523.171875,
+      331.203125
+    ],
+    "geometry": [
+      "5",
+      "4"
+    ],
+    "title": "CC Films"
+  },
+  {
+    "id": "case-easy-tiger",
+    "art": "browser-easy-tiger",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Easy Tiger Bar"
+  },
+  {
+    "id": "case-the-break-room",
+    "art": "browser-the-break-room",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "The Break Room"
+  },
+  {
+    "id": "case-clearhelp",
+    "art": "browser-clearhelp",
+    "size": [
+      427.34375,
+      427.3125
+    ],
+    "image": [
+      413.34375,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "ClearHelp"
+  },
+  {
+    "id": "case-army-navy-bags",
+    "art": "browser-army-navy-bags",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      303.40625
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Army & Navy Bags"
+  },
+  {
+    "id": "case-brothers-pizzeria",
+    "art": "browser-brothers-pizzeria",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      303.40625
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Brothers Pizzeria"
+  },
+  {
+    "id": "case-grand-funding-llc",
+    "art": "browser-grand-funding-llc",
+    "size": [
+      427.34375,
+      427.3125
+    ],
+    "image": [
+      413.34375,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Grand Funding LLC"
+  },
+  {
+    "id": "case-legacy-music-group",
+    "art": "browser-legacy-music-group",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      303.40625
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Legacy Music Group"
+  },
+  {
+    "id": "case-logan-loans",
+    "art": "browser-logan-loans",
+    "size": [
+      427.328125,
+      427.3125
+    ],
+    "image": [
+      413.328125,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "Logan Loans"
+  },
+  {
+    "id": "case-the-tarot-hotline",
+    "art": "browser-the-tarot-hotline",
+    "size": [
+      427.34375,
+      427.3125
+    ],
+    "image": [
+      413.34375,
+      331.203125
+    ],
+    "geometry": [
+      "4",
+      "4"
+    ],
+    "title": "The Tarot Hotline"
+  },
+  {
+    "id": "page-industries",
+    "art": "storefront",
+    "size": [
+      317.5,
+      317.484375
+    ],
+    "image": [
+      303.5,
+      195.046875
+    ],
+    "geometry": [
+      "3",
+      "3"
+    ],
+    "title": "A website for your business."
+  }
+]

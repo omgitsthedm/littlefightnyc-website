@@ -1,0 +1,58 @@
+00:00.358  blend            | Read blend: "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/asset-work/website-devices/duo.blend"
+/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/asset-work/website-devices/model-details.py:21: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  if not m or not m.use_nodes:continue
+ VozFyMVAwkoHjOE EMPTY 119 (1.5708, -0.0, 0.0)
+   ecOFHvzjpmGQnNS EMPTY 1 (0.0, -0.0, 0.0)
+     HSsYFMrRMLtGMxa EMPTY 0 (0.0, -0.0, 0.0)
+   oiUDqkWwTyKwnqQ EMPTY 116 (0.0, -0.0, 0.0)
+     xRLfDaARzGhpJRl EMPTY 115 (0.0, -0.0, 0.0)
+       bLGVKucFHZXPlJf EMPTY 0 (0.0, -0.0, 0.0)
+       ddUtWDgQuBTYSEY EMPTY 0 (0.0, -0.0, 0.0)
+       HPnmzcIImWvVtsh EMPTY 0 (0.0, -0.0, 0.0)
+       pAozAexmhJgprgi EMPTY 111 (0.0, -0.0, 0.0)
+frames 0 0 actions []
+SURFACE bsNHOLGaZbhIluH dimensions [0.06719585135579109, 0.003413198166526854, 0.1179492480455906] center (0.0078, 0.0028, 0.059) verts 884
+ MAT kUUqfCXsMaJHyje images [('Image Texture', 'dkizPfAaJCeekxv.png', (256, 256))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE fapSTOypmavuPic dimensions [0.08016221970319748, 0.003726186230778694, 0.1152841649018228] center (-0.0, 0.0073, 0.059) verts 2596
+ MAT eNDiNFhhBNyrPgP images [('Image Texture', 'ZsHNiHKcJhErviz.jpg', (512, 512)), ('Image Texture.001', 'KJqLujGRCuLHVMP.png', (512, 512))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE fdaipPEGAeomuPG dimensions [0.0676245242357254, 0.004895023972494528, 0.11794933795226825] center (0.0076, -0.0029, 0.059) verts 576
+ MAT yakTRrHfzYtGymu images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE gjdjMOcCfrwBMYH dimensions [0.08121665939688683, 0.0007822786880780086, 0.11648487683851272] center (0.0, 0.0004, 0.059) verts 1698
+ MAT AfMuGuGyrRdWvGa images [('Image Texture', 'DRxasyqSkWckIrI.jpg', (512, 512)), ('Image Texture.001', 'KJqLujGRCuLHVMP.png', (512, 512))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE hhgAIoCGsHXeDPY dimensions [0.0773935541510582, 4.563480615615845e-08, 0.11251289024949074] center (-0.0, -0.0055, 0.059) verts 166
+ MAT bVtHVUZGvQeXwdh images [('Image Texture', 'QBBzYEDdGGrfdSL.avif', (1024, 2048))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '1.0')]
+SURFACE iKZSoAlRlDlkSEw dimensions [0.08132024854421616, 0.0047193667851388454, 0.1167534562991932] center (0.0, -0.0031, 0.0589) verts 642
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE jJermpgmctotTSe dimensions [0.08245348557829857, 0.005028039129683748, 0.11794937485058199] center (0.0001, 0.003, 0.059) verts 5412
+ MAT pOHYMArkYgGMSvE images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE JnJdTkxbQgUtLwU dimensions [0.07884516194462776, 0.0025522576179355383, 0.11327030695974827] center (-0.0004, 0.0, 0.059) verts 960
+ MAT DHVeopyQCCjAHKQ images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE jnMRBCmgCrfRBeG dimensions [0.06762450747191906, 0.004895023914286867, 0.11794932267639524] center (0.0076, 0.0029, 0.059) verts 576
+ MAT yakTRrHfzYtGymu images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE lJPfQMFXvvcmdtA dimensions [0.16612500697374344, 0.06108535826206207, 0.11838947825508406] center (-0.0, 0.0, 0.0592) verts 24
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE mjecbCFnfurWWJV dimensions [0.07606786862015724, 0.004127418622374535, 0.11661095992894843] center (0.0027, 0.0029, 0.059) verts 72
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE PXwNjghIIgDPXsa dimensions [0.08025744557380676, 0.004031524091260508, 0.11584574822336435] center (-0.0009, -0.0022, 0.059) verts 424
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE qyiwePzfWzVHIDO dimensions [0.08245350420475006, 0.005028039187891409, 0.11794936775459064] center (0.0001, -0.003, 0.059) verts 4390
+ MAT pOHYMArkYgGMSvE images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE RwQzmCvUWHGlFfV dimensions [0.08025742694735527, 0.004031524003949016, 0.1158457329729572] center (-0.0009, 0.0022, 0.059) verts 424
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE SCDZMtVjLrcxENj dimensions [0.08140035346150398, 0.010163050552364439, 0.1167982944753021] center (0.0001, 0.0059, 0.0589) verts 804
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE svvOILdVxasRAOk dimensions [0.08121667429804802, 0.0007822786475646382, 0.11648489278741181] center (0.0, -0.0004, 0.059) verts 1600
+ MAT AfMuGuGyrRdWvGa images [('Image Texture', 'DRxasyqSkWckIrI.jpg', (512, 512)), ('Image Texture.001', 'KJqLujGRCuLHVMP.png', (512, 512))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE tLtsGCMtMAZfCYN dimensions [0.08016225323081017, 0.004039501305669546, 0.1152841649018228] center (-0.0, 0.0071, 0.059) verts 2558
+ MAT nfSKIKcFQpPcaTk images [('Image Texture', 'JPjlyCIBrJGaate.jpg', (512, 1024)), ('Image Texture.001', 'ZsHNiHKcJhErviz.jpg', (512, 512)), ('Image Texture.002', 'fxAdjuEBqczWSSx.jpg', (512, 1024)), ('Image Texture.003', 'KJqLujGRCuLHVMP.png', (512, 512))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE UPeNpLgJbcWzHun dimensions [0.08016221970319748, 0.0035622110590338707, 0.11528417223598808] center (-0.0, 0.0068, 0.059) verts 2456
+ MAT hpXWDkYkMocrDql images [('Image Texture', 'GSWJxiCgBOzzWvI.jpg', (512, 1024))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE uWPCbpPKzwJOmUY dimensions [0.07606788352131844, 0.004127418214920908, 0.11661097512114793] center (0.0027, -0.0029, 0.059) verts 80
+ MAT udkIoumZEJmNcgx images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+SURFACE UXtsBZYlaUvHoEh dimensions [0.07767727598547935, 0.0024532489478588104, 0.11103497073054314] center (-0.0009, 0.0, 0.059) verts 295
+ MAT UBwioVSWewZpuRX images [('Image Texture', 'OojuzFaMfhmMMQJ.png', (4, 4)), ('Image Texture.001', 'HxgKuovaIMWoJog.png', (16, 16)), ('Image Texture.002', 'QjcONWCxTjnRgmR.png', (16, 16))] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '1.0')]
+SURFACE xpVpaKuQKnXQhFj dimensions [0.08016226813197136, 0.00039975065737962723, 0.11528416746295989] center (-0.0, -0.0053, 0.059) verts 614
+ MAT DHVeopyQCCjAHKQ images [] emission [('Emission Color', '<bpy_float[4], NodeSocketColor.default_value>'), ('Emission Strength', '0.0')]
+Blender 5.2.2 LTS (hash d13f752e3b9c built 2026-09-15 01:49:19)
+
+Blender quit

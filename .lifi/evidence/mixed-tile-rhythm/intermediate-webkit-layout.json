@@ -1,0 +1,5365 @@
+{
+  "browser": "Playwright WebKit",
+  "checks": [
+    {
+      "name": "Only the requested redundant brand front was removed; all other destinations retained",
+      "passed": true
+    },
+    {
+      "name": "All 72 illustrated tiles use globally unique artwork",
+      "passed": true
+    },
+    {
+      "name": "No large extruded symbol illustrations remain",
+      "passed": true
+    },
+    {
+      "name": "Unique artwork names resolve to 72 different image files",
+      "passed": true
+    },
+    {
+      "name": "Seven review tiles have no 3D star illustration",
+      "passed": true
+    },
+    {
+      "name": "printer appears exactly once among all tiles",
+      "passed": true
+    },
+    {
+      "name": "security appears exactly once among all tiles",
+      "passed": true
+    },
+    {
+      "name": "software appears exactly once among all tiles",
+      "passed": true
+    },
+    {
+      "name": "All 413 reader route mappings retained",
+      "passed": true
+    },
+    {
+      "name": "Every composited screenshot source remains byte exact",
+      "passed": true
+    },
+    {
+      "name": "Protected VERA source bytes unchanged",
+      "passed": true
+    },
+    {
+      "name": "Website case studies use desktop, tablet, iPhone and Duo presentations",
+      "passed": true
+    },
+    {
+      "name": "Hero uses the supplied master artwork with two project links and no added props",
+      "passed": true
+    },
+    {
+      "name": "Category icons distinguish every non-review tile",
+      "passed": true
+    },
+    {
+      "name": "320px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "320px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "320px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 37488,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47256,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "320px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 37488,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47256,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "320px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 37488,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47256,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "320px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 27720,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 37488,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47256,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "360px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "360px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "360px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "360px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 31920,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 43168,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "360px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 31920,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 43168,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "360px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 31920,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 43168,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "360px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 31920,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 43168,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 43168,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "375px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "375px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "375px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "375px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 33600,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 33600,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "375px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 33600,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 33600,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "375px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 33600,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 33600,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "375px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 33600,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 33600,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45440,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "393px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "393px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "393px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "393px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 35490,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 35490,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "393px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 35490,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 35490,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "393px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 35490,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 35490,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "393px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 35490,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 35490,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47996,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "414px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "414px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "414px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "414px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 37590,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37590,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "414px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 37590,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37590,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "414px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 37590,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37590,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "414px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 37590,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37590,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50836,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "430px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "430px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "430px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "430px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 39270,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 39270,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53108,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53108,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "430px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 39270,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 39270,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53108,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53108,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "430px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 39270,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 39270,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53108,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53108,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "430px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 39270,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 39270,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53108,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53108,
+          "maxHeight": 286,
+          "footprints": 2,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "540px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "540px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "540px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "540px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 50820,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "540px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 50820,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "540px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 50820,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "540px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 50820,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 68728,
+          "maxHeight": 360,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "600px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "600px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "600px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "600px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42210,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42210,
+          "maxHeight": 212,
+          "footprints": 2,
+          "heights": 1,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42210,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 57084,
+          "maxHeight": 360,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "600px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42210,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42210,
+          "maxHeight": 212,
+          "footprints": 2,
+          "heights": 1,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42210,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 57084,
+          "maxHeight": 360,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "600px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42210,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42210,
+          "maxHeight": 212,
+          "footprints": 2,
+          "heights": 1,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42210,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 57084,
+          "maxHeight": 360,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "600px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42210,
+          "maxHeight": 360,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42210,
+          "maxHeight": 212,
+          "footprints": 2,
+          "heights": 1,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42210,
+          "maxHeight": 286,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 57084,
+          "maxHeight": 360,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "640px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "640px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "640px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "640px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 54800,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48238,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "640px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 54800,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48238,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "640px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 54800,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48238,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "640px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": false,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48238,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 54800,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48238,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "667px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "667px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "667px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "667px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37380,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 36990,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "667px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37380,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 36990,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "667px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37380,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 36990,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "667px prevents Websites from dominating the typical tile scale",
+      "passed": false,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37380,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 36990,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 50730,
+          "maxHeight": 372,
+          "footprints": 7,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "744px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "744px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "744px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "744px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 42542,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "744px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 42542,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "744px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 42542,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "744px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 42542,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "744px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 42542,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 42542,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "768px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "768px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "768px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "768px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 44144,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 44144,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 44114,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 59630,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "768px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 44144,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 44144,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 44114,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 59630,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "768px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 44144,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 44144,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 44114,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 59630,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "768px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 44144,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 44144,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 44114,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 59630,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "768px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 44144,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 44144,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 44114,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 59630,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "800px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "800px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "800px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "800px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 46280,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 46280,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "800px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 46280,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 46280,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "800px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 46280,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 46280,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "800px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 46280,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 46280,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "800px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 46280,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 46280,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 46306,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "820px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "820px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "820px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "820px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42008,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "820px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42008,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "820px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42008,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "820px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42008,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "820px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42008,
+          "maxHeight": 372,
+          "footprints": 4,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 47676,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "834px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "834px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "834px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "834px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42898,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "834px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42898,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "834px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42898,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "834px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42898,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "834px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 42898,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 48498,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "912px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "912px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "912px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "912px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 47526,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47526,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "912px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 47526,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47526,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "912px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 47526,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47526,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "912px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 47526,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47526,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "912px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 47526,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 47526,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 53704,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1000px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1000px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1000px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1000px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1000px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1000px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1000px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1000px prevents Websites from dominating the typical tile scale",
+      "passed": false,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1001px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1001px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1001px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1001px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 51264,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37914,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1001px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 51264,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37914,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1001px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 51264,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37914,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1001px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 51264,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37914,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1001px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 51264,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 37914,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 6,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 58362,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1024px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1024px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1024px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1024px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1024px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1024px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1024px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1024px prevents Websites from dominating the typical tile scale",
+      "passed": false,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 52688,
+          "maxHeight": 372,
+          "footprints": 3,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 38982,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 38634,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 60006,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1180px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1180px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1180px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1180px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45758,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45924,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1180px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45758,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45924,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1180px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45758,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45924,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1180px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45758,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45924,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1180px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 45924,
+          "maxHeight": 276,
+          "footprints": 3,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 45758,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 45924,
+          "maxHeight": 372,
+          "footprints": 5,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1280px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1280px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1280px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1280px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50374,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1280px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50374,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1280px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50374,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1280px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50374,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1280px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 50374,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 56992,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1366px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1366px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1366px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1366px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 54112,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1366px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 54112,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1366px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 54112,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1366px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 54112,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1366px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 54112,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 61650,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1440px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1440px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1440px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1440px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1440px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1440px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1440px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1440px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1920px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1920px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1920px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1920px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1920px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1920px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1920px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "1920px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "2560px has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "2560px has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "2560px keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "2560px keeps the four category tile scales comparable",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "2560px avoids oversized collection tiles after interactive previews load",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "2560px uses one title and icon scale across all collections",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "2560px keeps varied, interlocking compositions in every category",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "2560px prevents Websites from dominating the typical tile scale",
+      "passed": true,
+      "detail": [
+        {
+          "topic": "web",
+          "medianArea": 56248,
+          "maxHeight": 372,
+          "footprints": 6,
+          "heights": 3,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "it",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 5,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "consulting",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        },
+        {
+          "topic": "software",
+          "medianArea": 63842,
+          "maxHeight": 276,
+          "footprints": 4,
+          "heights": 2,
+          "interlocks": true,
+          "consistentType": true
+        }
+      ]
+    },
+    {
+      "name": "320px 200% text has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "320px 200% text has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320px 200% text keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "393px 200% text has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "393px 200% text has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "393px 200% text keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1440px 200% text has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1440px 200% text has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1440px 200% text keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "Homepage has no Axe violations",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "320px without JavaScript has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "320px without JavaScript has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "320px without JavaScript keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "393px without JavaScript has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "393px without JavaScript has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "393px without JavaScript keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "834px without JavaScript has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "834px without JavaScript has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "834px without JavaScript keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "1440px without JavaScript has 79 sculptural tiles after the requested brand tile removal",
+      "passed": true,
+      "detail": 79
+    },
+    {
+      "name": "1440px without JavaScript has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "1440px without JavaScript keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No page errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "No failed local resources",
+      "passed": true,
+      "detail": []
+    }
+  ],
+  "errors": [],
+  "resources": [],
+  "screenshots": [
+    "sculpture-home-webkit-393.png",
+    "sculpture-home-webkit-834.png",
+    "sculpture-home-webkit-1440.png"
+  ],
+  "physicalDevices": "Not verified by this desktop browser run",
+  "version": "26.5",
+  "result": "failed",
+  "fatal": "AssertionError [ERR_ASSERTION]: Sculpture contract failures\n\n3 !== 0\n\n    at main (/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/app/scripts/verify-sculpture.cjs:178:103)"
+}

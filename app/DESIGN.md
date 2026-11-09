@@ -36,13 +36,17 @@ motion:
   ease-out: "cubic-bezier(0.22, 1, 0.36, 1)"
 ---
 
-# Current marketing direction — Soft Mineral + Edge Light
+# Current marketing direction — Sculpture + Edge Light
 
-Owner-directed replacement, October 2, 2026. The original 110-tile mosaic is preserved and extended to 133 tiles, grouped into Websites, On-Site IT Support, Consulting, Custom Software, and Reviews. Preserve the 12-column desktop / 6-column mobile square-unit grid, 4×2 anchors, 4×4 photo albums, charcoal mineral surfaces, five semantic service colors, Atkinson Hyperlegible Next body and home typography, Manrope reader headings, original tugboat and Phosphor icons, and physical press/lift/flip/expand/reverse motion. Honor reduced motion. Navigation uses plus signs; the primary navigation is in the header and utility navigation is in a full-width footer.
+Owner-directed master, October 7–8, 2026: `/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Master Design Mockup.png`. This working copy is a local review candidate, not evidence of publication or owner acceptance of every new tile arrangement. The supplied master controls the hero composition and the sculptural materials, lighting and depth. Preserve its existing implementation when the request concerns only the tiles.
 
-Every opened editorial tile starts with Call, Text, and Email, then an orange headline, a short summary, contextual images or icons, the complete explanation, and a next step. Retain original paragraphs and destinations. Cases, Labs, albums, brand tiles, and review evidence stay orange within their service groups. Individual review tiles show verified excerpts, five stars, first names, and their Google source links.
+The current home has 79 visible tiles after the owner explicitly removed the redundant “Little Fight NYC / Real people in your corner” front. Websites, Tech support, Consulting and Custom software share a comparable card scale, typography, gutters and surface treatment, with deliberate compact, wide and portrait cards in every collection. Preserve source/keyboard order, readable enlarged text, proportional artwork, category colors, original icons and finite physical motion; honor reduced motion. Historical 110/133-tile counts and fixed square-grid dimensions are not instructions for this candidate.
 
-The implementation and provenance contract are `preview-ui/` and `preview-content/import-provenance.json`. Each tile has a real static URL; cases show actual product images and Labs open preserved working applications. VERA remains a protected independent browser product within this deployment.
+Read the working agreement and current scope proof in [`../design-qa.md`](../design-qa.md) before making visual changes. Each new request amends the existing project: a sizing correction does not reopen the hero, tugboat, artwork, screenshots, buttons, copy or destinations. Preserve the complete tile inventory and inspect all four collections together on desktop and phones. Do not replace images or invent a new art style to solve a layout problem. Use the registered approved screenshot sources and retain their provenance.
+
+Every opened editorial tile starts with Call, Text, and Email, then an orange headline, a short summary, contextual images or icons, the complete explanation, and a next step. Retain original paragraphs, destinations and each tile's existing semantic accent. Individual review tiles show verified excerpts, five flat stars, first names, and their Google source links; do not restore the removed 3D review illustrations.
+
+The marketing presentation authority is `preview-ui/sculpture.css`, `preview-ui/vendor/mosaic-layout.js`, `scripts/sculpture_tiles.py` and `preview-content/import-provenance.json`; the existing source manifests and `scripts/approved_screens.py` govern imagery. Each tile has a real static URL; cases show actual product images and Labs open preserved working applications. VERA remains a protected independent browser product within this deployment.
 
 The following historical React design supports retained intake islands only. It is not authority for the new marketing site.
 

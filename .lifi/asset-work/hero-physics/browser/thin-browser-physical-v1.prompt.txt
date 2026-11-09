@@ -1,0 +1,8 @@
+Use case: product-mockup
+Asset type: a premium physical browser-window frame, isolated on transparent alpha, for a web hero. The live page overlays authentic screenshot pixels over its central screen.
+Use Image 1 for the master site's warm practical light and petite miniature realism. Use Image 2 only for the believable graphite browser material and tiny three colored controls.
+Make one slim, straight-on landscape browser frame, orthographic frontal camera with no rotation or perspective. The frame must have a thin real physical graphite/cast-resin lip with faint microtexture and a subtle warm edge reflection from upper-left. It should feel like a 3mm-thick object, never like a deep monitor, tablet, phone, industrial slab, or black box.
+The central opening must be an absolutely clean, perfectly rectangular neutral light gray placeholder screen, reading as a single flat plane with no text, imagery, browser chrome, glare or reflections. The outer browser should nearly fill the transparent 4:3 canvas, with small clear margins; the visible bezel should be very thin (around 1% of browser width at the sides and bottom) and the top toolbar only modestly taller, around 3% of browser height. Keep corners almost square with a soft 5px radius.
+Place only three small red, amber, and green buttons at top left. No address bar, labels, icons, title, logo, watermark, client artwork, floor, shadow, glow or backdrop. Preserve the tactile physical surface, but keep all geometry clean and screen-ready.
+
+Execution: built-in ImageGen output preserved unmodified as the selected physical frame. Its center is transparent, intentionally left as the approved screenshot-overlay aperture.

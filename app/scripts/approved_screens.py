@@ -11,7 +11,7 @@ import os
 import re
 
 APP = Path(__file__).resolve().parents[1]
-LIBRARY = Path(os.environ.get('LFNYC_APPROVED_SCREENSHOTS', '/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07')).expanduser().resolve()
+LIBRARY = Path(os.environ.get('LFNYC_APPROVED_SCREENSHOTS', '/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07')).expanduser().resolve()
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -61,11 +61,32 @@ def require_approved(source, approved):
 
 def audit():
     approved = approved_originals()
+    # This is the owner's supplied illustration, not a substitute website capture.
+    # Keep its source and visible RGB exact while HTML owns the editable controls.
+    from PIL import Image
+    import numpy as np
+    master = json.loads((APP.parent / '.lifi/design-source/sculpture/hero-reference.json').read_text())
+    if sha256(Path(master['source'])) != master['sourceSha256']:
+        raise ValueError('The selected master reference changed')
+    source_image = Image.open(master['source']).convert('RGBA')
+    for output in master['outputs']:
+        path = APP.parent / output['file']
+        if sha256(path) != output['sha256']:
+            raise ValueError(f'Master artwork changed: {output["name"]}')
+        expected = np.array(source_image.crop(output['crop']))
+        actual = np.array(Image.open(path).convert('RGBA'))
+        if actual.shape != expected.shape or not np.array_equal(actual[actual[:,:,3] > 0,:3], expected[actual[:,:,3] > 0,:3]):
+            raise ValueError(f'Master illustration pixels were altered: {output["name"]}')
     receipts = json.loads((APP.parent / '.lifi/design-source/sculpture/screen-composites.json').read_text())
     for receipt in receipts:
         # Authored photography is separate from website screenshots in the brief.
         if receipt['frame'] == 'photo': continue
         require_approved((APP / receipt['source']).resolve(), approved)
+        for source in receipt.get('sources', []):
+            path = Path(source['path'])
+            require_approved(path, approved)
+            if source['sha256'] != sha256(path):
+                raise ValueError(f'Additional composite source changed: {receipt["name"]}')
         if receipt['sourceSha256'] != sha256((APP / receipt['source']).resolve()):
             raise ValueError(f'Composite source receipt changed: {receipt["name"]}')
         if receipt.get('outputSha256') != sha256(APP / 'public/assets/sculpture' / (receipt['name']+'.webp')):

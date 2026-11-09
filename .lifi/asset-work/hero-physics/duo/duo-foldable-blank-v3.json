@@ -1,0 +1,30 @@
+{
+  "asset": "duo-foldable-blank-v3.png",
+  "method": "OpenAI built-in image generation edit",
+  "source_asset": "duo-foldable-blank-v2.png",
+  "prompt": "Remove only every exterior gray glow, ambient halo, vignette, haze, gradient, backdrop and reflection from v2; preserve the 135-degree fold geometry, neutral-gray screen, graphite bezel, crease, silhouette and screen coordinates. Leave full alpha outside direct hardware edges.",
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "screen_alignment_guides_px": {
+    "left_top_outer_usable_screen": [170, 148],
+    "center_top_crease": [768, 232],
+    "right_top_outer_usable_screen": [1363, 147],
+    "left_bottom_outer_usable_screen": [172, 855],
+    "center_bottom_crease": [768, 783],
+    "right_bottom_outer_usable_screen": [1363, 855]
+  },
+  "alpha_validation": {
+    "format": "RGBA",
+    "tested_pixels": {
+      "0,0": "srgba(0,0,0,0)",
+      "100,100": "srgba(0,0,0,0)",
+      "100,512": "srgba(0,0,0,0)",
+      "768,0": "srgba(0,0,0,0)",
+      "768,100": "srgba(0,0,0,0)"
+    },
+    "visual_composite": "inspection-v3-over-magenta.png verified that no external aura, vignette, or backdrop remains."
+  },
+  "sha256": "b9afa91361e1de170e05925aced23c7015991fae9cf54b5f26c693a313fa3298"
+}

@@ -85,12 +85,13 @@ async function browserLanes() {
     run("node", ["scripts/verify-tile-preview.cjs"], env);
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });
     // The selected sculpture composition has a shared four-service opening,
-    // physical screenshot frames, and 80 sculptural fronts. Its new visual
+    // physical screenshot frames, and 79 sculptural fronts. Its new visual
     // contract replaces the previous 6x3-anchor/editorial-collage snapshots.
     run("node", [presentation === "sculpture-clay-2026-10-07" ? "scripts/verify-sculpture.cjs" : "scripts/verify-topic-mosaic.cjs"], env);
     if (presentation === "sculpture-clay-2026-10-07") {
       run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
       run("node", ["scripts/verify-responsive-sculpture.cjs"], env);
+      run("node", ["scripts/verify-hero-reference.cjs"], env);
     }
     run("node", ["scripts/verify-lab-fronts.cjs"], { ...env, LAB_FRONTS_URL: url });
     run("node", ["scripts/verify-construction-labs.cjs"], { ...env, CONSTRUCTION_URL: url });

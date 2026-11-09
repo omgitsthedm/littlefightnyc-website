@@ -1,0 +1,1420 @@
+{
+  "schema": 1,
+  "kind": "owner-authorized-replacement-library",
+  "authorization": "Owner authorized the best verifiable fallback on 2026-10-07 and rebuilding the missing library inside Desktop/LiFi Tile Website in this session. Byte-exact recovered historical captures and fresh signed-out public captures only.",
+  "originalLibraryRecovered": false,
+  "recoveryReason": "The original screenshot folders and manifest were no longer present after the Desktop reorganization. New captures are dated as new, never claimed to be recovered originals.",
+  "capturePolicy": "Public pages in a new signed-out installed Google Chrome context. No submissions, payment, private accounts or client pixel reconstruction.",
+  "records": [
+    {
+      "key": "brothers-pizzeria-desktop",
+      "project": "brothers-pizzeria",
+      "file": "brothers-pizzeria/brothers-pizzeria-desktop.webp",
+      "sha256": "54013a99e72436c3e1b1a5b77468a09c3c6a10d1bc08cacf1ec0cfbf203dd802",
+      "profile": "desktop",
+      "kind": "historical-concept-capture",
+      "width": 1200,
+      "height": 2000,
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "sourceUrl": "https://littlefightnyc.com/assets/case-brothers-pizzeria.webp",
+      "originalCaptureDate": "unknown",
+      "recoveredAt": "2026-10-08",
+      "recoveredFrom": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/app/public/assets/case-brothers-pizzeria-explore.webp",
+      "recoveryProof": "Byte-exact SHA-256 match to the previously verified original in portfolio-delivery.json.",
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "army-navy-bags-desktop",
+      "project": "army-navy-bags",
+      "file": "army-navy-bags/army-navy-bags-desktop.webp",
+      "sha256": "43fa58f581ea06b2c0cc3812b192af4e39d4aeeae1851c8c01b5c151a330e9cf",
+      "profile": "desktop",
+      "kind": "historical-concept-capture",
+      "width": 1200,
+      "height": 2000,
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "sourceUrl": "https://littlefightnyc.com/assets/case-army-navy-bags.webp",
+      "originalCaptureDate": "unknown",
+      "recoveredAt": "2026-10-08",
+      "recoveredFrom": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/app/public/assets/case-army-navy-bags-explore.webp",
+      "recoveryProof": "Byte-exact SHA-256 match to the previously verified original in portfolio-delivery.json.",
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "legacy-music-group-desktop",
+      "project": "legacy-music-group",
+      "file": "legacy-music-group/legacy-music-group-desktop.webp",
+      "sha256": "439f3451c0d24c24c7e0dedf33417319ce71a122857d272900715f7a5ef86db5",
+      "profile": "desktop",
+      "kind": "historical-concept-capture",
+      "width": 1200,
+      "height": 2000,
+      "crop": [
+        0,
+        0,
+        1200,
+        835
+      ],
+      "sourceUrl": "https://littlefightnyc.com/assets/case-legacy-music-group.webp",
+      "originalCaptureDate": "unknown",
+      "recoveredAt": "2026-10-08",
+      "recoveredFrom": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/app/public/assets/case-legacy-music-group-explore.webp",
+      "recoveryProof": "Byte-exact SHA-256 match to the previously verified original in portfolio-delivery.json.",
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-hero-slim",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-hero-slim.png",
+      "sha256": "bdb9b20c074396122896b8eabed0ae37545312adb17a2836c3f83913efef8c78",
+      "viewport": {
+        "width": 1328,
+        "height": 798
+      },
+      "deviceScaleFactor": 2,
+      "width": 2656,
+      "height": 1596,
+      "capturedAt": "2026-10-08T04:37:36.807Z",
+      "browser": "installed Google Chrome",
+      "state": "Public homepage at the physical screen opening aspect ratio; fonts settled; scroll 0; optional analytics declined through native control; no DOM modifications",
+      "observed": {
+        "title": "Chromatic Painting & Design | Phoenix painting and murals",
+        "heading": "Phoenix, repainted.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "little-fight-nyc-master-hero-v2",
+      "project": "little-fight-nyc",
+      "file": "little-fight-nyc/little-fight-nyc-master-hero-v2.png",
+      "sha256": "33a3579f0d0dba6da260f2487500e98ab40b9524632d51127fe0a77e60027e7a",
+      "profile": "desktop",
+      "kind": "local-agency-capture",
+      "width": 2400,
+      "height": 1260,
+      "recoveredFrom": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/evidence/master-fidelity/hero-only/social-master-hero-v2.png",
+      "recoveryProof": "Byte-exact match to previously verified source hash.",
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "after-hours-agenda-phone",
+      "project": "after-hours-agenda",
+      "url": "https://afterhoursagenda.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "after-hours-agenda/after-hours-agenda-phone.png",
+      "sha256": "95879ca145d7dd713e09ba5d111a8b0569a6e605b482102a2ef8789b3c10b301",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:36.108Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://afterhoursagenda.com/",
+        "title": "After Hours Agenda | For the dreamers and the doers",
+        "heading": "For the dreamers and the doers.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "after-hours-agenda-desktop",
+      "project": "after-hours-agenda",
+      "url": "https://afterhoursagenda.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "after-hours-agenda/after-hours-agenda-desktop.png",
+      "sha256": "69d3280f7437709259d97be64b316bba4b81cb34108dd2b4d74d00087db281b1",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:37.015Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://afterhoursagenda.com/",
+        "title": "After Hours Agenda | For the dreamers and the doers",
+        "heading": "For the dreamers and the doers.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "cc-films-desktop",
+      "project": "cc-films",
+      "url": "https://ccfilms.net/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "cc-films/cc-films-desktop.png",
+      "sha256": "e6e0b61a64029eb78db96d7b526795c504215597487c8d7e67bed40143e4099c",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:41.318Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://ccfilms.net/",
+        "title": "Marrow (2026) \u2014 Official Trailer, Cast & Film | CC Films",
+        "heading": "MARROW",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "cc-films-phone",
+      "project": "cc-films",
+      "url": "https://ccfilms.net/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "cc-films/cc-films-phone.png",
+      "sha256": "227e768cebbc3897abdc0ad0fbda72f90d0d8d66076fc0c5408a9eba01bf7328",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:41.833Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://ccfilms.net/",
+        "title": "Marrow (2026) \u2014 Official Trailer, Cast & Film | CC Films",
+        "heading": "MARROW",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-painting-design-desktop",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-painting-design-desktop.png",
+      "sha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:45.444Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://chromaticaz.com/",
+        "title": "Chromatic Painting & Design | Phoenix painting and murals",
+        "heading": "Phoenix, repainted.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-painting-design-phone",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-painting-design-phone.png",
+      "sha256": "49a0ab2f6aa70b6d1071701f08877e3c242c5ad52e6c6f8e4d4a0e1f4ccaee8a",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:46.005Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://chromaticaz.com/",
+        "title": "Chromatic Painting & Design | Phoenix painting and murals",
+        "heading": "Phoenix, repainted.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "clearhelp-desktop",
+      "project": "clearhelp",
+      "url": "https://clearhelp.org/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "clearhelp/clearhelp-desktop.png",
+      "sha256": "aa94af46cc967987c4ae2d919e492476361cd88807259e3d6f64df7d5a4caf98",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:49.006Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://clearhelp.org/",
+        "title": "Find Free Help Near You \u2014 Food, Shelter & Health | ClearHelp",
+        "heading": "Find real help near you.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "clearhelp-phone",
+      "project": "clearhelp",
+      "url": "https://clearhelp.org/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "clearhelp/clearhelp-phone.png",
+      "sha256": "b36d7ff3ffc00e26c03786ba74ab683cadbfef0d7cab6b25bd8eebbc67fd3f36",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:49.486Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://clearhelp.org/",
+        "title": "Find Free Help Near You \u2014 Food, Shelter & Health | ClearHelp",
+        "heading": "Find real help near you.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "easy-tiger-phone",
+      "project": "easy-tiger",
+      "url": "https://easytigerglendale.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "easy-tiger/easy-tiger-phone.png",
+      "sha256": "3ebda5d714fd60f46c6e88a4206d4d4da17fcb86c8944c7750f87b5c6c951d15",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:54.862Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://easytigerglendale.com/",
+        "title": "Easy Tiger Bar | Glendale, Arizona",
+        "heading": "Yourneighborhoodbar.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "easy-tiger-desktop",
+      "project": "easy-tiger",
+      "url": "https://easytigerglendale.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "easy-tiger/easy-tiger-desktop.png",
+      "sha256": "3c629a13d49adea896b0e14d60e71c6eedf8c33e544a0733c6e92e92af0cb979",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:54.864Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://easytigerglendale.com/",
+        "title": "Easy Tiger Bar | Glendale, Arizona",
+        "heading": "Yourneighborhoodbar.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "grand-funding-llc-desktop",
+      "project": "grand-funding-llc",
+      "url": "https://www.grandfundingllc.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "grand-funding-llc/grand-funding-llc-desktop.png",
+      "sha256": "0f62429cf7e710d3b1f07511efffc901b425b8d6935b19329e70d746496672ce",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T04:59:59.473Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://www.grandfundingllc.com/",
+        "title": "Grand Funding LLC | Hard Money Loans AZ & CA | 24hr Approval",
+        "heading": "Fast Hard Money Loans for Arizona & California Investors",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "grand-funding-llc-phone",
+      "project": "grand-funding-llc",
+      "url": "https://www.grandfundingllc.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "grand-funding-llc/grand-funding-llc-phone.png",
+      "sha256": "bc5650068f7dcc91d7e6b46152db5c4f421a8de05f2f4b778f8269564401dfe9",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T04:59:59.734Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://www.grandfundingllc.com/",
+        "title": "Grand Funding LLC | Hard Money Loans AZ & CA | 24hr Approval",
+        "heading": "Fast Hard Money Loans for Arizona & California Investors",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "hair-by-rachel-charles-desktop",
+      "project": "hair-by-rachel-charles",
+      "url": "https://hairbyrachelcharles.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "sha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:03.366Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://hairbyrachelcharles.com/",
+        "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+        "heading": "RachelCharles",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "hair-by-rachel-charles-phone",
+      "project": "hair-by-rachel-charles",
+      "url": "https://hairbyrachelcharles.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "hair-by-rachel-charles/hair-by-rachel-charles-phone.png",
+      "sha256": "af224398a8f374d7fdb262cd28fd3371af9eea06159af31f1f72fd04ee4c2d03",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:03.635Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://hairbyrachelcharles.com/",
+        "title": "Phoenix Balayage & Color Specialist | Hair By Rachel Charles",
+        "heading": "RachelCharles",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "logan-loans-phone",
+      "project": "logan-loans",
+      "url": "https://logan.loans/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "logan-loans/logan-loans-phone.png",
+      "sha256": "464b6daf3ceb7647846968fb052403d9fe0b5dca45d021e9b449df7c437745c3",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:07.917Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://logan.loans/",
+        "title": "Arizona Mortgage Advisor for Buyers & Realtors | Logan Loans",
+        "heading": "Arizona mortgages, explained like a human.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "logan-loans-desktop",
+      "project": "logan-loans",
+      "url": "https://logan.loans/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "logan-loans/logan-loans-desktop.png",
+      "sha256": "e4a6d728948a43192b8d5743a7a751930e261cc687ec47b907fdc58d34915bf1",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:07.919Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://logan.loans/",
+        "title": "Arizona Mortgage Advisor for Buyers & Realtors | Logan Loans",
+        "heading": "Arizona mortgages, explained like a human.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "the-break-room-phone",
+      "project": "the-break-room",
+      "url": "https://thebreakroompoolhall.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "the-break-room/the-break-room-phone.png",
+      "sha256": "f0566941c788400a46c758d3c885172960d24bbc454e8b8a880a523600062f3b",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:12.481Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://thebreakroompoolhall.com/",
+        "title": "The Break Room \u2014 Pool, Darts, Food & Sports in Glendale",
+        "heading": "BreakTheRoutine.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "the-break-room-desktop",
+      "project": "the-break-room",
+      "url": "https://thebreakroompoolhall.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "the-break-room/the-break-room-desktop.png",
+      "sha256": "921fa33e6dbb32dceb152506c43223b4a6a6498d2b8e5a3dd255b89ffa82e997",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:12.482Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://thebreakroompoolhall.com/",
+        "title": "The Break Room \u2014 Pool, Darts, Food & Sports in Glendale",
+        "heading": "BreakTheRoutine.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "the-tarot-hotline-phone",
+      "project": "the-tarot-hotline",
+      "url": "https://thetarothotline.com/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "the-tarot-hotline/the-tarot-hotline-phone.png",
+      "sha256": "ee049770b87d613c2a3dd07e431e0b294d6686b2dde5e5021b2b86728904d981",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:15.991Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://thetarothotline.com/",
+        "title": "Tarot Readings in Phoenix & by Phone | The Tarot Hotline",
+        "heading": "The Tarot Hotline",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "the-tarot-hotline-desktop",
+      "project": "the-tarot-hotline",
+      "url": "https://thetarothotline.com/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "the-tarot-hotline/the-tarot-hotline-desktop.png",
+      "sha256": "4c8321e40bb4a4238ec21d96a1b1c81aaf52f99cb4d7a8d8c0103a92eda32047",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:16.435Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://thetarothotline.com/",
+        "title": "Tarot Readings in Phoenix & by Phone | The Tarot Hotline",
+        "heading": "The Tarot Hotline",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "venuecircuit-phone",
+      "project": "venuecircuit",
+      "url": "https://venuecircuit.app/",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "venuecircuit/venuecircuit-phone.png",
+      "sha256": "af217f26c007a8fa53baa3e04a20c7c2b12b230426043959134d11ca4adc02e2",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:22.085Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://venuecircuit.app/",
+        "title": "VenueCircuit \u2014 the operating system for live events",
+        "heading": "Close the night.Know your numbers.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "venuecircuit-desktop",
+      "project": "venuecircuit",
+      "url": "https://venuecircuit.app/",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "venuecircuit/venuecircuit-desktop.png",
+      "sha256": "e83443abf28b917bf3836ddbb2839e58176b16153c87d6e91a27bb6f579f0812",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:22.087Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://venuecircuit.app/",
+        "title": "VenueCircuit \u2014 the operating system for live events",
+        "heading": "Close the night.Know your numbers.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "deckspace-desktop",
+      "project": "deckspace",
+      "url": "https://www.getdeckspace.com/events",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "deckspace/deckspace-desktop.png",
+      "sha256": "bd0f8de40c049249c049b4621854c34dad61892f54ee64d9f9b5455bccb5ae58",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:25.255Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://www.getdeckspace.com/events",
+        "title": "Cruise Events and Plans | DeckSpace",
+        "heading": "Cruise Events and Plans",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "deckspace-phone",
+      "project": "deckspace",
+      "url": "https://www.getdeckspace.com/events",
+      "profile": "phone",
+      "kind": "fresh-public-capture",
+      "file": "deckspace/deckspace-phone.png",
+      "sha256": "1db177fb3bd9efafa7a64c477d1297448084d432a59e08a9a4f76e4dc5dfd5d5",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 2,
+      "width": 780,
+      "height": 1688,
+      "capturedAt": "2026-10-08T05:00:25.255Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled",
+      "observed": {
+        "url": "https://www.getdeckspace.com/events",
+        "title": "Cruise Events and Plans | DeckSpace",
+        "heading": "Cruise Events and Plans",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-painting-design-tablet",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/",
+      "profile": "tablet",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-painting-design-tablet.png",
+      "sha256": "48c07569ccfc26a6f19fb21cdc27486cac32d3bbe8e693e056fcdce5e778de63",
+      "viewport": {
+        "width": 834,
+        "height": 1194
+      },
+      "deviceScaleFactor": 2,
+      "width": 1668,
+      "height": 2388,
+      "capturedAt": "2026-10-08T05:00:28.990Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://chromaticaz.com/",
+        "title": "Chromatic Painting & Design | Phoenix painting and murals",
+        "heading": "Phoenix, repainted.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-painting-design-foldable",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/",
+      "profile": "foldable",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-painting-design-foldable.png",
+      "sha256": "f12464e3d8195203ee92e0ffda6e451fc8ce22ebe927e4fc7969d1899a47edc5",
+      "viewport": {
+        "width": 690,
+        "height": 900
+      },
+      "deviceScaleFactor": 2,
+      "width": 1380,
+      "height": 1800,
+      "capturedAt": "2026-10-08T05:00:29.275Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; optional analytics declined using the public control",
+      "observed": {
+        "url": "https://chromaticaz.com/",
+        "title": "Chromatic Painting & Design | Phoenix painting and murals",
+        "heading": "Phoenix, repainted.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "rachel-services-desktop",
+      "project": "hair-by-rachel-charles",
+      "url": "https://hairbyrachelcharles.com/",
+      "profile": "desktop",
+      "view": "services",
+      "kind": "fresh-public-capture",
+      "file": "hair-by-rachel-charles/rachel-services-desktop.png",
+      "sha256": "0c6735a28bddfbe5f264866f25ff92d9ec2d856ad5581ee4fe4715c540e3faff",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:34.901Z",
+      "browser": "installed Google Chrome",
+      "state": "Public services view from observed navigation link",
+      "observed": {
+        "url": "https://hairbyrachelcharles.com/services/",
+        "title": "Hair Services in Phoenix | Color, Cuts, Extensions, Bridal | Hair By Rachel Charles",
+        "heading": "Services",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-walkup-3d",
+      "project": "walkup-3d",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/walkup-3d/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/walkup-3d/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "walkup-3d/lab-walkup-3d.png",
+      "sha256": "ebfd9abb626b35f783a56a67f5345276d8fcc7954e0f10f4422ac3bec6da9ac5",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:41.371Z",
+      "browser": "installed Google Chrome",
+      "state": "Public WebGL scene rendered",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/walkup-3d/",
+        "title": "Six-Story Walk-Up | The Lab \u00b7 Little Fight NYC",
+        "heading": "Six-StoryWalk-Up.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-terminal-3d",
+      "project": "terminal-3d",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/terminal-3d/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/terminal-3d/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "terminal-3d/lab-terminal-3d.png",
+      "sha256": "13584f4720a309b417d6b538a7cbc1e059295eb5342223e6297029d5c1cbf8b5",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:47.613Z",
+      "browser": "installed Google Chrome",
+      "state": "Public WebGL scene rendered",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/terminal-3d/",
+        "title": "Neon District | The Lab \u00b7 Little Fight NYC",
+        "heading": "NeonDistrict.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-pool-room",
+      "project": "pool-room",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/pool-room/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/pool-room/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "pool-room/lab-pool-room.png",
+      "sha256": "f8f9f546bed18496b560e3c1cad4389be058d343243ed901a81e0e04179b524b",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:51.803Z",
+      "browser": "installed Google Chrome",
+      "state": "Decoded public film paused at 19.2 seconds",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/pool-room/",
+        "title": "The Pool Room | The Lab \u00b7 Little Fight NYC",
+        "heading": "We built a barthat doesn\u2019t exist.Then broke a rack in it.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-pill-scroll",
+      "project": "pill-scroll",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/pill-scroll/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/pill-scroll/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "pill-scroll/lab-pill-scroll.png",
+      "sha256": "3e9de93cc1bff5fc7b43a8d7720a03119b287916721156e28e4872f69e159d22",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:52.378Z",
+      "browser": "installed Google Chrome",
+      "state": "Native page scroll at 30 percent of authored film",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/pill-scroll/",
+        "title": "Scroll Into Motion | The Lab \u00b7 Little Fight NYC",
+        "heading": "ScrollInto Motion.",
+        "scrollY": 1675,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-micro-animations",
+      "project": "micro-animations",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/micro-animations/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/micro-animations/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "micro-animations/lab-micro-animations.png",
+      "sha256": "68390e0b2628010c6df69aedcce05c14a0f81b29211fa3cc789402a1b1d4e028",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:00:56.138Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; scrolled to the interactive demonstration",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/micro-animations/",
+        "title": "Micro-Animations | The Lab \u00b7 Little Fight NYC",
+        "heading": "Feedbackyou can feel.",
+        "scrollY": 655,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-studio-engine",
+      "project": "studio-engine",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/studio-engine/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/studio-engine/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "studio-engine/lab-studio-engine.png",
+      "sha256": "e5947c2ba05cd07f0fc51a72be05dc452806761e58e4e0a4c30bc2a101f744a7",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:00.127Z",
+      "browser": "installed Google Chrome",
+      "state": "Studio build completed, m-done; scrolled to the interactive demonstration",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/studio-engine/",
+        "title": "Studio Engine | The Lab \u00b7 Little Fight NYC",
+        "heading": "Describe it.Watch it happen.",
+        "scrollY": 542,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-aha-laser",
+      "project": "aha-laser",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/aha-laser/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/aha-laser/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "aha-laser/lab-aha-laser.png",
+      "sha256": "290669f4757235a02bcaf1c65ab4058e901f1c444490887fdbc86f586f0f8ada",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:00.573Z",
+      "browser": "installed Google Chrome",
+      "state": "Laser drawing completed; scrolled to the interactive demonstration",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/aha-laser/",
+        "title": "AHA Laser Poster | The Lab \u00b7 Little Fight NYC",
+        "heading": "Brandas light.",
+        "scrollY": 629,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-growth-street",
+      "project": "growth-street",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/growth-street/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/growth-street/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "growth-street/lab-growth-street.png",
+      "sha256": "7767cbaa95018f4137542a778250da6871b9e93367868c9c3e8fcd690f02bb9e",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:04.514Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; scrolled to the interactive demonstration",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/growth-street/",
+        "title": "Growth Street | The Lab \u00b7 Little Fight NYC",
+        "heading": "Numbers,wearing costumes.",
+        "scrollY": 3020,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-goliath",
+      "project": "goliath",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/goliath/",
+      "publicUrl": "https://littlefightnyc.com/examples/lab/concepts/goliath/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "goliath/lab-goliath.png",
+      "sha256": "e5ce204d7db79beda02c9d205015beb42475d1b6160d5aa83910149d571bb9ac",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:05.102Z",
+      "browser": "installed Google Chrome",
+      "state": "Native page scroll at 30 percent of authored film",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/goliath/",
+        "title": "Goliath | The Lab \u00b7 Little Fight NYC",
+        "heading": "Loud,on purpose.",
+        "scrollY": 2065,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-house-explorer",
+      "project": "house-explorer",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/house-explorer/",
+      "publicUrl": "https://littlefightnyc.com/labs/house-explorer/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "house-explorer/lab-house-explorer.png",
+      "sha256": "809c76c63e5a920541c1687c2a58ca2eae99c16bc7304b79c75af3967154ca3d",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:08.257Z",
+      "browser": "installed Google Chrome",
+      "state": "Model ready",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/house-explorer/?view=aerial&light=day&yard=garden",
+        "title": "Farm House \u00b7 Little Fight NYC",
+        "heading": "Farm House",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "lab-cabinet-concept",
+      "project": "cabinet-concept",
+      "url": "http://127.0.0.1:57470/examples/lab/concepts/cabinet-concept/",
+      "publicUrl": "https://littlefightnyc.com/labs/cabinet-concept/",
+      "profile": "desktop",
+      "kind": "local-public-lab-capture",
+      "file": "cabinet-concept/lab-cabinet-concept.png",
+      "sha256": "542a873883565eea0530d464e92f2ea7d8a2d6c68d94e56bde3ca6ba9fa61752",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "width": 2880,
+      "height": 2000,
+      "capturedAt": "2026-10-08T05:01:10.710Z",
+      "browser": "installed Google Chrome",
+      "state": "Sanitized public cabinet viewer rendered",
+      "observed": {
+        "url": "http://127.0.0.1:57470/examples/lab/concepts/cabinet-concept/",
+        "title": "Cabinet Lab | The Lab \u00b7 Little Fight NYC",
+        "heading": "Cabinet Lab",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "chromatic-hero-photo",
+      "project": "chromatic-painting-design",
+      "url": "https://chromaticaz.com/images/portfolio/painting/finished/008-grand-ave-pizza-2023-3x2.webp",
+      "profile": "desktop",
+      "kind": "fresh-public-capture",
+      "file": "chromatic-painting-design/chromatic-hero-photo.png",
+      "sha256": "d6f257f87a7b92435da472519866bda93e0b07ed1d5f7d138ced2afe73b81d2d",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "deviceScaleFactor": 2,
+      "capturedAt": "2026-10-08T05:02:21.060Z",
+      "browser": "installed Google Chrome",
+      "state": "Public original hero photograph opened directly from its observed homepage image URL; no client DOM or pixels edited.",
+      "review": "passed",
+      "width": 2880,
+      "height": 2000,
+      "reviewEvidence": "Opened all four recovery contact sheets; separate full-size review of the additional Chromatic photograph. No generated client pixels, blocking overlays or failed visible images."
+    },
+    {
+      "key": "little-fight-nyc-hero-physics",
+      "project": "little-fight-nyc",
+      "profile": "desktop",
+      "kind": "local-agency-capture",
+      "file": "little-fight-nyc/little-fight-nyc-hero-physics.png",
+      "sha256": "4b625ec3ca4c4ae5f1efdb7edc9e9cce267c9fe34c1c8a23550e85780338b895",
+      "width": 2400,
+      "height": 1260,
+      "viewport": {
+        "width": 1200,
+        "height": 630
+      },
+      "deviceScaleFactor": 2,
+      "capturedAt": "2026-10-08T15:37:47.005Z",
+      "browser": "installed Google Chrome",
+      "review": "passed",
+      "state": "Dedicated social layout of the real local hero: original HTML copy and unmodified verified screen assets. Only layout sizing changes for 1200 by 630 sharing format.",
+      "reviewEvidence": "Opened final 1200 by 630 composition; all hero objects and original HTML copy fit. No clipped notebook, display, logo or boat."
+    },
+    {
+      "key": "little-fight-nyc-master-reference",
+      "project": "little-fight-nyc",
+      "profile": "desktop",
+      "kind": "local-agency-capture",
+      "file": "little-fight-nyc/little-fight-nyc-master-reference.png",
+      "sha256": "65707a695a81c91cc4c8e5024090475b3ecdf134e8c622c5dca26567965c4acc",
+      "width": 2760,
+      "height": 1792,
+      "viewport": {
+        "width": 1440,
+        "height": 1100
+      },
+      "deviceScaleFactor": 2,
+      "clip": {
+        "x": 30,
+        "y": 16,
+        "width": 1380,
+        "height": 896
+      },
+      "capturedAt": "2026-10-08T17:11:12.705Z",
+      "browser": "installed Google Chrome",
+      "review": "passed",
+      "state": "Actual local hero and header with the owner supplied master artwork, semantic HTML and live links. No screenshot DOM or layout substitutions.",
+      "reviewEvidence": "Opened the desktop source and complete 1200 by 630 social composition. Boat, both screens, storefront, text and controls fit without clipping.",
+      "pageErrors": []
+    },
+    {
+      "key": "clearhelp-tablet-20261008",
+      "project": "clearhelp",
+      "url": "https://clearhelp.org/",
+      "profile": "tablet",
+      "kind": "fresh-public-capture",
+      "file": "clearhelp/clearhelp-tablet-20261008.png",
+      "sha256": "bfa63b6da86e268e559f972e5c9574ad420d246991d72365ad13c14428d887d0",
+      "viewport": {
+        "width": 834,
+        "height": 1112
+      },
+      "deviceScaleFactor": 2,
+      "width": 1668,
+      "height": 2224,
+      "capturedAt": "2026-10-08T17:51:10.648Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; no submission",
+      "observed": {
+        "url": "https://clearhelp.org/",
+        "title": "Find Free Help Near You \u2014 Food, Shelter & Health | ClearHelp",
+        "heading": "Find real help near you.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened device capture contact sheet and full-size corrected Grand Funding capture; no broken visible images or blocking overlays. Public capture pixels preserved."
+    },
+    {
+      "key": "the-break-room-duo-20261008",
+      "project": "the-break-room",
+      "url": "https://thebreakroompoolhall.com/",
+      "profile": "duo",
+      "kind": "fresh-public-capture",
+      "file": "the-break-room/the-break-room-duo-20261008.png",
+      "sha256": "a458fadf8889a1d492bfa43cc431f1e9beea379b0f332497b6dec99472d36c95",
+      "viewport": {
+        "width": 900,
+        "height": 632
+      },
+      "deviceScaleFactor": 2,
+      "width": 1800,
+      "height": 1264,
+      "capturedAt": "2026-10-08T17:51:19.242Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; no submission",
+      "observed": {
+        "url": "https://thebreakroompoolhall.com/",
+        "title": "The Break Room \u2014 Pool, Darts, Food & Sports in Glendale",
+        "heading": "BreakTheRoutine.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened device capture contact sheet and full-size corrected Grand Funding capture; no broken visible images or blocking overlays. Public capture pixels preserved."
+    },
+    {
+      "key": "the-tarot-hotline-duo-20261008",
+      "project": "the-tarot-hotline",
+      "url": "https://thetarothotline.com/",
+      "profile": "duo",
+      "kind": "fresh-public-capture",
+      "file": "the-tarot-hotline/the-tarot-hotline-duo-20261008.png",
+      "sha256": "d79a7867575df252a99ad826dd785cdaa418dd9517cf9522cbd49f0c34714a15",
+      "viewport": {
+        "width": 900,
+        "height": 632
+      },
+      "deviceScaleFactor": 2,
+      "width": 1800,
+      "height": 1264,
+      "capturedAt": "2026-10-08T17:51:23.042Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; no submission",
+      "observed": {
+        "url": "https://thetarothotline.com/",
+        "title": "Tarot Readings for the Curious | The Tarot Hotline",
+        "heading": "Clarity iscalling.",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened device capture contact sheet and full-size corrected Grand Funding capture; no broken visible images or blocking overlays. Public capture pixels preserved."
+    },
+    {
+      "key": "grand-funding-llc-tablet-20261008",
+      "project": "grand-funding-llc",
+      "url": "https://www.grandfundingllc.com/",
+      "profile": "tablet",
+      "kind": "fresh-public-capture",
+      "file": "grand-funding-llc/grand-funding-llc-tablet-20261008.png",
+      "sha256": "d00f176354f3cf7e24399b93df879f31d07582160fc4e03aaadb43a78fb3b8e2",
+      "viewport": {
+        "width": 834,
+        "height": 1112
+      },
+      "deviceScaleFactor": 2,
+      "width": 1668,
+      "height": 2224,
+      "capturedAt": "2026-10-08T17:54:25.317Z",
+      "browser": "installed Google Chrome",
+      "state": "Public opening, fonts settled; no submission",
+      "observed": {
+        "url": "https://www.grandfundingllc.com/",
+        "title": "Grand Funding LLC | Hard Money Loans AZ & CA | 24hr Approval",
+        "heading": "Fast Hard Money Loans for Arizona & California Investors",
+        "scrollY": 0,
+        "brokenVisibleImages": []
+      },
+      "pageErrors": [],
+      "review": "passed",
+      "reviewEvidence": "Opened device capture contact sheet and full-size corrected Grand Funding capture; no broken visible images or blocking overlays. Public capture pixels preserved."
+    }
+  ],
+  "originalCount": 50
+}

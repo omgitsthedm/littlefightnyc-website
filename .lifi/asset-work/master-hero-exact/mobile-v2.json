@@ -1,0 +1,19 @@
+{
+  "asset": "mobile-v2.png",
+  "source": [
+    "mobile-v1.png",
+    "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png"
+  ],
+  "method": "OpenAI built-in image generation edit",
+  "prompt": "Tightly reframe the mobile claymation hero to 1.70:1: cornice 3% from top, rear browser 5% from top, boat at 1% left and 26% width, rear browser 8% left and 53% width, portrait browser left 30%, right 76%, bottom 90%, storefront/tree right 34%, shared ground base 90–96%. Preserve existing materials and exclude pointer, captions, controls, or text.",
+  "dimensions": {
+    "width": 1634,
+    "height": 963,
+    "ratio": "1.697:1"
+  },
+  "sha256": "21bfc41ba3b7910725a444b2980f40a1145e281bab8d02317d44aff662ec5072",
+  "known_deviations": [
+    "This is a generative reframing, so individual browser and storefront surface details were re-rendered rather than retained as source pixels.",
+    "The camera is tighter than v1 by request; it intentionally leaves no room for the former wide empty stage."
+  ]
+}

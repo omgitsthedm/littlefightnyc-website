@@ -105,9 +105,9 @@ async function enlargeEditorialAnchorText(page) {
       assert.deepEqual(measured.overlaps, [], `${width}: tiles must never cover one another`);
       const brand = measured.anchors.find(a => a.family === 'brand');
       const web = measured.anchors.find(a => a.family === 'web');
-      assert.ok(brand && web && measured.hero.bottom <= web.top + 1, `${width}: complete illustrated brand hero precedes the four services`);
+      assert.equal(brand, undefined, `${width}: the redundant brand front remains removed`);
+      assert.ok(web && measured.hero.bottom <= web.top + 1, `${width}: complete illustrated brand hero precedes the four services`);
       if (width >= 601 && width <= 1000) {
-        assert.ok(brand.width >= web.width, `${width}: brand context card remains wider than a service card`);
         assert.ok(web.height <= 400, `${width}: website anchor must not balloon (${web.height}px)`);
       }
       if (width === 924) {

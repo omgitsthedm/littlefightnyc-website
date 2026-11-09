@@ -1,0 +1,137 @@
+{
+  "screenshots": [
+    {
+      "width": 1440,
+      "file": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/evidence/website-devices/Website Tiles Desktop.png",
+      "desktop": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Master Match Review - 2026-10-08/Website Tiles Desktop.png"
+    },
+    {
+      "width": 393,
+      "file": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/evidence/website-devices/Website Tiles Mobile.png",
+      "desktop": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Master Match Review - 2026-10-08/Website Tiles Mobile.png"
+    }
+  ],
+  "imageSources": [
+    {
+      "width": 1440,
+      "images": [
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-hair-by-rachel-charles.webp",
+          "displayWidth": 214.609375,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-cc-films.webp",
+          "displayWidth": 688.359375,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-easy-tiger.webp",
+          "displayWidth": 231.296875,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-the-break-room.webp",
+          "displayWidth": 644.328125,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-clearhelp.webp",
+          "displayWidth": 364.375,
+          "sizes": "(max-width: 1100px) 48vw, 420px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-army-navy-bags.webp",
+          "displayWidth": 419.0625,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-brothers-pizzeria.webp",
+          "displayWidth": 419.0625,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-grand-funding-llc.webp",
+          "displayWidth": 349.6875,
+          "sizes": "(max-width: 1100px) 48vw, 420px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-legacy-music-group.webp",
+          "displayWidth": 668.328125,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-logan-loans.webp",
+          "displayWidth": 221.984375,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-the-tarot-hotline.webp",
+          "displayWidth": 401.875,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px"
+        }
+      ]
+    },
+    {
+      "width": 393,
+      "images": [
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-hair-by-rachel-charles-480.webp",
+          "displayWidth": 117.421875,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-cc-films-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-easy-tiger-480.webp",
+          "displayWidth": 116,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-the-break-room-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-clearhelp-480.webp",
+          "displayWidth": 197,
+          "sizes": "(max-width: 1100px) 48vw, 420px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-army-navy-bags-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-brothers-pizzeria-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-grand-funding-llc-480.webp",
+          "displayWidth": 197,
+          "sizes": "(max-width: 1100px) 48vw, 420px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-legacy-music-group-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-logan-loans-480.webp",
+          "displayWidth": 116,
+          "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px"
+        },
+        {
+          "src": "http://127.0.0.1:57470/assets/sculpture/website-the-tarot-hotline-800.webp",
+          "displayWidth": 337,
+          "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

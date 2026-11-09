@@ -9,6 +9,9 @@ const routes = {
   brand: '/how-we-help/', web: '/services/custom-local-websites/', it: '/services/it-support/',
   consulting: '/services/tech-consulting/', software: '/services/business-systems/',
 };
+// The owner removed the redundant brand front; its standalone story remains
+// covered by checkStatic while all four service anchors stay on the homepage.
+const visibleFamilies = Object.keys(routes).filter(family => family !== 'brand');
 const colors = { brand:'rgb(255, 120, 57)', web:'rgb(146, 191, 255)', it:'rgb(245, 217, 91)', consulting:'rgb(160, 223, 133)', software:'rgb(240, 155, 221)' };
 const evidence = path.resolve(__dirname, '../../.lifi/evidence/reader-audit/anchors');
 fs.mkdirSync(evidence, { recursive: true });
@@ -63,17 +66,16 @@ async function checkReaders(browser) {
     try {
       await page.goto(base + '/', { waitUntil:'networkidle' });
       const sizes = await page.locator('[data-reader-anchor]:not([data-reader-anchor=booking])').evaluateAll(nodes => nodes.map(n => ({ family:n.dataset.readerAnchor, width:n.getBoundingClientRect().width, height:n.getBoundingClientRect().height })));
-      assert.equal(sizes.length, 5);
-      const services = sizes.filter(x => x.family !== 'brand');
-      const brand = sizes.find(x => x.family === 'brand');
+      assert.deepEqual(sizes.map(x => x.family).sort(), [...visibleFamilies].sort());
+      const services = sizes;
       assert.ok(services.every(x => Math.abs(x.width - services[0].width) < 1), `equal four service anchor widths at ${width}: ${JSON.stringify(sizes)}`);
       for (const row of [services.slice(0, 2), services.slice(2)]) {
         assert.ok(row.every(x => Math.abs(x.height - row[0].height) < 1), `service pairs share a row height at ${width}: ${JSON.stringify(sizes)}`);
       }
       if (width > 600) assert.ok(services.every(x => Math.abs(x.height - services[0].height) < 1), `desktop service rows match at ${width}: ${JSON.stringify(sizes)}`);
       else assert.ok(services[2].height >= services[0].height, `phone second row makes room for copy and artwork at ${width}`);
-      assert.ok(brand.width >= services[0].width, `the brand context card stays wider than a service anchor at ${width}: ${JSON.stringify(sizes)}`);
-      for (const [family] of Object.entries(routes)) {
+      assert.equal(await page.locator('a.tile[data-reader-anchor="brand"]').count(), 0, 'the requested brand front stays removed');
+      for (const family of visibleFamilies) {
         const tile = page.locator(`a.tile[data-reader-anchor="${family}"]`);
         await tile.click();
         const main = page.locator('#detail-body');
@@ -98,14 +100,16 @@ async function checkReaders(browser) {
         await page.locator('#detail').waitFor({ state:'hidden' });
         assert.equal(await tile.evaluate(n => n === document.activeElement), true, 'closing restores focus');
       }
-      pass(`${width}px: service widths and paired row heights match, brand remains a wide context card, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
+      pass(`${width}px: four service anchors retain matching widths and paired row heights, the brand front stays removed, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus`);
       if (width === 390) {
         await page.addStyleTag({ content:'html{font-size:200%!important}' });
-        for (const family of ['brand','it','consulting','software']) {
+        for (const family of visibleFamilies) {
           await page.locator(`a.tile[data-reader-anchor="${family}"]`).click();
-          await page.locator('#detail-body .anchor-story-body').waitFor({ state:'visible' });
+          await page.waitForFunction(family => document.querySelector('#detail[open]')?.dataset.readerFamily === family, family);
+          await page.locator('#detail-body .rw-body').waitFor({ state:'visible' });
           assert.ok(await page.locator('#detail-body').evaluate(n => n.scrollWidth <= n.clientWidth + 1), `${family}: enlarged text must wrap`);
           await page.keyboard.press('Escape');
+          await page.locator('#detail').waitFor({ state:'hidden' });
         }
         pass('200% text: all new readers preserve content without horizontal overflow');
       }
@@ -114,15 +118,16 @@ async function checkReaders(browser) {
 }
 
 async function checkRotation(browser) {
-  // The owner removed the cursor; a shared ground contains the storefront.
+  // The exact supplied illustration preserves the selected composition and native links.
   const current = await context(browser);
   try {
     const { page } = current;
     await page.goto(base + '/', { waitUntil:'networkidle' });
     const displays = page.locator('.sculpture-hero img');
-    assert.equal(await displays.count(), 4);
+    assert.equal(await displays.count(), 1);
     const sources = await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src')));
-    assert.deepEqual(sources, ['hero-stage','browser-chromatic-painting-design','browser-hair-by-rachel-charles','boat'].map(name => '/assets/sculpture/'+name+'.webp'));
+    assert.deepEqual(sources, ['/assets/sculpture/hero-reference-desktop.webp']);
+    assert.equal(await page.locator('[data-hero-body]').count(), 0);
     assert.equal(await page.locator('.hero-cursor').count(), 0);
     assert.ok(await displays.evaluateAll(imgs => imgs.every(img => img.complete && img.naturalWidth > 0)));
     assert.equal(await page.locator('.hero-work-index').count(), 0);
@@ -137,12 +142,13 @@ async function checkRotation(browser) {
     assert.equal(await tile.locator('.sculpture-object').evaluate(n => getComputedStyle(n).transform), 'none');
     await page.emulateMedia({ reducedMotion:'reduce' });
     assert.deepEqual(await displays.evaluateAll(imgs => imgs.map(img => img.getAttribute('src'))), sources);
-    pass('The reference hero has two authentic screens, a shared storefront ground and tugboat, with two useful actions and no pointer or caption rail; pause and reduced motion suppress decorative tile motion');
+    pass('The hero preserves the supplied master illustration, two project links and both actions; pause and reduced motion suppress decorative tile motion');
   } finally { await current.ctx.close(); }
   const plain = await context(browser, { javaScriptEnabled:false });
   try {
     await plain.page.goto(base + '/');
-    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 4 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.ok(await plain.page.locator('.sculpture-hero img').evaluateAll(imgs => imgs.length === 1 && imgs.every(img => img.complete && img.naturalWidth > 0)));
+    assert.equal(await plain.page.locator('.hero-project[href][aria-label]').count(), 2);
     assert.equal(await plain.page.locator('.sculpture-hero-actions a[href]').count(), 2);
     pass('Without JavaScript, the complete reference hero and both actions remain available');
   } finally { await plain.ctx.close(); }

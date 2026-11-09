@@ -1,0 +1,44 @@
+{
+  "source": "ipad.blend",
+  "modelBranch": "zRrSLDpdYmKeRJQ",
+  "screenMesh": "lsDiIbtoSGSmWWZ",
+  "render": "tablet-frame.png",
+  "mask": "tablet-frame-mask.png",
+  "dimensions": {
+    "width": 1160,
+    "height": 1500
+  },
+  "screenQuadrilateral": {
+    "TL": [
+      66.0,
+      67.0
+    ],
+    "TR": [
+      1094.0,
+      67.0
+    ],
+    "BR": [
+      1094.0,
+      1435.0
+    ],
+    "BL": [
+      66.0,
+      1435.0
+    ]
+  },
+  "maskOpaqueBounds": {
+    "left": 66,
+    "top": 66,
+    "rightExclusive": 1095,
+    "bottomExclusive": 1436
+  },
+  "screenAspect": 0.75146,
+  "order": [
+    "TL",
+    "TR",
+    "BR",
+    "BL"
+  ],
+  "sourceNotes": "Apple USDZ-derived iPad model; keyboard and Pencil sibling branches hidden.",
+  "quadrilateralMethod": "Final aperture-mask straight edges in top-left-origin PNG pixels."
+}

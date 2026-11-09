@@ -1,0 +1,27 @@
+{
+  "size": [
+    1800,
+    1125
+  ],
+  "quad": [
+    [
+      101.24876350164413,
+      55.04167824983597
+    ],
+    [
+      1719.3008065223694,
+      88.9350101351738
+    ],
+    [
+      1698.7512230873108,
+      1069.9586402624846
+    ],
+    [
+      80.6992270052433,
+      1036.06531675905
+    ]
+  ],
+  "physicalScreenAspectRatio": 1.649351,
+  "frame": "slim graphite desktop window, warm key/cool rim",
+  "apertureMask": "desktop-frame-aperture-mask.png"
+}

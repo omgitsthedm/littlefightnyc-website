@@ -488,7 +488,9 @@ def audit_homepage_inventory(dist: Path, failures: list[str]) -> None:
     expected_total = 129 + added_labs + 1
     if inventory.get("sourceTileCount") != 106 or inventory.get("totalTileInventory") != expected_total:
         failures.append(f"homepage inventory must preserve 106 original tiles within {expected_total} retained routes")
-    expected_visible = 77 + added_labs + 1
+    # October 8: remove the redundant brand introduction front while keeping
+    # its reader and all source routes in the retained inventory.
+    expected_visible = 76 + added_labs + 1
     if not isinstance(visible, list) or len(visible) != expected_visible:
         failures.append(f"homepage inventory must expose exactly {expected_visible} tiles")
     if not isinstance(retained, list) or len(retained) != expected_total:

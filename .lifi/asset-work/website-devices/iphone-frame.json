@@ -1,0 +1,58 @@
+{
+  "source": "Apple iPhone 18 Pro USDZ, imported into iphone.blend",
+  "retainedBranch": "wUOhcMgiBmCgGaw",
+  "screenMesh": "EHjrGDHNHzgNjtE.001",
+  "render": {
+    "originalSize": [
+      1200,
+      1680
+    ],
+    "crop": [
+      212,
+      89,
+      984,
+      1648
+    ],
+    "padding": 20,
+    "size": [
+      772,
+      1559
+    ]
+  },
+  "screenMask": {
+    "path": "iphone-frame-screen-mask.png",
+    "size": [
+      772,
+      1559
+    ]
+  },
+  "screenQuadrilateral": [
+    [
+      45.813,
+      45.278
+    ],
+    [
+      718.587,
+      46.654
+    ],
+    [
+      718.587,
+      1515.213
+    ],
+    [
+      45.813,
+      1513.837
+    ]
+  ],
+  "screenQuadrilateralOrder": [
+    "TL",
+    "TR",
+    "BR",
+    "BL"
+  ],
+  "screenPhysicalSize": {
+    "width": 7.27895451,
+    "height": 15.82588911,
+    "aspect": 0.45993969
+  }
+}

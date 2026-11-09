@@ -1,0 +1,91 @@
+[
+  {
+    "name": "hero-duo-rachel",
+    "sourceKey": "hair-by-rachel-charles-desktop",
+    "frameFile": "duo/duo-foldable-blank-v3.png",
+    "screenSize": [
+      1192,
+      740
+    ],
+    "cornerRadius": 0,
+    "halves": [
+      [
+        [
+          173,
+          135
+        ],
+        [
+          768,
+          241
+        ],
+        [
+          768,
+          780
+        ],
+        [
+          173,
+          877
+        ]
+      ],
+      [
+        [
+          768,
+          241
+        ],
+        [
+          1363,
+          135
+        ],
+        [
+          1363,
+          877
+        ],
+        [
+          768,
+          780
+        ]
+      ]
+    ],
+    "frameCrop": [
+      120,
+      94,
+      1418,
+      918
+    ],
+    "apertureMask": "duo/screen-aperture-mask.png"
+  },
+  {
+    "name": "hero-browser-slim",
+    "sourceKey": "chromatic-hero-slim",
+    "frameFile": "browser/thin-browser-physical-v1.png",
+    "screenSize": [
+      1328,
+      798
+    ],
+    "cornerRadius": 6,
+    "quad": [
+      [
+        90,
+        138
+      ],
+      [
+        1418,
+        138
+      ],
+      [
+        1418,
+        936
+      ],
+      [
+        90,
+        936
+      ]
+    ],
+    "frameCrop": [
+      55,
+      76,
+      1450,
+      971
+    ]
+  }
+]

@@ -57,6 +57,7 @@ def source_routes(content, groups):
     for item in json.loads((content / 'topic-tiles.json').read_text()):
         routes[item['id']] = '/answers/help/' + item['id'] + '/'
     routes.update({
+        'brand-brief': '/how-we-help/',
         'buyer-plumbers': '/industries/plumbers/', 'buyer-roofing': '/industries/roofing/',
         'buyer-homes': '/industries/luxury-home-services/', 'buyer-law': '/industries/law-firms/',
         'google-reviews': '/reviews/',
@@ -80,6 +81,7 @@ def home_contexts(content, groups, hidden):
         'web-reviews-response': '/answers/help/maps/',
         'web-newsletter-choice': '/answers/help/consulting-tool-choice/',
         'page-library': '/services/custom-local-websites/',
+        'brand-brief': '/how-we-help/',
     }
     for identity in hidden:
         assert identity in routes, f'Unknown hidden homepage source: {identity}'

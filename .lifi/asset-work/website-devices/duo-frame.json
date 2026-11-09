@@ -1,0 +1,24 @@
+{
+  "screenQuadrilateral": [
+    [
+      104.76314797997475,
+      121.8959391117096
+    ],
+    [
+      1661.6656064987183,
+      146.37442231178284
+    ],
+    [
+      1661.6656064987183,
+      1250.8676066994667
+    ],
+    [
+      104.76314797997475,
+      1226.3891134411097
+    ]
+  ],
+  "screenAspect": 1.420627802690583,
+  "source": "https://www.apple.com/iphone-duo/",
+  "modelSource": "https://www.apple.com/105/media/us/iphone-duo/2026/9305e4b9-72d9-4c05-9381-b572adadd5e5/ar/iPhone_Duo_e-sim_Star-White_Variant.usdz",
+  "pose": "Native housings unfolded flat at physical hinge; continuous flat internal aperture."
+}

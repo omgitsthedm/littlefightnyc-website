@@ -1,0 +1,37 @@
+{
+  "asset": "duo-foldable-blank-v2.png",
+  "method": "OpenAI built-in image generation edit",
+  "references": [
+    "duo-foldable-blank-v1.png",
+    "/Users/davidmarsh/.codex/.chatgpt-projects/g-p-6837cc8112e8819184a3931559901698/output/Little-Fight-NYC-Codex-Handoff/reference/device-concepts/04-foldable-partly-open.png"
+  ],
+  "prompt": "Preserve v1 graphite finish and blank screen, while changing only geometry to one continuous 135-degree book fold with a pronounced 90–120px centered top V, mirrored bottom V, slight perspective narrowing in each physical plane, thin hinge, and transparent exterior.",
+  "dimensions": {
+    "width": 1536,
+    "height": 1024
+  },
+  "screen_alignment_guides_px": {
+    "left_top_outer_usable_screen": [170, 148],
+    "center_top_crease": [768, 232],
+    "right_top_outer_usable_screen": [1363, 147],
+    "left_bottom_outer_usable_screen": [172, 855],
+    "center_bottom_crease": [768, 783],
+    "right_bottom_outer_usable_screen": [1363, 855],
+    "measured_center_top_dip_px": 84,
+    "measured_center_bottom_rise_px": 72,
+    "note": "Approximate visual interior-screen guides. Apply authentic imagery as two perspective-correct quadrilaterals that meet exactly at the crease."
+  },
+  "alpha": {
+    "format": "RGBA",
+    "verified_transparent_pixels": [
+      [0, 0],
+      [100, 100],
+      [768, 0]
+    ]
+  },
+  "sha256": "24e76a417cac3db40c095f2393c08cada56d51529ebf12cb55c1309981263e45",
+  "known_deviations": [
+    "The low-opacity hardware glow expands close to the canvas edges, though tested corner pixels are transparent.",
+    "The screen remains neutral gray and deliberately contains no client/site pixels."
+  ]
+}

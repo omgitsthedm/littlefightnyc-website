@@ -1,0 +1,2667 @@
+[
+  {
+    "width": 1440,
+    "groups": [
+      {
+        "section": "web",
+        "height": 756,
+        "cards": [
+          {
+            "id": "case-hair-by-rachel-charles",
+            "width": 152.75,
+            "height": 372,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "booking",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "web-homepage-priority",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-4",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-content-collection",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-cc-films",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-easy-tiger",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-break-room",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-clearhelp",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-army-navy-bags",
+            "width": 482.25,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-brothers-pizzeria",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-grand-funding-llc",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-legacy-music-group",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "case-logan-loans",
+            "width": 152.75,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-tarot-hotline",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "page-industries",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "it",
+        "height": 948,
+        "cards": [
+          {
+            "id": "wifi",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "email",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-3",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "ownership",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "computer",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "printer",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "backup",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-security-basics",
+            "width": 482.25,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "it-password-ownership",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "it-license-renewal",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-video-call-room",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "google-review-2",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-storage-full",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-shared-files",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-phone-setup",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-software-updates",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "it-payment-device-check",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-vendor-handoff",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-areas",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "consulting",
+        "height": 756,
+        "cards": [
+          {
+            "id": "album-nyc",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "album-marthas-vineyard",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-arizona",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "maps",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-redesign-decision",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-hospitality",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "album-roofing",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-shops",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-5",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-trades",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-makers",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "consulting-first-priority",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-tool-choice",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-second-opinion",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-7",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "software",
+        "height": 1140,
+        "cards": [
+          {
+            "id": "case-venuecircuit",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-vera",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-repeat-work",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-6",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "software-approval-path",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-deckspace",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-after-hours-agenda",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "lab-pool-room",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pill-scroll",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-walkup-3d",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-terminal-3d",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-micro-animations",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "lab-aha-laser",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-goliath",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-studio-engine",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-growth-street",
+            "width": 317.5,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "construction-showcase",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-cabinet-concept",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-house-explorer",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-connect-existing-tools",
+            "width": 235.125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-business-ownership",
+            "width": 235.125,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-smallest-useful-change",
+            "width": 317.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 1051,
+    "groups": [
+      {
+        "section": "web",
+        "height": 948,
+        "cards": [
+          {
+            "id": "case-hair-by-rachel-charles",
+            "width": 147.5,
+            "height": 372,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "booking",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "web-homepage-priority",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-4",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "web-content-collection",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-cc-films",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-easy-tiger",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-break-room",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-clearhelp",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-army-navy-bags",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-brothers-pizzeria",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-grand-funding-llc",
+            "width": 147.5,
+            "height": 372,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-legacy-music-group",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "case-logan-loans",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-tarot-hotline",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "page-industries",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          }
+        ]
+      },
+      {
+        "section": "it",
+        "height": 948,
+        "cards": [
+          {
+            "id": "wifi",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "email",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-3",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "ownership",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "computer",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "printer",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "backup",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-security-basics",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-password-ownership",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-license-renewal",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-video-call-room",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-2",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-storage-full",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-shared-files",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-phone-setup",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-software-updates",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-payment-device-check",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-vendor-handoff",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-areas",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "consulting",
+        "height": 948,
+        "cards": [
+          {
+            "id": "album-nyc",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "album-marthas-vineyard",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "album-arizona",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "maps",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-redesign-decision",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-hospitality",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "album-roofing",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-shops",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-5",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "album-trades",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-makers",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-first-priority",
+            "width": 307,
+            "height": 180,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "consulting-tool-choice",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-second-opinion",
+            "width": 466.5,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "google-review-7",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "software",
+        "height": 1428,
+        "cards": [
+          {
+            "id": "case-venuecircuit",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-vera",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-repeat-work",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-6",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-approval-path",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-deckspace",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-after-hours-agenda",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pool-room",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pill-scroll",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-walkup-3d",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-terminal-3d",
+            "width": 147.5,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-micro-animations",
+            "width": 307,
+            "height": 276,
+            "icon": 28,
+            "font": "19.825px"
+          },
+          {
+            "id": "lab-aha-laser",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-goliath",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-studio-engine",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-growth-street",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "construction-showcase",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-cabinet-concept",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-house-explorer",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-connect-existing-tools",
+            "width": 227.25,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-business-ownership",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-smallest-useful-change",
+            "width": 227.25,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 834,
+    "groups": [
+      {
+        "section": "web",
+        "height": 1044,
+        "cards": [
+          {
+            "id": "case-hair-by-rachel-charles",
+            "width": 115.328125,
+            "height": 372,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "booking",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-homepage-priority",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-4",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-content-collection",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-cc-films",
+            "width": 242.65625,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-easy-tiger",
+            "width": 115.34375,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-break-room",
+            "width": 179,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-clearhelp",
+            "width": 179,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-army-navy-bags",
+            "width": 242.65625,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-brothers-pizzeria",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-grand-funding-llc",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-legacy-music-group",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-logan-loans",
+            "width": 115.34375,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-tarot-hotline",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-industries",
+            "width": 242.65625,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "it",
+        "height": 1332,
+        "cards": [
+          {
+            "id": "wifi",
+            "width": 242.65625,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "email",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-3",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "ownership",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "computer",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "printer",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "backup",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-security-basics",
+            "width": 242.65625,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-password-ownership",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-license-renewal",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-video-call-room",
+            "width": 370,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "google-review-2",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-storage-full",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-shared-files",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-phone-setup",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-software-updates",
+            "width": 370,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "it-payment-device-check",
+            "width": 242.65625,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-vendor-handoff",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-areas",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "consulting",
+        "height": 1044,
+        "cards": [
+          {
+            "id": "album-nyc",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-marthas-vineyard",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-arizona",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "maps",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-redesign-decision",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-hospitality",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-roofing",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-shops",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-5",
+            "width": 179,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-trades",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-makers",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-first-priority",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-tool-choice",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-second-opinion",
+            "width": 370,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "google-review-7",
+            "width": 179,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "software",
+        "height": 1620,
+        "cards": [
+          {
+            "id": "case-venuecircuit",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-vera",
+            "width": 115.328125,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-repeat-work",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-6",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-approval-path",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-deckspace",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-after-hours-agenda",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pool-room",
+            "width": 115.328125,
+            "height": 372,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pill-scroll",
+            "width": 242.671875,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-walkup-3d",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-terminal-3d",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-micro-animations",
+            "width": 370,
+            "height": 276,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "lab-aha-laser",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-goliath",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-studio-engine",
+            "width": 370,
+            "height": 180,
+            "icon": 28,
+            "font": "20px"
+          },
+          {
+            "id": "lab-growth-street",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "construction-showcase",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-cabinet-concept",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-house-explorer",
+            "width": 179,
+            "height": 276,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-connect-existing-tools",
+            "width": 242.65625,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-business-ownership",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-smallest-useful-change",
+            "width": 242.671875,
+            "height": 180,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 393,
+    "groups": [
+      {
+        "section": "web",
+        "height": 1988,
+        "cards": [
+          {
+            "id": "case-hair-by-rachel-charles",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "booking",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-homepage-priority",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-4",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-content-collection",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-cc-films",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-easy-tiger",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-break-room",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-clearhelp",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-army-navy-bags",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-brothers-pizzeria",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-grand-funding-llc",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-legacy-music-group",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-logan-loans",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-tarot-hotline",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-industries",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "it",
+        "height": 2358,
+        "cards": [
+          {
+            "id": "wifi",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "email",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-3",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "ownership",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "computer",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "printer",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "backup",
+            "width": 170.5,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-security-basics",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-password-ownership",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-license-renewal",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-video-call-room",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-2",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-storage-full",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-shared-files",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-phone-setup",
+            "width": 170.5,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-software-updates",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-payment-device-check",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-vendor-handoff",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-areas",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "consulting",
+        "height": 1988,
+        "cards": [
+          {
+            "id": "album-nyc",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-marthas-vineyard",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-arizona",
+            "width": 170.5,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "maps",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-redesign-decision",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-hospitality",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-roofing",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-shops",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-5",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-trades",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-makers",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-first-priority",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-tool-choice",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-second-opinion",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-7",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "software",
+        "height": 3024,
+        "cards": [
+          {
+            "id": "case-venuecircuit",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-vera",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-repeat-work",
+            "width": 170.5,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-6",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-approval-path",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-deckspace",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-after-hours-agenda",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pool-room",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pill-scroll",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-walkup-3d",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-terminal-3d",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-micro-animations",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-aha-laser",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-goliath",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-studio-engine",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-growth-street",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "construction-showcase",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-cabinet-concept",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-house-explorer",
+            "width": 170.5,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-connect-existing-tools",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-business-ownership",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-smallest-useful-change",
+            "width": 170.5,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "groups": [
+      {
+        "section": "web",
+        "height": 2136,
+        "cards": [
+          {
+            "id": "case-hair-by-rachel-charles",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "booking",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-homepage-priority",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-4",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-content-collection",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-cc-films",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-easy-tiger",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-break-room",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-clearhelp",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-army-navy-bags",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-brothers-pizzeria",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-grand-funding-llc",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-legacy-music-group",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-logan-loans",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-the-tarot-hotline",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-industries",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "it",
+        "height": 2580,
+        "cards": [
+          {
+            "id": "wifi",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "email",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-3",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "ownership",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "computer",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "printer",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "backup",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-security-basics",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-password-ownership",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-license-renewal",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-video-call-room",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-2",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-storage-full",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-shared-files",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-phone-setup",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-software-updates",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-payment-device-check",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "it-vendor-handoff",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-areas",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "consulting",
+        "height": 2062,
+        "cards": [
+          {
+            "id": "album-nyc",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-marthas-vineyard",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-arizona",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "maps",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "web-redesign-decision",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-hospitality",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-roofing",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-shops",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-5",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-trades",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "album-makers",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-first-priority",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-tool-choice",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "consulting-second-opinion",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-7",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      },
+      {
+        "section": "software",
+        "height": 3764,
+        "cards": [
+          {
+            "id": "case-venuecircuit",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "page-vera",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-repeat-work",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "google-review-6",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-approval-path",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-deckspace",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "case-after-hours-agenda",
+            "width": 278,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pool-room",
+            "width": 134,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-pill-scroll",
+            "width": 134,
+            "height": 360,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-walkup-3d",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-terminal-3d",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-micro-animations",
+            "width": 278,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-aha-laser",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-goliath",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-studio-engine",
+            "width": 278,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-growth-street",
+            "width": 278,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "construction-showcase",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-cabinet-concept",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "lab-house-explorer",
+            "width": 134,
+            "height": 286,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-connect-existing-tools",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-business-ownership",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          },
+          {
+            "id": "software-smallest-useful-change",
+            "width": 134,
+            "height": 212,
+            "icon": 28,
+            "font": "18px"
+          }
+        ]
+      }
+    ]
+  }
+]

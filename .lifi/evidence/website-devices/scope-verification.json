@@ -1,0 +1,86 @@
+{
+  "removed": [
+    "brand-brief"
+  ],
+  "added": [],
+  "changed": {
+    "case-army-navy-bags": {
+      "art": [
+        "browser-army-navy-bags",
+        "website-army-navy-bags"
+      ]
+    },
+    "case-the-break-room": {
+      "art": [
+        "browser-the-break-room",
+        "website-the-break-room"
+      ]
+    },
+    "case-clearhelp": {
+      "art": [
+        "browser-clearhelp",
+        "website-clearhelp"
+      ]
+    },
+    "case-grand-funding-llc": {
+      "art": [
+        "browser-grand-funding-llc",
+        "website-grand-funding-llc"
+      ]
+    },
+    "case-the-tarot-hotline": {
+      "art": [
+        "browser-the-tarot-hotline",
+        "website-the-tarot-hotline"
+      ]
+    },
+    "case-logan-loans": {
+      "art": [
+        "browser-logan-loans",
+        "website-logan-loans"
+      ]
+    },
+    "case-easy-tiger": {
+      "art": [
+        "browser-easy-tiger",
+        "website-easy-tiger"
+      ]
+    },
+    "case-hair-by-rachel-charles": {
+      "art": [
+        "browser-hair-by-rachel-charles",
+        "website-hair-by-rachel-charles"
+      ]
+    },
+    "case-brothers-pizzeria": {
+      "art": [
+        "browser-brothers-pizzeria",
+        "website-brothers-pizzeria"
+      ]
+    },
+    "case-cc-films": {
+      "art": [
+        "browser-cc-films",
+        "website-cc-films"
+      ]
+    },
+    "case-legacy-music-group": {
+      "art": [
+        "browser-legacy-music-group",
+        "website-legacy-music-group"
+      ]
+    }
+  },
+  "heroHtmlIdentical": true,
+  "visibleTiles": 79,
+  "unchangedSurvivingTiles": 68,
+  "finalArtifactSha256": "b0e422582c18be62ac2b27184d9d75f0504f6b3a2ff6a2418510be481c456b51",
+  "finalHeroHtmlIdentical": true,
+  "finalInventoryChangesVerified": true,
+  "layoutScope": [
+    "web",
+    "it",
+    "consulting",
+    "software"
+  ]
+}

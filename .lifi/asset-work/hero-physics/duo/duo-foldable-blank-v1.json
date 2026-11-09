@@ -1,0 +1,28 @@
+{
+  "asset": "duo-foldable-blank-v1.png",
+  "method": "OpenAI built-in image generation",
+  "references": [
+    "/Users/davidmarsh/.codex/.chatgpt-projects/g-p-6837cc8112e8819184a3931559901698/output/Little-Fight-NYC-Codex-Handoff/reference/device-concepts/04-foldable-partly-open.png",
+    "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png"
+  ],
+  "prompt": "One continuous partly-open graphite foldable phone, 155-degree book-style geometry, nearly frontal 4:3 unfolded blank neutral-gray screen across a subtle center crease, thin bezel, transparent exterior, no logos, text, UI, client pixels, surroundings, floor, stand, or hand.",
+  "dimensions": {
+    "width": 1448,
+    "height": 1086
+  },
+  "screen_alignment_guides_px": {
+    "left_top_outer_usable_screen": [137, 156],
+    "center_top_crease": [722, 178],
+    "right_top_outer_usable_screen": [1312, 155],
+    "left_bottom_outer_usable_screen": [136, 926],
+    "center_bottom_crease": [723, 904],
+    "right_bottom_outer_usable_screen": [1313, 924],
+    "note": "Approximate visual guides measured from the rendered raster; apply authentic source imagery in two perspective-aware halves meeting at the crease."
+  },
+  "sha256": "a6a223b706f15097d782f3b1eee3f4a67f258edb3123463d0339b54b535582ef",
+  "alpha": "RGBA with transparent exterior",
+  "known_deviations": [
+    "A low-opacity antialiasing fringe reaches the source canvas edge, although the visible device itself retains substantial transparent margin.",
+    "The thin rendered bezel is visually closer to 8–12px in sections than the requested 6px target."
+  ]
+}

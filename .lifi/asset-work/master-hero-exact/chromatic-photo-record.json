@@ -1,0 +1,18 @@
+{
+  "key": "chromatic-hero-photo",
+  "project": "chromatic-painting-design",
+  "url": "https://chromaticaz.com/images/portfolio/painting/finished/008-grand-ave-pizza-2023-3x2.webp",
+  "profile": "desktop",
+  "kind": "fresh-public-capture",
+  "file": "chromatic-painting-design/chromatic-hero-photo.png",
+  "sha256": "a937e2453e4e7064fbc3fae5d43359ece28d7174909842f7f2342b681fc4aee0",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "deviceScaleFactor": 2,
+  "capturedAt": "2026-10-08T03:44:36.913Z",
+  "browser": "installed Google Chrome",
+  "state": "Public original hero photograph opened directly from its observed homepage image URL; no client DOM or pixels edited.",
+  "review": "pending"
+}

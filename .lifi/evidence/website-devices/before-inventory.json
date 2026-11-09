@@ -1,0 +1,722 @@
+[
+  {
+    "id": "brand-brief",
+    "href": "/how-we-help/",
+    "art": "boat",
+    "icon": "tugboat",
+    "motion": "cast",
+    "kind": "brand",
+    "family": "brand"
+  },
+  {
+    "id": "page-services-custom-local-websites",
+    "href": "/services/custom-local-websites/",
+    "art": "browser-chromatic-painting-design",
+    "icon": "browser-duotone",
+    "motion": "frame",
+    "kind": "service",
+    "family": "web"
+  },
+  {
+    "id": "case-chromatic-painting-design",
+    "href": "/case-studies/chromatic-painting-design/",
+    "art": "work-chromatic",
+    "icon": "images-duotone",
+    "motion": "cast",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-hair-by-rachel-charles",
+    "href": "/case-studies/hair-by-rachel-charles/",
+    "art": "browser-hair-by-rachel-charles",
+    "icon": "scissors-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "google-review-1",
+    "href": "https://maps.app.goo.gl/8o4eXRSJTAcpvAgCA",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "speed",
+    "href": "/answers/help/speed/",
+    "art": "phone-chromatic",
+    "icon": "device-mobile-duotone",
+    "motion": "frame",
+    "kind": "question",
+    "family": "web"
+  },
+  {
+    "id": "booking",
+    "href": "/answers/help/booking/",
+    "art": "booking-calendar",
+    "icon": "calendar-check-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "web"
+  },
+  {
+    "id": "web-homepage-priority",
+    "href": "/answers/help/web-homepage-priority/",
+    "art": "homepage-sketchbook",
+    "icon": "layout-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "web"
+  },
+  {
+    "id": "google-review-4",
+    "href": "https://maps.app.goo.gl/83AQRN2zmZLi6msJA",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "web-content-collection",
+    "href": "/answers/help/web-content-collection/",
+    "art": "content-camera",
+    "icon": "images-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "web"
+  },
+  {
+    "id": "case-cc-films",
+    "href": "/case-studies/cc-films/",
+    "art": "browser-cc-films",
+    "icon": "film-slate-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-easy-tiger",
+    "href": "/case-studies/easy-tiger/",
+    "art": "browser-easy-tiger",
+    "icon": "fork-knife-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-the-break-room",
+    "href": "/case-studies/the-break-room/",
+    "art": "browser-the-break-room",
+    "icon": "martini-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-clearhelp",
+    "href": "/case-studies/clearhelp/",
+    "art": "browser-clearhelp",
+    "icon": "lifebuoy-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-army-navy-bags",
+    "href": "/case-studies/army-navy-bags/",
+    "art": "browser-army-navy-bags",
+    "icon": "backpack-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-brothers-pizzeria",
+    "href": "/case-studies/brothers-pizzeria/",
+    "art": "browser-brothers-pizzeria",
+    "icon": "pizza-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-grand-funding-llc",
+    "href": "/case-studies/grand-funding-llc/",
+    "art": "browser-grand-funding-llc",
+    "icon": "bank-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-legacy-music-group",
+    "href": "/case-studies/legacy-music-group/",
+    "art": "browser-legacy-music-group",
+    "icon": "music-notes-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-logan-loans",
+    "href": "/case-studies/logan-loans/",
+    "art": "browser-logan-loans",
+    "icon": "house-line-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-the-tarot-hotline",
+    "href": "/case-studies/the-tarot-hotline/",
+    "art": "browser-the-tarot-hotline",
+    "icon": "phone-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "page-industries",
+    "href": "/industries/",
+    "art": "storefront",
+    "icon": "storefront-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "web"
+  },
+  {
+    "id": "page-services-it-support",
+    "href": "/services/it-support/",
+    "art": "router",
+    "icon": "laptop-duotone",
+    "motion": "clay",
+    "kind": "service",
+    "family": "it"
+  },
+  {
+    "id": "wifi",
+    "href": "/answers/help/wifi/",
+    "art": "network-switch",
+    "icon": "wifi-high-duotone",
+    "motion": "clay",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "email",
+    "href": "/answers/help/email/",
+    "art": "mail",
+    "icon": "envelope-simple-duotone",
+    "motion": "paper",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "google-review-3",
+    "href": "https://maps.app.goo.gl/iroSD2VgyrKTPWgX6",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "ownership",
+    "href": "/answers/help/ownership/",
+    "art": "ownership-keys",
+    "icon": "key-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "computer",
+    "href": "/answers/help/computer/",
+    "art": "desk-workstation",
+    "icon": "desktop-tower-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "printer",
+    "href": "/answers/help/printer/",
+    "art": "printer",
+    "icon": "printer-duotone",
+    "motion": "clay",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "backup",
+    "href": "/answers/help/backup/",
+    "art": "backup-drive",
+    "icon": "cloud-arrow-up-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-security-basics",
+    "href": "/answers/help/it-security-basics/",
+    "art": "security",
+    "icon": "shield-check-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-password-ownership",
+    "href": "/answers/help/it-password-ownership/",
+    "art": "password-safe",
+    "icon": "password-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-license-renewal",
+    "href": "/answers/help/it-license-renewal/",
+    "art": "renewal-hourglass",
+    "icon": "receipt-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-video-call-room",
+    "href": "/answers/help/it-video-call-room/",
+    "art": "video-meeting",
+    "icon": "video-camera-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "google-review-2",
+    "href": "https://maps.app.goo.gl/DN3H137sCowxp9496",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "it-storage-full",
+    "href": "/answers/help/it-storage-full/",
+    "art": "storage-drives",
+    "icon": "hard-drives-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-shared-files",
+    "href": "/answers/help/it-shared-files/",
+    "art": "shared-file-cabinet",
+    "icon": "folders-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-phone-setup",
+    "href": "/answers/help/it-phone-setup/",
+    "art": "phone-dock",
+    "icon": "phone-incoming-duotone",
+    "motion": "frame",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-software-updates",
+    "href": "/answers/help/it-software-updates/",
+    "art": "software-maintenance",
+    "icon": "arrows-clockwise-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-payment-device-check",
+    "href": "/answers/help/it-payment-device-check/",
+    "art": "payment-terminal",
+    "icon": "credit-card-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "it-vendor-handoff",
+    "href": "/answers/help/it-vendor-handoff/",
+    "art": "vendor-handoff",
+    "icon": "handshake-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "page-areas",
+    "href": "/areas/",
+    "art": "yellow-taxi-v1",
+    "icon": "map-pin-duotone",
+    "motion": "clay",
+    "kind": "question",
+    "family": "it"
+  },
+  {
+    "id": "page-services-tech-consulting",
+    "href": "/services/tech-consulting/",
+    "art": "notebook",
+    "icon": "chats-circle-duotone",
+    "motion": "paper",
+    "kind": "service",
+    "family": "consulting"
+  },
+  {
+    "id": "album-nyc",
+    "href": "/photos/nyc/",
+    "art": "photo-nyc",
+    "icon": "camera-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "album-marthas-vineyard",
+    "href": "/photos/marthas-vineyard/",
+    "art": "photo-marthas-vineyard",
+    "icon": "sailboat-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "album-arizona",
+    "href": "/photos/arizona/",
+    "art": "photo-arizona",
+    "icon": "cactus-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "maps",
+    "href": "/answers/help/maps/",
+    "art": "map-red-pin",
+    "icon": "map-trifold-duotone",
+    "motion": "paper",
+    "kind": "question",
+    "family": "consulting"
+  },
+  {
+    "id": "web-redesign-decision",
+    "href": "/answers/help/web-redesign-decision/",
+    "art": "redesign-paint",
+    "icon": "wrench-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "consulting"
+  },
+  {
+    "id": "album-hospitality",
+    "href": "/photos/hospitality/",
+    "art": "photo-hospitality",
+    "icon": "coffee-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "album-roofing",
+    "href": "/photos/roofing/",
+    "art": "photo-roofing",
+    "icon": "hammer-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "album-shops",
+    "href": "/photos/shops/",
+    "art": "photo-shops",
+    "icon": "shopping-bag-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "google-review-5",
+    "href": "https://maps.app.goo.gl/PVRmfbCD1GCauwKH7",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "album-trades",
+    "href": "/photos/trades/",
+    "art": "photo-trades",
+    "icon": "pipe-wrench-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "album-makers",
+    "href": "/photos/makers/",
+    "art": "photo-makers",
+    "icon": "needle-duotone",
+    "motion": "frame",
+    "kind": "photo",
+    "family": "consulting"
+  },
+  {
+    "id": "consulting-first-priority",
+    "href": "/answers/help/consulting-first-priority/",
+    "art": "priority-notes",
+    "icon": "list-numbers-duotone",
+    "motion": "paper",
+    "kind": "question",
+    "family": "consulting"
+  },
+  {
+    "id": "consulting-tool-choice",
+    "href": "/answers/help/consulting-tool-choice/",
+    "art": "consulting-toolbox",
+    "icon": "sliders-horizontal-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "consulting"
+  },
+  {
+    "id": "consulting-second-opinion",
+    "href": "/answers/help/consulting-second-opinion/",
+    "art": "rubber-duck",
+    "icon": "chat-circle-dots-duotone",
+    "motion": "clay",
+    "kind": "question",
+    "family": "consulting"
+  },
+  {
+    "id": "google-review-7",
+    "href": "https://www.google.com/maps/place/Little+Fight+NYC/data=!4m2!3m1!1s0x69a0f4f2cbb0e4f5:0x3cfe5b8554bef416",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "page-services-business-systems",
+    "href": "/services/business-systems/",
+    "art": "software",
+    "icon": "cube-duotone",
+    "motion": "stack",
+    "kind": "service",
+    "family": "software"
+  },
+  {
+    "id": "case-venuecircuit",
+    "href": "/case-studies/venuecircuit/",
+    "art": "browser-venuecircuit",
+    "icon": "calendar-check-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "page-vera",
+    "href": "/vera/",
+    "art": "vera-brownstone",
+    "icon": "blueprint-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "software-repeat-work",
+    "href": "/answers/help/software-repeat-work/",
+    "art": "repeat-work-machine",
+    "icon": "repeat-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "google-review-6",
+    "href": "https://maps.app.goo.gl/4s36rS4TCFThvc6J8",
+    "art": null,
+    "icon": "quotes-duotone",
+    "motion": "stamp",
+    "kind": "review",
+    "family": "brand"
+  },
+  {
+    "id": "software-approval-path",
+    "href": "/answers/help/software-approval-path/",
+    "art": "approval-stamp",
+    "icon": "check-square-duotone",
+    "motion": "stamp",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "case-deckspace",
+    "href": "/case-studies/deckspace/",
+    "art": "browser-deckspace",
+    "icon": "calendar-dots-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "brand"
+  },
+  {
+    "id": "case-after-hours-agenda",
+    "href": "/case-studies/after-hours-agenda/",
+    "art": "browser-after-hours-agenda",
+    "icon": "coat-hanger-duotone",
+    "motion": "frame",
+    "kind": "proof",
+    "family": "software"
+  },
+  {
+    "id": "lab-pool-room",
+    "href": "/labs/pool-room/",
+    "art": "lab-pool-room",
+    "icon": "film-reel-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-pill-scroll",
+    "href": "/labs/pill-scroll/",
+    "art": "lab-pill-scroll",
+    "icon": "mouse-scroll-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-walkup-3d",
+    "href": "/labs/walkup-3d/",
+    "art": "lab-walkup-3d",
+    "icon": "buildings-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-terminal-3d",
+    "href": "/labs/terminal-3d/",
+    "art": "lab-terminal-3d",
+    "icon": "city-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-micro-animations",
+    "href": "/labs/micro-animations/",
+    "art": "lab-micro-animations",
+    "icon": "sparkle-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-aha-laser",
+    "href": "/labs/aha-laser/",
+    "art": "lab-aha-laser",
+    "icon": "waveform-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-goliath",
+    "href": "/labs/goliath/",
+    "art": "lab-goliath",
+    "icon": "planet-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-studio-engine",
+    "href": "/labs/studio-engine/",
+    "art": "lab-studio-engine",
+    "icon": "shapes-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-growth-street",
+    "href": "/labs/growth-street/",
+    "art": "lab-growth-street",
+    "icon": "plant-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "construction-showcase",
+    "href": "/construction/",
+    "art": "construction-plans",
+    "icon": "hard-hat-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "lab-cabinet-concept",
+    "href": "/labs/cabinet-concept/",
+    "art": "lab-cabinet-concept",
+    "icon": "armchair-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "lab-house-explorer",
+    "href": "/labs/house-explorer/",
+    "art": "lab-house-explorer",
+    "icon": "house-line-duotone",
+    "motion": "frame",
+    "kind": "lab",
+    "family": "software"
+  },
+  {
+    "id": "software-connect-existing-tools",
+    "href": "/answers/help/software-connect-existing-tools/",
+    "art": "connected-cables",
+    "icon": "plugs-connected-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "software-business-ownership",
+    "href": "/answers/help/software-business-ownership/",
+    "art": "custom-os-spheres",
+    "icon": "fingerprint-duotone",
+    "motion": "stack",
+    "kind": "question",
+    "family": "software"
+  },
+  {
+    "id": "software-smallest-useful-change",
+    "href": "/answers/help/software-smallest-useful-change/",
+    "art": "scissors-red-tape",
+    "icon": "puzzle-piece-duotone",
+    "motion": "cast",
+    "kind": "question",
+    "family": "software"
+  }
+]
