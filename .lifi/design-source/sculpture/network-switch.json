@@ -1,0 +1,23 @@
+{
+  "asset": "network-switch",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-53850257-948e-49ac-82b1-f37eec11f683.png",
+  "prompt": "Natural physical network connection: compact graphite satin-resin and brushed-aluminum 5-port network switch with five recessed RJ45 ports, a cream braided ethernet cable loop, and a transparent RJ45 plug facing the viewer; premium detailed hardware miniature, upper-left studio light, 3/4 view, transparent alpha, no text, brand, UI, glow, floor, or shadow field.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/network-switch.png",
+      "dimensions": "1402x1122",
+      "bytes": 1231325,
+      "sha256": "cf2bcbfbfd45b73c8b849097b36ff0a2f9bd25074dc8dac534cbd419abea9b90"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/network-switch.webp",
+      "dimensions": "1402x1122",
+      "bytes": 176130,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "f2611dab16321393b80b1b0351ca5f253f866a5967396ac33f6e2342e7d5b503"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

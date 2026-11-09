@@ -1,0 +1,25 @@
+{
+  "asset": "video-meeting",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-e8cbb6d5-a2f4-4204-8778-8a2a4db54b8d.png",
+  "prompt": "Graphite cylindrical fabric-mesh desktop conference speakerphone with a brushed aluminum rim, beside a compact webcam with a blue glass lens on an articulated cream stand. Natural realistic clay/resin, fabric, metal, and painted product miniature materials, upper-left studio light, transparent background, no markings, screen, people, scene, or UI.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png",
+    ".lifi/design-source/sculpture/notebook.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/video-meeting.png",
+    "dimensions": [1402, 1122],
+    "sha256": "7fd4e53bd42deba30a80a7e1094d9e0d889ad39a42a0d6a30c5c1582f2accac0"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/video-meeting.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "f63d6caa2b85cc1368c16be4aad276084680ed1927ffdba2dfe7aadd5defbd44",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1291x1069+59+29"
+  }
+}

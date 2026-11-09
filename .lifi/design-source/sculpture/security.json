@@ -1,0 +1,26 @@
+{
+  "asset": "security",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceReference": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a115fa-6eb3-7231-8427-9c5ea090ba17/exec-a529e403-c0d0-4c12-8687-5fac603e1c82.png",
+  "prompt": "Use case: stylized-concept. Reusable Little Fight NYC security tile illustration, matching the supplied reference's premium claymation/resin miniature-sculpture language. Create one isolated small brass padlock seated beside a pair of neat blue file folders. The padlock has precise mechanical geometry, softly worn edge highlights only, and a coherent blackened-metal shackle with believable openings and attachment points. The folders have clean, slightly offset covers and restrained inner-page edges. Use broad soft upper-left key light, real material contrast, 85% precision product sculpture and 15% restrained handmade finish. No lettering, labels, screens, UI, glow, logo, watermark, floor, environment, spotlight pool, or puddle. True transparent background, fully visible subject with about 5% padding in a landscape frame.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/security.png",
+      "dimensions": "1402x1122",
+      "bytes": 1183114,
+      "alpha": true,
+      "sha256": "e046e5e0c13f4d2416a697bbf036c4e8cbbaeafab23bb2c2abd770b2093e3f17"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/security.webp",
+      "dimensions": "1402x1122",
+      "bytes": 114808,
+      "alpha": true,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "ce67e3425fa964809a9517635e4c5f38db2254fd85ebf4fa22c72a2768980853"
+    }
+  },
+  "inspection": "Visually inspected against the reference. Alpha verified on both output formats: 8-bit alpha with min 0."
+}

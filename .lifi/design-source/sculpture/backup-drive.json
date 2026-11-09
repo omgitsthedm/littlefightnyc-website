@@ -1,0 +1,23 @@
+{
+  "asset": "backup-drive",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-5d41b2f3-5c66-4b03-9ba4-3a277dc3c622.png",
+  "prompt": "Compact physical portable external SSD: brushed aluminum body with rounded graphite protective edges and recessed USB-C port, plus a short mustard braided USB cable coiled alongside with a real silver USB-C connector. Low horizontal three-quarter hardware still life, upper-left studio light, transparent alpha, no floor, glow, text, logo, cloud, icon, or screen.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/backup-drive.png",
+      "dimensions": "1402x1122",
+      "bytes": 1011142,
+      "sha256": "ad846fbf4fde1ba1b96ef871dcea827c906c7d188359ffeceae82f25515865ae"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/backup-drive.webp",
+      "dimensions": "1402x1122",
+      "bytes": 130764,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "e8229bc68229efaa200665911b9c916e9ebe3274083e33e44de1880439464f01"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

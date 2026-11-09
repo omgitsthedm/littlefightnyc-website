@@ -1,0 +1,23 @@
+{
+  "asset": "vera-brownstone",
+  "tile": "VERA.",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-dd517116-a23e-4b80-a5be-0129045225cb.png",
+  "prompt": "Elegant recognizable NYC brownstone walk-up miniature: one narrow four-storey reddish-brown sandstone facade, tall black-framed windows, black cornice, and raised front stoop with black iron rails. Three-quarter view from slightly above; 85% precise architectural model and 15% restrained clay finish; soft upper-left studio light; transparent background; no storefront, text, signage, street, people, cars, floor, backdrop, or hard shadow; centered landscape frame.",
+  "png": {
+    "path": ".lifi/design-source/sculpture/vera-brownstone.png",
+    "dimensions": [1402, 1122],
+    "sha256": "863903ee61f0aeea535b8a262afcb80518e1921f51aeda825871cfda4940c597"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/vera-brownstone.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "77db2f52306aea01c3d92038390aa820d31dc06c6a29bd9fd37e3dc6a03673f5",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1382x1088+0+0",
+    "visible_subject_bbox_at_alpha_5pct": "538x1050+436+30"
+  }
+}

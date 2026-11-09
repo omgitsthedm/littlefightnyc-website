@@ -1,0 +1,26 @@
+{
+  "asset": "approval-stamp",
+  "use": "software-approval-path — Make approvals clear",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-13448727-f69a-48b6-aeb5-13d2776d17ab.png",
+    "prompt": "One traditional approval rubber stamp with a turned warm-wood handle and dark rectangular rubber base, slightly tilted beside a small cream card with one clear dark-green check mark only; precise cast-clay miniature with restrained handmade texture; three-quarter overhead under soft upper-left studio light; genuinely transparent background; no floor, extended shadow, lettering, logo, or props; centered landscape framing with about 6% padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/approval-stamp.png",
+      "dimensions": "1402x1122",
+      "sha256": "e967e9c2292c3d5c9196b88a4bce882e424677c1527d0429da6769ed72fa8664"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/approval-stamp.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=90",
+      "sha256": "54e6ced883f8d57e70e1de48158ecca89d36b9ab92b1cd7cd8d9787f824f8fa2"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "1149x945+147+88"
+  }
+}

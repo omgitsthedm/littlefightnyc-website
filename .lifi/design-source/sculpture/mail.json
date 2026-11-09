@@ -1,0 +1,19 @@
+{
+  "asset": ".lifi/design-source/sculpture/mail.png",
+  "alternate": "app/public/assets/sculpture/mail.webp",
+  "generator": "built-in image_gen",
+  "use_case": "stylized-concept",
+  "references": [
+    "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+    "/Users/davidmarsh/.codex/.chatgpt-projects/g-p-6837cc8112e8819184a3931559901698/output/Little-Fight-NYC-Codex-Handoff/reference/approved-direction/01-selected-hero-user-reference.png"
+  ],
+  "prompt": "Isolated service-tile mail sculpture in the approved Little Fight NYC clay/resin style: a precise thick light-blue folded envelope at a slight three-quarter angle, plain orange circular wax seal on its flap, two blank cream sheets emerging from the envelope, and a short black pen beside it. Natural separate paper, resin, wax and pen materials; broad soft upper-left studio light; transparent alpha background; no text, UI, logos, floor, shadow plane, glow or inflated cartoon form.",
+  "output": {
+    "width": 1402,
+    "height": 1122,
+    "alpha": true,
+    "webp_encoding": "q88",
+    "png_sha256": "2cfe4a00f2624f68cf55d7b77216f0b97138b4cda84d0afe74c4ee9da44523aa",
+    "webp_sha256": "74550f666a3996500cc69fe9cf17fa34fab31acfe31382b12d36764d403094e2"
+  }
+}

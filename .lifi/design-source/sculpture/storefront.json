@@ -1,0 +1,29 @@
+{
+  "asset": ".lifi/design-source/sculpture/storefront.png",
+  "alternate": "app/public/assets/sculpture/storefront.webp",
+  "generator": "built-in image_gen",
+  "use_case": "stylized-concept",
+  "references": [
+    "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+    "/Users/davidmarsh/.codex/.chatgpt-projects/g-p-6837cc8112e8819184a3931559901698/output/Little-Fight-NYC-Codex-Handoff/reference/approved-direction/01-selected-hero-user-reference.png"
+  ],
+  "prompt": "One isolated, two-story warm cream NYC brownstone storefront miniature in the supplied Little Fight NYC clay/resin sculptural language: frontal with a subtle right-side fa\u00e7ade visible; black architectural cornice; three amber-lit upper windows with small plants; black-and-cream vertically striped awning; amber-lit ground floor; narrow dark doorway; potted greenery; blank unlettered A-frame sign; soft broad upper-left studio light. Transparent alpha background, portrait framing with clean padding. No lettering, logo, screens, stage, floor, shadows, glow pool, people, vehicles, watermark, or border.",
+  "output": {
+    "width": 1134,
+    "height": 1387,
+    "alpha": true,
+    "webp_encoding": "lossless, q95",
+    "png_sha256": "6fbb1fb23fd0a47a5d57cc3776843363c19fb08a0ced88a174abb5341fe4a2db",
+    "webp_sha256": "f09bd7d94ef59b019cece1c6ada008ed14d49131fd107823c7a1209a84ca282a"
+  },
+  "deliveryOptimization": {
+    "path": "app/public/assets/sculpture/storefront.webp",
+    "dimensions": [
+      899,
+      1100
+    ],
+    "bytes": 176578,
+    "sha256": "891c5bff57ebabca41f9b1fa3965d8a0291d6245802d367cbf1a26f7b8ff9ae0",
+    "method": "Aspect-preserving downscale to 900 by 1100 maximum, WebP q88 with alpha"
+  }
+}

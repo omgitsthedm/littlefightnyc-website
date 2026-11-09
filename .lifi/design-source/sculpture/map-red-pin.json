@@ -1,0 +1,23 @@
+{
+  "asset": "map-red-pin",
+  "tile": "Help people find you.",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-35a0fa6a-e752-47b5-a198-ef05dbdf32e6.png",
+  "prompt": "One folded cream and ivory city map with tasteful muted green park blocks, pale-blue water, faint street lines, and one chunky sculpted red location pin. Restrained premium clay/resin miniature, crisp folded paper, three-quarter overhead view, soft upper-left studio light, genuine transparent background, no readable words, logos, screenshots, floor, or backdrop.",
+  "png": {
+    "path": ".lifi/design-source/sculpture/map-red-pin.png",
+    "dimensions": [1402, 1122],
+    "sha256": "ccc0fbaacd9da0d602b04919795644501a6ca2a7e640d34d4350c4ab1bc79a92"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/map-red-pin.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "1360b89c36fa2d1192a8386ee2226cad56d2cc9d9ff454a76d44e55a2aef7210",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1285x1099+39+23",
+    "visible_subject_bbox_at_alpha_5pct": "1224x839+76+177"
+  }
+}

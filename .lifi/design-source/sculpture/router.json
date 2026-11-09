@@ -1,0 +1,26 @@
+{
+  "asset": "router",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceReference": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a115fa-6eb3-7231-8427-9c5ea090ba17/exec-291598a8-115f-40f5-9905-667749b1130c.png",
+  "prompt": "Use case: stylized-concept. Reusable web interface tile illustration for Little Fight NYC tech support and reader views. Match the supplied reference's premium claymation/resin miniature-sculpture language. Create one isolated warm-yellow firm clay/resin Wi-Fi router in a slight three-quarter view from above: a compact rectangular base with crisp softened edges, two exact straight upright antennas, a neatly curved yellow Ethernet cable attached on the right, a few meaningful dark ports and tiny indicator dots, sparse tiny maker marks, and no readable lettering. Use a broad soft upper-left key. Keep 85% precision product sculpture and 15% restrained hand finish. No floor, environment, spotlight pool, glowing edges, melted/inflated shapes, all-over grain, heavy fingerprints, text, logo, or watermark. True transparent background; subject fully visible with about 5% padding in a landscape frame.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/router.png",
+      "dimensions": "1402x1122",
+      "bytes": 719722,
+      "alpha": true,
+      "sha256": "e4023afb8f7ef3abfc4dba3cae0e6633046faf7b9bbc3242bfb86525c5c3527d"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/router.webp",
+      "dimensions": "1402x1122",
+      "bytes": 84954,
+      "alpha": true,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "6c3aebd4c88ab507569f125c8dd11e59db56535b3d917b18e1d6d406ce64352e"
+    }
+  },
+  "inspection": "Visually inspected against the reference. Alpha verified on both output formats: 8-bit alpha with min 0."
+}

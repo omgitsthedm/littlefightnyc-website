@@ -1,0 +1,19 @@
+{
+  "asset": ".lifi/design-source/sculpture/printer.png",
+  "alternate": "app/public/assets/sculpture/printer.webp",
+  "generator": "built-in image_gen",
+  "use_case": "stylized-concept",
+  "references": [
+    "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+    "/Users/davidmarsh/.codex/.chatgpt-projects/g-p-6837cc8112e8819184a3931559901698/output/Little-Fight-NYC-Codex-Handoff/reference/approved-direction/01-selected-hero-user-reference.png"
+  ],
+  "prompt": "Isolated small office-printer sculpture in the approved Little Fight NYC clay/resin product language: warm cream precise housing, graphite scanner lid, one blank cream sheet emerging from its rear feed and a neatly coiled yellow cable beside it. Separate satin resin, real paper and coated cable material contrast; broad soft upper-left studio light; transparent alpha background; no text, UI, logo, controls with icons, floor, shadow plane, glow or people.",
+  "output": {
+    "width": 1402,
+    "height": 1122,
+    "alpha": true,
+    "webp_encoding": "q88",
+    "png_sha256": "21eeb71673011374f8874c833bfd30a8eb248a8931e8e1d8b770257cc1f7ec23",
+    "webp_sha256": "0317a201b793c7718647a3e6a15949ea9f1b2734fc22badf78c642b9a6f804b6"
+  }
+}

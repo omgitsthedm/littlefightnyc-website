@@ -1,0 +1,17 @@
+{
+  "asset": "app/public/assets/sculpture/notebook.{png,webp}",
+  "generated_with": "built-in image_gen",
+  "generated_source": "/Users/davidmarsh/.codex/generated_images/01a115fa-b1e9-75d3-b48e-2d4537f033a8/exec-118ccfe2-6628-44a6-89e8-65fa96178991.png",
+  "style_reference": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "use_case": "stylized-concept",
+  "prompt": "Transparent standalone consulting-tile sculpture: a firm dark olive-green linen clay notebook with exact rounded manufactured geometry and coherent small gold left spiral; a graphite and ochre-yellow pencil diagonally across it; a small leafy plant in a cream handmade ceramic pot and a small cream coffee mug behind on the right. Restrained premium hand-finished claymation, broad upper-left soft key, frontal top three-quarter view, distinct linen/metal/pencil/ceramic/leaf materials. No writing, lettering, floor, glow, halos, excessive fingerprints, arbitrary dents, logos, or cropped objects.",
+  "output": {
+    "dimensions": "1000x800",
+    "alpha": true,
+    "padding": "Canvas expanded after generation to retain at least 5 percent clear edge padding.",
+    "png_sha256": "d920941bc710cfff1fa69dc5e1a5dd5ae0b69d054a9aeb89fa87ed2d9b905def",
+    "webp_sha256": "6e6809a41338fc3bd53e409e68b55b772e750170998226e12310833a521ffec2",
+    "webp_quality": 92
+  },
+  "inspection": "Visual check passed: one unlettered notebook, coherent spiral and pencil, handmade ceramic plant and mug, balanced upper-left lighting, and no visible background. Metadata check passed: both files are 1000x800 with alpha."
+}

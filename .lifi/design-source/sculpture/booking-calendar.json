@@ -1,0 +1,27 @@
+{
+  "asset": "booking-calendar",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-8dbf5600-2614-4c49-9e5e-76c8d5c545cc.png",
+  "prompt": "Small cream paper desk calendar on a warm oak triangular stand, brass spiral rings, simple unlabeled tiny grid squares, one muted brick-red circular date marker, and one graphite pencil beside it. Tactile real clay/resin product language with natural material detail, three-quarter product camera, broad upper-left studio light, genuine transparent background, no text or letters.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png",
+    ".lifi/design-source/sculpture/notebook.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/booking-calendar.png",
+    "dimensions": [1402, 1122],
+    "sha256": "0073ba7beff32f458036b79147d6448ade45a8974915fb31c98c9d51c9f57332",
+    "alpha_cleanup": "removed source pixels with alpha below 5 percent"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/booking-calendar.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "eaeaa5e681d84115558857a87892b96dfe3e30e7aba7b50b8871de0f62d3daf8",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1062x925+248+104",
+    "visible_subject_bbox_at_alpha_5pct": "1062x925+248+104"
+  }
+}

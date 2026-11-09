@@ -1,0 +1,25 @@
+{
+  "asset": "homepage-sketchbook",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-3c7d3943-919d-4bcc-91ae-41a3a99f3dca.png",
+  "prompt": "Open cream-paper wirebound sketchbook, architectural graphite pencil, and brushed metal ruler in a three-quarter physical product view. On the page: one pale graphite hero rectangle and three pale graphite panel rectangles, with no writing. Natural paper fibers, wood, brass, and metal in a realistic hand-finished clay/resin miniature, transparent background, no floor or glow.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png",
+    ".lifi/design-source/sculpture/notebook.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/homepage-sketchbook.png",
+    "dimensions": [1402, 1122],
+    "sha256": "e4344444454124fed290fb91c3616cfbbe6e28b195381ea60a627028a62f7615"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/homepage-sketchbook.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "6529233e2b8f50580c0fa1d659fc90ff39ef77e4a420cacfc3b178b2bafd2b95",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1402x1011+0+86"
+  }
+}

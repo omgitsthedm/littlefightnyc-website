@@ -1,0 +1,279 @@
+{
+  "cast-check-square": {
+    "icon": "preview-ui/assets/mineral/check-square-duotone.svg",
+    "sourceSha256": "a3d0750f54db82659ffa0b66daf3a06b7b79680843b1018c2051984c03a23b24",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-check-square.webp",
+    "sha256": "1de4b5b5781cb70cb273ba31d74be6cde7172c02a45ce4c94681e258b0d640e0"
+  },
+  "cast-plugs-connected": {
+    "icon": "preview-ui/assets/mineral/plugs-connected-duotone.svg",
+    "sourceSha256": "efd9719ae5dc8fac82db613a6dec9b03965893da7c5a70d200d527446ec0bd23",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-plugs-connected.webp",
+    "sha256": "6c54b106b7dabd2e71b177d5fec74dbe41d30c85d9af61413f5abb1cc929c33c"
+  },
+  "cast-wifi-high": {
+    "icon": "preview-ui/assets/mineral/wifi-high-duotone.svg",
+    "sourceSha256": "8786219e51e953522cf0d170f13d70acac93fc795a9fabb711351ae4e71ae2c5",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-wifi-high.webp",
+    "sha256": "feb58af9dbbcd740a04cffc56604ad614c88f0feed5ca9d1deb94380a3ee5bb2"
+  },
+  "cast-arrows-clockwise": {
+    "icon": "preview-ui/assets/mineral/arrows-clockwise-duotone.svg",
+    "sourceSha256": "32e3d1e35733d6ad0f9c03286ca756deb142e43f9cda1e5f36c3e3896b5d37ae",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-arrows-clockwise.webp",
+    "sha256": "11eaa3b6a97d7c79975da0b2ed463e43863937eb55435f65c969584eac807b01"
+  },
+  "cast-calendar-check": {
+    "icon": "preview-ui/assets/mineral/calendar-check-duotone.svg",
+    "sourceSha256": "59b8664b99b6c926c4714f69aff0432a0a4315f67d89c7502634f641a85d410b",
+    "family": "web",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-calendar-check.webp",
+    "sha256": "fed8f09495a28017d41f74de88104bcc2b346baeb9319659aa0d517bc9de7184"
+  },
+  "cast-chats-circle": {
+    "icon": "preview-ui/assets/mineral/chats-circle-duotone.svg",
+    "sourceSha256": "9123089fee504b756482fca7fd7b9ba9d9d295c79a2fd9661cea32ccdee5dd9f",
+    "family": "consulting",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-chats-circle.webp",
+    "sha256": "d3f9b20f74ed742324603a7204206a31caec4343f8da02e8b5795bba49cd0217"
+  },
+  "cast-cloud-arrow-up": {
+    "icon": "preview-ui/assets/mineral/cloud-arrow-up-duotone.svg",
+    "sourceSha256": "4e08ed5b8730960d7fea46028f95f9ba8188860f5f54a799a8ed579ecf764bf0",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-cloud-arrow-up.webp",
+    "sha256": "80b0168de26b25438aa3585f8727639068547b78c5ee3d231ef057a22129b871"
+  },
+  "cast-credit-card": {
+    "icon": "preview-ui/assets/mineral/credit-card-duotone.svg",
+    "sourceSha256": "27169bdb3b0d960c41a01e44ee1c7bf9c3b102ba1403e7c72cbae63be8e704f7",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-credit-card.webp",
+    "sha256": "0dee7ee18f8d6a83bce51707205b0774c9e74fc98f82cfe0e1f219f6b3f5e589"
+  },
+  "cast-desktop-tower": {
+    "icon": "preview-ui/assets/mineral/desktop-tower-duotone.svg",
+    "sourceSha256": "fa8b4492fc2f5cf40ba88282a84890d46846cc8b0d2d4f8311838b8a81b7d35c",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-desktop-tower.webp",
+    "sha256": "31a8f832101e2b7fa3bc91671eb2fb3a6bfa7fbe196173b76b1b910539f9d973"
+  },
+  "cast-fingerprint": {
+    "icon": "preview-ui/assets/mineral/fingerprint-duotone.svg",
+    "sourceSha256": "2390d01f9c704bd6ce61bc52c6ce20cb420132c308c58e389879d59796c7bc03",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-fingerprint.webp",
+    "sha256": "d22ff08c2cda331add51db648b40423ea246b0acef34dcb3504a6ec7f1d785e0"
+  },
+  "cast-folders": {
+    "icon": "preview-ui/assets/mineral/folders-duotone.svg",
+    "sourceSha256": "a98279745145cc08b47da5348b951d68fe094d0ae7615495d3151314c39dd44b",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-folders.webp",
+    "sha256": "e701743d02c3ce1b00f4656462c0aacba270abbf9168f839da2e51e6f6e7f2bd"
+  },
+  "cast-globe-hemisphere-west": {
+    "icon": "preview-ui/assets/mineral/globe-hemisphere-west-duotone.svg",
+    "sourceSha256": "52a225637cebbe67a961f6066f2ef9c29a73b9645e78258bd39e6bb2f4784bb6",
+    "family": "web",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-globe-hemisphere-west.webp",
+    "sha256": "c1d3ac046de023b41cc787152bf4a7b41917106905ade61c483b28e3f0cad142"
+  },
+  "cast-handshake": {
+    "icon": "preview-ui/assets/mineral/handshake-duotone.svg",
+    "sourceSha256": "4f8827d067f5b777902e4e6e0f1e6ccc6b60c5d34605d65ecb8020137072ebb9",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-handshake.webp",
+    "sha256": "3553d748e9275505bb13689535cbb92092d21c6ab1ca4fe7b802a23dc37b9012"
+  },
+  "cast-hard-drives": {
+    "icon": "preview-ui/assets/mineral/hard-drives-duotone.svg",
+    "sourceSha256": "ded508a98776d1f04adf05371d1f1fc9e8be8ddcf3a221e7d749af5f486dd452",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-hard-drives.webp",
+    "sha256": "2449b3ca6ad5180ed32967e8a3ba2cd956198994626f42bdd330897662f97f29"
+  },
+  "cast-hard-hat": {
+    "icon": "preview-ui/assets/mineral/hard-hat-duotone.svg",
+    "sourceSha256": "d40c91a343a3330e547ec49110b5ef305d2c082bf0bfaf49736771022d5b79d0",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-hard-hat.webp",
+    "sha256": "9ca24df5c45a2b50f9a81bf4d4e6efcfc6de74139289e3643a70918a97fec19a"
+  },
+  "cast-house-line": {
+    "icon": "preview-ui/assets/mineral/house-line-duotone.svg",
+    "sourceSha256": "c4a8e60acc0a98d65c01c210d9e6ac1cbc302d9e3df9ceffbbf9d9ff06f8dba4",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light"
+  },
+  "cast-images": {
+    "icon": "preview-ui/assets/mineral/images-duotone.svg",
+    "sourceSha256": "ac0a3a8fa6c9d3bfb7aeb003891940e498a49d34fa50878779ada3363d1593c2",
+    "family": "web",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-images.webp",
+    "sha256": "c3319e5c576e53d6defdd91970459f291fe0a85dc212558523c0ab80ffcc1212"
+  },
+  "cast-key": {
+    "icon": "preview-ui/assets/mineral/key-duotone.svg",
+    "sourceSha256": "c84fa84d090e51e1a43b2eebf3182c3cfb2c98cf64a2a7fab35b748ee2744c77",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-key.webp",
+    "sha256": "fdcc29ede2184dbc9b8fafd8cf6b30eb1376c6784bcf5d1d4023b4e3ab17307c"
+  },
+  "cast-layout": {
+    "icon": "preview-ui/assets/mineral/layout-duotone.svg",
+    "sourceSha256": "f8d0876ac047847e913ad4de06f2c44a88bdc7b583538808757b47857f87af62",
+    "family": "web",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-layout.webp",
+    "sha256": "ea266504a11621e7c6ffe7e15e8a48b17a013a7f9818b71ebf50e316d472c0d9"
+  },
+  "cast-list-numbers": {
+    "icon": "preview-ui/assets/mineral/list-numbers-duotone.svg",
+    "sourceSha256": "51abf7bb36df214016951acdf3491f4bff71fbf5b9780a8b394e9cc53bae823f",
+    "family": "consulting",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-list-numbers.webp",
+    "sha256": "826a3767a210d5290b3e69fb125a9b6bc80481a31013b762fbeba207a5fd205a"
+  },
+  "cast-map-pin": {
+    "icon": "preview-ui/assets/mineral/map-pin-duotone.svg",
+    "sourceSha256": "c21ced095b724128b17c25ce60f40e32d98d14339038d818cf79140dc1e04349",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-map-pin.webp",
+    "sha256": "124039669caa4f6ce5085cbf85cdcc83175ec03389b911174717a09f7b9d523c"
+  },
+  "cast-map-trifold": {
+    "icon": "preview-ui/assets/mineral/map-trifold-duotone.svg",
+    "sourceSha256": "51fc6df1cb4a67fcf8ec828735f3d2eb163c14d998b2bd34b1507782bf40bb5c",
+    "family": "consulting",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-map-trifold.webp",
+    "sha256": "aea6d03e0d128eb3aba6721bf64bbf0081969d3ac6ebf41c1ddd269fe25b34e1"
+  },
+  "cast-password": {
+    "icon": "preview-ui/assets/mineral/password-duotone.svg",
+    "sourceSha256": "0b7d1e2997ea6420345d13716d44e04131f8bb4fe86dabc55cb1bbacd1b3a175",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-password.webp",
+    "sha256": "9eca3f64d854c917c98d256dc7adfd344fece57eedd4f9e32951ec4d2935ca55"
+  },
+  "cast-phone-incoming": {
+    "icon": "preview-ui/assets/mineral/phone-incoming-duotone.svg",
+    "sourceSha256": "d943bd20ef4722c5f3e685299783046bdc317ee46ad90cda983515772901fb24",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-phone-incoming.webp",
+    "sha256": "b02cebd39e5534c8d66d280a3b0ff764935298d7942a65232c04b0aac34bce44"
+  },
+  "cast-puzzle-piece": {
+    "icon": "preview-ui/assets/mineral/puzzle-piece-duotone.svg",
+    "sourceSha256": "21b5ecfdd65a1aaced52daf72e1ac405e4de7c2a1363a9065800a40fb15cb602",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-puzzle-piece.webp",
+    "sha256": "1d44f70aebca800dbc156ed64e367606c23effd7ed46300e606de12b434360ad"
+  },
+  "cast-receipt": {
+    "icon": "preview-ui/assets/mineral/receipt-duotone.svg",
+    "sourceSha256": "48bd25a0c53d8c5e49105a4208fd1297d30d89024eb04c5825983433fe256cc6",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-receipt.webp",
+    "sha256": "6b9f3983d8b785f58eac99e770c0208fcd029ace486ab34578d6d6117afb06d2"
+  },
+  "cast-repeat": {
+    "icon": "preview-ui/assets/mineral/repeat-duotone.svg",
+    "sourceSha256": "3b6c818a506d0a591de61f835504b2a4828c3a1be60132dd49bfa5a64f60d541",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-repeat.webp",
+    "sha256": "59d8fff2c7047d9d288b51801c1bb306e522dc2a6c95a3030c3ceb6580a3c137"
+  },
+  "cast-sliders-horizontal": {
+    "icon": "preview-ui/assets/mineral/sliders-horizontal-duotone.svg",
+    "sourceSha256": "e06fc4da61f451fbe86bb08b076ca06043c74da6f7e55e04706f988c0d7123fb",
+    "family": "consulting",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-sliders-horizontal.webp",
+    "sha256": "c3ebb46b7e696c9bc877562699e997877bc86f5f158d2349c321480521450984"
+  },
+  "cast-video-camera": {
+    "icon": "preview-ui/assets/mineral/video-camera-duotone.svg",
+    "sourceSha256": "a4bcecf064f65c4b245c49f70f7c7988670c18f179505ad29e8208ebf5ba7e3b",
+    "family": "it",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-video-camera.webp",
+    "sha256": "3c88949a46bca4f99d1df587e091ac84304a75df5ab2c943f2cd912ce446ee30"
+  },
+  "cast-wrench": {
+    "icon": "preview-ui/assets/mineral/wrench-duotone.svg",
+    "sourceSha256": "67c0b89c2688777cc25a14a7f78c39fc5463f7bc5257f1393f46d48b36422716",
+    "family": "consulting",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-wrench.webp",
+    "sha256": "68c9dafa3b06c2866b2492b1b188a0048143c33895db3c6aefd815b3f4be6a6e"
+  },
+  "cast-blueprint": {
+    "icon": "preview-ui/assets/mineral/blueprint-duotone.svg",
+    "sourceSha256": "e26064270a1b6455e18e84e585a26cde27f4f0c9cc5420b9e1f6f03ee31d793f",
+    "family": "software",
+    "renderer": "Blender Cycles, 32 samples",
+    "modifications": "Unchanged official paths; extruded, beveled, clay materials and studio light",
+    "output": "app/public/assets/sculpture/cast-blueprint.webp",
+    "sha256": "2df82341c35227313a9cedab0595b5298ac22cf166e9ce155c9f6b19456b72b2"
+  }
+}

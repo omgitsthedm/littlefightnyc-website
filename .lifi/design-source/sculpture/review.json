@@ -1,0 +1,17 @@
+{
+  "asset": "app/public/assets/sculpture/review.{png,webp}",
+  "generated_with": "built-in image_gen",
+  "generated_source": "/Users/davidmarsh/.codex/generated_images/01a115fa-b1e9-75d3-b48e-2d4537f033a8/exec-5f3eae7d-5ae8-42bb-a423-11cf68c47574.png",
+  "style_reference": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "use_case": "stylized-concept",
+  "prompt": "Transparent testimonial-tile sculpture: one compact bright orange five-point ceramic/resin star paperweight with a regular symmetrical silhouette, flat faceted front and shallow bevels; one smaller pair of cream handmade ceramic quotation marks beside it. Broad upper-left studio key; physically coherent handmade miniature. No writing, logos, ratings, UI, floor, halo, glow, or inflated-balloon shape.",
+  "output": {
+    "dimensions": "1000x800",
+    "alpha": true,
+    "padding": "Canvas expanded after generation to retain at least 5 percent clear edge padding.",
+    "png_sha256": "478770e8abc3788432261975c861dfd568b8429a6a832b7ed33c050c9e8a9b73",
+    "webp_sha256": "6f88b52dd54685a4008777784d539b0e52127f1950bb3ffb7ea3190cc9f31374",
+    "webp_quality": 88
+  },
+  "inspection": "Visual inspection passed: a single faceted five-point orange star and one cream quotation-mark pair, with intentionally distinct resin and ceramic material treatments. Metadata inspection passed: both files are 1000x800 with alpha."
+}

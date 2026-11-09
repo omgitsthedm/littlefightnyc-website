@@ -1,0 +1,26 @@
+{
+  "asset": "rubber-duck",
+  "use": "consulting-second-opinion — Get a second opinion",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-a2063ab7-bd81-4a5f-85b4-429f57d67cbc.png",
+    "prompt": "One cheerful yellow rubber duck with an orange beak; a precise miniature sculpture with 85% smooth molded resin/plastic and 15% understated handmade cast-clay texture; three-quarter view slightly from above; soft upper-left studio light; genuinely transparent background; no floor, backdrop, hard shadow, text, logo, or props; full silhouette centered in a landscape canvas with about 6% padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/rubber-duck.png",
+      "dimensions": "1402x1122",
+      "sha256": "ff58ce2c132b3bf7e475faef5936a0e48d412f5cdfb0e6898d0668591c249789"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/rubber-duck.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=90",
+      "sha256": "49ca02610b03ca88edc1943761771d6702153a47267129ccfd5b9532adeb02c2"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "883x933+262+93"
+  }
+}

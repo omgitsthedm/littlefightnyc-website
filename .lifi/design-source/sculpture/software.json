@@ -1,0 +1,26 @@
+{
+  "asset": "software",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceReference": "/Users/davidmarsh/Desktop/ChatGPT Image Oct 7, 2026, 03_43_45 AM.png",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a115fa-6eb3-7231-8427-9c5ea090ba17/exec-62d394e2-30c6-4d7e-8cd6-3dc10d66e7a5.png",
+  "prompt": "Use case: stylized-concept. Reusable Little Fight NYC custom-software tile illustration, matching the supplied reference's premium claymation/resin miniature-sculpture language. Create one isolated sculpture of precise rectangular interlocking lavender, violet, and raspberry resin blocks, arranged as a legible modular system-logic mechanism, with one small orange mechanical control dial integrated into the construction. Use tangible engineered modules, clean seams, careful alignments, and sparse maker marks. Render in 85% precision product sculpture and 15% restrained handmade finish, with broad soft upper-left key light. No printed text, screen, UI, glow, puddle, floor, environment, spotlight pool, logo, or watermark. True transparent background, complete subject with about 5% padding in a landscape frame.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/software.png",
+      "dimensions": "1402x1122",
+      "bytes": 1430574,
+      "alpha": true,
+      "sha256": "decf736ca4f5c615b39264086ff38a3676b0bead4b7ba270e97353d8e4264033"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/software.webp",
+      "dimensions": "1402x1122",
+      "bytes": 112698,
+      "alpha": true,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "6197dfd1f2717132ca40e462e5e1a7e10ed2e89c007dfac9ddf3b794d55b6d02"
+    }
+  },
+  "inspection": "Visually inspected against the reference. Alpha verified on both output formats: 8-bit alpha with min 0."
+}

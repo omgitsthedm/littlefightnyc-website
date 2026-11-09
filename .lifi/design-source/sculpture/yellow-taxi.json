@@ -1,0 +1,27 @@
+{
+  "asset": "yellow-taxi",
+  "createdAt": "2026-10-07",
+  "generator": "Native Blender Cycles miniature, 48 samples",
+  "source": "app/scripts/render-taxi-sculpture.py",
+  "reason": "Generated variants and background-removal edit retained a visible aura; replaced with actual 3D geometry and clean film transparency. Previous candidate preserved as yellow-taxi-v1.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/yellow-taxi.png",
+      "sha256": "f1611c869526783b91f7f6cfee6bb5e2ffb08fbca92d151fa5ae287b0916021e",
+      "width": 1200,
+      "height": 960,
+      "bytes": 708908
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/yellow-taxi.webp",
+      "sha256": "0ecc7149b3f59fd5ce4db76fbccb0a6a70e3b6340f3392a6290ab846fec5d57c",
+      "width": 1200,
+      "height": 960,
+      "bytes": 36674
+    }
+  },
+  "alpha": [
+    0,
+    255
+  ]
+}

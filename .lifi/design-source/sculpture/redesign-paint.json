@@ -1,0 +1,25 @@
+{
+  "asset": "redesign-paint",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-f113dc3c-0859-4502-8306-3ca4c9449624.png",
+  "prompt": "Small blank warm-white paint can with a dark graphite rim and one wooden-handled metal-frame roller across its edge. Roller nap is lightly coated in controlled terracotta orange paint. Artisan resin miniature with natural painted metal, roller, wood, and metal materials; three-quarter camera, soft upper-left studio light, genuine transparent background, no label, text, logo, backdrop, or ground.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png",
+    ".lifi/design-source/sculpture/storefront.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/redesign-paint.png",
+    "dimensions": [1402, 1122],
+    "sha256": "b2e9e2ed16be0a8f9b610cdb7608cf3f316278e3ac8b3eec72cb78f04cffa72b"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/redesign-paint.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "8aae88057b2355417dc3f8387093fb6d8ec345dbf532df9330e38fb93a0c9147",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1357x1081+25+41"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "asset": "content-camera",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-9269823f-9106-4be3-bf1c-ac105a2cd363.png",
+  "prompt": "Compact realistic charcoal-and-cream analog camera with a small brushed-metal lens and brown leather wrist strap, beside exactly three blank warm-cream photo prints. Handmade tactile clay/resin product-miniature quality with leather, painted body, metal, and paper material realism; upper-left studio light and genuine transparent background. No photos, text, screens, UI, or logos.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png",
+    ".lifi/design-source/sculpture/notebook.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/content-camera.png",
+    "dimensions": [1402, 1122],
+    "sha256": "02dd768c17d94a5751665e84392e99ba264bb960360da865545e2d2f6818e658"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/content-camera.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "942788c4388f8e9f91b1829f1a4e4fa8d7ec27d9049e345445579e97eab78a71",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1388x1119+0+3"
+  }
+}

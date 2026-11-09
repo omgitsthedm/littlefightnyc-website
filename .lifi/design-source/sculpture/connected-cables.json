@@ -1,0 +1,23 @@
+{
+  "asset": "connected-cables",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-713e3f44-10b0-4a2e-88a1-0d10a51d6b56.png",
+  "prompt": "Two realistic chunky electrical plugs meeting securely at center: cream plug with blue fabric-braided cable curving left and terracotta orange plug with mustard fabric-braided cable curving right. Premium physical hardware miniature with distinct molded material, metal connector, and woven cable textures; upper-left studio light, transparent alpha, no words, floor, glow, or background.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/connected-cables.png",
+      "dimensions": "1402x1122",
+      "bytes": 657310,
+      "sha256": "de643760a9d76b7cebd03da3d6b98a8ad483c0267f88ffda85983507cfb9095e"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/connected-cables.webp",
+      "dimensions": "1402x1122",
+      "bytes": 106152,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "c4dfeeb9e797769abdf6609422533637dabad2aa93e26acb0e10efdfd9ccb58f"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

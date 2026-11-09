@@ -1,0 +1,26 @@
+{
+  "asset": "scissors-red-tape",
+  "use": "software-smallest-useful-change — How small can the first change be?",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-74045e85-5003-4c22-8e44-a4743faaee25.png",
+    "prompt": "One elegant pair of matte charcoal-handled scissors cleanly cutting one bright-red ribbon; cool steel beveled blades open around a visible gap between exactly two just-separated curled ribbon ends; refined 85% precise resin sculpture and 15% restrained handmade texture; three-quarter from above under soft upper-left light; transparent background with at least 10% clear edge padding; no hands, words, floor, or extra objects."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/scissors-red-tape.png",
+      "dimensions": "1402x1122",
+      "sha256": "29d7cc5419e14ab2b80dc8cb530654d6a1289cb72bc8ed2735352bd6e74b675e"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/scissors-red-tape.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=90",
+      "sha256": "40a4f11601c2eff6a2dd7cffea1d5992decde46eea3463a645bd06c8e08b36e7"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "1154x727+124+174"
+  }
+}

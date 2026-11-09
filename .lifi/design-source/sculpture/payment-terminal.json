@@ -1,0 +1,23 @@
+{
+  "asset": "payment-terminal",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-cd7da719-b0a4-46b1-af00-8fdc19ffaaa6.png",
+  "prompt": "Charcoal-and-cream physical card-payment terminal with a blank deep blue glass screen, unlabeled tactile keypad, blank cream receipt curling from its rear slot, and one small unbranded blank blue card beside it. Resin/hardware miniature, upper-left studio light, three-quarter view, transparent alpha, no text, numbers, logo, floor, glow, or background.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/payment-terminal.png",
+      "dimensions": "1402x1122",
+      "bytes": 1311107,
+      "sha256": "21430cb75810da62cde96e0294b6e74809e2a4d29ff6fd02b051bc19bde9290f"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/payment-terminal.webp",
+      "dimensions": "1402x1122",
+      "bytes": 136678,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "18f07b02a1455506ac35d790d5104d1d3f1f16d8f49a700ba66a21aaaf02d343"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

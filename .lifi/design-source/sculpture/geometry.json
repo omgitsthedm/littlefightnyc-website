@@ -1,0 +1,18 @@
+{
+  "generator": "Installed Blender 5.2.2 LTS, Cycles, 24 samples",
+  "script": "app/scripts/render-sculpture-frames.py",
+  "compositor": "app/scripts/compose-sculpture-screens.py",
+  "optimizer": "app/scripts/optimize-sculpture-assets.py",
+  "logoSource": "app/preview-ui/assets/boat-orange.svg",
+  "logoSha256": "c4e9f0bfa50a2b4bb994dea545bbf257e7b725729b889cef045e4c60e5353a59",
+  "geometry": [
+    "Exact logo curve extrusion with its original cutouts",
+    "Thin graphite browser, phone and tablet frames",
+    "Single partly folded display with a shared continuous crease",
+    "One-piece graphite pointer",
+    "Warm ash photo frame"
+  ],
+  "screens": "Only real local captures. Crop, scale and perspective mapping; original files unchanged.",
+  "renderSource": ".lifi/evidence/visual-overhaul/frames/",
+  "stage": "Transparent alpha, no floor geometry"
+}

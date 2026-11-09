@@ -1,0 +1,24 @@
+{
+  "asset": "construction-plans",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-78fab401-ed39-45ae-a68a-2d0813d6a21b.png",
+  "prompt": "Real off-white hard hat on partly unrolled cream architectural plan paper with faint unlabelled graphite building outlines and a short wooden carpenter pencil. Tactile molded plastic, paper, graphite, and wood in hand-finished resin/satin miniature product realism; three-quarter camera, upper-left light, genuine transparent background, no blue theme, text, label, icon, or ground.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/construction-plans.png",
+    "dimensions": [1402, 1122],
+    "sha256": "5ad0bfa535a99c8439ba7fb2381969e4e05529ccc0a49d679581b83cf0b13f12"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/construction-plans.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "f684bf7c0733a0f1736f1ebb252a3fcb934cf084235b5ca3203a9457f384c446",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1390x1013+0+109"
+  }
+}

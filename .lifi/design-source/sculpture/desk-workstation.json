@@ -1,0 +1,29 @@
+{
+  "asset": "desk-workstation",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-aeeae236-f42c-4885-8fed-e149526f15a1.png",
+    "reference_assets_inspected": [
+      ".lifi/design-source/sculpture/printer.png",
+      ".lifi/design-source/sculpture/notebook.png"
+    ],
+    "prompt": "One compact physical desktop workstation: graphite-and-cream monitor on a warm wood desk, blank warm-pale screen, cream paper pad, natural wooden pencil, and a small green plant in a cream pot; real satin resin and cast-clay miniature with material variation; three-quarter front-left view under soft upper-left studio light; genuine transparent background, no plane, floor, glow, UI, text, or symbols; centered with at least 12% transparent edge padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/desk-workstation.png",
+      "dimensions": "1402x1122",
+      "sha256": "39b671f4a00b1f3532e602462629b35abf46a661df1d198167e9a9dd6f2866f3"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/desk-workstation.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=88",
+      "sha256": "f07dc139460785d3b4f84e2169233f123c274f065c491c0f72814c0c2c6741df"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "841x788+316+224"
+  }
+}

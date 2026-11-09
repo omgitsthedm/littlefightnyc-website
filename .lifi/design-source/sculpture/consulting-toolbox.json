@@ -1,0 +1,23 @@
+{
+  "asset": "consulting-toolbox",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-2eaf46d8-db2a-43ae-90c2-d9fce81f7632.png",
+  "prompt": "Small open oak carpenter’s toolbox with finger-jointed corners, curved wood carry handle, one brushed-steel adjustable wrench, one graphite-handled flat screwdriver, and a folded cream work cloth at the near edge. Natural tactile wood, metal, resin, and cloth miniature in three-quarter view under upper-left light, transparent alpha, no text, icons, brand, floor, glow, or background.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/consulting-toolbox.png",
+      "dimensions": "1402x1122",
+      "bytes": 2030138,
+      "sha256": "e56b2f31dfddb2c4b835c06a45fe1a89882abe6b4cdf1da5d33f92caf094f009"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/consulting-toolbox.webp",
+      "dimensions": "1402x1122",
+      "bytes": 304056,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "33b0c7cbd6c8810cfabe642414cdbd97a7f15758b04ed6f38252b886e7c4a883"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

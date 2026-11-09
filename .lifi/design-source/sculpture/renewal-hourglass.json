@@ -1,0 +1,29 @@
+{
+  "asset": "renewal-hourglass",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-a15dc83a-90bb-4eb7-9181-d10f602fe483.png",
+    "reference_assets_inspected": [
+      ".lifi/design-source/sculpture/printer.png",
+      ".lifi/design-source/sculpture/notebook.png"
+    ],
+    "prompt": "One miniature hourglass with clear glass, visibly flowing fine pale sand, warm walnut top and bottom, brushed brass supports, and exactly two blank cream receipt slips by the lower base; tactile satin resin/cast-clay material contrast; three-quarter front view under soft upper-left studio light; genuine transparent background, no typography, icon, floor, glow, or extra objects; centered with clear edge padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/renewal-hourglass.png",
+      "dimensions": "1402x1122",
+      "sha256": "9a3514b4d231c1ed5e1c2a825db8ddf9e009a3b7e4b79c55f70e02ff3e63ff4d"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/renewal-hourglass.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=88",
+      "sha256": "41165d001f05caf1be1169f71bd6f1e60b46e4039a6b7be73c54304edee47f75"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "695x985+427+69"
+  }
+}

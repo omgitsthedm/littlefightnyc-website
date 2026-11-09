@@ -1,0 +1,23 @@
+{
+  "asset": "storage-drives",
+  "createdAt": "2026-10-07",
+  "generator": "built-in image_gen",
+  "sourceImage": "/Users/davidmarsh/.codex/generated_images/01a1184f-3cef-77a3-9071-2acc5215d8f8/exec-ac2aadb4-a1ac-45b3-b622-f7e9110c519b.png",
+  "prompt": "Compact upright dark graphite two-bay desktop data enclosure with an upper brushed-aluminum removable tray partly pulled forward, lower graphite closed bay, and one tiny subdued green indicator. Detailed brushed metal and satin resin hardware miniature in three-quarter view, upper-left studio light, transparent alpha, no icons, labels, words, glow, floor, or extra props.",
+  "outputs": {
+    "png": {
+      "path": ".lifi/design-source/sculpture/storage-drives.png",
+      "dimensions": "1402x1122",
+      "bytes": 1334419,
+      "sha256": "2e29370360c7ed0bd239c6c22c94680789839c203ec28e758eb00828a768ce68"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/storage-drives.webp",
+      "dimensions": "1402x1122",
+      "bytes": 117160,
+      "encoding": "cwebp q=88 alpha_q=100",
+      "sha256": "5c8c3d75f0abd127578c8412af93dd9c43de76ca6552650f3c2bae8f226a141e"
+    }
+  },
+  "transparency": "Verified PNG and WebP alpha channels with min 0 and max 65535."
+}

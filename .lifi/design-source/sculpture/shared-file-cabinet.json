@@ -1,0 +1,29 @@
+{
+  "asset": "shared-file-cabinet",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-823d0eeb-048d-40c5-b8eb-bc8247c882f3.png",
+    "reference_assets_inspected": [
+      ".lifi/design-source/sculpture/printer.png",
+      ".lifi/design-source/sculpture/notebook.png"
+    ],
+    "prompt": "One small terracotta powder-coated steel two-drawer filing cabinet: closed lower drawer, half-open upper drawer revealing cream and manila hanging folders, plain tiny brass pulls; tactile satin resin/cast-clay miniature with natural material contrast; three-quarter front-left view under soft upper-left studio light; genuine transparent background, no locks, keys, captions, floor, or extra objects; centered with generous padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/shared-file-cabinet.png",
+      "dimensions": "1402x1122",
+      "sha256": "dead5eb271de8afefe33e4543eda57d069bf45f67685c27dd046af82119a740a"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/shared-file-cabinet.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=88",
+      "sha256": "ee06c1230d88c66245271b8e336578b73c89c935bf51db79d63da07b4dd7f4a1"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "786x904+340+105"
+  }
+}

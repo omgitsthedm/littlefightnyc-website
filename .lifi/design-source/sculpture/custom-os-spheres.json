@@ -1,0 +1,23 @@
+{
+  "asset": "custom-os-spheres",
+  "tile": "Own your system",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-a76fac32-4325-4024-812c-cfd7a5e098f6.png",
+  "prompt": "Exactly six solid smooth balls, one each cobalt blue, coral orange, sunflower yellow, pink, violet, and mint green; slightly varied sizes in a balanced compact cluster. Refined solid clay/resin with satin highlights, slight three-quarter overhead view, broad upper-left light, genuine transparent background, no faces, symbols, rods, box, text, or extra objects.",
+  "png": {
+    "path": ".lifi/design-source/sculpture/custom-os-spheres.png",
+    "dimensions": [1402, 1122],
+    "sha256": "b57da8282cea7ce45e164f4a267e37a1654293886f5838af30c695c44e7c3ef1"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/custom-os-spheres.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "49d091eb4c4d09c8988ea07a7117b1e5fe1a8ca3111308161664bc155f7eabe4",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1371x1051+0+71",
+    "visible_subject_bbox_at_alpha_5pct": "898x713+252+223"
+  }
+}

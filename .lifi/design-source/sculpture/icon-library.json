@@ -1,0 +1,358 @@
+{
+  "package": "@phosphor-icons/core",
+  "version": "2.1.1",
+  "source": "https://github.com/phosphor-icons/core",
+  "integrity": "sha512-v4ARvrip4qBCImOE5rmPUylOEK4iiED9ZyKjcvzuezqMaiRASCHKcRIuvvxL/twvLpkfnEODCOJp5dM4eZilxQ==",
+  "icons": [
+    {
+      "file": "app-window-duotone.svg",
+      "sha256": "1ed177a52553f8d7bb7bca5ad8a44a23be82b260b3f2339446436c1d21923021",
+      "source": "package/assets/duotone/app-window-duotone.svg"
+    },
+    {
+      "file": "armchair-duotone.svg",
+      "sha256": "49150111cdbb0a77f747f79265462973490e2885b684aff9319cea14bf4f0deb",
+      "source": "package/assets/duotone/armchair-duotone.svg"
+    },
+    {
+      "file": "arrows-clockwise-duotone.svg",
+      "sha256": "32e3d1e35733d6ad0f9c03286ca756deb142e43f9cda1e5f36c3e3896b5d37ae",
+      "source": "package/assets/duotone/arrows-clockwise-duotone.svg"
+    },
+    {
+      "file": "backpack-duotone.svg",
+      "sha256": "267ccffb2d05588b462e52b8942d40f26903ef284bafd0f3aa8c57b395759c2a",
+      "source": "package/assets/duotone/backpack-duotone.svg"
+    },
+    {
+      "file": "bank-duotone.svg",
+      "sha256": "5dffd93d7fcc81e6faed6f69b327506418af5b39aa3c6baa59fbe5afe25804ff",
+      "source": "package/assets/duotone/bank-duotone.svg"
+    },
+    {
+      "file": "blueprint-duotone.svg",
+      "sha256": "e26064270a1b6455e18e84e585a26cde27f4f0c9cc5420b9e1f6f03ee31d793f",
+      "source": "package/assets/duotone/blueprint-duotone.svg"
+    },
+    {
+      "file": "browser-duotone.svg",
+      "sha256": "88f105c2e7bebeea6a62a388f7e054a9eff16c4474c528359a45432d4f63e471",
+      "source": "package/assets/duotone/browser-duotone.svg"
+    },
+    {
+      "file": "buildings-duotone.svg",
+      "sha256": "d6843f7a68d132f539effacbfc5151d6a506ee983f1a409ad98a868d8be14713",
+      "source": "package/assets/duotone/buildings-duotone.svg"
+    },
+    {
+      "file": "cactus-duotone.svg",
+      "sha256": "c71c2a1faafb49b6ee42dbefd3c6eb4b1f18c690b39707ac7e38199fba7ec2f3",
+      "source": "package/assets/duotone/cactus-duotone.svg"
+    },
+    {
+      "file": "calendar-check-duotone.svg",
+      "sha256": "59b8664b99b6c926c4714f69aff0432a0a4315f67d89c7502634f641a85d410b",
+      "source": "package/assets/duotone/calendar-check-duotone.svg"
+    },
+    {
+      "file": "calendar-dots-duotone.svg",
+      "sha256": "72b4bb72b7b180840bb6f5b86ad94987fc8b1b0fdb49caab09c7a2790a93c707",
+      "source": "package/assets/duotone/calendar-dots-duotone.svg"
+    },
+    {
+      "file": "camera-duotone.svg",
+      "sha256": "16aab74ac3605daf0b2b55f2eb5cea741f42a0a49894e4fd1c1211bfeb7e1f16",
+      "source": "package/assets/duotone/camera-duotone.svg"
+    },
+    {
+      "file": "chats-circle-duotone.svg",
+      "sha256": "9123089fee504b756482fca7fd7b9ba9d9d295c79a2fd9661cea32ccdee5dd9f",
+      "source": "package/assets/duotone/chats-circle-duotone.svg"
+    },
+    {
+      "file": "check-square-duotone.svg",
+      "sha256": "a3d0750f54db82659ffa0b66daf3a06b7b79680843b1018c2051984c03a23b24",
+      "source": "package/assets/duotone/check-square-duotone.svg"
+    },
+    {
+      "file": "city-duotone.svg",
+      "sha256": "6af86d242c376695fafddbfba28788488e85bd760cb670c49d54ebf21f8a1a4a",
+      "source": "package/assets/duotone/city-duotone.svg"
+    },
+    {
+      "file": "cloud-arrow-up-duotone.svg",
+      "sha256": "4e08ed5b8730960d7fea46028f95f9ba8188860f5f54a799a8ed579ecf764bf0",
+      "source": "package/assets/duotone/cloud-arrow-up-duotone.svg"
+    },
+    {
+      "file": "coat-hanger-duotone.svg",
+      "sha256": "4248323cbc6324149fa900907fc3153ebfc2d360bd2220c457961aff10ac4fef",
+      "source": "package/assets/duotone/coat-hanger-duotone.svg"
+    },
+    {
+      "file": "coffee-duotone.svg",
+      "sha256": "f8285e75660c4ed9830ed42416bf3a839cb52c30a3bf2f19ba303e9ed6fb05a1",
+      "source": "package/assets/duotone/coffee-duotone.svg"
+    },
+    {
+      "file": "credit-card-duotone.svg",
+      "sha256": "27169bdb3b0d960c41a01e44ee1c7bf9c3b102ba1403e7c72cbae63be8e704f7",
+      "source": "package/assets/duotone/credit-card-duotone.svg"
+    },
+    {
+      "file": "cube-duotone.svg",
+      "sha256": "5a4833e706e0d7431e607b930ce22af06fcb8ee29ff05da50cb12701a8e64e5b",
+      "source": "package/assets/duotone/cube-duotone.svg"
+    },
+    {
+      "file": "desktop-tower-duotone.svg",
+      "sha256": "fa8b4492fc2f5cf40ba88282a84890d46846cc8b0d2d4f8311838b8a81b7d35c",
+      "source": "package/assets/duotone/desktop-tower-duotone.svg"
+    },
+    {
+      "file": "device-mobile-duotone.svg",
+      "sha256": "dd1f130cc18a988d9e606f5253fb96f2c2b9502f1153b3685a4dd49628995b87",
+      "source": "package/assets/duotone/device-mobile-duotone.svg"
+    },
+    {
+      "file": "envelope-simple-duotone.svg",
+      "sha256": "8cd858097658d41520072e3232a85185b697828751bb691bd54cd4960fc2d574",
+      "source": "package/assets/duotone/envelope-simple-duotone.svg"
+    },
+    {
+      "file": "film-reel-duotone.svg",
+      "sha256": "2abc55c97247179a992ed9ecbf67975198d0ecdcf8818a403b5a4c3cd7ae9033",
+      "source": "package/assets/duotone/film-reel-duotone.svg"
+    },
+    {
+      "file": "film-slate-duotone.svg",
+      "sha256": "409f17cfc2b5113d9dcc27caf0bdcd89a7fcc32746a0179c110897c98ac0cb75",
+      "source": "package/assets/duotone/film-slate-duotone.svg"
+    },
+    {
+      "file": "fingerprint-duotone.svg",
+      "sha256": "2390d01f9c704bd6ce61bc52c6ce20cb420132c308c58e389879d59796c7bc03",
+      "source": "package/assets/duotone/fingerprint-duotone.svg"
+    },
+    {
+      "file": "folders-duotone.svg",
+      "sha256": "a98279745145cc08b47da5348b951d68fe094d0ae7615495d3151314c39dd44b",
+      "source": "package/assets/duotone/folders-duotone.svg"
+    },
+    {
+      "file": "fork-knife-duotone.svg",
+      "sha256": "e041753e7555d98ceb8d7f71d7b36fc572190d22440bbded87af3f080fa99e95",
+      "source": "package/assets/duotone/fork-knife-duotone.svg"
+    },
+    {
+      "file": "globe-hemisphere-west-duotone.svg",
+      "sha256": "52a225637cebbe67a961f6066f2ef9c29a73b9645e78258bd39e6bb2f4784bb6",
+      "source": "package/assets/duotone/globe-hemisphere-west-duotone.svg"
+    },
+    {
+      "file": "hammer-duotone.svg",
+      "sha256": "810a65ab7d44732714b3eced6fb39f6e3391a061ef8abe5d9325376b33acc8d4",
+      "source": "package/assets/duotone/hammer-duotone.svg"
+    },
+    {
+      "file": "handshake-duotone.svg",
+      "sha256": "4f8827d067f5b777902e4e6e0f1e6ccc6b60c5d34605d65ecb8020137072ebb9",
+      "source": "package/assets/duotone/handshake-duotone.svg"
+    },
+    {
+      "file": "hard-drives-duotone.svg",
+      "sha256": "ded508a98776d1f04adf05371d1f1fc9e8be8ddcf3a221e7d749af5f486dd452",
+      "source": "package/assets/duotone/hard-drives-duotone.svg"
+    },
+    {
+      "file": "hard-hat-duotone.svg",
+      "sha256": "d40c91a343a3330e547ec49110b5ef305d2c082bf0bfaf49736771022d5b79d0",
+      "source": "package/assets/duotone/hard-hat-duotone.svg"
+    },
+    {
+      "file": "house-line-duotone.svg",
+      "sha256": "c4a8e60acc0a98d65c01c210d9e6ac1cbc302d9e3df9ceffbbf9d9ff06f8dba4",
+      "source": "package/assets/duotone/house-line-duotone.svg"
+    },
+    {
+      "file": "images-duotone.svg",
+      "sha256": "ac0a3a8fa6c9d3bfb7aeb003891940e498a49d34fa50878779ada3363d1593c2",
+      "source": "package/assets/duotone/images-duotone.svg"
+    },
+    {
+      "file": "key-duotone.svg",
+      "sha256": "c84fa84d090e51e1a43b2eebf3182c3cfb2c98cf64a2a7fab35b748ee2744c77",
+      "source": "package/assets/duotone/key-duotone.svg"
+    },
+    {
+      "file": "layout-duotone.svg",
+      "sha256": "f8d0876ac047847e913ad4de06f2c44a88bdc7b583538808757b47857f87af62",
+      "source": "package/assets/duotone/layout-duotone.svg"
+    },
+    {
+      "file": "lifebuoy-duotone.svg",
+      "sha256": "adaa0368a3342c918f91458df3c9a04dbdcf9e2572065d24a03bd8c8db48ac80",
+      "source": "package/assets/duotone/lifebuoy-duotone.svg"
+    },
+    {
+      "file": "list-numbers-duotone.svg",
+      "sha256": "51abf7bb36df214016951acdf3491f4bff71fbf5b9780a8b394e9cc53bae823f",
+      "source": "package/assets/duotone/list-numbers-duotone.svg"
+    },
+    {
+      "file": "map-pin-duotone.svg",
+      "sha256": "c21ced095b724128b17c25ce60f40e32d98d14339038d818cf79140dc1e04349",
+      "source": "package/assets/duotone/map-pin-duotone.svg"
+    },
+    {
+      "file": "map-trifold-duotone.svg",
+      "sha256": "51fc6df1cb4a67fcf8ec828735f3d2eb163c14d998b2bd34b1507782bf40bb5c",
+      "source": "package/assets/duotone/map-trifold-duotone.svg"
+    },
+    {
+      "file": "martini-duotone.svg",
+      "sha256": "174979fc449b750de1e8a81bebe0e82e210fa9e11fc2d0a2376fab1362a8ee9a",
+      "source": "package/assets/duotone/martini-duotone.svg"
+    },
+    {
+      "file": "mouse-scroll-duotone.svg",
+      "sha256": "215819e057f45820836c9bda80ac34e4501470ee26520317743bc8742ba6b9d3",
+      "source": "package/assets/duotone/mouse-scroll-duotone.svg"
+    },
+    {
+      "file": "music-notes-duotone.svg",
+      "sha256": "3bef98ba3b52c89aa02fa9e77d76aae93cebe71f116afa1eb5df57ff21d17d02",
+      "source": "package/assets/duotone/music-notes-duotone.svg"
+    },
+    {
+      "file": "needle-duotone.svg",
+      "sha256": "f9bdd97d1485e8f72ef93002eaa71b84b8a75508ffedead06140b81b4800ca45",
+      "source": "package/assets/duotone/needle-duotone.svg"
+    },
+    {
+      "file": "paint-brush-duotone.svg",
+      "sha256": "0b51caafe4ae1a139e7da7bd4051f199fdf466ef9cc2ba6b1a30058eaf93285a",
+      "source": "package/assets/duotone/paint-brush-duotone.svg"
+    },
+    {
+      "file": "password-duotone.svg",
+      "sha256": "0b7d1e2997ea6420345d13716d44e04131f8bb4fe86dabc55cb1bbacd1b3a175",
+      "source": "package/assets/duotone/password-duotone.svg"
+    },
+    {
+      "file": "phone-duotone.svg",
+      "sha256": "9fe2afc9a3e387300640fb9a83aa8bed793882301780ae247cc5cb514cfb730a",
+      "source": "package/assets/duotone/phone-duotone.svg"
+    },
+    {
+      "file": "phone-incoming-duotone.svg",
+      "sha256": "d943bd20ef4722c5f3e685299783046bdc317ee46ad90cda983515772901fb24",
+      "source": "package/assets/duotone/phone-incoming-duotone.svg"
+    },
+    {
+      "file": "pipe-wrench-duotone.svg",
+      "sha256": "2874474f19548e6a2a87a1895bb411d407bfed8bc1afe2364aab0fa46f75834a",
+      "source": "package/assets/duotone/pipe-wrench-duotone.svg"
+    },
+    {
+      "file": "pizza-duotone.svg",
+      "sha256": "7c797b60091ed8d06909765e51517c086c134c9ec08a982cf6508f6d7ec13783",
+      "source": "package/assets/duotone/pizza-duotone.svg"
+    },
+    {
+      "file": "planet-duotone.svg",
+      "sha256": "154c0409513cbc726e4b3c2bcb22eb168fe92b2dbdca9dc14d6faa66089cc11d",
+      "source": "package/assets/duotone/planet-duotone.svg"
+    },
+    {
+      "file": "plant-duotone.svg",
+      "sha256": "36d1d5f41d065676bafc964857fdfe7255c378f6700b1712ac62c8d47c0263bd",
+      "source": "package/assets/duotone/plant-duotone.svg"
+    },
+    {
+      "file": "plugs-connected-duotone.svg",
+      "sha256": "efd9719ae5dc8fac82db613a6dec9b03965893da7c5a70d200d527446ec0bd23",
+      "source": "package/assets/duotone/plugs-connected-duotone.svg"
+    },
+    {
+      "file": "printer-duotone.svg",
+      "sha256": "0db8f4860c37a3a9e94b9bee6c0494abf2e6dfad0c6cc0a9e1301d02f2f0e437",
+      "source": "package/assets/duotone/printer-duotone.svg"
+    },
+    {
+      "file": "puzzle-piece-duotone.svg",
+      "sha256": "21b5ecfdd65a1aaced52daf72e1ac405e4de7c2a1363a9065800a40fb15cb602",
+      "source": "package/assets/duotone/puzzle-piece-duotone.svg"
+    },
+    {
+      "file": "quotes-duotone.svg",
+      "sha256": "e8a6b1fe1264c19c614c443871723b822d79a8d8a3af9438b1d4b0a260429380",
+      "source": "package/assets/duotone/quotes-duotone.svg"
+    },
+    {
+      "file": "receipt-duotone.svg",
+      "sha256": "48bd25a0c53d8c5e49105a4208fd1297d30d89024eb04c5825983433fe256cc6",
+      "source": "package/assets/duotone/receipt-duotone.svg"
+    },
+    {
+      "file": "repeat-duotone.svg",
+      "sha256": "3b6c818a506d0a591de61f835504b2a4828c3a1be60132dd49bfa5a64f60d541",
+      "source": "package/assets/duotone/repeat-duotone.svg"
+    },
+    {
+      "file": "sailboat-duotone.svg",
+      "sha256": "faaca9c4928d5fac02e6ba9d6e2039da9fda9757b2225f9d7516bdec76292cdb",
+      "source": "package/assets/duotone/sailboat-duotone.svg"
+    },
+    {
+      "file": "scissors-duotone.svg",
+      "sha256": "a1d6e1a9d9e9513d1791e83d09fe460fb48736d5f30aa5190fb26d6439114d77",
+      "source": "package/assets/duotone/scissors-duotone.svg"
+    },
+    {
+      "file": "shield-check-duotone.svg",
+      "sha256": "e42c34a900022e60b41136a5744989af1cfb977247079afbfaf5a8440b86fd91",
+      "source": "package/assets/duotone/shield-check-duotone.svg"
+    },
+    {
+      "file": "shopping-bag-duotone.svg",
+      "sha256": "7c8666c1b779180724ed0536b926b8358e8cec579a91670fc8c3718b25e86776",
+      "source": "package/assets/duotone/shopping-bag-duotone.svg"
+    },
+    {
+      "file": "sliders-horizontal-duotone.svg",
+      "sha256": "e06fc4da61f451fbe86bb08b076ca06043c74da6f7e55e04706f988c0d7123fb",
+      "source": "package/assets/duotone/sliders-horizontal-duotone.svg"
+    },
+    {
+      "file": "sparkle-duotone.svg",
+      "sha256": "c4740b4365131487e4b49b54fc554a6cbdde28aaad74c5a8a8be2195b5fb4c19",
+      "source": "package/assets/duotone/sparkle-duotone.svg"
+    },
+    {
+      "file": "storefront-duotone.svg",
+      "sha256": "9e755963f1672b9d45a199797cfb3479dd13517690b08f76bb013a08043cc2b3",
+      "source": "package/assets/duotone/storefront-duotone.svg"
+    },
+    {
+      "file": "video-camera-duotone.svg",
+      "sha256": "a4bcecf064f65c4b245c49f70f7c7988670c18f179505ad29e8208ebf5ba7e3b",
+      "source": "package/assets/duotone/video-camera-duotone.svg"
+    },
+    {
+      "file": "waveform-duotone.svg",
+      "sha256": "9a75919388f5474d3a2f76694b1d7dd4f9621f63101f410ee2583c7af153bae3",
+      "source": "package/assets/duotone/waveform-duotone.svg"
+    },
+    {
+      "file": "wifi-high-duotone.svg",
+      "sha256": "8786219e51e953522cf0d170f13d70acac93fc795a9fabb711351ae4e71ae2c5",
+      "source": "package/assets/duotone/wifi-high-duotone.svg"
+    },
+    {
+      "file": "wrench-duotone.svg",
+      "sha256": "67c0b89c2688777cc25a14a7f78c39fc5463f7bc5257f1393f46d48b36422716",
+      "source": "package/assets/duotone/wrench-duotone.svg"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "asset": "priority-notes",
+  "use": "consulting-first-priority — Choose what to fix first",
+  "generation": {
+    "tool": "built-in image_gen",
+    "source_tool_output": "/Users/davidmarsh/.codex/generated_images/01a1184f-0ea2-7733-bf76-158bcc179228/exec-14c2ed95-a5c6-4ed3-9833-10c56125bbed.png",
+    "prompt": "A small expressive six-note physical sticky-note cluster in butter yellow, soft peach, and sage green, offset and overlapping with subtly curled corners; sparse charcoal horizontal marks and exactly one simple checked checkbox, no words; premium precise paper-and-clay miniature with restrained handmade texture; overhead three-quarter slight tilt under soft upper-left light; genuinely transparent background, no floor or extra objects; centered landscape framing with about 6% padding."
+  },
+  "files": {
+    "source_png": {
+      "path": ".lifi/design-source/sculpture/priority-notes.png",
+      "dimensions": "1402x1122",
+      "sha256": "0b8c6f6b2116eff2bb315012e9e21c4857956937883f11a39983bfcd7e6d12f1"
+    },
+    "webp": {
+      "path": "app/public/assets/sculpture/priority-notes.webp",
+      "dimensions": "1402x1122",
+      "encoder": "cwebp q=90",
+      "sha256": "b85f9d34a3a61f9a97d2b4ce4a1c15d93ffd6be6038daf5fa58727fad124c954"
+    }
+  },
+  "transparency": {
+    "alpha": "8-bit true alpha; min 0; max 1; preserved in WebP",
+    "visible_silhouette_bbox_at_alpha_ge_50_percent": "1227x980+95+81"
+  }
+}

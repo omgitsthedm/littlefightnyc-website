@@ -1,0 +1,24 @@
+{
+  "asset": "phone-dock",
+  "source": "/Users/davidmarsh/.codex/generated_images/01a1184f-6edd-77d0-82ee-94675135cfb8/exec-3eb9dc04-d275-4a52-87fa-6e2d28551f0c.png",
+  "prompt": "Compact modern graphite smartphone upright in a small warm-oak charging cradle with a single short cream cable beside it. The dark blue-black glass screen is completely blank. Tactile physical glass, wood, resin, and cable product miniature, three-quarter camera, upper-left soft studio light, genuine transparent background, no UI, text, icon, stage, glow, or ground.",
+  "reference_assets": [
+    ".lifi/design-source/sculpture/printer.png"
+  ],
+  "png": {
+    "path": ".lifi/design-source/sculpture/phone-dock.png",
+    "dimensions": [1402, 1122],
+    "sha256": "bdc51fe3e2453a30190725ff0c41db4fb35c1e51f0e6d67c200cf8429c054acc"
+  },
+  "webp": {
+    "path": "app/public/assets/sculpture/phone-dock.webp",
+    "dimensions": [1402, 1122],
+    "sha256": "287d56a250de14d1a684d1294ae064a7b788d5820b1435e6f723a308b03002e7",
+    "encoder": "cwebp q=88 alpha_q=100"
+  },
+  "transparency": {
+    "alpha": true,
+    "alpha_range": [0, 65535],
+    "nontransparent_bbox": "1348x1079+0+25"
+  }
+}
