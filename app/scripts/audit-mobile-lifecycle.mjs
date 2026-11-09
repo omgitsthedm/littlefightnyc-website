@@ -56,13 +56,8 @@ assert.match(
 );
 assert.match(
   noticeSource,
-  /const \[visible, setVisible\] = useState\(false\)/,
-  "privacy preferences must start closed before the intentional first-visit delay",
-);
-assert.match(
-  noticeSource,
   /getAnalyticsConsent\(\) === null/,
-  "a first visit must expose the optional consent choices after the delay",
+  "a first visit must offer optional consent choices without requiring an existing preference",
 );
 assert.match(
   noticeSource,

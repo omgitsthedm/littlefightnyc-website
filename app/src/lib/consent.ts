@@ -163,6 +163,9 @@ export function onAdvertisingConsentChange(
     window.removeEventListener(ADVERTISING_CONSENT_CHANGE_EVENT, handle);
 }
 
-export function openConsentPreferences() {
-  window.dispatchEvent(new Event(CONSENT_OPEN_EVENT));
+export function openConsentPreferences(event?: { currentTarget: EventTarget | null }) {
+  // Safari need not focus a clicked button. Preserve the actual control that
+  // opened preferences so closing returns there for pointer and keyboard use.
+  const trigger = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null;
+  window.dispatchEvent(new CustomEvent(CONSENT_OPEN_EVENT, { detail: { trigger } }));
 }

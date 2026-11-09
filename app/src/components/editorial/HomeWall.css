@@ -134,8 +134,7 @@
   content: "";
 }
 
-/* ── the call ───────────────────────────────────────────────────────────── */
-
+/* The free first look leads; the phone stays a direct second action. */
 .lf-wall__act {
   display: flex;
   flex-wrap: wrap;
@@ -144,27 +143,42 @@
   margin-top: var(--lf-space-6);
 }
 
-.lf-editorial .lf-wall__call {
+.lf-editorial .lf-wall__check {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--lf-space-3);
   min-height: 3.5rem;
-  padding-inline: clamp(var(--lf-space-5), 3vw, var(--lf-space-7));
+  padding-inline: var(--lf-space-5);
   border-radius: var(--lf-radius-pill);
   background: var(--lf-fight);
   color: var(--lf-ink);
-  font-family: var(--lf-mono);
-  font-weight: 700;
-  font-size: var(--lf-text-md);
+  font-family: var(--lf-body);
+  font-weight: 600;
+  font-size: var(--lf-text-base);
   text-decoration: none;
-  transition:
-    background var(--m-settle-ms) var(--m-settle-ease),
-    transform var(--m-signal-ms) var(--m-signal-ease);
+  transition: background var(--m-signal-ms) var(--m-signal-ease);
 }
 
-.lf-editorial .lf-wall__call:hover,
-.lf-editorial .lf-wall__call:focus-visible {
+.lf-editorial .lf-wall__check:hover {
   background: var(--lf-fight-hover);
+}
+
+.lf-editorial .lf-wall__call {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lf-space-2);
+  min-height: var(--lf-control-min);
+  color: var(--lf-bone);
+  font-family: var(--lf-mono);
+  font-size: var(--lf-text-2xs);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--lf-hairline);
+}
+
+.lf-editorial .lf-wall__call:hover {
+  text-decoration-color: var(--lf-bone);
 }
 
 .lf-editorial .lf-wall__call:focus-visible,
@@ -173,24 +187,14 @@
   outline-offset: 4px;
 }
 
-.lf-editorial .lf-wall__check {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--lf-space-2);
-  min-height: var(--lf-control-min);
-  color: var(--lf-bone);
-  font-family: var(--lf-mono);
-  font-size: var(--lf-text-2xs);
-  text-decoration: none;
-  border-bottom: 1px solid var(--lf-hairline);
-}
-
-.lf-editorial .lf-wall__check:hover,
-.lf-editorial .lf-wall__check:focus-visible {
-  border-bottom-color: var(--lf-bone);
-}
-
 /* ── the other three channels ───────────────────────────────────────────── */
+
+.lf-editorial .lf-wall__first-look-note {
+  margin: var(--lf-space-2) 0 0;
+  color: var(--lf-bone-soft);
+  font-size: var(--lf-text-2xs);
+  line-height: 1.35;
+}
 
 .lf-wall__reach {
   display: flex;
@@ -321,32 +325,33 @@
    first screen. Measured: the CTA pair ended 49px past the fold before this. */
 @media (max-width: 22.5rem) {
   .lf-wall {
-    padding-block-start: var(--lf-space-6);
+    padding-block-start: var(--lf-space-5);
   }
 
   /* At 2.5rem the headline wrapped to four lines and pushed the hours line —
      which the copy contract requires in the first screen — 72px past the fold.
      2rem keeps "SHOPS LIKE YOURS," on one line inside 288px of column. */
   .lf-editorial .lf-wall__claim {
+    margin-top: var(--lf-space-3);
     font-size: 2rem;
     line-height: 0.94;
   }
 
   .lf-editorial .lf-wall__dek {
-    margin-top: var(--lf-space-4);
+    margin-top: var(--lf-space-3);
     font-size: var(--lf-text-base);
   }
 
   .lf-wall__act {
     gap: var(--lf-space-3);
-    margin-top: var(--lf-space-4);
+    margin-top: var(--lf-space-2);
   }
 
   /* The hours line has to clear a 568px fold with room for a different
      engine's line-breaking, not just Chromium's. */
   .lf-wall__reach {
-    gap: var(--lf-space-2) var(--lf-space-4);
-    margin-top: var(--lf-space-3);
+    gap: var(--lf-space-1) var(--lf-space-4);
+    margin-top: var(--lf-space-2);
   }
 
   .lf-editorial .lf-wall__hours {
@@ -382,8 +387,9 @@
   .lf-editorial .lf-wall__claim { order: 1; }
   .lf-editorial .lf-wall__dek { order: 2; }
   .lf-wall__act { order: 3; }
-  .lf-wall__reach { order: 4; }
-  .lf-wall__pillars { order: 5; }
+  .lf-wall__first-look-note { order: 4; }
+  .lf-wall__reach { order: 5; }
+  .lf-wall__pillars { order: 6; }
 
   .lf-wall__pillars {
     gap: 0.35rem 1.25rem;

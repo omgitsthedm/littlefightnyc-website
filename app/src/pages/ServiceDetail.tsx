@@ -16,7 +16,6 @@ import {
   SubscriptionStack,
 } from "@/components/dataviz/OwnerCalculators";
 import MoneyLeakMeter from "@/components/dataviz/MoneyLeakMeter";
-import WebsiteNightShift from "@/components/dataviz/WebsiteNightShift";
 import OwnerPath from "@/components/dataviz/OwnerPath";
 import { responsiveImageProps } from "@/lib/responsiveImages";
 import { skelImg } from "@/lib/imgSkeleton";
@@ -72,7 +71,7 @@ const CLOSING_LINE: Record<string, { heading: string; lede: string }> = {
   },
   "it-support": {
     heading: "Something broken right now?",
-    lede: "Call, 9am-9pm New York time. We will assess the immediate issue and confirm the next step. If it needs hands, we can be on site within 24 hours.",
+    lede: "Call, 9am–9pm Eastern. We assess the issue and confirm the next step. Urgent New York jobs usually receive on-site help within 24 hours; we confirm timing with you.",
   },
   "custom-local-websites": {
     heading: "Want a site that pulls its weight?",
@@ -105,9 +104,12 @@ function WebsiteAcquisitionBlock() {
             />
           </Link>
           <div className="lf-sd-web__proof-copy">
-            <p className="lf-sd-web__label">A website result you can open</p>
-            <h2 id="lf-sd-web-title">Instagram-only to a real booking site in two weeks.</h2>
-            <p>{proof.result}</p>
+            <p className="lf-sd-web__label">Public work, live</p>
+            <h2 id="lf-sd-web-title">A clearer path from discovery to booking.</h2>
+            <dl className="lf-sd-web__change">
+              <div><dt>Before</dt><dd>{proof.problem}</dd></div>
+              <div><dt>Now</dt><dd>{proof.result}</dd></div>
+            </dl>
             {proof.metrics && (
               <dl className="lf-sd-web__metrics">
                 {proof.metrics.map((metric) => (
@@ -130,41 +132,86 @@ function WebsiteAcquisitionBlock() {
                 Get my website plan
               </Link>
               <Link className="lf-sd-web__secondary" to={`/case-studies/${proof.slug}/`}>
-                See what changed
+                Read the dated project proof
               </Link>
-            </div>
-            <div className="lf-sd-web__owner">
-              <p>
-                <strong>One person stays with the job.</strong> You do not have to explain the business again every time we make progress.{" "}
-                <Link to="/about/">How we work</Link>
-              </p>
             </div>
           </div>
         </div>
 
         <div className="lf-sd-web__terms">
           <header className="lf-sd-web__terms-head">
-            <h2>Know the fit before the quote.</h2>
-            <p>The first look is free. Before work starts, you get a written plan, who does what, and the exact price.</p>
+            <h2>Know what happens next.</h2>
+            <p>Built for businesses that run on calls, bookings, visits or real questions. A working site may only need a cleanup. A large, changing catalog may need a different kind of shop.</p>
           </header>
-          <dl className="lf-sd-web__terms-grid">
-            <div>
-              <dt>Works best for</dt>
-              <dd>Businesses that run on calls, bookings, visits, or real questions. One person should know what happens next.</dd>
-            </div>
-            <div>
-              <dt>Not the right fit</dt>
-              <dd>A store with thousands of items changing every day may need a different kind of shop. A working site may only need a cleanup.</dd>
-            </div>
-            <div>
-              <dt>What we need from you</dt>
-              <dd>One decision-maker, accurate services and hours, usable photos or logos, and access to the website address and business tools. Never send passwords through the form.</dd>
-            </div>
-            <div>
-              <dt>Scope, ownership, and care</dt>
-              <dd>The written plan names review rounds, launch timing, and care. You own the code, website address, and content.</dd>
-            </div>
-          </dl>
+          <ol className="lf-sd-web__steps">
+            <li>
+              <h3>A free first look</h3>
+              <p>We look at how customers find you and get in touch. You get a clear next step, including whether a small cleanup is enough.</p>
+            </li>
+            <li>
+              <h3>A written plan and exact price</h3>
+              <p>Before work starts, the plan names the scope, who does what, review rounds, launch timing and care. The 14-day promise applies only to qualifying written scopes.</p>
+            </li>
+            <li>
+              <h3>Build, review, then launch</h3>
+              <p>We build the agreed pages. You review the working site and its contact or booking path before we launch the agreed version.</p>
+              <p>You provide one decision-maker, accurate services and hours, usable photos or logos, and access to the website address and business tools. Never send passwords through the form.</p>
+            </li>
+            <li>
+              <h3>Your website, with care agreed</h3>
+              <p>One person stays with the job. You own the code, website address and content. The written plan sets out ongoing care, so you know who handles the next change.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WebsiteDecisionReference({
+  commonIssues,
+  fallacies,
+  faq,
+}: Pick<(typeof services)[number], "commonIssues" | "fallacies" | "faq">) {
+  return (
+    <section className="lf-sd-decision-reference" aria-labelledby="lf-sd-decision-reference-title">
+      <div className="lf-sd-decision-reference__inner">
+        <header className="lf-sd-decision-reference__head">
+          <p>Reference notes</p>
+          <h2 id="lf-sd-decision-reference-title">Questions to check before you decide.</h2>
+          <span>Open the question that matches the business. Every answer stays here when you need it.</span>
+        </header>
+
+        <div className="lf-sd-decision-reference__groups">
+          <section aria-labelledby="lf-sd-decision-problems-title">
+            <h3 id="lf-sd-decision-problems-title">Common problems</h3>
+            {commonIssues.map((issue) => (
+              <details key={issue.title} className="lf-sd-decision-reference__item" data-lf-disclosure={`website-problem:${issue.title}`}>
+                <summary>{issue.title}</summary>
+                <p>{issue.body}</p>
+              </details>
+            ))}
+          </section>
+
+          <section aria-labelledby="lf-sd-decision-fit-title">
+            <h3 id="lf-sd-decision-fit-title">Before you decide</h3>
+            {fallacies.map((fallacy) => (
+              <details key={fallacy.myth} className="lf-sd-decision-reference__item" data-lf-disclosure={`website-fit:${fallacy.myth}`}>
+                <summary>{fallacy.myth}</summary>
+                <p>{fallacy.reality}</p>
+              </details>
+            ))}
+          </section>
+
+          <section aria-labelledby="lf-sd-decision-faq-title">
+            <h3 id="lf-sd-decision-faq-title">Owner questions, answered plainly</h3>
+            {faq.map((item) => (
+              <details key={item.question} className="lf-sd-decision-reference__item" data-lf-disclosure={`website-question:${item.question}`}>
+                <summary>{item.question}</summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </section>
         </div>
       </div>
     </section>
@@ -186,15 +233,19 @@ export default function ServiceDetail() {
   );
 
   const labProof = LAB_PROOF[service.slug];
+  const isWebsiteService = service.slug === "custom-local-websites";
 
   return (
     <>
       <PageHero
+        layout={isWebsiteService ? "website" : undefined}
         eyebrow={service.eyebrow}
         icon={service.icon}
         title={<>{service.headline}</>}
-        dek={service.shortAnswer.replace(/^Short answer:\s*/i, "")}
-        pillars={service.pillars ? [...service.pillars] : undefined}
+        dek={isWebsiteService
+          ? "A first website or a better one. Help customers find you, see your work and take the next step."
+          : service.shortAnswer.replace(/^Short answer:\s*/i, "")}
+        pillars={service.slug !== "custom-local-websites" && service.pillars ? [...service.pillars] : undefined}
         visual={labProof ? <LabVisual slug={labProof.slug} because={labProof.because} /> : undefined}
         image={labProof ? undefined : {
           src: FEATURE_IMAGE[service.slug] ?? service.image,
@@ -204,121 +255,144 @@ export default function ServiceDetail() {
           width: 1200,
           height: 900,
         }}
+        imageCaption={isWebsiteService ? (
+          <>
+            Public work, live · <Link to="/case-studies/hair-by-rachel-charles/">Hair By Rachel Charles</Link>
+          </>
+        ) : undefined}
       />
 
-      <section className="lf-content-section">
-        <div className="lf-content-grid">
-          <article className="lf-content-tile lf-content-tile--wide">
-            <EditorialBody dropcap>
-              <p>{service.plain}</p>
-            </EditorialBody>
-          </article>
-
-          <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--quiet lf-sd__aside">
-            <p className="lf-sd__aside-label">What you get</p>
-            <ul className="lf-sd__aside-list">
-              {service.includes.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </aside>
-
-          <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--signal">
-            <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
-          </aside>
-
-          <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet">
-            <ServiceDiagram slug={service.slug} />
-          </div>
-        </div>
-      </section>
-
-      {service.slug === "custom-local-websites" && <WebsiteAcquisitionBlock />}
-
-      {service.slug === "custom-local-websites" && <OwnerPath />}
-
-      {service.slug === "custom-local-websites" && <WebsiteNightShift />}
-
-      <ServiceOwnerMath slug={service.slug} />
-
-      <section className="lf-sd-deep">
-        <div className="lf-sd-deep__inner">
-          <p className="lf-sd-deep__label">What the work does</p>
-          <div className="lf-sd-deep__prose">
-            {service.whatItDoes.map((para, i) => (
-              <p key={i}>{para}</p>
-            ))}
-          </div>
-          <EditorialFigure
-            src={service.image}
-            video={service.video}
-            alt=""
-            caption={FIGURE_CAPTION[service.slug] ?? ""}
-            width={1600}
-            height={1067}
+      {isWebsiteService ? (
+        <>
+          <WebsiteAcquisitionBlock />
+          <QuietContact
+            heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what’s broken."}
+            lede={CLOSING_LINE[service.slug]?.lede}
+            intent={acquisitionIntentForServiceSlug(service.slug)}
           />
-        </div>
-      </section>
-
-      <section className="lf-sd-issues">
-        <div className="lf-sd-issues__inner">
-          <header className="lf-sd-issues__head">
-            <p className="lf-sd-issues__label">Common problems</p>
-            <h2 className="lf-sd-issues__title">Most of these problems cost time, money, or a customer.</h2>
-          </header>
-          <div className="lf-sd-issues__list">
-            {service.commonIssues.map((issue, i) => (
-              <article key={i} className="lf-sd-issues__item lf-sd-issues__item--visible">
-                <span className="lf-sd-issues__numeral" aria-hidden="true">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="lf-sd-issues__body">
-                  <h3 className="lf-sd-issues__item-title">{issue.title}</h3>
-                  <p className="lf-sd-issues__item-text">{issue.body}</p>
-                </div>
+          <OwnerPath />
+          <ServiceOwnerMath slug={service.slug} />
+          <WebsiteDecisionReference
+            commonIssues={service.commonIssues}
+            fallacies={service.fallacies}
+            faq={service.faq}
+          />
+        </>
+      ) : (
+        <>
+          <section className="lf-content-section">
+            <div className="lf-content-grid">
+              <article className="lf-content-tile lf-content-tile--wide">
+                <EditorialBody dropcap>
+                  <p>{service.plain}</p>
+                </EditorialBody>
               </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section className="lf-sd-fallacies">
-        <div className="lf-sd-fallacies__inner">
-          <header className="lf-sd-fallacies__head">
-            <p className="lf-sd-fallacies__label">Before you decide</p>
-            <h2 className="lf-sd-fallacies__title">The right answer depends on the work.</h2>
-          </header>
-          <div className="lf-sd-fallacies__list">
-            {service.fallacies.map((f, i) => (
-              <article key={i} className="lf-sd-fallacies__item lf-sd-fallacies__item--visible">
-                <div className="lf-sd-fallacies__myth">
-                  <span className="lf-sd-fallacies__tag">The question</span>
-                  <span className="lf-sd-fallacies__myth-text">{f.myth}</span>
-                </div>
-                <div className="lf-sd-fallacies__reality">
-                  <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">What matters</span>
-                  <span>{f.reality}</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+              <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--quiet lf-sd__aside">
+                <p className="lf-sd__aside-label">What you get</p>
+                <ul className="lf-sd__aside-list">
+                  {service.includes.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </aside>
 
-      {service.faq.length > 0 && (
-        <section className="lf-sd-faq">
-          <div className="lf-sd-faq__inner">
-            <h2 className="lf-sd-faq__title">Owner questions, answered plainly.</h2>
-            <div className="lf-sd-faq__list">
-              {service.faq.map((item) => (
-                <article key={item.question} className="lf-sd-faq__item lf-sd-faq__item--visible">
-                  <h3 className="lf-sd-faq__q">{item.question}</h3>
-                  <p className="lf-sd-faq__a">{item.answer}</p>
-                </article>
-              ))}
+              <aside className="lf-content-tile lf-content-tile--narrow lf-content-tile--signal">
+                <PullQuote cite="What you can count on">{service.outcome}</PullQuote>
+              </aside>
+
+              <div className="lf-content-tile lf-content-tile--wide lf-content-tile--quiet">
+                <ServiceDiagram slug={service.slug} />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          <ServiceOwnerMath slug={service.slug} />
+
+          <section className="lf-sd-deep">
+            <div className="lf-sd-deep__inner">
+              <p className="lf-sd-deep__label">What the work does</p>
+              <div className="lf-sd-deep__prose">
+                {service.whatItDoes.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
+              </div>
+              <EditorialFigure
+                src={service.image}
+                video={service.video}
+                alt=""
+                caption={FIGURE_CAPTION[service.slug] ?? ""}
+                width={1600}
+                height={1067}
+              />
+            </div>
+          </section>
+        </>
+      )}
+
+      {!isWebsiteService && (
+        <>
+          <section className="lf-sd-issues">
+            <div className="lf-sd-issues__inner">
+              <header className="lf-sd-issues__head">
+                <p className="lf-sd-issues__label">Common problems</p>
+                <h2 className="lf-sd-issues__title">Most of these problems cost time, money, or a customer.</h2>
+              </header>
+              <div className="lf-sd-issues__list">
+                {service.commonIssues.map((issue, i) => (
+                  <article key={i} className="lf-sd-issues__item lf-sd-issues__item--visible">
+                    <span className="lf-sd-issues__numeral" aria-hidden="true">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="lf-sd-issues__body">
+                      <h3 className="lf-sd-issues__item-title">{issue.title}</h3>
+                      <p className="lf-sd-issues__item-text">{issue.body}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="lf-sd-fallacies">
+            <div className="lf-sd-fallacies__inner">
+              <header className="lf-sd-fallacies__head">
+                <p className="lf-sd-fallacies__label">Before you decide</p>
+                <h2 className="lf-sd-fallacies__title">The right answer depends on the work.</h2>
+              </header>
+              <div className="lf-sd-fallacies__list">
+                {service.fallacies.map((f, i) => (
+                  <article key={i} className="lf-sd-fallacies__item lf-sd-fallacies__item--visible">
+                    <div className="lf-sd-fallacies__myth">
+                      <span className="lf-sd-fallacies__tag">The question</span>
+                      <span className="lf-sd-fallacies__myth-text">{f.myth}</span>
+                    </div>
+                    <div className="lf-sd-fallacies__reality">
+                      <span className="lf-sd-fallacies__tag lf-sd-fallacies__tag--reality">What matters</span>
+                      <span>{f.reality}</span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {service.faq.length > 0 && (
+            <section className="lf-sd-faq">
+              <div className="lf-sd-faq__inner">
+                <h2 className="lf-sd-faq__title">Owner questions, answered plainly.</h2>
+                <div className="lf-sd-faq__list">
+                  {service.faq.map((item) => (
+                    <article key={item.question} className="lf-sd-faq__item lf-sd-faq__item--visible">
+                      <h3 className="lf-sd-faq__q">{item.question}</h3>
+                      <p className="lf-sd-faq__a">{item.answer}</p>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </>
       )}
 
       <section className="lf-sd-local">
@@ -376,11 +450,13 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      <QuietContact
-        heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what’s broken."}
-        lede={CLOSING_LINE[service.slug]?.lede}
-        intent={acquisitionIntentForServiceSlug(service.slug)}
-      />
+      {!isWebsiteService && (
+        <QuietContact
+          heading={CLOSING_LINE[service.slug]?.heading ?? "Tell us what’s broken."}
+          lede={CLOSING_LINE[service.slug]?.lede}
+          intent={acquisitionIntentForServiceSlug(service.slug)}
+        />
+      )}
     </>
   );
 }

@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from "react";
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { OpenNowBadge } from "./QuietNav";
@@ -7,24 +7,6 @@ import LifiCredit from "./LifiCredit";
 import { openConsentPreferences } from "@/lib/consent";
 import "./QuietFooter.css";
 import { PHONE_DISPLAY, PHONE_HREF, SMS_HREF } from "@/data/contact";
-
-// Hydration-safe mobile check: server snapshot says desktop (plain lists),
-// the client corrects to accordions right after mount on small screens.
-const MOBILE_QUERY = "(max-width: 639px)";
-
-function subscribeMobile(onChange: () => void) {
-  const mq = window.matchMedia(MOBILE_QUERY);
-  mq.addEventListener("change", onChange);
-  return () => mq.removeEventListener("change", onChange);
-}
-
-function useIsMobile(): boolean {
-  return useSyncExternalStore(
-    subscribeMobile,
-    () => window.matchMedia(MOBILE_QUERY).matches,
-    () => false,
-  );
-}
 
 /* Curated, not exhaustive: the hubs carry the long lists — the footer names
  * the acquisition and continuity paths owners most often need.
@@ -68,10 +50,10 @@ const footerGroups: Array<{
 
 export default function QuietFooter() {
   const year = new Date().getFullYear();
-  const isMobile = useIsMobile();
 
   return (
     <footer className="lf-quiet-foot" role="contentinfo">
+      <noscript><style>{`.lf-quiet-foot__privacy-button{display:none!important}`}</style></noscript>
       <div className="lf-quiet-foot__inner">
         <div className="lf-quiet-foot__top">
           <div className="lf-quiet-foot__brand">
@@ -116,10 +98,12 @@ export default function QuietFooter() {
               </ul>
             );
 
-            // Phones: each group folds into an accordion so the footer stops
-            // being a five-screen scroll. Desktop keeps the open site map.
-            return isMobile ? (
-              <details className="lf-quiet-foot__group lf-quiet-foot__group--fold" key={group.title}>
+            // Both layouts come from this one record. CSS selects exactly one
+            // visible/accessibility-tree version before JavaScript arrives,
+            // so mobile never starts with a tall desktop footer then shrinks.
+            return (
+              <Fragment key={group.title}>
+              <details className="lf-quiet-foot__group lf-quiet-foot__group--fold" data-lf-disclosure={`footer:${group.title}`}>
                 <summary>
                   <h2>{group.title}</h2>
                   <ChevronDown
@@ -131,11 +115,11 @@ export default function QuietFooter() {
                 </summary>
                 {links}
               </details>
-            ) : (
-              <div className="lf-quiet-foot__group" key={group.title}>
+              <div className="lf-quiet-foot__group lf-quiet-foot__group--wide">
                 <h2>{group.title}</h2>
                 {links}
               </div>
+              </Fragment>
             );
           })}
         </nav>

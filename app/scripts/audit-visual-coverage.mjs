@@ -201,7 +201,7 @@ if (
 }
 
 const serviceDetailSource = await text("src/pages/ServiceDetail.tsx");
-for (const component of ["CopyPasteTax", "DowntimeClock", "MissedCallMeter", "SubscriptionStack", "MoneyLeakMeter", "WebsiteNightShift", "OwnerPath"]) {
+for (const component of ["CopyPasteTax", "DowntimeClock", "MissedCallMeter", "SubscriptionStack", "MoneyLeakMeter", "OwnerPath"]) {
   if (!serviceDetailSource.includes(component)) fail(`service visual placement is missing ${component}`);
 }
 

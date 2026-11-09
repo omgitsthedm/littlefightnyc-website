@@ -389,24 +389,37 @@ if (!/<main(?:\s|>)/i.test(brandKit) || !/<\/main>/i.test(brandKit)) {
 }
 
 const homeDocument = await readFile(path.join(distRoot, "index.html"), "utf8");
-// The acquisition hero is the wall: six live client sites across six trades,
-// so a visitor sees someone like themselves before they read anything. The
-// first tile is the largest thing in the first screen, so the first response
-// must carry that exact image as the high-priority candidate and preload
-// nothing else for the route.
-const HOME_WALL_LEAD = "/assets/case-chromatic-painting-design-900.webp";
-if (!/<img[^>]+src="\/assets\/case-chromatic-painting-design-900\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
-  failures.push("home first response is missing the high-priority wall lead capture");
+// The avenue is the actual first-screen image at every viewport. Its media
+// sources and matching responsive preloads are a contract: adding a gallery
+// image as a competing high-priority request pushes the first decision later.
+const HOME_AVENUE_MOBILE = "/assets/hero-home-avenue-900.webp";
+const HOME_AVENUE_DESKTOP = "/assets/hero-home-avenue-1600.webp";
+if (!/<div class="lf-wall__backdrop"[\s\S]*?<img[^>]+src="\/assets\/hero-home-avenue-900\.webp"[^>]+srcset="\/assets\/hero-home-avenue-480\.webp 480w, \/assets\/hero-home-avenue-640\.webp 640w, \/assets\/hero-home-avenue-900\.webp 900w"[^>]+sizes="50vw"[^>]+loading="eager"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response is missing the eager high-priority mobile avenue image");
+}
+if (!/<div class="lf-wall__backdrop"[\s\S]*?<source[^>]+media="\(min-width: 64rem\)"[^>]+srcset="\/assets\/hero-home-avenue-1280\.webp 1280w, \/assets\/hero-home-avenue-1600\.webp 1600w, \/assets\/hero-home-avenue-2000\.webp 2000w"[^>]+sizes="100vw"/i.test(homeDocument)) {
+  failures.push("home first response is missing the desktop avenue source set");
+}
+if (/<img[^>]+src="\/assets\/case-chromatic-painting-design-900\.webp"[^>]+fetchpriority="high"/i.test(homeDocument)) {
+  failures.push("home first response still prioritizes a gallery capture over the avenue");
 }
 if (/connected-counter-hero-(?:mobile|desktop)-v1\.webp/i.test(homeDocument)) {
   failures.push("home first response still references the retired connected-counter illustration");
 }
 const homeRouteImagePreloads = homeDocument.match(/<link[^>]+rel="preload"[^>]+as="image"[^>]+data-route-preload[^>]*>/gi) ?? [];
-if (homeRouteImagePreloads.length !== 1 || !homeRouteImagePreloads[0].includes(HOME_WALL_LEAD)) {
-  failures.push("home route-preloads must contain exactly the wall lead capture");
+const homeMobilePreload = homeRouteImagePreloads.find((tag) => tag.includes(HOME_AVENUE_MOBILE));
+const homeDesktopPreload = homeRouteImagePreloads.find((tag) => tag.includes(HOME_AVENUE_DESKTOP));
+if (
+  homeRouteImagePreloads.length !== 2
+  || !homeMobilePreload?.includes('media="(max-width: 63.99rem)"')
+  || !homeMobilePreload?.includes('imagesizes="50vw"')
+  || !homeDesktopPreload?.includes('media="(min-width: 64rem)"')
+  || !homeDesktopPreload?.includes('imagesizes="100vw"')
+) {
+  failures.push("home route-preloads must be the two media-aware avenue sources");
 }
-if (/data-route-preload[^>]+(?:hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
-  failures.push("home still preloads a retired image-led hero");
+if (/data-route-preload[^>]+(?:case-chromatic-painting-design|hero-soho-crosswalk|storefronts-dawn)/i.test(homeDocument)) {
+  failures.push("home still preloads a gallery or retired hero image");
 }
 
 if (failures.length > 0) {

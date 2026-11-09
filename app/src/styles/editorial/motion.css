@@ -57,6 +57,12 @@ html[data-vt-route] .lf-page-enter {
 .lf-page-enter {
   animation: lf-page-in var(--m-settle-ms) var(--m-settle-ease) both;
 }
+/* Initial public HTML is already present. Replaying the entrance when its
+ * interactive counterpart is revealed creates a second visible page move.
+ * Keep the opening route still; later route transitions retain their motion. */
+.lf-page-enter[data-initial-route] {
+  animation: none;
+}
 @keyframes lf-page-in {
   from { transform: translateY(12px); }
   to { transform: none; }

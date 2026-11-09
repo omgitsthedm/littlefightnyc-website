@@ -25,30 +25,30 @@ const NOTICE_COPY: Record<"en" | "es" | "zh", NoticeCopy> = {
   en: {
     ariaLabel: "Privacy preferences",
     title: "Privacy choices",
-    body: "Anonymous visit counts help us improve this website. Advertising tracking is off.",
+    body: "Optional visit counts help us improve this website. Advertising tracking is off.",
     details: "Details",
     current: (analyticsOn) =>
-      `Current choice: anonymous visit counting ${analyticsOn ? "on" : "off"}; advertising off`,
+      `Current choice: visit counting ${analyticsOn ? "on" : "off"}; advertising off`,
     allowAnalytics: "Allow visit counting",
     essentialOnly: "Essential only",
   },
   es: {
     ariaLabel: "Preferencias de privacidad",
     title: "Opciones de privacidad",
-    body: "El conteo anónimo de visitas nos ayuda a mejorar este sitio. El seguimiento publicitario está desactivado.",
+    body: "El conteo opcional de visitas nos ayuda a mejorar este sitio. El seguimiento publicitario está desactivado.",
     details: "Detalles (en inglés)",
     current: (analyticsOn) =>
-      `Opción actual: conteo anónimo ${analyticsOn ? "activado" : "desactivado"}; publicidad desactivada`,
+      `Opción actual: conteo de visitas ${analyticsOn ? "activado" : "desactivado"}; publicidad desactivada`,
     allowAnalytics: "Permitir conteo",
     essentialOnly: "Solo lo esencial",
   },
   zh: {
     ariaLabel: "隐私设置",
     title: "隐私选项",
-    body: "匿名访问统计帮助我们改进这个网站。广告跟踪已关闭。",
+    body: "可选访问统计帮助我们改进这个网站。广告跟踪已关闭。",
     details: "详细说明（英文）",
     current: (analyticsOn) =>
-      `当前选择：匿名访问统计${analyticsOn ? "已开启" : "已关闭"}；广告已关闭`,
+      `当前选择：访问统计${analyticsOn ? "已开启" : "已关闭"}；广告已关闭`,
     allowAnalytics: "允许访问统计",
     essentialOnly: "仅必要功能",
   },
@@ -71,58 +71,62 @@ function ConsentNotice() {
   const { pathname } = useLocation();
   const copy = NOTICE_COPY[noticeLocale(pathname)];
   // Privacy-first: analytics and advertising remain denied until the visitor
-  // makes a choice. Show the compact panel on a first visit so the opt-in path
-  // is discoverable; returning visitors keep their saved choice without noise.
-  const [visible, setVisible] = useState(false);
+  // makes a choice. First-visit choices live after the page, in normal flow:
+  // they never cover the work or interrupt an inquiry. Footer/legal controls
+  // bring this same panel into view when the visitor asks to change a choice.
+  const [visible, setVisible] = useState(() => getAnalyticsConsent() === null);
   const [choices, setChoices] = useState(getConsentChoices);
   const panelRef = useRef<HTMLDivElement>(null);
+  const returnFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    let firstVisitTimer: number | undefined;
-    if (getAnalyticsConsent() === null) {
-      firstVisitTimer = window.setTimeout(() => setVisible(true), 900);
-    }
-
-    const open = () => {
+    const open = (event: Event) => {
+      const trigger = (event as CustomEvent<{ trigger?: unknown }>).detail?.trigger;
+      returnFocusRef.current = trigger instanceof HTMLElement ? trigger
+        : document.activeElement instanceof HTMLElement ? document.activeElement : null;
       setChoices(getConsentChoices());
       setVisible(true);
-      window.setTimeout(() => panelRef.current?.focus(), 0);
+      window.setTimeout(() => {
+        panelRef.current?.scrollIntoView({ block: "center", behavior: "instant" });
+        panelRef.current?.focus({ preventScroll: true });
+      }, 0);
     };
     window.addEventListener(CONSENT_OPEN_EVENT, open);
     return () => {
-      if (firstVisitTimer !== undefined) window.clearTimeout(firstVisitTimer);
       window.removeEventListener(CONSENT_OPEN_EVENT, open);
     };
   }, []);
 
   useEffect(() => {
-    if (visible) {
-      document.documentElement.dataset.lfConsentNotice = "open";
-    } else {
-      delete document.documentElement.dataset.lfConsentNotice;
-    }
-    window.dispatchEvent(
-      new CustomEvent(CONSENT_VISIBILITY_EVENT, { detail: { visible } }),
-    );
-  }, [visible]);
-
-  useEffect(
-    () => () => {
-      delete document.documentElement.dataset.lfConsentNotice;
+    const announceVisibility = (inView: boolean) => {
+      if (inView) document.documentElement.dataset.lfConsentNotice = "open";
+      else delete document.documentElement.dataset.lfConsentNotice;
       window.dispatchEvent(
         new CustomEvent(CONSENT_VISIBILITY_EVENT, {
-          detail: { visible: false },
+          detail: { visible: inView },
         }),
       );
-    },
-    [],
-  );
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      announceVisibility(entry.isIntersecting);
+    });
+    if (visible && panelRef.current) observer.observe(panelRef.current);
+    else announceVisibility(false);
+    return () => {
+      observer.disconnect();
+      announceVisibility(false);
+    };
+  }, [visible]);
 
   if (!visible) return null;
 
   const finish = () => {
     setChoices(getConsentChoices());
     setVisible(false);
+    const returnTarget = returnFocusRef.current?.isConnected
+      ? returnFocusRef.current
+      : document.querySelector<HTMLElement>(".lf-quiet-foot__privacy-button");
+    returnTarget?.focus();
   };
 
   const allowAnalyticsOnly = () => {

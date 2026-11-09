@@ -143,7 +143,7 @@ export default function MoneyLeakMeter() {
           </div>
         </div>
 
-        <MethodologyDisclosure title="Show the math and the limit">
+        <MethodologyDisclosure title="Show the math and the limit" disclosureKey="money-leak:methodology">
           <p>
             <strong>{missed}</strong> missed inquiries per week × <strong>{formatCurrency(sale, currency.locale, currency.code)}</strong>
             {" "}average sale × <strong>{Math.round(closeRate * 100)}%</strong> close rate × <strong>4 weeks</strong> = <strong>{formatCurrency(estimate, currency.locale, currency.code)}</strong>.

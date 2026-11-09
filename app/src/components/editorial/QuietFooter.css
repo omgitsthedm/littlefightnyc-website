@@ -247,9 +247,19 @@
    ============================================================ */
 
 @media (max-width: 639px) {
+  .lf-quiet-foot__group--wide {
+    display: none;
+  }
+
   .lf-quiet-foot__nav {
     grid-template-columns: 1fr;
     gap: 0;
+  }
+}
+
+@media (min-width: 640px) {
+  .lf-quiet-foot__group--fold {
+    display: none;
   }
 }
 

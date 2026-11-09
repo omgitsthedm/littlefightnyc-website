@@ -20,6 +20,7 @@ import {
 } from "@/components/editorial/caseProof";
 import { caseStudies, services } from "@/data/site";
 import {
+  acquisitionCtaForIntent,
   acquisitionIntentForServiceSlug,
   techAuditHref,
   type AcquisitionIntent,
@@ -124,6 +125,12 @@ export default function CaseStudyDetail() {
     .map(acquisitionIntentForServiceSlug)
     .find((intent) => intent !== "general") ?? "general";
   const casePlan = CASE_PLAN_COPY[caseIntent];
+  const caseHeroAction = acquisitionCtaForIntent(caseIntent, `case_${study.slug}_hero`);
+  // Rachel's focused, public booking path already has a live capture and a
+  // source-verified See / Choose / Book proof. Its generic walkthrough repeats
+  // that same path without adding a separate evidence type; other cases keep
+  // their walkthroughs because their proof structures differ.
+  const usesFocusedBookingProof = study.slug === "hair-by-rachel-charles";
 
   const beats = [
     { label: "Before", body: study.problem },
@@ -135,6 +142,7 @@ export default function CaseStudyDetail() {
   return (
     <>
       <PageHero
+        layout={study.slug === "hair-by-rachel-charles" ? "acquisition" : undefined}
         eyebrow={`Case study: ${study.showcase.kind}`}
         icon={Award}
         title={<span className="lf-accent">{study.showcase.label}</span>}
@@ -147,6 +155,7 @@ export default function CaseStudyDetail() {
           position: study.showcase.heroPosition,
           mobilePosition: study.showcase.heroPositionMobile,
         } : undefined}
+        action={caseHeroAction}
       />
 
       <div className="lf-case__hero-band">
@@ -282,7 +291,7 @@ export default function CaseStudyDetail() {
                   featureProof={study.featureProof}
                 />
               )}
-              <ProjectWalkthrough key={study.slug} study={study} />
+              {!usesFocusedBookingProof && <ProjectWalkthrough key={study.slug} study={study} />}
               <FeatureProof study={study} />
             </div>
           </div>

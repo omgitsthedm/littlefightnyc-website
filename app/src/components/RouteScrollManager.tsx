@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 function jumpToTop() {
@@ -12,10 +12,15 @@ function jumpToTop() {
 
 export default function RouteScrollManager() {
   const { pathname, search, hash } = useLocation();
+  const firstMount = useRef(true);
 
   useLayoutEffect(() => {
+    // The initial document is already usable. Mounting React is not a new
+    // navigation and must not send an owner reading that document to the top.
+    const retainInitialPosition = firstMount.current && document.documentElement.dataset.snap === "1";
+    firstMount.current = false;
     if (!hash) {
-      jumpToTop();
+      if (!retainInitialPosition) jumpToTop();
       return undefined;
     }
 

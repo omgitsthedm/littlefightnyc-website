@@ -13,9 +13,9 @@ const PLAN_COPY: Record<AcquisitionIntent, {
   detail: string;
 }> = {
   website: {
-    label: "I want a stronger website",
+    label: "A first website, or a better one",
     title: "Get a free website plan",
-    detail: "A human review before any paid work.",
+    detail: "Website, social page, or referrals. Start where you are.",
   },
   support: {
     label: "I need a practical fix",
@@ -24,7 +24,7 @@ const PLAN_COPY: Record<AcquisitionIntent, {
   },
   consulting: {
     label: "I want a clearer next move",
-    title: "Get a free second opinion",
+    title: "Get a free first look",
     detail: "A human review before any paid work.",
   },
   systems: {
@@ -39,7 +39,7 @@ const PLAN_COPY: Record<AcquisitionIntent, {
   },
   general: {
     label: "I want a clearer next move",
-    title: "Get a free second opinion",
+    title: "Get a free first look",
     detail: "A human review before any paid work.",
   },
 };
@@ -133,7 +133,7 @@ export default function QuietContact({
               data-lf-label="contact_block"
             >
               <CalendarDays size={18} strokeWidth={1.8} aria-hidden="true" />
-              Book a free 30-minute second opinion
+              Book a free 30-minute first look
             </a>
           )}
         </div>

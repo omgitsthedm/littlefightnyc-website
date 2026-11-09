@@ -14,12 +14,45 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
 
   if (!proof) return null;
 
-  const active = proof.steps[activeStep];
+  const steps = proof.steps;
+  const active = steps[activeStep];
+
+  function activateStep(index: number) {
+    if (index !== activeStep) setSwitched(true);
+    setActiveStep(index);
+  }
+
+  function handleTabKeyDown(event: React.KeyboardEvent<HTMLButtonElement>, index: number) {
+    let nextIndex: number | null = null;
+    switch (event.key) {
+      case "ArrowRight":
+        nextIndex = (index + 1) % steps.length;
+        break;
+      case "ArrowLeft":
+        nextIndex = (index - 1 + steps.length) % steps.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = steps.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    activateStep(nextIndex);
+    event.currentTarget
+      .closest<HTMLElement>("[role=tablist]")
+      ?.querySelectorAll<HTMLButtonElement>("[role=tab]")[nextIndex]
+      ?.focus();
+  }
 
   return (
     <section
       className="lf-feature-proof"
-      data-feature-proof
+      data-feature-proof={study.slug}
       aria-labelledby={`${id}-title`}
     >
       <header className="lf-feature-proof__head">
@@ -56,7 +89,7 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
           role="tablist"
           aria-label={`${study.client} feature proof steps`}
         >
-          {proof.steps.map((step, index) => {
+          {steps.map((step, index) => {
             const selected = index === activeStep;
 
             return (
@@ -68,10 +101,12 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
                 aria-selected={selected}
                 aria-controls={`${id}-panel-${index}`}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => {
-                  if (index !== activeStep) setSwitched(true);
-                  setActiveStep(index);
-                }}
+                data-feature-proof-step={index}
+                onClick={() => activateStep(index)}
+                // The static response keeps the complete first panel and a
+                // text alternative; roving-tab keys become available once
+                // this live component mounts.
+                onKeyDown={(event) => handleTabKeyDown(event, index)}
               >
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {step.label}
@@ -103,7 +138,7 @@ export default function FeatureProof({ study }: { study: CaseStudy }) {
         <span>
           Verified live: <time dateTime={proof.verifiedAt}>{formatCaseProofDate(proof.verifiedAt)}</time>
         </span>
-        <details>
+        <details data-lf-disclosure={`feature-proof:${study.slug}`}>
           <summary>Plain-English readout</summary>
           <p>{proof.textAlternative}</p>
         </details>

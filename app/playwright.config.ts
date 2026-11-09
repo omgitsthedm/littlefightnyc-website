@@ -9,7 +9,7 @@ const baseURL = `http://127.0.0.1:${port}`;
 
 export default defineConfig({
   testDir: "./tests",
-  testMatch: ["quality-smoke.spec.ts", "vera-product.spec.ts", "visual-proof.spec.ts"],
+  testMatch: ["quality-smoke.spec.ts", "vera-product.spec.ts", "visual-proof.spec.ts", "no-site-intake.spec.ts", "public-route-bootstrap.spec.ts", "shared-acquisition-render.spec.ts", "owner-calculator-handoff.spec.ts"],
   timeout: 45_000,
   expect: {
     timeout: 8_000,

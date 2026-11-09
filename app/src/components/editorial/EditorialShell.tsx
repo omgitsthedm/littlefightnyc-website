@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { importWithRetry } from "@/lib/importWithRetry";
 
@@ -21,6 +21,7 @@ import CommandPalette from "./CommandPalette";
 
 export default function EditorialShell() {
   const location = useLocation();
+  const [initialPathname] = useState(location.pathname);
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -38,7 +39,11 @@ export default function EditorialShell() {
       <main id="main-content" className="lf-page">
         {/* Re-key on path so the page content fades + rises on each navigation;
             nav/footer are siblings and never re-mount. */}
-        <div className="lf-page-enter" key={location.pathname}>
+        <div
+          className="lf-page-enter"
+          key={location.pathname}
+          data-initial-route={location.pathname === initialPathname || undefined}
+        >
           <Outlet />
         </div>
       </main>

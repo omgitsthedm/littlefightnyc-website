@@ -62,9 +62,9 @@ test("owner formulas expose the promised business inputs", async ({ page }) => {
 });
 
 test("night-shift path is replayable and never loops", async ({ page }) => {
-  // Mobile home is the short acquisition path; the full explainer lives on
-  // the website service page at every viewport.
-  await page.goto("/services/custom-local-websites/");
+  // The website-service decision path uses OwnerPath once. The complete
+  // after-hours explainer remains on its relevant creative-business page.
+  await page.goto("/industries/galleries-creative-studios/");
   const nightShift = page.locator('[data-lf-visual-proof="website-night-shift"]');
   await expect(nightShift).toBeVisible();
   await nightShift.getByRole("button", { name: "Replay the Path" }).click();
@@ -95,11 +95,32 @@ test("service and multilingual paths expose complete text equivalents", async ({
 
 test("portfolio proof step changes with visible feedback", async ({ page }) => {
   await page.goto("/case-studies/hair-by-rachel-charles/");
+  const hero = page.locator(".lf-pagehero");
+  await expect(hero.getByRole("link", { name: /get a free first look/i })).toHaveAttribute(
+    "href",
+    "/website-check/#website-check-start",
+  );
+
+  // This focused case keeps the dated capture and source-verified booking proof
+  // rather than repeating the same path in the generic project walkthrough.
+  await expect(page.locator("[data-live-site-explorer]")).toBeVisible();
+  await expect(page.locator(".lf-project-walkthrough")).toHaveCount(0);
   const proof = page.locator("[data-feature-proof]");
   const tabs = proof.getByRole("tab");
   await tabs.nth(1).click();
   await expect(tabs.nth(1)).toHaveAttribute("aria-selected", "true");
   await expect(proof.getByRole("tabpanel")).toBeVisible();
+  await tabs.nth(1).press("Home");
+  await expect(tabs.first()).toBeFocused();
+  await expect(tabs.first()).toHaveAttribute("aria-selected", "true");
+  await tabs.first().press("ArrowLeft");
+  await expect(tabs.last()).toBeFocused();
+  await expect(tabs.last()).toHaveAttribute("aria-selected", "true");
+  await tabs.last().press("ArrowRight");
+  await expect(tabs.first()).toBeFocused();
+  await tabs.first().press("End");
+  await expect(tabs.last()).toBeFocused();
+  await expect(tabs.last()).toHaveAttribute("aria-selected", "true");
 });
 
 });

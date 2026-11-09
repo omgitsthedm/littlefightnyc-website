@@ -35,6 +35,7 @@
 }
 
 .lf-nav__brand {
+  flex-shrink: 0;
   min-height: var(--lf-control-min);
   display: inline-flex;
   align-items: center;
@@ -113,11 +114,31 @@
 }
 
 /* ---- Desktop primary nav ---- */
+.lf-nav__noscript {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--lf-space-2);
+  padding: 0 var(--lf-margin-mobile) var(--lf-space-4);
+}
+
+.lf-nav__noscript a {
+  display: flex;
+  align-items: center;
+  min-height: var(--lf-control-min);
+  font-size: var(--lf-text-sm);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 .lf-nav__primary {
   display: none;
 }
 
 @media (min-width: 76rem) {
+  .lf-nav__noscript {
+    display: none;
+  }
+
   .lf-nav__primary {
     display: flex;
     align-items: center;
@@ -197,6 +218,7 @@
 /* ---- Right-side actions ---- */
 .lf-nav__actions {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: var(--lf-space-1);
 }
@@ -327,6 +349,7 @@
   font-size: var(--lf-text-sm);
   letter-spacing: -0.01em;
   text-decoration: none;
+  white-space: nowrap;
   transition:
     background-color var(--lf-time-snappy) var(--lf-ease-standard),
     transform var(--lf-time-snappy) var(--lf-ease-standard),
@@ -357,9 +380,29 @@
   }
 }
 
-@media (min-width: 80rem) {
-  .lf-nav__start {
-    margin-inline-start: var(--lf-space-5);
+/* The number remains in the accessible name and the call/text menu. Where
+ * the first-look action shares this row, a short Call label preserves room
+ * for both actions without wrapping the CTA or crowding the wordmark. */
+@media (min-width: 48rem) {
+  .lf-nav__actions--has-start .lf-nav__phone-number {
+    display: none;
+  }
+
+  .lf-nav__actions--has-start .lf-nav__phone-short {
+    display: inline;
+  }
+}
+
+/* Compact desktop keeps every primary route at the same 16px type floor
+ * and 44px target height. Reduce side padding before consuming logo space. */
+@media (min-width: 76rem) and (max-width: 89.99rem) {
+  .lf-nav__link {
+    padding-inline: var(--lf-space-2);
+  }
+
+  .lf-nav__link::after {
+    left: var(--lf-space-2);
+    right: var(--lf-space-2);
   }
 }
 

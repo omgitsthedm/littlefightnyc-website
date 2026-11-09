@@ -81,7 +81,7 @@ export type AcquisitionCta = {
    * roomy surfaces; this is the short form for that one bar.
    */
   compactKicker?: string;
-  event?: "human_review_requested";
+  event?: "human_review_requested" | "first_look_opened";
 };
 
 export function acquisitionCtaForIntent(
@@ -90,14 +90,14 @@ export function acquisitionCtaForIntent(
 ): AcquisitionCta {
   if (intent === "website") {
     return {
-      // Straight to the URL field, focused (RouteScrollManager focuses form
-      // controls named by a hash) — one tap fewer than landing at the top of
-      // the page and finding the box two screens down.
-      href: "/website-check/#website-check-url",
-      label: "Check my website",
-      compactLabel: "Check website",
+      // Start with the owner's situation. A required URL would exclude
+      // first websites, social-only businesses and referral-led shops.
+      href: "/website-check/#website-check-start",
+      label: "Get a free first look",
+      compactLabel: "Free first look",
       kicker: "Free first look",
       compactKicker: "Free look",
+      event: "first_look_opened",
     };
   }
   if (intent === "support") {
@@ -129,8 +129,8 @@ export function acquisitionCtaForIntent(
   }
   return {
     href: techAuditHref(intent, source),
-    label: "Free second opinion",
-    compactLabel: "Second opinion",
+    label: "Free first look",
+    compactLabel: "Free first look",
     kicker: "Free consult",
     event: "human_review_requested",
   };

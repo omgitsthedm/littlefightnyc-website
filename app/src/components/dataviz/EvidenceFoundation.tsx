@@ -68,8 +68,8 @@ export function EvidenceSource({
   );
 }
 
-export function MethodologyDisclosure({ title = "Show the math and limits", children }: { title?: string; children: ReactNode }) {
-  return <details className="lf-methodology-disclosure"><summary>{title}</summary><div>{children}</div></details>;
+export function MethodologyDisclosure({ title = "Show the math and limits", disclosureKey, children }: { title?: string; disclosureKey?: string; children: ReactNode }) {
+  return <details className="lf-methodology-disclosure" data-lf-disclosure={disclosureKey}><summary>{title}</summary><div>{children}</div></details>;
 }
 
 export function OwnerMath({

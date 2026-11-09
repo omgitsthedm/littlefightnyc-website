@@ -83,15 +83,33 @@ async function sha256Hex(value: string): Promise<string> {
 // Status helper — updates the polling blob
 // ═══════════════════════════════════════════════════════════════
 
+type PublicAuditEmailDelivery = "unavailable";
+
+function publicAuditEmailDelivery(
+  delivery: Exclude<AuditEmailDeliveryStatus, "pending">,
+): PublicAuditEmailDelivery | undefined {
+  // The polling endpoint is public. Do not expose provider/configuration
+  // states or error labels; the only visitor-facing recovery state is that a
+  // copy was not sent and the completed report remains available here.
+  return delivery === "sent" ? undefined : "unavailable";
+}
+
 async function setStatus(
   slug: string,
   status: string,
   step: string,
   url: string | null = null,
   message: string | null = null,
+  emailDelivery?: PublicAuditEmailDelivery,
 ) {
   const store = getStore({ name: "audit-status", consistency: "strong" });
-  await store.setJSON(slug, { status, step, url, message });
+  await store.setJSON(slug, {
+    status,
+    step,
+    url,
+    message,
+    ...(emailDelivery ? { email_delivery: emailDelivery } : {}),
+  });
 }
 
 async function persistAndDeliverRevenueBridgePatch(
@@ -1464,6 +1482,8 @@ export default async (req: Request, context: Context) => {
       "done",
       "complete",
       `/examples/audit/report/${slug}`,
+      null,
+      publicAuditEmailDelivery(emailDeliveryStatus),
     );
     console.log(`[audit] ✅ Pipeline complete: ${auditUrl}`);
   } catch (err) {
