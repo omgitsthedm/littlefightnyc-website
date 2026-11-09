@@ -90,9 +90,11 @@ export default function QuietFooter() {
             >
               Privacy choices
             </button>
-            <Link to="/es/" lang="es">
-              En español</Link>{" · "}<Link to="/zh/">中文
-            </Link>
+            <span className="lf-quiet-foot__languages">
+              <Link to="/es/" lang="es">En español</Link>
+              <span aria-hidden="true">·</span>
+              <Link to="/zh/">中文</Link>
+            </span>
           </nav>
         </div>
 

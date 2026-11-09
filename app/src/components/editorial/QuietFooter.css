@@ -98,6 +98,13 @@
   margin-top: var(--lf-space-4);
 }
 
+.lf-quiet-foot__languages {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  white-space: nowrap;
+}
+
 @media (min-width: 768px) {
   .lf-quiet-foot__company {
     justify-content: flex-end;

@@ -51,6 +51,7 @@ export default function StickyHelpBar() {
     trimmed === "/tech-audit" ||
     trimmed === "/website-check" ||
     trimmed === "/thanks" ||
+    trimmed.startsWith("/trivia/") ||
     (onHome && heroVisible)
   ) {
     return null;
