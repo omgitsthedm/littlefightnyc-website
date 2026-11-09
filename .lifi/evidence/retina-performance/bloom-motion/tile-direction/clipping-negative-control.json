@@ -1,0 +1,56 @@
+{
+  "result": "passed",
+  "baselineFits": true,
+  "deliberateClipDetected": true,
+  "checks": [
+    {
+      "name": "baseline has the 58 approved sculptural tiles",
+      "passed": true,
+      "detail": 58
+    },
+    {
+      "name": "baseline has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "baseline keeps words and sculpture inside every tile",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "deliberate clipping has the 58 approved sculptural tiles",
+      "passed": true,
+      "detail": 58
+    },
+    {
+      "name": "deliberate clipping has no horizontal overflow",
+      "passed": true
+    },
+    {
+      "name": "deliberate clipping keeps words and sculpture inside every tile",
+      "passed": false,
+      "detail": [
+        {
+          "id": "backup",
+          "issue": "visible art outside tile",
+          "image": {
+            "left": 933.8966619318181,
+            "top": 2693.4921875,
+            "right": 1087.8384232954545,
+            "bottom": 2765.536931818182,
+            "width": 153.94176136363637,
+            "height": 72.04474431818198
+          },
+          "box": {
+            "left": 643.5,
+            "right": 879,
+            "top": 2600.984375,
+            "bottom": 2780.984375,
+            "width": 235.5,
+            "height": 180
+          }
+        }
+      ]
+    }
+  ]
+}

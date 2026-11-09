@@ -1,7 +1,10 @@
 /* Master reference: one dark stage, warm miniature objects, colored edge light. */
-.mosaic-home{background:#07090b}
+.mosaic-home{background:#07090b;isolation:isolate}
 #canvas{--sculpture-ground:#080b0e;--tile-radius:16px}
-.mosaic-home .app-shell{width:calc(100% - 32px);max-width:1380px;padding:12px 36px 54px;margin:16px auto;border:0;border-radius:0;box-shadow:none;background:#07090b}
+.mosaic-home .app-shell{position:relative;z-index:1;width:calc(100% - 32px);max-width:1380px;padding:12px 36px 54px;margin:16px auto;border:0;border-radius:0;box-shadow:none;background:transparent}
+.signal-field{position:fixed;inset:0;z-index:0;display:block;width:100%;height:100%;pointer-events:none;contain:strict;opacity:.8}
+.mosaic-home:is(.reader-open,.explore-open) .signal-field{visibility:hidden}
+@media(forced-colors:active){.signal-field{display:none}}
 .mosaic-home .topbar{display:flex;flex-wrap:nowrap;gap:28px;margin-bottom:0;min-height:58px}
 .mosaic-home .wordmark{font-size:clamp(18px,1.7vw,24px);gap:8px}.mosaic-home .wordmark .boat{width:62px;height:54px}.mosaic-home .primary-nav>a{font-size:clamp(16px,1.55vw,22px);font-weight:400}
 .mosaic-home .primary-nav{display:contents}
@@ -35,9 +38,17 @@
 .sculpture-services .topic-heading{margin-bottom:2px}
 .sculpture-services .topic-heading h2{font-size:clamp(32px,4.2vw,60px)}
 .mosaic-home [data-topic-grid]{gap:12px;grid-auto-rows:calc((100cqw - 132px)/12)}
-.sculpture-tile[data-family=web]{--tile-pop:#92bfff}.sculpture-tile[data-family=it]{--tile-pop:#f5d95b}.sculpture-tile[data-family=consulting]{--tile-pop:#a0df85}.sculpture-tile[data-family=software]{--tile-pop:#f09bdd}.sculpture-tile[data-family=brand]{--tile-pop:#ff7839}
-.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 78%,#252c32);border-radius:15px;background:radial-gradient(ellipse at 70% 105%,color-mix(in srgb,var(--tile-pop) 5%,transparent),transparent 72%),linear-gradient(145deg,#0d1115,#07090c 66%);box-shadow:inset 0 0 0 1px #ffffff06,inset 0 0 20px color-mix(in srgb,var(--tile-pop) 2.4%,transparent),0 0 3px color-mix(in srgb,var(--tile-pop) 9%,transparent),0 5px 10px #0008;overflow:hidden;container-type:inline-size;grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
-.sculpture-tile.tile::after{background:none}.sculpture-tile.tile::before{background:none;border:1px solid var(--tile-pop);padding:0}
+/* Keep the soft floor reflection, with a high corner light and an opposing
+   side fill. Static gradients give the artwork depth without another animation. */
+.sculpture-tile[data-family=web]{--tile-pop:#92bfff;--tile-bloom-tone:#448ddd;--tile-bloom-light:#d9ecff}
+.sculpture-tile[data-family=it]{--tile-pop:#f5d95b;--tile-bloom-tone:#e99a35;--tile-bloom-light:#fff0cb}
+.sculpture-tile[data-family=consulting]{--tile-pop:#a0df85;--tile-bloom-tone:#579767;--tile-bloom-light:#dcf5c8}
+.sculpture-tile[data-family=software]{--tile-pop:#f09bdd;--tile-bloom-tone:#b45c9f;--tile-bloom-light:#ffe0f8}
+.sculpture-tile[data-family=brand]{--tile-pop:#ff7839;--tile-bloom-tone:#e26e32;--tile-bloom-light:#ffd5a4}
+.sculpture-tile.tile{position:relative;display:block;padding:0;border:1px solid color-mix(in srgb,var(--tile-pop) 60%,#283039);border-radius:15px;background:radial-gradient(ellipse var(--bloom-width,64%) var(--bloom-height,24%) at var(--bloom-x,60%) var(--bloom-y,102%),color-mix(in srgb,var(--tile-bloom-light) 62%,transparent),color-mix(in srgb,var(--tile-bloom-tone) 26%,transparent) 46%,transparent 86%),radial-gradient(ellipse var(--bloom-key-width,60%) var(--bloom-key-height,58%) at var(--bloom-key-x,92%) var(--bloom-key-y,-8%),color-mix(in srgb,var(--tile-bloom-light) 30%,transparent),color-mix(in srgb,var(--tile-bloom-tone) 12%,transparent) 38%,transparent 78%),radial-gradient(ellipse var(--bloom-fill-width,36%) 58% at var(--bloom-fill-x,-12%) var(--bloom-fill-y,58%),color-mix(in srgb,var(--tile-bloom-light) 22%,transparent),color-mix(in srgb,var(--tile-bloom-tone) 10%,transparent) 36%,transparent 80%),radial-gradient(ellipse 90% 66% at var(--bloom-x,60%) 115%,color-mix(in srgb,var(--tile-bloom-tone) 14%,transparent),transparent 78%),radial-gradient(ellipse 80% 60% at 80% 0%,#ffffff05,transparent 70%),linear-gradient(150deg,#141920,#090d12 53%,#0c1117);box-shadow:inset 0 1px 1px #ffffff10,inset 1px 0 0 color-mix(in srgb,var(--tile-bloom-light) 16%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--tile-bloom-light) 32%,transparent),inset 0 -7px 18px color-mix(in srgb,var(--tile-bloom-tone) 4%,transparent),0 6px 12px #0007;overflow:hidden;container-type:inline-size;grid-column:span var(--preferred-columns);grid-row:span var(--preferred-rows)}
+.sculpture-tile.tile::after{background:none}.sculpture-tile.tile::before{background:none;border:1px solid color-mix(in srgb,var(--tile-bloom-light) 60%,var(--tile-pop));padding:0}
+.sculpture-tile[data-sculpture-kind=service]{--bloom-x:77%;--bloom-key-x:78%;--bloom-fill-y:42%}
+.sculpture-tile[data-collection-wide]{--bloom-key-x:82%;--bloom-fill-y:48%}
 .sculpture-copy{position:relative;display:flex;flex:none;flex-direction:column;align-items:flex-start;gap:7px;padding:19px 38px 0 18px;z-index:2;min-width:0}
 .sculpture-copy>*{flex-shrink:0}.sculpture-tile .construction-tile-copy{height:auto;align-content:normal}
 .sculpture-title,.sculpture-tile .construction-tile-copy strong{display:block;margin:0;font-size:clamp(19px,7.5cqw,24px);line-height:1.13;font-weight:700;letter-spacing:-.03em;text-wrap:pretty;color:var(--lf-paper);overflow-wrap:normal}
@@ -214,3 +225,185 @@ body.no-motion .sculpture-tile :is(.sculpture-symbol,.sculpture-object){animatio
 
 .hero-ending{white-space:nowrap}
 @media(max-width:360px){.sculpture-hero-actions{gap:8px}.sculpture-help{padding-inline:10px}}
+
+/* Individual art direction, reviewed against all 58 desktop and phone fronts.
+   Preserve the two-angle mineral lighting; only its placement/footprint varies. */
+#canvas .sculpture-tile .sculpture-art img{width:calc(100% * var(--object-scale,1));height:calc(100% * var(--object-scale,1));max-width:none;max-height:none;left:calc((100% - 100% * var(--object-scale,1)) / 2 + var(--object-x,0px));top:calc((100% - 100% * var(--object-scale,1)) / 2 + var(--object-y,0px));right:auto;bottom:auto;object-position:var(--object-position,50% 50%)}
+/* 01. Keep the large browser crop; reserve a clear right corner for the plus. On phone replace the tiny thumbnail with a lower browser scene. */
+.sculpture-tile[data-answer="page-services-custom-local-websites"]{--bloom-x:79%;--bloom-width:46%;--bloom-key-x:83%;}
+/* 02. Lower the router and plant toward their amber floor; keep the two lights and yellow identity. */
+.sculpture-tile[data-answer="page-services-it-support"]{--bloom-x:73%;--bloom-width:51%;--bloom-key-x:70%;--object-scale:1.04;--object-y:13px;}
+/* 03. Retain the strong notebook crop and diagonal pencil; move the light below the notebook and the key above the plant. */
+.sculpture-tile[data-answer="page-services-tech-consulting"]{--bloom-x:79%;--bloom-width:51%;--bloom-key-x:86%;}
+/* 04. Preserve the block arrangement; align the magenta floor with the block group, not the text column. */
+.sculpture-tile[data-answer="page-services-business-systems"]{--bloom-x:76%;--bloom-width:52%;--bloom-key-x:81%;}
+/* 05. Retain the real edge-to-edge proof crop and orange title; move the warm pool under the copy side. */
+.sculpture-tile[data-answer="case-chromatic-painting-design"]{--bloom-x:24%;--bloom-width:47%;--bloom-key-x:80%;}
+/* 07. Keep the readable phone frame and horizontal question; move blue light under the phone. */
+.sculpture-tile[data-answer="speed"]{--bloom-x:79%;--bloom-width:37%;--bloom-key-x:89%;}
+/* 08. Keep the tall phone composition and yellow client identity; center the floor below its base. */
+.sculpture-tile[data-answer="case-hair-by-rachel-charles"]{--bloom-x:50%;--bloom-width:57%;--bloom-key-x:88%;}
+/* 09. Enlarge the calendar and pencil within the existing text-safe area; center the blue floor under both. */
+.sculpture-tile[data-answer="booking"]{--bloom-x:54%;--bloom-width:65%;--bloom-key-x:72%;--object-scale:1.15;--object-y:1px;}
+/* 11. Retain the full dark film screenshot; align the warm floor under the frame instead of the empty right side. */
+.sculpture-tile[data-answer="case-cc-films"]{--bloom-x:50%;--bloom-width:67%;--bloom-key-x:82%;}
+/* 12. Keep the tall phone on desktop and the full bar homepage on phone; center the base light. */
+.sculpture-tile[data-answer="case-easy-tiger"]{--bloom-x:50%;--bloom-width:58%;--bloom-key-x:86%;}
+/* 13. Retain the full device duo; place warm light under its complete wide footprint. */
+.sculpture-tile[data-answer="case-the-break-room"]{--bloom-x:51%;--bloom-width:68%;--bloom-key-x:78%;}
+/* 14. Give the portrait tablet more height beside desktop copy; retain the strong stacked phone layout. */
+.sculpture-tile[data-answer="case-clearhelp"]{--bloom-x:66%;--bloom-width:52%;--bloom-key-x:83%;}
+/* 15. Preserve the design-concept label and browser view; reserve the upper-right opening affordance. */
+.sculpture-tile[data-answer="case-brothers-pizzeria"]{--bloom-x:73%;--bloom-width:51%;--bloom-key-x:86%;}
+/* 16. Give the portrait capture enough height to read on desktop; preserve the phone screenshot. */
+.sculpture-tile[data-answer="case-grand-funding-llc"]{--bloom-x:70%;--bloom-width:48%;--bloom-key-x:84%;}
+/* 17. Give the narrow iPhone a taller desktop card; retain the stacked phone version. */
+.sculpture-tile[data-answer="case-logan-loans"]{--bloom-x:74%;--bloom-width:42%;--bloom-key-x:88%;}
+/* 18. Keep the client artwork complete and clear the plus from the browser frame. */
+.sculpture-tile[data-answer="case-the-tarot-hotline"]{--bloom-x:73%;--bloom-width:52%;--bloom-key-x:84%;}
+/* 19. Enlarge the storefront beside the title on desktop; keep the complete doorway and awning on phones. */
+.sculpture-tile[data-answer="page-industries"]{--bloom-x:73%;--bloom-width:44%;--bloom-key-x:81%;--object-scale:1.05;--object-y:1px;}
+/* 20. Enlarge the switch/cable pair and match the light to its low horizontal silhouette. */
+.sculpture-tile[data-answer="wifi"]{--bloom-x:52%;--bloom-width:68%;--bloom-key-x:71%;--object-scale:1.18;--object-y:2px;}
+/* 21. Increase the envelope slightly and lower it; leave breathing room for the pen at right. */
+.sculpture-tile[data-answer="email"]{--bloom-x:54%;--bloom-width:59%;--bloom-key-x:78%;--object-scale:1.08;--object-x:-3px;--object-y:10px;}
+/* 23. Compensate for transparent margins around the desk, keeping the monitor and plant intact. */
+.sculpture-tile[data-answer="computer"]{--bloom-x:52%;--bloom-width:65%;--bloom-key-x:67%;--object-scale:1.28;--object-x:-4px;--object-y:2px;}
+/* 24. Enlarge the printer without clipping the yellow cable; bring the floor under the paper tray. */
+.sculpture-tile[data-answer="printer"]{--bloom-x:53%;--bloom-width:68%;--bloom-key-x:73%;--object-scale:1.14;--object-x:-8px;--object-y:7px;}
+/* 25. Enlarge the low drive and cable silhouette and bring it closer to the light beneath it. */
+.sculpture-tile[data-answer="backup"]{--bloom-x:52%;--bloom-width:64%;--bloom-key-x:76%;--object-scale:1.16;--object-y:6px;}
+/* 26. Enlarge the blue folder/lock and anchor it lower in the tall phone card; align the floor under the folder. */
+.sculpture-tile[data-answer="it-security-basics"]{--bloom-x:52%;--bloom-width:59%;--bloom-key-x:77%;--object-scale:1.2;--object-x:-3px;--object-y:7px;}
+/* 27. Give the safe slightly more presence; tighten the floor to its square footprint. */
+.sculpture-tile[data-answer="it-password-ownership"]{--bloom-x:50%;--bloom-width:48%;--bloom-key-x:74%;--object-scale:1.1;}
+/* 28. Enlarge the speaker/camera pair together without losing the camera silhouette. */
+.sculpture-tile[data-answer="it-video-call-room"]{--bloom-x:52%;--bloom-width:68%;--bloom-key-x:79%;--object-scale:1.18;--object-y:5px;}
+/* 30. Preserve the tall drive tower; tighten the light underneath its narrow base. */
+.sculpture-tile[data-answer="it-storage-full"]{--bloom-x:50%;--bloom-width:36%;--bloom-key-x:69%;}
+/* 31. Retain the large diagonal terminal; align the floor with the terminal and blue card together. */
+.sculpture-tile[data-answer="it-payment-device-check"]{--bloom-x:54%;--bloom-width:58%;--bloom-key-x:75%;}
+/* 32. Keep the leather folder and keys complete; lower the folio into its floor light. */
+.sculpture-tile[data-answer="it-vendor-handoff"]{--bloom-x:53%;--bloom-width:66%;--bloom-key-x:76%;--object-scale:1.03;--object-y:6px;}
+/* 33. Enlarge the taxi slightly; bring the wheels closer to the amber floor without cropping either bumper. */
+.sculpture-tile[data-answer="page-areas"]{--bloom-x:51%;--bloom-width:71%;--bloom-key-x:70%;--object-scale:1.06;--object-y:4px;}
+/* 34. Keep the large unaltered interior photograph; center a restrained green floor below its wooden frame. */
+.sculpture-tile[data-answer="album-nyc"]{--bloom-x:50%;--bloom-width:70%;--bloom-key-x:85%;}
+/* 35. Retain the complete folded map; lower the paper points into the broad green reflection. */
+.sculpture-tile[data-answer="maps"]{--bloom-x:50%;--bloom-width:74%;--bloom-key-x:80%;--object-scale:1.03;--object-y:7px;}
+/* 36. Move the can and roller slightly left/down; put the light beneath the can instead of its handle. */
+.sculpture-tile[data-answer="web-redesign-decision"]{--bloom-x:44%;--bloom-width:57%;--bloom-key-x:76%;--object-scale:1.07;--object-x:-8px;--object-y:7px;}
+/* 37. Enlarge the cafe photo beside copy on wide cards; retain the complete stacked image on phones. */
+.sculpture-tile[data-answer="album-hospitality"]{--bloom-x:75%;--bloom-width:47%;--bloom-key-x:88%;}
+/* 38. Retain the large roofer photograph; center light below the full frame and keep all copy. */
+.sculpture-tile[data-answer="album-roofing"]{--bloom-x:50%;--bloom-width:70%;--bloom-key-x:84%;}
+/* 39. Keep the wide two-part portrait composition; place the green pool below the frame. */
+.sculpture-tile[data-answer="album-shops"]{--bloom-x:74%;--bloom-width:48%;--bloom-key-x:86%;}
+/* 41. Keep the distinct sticky-note arrangement; lower the whole group slightly toward the floor. */
+.sculpture-tile[data-answer="consulting-first-priority"]{--bloom-x:51%;--bloom-width:74%;--bloom-key-x:79%;--object-y:5px;}
+/* 42. Preserve the large wooden toolbox and tools; match green light to the box base. */
+.sculpture-tile[data-answer="consulting-tool-choice"]{--bloom-x:51%;--bloom-width:63%;--bloom-key-x:75%;}
+/* 43. Keep the expressive duck silhouette; lower it slightly and narrow the pool to its body. */
+.sculpture-tile[data-answer="consulting-second-opinion"]{--bloom-x:50%;--bloom-width:49%;--bloom-key-x:77%;--object-scale:1.04;--object-y:6px;}
+/* 45. Retain the full live platform capture; lower the frame toward its warm floor, keeping the label readable. */
+.sculpture-tile[data-answer="case-venuecircuit"]{--bloom-x:50%;--bloom-width:78%;--bloom-key-x:86%;--object-y:3px;}
+/* 46. Scale the brownstone inside its transparent canvas so the architecture has more presence; retain the full stoop. */
+.sculpture-tile[data-answer="page-vera"]{--bloom-x:50%;--bloom-width:42%;--bloom-key-x:72%;--object-scale:1.2;--object-x:-2px;--object-y:-5px;}
+/* 47. Retain the paper machine and crank; place magenta light under its asymmetric footprint. */
+.sculpture-tile[data-answer="software-repeat-work"]{--bloom-x:51%;--bloom-width:73%;--bloom-key-x:73%;--object-scale:1.03;--object-x:-3px;--object-y:8px;}
+/* 49. Preserve both the stamp and approval slip; lower them into a shared reflection. */
+.sculpture-tile[data-answer="software-approval-path"]{--bloom-x:54%;--bloom-width:66%;--bloom-key-x:65%;--object-scale:1.04;--object-x:-2px;--object-y:8px;}
+/* 50. Keep the complete bright software screenshot and concept label; align the light under its frame. */
+.sculpture-tile[data-answer="case-deckspace"]{--bloom-x:50%;--bloom-width:76%;--bloom-key-x:84%;}
+/* 51. Keep the client headline and photograph intact; move the frame clear of the opening affordance. */
+.sculpture-tile[data-answer="case-after-hours-agenda"]{--bloom-x:72%;--bloom-width:55%;--bloom-key-x:84%;}
+/* 52. Remove the stray rectangular outline around the transparent screenshot; preserve its full invitation and pool view. */
+.sculpture-tile[data-answer="lab-pool-room"]{--bloom-x:50%;--bloom-width:72%;--bloom-key-x:79%;}
+/* 53. Remove the outer outline; anchor the night-building screenshot lower in its tall phone tile. */
+.sculpture-tile[data-answer="lab-walkup-3d"]{--bloom-x:50%;--bloom-width:72%;--bloom-key-x:77%;}
+/* 54. Remove the outer outline; retain the whole UI demonstration and action label. */
+.sculpture-tile[data-answer="lab-micro-animations"]{--bloom-x:50%;--bloom-width:70%;--bloom-key-x:80%;}
+/* 55. Remove the outer outline and retain every line of the two-line action and cabinet screenshot. */
+.sculpture-tile[data-answer="lab-cabinet-concept"]{--bloom-x:50%;--bloom-width:70%;--bloom-key-x:82%;}
+/* 56. Remove the outer outline; retain the full property model, sky and invitation. */
+.sculpture-tile[data-answer="lab-house-explorer"]{--bloom-x:50%;--bloom-width:73%;--bloom-key-x:80%;}
+/* 57. Enlarge the connected cable silhouette and bring the reflection up to its suspended junction. */
+.sculpture-tile[data-answer="software-connect-existing-tools"]{--bloom-x:51%;--bloom-width:73%;--bloom-key-x:70%;--object-scale:1.12;--object-y:2px;}
+/* 58. Enlarge the sphere cluster so it reads as the subject; center the light beneath the cluster. */
+.sculpture-tile[data-answer="software-business-ownership"]{--bloom-x:50%;--bloom-width:51%;--bloom-key-x:75%;--object-scale:1.2;--object-y:3px;}
+#canvas .sculpture-tile[data-sculpture-kind=lab] .sculpture-art img{outline:0}
+/* Very wide source objects need their floor nearer the actual silhouette. */
+.sculpture-tile[data-answer="software-connect-existing-tools"]{--bloom-y:96%;--bloom-height:20%}
+@media(min-width:1001px){
+ #canvas .sculpture-tile[data-answer="page-services-custom-local-websites"] .sculpture-art{width:56%;right:32px}
+ .mosaic-home #canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile.tile[data-sculpture-kind=proof][data-collection-wide] .sculpture-art{right:43px;width:47%}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile:is([data-answer="page-industries"],[data-answer="album-hospitality"]) .sculpture-copy{display:flex;justify-content:center;align-items:flex-start;width:47%;height:100%;gap:7px;padding:14px}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile:is([data-answer="page-industries"],[data-answer="album-hospitality"]) .sculpture-art{position:absolute;inset:20px 10px 10px auto;width:49%;height:auto;margin:0}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile[data-answer="page-industries"] .sculpture-art{top:9px;width:48%}
+ .sculpture-tile[data-answer="page-industries"]{--object-x:-7px}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile[data-answer="album-hospitality"] .sculpture-copy{width:42%;padding-right:5px}
+}
+/* Handset compositions keep copy above a properly sized scene. */
+@media(max-width:600px){
+ #canvas .sculpture-tile[data-sculpture-kind=service]{min-height:clamp(190px,49vw,260px)!important}
+ #canvas .sculpture-tile[data-sculpture-kind=service] .sculpture-art{top:auto;bottom:4px;right:4px;width:92%;height:40%}
+ #canvas .sculpture-tile[data-answer="page-services-custom-local-websites"] .sculpture-art{top:auto;bottom:3px;right:5px;width:87%;height:40%}
+ #canvas .sculpture-tile[data-sculpture-kind=service][data-answer="page-services-custom-local-websites"] .sculpture-art img{object-fit:contain;object-position:70% 100%}
+ .sculpture-tile[data-answer="page-services-custom-local-websites"]{--bloom-x:57%;--bloom-width:67%}
+ .sculpture-tile[data-answer="page-services-it-support"]{--object-scale:1.08;--object-y:0px;--bloom-x:54%;--bloom-width:71%}
+ .sculpture-tile[data-answer="page-services-tech-consulting"]{--bloom-x:61%;--bloom-width:67%}
+ .sculpture-tile[data-answer="page-services-business-systems"]{--bloom-x:57%;--bloom-width:72%}
+ .sculpture-tile:is([data-answer="case-clearhelp"],[data-answer="case-grand-funding-llc"],[data-answer="case-logan-loans"],[data-answer="case-brothers-pizzeria"],[data-answer="case-the-tarot-hotline"],[data-answer="case-after-hours-agenda"],[data-answer="page-industries"],[data-answer="album-hospitality"],[data-answer="album-shops"]){--bloom-x:50%;--bloom-width:72%}
+ .sculpture-tile[data-answer="email"]{--object-scale:1.12;--object-y:4px;--object-x:-3px}
+ .sculpture-tile[data-answer="computer"]{--object-scale:1.26;--object-y:0px}
+ .sculpture-tile[data-answer="printer"]{--object-scale:1.13;--object-y:7px;--object-x:-6px;--object-position:50% 75%}
+ .sculpture-tile[data-answer="it-security-basics"]{--object-scale:1.24;--object-y:0px;--object-position:50% 84%;--bloom-height:20%;--bloom-y:98%}
+ .sculpture-tile[data-answer="it-vendor-handoff"]{--object-y:2px;--object-position:50% 79%;--bloom-y:100%}
+ .sculpture-tile[data-answer="consulting-first-priority"]{--object-y:0px;--object-position:50% 73%}
+ .sculpture-tile[data-answer="page-vera"]{--object-scale:1.14;--object-y:-2px}
+ .sculpture-tile[data-answer="software-repeat-work"]{--object-scale:1.03;--object-y:0px;--object-position:50% 75%}
+ .sculpture-tile[data-answer="lab-walkup-3d"]{--object-position:50% 83%}
+ .sculpture-tile[data-answer="software-business-ownership"]{--object-scale:1.16;--object-y:0px}
+}
+/* At intermediate widths the packer may choose a stacked front again. */
+@media(min-width:601px) and (max-width:1000px){
+ .sculpture-tile:is([data-answer="case-clearhelp"],[data-answer="case-grand-funding-llc"],[data-answer="case-logan-loans"],[data-answer="album-hospitality"]){--bloom-x:50%;--bloom-width:68%}
+ #canvas .sculpture-tile[data-answer="page-services-custom-local-websites"] .sculpture-art{right:38px;width:51%}
+}
+/* Enlarged-text layouts own their art geometry and remain fully readable. */
+#canvas [data-sculpture-layout=compact].is-large-text .sculpture-tile .sculpture-art img{--object-scale:1;--object-x:0px;--object-y:0px}
+
+/* Two portrait proofs and one phone need an intentional footprint, not the
+   incidental shape left by the collection rhythm. The packer still measures
+   all text and keeps its enlarged-type fallback. */
+@media(min-width:1201px){
+ .sculpture-tile[data-answer="case-clearhelp"]{--tile-target-ratio:1.6;--bloom-x:73%;--bloom-width:50%}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile[data-answer="case-clearhelp"] .sculpture-copy{display:flex;justify-content:center;align-items:flex-start;width:45%;height:100%;gap:7px;padding:14px}
+ .mosaic-home #canvas [data-topic-grid][data-grid-revision]:not([data-collection-layout=rows]) .sculpture-tile.tile[data-answer="case-clearhelp"] .sculpture-art{position:absolute;inset:12px 32px 12px auto;width:49%;height:auto;margin:0}
+ .sculpture-tile[data-answer="case-grand-funding-llc"]{--tile-target-ratio:.82;--tile-preferred-rows:3;--bloom-x:50%;--bloom-width:62%}
+ .sculpture-tile[data-answer="case-logan-loans"]{--tile-target-ratio:.60;--tile-preferred-rows:3;--bloom-x:50%;--bloom-width:47%}
+}
+@media(max-width:600px){
+ .sculpture-tile[data-answer="it-security-basics"]{--tile-target-ratio:.76;--tile-max-rows:4;--object-position:50% 68%}
+ .sculpture-tile[data-answer="lab-walkup-3d"]{--tile-target-ratio:.65;--tile-max-rows:4;--object-position:50% 60%}
+ .sculpture-tile[data-answer="backup"]{--object-scale:1.16;--object-y:3px}
+}
+
+/* Wide, thin objects stop at the frame edge even in a taller packed card. */
+#canvas .sculpture-tile:is([data-answer="wifi"],[data-answer="software-connect-existing-tools"]) .sculpture-art img{width:100%;left:var(--object-x,0px)}
+@media(max-width:600px){
+ .sculpture-tile[data-answer="lab-pool-room"],.sculpture-tile[data-answer="lab-micro-animations"],.sculpture-tile[data-answer="lab-cabinet-concept"],.sculpture-tile[data-answer="lab-house-explorer"]{--tile-max-rows:4}
+}
+
+/* A plus needs its own clear corner when a photo becomes a horizontal card. */
+@media(min-width:601px){
+ .mosaic-home #canvas [data-topic-grid]:not([data-sculpture-layout=compact]) .sculpture-tile.tile[data-sculpture-kind=photo][data-collection-wide] .sculpture-art{right:43px;width:47%}
+}
+@media(min-width:601px) and (max-width:1000px){
+ #canvas .sculpture-featured [data-featured=phone] .sculpture-art{inset:36px 5px 6px auto!important}
+}
+@media(max-width:600px){.sculpture-tile[data-answer="speed"]{--object-x:-3px}}
+
+/* Natural rows prioritize readable enlarged text over optical oversizing. */
+#canvas [data-collection-layout=rows] .sculpture-tile .sculpture-art img{--object-scale:1;--object-x:0px;--object-y:0px;--object-position:50% 50%}
+.sculpture-tile[data-answer="backup"][data-collection-narrow]{--object-scale:1.16}

@@ -9,6 +9,7 @@ app/playwright-report/
 .unlighthouse/
 output/
 *.png
+!.lifi/design-source/sculpture/approved-hero-master.png
 # ...but EVERY PWA / apple-touch / startup / screenshot PNG in public/ MUST
 # deploy (Netlify builds from git, so blanket-ignoring these 404s the live
 # manifest icons, iOS startup images, and install-dialog screenshots).

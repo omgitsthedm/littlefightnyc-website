@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "updatedAt": "2026-10-10T10:48:48.607036+00:00",
+  "published": false,
+  "preview": "http://127.0.0.1:63449/?qa=1",
+  "artifactSha256": "b45eacf94b01f5d7bc8b62d955704c85b4dba4c0b42080e433835f0fd88ba648",
+  "changedSource": [
+    "app/preview-ui/sculpture.css"
+  ],
+  "sourceFilesCompared": 3343,
+  "unrelatedSourceChanges": [],
+  "design": "Existing floor bloom intensity and category palette preserved; soft upper-corner light, opposing side fill and faint side rim added. Light positions follow service and wide-card artwork.",
+  "qualityFast": "passed",
+  "qualityLog": "quality-fast.log",
+  "browserChecks": 25,
+  "screenshots": 28,
+  "browserReport": "browser-verification.json",
+  "geometryWidths": [
+    360,
+    393,
+    600,
+    834,
+    1100,
+    1440
+  ],
+  "tilesPerWidth": 58,
+  "geometryChanges": [],
+  "homeCSSGzipBytes": 17111,
+  "homeCSSAddedGzipBytes": 105,
+  "newMediaRequests": 0,
+  "animationCodeChanged": false,
+  "sourceCheckpoint": {
+    "before": "before-sculpture.css",
+    "after": "after-sculpture.css",
+    "diff": "change.patch",
+    "sha256": "a5a31e404e0a794b901bf7f560dc7fb9c4d40c653c6d626f709cf14bcea37cf3"
+  },
+  "visualReview": [
+    "Chrome desktop service tiles and all four collections",
+    "Chrome phone support tiles",
+    "WebKit tablet service tiles"
+  ],
+  "performanceScope": "No Lighthouse rerun for this static CSS lighting change. Prior lab measurements remain attached to their original artifact.",
+  "workspaceCheck": {
+    "passed": true,
+    "checksPassed": 508,
+    "failures": [],
+    "fullChecksums": true,
+    "liveChecked": true,
+    "evidence": "/Users/davidmarsh/Desktop/LiFi NYC/Business/Archive/Folder maintenance 2026-10-10/website-angled-light-validation.json"
+  }
+}

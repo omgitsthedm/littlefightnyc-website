@@ -1,0 +1,126 @@
+{
+  "capturedAt": "2026-10-10T07:02:46.847Z",
+  "reducedMotion": "reduce",
+  "profiles": {
+    "desktop": {
+      "candidate": {
+        "currentSrc": "http://127.0.0.1:64358/assets/sculpture/hero-reference-desktop.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 66,
+          "y": 102,
+          "width": 1308,
+          "height": 813.796875,
+          "bottom": 915.796875
+        },
+        "stage": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "image": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "stageHtml": " <picture class=\"hero-reference-art\"><source media=\"(max-width: 600px)\" srcset=\"/assets/sculpture/hero-reference-mobile.webp\" width=\"288\" height=\"194\"><img src=\"/assets/sculpture/hero-reference-desktop.webp\" width=\"762\" height=\"337\" alt=\"\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\"></picture> <a class=\"hero-project hero-main\" href=\"/case-studies/chromatic-painting-design/\" data-reader-link=\"\" aria-label=\"Explore the Chromatic Painting and Design website\"></a> <a class=\"hero-project hero-secondary\" href=\"/case-studies/hair-by-rachel-charles/\" data-reader-link=\"\" aria-label=\"Explore the Hair By Rachel website\"></a> ",
+        "reduced": true,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      },
+      "live": {
+        "currentSrc": "https://littlefightnyc.com/assets/sculpture/hero-reference-desktop.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 66,
+          "y": 102,
+          "width": 1308,
+          "height": 813.796875,
+          "bottom": 915.796875
+        },
+        "stage": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "image": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "stageHtml": " <picture class=\"hero-reference-art\"><source media=\"(max-width: 600px)\" srcset=\"/assets/sculpture/hero-reference-mobile.webp\" width=\"288\" height=\"194\"><img src=\"/assets/sculpture/hero-reference-desktop.webp\" width=\"762\" height=\"337\" alt=\"\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\"></picture> <a class=\"hero-project hero-main\" href=\"/case-studies/chromatic-painting-design/\" data-reader-link=\"\" aria-label=\"Explore the Chromatic Painting and Design website\"></a> <a class=\"hero-project hero-secondary\" href=\"/case-studies/hair-by-rachel-charles/\" data-reader-link=\"\" aria-label=\"Explore the Hair By Rachel website\"></a> ",
+        "reduced": true,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    "phone": {
+      "candidate": {
+        "currentSrc": "http://127.0.0.1:64358/assets/sculpture/hero-reference-mobile.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 20,
+          "y": 72,
+          "width": 353,
+          "height": 533.875,
+          "bottom": 605.875
+        },
+        "stage": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "image": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "stageHtml": " <picture class=\"hero-reference-art\"><source media=\"(max-width: 600px)\" srcset=\"/assets/sculpture/hero-reference-mobile.webp\" width=\"288\" height=\"194\"><img src=\"/assets/sculpture/hero-reference-desktop.webp\" width=\"762\" height=\"337\" alt=\"\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\"></picture> <a class=\"hero-project hero-main\" href=\"/case-studies/chromatic-painting-design/\" data-reader-link=\"\" aria-label=\"Explore the Chromatic Painting and Design website\"></a> <a class=\"hero-project hero-secondary\" href=\"/case-studies/hair-by-rachel-charles/\" data-reader-link=\"\" aria-label=\"Explore the Hair By Rachel website\"></a> ",
+        "reduced": true,
+        "scrollWidth": 393,
+        "clientWidth": 393
+      },
+      "live": {
+        "currentSrc": "https://littlefightnyc.com/assets/sculpture/hero-reference-mobile.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 20,
+          "y": 72,
+          "width": 353,
+          "height": 533.875,
+          "bottom": 605.875
+        },
+        "stage": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "image": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "stageHtml": " <picture class=\"hero-reference-art\"><source media=\"(max-width: 600px)\" srcset=\"/assets/sculpture/hero-reference-mobile.webp\" width=\"288\" height=\"194\"><img src=\"/assets/sculpture/hero-reference-desktop.webp\" width=\"762\" height=\"337\" alt=\"\" loading=\"eager\" decoding=\"async\" fetchpriority=\"high\"></picture> <a class=\"hero-project hero-main\" href=\"/case-studies/chromatic-painting-design/\" data-reader-link=\"\" aria-label=\"Explore the Chromatic Painting and Design website\"></a> <a class=\"hero-project hero-secondary\" href=\"/case-studies/hair-by-rachel-charles/\" data-reader-link=\"\" aria-label=\"Explore the Hair By Rachel website\"></a> ",
+        "reduced": true,
+        "scrollWidth": 393,
+        "clientWidth": 393
+      }
+    }
+  }
+}

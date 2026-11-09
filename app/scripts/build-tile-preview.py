@@ -26,6 +26,8 @@ from retained_answers import render_retained_answers
 from tile_rewrite import load_rewrite, apply_catalog_hooks, prepare_groups, apply_page_rewrite, render_category_answers, category_schema
 from editorial_workbench import header as workbench_header
 from review_readers import review_reader_pages, render_review_reader
+from tile_stylesheets import write_stylesheets
+from homepage_proof import load_homepage_proof, render_home_proof
 
 APP = Path(__file__).resolve().parents[1]
 CONTENT = APP / 'preview-content'
@@ -35,6 +37,7 @@ OUT = APP / ('dist' if PRODUCTION else 'preview-dist')
 ORIGIN = 'https://littlefightnyc.com'
 E = lambda value: escape(str(value or ''), quote=True)
 load = lambda name: json.loads((CONTENT / name).read_text())
+homepage_proof = load_homepage_proof(CONTENT / 'homepage-proof.json')
 OUT.mkdir(exist_ok=True)
 BRIDGE = ''
 if PRODUCTION:
@@ -422,7 +425,8 @@ def article(p):
     if p.get('_answerGuide') or path.startswith('/answers/') or path=='/library/':
         # These are an answer and a map, not a second service pitch. Get the
         # visitor to the substance before any project evidence further down.
-        hero=f'<header class="story-hero answer-guide-hero"><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{("<div class=\"story-art reader-support-opening\">" + support_opening_art + "</div>") if support_opening_art else ""}</header>'
+        support_opening_html = '<div class="story-art reader-support-opening">' + support_opening_art + '</div>' if support_opening_art else ''
+        hero=f'<header class="story-hero answer-guide-hero"><h1 class="story-title" id="detail-title" tabindex="-1">{E(q["heading"])}</h1><p class="story-summary">{E(q["summary"])}</p>{support_opening_html}</header>'
     if path=='/services/custom-local-websites/':
         headline=E(q['heading']).replace('feels like', 'feels<br> like')
         benefits=''.join(f'<li><a href="{href}"><span class="reference-benefit-icon" aria-hidden="true" style="--benefit-asset:url(/assets/mineral/{icon}-duotone.svg)"></span><strong>{label}</strong></a></li>' for href,icon,label in [('#reader-compare','browser','Designed around your business.'),('#reader-ownership','database','Your site. Your domain. Your code.'),('#reader-plan','tag','No monthly hosting fee.')])
@@ -618,7 +622,8 @@ def head(q, home=False):
                                      'acceptedAnswer':{'@type':'Answer','text':item['answer']}} for item in q['faqs']]})
     ld=json.dumps({'@context':'https://schema.org','@graph':graph},ensure_ascii=False).replace('<','\\u003c')
     robots = ('index, follow, max-image-preview:large' if indexable(path) else 'noindex, follow') if PRODUCTION else 'noindex, nofollow, noarchive'
-    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="/site.css">{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
+    stylesheet = '<link rel="stylesheet" href="/home.css" id="home-styles">' if home else '<link rel="stylesheet" href="/site.css" id="reader-styles">'
+    return f'''<!doctype html><html lang="{E(q.get('language','en'))}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{robots}"><meta name="theme-color" content="#ff7839"><link rel="canonical" href="{ORIGIN}{E(q.get("canonicalPath",path))}"><meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{ORIGIN}{E(path)}"><meta property="og:site_name" content="Little Fight NYC"><meta property="og:image" content="{share_image}"><meta property="og:image:alt" content="{share_alt}"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="{share_image}"><meta name="twitter:image:alt" content="{share_alt}"><link rel="icon" href="/assets/boat-orange.svg" type="image/svg+xml"><link rel="preload" href="/assets/mineral/atkinson-hyperlegible-next-latin.woff2" as="font" type="font/woff2" crossorigin>{stylesheet}{'<noscript><link rel="stylesheet" href="/sculpture-static.css"></noscript>' if home else ''}<script type="application/ld+json">{ld}</script>{'<script defer src="/mosaic-layout.js"></script>' if home else ''}<script defer src="/tile-motion.js"></script>{'<script defer src="/tile-effects.js"></script>' if home else ''}<script defer src="/website-story.js"></script><script defer src="/search-relevance.js"></script><script defer src="/site.js"></script>{BRIDGE}</head>'''
 
 def topbar(home=False):
     question_link='<a class="start-button" href="/tech-audit/?intent=support" data-reader-link aria-label="Get help"><span class="start-button__long">Get help +</span><span class="start-button__short" aria-hidden="true">Get help +</span></a>'
@@ -626,7 +631,8 @@ def topbar(home=False):
     return '<header class="topbar"><a class="wordmark pill" href="/" aria-label="Little Fight NYC homepage"><img class="boat" src="/assets/boat-orange.svg" width="44" height="38" alt=""><span>little fight <span class="nyc">NYC</span></span></a><nav class="primary-nav" aria-label="Main navigation">'+link('Websites','/services/custom-local-websites/')+services+link('Our work','/examples/')+question_link+'</nav><button class="explore-toggle pill" id="explore-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Search answers and services"><span class="explore-label">Search answers</span><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/magnifying-glass-duotone.svg)"></span></button><button class="mobile-menu-toggle" id="menu-toggle" aria-controls="explore-menu" aria-haspopup="dialog" aria-expanded="false" aria-label="Explore services and work"><span class="nav-symbol" aria-hidden="true" style="--nav-asset:url(/assets/mineral/list-duotone.svg)"></span></button></header>'
 
 def site_footer():
-    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+'</nav></footer>'
+    motion = '<button class="privacy-control" type="button" data-motion-toggle aria-pressed="false" aria-label="Pause animations and image rotation" hidden><span class="motion-label">Pause motion</span></button>'
+    return '<footer class="site-footer"><nav class="utility-nav" aria-label="More Little Fight">'+''.join(link(label,url) for label,url in [('Answers','/library/'),('Your business','/websites-for-your-business/'),('Reviews','/reviews/'),('About','/about/')])+'<a href="https://www.yelp.com/biz/little-fight-nyc-new-york" target="_blank" rel="noopener noreferrer">Yelp</a>'+('<button class="privacy-control" type="button" data-production-open-consent>Privacy choices</button>' if PRODUCTION else link('Privacy choices','/legal/'))+motion+'</nav></footer>'
 
 def shell_end(home=False):
     privacy = site_footer()
@@ -708,8 +714,8 @@ mosaic,homepage_inventory=apply_homepage_groups(mosaic,home_groups,hidden_home_i
 mosaic,sculpture_inventory=sculptural_mosaic(mosaic)
 write('sculpture-inventory.json',json.dumps(sculpture_inventory,ensure_ascii=False,indent=2)+'\n')
 write('homepage-inventory.json',json.dumps(homepage_inventory,ensure_ascii=False,indent=2)+'\n')
-q={'path':'/','title':'Custom Websites for Independent Businesses | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
-home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+site_footer()+'</div>'+shell_end(True)
+q={'path':'/','title':'Websites, Tech Support & Custom Software | Little Fight NYC','description':'Custom websites for independent businesses nationwide. Explore the work, find a useful answer, and talk with a real person.'}
+home=head(q,True)+'<body class="mosaic-home"><a class="skip-to-finder" href="#canvas">Skip to the tiles</a><div class="app-shell">'+topbar(True)+sculptural_hero()+'<main class="topic-canvas" id="canvas" aria-label="Explore Little Fight NYC by topic">'+mosaic+'</main>'+render_home_proof(homepage_proof)+site_footer()+'</div>'+shell_end(True)
 write('index.html',home)
 rows=[{'path':p,'title':normalize(x)['heading'],'description':normalize(x)['description'],'questions':[section['heading'] for section in x.get('_homeGroup',{}).get('sections',x.get('sections',[])) if section.get('heading')], 'homePath':home_context.get(p,p), 'family':{'web':'Websites','it':'Tech support','consulting':'Consulting','software':'Custom software','brand':'Little Fight NYC'}[reader_family(x)]} for p,x in pages.items() if p!='/' and p not in lab_by_embed_path]
 write('search-index.json',json.dumps(rows,ensure_ascii=False,separators=(',',':')))
@@ -732,11 +738,16 @@ write('404.html',head({'path':'/404/','title':'Page Not Found | Little Fight NYC
 
 # One design system. Retired prototype themes never enter the release cascade.
 css_files = load('import-provenance.json')['activeCssOrder']
-css='\n'.join((UI/name).read_text() for name in css_files)
-minified_css=subprocess.run([str(APP/'node_modules/.bin/esbuild'), '--loader=css', '--minify'], input=css, text=True, capture_output=True, check=True).stdout
-write('site.css',minified_css)
-for name in ['tile-motion.js','mosaic-layout.js','sculpture-static.css']:shutil.copy2(UI/'vendor'/name,OUT/name)
-for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js']:shutil.copy2(UI/name,OUT/name)
+write_stylesheets(APP, UI, css_files, write)
+shutil.copy2(UI/'vendor/sculpture-static.css', OUT/'sculpture-static.css')
+script_sources = {name: UI/'vendor'/name for name in ['tile-motion.js', 'mosaic-layout.js']}
+script_sources.update({name: UI/name for name in ['site.js', 'search-relevance.js', 'tile-effects.js', 'website-story.js']})
+for name, source in script_sources.items():
+    minified = subprocess.run(
+        [str(APP/'node_modules/.bin/esbuild'), '--loader=js', '--minify', '--target=es2020'],
+        input=source.read_text(), text=True, capture_output=True, check=True,
+    )
+    write(name, minified.stdout)
 shutil.copy2(CONTENT/'search-aliases.json',OUT/'search-aliases.json')
 if (UI/'assets').exists():shutil.copytree(UI/'assets',OUT/'assets',dirs_exist_ok=True)
 for relative in RETIRED_PUBLISHED_ASSETS:

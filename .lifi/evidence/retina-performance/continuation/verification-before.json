@@ -1,0 +1,46 @@
+{
+  "status": "Approved live hero restored; sharpness source limitation remains",
+  "artifactSha256": "6bf334e56aecf82fa4dd32e35ec9c70b4b9d7a37bf2354df5b9a3614c6c265db",
+  "published": false,
+  "preview": "http://127.0.0.1:64358/",
+  "hero": {
+    "approvedPixelsPreserved": true,
+    "geometryMatchesLive": true,
+    "sourceDimensions": {
+      "desktop": [
+        762,
+        337
+      ],
+      "phone": [
+        288,
+        194
+      ]
+    },
+    "sourceSearch": "No larger exact master found; larger alternatives have different compositions",
+    "visualEvidence": "hero-restored/hero-restored-report.json",
+    "restorationChecks": "hero-restoration-checks.log",
+    "losslessCompressionTrial": "hero-lossless-compression-trial.json",
+    "compressionTrialApplied": false
+  },
+  "performance": {
+    "status": "failed",
+    "failures": [
+      "home-mobile: median LCP above 2500ms"
+    ],
+    "medians": {
+      "home-mobile": {
+        "score": 95,
+        "lcp": 2852.0610999999976,
+        "tbt": 101,
+        "cls": 0
+      },
+      "websites-mobile": {
+        "score": 92,
+        "lcp": 3077.9595,
+        "tbt": 0,
+        "cls": 0
+      }
+    },
+    "note": "Supersedes performance claims for the rejected four-part hero. CSS and reader delivery improvements remain."
+  }
+}

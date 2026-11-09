@@ -1,0 +1,105 @@
+{
+  "evaluatedTileViews": 348,
+  "boundingFlags": 12,
+  "flags": [
+    {
+      "width": 834,
+      "id": "page-services-tech-consulting",
+      "kind": "artwork bounds overlap plus",
+      "area": 465.9160625000004,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 834,
+      "id": "page-services-business-systems",
+      "kind": "artwork bounds overlap plus",
+      "area": 211.30348815538267,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 834,
+      "id": "it-vendor-handoff",
+      "kind": "artwork bounds overlap plus",
+      "area": 21.598038527018275,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 834,
+      "id": "page-vera",
+      "kind": "artwork bounds overlap copy",
+      "text": "VERA.",
+      "area": 27.969268575221225,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1100,
+      "id": "page-services-tech-consulting",
+      "kind": "artwork bounds overlap plus",
+      "area": 278.93818750000173,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1100,
+      "id": "page-services-business-systems",
+      "kind": "artwork bounds overlap plus",
+      "area": 151.16589882050215,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1100,
+      "id": "speed",
+      "kind": "artwork bounds overlap plus",
+      "area": 13.35413687070968,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1100,
+      "id": "page-industries",
+      "kind": "artwork bounds overlap plus",
+      "area": 88.41575054989244,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1100,
+      "id": "page-vera",
+      "kind": "artwork bounds overlap copy",
+      "text": "VERA.",
+      "area": 31.102937032252452,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1440,
+      "id": "page-services-tech-consulting",
+      "kind": "artwork bounds overlap plus",
+      "area": 37.915062500000204,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1440,
+      "id": "page-services-business-systems",
+      "kind": "artwork bounds overlap plus",
+      "area": 11.436449005522359,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    },
+    {
+      "width": 1440,
+      "id": "page-industries",
+      "kind": "artwork bounds overlap plus",
+      "area": 119.42014263973618,
+      "opaqueIntersectionPixels": 0.0,
+      "requiresCorrection": false
+    }
+  ],
+  "remaining": []
+}

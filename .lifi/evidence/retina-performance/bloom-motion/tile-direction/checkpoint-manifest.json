@@ -1,0 +1,27 @@
+{
+  "archive": "source-checkpoint.zip",
+  "sha256": "5b7f152fcdb5edc9c71726a60f2525653d8a8e4b0548c77a001e345e7b7d42e7",
+  "verifiedFiles": 20,
+  "files": {
+    "rejected-sculpture.css": "c52b1ece87835593c8fcdeb99c76d9e509b6df7d585f2d9a6b9b4bfdb3d85faa",
+    "baseline-sculpture.css": "a5a31e404e0a794b901bf7f560dc7fb9c4d40c653c6d626f709cf14bcea37cf3",
+    "before-mosaic-layout.js": "54870aa6c8dd90b3707cb2964c1fa076c32ac5a404cbf15b098f71dc4e9ae6e2",
+    "before-verify-sculpture.cjs": "abe1071b0053b63703cd4708a99dcb14092f2e738cafa6fc1f6c1be0a604a8f8",
+    "after-sculpture.css": "66bc808329642194a70eeb95f2d404e1ea652b6275854a00489a1f440b79c5de",
+    "after-mosaic-layout.js": "666e1e7dc7444af51c64d21a2c817c69de859b1e2f430c440397037c485a79e5",
+    "after-verify-sculpture.cjs": "adcd821537746f7f255a1d853e0d4297ef66c7426173c3c7bf99a9161fc65f97",
+    "directions.json": "e69e5f34861efe6b0c8d8ede55d0af1e3272f99ed8d34349f005659144359fd4",
+    "before-source-hashes.json": "b351edb3e86bb4223a5f5a3af1dd659d3dc996db35bfa1d6861c42d402919340",
+    "after-source-hashes.json": "f551c9a6460f69ca602e0699ac7d4a99b8fc2aad21706e81a4667df41c96dfbe",
+    "source-preservation.json": "a1585967ad862131fcb1d0f6c643ac3b8672681fd710631d16ad624890ffc93b",
+    "change.patch": "657b72c6c97732437d8491d8fe5d93996e3edce913953ba3b742f86fb0af2836",
+    "local-artifact.json": "96eb1c9b9980faca66cb256ed21eff6135f0610fa47a7df9686b6ae6db20d2de",
+    "full-suite-artifact.json": "5a2f1bd9312b43ea7f05efe6ef16e5893e88158730a7c01a0b184b4722cfcb98",
+    "delivery.json": "f203b1b6735a43c5b81a440a26c6a0fec98f3a7224e54177ded52ba22cc698c8",
+    "verification.json": "8daecfcaf0bc1bfc0ebde62d29523cff0bb6d0c2ac31886d1aa896b62617bec8",
+    "width-range-final.json": "6d3680c5a187f668bcd15fbb2e45ddb17994d2dbcec1fea277b8c704c8329d35",
+    "composition-alpha-check.json": "449086616114ff1479e673fad0ce26113fdca906fa5fbca5cfce7101b852f05e",
+    "clipping-negative-control.json": "cc2f1bec0b91561fbf8c8e79725c53843cdba982fedb64113ba846d91a2762fb",
+    "chrome-user-review.json": "493f2570c1f892ac7e5f5903e804c48b36a54af98274b34d3e797883a89b5b6d"
+  }
+}

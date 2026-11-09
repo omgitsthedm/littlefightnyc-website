@@ -10,6 +10,17 @@ const crypto=require('node:crypto');
 const {chromium,webkit}=require('@playwright/test');
 const {AxeBuilder}=require('@axe-core/playwright');
 const app=path.resolve(__dirname,'..');
+function receiptSourcePath(value) {
+ const direct=path.resolve(app,value);
+ if(fs.existsSync(direct))return direct;
+ const marker='Little Fight NYC Verified Screenshots 2026-10-07/';
+ if(value.includes(marker)) {
+  const library=process.env.LFNYC_APPROVED_SCREENSHOTS||'/Users/davidmarsh/Desktop/LiFi NYC/Business/Website/Little Fight NYC Verified Screenshots 2026-10-07';
+  const relocated=path.resolve(library,value.split(marker)[1]);
+  if(fs.existsSync(relocated))return relocated;
+ }
+ return direct;
+}
 const curation=JSON.parse(fs.readFileSync(path.join(app,'preview-content/homepage-curation.json')));
 const reviewSources=JSON.parse(fs.readFileSync(path.join(app,'preview-content/reviews.json'))).reviews;
 const reviewPaths=new Map(reviewSources.map(review=>[review.id,`/reviews/${review.id}/`]));
@@ -26,9 +37,34 @@ const check=(name,condition,detail)=>{report.checks.push({name,passed:Boolean(co
 const delay=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 async function settled(page){await page.evaluate(()=>document.fonts.ready);await delay(500);}
 async function geometry(page,label){
- const result=await page.locator('#canvas .sculpture-tile').evaluateAll(tiles=>{
+ const result=await page.locator('#canvas .sculpture-tile').evaluateAll(async tiles=>{
   const rect=n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};
   const inside=(a,b)=>a.left>=b.left-2&&a.right<=b.right+2&&a.top>=b.top-2&&a.bottom<=b.bottom+2;
+  // Transparent source padding is intentionally scaled beyond the card for
+  // optical alignment. Check actual artwork pixels, not the empty canvas.
+  const alphaCache=window.__sculptureAlphaBounds||(window.__sculptureAlphaBounds=new Map());
+  const visibleBounds=async img=>{
+   img.loading='eager';await img.decode();
+   const key=img.currentSrc;
+   if(!alphaCache.has(key)){
+    const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+    const context=canvas.getContext('2d',{willReadFrequently:true});context.drawImage(img,0,0,canvas.width,canvas.height);
+    const pixels=context.getImageData(0,0,canvas.width,canvas.height).data;
+    let left=canvas.width,top=canvas.height,right=0,bottom=0;
+    for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++)if(pixels[(y*canvas.width+x)*4+3]>=64){left=Math.min(left,x);top=Math.min(top,y);right=Math.max(right,x+1);bottom=Math.max(bottom,y+1);}
+    if(!right||!bottom)throw new Error('Empty illustration: '+key);
+    alphaCache.set(key,{left:left/canvas.width,top:top/canvas.height,right:right/canvas.width,bottom:bottom/canvas.height});
+   }
+   const alpha=alphaCache.get(key),box=rect(img),style=getComputedStyle(img);
+   const cover=style.objectFit==='cover';
+   const scale=(cover?Math.max:Math.min)(box.width/img.naturalWidth,box.height/img.naturalHeight);
+   const [px,py]=style.objectPosition.split(' ').map(value=>parseFloat(value)/100);
+   const x=box.left+(box.width-img.naturalWidth*scale)*px,y=box.top+(box.height-img.naturalHeight*scale)*py;
+   const art={left:x+alpha.left*img.naturalWidth*scale,top:y+alpha.top*img.naturalHeight*scale,right:x+alpha.right*img.naturalWidth*scale,bottom:y+alpha.bottom*img.naturalHeight*scale};
+   // The few authored cover compositions intentionally crop inside the image.
+   if(cover){art.left=Math.max(art.left,box.left);art.top=Math.max(art.top,box.top);art.right=Math.min(art.right,box.right);art.bottom=Math.min(art.bottom,box.bottom);}
+   return {...art,width:art.right-art.left,height:art.bottom-art.top};
+  };
   const problems=[];
   for(const tile of tiles){
    const box=rect(tile),art=tile.querySelector('.sculpture-art'),img=art?.querySelector('img');
@@ -38,7 +74,8 @@ async function geometry(page,label){
     if(art||tile.dataset.sculptureArt)problems.push({id:tile.dataset.answer,issue:'review has unwanted 3D art'});
    }else if(!img){problems.push({id:tile.dataset.answer,issue:'missing topic illustration'});}
    else{
-    if(!inside(rect(img),box))problems.push({id:tile.dataset.answer,issue:'art outside tile',image:rect(img),box});
+    const visible=await visibleBounds(img);
+    if(!inside(visible,box))problems.push({id:tile.dataset.answer,issue:'visible art outside tile',image:visible,box});
     if(rect(img).height<44||rect(img).width<44)problems.push({id:tile.dataset.answer,issue:'art too small',image:rect(img)});
    }
    for(const node of tile.querySelectorAll('.sculpture-title,.sculpture-description,.sculpture-lab-action')){
@@ -130,7 +167,7 @@ async function main(){
  const routes=JSON.parse(fs.readFileSync(path.join(app,'dist/reader-routes.json')));
  check('All '+Object.keys(baseline.routes).length+' prior reader mappings retained with exactly seven new review backs',Object.entries(baseline.routes).every(([route,target])=>routes[route]===target)&&Object.keys(routes).length===Object.keys(baseline.routes).length+7&&[...reviewPaths.values()].every(route=>routes[route]===route));
  const receipts=JSON.parse(fs.readFileSync(path.resolve(app,'../.lifi/design-source/sculpture/screen-composites.json')));
- check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(path.resolve(app,r.source))).digest('hex')===r.sourceSha256));
+ check('Every composited screenshot source remains byte exact',receipts.every(r=>crypto.createHash('sha256').update(fs.readFileSync(receiptSourcePath(r.source))).digest('hex')===r.sourceSha256));
  check('Protected VERA source bytes unchanged',Object.entries(baseline.protectedVera).every(([f,hash])=>crypto.createHash('sha256').update(fs.readFileSync(path.join(app,'public',f))).digest('hex')===hash));
  const browser=isWebKit?await webkit.launch({headless:true}):await chromium.launch({channel:'chrome',headless:true});
  report.version=browser.version();

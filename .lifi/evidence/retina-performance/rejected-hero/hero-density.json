@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "kind": "native-retina-hero-composition",
+  "purpose": "Replace the undersized extracted master crop with a responsive composition assembled from the approved source parts at their native pixel densities.",
+  "composition": "HTML and CSS position the original tactile boat and storefront around approved transparent physical display composites. The folded Duo keeps its distinct physical silhouette with a CSS clip around only its device form. The original Master Design Mockup remains preserved in hero-reference.json; no bitmap upscaling or generated customer imagery is used.",
+  "sources": [
+    {"path": ".lifi/design-source/sculpture/hero-sources/hero-browser-slim.png", "sha256": "919e5c583dee4c0a91b1448401c09d508cc42c2eb0e49c484eafa4293345c1f8", "role": "Chromatic physical display composite"},
+    {"path": ".lifi/design-source/sculpture/hero-sources/hero-duo-rachel.png", "sha256": "959807260ab3986e13bb05a7fb067b3f263106288f941e47ddddb3e74bfe91a2", "role": "Rachel folded Duo composite"},
+    {"path": "app/public/assets/sculpture/boat.webp", "sha256": "c434c75f41a9f49aa032cbad8f9d5e5a377b4c6102b8c00836bc86a5be04cc44", "role": "tugboat"},
+    {"path": "app/public/assets/sculpture/storefront.webp", "sha256": "891c5bff57ebabca41f9b1fa3965d8a0291d6245802d367cbf1a26f7b8ff9ae0", "role": "storefront"}
+  ],
+  "delivery": {
+    "desktop": "1395px browser, 1298px folded-Duo, 720px storefront, and 800px boat candidates cover the rendered desktop scene at 2x.",
+    "mobile": "At a 430px 3x phone, the browser selects 900px, the Duo selects 720px, and both scenery pieces select 480px candidates without upscaling.",
+    "encoding": "Deterministic cwebp delivery encodes only; source artwork is preserved unchanged. Desktop display and scenery variants use visually checked lossy delivery, with smaller phone candidates selected only when their native pixels cover the rendered area.",
+    "budgets": {"mobileBytes": 150000, "desktopBytes": 300000}
+  }
+}

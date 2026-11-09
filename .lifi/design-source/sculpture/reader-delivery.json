@@ -1,0 +1,909 @@
+{
+  "schema": 1,
+  "method": "Aspect-preserving delivery sizes from the approved portfolio files; no generated content.",
+  "images": {
+    "/assets/portfolio-20261007/army-navy-bags-desktop.webp": {
+      "sourceSha256": "21273d4caee3c610fccab4e2c27a9f08afab4393d99288972c26da9095d48261",
+      "width": 1200,
+      "height": 835,
+      "variants": [
+        {
+          "src": "/assets/reader-images/army-navy-bags-desktop-21273d4c-480.webp",
+          "width": 480,
+          "sha256": "dc9d7a29cf6a7a261e577aca936ebb8c8d0a9ad1fa8f8d4a32479e737de2a713"
+        },
+        {
+          "src": "/assets/reader-images/army-navy-bags-desktop-21273d4c-800.webp",
+          "width": 800,
+          "sha256": "d276608e27c1faa3435ae231ff87f412b70910d8525792cccbbd6c778d9a5a69"
+        },
+        {
+          "src": "/assets/portfolio-20261007/army-navy-bags-desktop.webp",
+          "width": 1200,
+          "sha256": "21273d4caee3c610fccab4e2c27a9f08afab4393d99288972c26da9095d48261"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp": {
+      "sourceSha256": "8b5d7c1a4aa38c3d4adacc8c47cb1ba51ac371cd23646fd670e05fc13aa2c850",
+      "width": 1200,
+      "height": 835,
+      "variants": [
+        {
+          "src": "/assets/reader-images/brothers-pizzeria-desktop-8b5d7c1a-480.webp",
+          "width": 480,
+          "sha256": "28d0e618f3184c1aa1a6d10183c670d10896949033efe63c73cae797b9ebd9af"
+        },
+        {
+          "src": "/assets/reader-images/brothers-pizzeria-desktop-8b5d7c1a-800.webp",
+          "width": 800,
+          "sha256": "86699dc872745a021e834f365b73247e746be8c0e5a81628d663a6696f0603ae"
+        },
+        {
+          "src": "/assets/portfolio-20261007/brothers-pizzeria-desktop.webp",
+          "width": 1200,
+          "sha256": "8b5d7c1a4aa38c3d4adacc8c47cb1ba51ac371cd23646fd670e05fc13aa2c850"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/cc-films-desktop.webp": {
+      "sourceSha256": "396cec8ecf37de9ce0c392ca8edf4a6e4a224193ff1c633d96b3600042b0ba85",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/cc-films-desktop-396cec8e-480.webp",
+          "width": 480,
+          "sha256": "9d2cc102858eee8aa7b00a7b7c0fbac06661071861b49930a5cde0b7f0ea44fb"
+        },
+        {
+          "src": "/assets/reader-images/cc-films-desktop-396cec8e-800.webp",
+          "width": 800,
+          "sha256": "f29f96eecbc3ee54c53393efdeda90016f16d96a12b66857ebbe16496e9d14f0"
+        },
+        {
+          "src": "/assets/reader-images/cc-films-desktop-396cec8e-1200.webp",
+          "width": 1200,
+          "sha256": "2f6adaad2594a2987efe24afd3f254a052ae3179268a079ab96c59165922cd38"
+        },
+        {
+          "src": "/assets/portfolio-20261007/cc-films-desktop.webp",
+          "width": 1600,
+          "sha256": "396cec8ecf37de9ce0c392ca8edf4a6e4a224193ff1c633d96b3600042b0ba85"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/cc-films-phone.webp": {
+      "sourceSha256": "f55c151db578c4b80aeb3be84b079a09e651ecf181c1f851146a2f7549950b30",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/cc-films-phone-f55c151d-480.webp",
+          "width": 480,
+          "sha256": "de730cd71779afa2fd4541f543e5893678ae3bd5b8dcae266c48a7334acfb88a"
+        },
+        {
+          "src": "/assets/portfolio-20261007/cc-films-phone.webp",
+          "width": 780,
+          "sha256": "f55c151db578c4b80aeb3be84b079a09e651ecf181c1f851146a2f7549950b30"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp": {
+      "sourceSha256": "afce0009d5857a3c7a0c7d2eeda6e8bb1e7fea287b7e8ae0441f01c9e7d75c92",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/chromatic-painting-design-desktop-afce0009-480.webp",
+          "width": 480,
+          "sha256": "ed6046703a698ca95498a391d2828dc812e77643666255d87726e1b21bb7c034"
+        },
+        {
+          "src": "/assets/reader-images/chromatic-painting-design-desktop-afce0009-800.webp",
+          "width": 800,
+          "sha256": "069684ce697cef2d78826e229a8d3680ce34d947c1653a55843e67b99d173ee5"
+        },
+        {
+          "src": "/assets/reader-images/chromatic-painting-design-desktop-afce0009-1200.webp",
+          "width": 1200,
+          "sha256": "b3c466ceab73fd5a434f2fbbb3a0d6cf4d7df8eadcefdf6864b150a460ef8c6c"
+        },
+        {
+          "src": "/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+          "width": 1600,
+          "sha256": "afce0009d5857a3c7a0c7d2eeda6e8bb1e7fea287b7e8ae0441f01c9e7d75c92"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/chromatic-painting-design-phone.webp": {
+      "sourceSha256": "709d9ff1d268292186cfe3bcc567f52085be51f8bef2ec0b3e15f31f9f48ce0c",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/chromatic-painting-design-phone-709d9ff1-480.webp",
+          "width": 480,
+          "sha256": "e90cc1e5ece329c3367d9d610e6dc0186701c01d4336a6f30775815076bef4c7"
+        },
+        {
+          "src": "/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+          "width": 780,
+          "sha256": "709d9ff1d268292186cfe3bcc567f52085be51f8bef2ec0b3e15f31f9f48ce0c"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/clearhelp-desktop.webp": {
+      "sourceSha256": "bf62f0f398fe0fcc233605a8497f70d758b6533cfda24a2c481efbf99182a271",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/clearhelp-desktop-bf62f0f3-480.webp",
+          "width": 480,
+          "sha256": "771c7f19de98305b928e0674140a87c2c812ce8454ea1c2c0125b2859aaa2cf3"
+        },
+        {
+          "src": "/assets/reader-images/clearhelp-desktop-bf62f0f3-800.webp",
+          "width": 800,
+          "sha256": "99554cb145036b0813dad7d6d39fe53eaa43adfacf4ce583957e59a08fd29499"
+        },
+        {
+          "src": "/assets/reader-images/clearhelp-desktop-bf62f0f3-1200.webp",
+          "width": 1200,
+          "sha256": "a6fac737ec658b4bb1c9d92fc8e6a2485fdf039a197430b8b4b8bb7aaf53a6b8"
+        },
+        {
+          "src": "/assets/portfolio-20261007/clearhelp-desktop.webp",
+          "width": 1600,
+          "sha256": "bf62f0f398fe0fcc233605a8497f70d758b6533cfda24a2c481efbf99182a271"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/clearhelp-phone.webp": {
+      "sourceSha256": "37aa36b277a0a8e65a9cb274c4eef460a38344f2da14ca69eb5a8e317d463206",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/clearhelp-phone-37aa36b2-480.webp",
+          "width": 480,
+          "sha256": "15a778a9ccfdcf3ba49533cc58e9294ff02b04aa1bff3a52a4552bdd5585735e"
+        },
+        {
+          "src": "/assets/portfolio-20261007/clearhelp-phone.webp",
+          "width": 780,
+          "sha256": "37aa36b277a0a8e65a9cb274c4eef460a38344f2da14ca69eb5a8e317d463206"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/deckspace-desktop.webp": {
+      "sourceSha256": "96650fed307fbf73192ad115a6ceb4aad963e48b2193766cf853ef2cacc5ccdb",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/deckspace-desktop-96650fed-480.webp",
+          "width": 480,
+          "sha256": "13f36ecf386fff60e94938779b0c0d69d49e94f879b20fbded2cdb333e97c785"
+        },
+        {
+          "src": "/assets/reader-images/deckspace-desktop-96650fed-800.webp",
+          "width": 800,
+          "sha256": "2c3fcae1db2a2f095b71007913af6d2b7bc672a6bc1af69a0fc76de1e4f7ffb9"
+        },
+        {
+          "src": "/assets/reader-images/deckspace-desktop-96650fed-1200.webp",
+          "width": 1200,
+          "sha256": "a945e4b63f97ec79262d16dd6a22281ea94314a247b2807a5163475b3dd00d16"
+        },
+        {
+          "src": "/assets/portfolio-20261007/deckspace-desktop.webp",
+          "width": 1600,
+          "sha256": "96650fed307fbf73192ad115a6ceb4aad963e48b2193766cf853ef2cacc5ccdb"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/deckspace-phone.webp": {
+      "sourceSha256": "8c5752685df438a0f2449243b84ddf4cbdb2127cd05fb9c54d0f4f79c937cedf",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/deckspace-phone-8c575268-480.webp",
+          "width": 480,
+          "sha256": "6d4f4fa1d439bd1c971b54e300d16263bec9cd9db2b40fc1bb3b5c89abb3608f"
+        },
+        {
+          "src": "/assets/portfolio-20261007/deckspace-phone.webp",
+          "width": 780,
+          "sha256": "8c5752685df438a0f2449243b84ddf4cbdb2127cd05fb9c54d0f4f79c937cedf"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/easy-tiger-desktop.webp": {
+      "sourceSha256": "f1bbc14fb1ba50265323761ec18e57b37c232795488727ce649cefca11367df6",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/easy-tiger-desktop-f1bbc14f-480.webp",
+          "width": 480,
+          "sha256": "1e71838195af3c1218259444c3d96437648188e30779145cb6cca2b4d16dfd0e"
+        },
+        {
+          "src": "/assets/reader-images/easy-tiger-desktop-f1bbc14f-800.webp",
+          "width": 800,
+          "sha256": "64805183701a3a7ffd50b1795c3c6fd9b072a60d17211eef9992dfcc133aaaaf"
+        },
+        {
+          "src": "/assets/reader-images/easy-tiger-desktop-f1bbc14f-1200.webp",
+          "width": 1200,
+          "sha256": "cceef42050b943008fbbd22c0781ca23e382a4f64e407b9cbf0c7e9ed89b0631"
+        },
+        {
+          "src": "/assets/portfolio-20261007/easy-tiger-desktop.webp",
+          "width": 1600,
+          "sha256": "f1bbc14fb1ba50265323761ec18e57b37c232795488727ce649cefca11367df6"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/easy-tiger-phone.webp": {
+      "sourceSha256": "d58be741c978361a7c44afc9360bbf873ca21e987ba04175381f4d573c803f69",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/easy-tiger-phone-d58be741-480.webp",
+          "width": 480,
+          "sha256": "fcf57d9c13a0c2d49e64f46ab1c49f024ae79842c53f685cd2651ee9e469d4f9"
+        },
+        {
+          "src": "/assets/portfolio-20261007/easy-tiger-phone.webp",
+          "width": 780,
+          "sha256": "d58be741c978361a7c44afc9360bbf873ca21e987ba04175381f4d573c803f69"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/grand-funding-llc-desktop.webp": {
+      "sourceSha256": "e7c195db910fc5909495f48dea8b840196bfee95f037da4fe457d438458d32d1",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/grand-funding-llc-desktop-e7c195db-480.webp",
+          "width": 480,
+          "sha256": "c0b209d3ca026a1ab85766fc87a1ea1e81eb093faf37c3d7f35b50c55fe57f28"
+        },
+        {
+          "src": "/assets/reader-images/grand-funding-llc-desktop-e7c195db-800.webp",
+          "width": 800,
+          "sha256": "a16c137212239f5a3461bed0db99c1e66e0fd0285dc39582cd348389416f5bf9"
+        },
+        {
+          "src": "/assets/reader-images/grand-funding-llc-desktop-e7c195db-1200.webp",
+          "width": 1200,
+          "sha256": "c9ec29853d59047e527d395b824b5dd4a22236a0f08973d0ee9c66a5ca48f6e6"
+        },
+        {
+          "src": "/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+          "width": 1600,
+          "sha256": "e7c195db910fc5909495f48dea8b840196bfee95f037da4fe457d438458d32d1"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/grand-funding-llc-phone.webp": {
+      "sourceSha256": "a19aea87a2f692db718e145edf85f820f10923fad04248705b03a05514fe28bc",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/grand-funding-llc-phone-a19aea87-480.webp",
+          "width": 480,
+          "sha256": "ab12937269f290a22f4b8402f50c2cb8e6dfcdeeaf4a32bb25a9e150936edc05"
+        },
+        {
+          "src": "/assets/portfolio-20261007/grand-funding-llc-phone.webp",
+          "width": 780,
+          "sha256": "a19aea87a2f692db718e145edf85f820f10923fad04248705b03a05514fe28bc"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp": {
+      "sourceSha256": "c3e8e3564e0a82befa76b7fcb25db9334124d657c9eac1b2d7aefa31116f341b",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-480.webp",
+          "width": 480,
+          "sha256": "d6b51220b5963a1915fc55ab0337ce38e0d716ef7b6c7fb72a46bd750172afbf"
+        },
+        {
+          "src": "/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-800.webp",
+          "width": 800,
+          "sha256": "209d105399748b5a4d7aa47305d88d59a66c43d21a1738d9c5bcc5aa640671ce"
+        },
+        {
+          "src": "/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-1200.webp",
+          "width": 1200,
+          "sha256": "538b0de4d43248d890c1f0a598d322f77d66bc9d9ccd7cfa25ca334519d6c0e1"
+        },
+        {
+          "src": "/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+          "width": 1600,
+          "sha256": "c3e8e3564e0a82befa76b7fcb25db9334124d657c9eac1b2d7aefa31116f341b"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp": {
+      "sourceSha256": "12ad08ed6e2d9cf6d936352d6d9fed8943635c4b535f65730b25c078e5883a74",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/hair-by-rachel-charles-phone-12ad08ed-480.webp",
+          "width": 480,
+          "sha256": "6e67ba3c6f613cc0dad006af59a1b36c54cc676186a73c998a1ed1cbfb486938"
+        },
+        {
+          "src": "/assets/portfolio-20261007/hair-by-rachel-charles-phone.webp",
+          "width": 780,
+          "sha256": "12ad08ed6e2d9cf6d936352d6d9fed8943635c4b535f65730b25c078e5883a74"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-aha-laser.webp": {
+      "sourceSha256": "39670abc962a1c9839d240dcae3480efd2482277b27002d1ea167338ea5260eb",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-aha-laser-39670abc-480.webp",
+          "width": 480,
+          "sha256": "ddbdda24ba851286be437d0fb2a709d2976e084a7a52bfc311b89f3ce260d5c1"
+        },
+        {
+          "src": "/assets/reader-images/lab-aha-laser-39670abc-800.webp",
+          "width": 800,
+          "sha256": "cdef9f497f211e36f98979cb5bd91b9f873a10b7fc6ac599ebfade8daaa6fc3d"
+        },
+        {
+          "src": "/assets/reader-images/lab-aha-laser-39670abc-1200.webp",
+          "width": 1200,
+          "sha256": "d9d347f5eefed009ef7f70bb911afd043712422bdf5c45eefd64affb6c5b3266"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-aha-laser.webp",
+          "width": 1600,
+          "sha256": "39670abc962a1c9839d240dcae3480efd2482277b27002d1ea167338ea5260eb"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-cabinet-concept.webp": {
+      "sourceSha256": "4aba52f20af7298a1301d0c7ba792f199324f467bf7bb6ca82f18fa23ea77ea8",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-cabinet-concept-4aba52f2-480.webp",
+          "width": 480,
+          "sha256": "04794f71c05303bfbeaf470f7e6fbbafd0edb3844339698ff1f4aabc100ad50b"
+        },
+        {
+          "src": "/assets/reader-images/lab-cabinet-concept-4aba52f2-800.webp",
+          "width": 800,
+          "sha256": "b29323d888d5a41dd946558b74443e2a7a290d71f9f20981cf6033a0e7b6feb4"
+        },
+        {
+          "src": "/assets/reader-images/lab-cabinet-concept-4aba52f2-1200.webp",
+          "width": 1200,
+          "sha256": "7dc2964fea187caf2a5751ff30f56cc426e0965dabe4b186636ac399849f6f50"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-cabinet-concept.webp",
+          "width": 1600,
+          "sha256": "4aba52f20af7298a1301d0c7ba792f199324f467bf7bb6ca82f18fa23ea77ea8"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-goliath.webp": {
+      "sourceSha256": "9bf648b102b51507f0c62a881972ae3323a7847dbdbc52fe11f7a4fa7d375721",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-goliath-9bf648b1-480.webp",
+          "width": 480,
+          "sha256": "b9968ab0483a3913d2a26eea1332a5963c2fff6ab050a728bb6a5248b7b21fb8"
+        },
+        {
+          "src": "/assets/reader-images/lab-goliath-9bf648b1-800.webp",
+          "width": 800,
+          "sha256": "f052d6a4f3d6cbe826c93c37cc6a21a1f42616027bb548738bacefd3a632cf00"
+        },
+        {
+          "src": "/assets/reader-images/lab-goliath-9bf648b1-1200.webp",
+          "width": 1200,
+          "sha256": "966f015611e684aef0c83fce84972e8964a501bd0fcdd137a2578e74003316e5"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-goliath.webp",
+          "width": 1600,
+          "sha256": "9bf648b102b51507f0c62a881972ae3323a7847dbdbc52fe11f7a4fa7d375721"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-growth-street.webp": {
+      "sourceSha256": "066f0fa42b90e153d7b7bc9e69ce0c32600bbad9cde4db108ea6d8e49e48809c",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-growth-street-066f0fa4-480.webp",
+          "width": 480,
+          "sha256": "aaea03ab5a18e7604bd05fe183614499fe2aa035cc893b32743547c8c85edc97"
+        },
+        {
+          "src": "/assets/reader-images/lab-growth-street-066f0fa4-800.webp",
+          "width": 800,
+          "sha256": "794cb5799f141fcf6cb728459190dff023ce3d101485c42bb4729368fb31de32"
+        },
+        {
+          "src": "/assets/reader-images/lab-growth-street-066f0fa4-1200.webp",
+          "width": 1200,
+          "sha256": "14e10a7813a1f05b114a85bf7946ac3594d25510d8690827068c300b8f59f1e3"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-growth-street.webp",
+          "width": 1600,
+          "sha256": "066f0fa42b90e153d7b7bc9e69ce0c32600bbad9cde4db108ea6d8e49e48809c"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-house-explorer.webp": {
+      "sourceSha256": "402ee9512016ef86890911c52577eb0fe8cd7789c2341b99719b262394a779ce",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-house-explorer-402ee951-480.webp",
+          "width": 480,
+          "sha256": "ecb4381bccb255e069f7c988a156736d0dc5f1250053d76eacfb4915f31f8248"
+        },
+        {
+          "src": "/assets/reader-images/lab-house-explorer-402ee951-800.webp",
+          "width": 800,
+          "sha256": "9d736a1f7bc089bfc3e0b31e8478e844a85b13e2246bc2741247c021d7a32a9f"
+        },
+        {
+          "src": "/assets/reader-images/lab-house-explorer-402ee951-1200.webp",
+          "width": 1200,
+          "sha256": "398f820de87428953ca810e51d4bd8d811a199a63bec3b29a84de58384d407d4"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-house-explorer.webp",
+          "width": 1600,
+          "sha256": "402ee9512016ef86890911c52577eb0fe8cd7789c2341b99719b262394a779ce"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-micro-animations.webp": {
+      "sourceSha256": "e3b890a1e38dc31f53c3a6a10584fdfbe2aa6ad844a7163e1988b14b30f9561c",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-micro-animations-e3b890a1-480.webp",
+          "width": 480,
+          "sha256": "3ce07bad05c762108d7b3da14d63289775b92f5e3a2c4fb1bfb6b237791544b4"
+        },
+        {
+          "src": "/assets/reader-images/lab-micro-animations-e3b890a1-800.webp",
+          "width": 800,
+          "sha256": "7554bc0b04face98a5d6c458a58f1e7d92a53a48215ab8e65bb08fe245402cd6"
+        },
+        {
+          "src": "/assets/reader-images/lab-micro-animations-e3b890a1-1200.webp",
+          "width": 1200,
+          "sha256": "7a303b34a39ad9b78f1cf74c8b180f14f8990f212d23b3c10b991e793cc12940"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-micro-animations.webp",
+          "width": 1600,
+          "sha256": "e3b890a1e38dc31f53c3a6a10584fdfbe2aa6ad844a7163e1988b14b30f9561c"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-pill-scroll.webp": {
+      "sourceSha256": "420140fa1a097bd8d7fbff6511376ca8dfd9f700e7cf327ec62f5b6c649b7ed0",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-pill-scroll-420140fa-480.webp",
+          "width": 480,
+          "sha256": "fe1a3923fd9c102702cf3b440ca4bebb5c0f5f09181e51333685e369546d96f1"
+        },
+        {
+          "src": "/assets/reader-images/lab-pill-scroll-420140fa-800.webp",
+          "width": 800,
+          "sha256": "794362805633dc743597f27fd0d004fdfb5df8b4a267da8374b235ad5c450fe8"
+        },
+        {
+          "src": "/assets/reader-images/lab-pill-scroll-420140fa-1200.webp",
+          "width": 1200,
+          "sha256": "3213b1228a2056b17e5582fcde84b4355e831391c0b9863e7b48bf95402961f8"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-pill-scroll.webp",
+          "width": 1600,
+          "sha256": "420140fa1a097bd8d7fbff6511376ca8dfd9f700e7cf327ec62f5b6c649b7ed0"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-pool-room.webp": {
+      "sourceSha256": "45849fc06b28b1fb200aea20d7724a17f22e764f05e66a138328f45af0ae0407",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-pool-room-45849fc0-480.webp",
+          "width": 480,
+          "sha256": "60c77b746cfc9e5f17730d26cef5693e751ac6765d56db0813ad3bc331918d09"
+        },
+        {
+          "src": "/assets/reader-images/lab-pool-room-45849fc0-800.webp",
+          "width": 800,
+          "sha256": "c78b8e3dbc7c08c0b644bd7af66699809e40df9ee73d4972cd5d38c16c883c2a"
+        },
+        {
+          "src": "/assets/reader-images/lab-pool-room-45849fc0-1200.webp",
+          "width": 1200,
+          "sha256": "338dbbf9bf8fecf18b279e28c1f1c2d68a4d39748fc5204121c2d0961a3cac5d"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-pool-room.webp",
+          "width": 1600,
+          "sha256": "45849fc06b28b1fb200aea20d7724a17f22e764f05e66a138328f45af0ae0407"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-studio-engine.webp": {
+      "sourceSha256": "1bf71c30c32c0c1999080848f5f5839072ed0572aa615dfe5b385c406c8b520f",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-studio-engine-1bf71c30-480.webp",
+          "width": 480,
+          "sha256": "4c42961c1f289d1d221c7353b7badc6edaa3c9f821b80edde717101bb47bbba2"
+        },
+        {
+          "src": "/assets/reader-images/lab-studio-engine-1bf71c30-800.webp",
+          "width": 800,
+          "sha256": "ed69deab520f1903263b8e6461d81f768cdd737e9c3c7ae273fe0b94572550aa"
+        },
+        {
+          "src": "/assets/reader-images/lab-studio-engine-1bf71c30-1200.webp",
+          "width": 1200,
+          "sha256": "312f7ae8e65f60b412626f5bba3d995b55dc8d2a5e83741592fb2031f85bb406"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-studio-engine.webp",
+          "width": 1600,
+          "sha256": "1bf71c30c32c0c1999080848f5f5839072ed0572aa615dfe5b385c406c8b520f"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-terminal-3d.webp": {
+      "sourceSha256": "f68eeb7ebfe73a0bc0c496264c65a33f423756c5877a72ab9ae678d125a91587",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-terminal-3d-f68eeb7e-480.webp",
+          "width": 480,
+          "sha256": "e504417edb2f9b744c8c837d517585bc2615dc30ebc9bc02b2cc1551ff6fd21b"
+        },
+        {
+          "src": "/assets/reader-images/lab-terminal-3d-f68eeb7e-800.webp",
+          "width": 800,
+          "sha256": "c39c209f4e6f84ef75073c0804dc190e679d51b24241e5ed000168672f814e6e"
+        },
+        {
+          "src": "/assets/reader-images/lab-terminal-3d-f68eeb7e-1200.webp",
+          "width": 1200,
+          "sha256": "7f2f5a24fa9f4f76c705291cd5cd3eb8a87229741fd6e37c55d797abcad8ce83"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-terminal-3d.webp",
+          "width": 1600,
+          "sha256": "f68eeb7ebfe73a0bc0c496264c65a33f423756c5877a72ab9ae678d125a91587"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/lab-walkup-3d.webp": {
+      "sourceSha256": "abb89c9f4853ce5f1bece5066a2646e9c30247b3c224af120538a646fa06d8a4",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/lab-walkup-3d-abb89c9f-480.webp",
+          "width": 480,
+          "sha256": "b2e27a188aa79dc90f7225da18a686cfffe447c0a75a50f9d5aab58372810d8d"
+        },
+        {
+          "src": "/assets/reader-images/lab-walkup-3d-abb89c9f-800.webp",
+          "width": 800,
+          "sha256": "c04f020031d0f14ee0b42c617bba2daf13a2e4c86b80aa6f68f0e187de254806"
+        },
+        {
+          "src": "/assets/reader-images/lab-walkup-3d-abb89c9f-1200.webp",
+          "width": 1200,
+          "sha256": "e54b1b2634e7c7c2327a82282dea61a9d3accdb6ca095db2033dddc77dab1d12"
+        },
+        {
+          "src": "/assets/portfolio-20261007/lab-walkup-3d.webp",
+          "width": 1600,
+          "sha256": "abb89c9f4853ce5f1bece5066a2646e9c30247b3c224af120538a646fa06d8a4"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/legacy-music-group-desktop.webp": {
+      "sourceSha256": "e56636b169af0ce6162984c85dcbe7f01a30cd1acba565694f580ae988508f2a",
+      "width": 1200,
+      "height": 835,
+      "variants": [
+        {
+          "src": "/assets/reader-images/legacy-music-group-desktop-e56636b1-480.webp",
+          "width": 480,
+          "sha256": "530c954366625ad8801f708c7c71ad66ae1d3996a9181cd7d91e1273092ec3d1"
+        },
+        {
+          "src": "/assets/reader-images/legacy-music-group-desktop-e56636b1-800.webp",
+          "width": 800,
+          "sha256": "3ca84714ed48a0c458cbb5220dd424a8061e1cae172d2107fc404c5e35581d7a"
+        },
+        {
+          "src": "/assets/portfolio-20261007/legacy-music-group-desktop.webp",
+          "width": 1200,
+          "sha256": "e56636b169af0ce6162984c85dcbe7f01a30cd1acba565694f580ae988508f2a"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/logan-loans-desktop.webp": {
+      "sourceSha256": "3af6e8af099737ab0d131cee5f40656dcbf8d9a856fb9fe41e845516fd49bc50",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/logan-loans-desktop-3af6e8af-480.webp",
+          "width": 480,
+          "sha256": "aba741454d5614385359d484e6677ff78584034dbdc69adc5aeabdb032918017"
+        },
+        {
+          "src": "/assets/reader-images/logan-loans-desktop-3af6e8af-800.webp",
+          "width": 800,
+          "sha256": "df4d930e7324f44babb7390d2d18485dcbafb90bc6265f0cc3638beecd6f6b2e"
+        },
+        {
+          "src": "/assets/reader-images/logan-loans-desktop-3af6e8af-1200.webp",
+          "width": 1200,
+          "sha256": "3c8f1e4e9ad191838367ceda0ddb4d68dfb41c1a56d405574c94f0c9d2624a3e"
+        },
+        {
+          "src": "/assets/portfolio-20261007/logan-loans-desktop.webp",
+          "width": 1600,
+          "sha256": "3af6e8af099737ab0d131cee5f40656dcbf8d9a856fb9fe41e845516fd49bc50"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/logan-loans-phone.webp": {
+      "sourceSha256": "1525779c3c0012ccd26e9a83651c7f5448aa5745b4bb8597126ebd207eb4c343",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/logan-loans-phone-1525779c-480.webp",
+          "width": 480,
+          "sha256": "7b789665f5fe7c46072f5a53aa8be59df6b648689a35f3dddedfee652712b4a6"
+        },
+        {
+          "src": "/assets/portfolio-20261007/logan-loans-phone.webp",
+          "width": 780,
+          "sha256": "1525779c3c0012ccd26e9a83651c7f5448aa5745b4bb8597126ebd207eb4c343"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/rachel-services-desktop.webp": {
+      "sourceSha256": "53873518650a66998e528bfaa3d11e238ead78f41fe07d9effea9b5c2d5dec21",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/rachel-services-desktop-53873518-480.webp",
+          "width": 480,
+          "sha256": "a550186a250cc2fcfff82022b899c3780488451189de514c50548a58e0f5d5d0"
+        },
+        {
+          "src": "/assets/reader-images/rachel-services-desktop-53873518-800.webp",
+          "width": 800,
+          "sha256": "df4f6c108e809d16a18e3738827246cdda560c5036dcff815f7c220a136afb7b"
+        },
+        {
+          "src": "/assets/reader-images/rachel-services-desktop-53873518-1200.webp",
+          "width": 1200,
+          "sha256": "90739c6dfe637a4803cde4fa668be5969f5d8d1f2891d4e582b0a652fb51473c"
+        },
+        {
+          "src": "/assets/portfolio-20261007/rachel-services-desktop.webp",
+          "width": 1600,
+          "sha256": "53873518650a66998e528bfaa3d11e238ead78f41fe07d9effea9b5c2d5dec21"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/the-break-room-desktop.webp": {
+      "sourceSha256": "0f703a1be9a43bba5d34da8c33775f693d2741542b783ce100da2801dfdd3e12",
+      "width": 1600,
+      "height": 1111,
+      "variants": [
+        {
+          "src": "/assets/reader-images/the-break-room-desktop-0f703a1b-480.webp",
+          "width": 480,
+          "sha256": "d4c831395cc099d5ba06f57c0ccc0608ce45efde53693fdb5dda017f254b8698"
+        },
+        {
+          "src": "/assets/reader-images/the-break-room-desktop-0f703a1b-800.webp",
+          "width": 800,
+          "sha256": "3d52e182c94ed4c84342d9b76292e9031fc4afdbcf1ba53512fc1e90d5e2bedc"
+        },
+        {
+          "src": "/assets/reader-images/the-break-room-desktop-0f703a1b-1200.webp",
+          "width": 1200,
+          "sha256": "0ce43a7a9db2e900131e592958d1f7eb30d1a275328e90a002f0978a8caa410d"
+        },
+        {
+          "src": "/assets/portfolio-20261007/the-break-room-desktop.webp",
+          "width": 1600,
+          "sha256": "0f703a1be9a43bba5d34da8c33775f693d2741542b783ce100da2801dfdd3e12"
+        }
+      ]
+    },
+    "/assets/portfolio-20261007/the-break-room-phone.webp": {
+      "sourceSha256": "ed466f8f1cf48c112ed971f3a0ee84694ab8fbf024b38600f8991a387d9a9c02",
+      "width": 780,
+      "height": 1688,
+      "variants": [
+        {
+          "src": "/assets/reader-images/the-break-room-phone-ed466f8f-480.webp",
+          "width": 480,
+          "sha256": "64b0529ee87214674cf3099d825922a392795f77583c4cb0899c252a75d53ee2"
+        },
+        {
+          "src": "/assets/portfolio-20261007/the-break-room-phone.webp",
+          "width": 780,
+          "sha256": "ed466f8f1cf48c112ed971f3a0ee84694ab8fbf024b38600f8991a387d9a9c02"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp": {
+      "sourceSha256": "81860377d2e774945d872315904a1d6c7635ac1abb4d430d8d285ad4fe2a231a",
+      "width": 1440,
+      "height": 1000,
+      "variants": [
+        {
+          "src": "/assets/reader-images/after-hours-agenda-desktop-81860377-480.webp",
+          "width": 480,
+          "sha256": "749faa7150cdb0545ab2e76080270efe9310e00b81728b3fb29385186ac584bd"
+        },
+        {
+          "src": "/assets/reader-images/after-hours-agenda-desktop-81860377-800.webp",
+          "width": 800,
+          "sha256": "628fb6d5c11331b1ef0804a1bf6a700228c1fe32814ee0a4381a2520717fad2c"
+        },
+        {
+          "src": "/assets/reader-images/after-hours-agenda-desktop-81860377-1200.webp",
+          "width": 1200,
+          "sha256": "9ee71e7e6ddcefee3b47f6356be3d7d65d3803d27e142d85d6d0b923f957c0d5"
+        },
+        {
+          "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-desktop.webp",
+          "width": 1440,
+          "sha256": "81860377d2e774945d872315904a1d6c7635ac1abb4d430d8d285ad4fe2a231a"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp": {
+      "sourceSha256": "1a5e9f439cd8ef891658fa6440bb88648649ae2871ac5d57ddb2646ed76b27a1",
+      "width": 390,
+      "height": 844,
+      "variants": [
+        {
+          "src": "/assets/portfolio-upgrade-20261009/after-hours-agenda-phone.webp",
+          "width": 390,
+          "sha256": "1a5e9f439cd8ef891658fa6440bb88648649ae2871ac5d57ddb2646ed76b27a1"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.webp": {
+      "sourceSha256": "7dc20938729aea14d2f5a23e8124b07cb960de88c6159169ef4a91f633f159f7",
+      "width": 1440,
+      "height": 900,
+      "variants": [
+        {
+          "src": "/assets/reader-images/the-tarot-hotline-desktop-7dc20938-480.webp",
+          "width": 480,
+          "sha256": "b399be34d2eadc08086ef4e902224144fa225c480aa2be5f06875d98dd9e4424"
+        },
+        {
+          "src": "/assets/reader-images/the-tarot-hotline-desktop-7dc20938-800.webp",
+          "width": 800,
+          "sha256": "bddf91474c6eee4b7fd89af27395420f428b0c224f8a359c7efd109f88f1afc8"
+        },
+        {
+          "src": "/assets/reader-images/the-tarot-hotline-desktop-7dc20938-1200.webp",
+          "width": 1200,
+          "sha256": "744d47fb1d2d5d9bf9acc7435760c93b5fdf15a938b08cd936fb515c9bd99590"
+        },
+        {
+          "src": "/assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.webp",
+          "width": 1440,
+          "sha256": "7dc20938729aea14d2f5a23e8124b07cb960de88c6159169ef4a91f633f159f7"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/the-tarot-hotline-phone.webp": {
+      "sourceSha256": "8e0010897802496fce857b1377cfe355fbeb3a57847f364f39e6eac5f114d65e",
+      "width": 390,
+      "height": 900,
+      "variants": [
+        {
+          "src": "/assets/portfolio-upgrade-20261009/the-tarot-hotline-phone.webp",
+          "width": 390,
+          "sha256": "8e0010897802496fce857b1377cfe355fbeb3a57847f364f39e6eac5f114d65e"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp": {
+      "sourceSha256": "4068fa39480967ac7e07dd767be783540a7428fc39a85dc5861e8dde3b4bb123",
+      "width": 1440,
+      "height": 900,
+      "variants": [
+        {
+          "src": "/assets/reader-images/venuecircuit-desktop-top-4068fa39-480.webp",
+          "width": 480,
+          "sha256": "1d1a85d709f752502544fd6013989a5e290d87b7e0412158889b2f273011e666"
+        },
+        {
+          "src": "/assets/reader-images/venuecircuit-desktop-top-4068fa39-800.webp",
+          "width": 800,
+          "sha256": "2e84e7fde10254460ff0e5127a34cd664444ec8418eb29bd0dad975fa6b395d8"
+        },
+        {
+          "src": "/assets/reader-images/venuecircuit-desktop-top-4068fa39-1200.webp",
+          "width": 1200,
+          "sha256": "9948225fe26f0abf151ab43fb7e8fa298bce6aa27fb21116f3516e461b293bde"
+        },
+        {
+          "src": "/assets/portfolio-upgrade-20261009/venuecircuit-desktop-top.webp",
+          "width": 1440,
+          "sha256": "4068fa39480967ac7e07dd767be783540a7428fc39a85dc5861e8dde3b4bb123"
+        }
+      ]
+    },
+    "/assets/portfolio-upgrade-20261009/venuecircuit-phone-top.webp": {
+      "sourceSha256": "21387379fc50a3a8339595b4b877d49db08e4ce864c6544e95617c42734c0b78",
+      "width": 390,
+      "height": 844,
+      "variants": [
+        {
+          "src": "/assets/portfolio-upgrade-20261009/venuecircuit-phone-top.webp",
+          "width": 390,
+          "sha256": "21387379fc50a3a8339595b4b877d49db08e4ce864c6544e95617c42734c0b78"
+        }
+      ]
+    }
+  }
+}

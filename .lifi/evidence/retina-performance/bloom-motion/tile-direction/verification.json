@@ -1,0 +1,160 @@
+{
+  "status": "verified-local-awaiting-visual-review",
+  "current": true,
+  "updatedAt": "2026-10-10T12:40:02.381083+00:00",
+  "published": false,
+  "preview": "http://127.0.0.1:63449/?qa=1#topic-it",
+  "artifactSha256": "c86ad6e6fbcba5360279923c70eeac624dad46716188f30f647009a7d397a155",
+  "changedSource": [
+    "app/preview-ui/sculpture.css",
+    "app/preview-ui/vendor/mosaic-layout.js",
+    "app/scripts/verify-sculpture.cjs"
+  ],
+  "sourcePreservation": {
+    "sampled": 2941,
+    "changed": [
+      "app/preview-ui/sculpture.css",
+      "app/preview-ui/vendor/mosaic-layout.js",
+      "app/scripts/verify-sculpture.cjs"
+    ],
+    "unchanged": 2938
+  },
+  "design": "Restored the earlier two-angle category lighting. Reviewed all 58 tiles individually; aligned light, object size, placement and card shape to each subject. All source artwork, client identities, content, destinations and seven reviews preserved.",
+  "visualReview": {
+    "tiles": 58,
+    "widths": [
+      1440,
+      393,
+      834
+    ],
+    "individualCaptures": 174,
+    "sectionCaptures": 15,
+    "directions": "directions.json",
+    "finalScreenshots": "final/",
+    "allTilesReviewedAtEveryWidth": true
+  },
+  "validation": {
+    "fullQualitySuite": {
+      "passed": true,
+      "artifactSha256": "1321f7920bc239556dc72c1711728324ce743127f183aa34743fa27807727f1e",
+      "log": "quality-full-final.log",
+      "scope": "Before the final backup 1.24 to 1.16 optical scale and desktop storefront 7px left refinement. Both full Chrome and WebKit sculpture suites passed 477 checks each; all subsequent project suites passed."
+    },
+    "finalArtifactGate": {
+      "passed": true,
+      "log": "quality-fast-final.log"
+    },
+    "finalChromeLayout": {
+      "passed": true,
+      "checks": 230,
+      "report": "layout-chrome-final.json"
+    },
+    "finalWebKitLayout": {
+      "passed": true,
+      "checks": 230,
+      "report": "layout-webkit-final.json"
+    },
+    "finalWidthSweep": {
+      "passed": true,
+      "widths": 82,
+      "range": [
+        320,
+        1600
+      ],
+      "includesUserWindow": 1048,
+      "tileViews": 4756,
+      "assertions": 246,
+      "report": "width-range-final.json"
+    },
+    "finalComposition": {
+      "passed": true,
+      "tileViews": 348,
+      "unresolvedClippingOrOpaqueOverlaps": 0,
+      "report": "composition-alpha-check.json"
+    },
+    "negativeControl": "clipping-negative-control.json",
+    "userChrome": "chrome-user-review.json",
+    "performanceScope": "No new Lighthouse run. Previous lab medians belong to an earlier artifact; new delivery byte sizes are in delivery.json.",
+    "physicalDevices": "Not claimed by desktop browser checks",
+    "workspaceCheck": {
+      "passed": true,
+      "checksPassed": 510,
+      "failures": [],
+      "fullChecksums": true,
+      "liveChecked": true,
+      "evidence": "/Users/davidmarsh/Desktop/LiFi NYC/Business/Archive/Folder maintenance 2026-10-10/website-tile-direction-validation.json"
+    },
+    "diffCheck": "passed"
+  },
+  "delivery": {
+    "home.css": {
+      "raw": 101947,
+      "gzip": 19101
+    },
+    "site.css": {
+      "raw": 258760,
+      "gzip": 43859
+    },
+    "mosaic-layout.js": {
+      "raw": 25355,
+      "gzip": 8548
+    },
+    "tile-motion.js": {
+      "raw": 6132,
+      "gzip": 2273
+    },
+    "tile-effects.js": {
+      "raw": 8267,
+      "gzip": 2972
+    },
+    "website-story.js": {
+      "raw": 2970,
+      "gzip": 1162
+    },
+    "search-relevance.js": {
+      "raw": 2343,
+      "gzip": 1220
+    },
+    "site.js": {
+      "raw": 22796,
+      "gzip": 7760
+    },
+    "sixScripts": {
+      "raw": 67863,
+      "gzip": 23935
+    }
+  },
+  "newMediaRequests": 0,
+  "newDependencies": 0,
+  "production": {
+    "checkedAt": "2026-10-10T12:26:54.098620+00:00",
+    "url": "https://littlefightnyc.com/release.json",
+    "siteId": "0907d8fe-7018-48db-a6be-1f906e4b2619",
+    "release": {
+      "schema_version": 1,
+      "project": "Little Fight NYC",
+      "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+      "branch": "main",
+      "context": "production",
+      "built_at": "2026-10-09T18:10:06.327Z",
+      "source_dirty": false
+    },
+    "action": "read only; system curl TLS verified"
+  },
+  "checkpoint": {
+    "archive": "source-checkpoint.zip",
+    "manifest": "checkpoint-manifest.json",
+    "diff": "change.patch",
+    "restoration": "After files map to the three changedSource paths. Prior angled-light CSS, rejected premium CSS, and pre-change JS/checker are retained. Full preceding source archives remain in the parent bloom-motion evidence folder.",
+    "scope": "Restorable before/after files for the three modified sources; previous full baseline archives retained. Visual evidence lives beside this archive."
+  },
+  "evidence": "bloom-motion/tile-direction/verification.json",
+  "agencyStatus": {
+    "ranAtSessionStartAndFinish": true,
+    "exitCode": 1,
+    "dirtyCanonicalRoots": 24,
+    "unpushedCanonicalRoots": 9,
+    "unresolvedFleetBlockers": 2,
+    "scope": "Same fleet totals as session start; unrelated projects preserved."
+  }
+}

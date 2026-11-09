@@ -1,0 +1,692 @@
+{
+  "capturedAt": "2026-10-10T10:09:58.917430+00:00",
+  "root": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-retina-performance-20261010",
+  "head": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+  "branch": "codex/lifi-retina-performance-20261010",
+  "artifact": {
+    "kind": "static-production-candidate",
+    "artifactSha256": "9df2e9477ab06d9268edce79bdb1a0f1f3391a59fd99c34a3ff0094752306420",
+    "routes": 421,
+    "tiles": 58,
+    "totalTileInventory": 132,
+    "consolidatedGroups": 19,
+    "originalTilesPreserved": 106,
+    "reviews": 7,
+    "analyticsDelivery": true,
+    "formDelivery": "native Netlify Forms",
+    "sourceBase": "05d6f5a425bffb548213545131a89f9c53e5a297",
+    "productionChanged": false,
+    "artifactFiles": 3113,
+    "sitemapUrls": 160,
+    "hashScope": "All final artifact files except release markers"
+  },
+  "changedThisPass": [
+    "app/preview-ui/base.css",
+    "app/preview-ui/sculpture.css",
+    "app/preview-ui/site.js",
+    "app/preview-ui/tile-effects.js",
+    "app/scripts/build-tile-preview.py",
+    "app/scripts/tile_stylesheets.py",
+    "app/scripts/quality-tiles.mjs",
+    "app/scripts/verify-bloom-motion.cjs"
+  ],
+  "preexistingFilesChecked": 129,
+  "unexpectedPreexistingChanges": [],
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 2203,
+      "sha256": "cc4cbbd5d90164168927d2838c048526fb2258d58d2f352226cb291760bd0dc1"
+    },
+    {
+      "path": ".lifi/design-source/sculpture/approved-hero-master.png",
+      "bytes": 1984986,
+      "sha256": "c64745aef55ea754f4b980701bafadd523b270c7307240e754ebdb0bb6253e38"
+    },
+    {
+      "path": ".lifi/design-source/sculpture/hero-reference.json",
+      "bytes": 1604,
+      "sha256": "be48b78d6820053c7273d76a904a6ca292b131f8b8c8784bb78af7e4d1b29d71"
+    },
+    {
+      "path": ".lifi/design-source/sculpture/reader-delivery.json",
+      "bytes": 35746,
+      "sha256": "f7de6ccd88c5674c2e82c4cfce4a3ef454977cdf2f4692d69056bf225e919300"
+    },
+    {
+      "path": "app/package.json",
+      "bytes": 6367,
+      "sha256": "2176628288ed1d5c5ded02faff8262d8bd832f4acd634afc151827ab2ee59d23"
+    },
+    {
+      "path": "app/preview-content/homepage-proof.json",
+      "bytes": 2365,
+      "sha256": "3193b0caf22d3715f13868fc2665da4c4452daefe4835520d5efa0b741d6413f"
+    },
+    {
+      "path": "app/preview-content/import-provenance.json",
+      "bytes": 1449,
+      "sha256": "5d8d9a06265413fc4a86c8e6b2988f70ae285a040042d14029f82cf79689cff7"
+    },
+    {
+      "path": "app/preview-content/website-body.html",
+      "bytes": 9924,
+      "sha256": "40bf92c9fce5bc02bda526a86266d84b95f55fedae28ff26a266cf688b105ab0"
+    },
+    {
+      "path": "app/preview-ui/base.css",
+      "bytes": 6800,
+      "sha256": "c5ba8bd1268fa95104db6c38655568e0ede4ea5c3562f4f5a78d6eea61024b72"
+    },
+    {
+      "path": "app/preview-ui/homepage-proof.css",
+      "bytes": 5328,
+      "sha256": "4fb4e43f41676378c1465ffc8ec126af6e6d9b43c49ad8953e8afaebd08630b8"
+    },
+    {
+      "path": "app/preview-ui/sculpture.css",
+      "bytes": 26889,
+      "sha256": "c79effcadc429b2516a7754538d4978c5f9978a16145a3c2764580e8e184e4fb"
+    },
+    {
+      "path": "app/preview-ui/site.js",
+      "bytes": 44985,
+      "sha256": "580ed1fde35f0c9c306c71c64385e324afddc44df252144f157a8d4fe2d476df"
+    },
+    {
+      "path": "app/preview-ui/tile-effects.js",
+      "bytes": 16565,
+      "sha256": "ffa3d47012135a213981f80457842496f324a3021a81e9f1974c8047782b9b20"
+    },
+    {
+      "path": "app/preview-ui/vendor/mosaic-layout.js",
+      "bytes": 57549,
+      "sha256": "54870aa6c8dd90b3707cb2964c1fa076c32ac5a404cbf15b098f71dc4e9ae6e2"
+    },
+    {
+      "path": "app/public/assets/reader-images/after-hours-agenda-desktop-81860377-1200.webp",
+      "bytes": 64944,
+      "sha256": "9ee71e7e6ddcefee3b47f6356be3d7d65d3803d27e142d85d6d0b923f957c0d5"
+    },
+    {
+      "path": "app/public/assets/reader-images/after-hours-agenda-desktop-81860377-480.webp",
+      "bytes": 19286,
+      "sha256": "749faa7150cdb0545ab2e76080270efe9310e00b81728b3fb29385186ac584bd"
+    },
+    {
+      "path": "app/public/assets/reader-images/after-hours-agenda-desktop-81860377-800.webp",
+      "bytes": 36942,
+      "sha256": "628fb6d5c11331b1ef0804a1bf6a700228c1fe32814ee0a4381a2520717fad2c"
+    },
+    {
+      "path": "app/public/assets/reader-images/army-navy-bags-desktop-21273d4c-480.webp",
+      "bytes": 25084,
+      "sha256": "dc9d7a29cf6a7a261e577aca936ebb8c8d0a9ad1fa8f8d4a32479e737de2a713"
+    },
+    {
+      "path": "app/public/assets/reader-images/army-navy-bags-desktop-21273d4c-800.webp",
+      "bytes": 52632,
+      "sha256": "d276608e27c1faa3435ae231ff87f412b70910d8525792cccbbd6c778d9a5a69"
+    },
+    {
+      "path": "app/public/assets/reader-images/brothers-pizzeria-desktop-8b5d7c1a-480.webp",
+      "bytes": 25136,
+      "sha256": "28d0e618f3184c1aa1a6d10183c670d10896949033efe63c73cae797b9ebd9af"
+    },
+    {
+      "path": "app/public/assets/reader-images/brothers-pizzeria-desktop-8b5d7c1a-800.webp",
+      "bytes": 48534,
+      "sha256": "86699dc872745a021e834f365b73247e746be8c0e5a81628d663a6696f0603ae"
+    },
+    {
+      "path": "app/public/assets/reader-images/cc-films-desktop-396cec8e-1200.webp",
+      "bytes": 40700,
+      "sha256": "2f6adaad2594a2987efe24afd3f254a052ae3179268a079ab96c59165922cd38"
+    },
+    {
+      "path": "app/public/assets/reader-images/cc-films-desktop-396cec8e-480.webp",
+      "bytes": 11096,
+      "sha256": "9d2cc102858eee8aa7b00a7b7c0fbac06661071861b49930a5cde0b7f0ea44fb"
+    },
+    {
+      "path": "app/public/assets/reader-images/cc-films-desktop-396cec8e-800.webp",
+      "bytes": 23092,
+      "sha256": "f29f96eecbc3ee54c53393efdeda90016f16d96a12b66857ebbe16496e9d14f0"
+    },
+    {
+      "path": "app/public/assets/reader-images/cc-films-phone-f55c151d-480.webp",
+      "bytes": 33538,
+      "sha256": "de730cd71779afa2fd4541f543e5893678ae3bd5b8dcae266c48a7334acfb88a"
+    },
+    {
+      "path": "app/public/assets/reader-images/chromatic-painting-design-desktop-afce0009-1200.webp",
+      "bytes": 70832,
+      "sha256": "b3c466ceab73fd5a434f2fbbb3a0d6cf4d7df8eadcefdf6864b150a460ef8c6c"
+    },
+    {
+      "path": "app/public/assets/reader-images/chromatic-painting-design-desktop-afce0009-480.webp",
+      "bytes": 21202,
+      "sha256": "ed6046703a698ca95498a391d2828dc812e77643666255d87726e1b21bb7c034"
+    },
+    {
+      "path": "app/public/assets/reader-images/chromatic-painting-design-desktop-afce0009-800.webp",
+      "bytes": 43420,
+      "sha256": "069684ce697cef2d78826e229a8d3680ce34d947c1653a55843e67b99d173ee5"
+    },
+    {
+      "path": "app/public/assets/reader-images/chromatic-painting-design-phone-709d9ff1-480.webp",
+      "bytes": 34546,
+      "sha256": "e90cc1e5ece329c3367d9d610e6dc0186701c01d4336a6f30775815076bef4c7"
+    },
+    {
+      "path": "app/public/assets/reader-images/clearhelp-desktop-bf62f0f3-1200.webp",
+      "bytes": 47216,
+      "sha256": "a6fac737ec658b4bb1c9d92fc8e6a2485fdf039a197430b8b4b8bb7aaf53a6b8"
+    },
+    {
+      "path": "app/public/assets/reader-images/clearhelp-desktop-bf62f0f3-480.webp",
+      "bytes": 15088,
+      "sha256": "771c7f19de98305b928e0674140a87c2c812ce8454ea1c2c0125b2859aaa2cf3"
+    },
+    {
+      "path": "app/public/assets/reader-images/clearhelp-desktop-bf62f0f3-800.webp",
+      "bytes": 29778,
+      "sha256": "99554cb145036b0813dad7d6d39fe53eaa43adfacf4ce583957e59a08fd29499"
+    },
+    {
+      "path": "app/public/assets/reader-images/clearhelp-phone-37aa36b2-480.webp",
+      "bytes": 36698,
+      "sha256": "15a778a9ccfdcf3ba49533cc58e9294ff02b04aa1bff3a52a4552bdd5585735e"
+    },
+    {
+      "path": "app/public/assets/reader-images/deckspace-desktop-96650fed-1200.webp",
+      "bytes": 53548,
+      "sha256": "a945e4b63f97ec79262d16dd6a22281ea94314a247b2807a5163475b3dd00d16"
+    },
+    {
+      "path": "app/public/assets/reader-images/deckspace-desktop-96650fed-480.webp",
+      "bytes": 13820,
+      "sha256": "13f36ecf386fff60e94938779b0c0d69d49e94f879b20fbded2cdb333e97c785"
+    },
+    {
+      "path": "app/public/assets/reader-images/deckspace-desktop-96650fed-800.webp",
+      "bytes": 29604,
+      "sha256": "2c3fcae1db2a2f095b71007913af6d2b7bc672a6bc1af69a0fc76de1e4f7ffb9"
+    },
+    {
+      "path": "app/public/assets/reader-images/deckspace-phone-8c575268-480.webp",
+      "bytes": 42330,
+      "sha256": "6d4f4fa1d439bd1c971b54e300d16263bec9cd9db2b40fc1bb3b5c89abb3608f"
+    },
+    {
+      "path": "app/public/assets/reader-images/easy-tiger-desktop-f1bbc14f-1200.webp",
+      "bytes": 84260,
+      "sha256": "cceef42050b943008fbbd22c0781ca23e382a4f64e407b9cbf0c7e9ed89b0631"
+    },
+    {
+      "path": "app/public/assets/reader-images/easy-tiger-desktop-f1bbc14f-480.webp",
+      "bytes": 24664,
+      "sha256": "1e71838195af3c1218259444c3d96437648188e30779145cb6cca2b4d16dfd0e"
+    },
+    {
+      "path": "app/public/assets/reader-images/easy-tiger-desktop-f1bbc14f-800.webp",
+      "bytes": 50704,
+      "sha256": "64805183701a3a7ffd50b1795c3c6fd9b072a60d17211eef9992dfcc133aaaaf"
+    },
+    {
+      "path": "app/public/assets/reader-images/easy-tiger-phone-d58be741-480.webp",
+      "bytes": 57058,
+      "sha256": "fcf57d9c13a0c2d49e64f46ab1c49f024ae79842c53f685cd2651ee9e469d4f9"
+    },
+    {
+      "path": "app/public/assets/reader-images/grand-funding-llc-desktop-e7c195db-1200.webp",
+      "bytes": 84992,
+      "sha256": "c9ec29853d59047e527d395b824b5dd4a22236a0f08973d0ee9c66a5ca48f6e6"
+    },
+    {
+      "path": "app/public/assets/reader-images/grand-funding-llc-desktop-e7c195db-480.webp",
+      "bytes": 24978,
+      "sha256": "c0b209d3ca026a1ab85766fc87a1ea1e81eb093faf37c3d7f35b50c55fe57f28"
+    },
+    {
+      "path": "app/public/assets/reader-images/grand-funding-llc-desktop-e7c195db-800.webp",
+      "bytes": 50388,
+      "sha256": "a16c137212239f5a3461bed0db99c1e66e0fd0285dc39582cd348389416f5bf9"
+    },
+    {
+      "path": "app/public/assets/reader-images/grand-funding-llc-phone-a19aea87-480.webp",
+      "bytes": 48796,
+      "sha256": "ab12937269f290a22f4b8402f50c2cb8e6dfcdeeaf4a32bb25a9e150936edc05"
+    },
+    {
+      "path": "app/public/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-1200.webp",
+      "bytes": 73600,
+      "sha256": "538b0de4d43248d890c1f0a598d322f77d66bc9d9ccd7cfa25ca334519d6c0e1"
+    },
+    {
+      "path": "app/public/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-480.webp",
+      "bytes": 19256,
+      "sha256": "d6b51220b5963a1915fc55ab0337ce38e0d716ef7b6c7fb72a46bd750172afbf"
+    },
+    {
+      "path": "app/public/assets/reader-images/hair-by-rachel-charles-desktop-c3e8e356-800.webp",
+      "bytes": 41706,
+      "sha256": "209d105399748b5a4d7aa47305d88d59a66c43d21a1738d9c5bcc5aa640671ce"
+    },
+    {
+      "path": "app/public/assets/reader-images/hair-by-rachel-charles-phone-12ad08ed-480.webp",
+      "bytes": 40130,
+      "sha256": "6e67ba3c6f613cc0dad006af59a1b36c54cc676186a73c998a1ed1cbfb486938"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-aha-laser-39670abc-1200.webp",
+      "bytes": 46408,
+      "sha256": "d9d347f5eefed009ef7f70bb911afd043712422bdf5c45eefd64affb6c5b3266"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-aha-laser-39670abc-480.webp",
+      "bytes": 13552,
+      "sha256": "ddbdda24ba851286be437d0fb2a709d2976e084a7a52bfc311b89f3ce260d5c1"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-aha-laser-39670abc-800.webp",
+      "bytes": 27712,
+      "sha256": "cdef9f497f211e36f98979cb5bd91b9f873a10b7fc6ac599ebfade8daaa6fc3d"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-cabinet-concept-4aba52f2-1200.webp",
+      "bytes": 73980,
+      "sha256": "7dc2964fea187caf2a5751ff30f56cc426e0965dabe4b186636ac399849f6f50"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-cabinet-concept-4aba52f2-480.webp",
+      "bytes": 20272,
+      "sha256": "04794f71c05303bfbeaf470f7e6fbbafd0edb3844339698ff1f4aabc100ad50b"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-cabinet-concept-4aba52f2-800.webp",
+      "bytes": 43100,
+      "sha256": "b29323d888d5a41dd946558b74443e2a7a290d71f9f20981cf6033a0e7b6feb4"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-goliath-9bf648b1-1200.webp",
+      "bytes": 114284,
+      "sha256": "966f015611e684aef0c83fce84972e8964a501bd0fcdd137a2578e74003316e5"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-goliath-9bf648b1-480.webp",
+      "bytes": 10286,
+      "sha256": "b9968ab0483a3913d2a26eea1332a5963c2fff6ab050a728bb6a5248b7b21fb8"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-goliath-9bf648b1-800.webp",
+      "bytes": 38950,
+      "sha256": "f052d6a4f3d6cbe826c93c37cc6a21a1f42616027bb548738bacefd3a632cf00"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-growth-street-066f0fa4-1200.webp",
+      "bytes": 54004,
+      "sha256": "14e10a7813a1f05b114a85bf7946ac3594d25510d8690827068c300b8f59f1e3"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-growth-street-066f0fa4-480.webp",
+      "bytes": 17074,
+      "sha256": "aaea03ab5a18e7604bd05fe183614499fe2aa035cc893b32743547c8c85edc97"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-growth-street-066f0fa4-800.webp",
+      "bytes": 34208,
+      "sha256": "794cb5799f141fcf6cb728459190dff023ce3d101485c42bb4729368fb31de32"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-house-explorer-402ee951-1200.webp",
+      "bytes": 54118,
+      "sha256": "398f820de87428953ca810e51d4bd8d811a199a63bec3b29a84de58384d407d4"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-house-explorer-402ee951-480.webp",
+      "bytes": 14006,
+      "sha256": "ecb4381bccb255e069f7c988a156736d0dc5f1250053d76eacfb4915f31f8248"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-house-explorer-402ee951-800.webp",
+      "bytes": 30342,
+      "sha256": "9d736a1f7bc089bfc3e0b31e8478e844a85b13e2246bc2741247c021d7a32a9f"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-micro-animations-e3b890a1-1200.webp",
+      "bytes": 35792,
+      "sha256": "7a303b34a39ad9b78f1cf74c8b180f14f8990f212d23b3c10b991e793cc12940"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-micro-animations-e3b890a1-480.webp",
+      "bytes": 9944,
+      "sha256": "3ce07bad05c762108d7b3da14d63289775b92f5e3a2c4fb1bfb6b237791544b4"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-micro-animations-e3b890a1-800.webp",
+      "bytes": 21668,
+      "sha256": "7554bc0b04face98a5d6c458a58f1e7d92a53a48215ab8e65bb08fe245402cd6"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pill-scroll-420140fa-1200.webp",
+      "bytes": 71108,
+      "sha256": "3213b1228a2056b17e5582fcde84b4355e831391c0b9863e7b48bf95402961f8"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pill-scroll-420140fa-480.webp",
+      "bytes": 22582,
+      "sha256": "fe1a3923fd9c102702cf3b440ca4bebb5c0f5f09181e51333685e369546d96f1"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pill-scroll-420140fa-800.webp",
+      "bytes": 46344,
+      "sha256": "794362805633dc743597f27fd0d004fdfb5df8b4a267da8374b235ad5c450fe8"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pool-room-45849fc0-1200.webp",
+      "bytes": 44910,
+      "sha256": "338dbbf9bf8fecf18b279e28c1f1c2d68a4d39748fc5204121c2d0961a3cac5d"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pool-room-45849fc0-480.webp",
+      "bytes": 14656,
+      "sha256": "60c77b746cfc9e5f17730d26cef5693e751ac6765d56db0813ad3bc331918d09"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-pool-room-45849fc0-800.webp",
+      "bytes": 27670,
+      "sha256": "c78b8e3dbc7c08c0b644bd7af66699809e40df9ee73d4972cd5d38c16c883c2a"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-studio-engine-1bf71c30-1200.webp",
+      "bytes": 39838,
+      "sha256": "312f7ae8e65f60b412626f5bba3d995b55dc8d2a5e83741592fb2031f85bb406"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-studio-engine-1bf71c30-480.webp",
+      "bytes": 11838,
+      "sha256": "4c42961c1f289d1d221c7353b7badc6edaa3c9f821b80edde717101bb47bbba2"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-studio-engine-1bf71c30-800.webp",
+      "bytes": 24252,
+      "sha256": "ed69deab520f1903263b8e6461d81f768cdd737e9c3c7ae273fe0b94572550aa"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-terminal-3d-f68eeb7e-1200.webp",
+      "bytes": 72830,
+      "sha256": "7f2f5a24fa9f4f76c705291cd5cd3eb8a87229741fd6e37c55d797abcad8ce83"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-terminal-3d-f68eeb7e-480.webp",
+      "bytes": 22620,
+      "sha256": "e504417edb2f9b744c8c837d517585bc2615dc30ebc9bc02b2cc1551ff6fd21b"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-terminal-3d-f68eeb7e-800.webp",
+      "bytes": 47128,
+      "sha256": "c39c209f4e6f84ef75073c0804dc190e679d51b24241e5ed000168672f814e6e"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-walkup-3d-abb89c9f-1200.webp",
+      "bytes": 45502,
+      "sha256": "e54b1b2634e7c7c2327a82282dea61a9d3accdb6ca095db2033dddc77dab1d12"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-walkup-3d-abb89c9f-480.webp",
+      "bytes": 14230,
+      "sha256": "b2e27a188aa79dc90f7225da18a686cfffe447c0a75a50f9d5aab58372810d8d"
+    },
+    {
+      "path": "app/public/assets/reader-images/lab-walkup-3d-abb89c9f-800.webp",
+      "bytes": 28274,
+      "sha256": "c04f020031d0f14ee0b42c617bba2daf13a2e4c86b80aa6f68f0e187de254806"
+    },
+    {
+      "path": "app/public/assets/reader-images/legacy-music-group-desktop-e56636b1-480.webp",
+      "bytes": 16884,
+      "sha256": "530c954366625ad8801f708c7c71ad66ae1d3996a9181cd7d91e1273092ec3d1"
+    },
+    {
+      "path": "app/public/assets/reader-images/legacy-music-group-desktop-e56636b1-800.webp",
+      "bytes": 29582,
+      "sha256": "3ca84714ed48a0c458cbb5220dd424a8061e1cae172d2107fc404c5e35581d7a"
+    },
+    {
+      "path": "app/public/assets/reader-images/logan-loans-desktop-3af6e8af-1200.webp",
+      "bytes": 83328,
+      "sha256": "3c8f1e4e9ad191838367ceda0ddb4d68dfb41c1a56d405574c94f0c9d2624a3e"
+    },
+    {
+      "path": "app/public/assets/reader-images/logan-loans-desktop-3af6e8af-480.webp",
+      "bytes": 21376,
+      "sha256": "aba741454d5614385359d484e6677ff78584034dbdc69adc5aeabdb032918017"
+    },
+    {
+      "path": "app/public/assets/reader-images/logan-loans-desktop-3af6e8af-800.webp",
+      "bytes": 47218,
+      "sha256": "df4d930e7324f44babb7390d2d18485dcbafb90bc6265f0cc3638beecd6f6b2e"
+    },
+    {
+      "path": "app/public/assets/reader-images/logan-loans-phone-1525779c-480.webp",
+      "bytes": 46872,
+      "sha256": "7b789665f5fe7c46072f5a53aa8be59df6b648689a35f3dddedfee652712b4a6"
+    },
+    {
+      "path": "app/public/assets/reader-images/rachel-services-desktop-53873518-1200.webp",
+      "bytes": 51190,
+      "sha256": "90739c6dfe637a4803cde4fa668be5969f5d8d1f2891d4e582b0a652fb51473c"
+    },
+    {
+      "path": "app/public/assets/reader-images/rachel-services-desktop-53873518-480.webp",
+      "bytes": 12890,
+      "sha256": "a550186a250cc2fcfff82022b899c3780488451189de514c50548a58e0f5d5d0"
+    },
+    {
+      "path": "app/public/assets/reader-images/rachel-services-desktop-53873518-800.webp",
+      "bytes": 29536,
+      "sha256": "df4f6c108e809d16a18e3738827246cdda560c5036dcff815f7c220a136afb7b"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-break-room-desktop-0f703a1b-1200.webp",
+      "bytes": 37054,
+      "sha256": "0ce43a7a9db2e900131e592958d1f7eb30d1a275328e90a002f0978a8caa410d"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-break-room-desktop-0f703a1b-480.webp",
+      "bytes": 12158,
+      "sha256": "d4c831395cc099d5ba06f57c0ccc0608ce45efde53693fdb5dda017f254b8698"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-break-room-desktop-0f703a1b-800.webp",
+      "bytes": 23104,
+      "sha256": "3d52e182c94ed4c84342d9b76292e9031fc4afdbcf1ba53512fc1e90d5e2bedc"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-break-room-phone-ed466f8f-480.webp",
+      "bytes": 31632,
+      "sha256": "64b0529ee87214674cf3099d825922a392795f77583c4cb0899c252a75d53ee2"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-tarot-hotline-desktop-7dc20938-1200.webp",
+      "bytes": 89892,
+      "sha256": "744d47fb1d2d5d9bf9acc7435760c93b5fdf15a938b08cd936fb515c9bd99590"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-tarot-hotline-desktop-7dc20938-480.webp",
+      "bytes": 29078,
+      "sha256": "b399be34d2eadc08086ef4e902224144fa225c480aa2be5f06875d98dd9e4424"
+    },
+    {
+      "path": "app/public/assets/reader-images/the-tarot-hotline-desktop-7dc20938-800.webp",
+      "bytes": 56850,
+      "sha256": "bddf91474c6eee4b7fd89af27395420f428b0c224f8a359c7efd109f88f1afc8"
+    },
+    {
+      "path": "app/public/assets/reader-images/venuecircuit-desktop-top-4068fa39-1200.webp",
+      "bytes": 49772,
+      "sha256": "9948225fe26f0abf151ab43fb7e8fa298bce6aa27fb21116f3516e461b293bde"
+    },
+    {
+      "path": "app/public/assets/reader-images/venuecircuit-desktop-top-4068fa39-480.webp",
+      "bytes": 14790,
+      "sha256": "1d1a85d709f752502544fd6013989a5e290d87b7e0412158889b2f273011e666"
+    },
+    {
+      "path": "app/public/assets/reader-images/venuecircuit-desktop-top-4068fa39-800.webp",
+      "bytes": 29620,
+      "sha256": "2e84e7fde10254460ff0e5127a34cd664444ec8418eb29bd0dad975fa6b395d8"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/aha-laser/index.html",
+      "bytes": 10275,
+      "sha256": "92c5559871d18657ea9ee6c50bc3cc4d1abc7dc99e700404ea8cc7df61943226"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/goliath/index.html",
+      "bytes": 9679,
+      "sha256": "4334f93f6e846c0a7e4a4a1adb761594d247d305373451085f2519e5c30e76bf"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/growth-street/index.html",
+      "bytes": 13751,
+      "sha256": "4d1577505983d094cf7ff3369b247e75efa53a08e29c979878cc885eff32a47e"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/micro-animations/index.html",
+      "bytes": 13391,
+      "sha256": "187ab22634c9161ffa08143a4307502139af9ef87668846294822d3e1735a886"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/pill-scroll/index.html",
+      "bytes": 9813,
+      "sha256": "2ecfad32a42cf0ac410062668a3d41528a9feec9d015bdd2214e0ffe88e05214"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/studio-engine/index.html",
+      "bytes": 10499,
+      "sha256": "98f633a748ab174d80473d0d7dab2b941a140268326b0439e0023a91cd805e1f"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/terminal-3d/index.html",
+      "bytes": 4644,
+      "sha256": "e29b7cd2e62f91f6112053bd89ce7d7ba1b9e14b6de9f3db670f308573985a34"
+    },
+    {
+      "path": "app/public/examples/lab/concepts/walkup-3d/index.html",
+      "bytes": 2993,
+      "sha256": "e4370d8bd5f36b73c1d765fe9fb018ab9a2d22a927bbf215263d0fb59fbbfcfd"
+    },
+    {
+      "path": "app/public/examples/lab/suites/brand-campaign/index.html",
+      "bytes": 10350,
+      "sha256": "44584ccdfcaf6387fb4b119eab1ddc06ef4718e88e86b9dcd9e81947e54fea03"
+    },
+    {
+      "path": "app/public/examples/lab/suites/business-systems/index.html",
+      "bytes": 11136,
+      "sha256": "d5fc40007c727bc2c17ecbcd0060553a3d792d8b2e7a64af175a2536ed9b5fa2"
+    },
+    {
+      "path": "app/public/examples/lab/suites/cinema/index.html",
+      "bytes": 10385,
+      "sha256": "1e15e77ff08bd4a6a3fe57b882b296632b37a9040a29e801a4aea43708f1b7d8"
+    },
+    {
+      "path": "app/public/examples/lab/suites/motion-playground/index.html",
+      "bytes": 11617,
+      "sha256": "0ca6540fbc19c313d99a1a224f9eec6eae005acb9d4393279549d3406bee3b6c"
+    },
+    {
+      "path": "app/public/examples/lab/suites/spatial-nyc/index.html",
+      "bytes": 10882,
+      "sha256": "1a3253e8de6ed833ba82fc6723b82c9094196a9123e0f08bb16c7defbed30bbb"
+    },
+    {
+      "path": "app/scripts/approved_screens.py",
+      "bytes": 10956,
+      "sha256": "5a558d252210c57cdfc844d51eab5b488b6a63eb3546a852f290d16d26fc6309"
+    },
+    {
+      "path": "app/scripts/build-reader-images.py",
+      "bytes": 1903,
+      "sha256": "761c5805b09bcc65e68256e71f28c69ad90cf13352e5949309377143eef16d7e"
+    },
+    {
+      "path": "app/scripts/build-tile-preview.py",
+      "bytes": 69599,
+      "sha256": "64367fa6b3d176d31e99deded720a63a181def3048a00a28137e69d2b2f5ad8a"
+    },
+    {
+      "path": "app/scripts/homepage_proof.py",
+      "bytes": 7647,
+      "sha256": "f42ff28f91fc860f4522fefb0a7a665ddea7dce07959a353695ae8dc348939e1"
+    },
+    {
+      "path": "app/scripts/measure-mosaic-layout.cjs",
+      "bytes": 3218,
+      "sha256": "c9c47cf1da7e8bad37f491eb3f556a975700a100c56b5c9b65a57ebbd8e56a92"
+    },
+    {
+      "path": "app/scripts/measure-release-performance.mjs",
+      "bytes": 3414,
+      "sha256": "a47fb069fc6447b247d31387e97ee443dd14b1fa4d791926e9f0835b602c713e"
+    },
+    {
+      "path": "app/scripts/measure-sculpture-delivery.cjs",
+      "bytes": 3759,
+      "sha256": "823c671be7b89b9b09b9d29fb1abf6ea6f0baeb5f9c3176a0aac5bde0d528ed4"
+    },
+    {
+      "path": "app/scripts/portfolio_media.py",
+      "bytes": 5059,
+      "sha256": "1a639beb0438a987da9a745b9934e034123211fc33418e8e716e979f27e971bd"
+    },
+    {
+      "path": "app/scripts/quality-tiles.mjs",
+      "bytes": 7648,
+      "sha256": "97b487da3945078efa8d99346b9d70b99ae4d5cb6a9bf5dac21462c28b9988d4"
+    },
+    {
+      "path": "app/scripts/sculpture_tiles.py",
+      "bytes": 21182,
+      "sha256": "2eda5212ba17091785a8f10877bfd6799386fa91f3058efbc9074d23245fe72d"
+    },
+    {
+      "path": "app/scripts/test-lab-metadata.mjs",
+      "bytes": 3831,
+      "sha256": "49a00d4ebcc7e8368c39d12a1c18436a1c2d9805711b67c3782433d813c47430"
+    },
+    {
+      "path": "app/scripts/test-sculpture-delivery.cjs",
+      "bytes": 2582,
+      "sha256": "7580783a1e77a30fdc57dc67735a4c30da3ba6030ad342400a29b9a813198513"
+    },
+    {
+      "path": "app/scripts/tile_stylesheets.py",
+      "bytes": 1168,
+      "sha256": "2644fd9d5987c7f6a392238f928a37754151da95bbb1c0cf1bb0f26337643cc0"
+    },
+    {
+      "path": "app/scripts/verify-bloom-motion.cjs",
+      "bytes": 11461,
+      "sha256": "30568c360b7588d55b43f58449782a7f9fa13e034a87c2ff6f5b425f7c01aef4"
+    },
+    {
+      "path": "app/scripts/verify-hero-reference.cjs",
+      "bytes": 3970,
+      "sha256": "9928c093b922cfda2a2bb102c368d2421e91a897c411cd9d0e735d3c9175ee02"
+    },
+    {
+      "path": "app/scripts/verify-reader-delivery.cjs",
+      "bytes": 5545,
+      "sha256": "165a20de64eaa38258f86ab6e8e41784ad227e9b8e2701abf6aa6a6a5d9c9915"
+    },
+    {
+      "path": "app/scripts/verify-sculpture.cjs",
+      "bytes": 19643,
+      "sha256": "abe1071b0053b63703cd4708a99dcb14092f2e738cafa6fc1f6c1be0a604a8f8"
+    }
+  ]
+}

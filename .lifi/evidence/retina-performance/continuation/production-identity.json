@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-10T09:16:07.618437+00:00",
+  "siteId": "0907d8fe-7018-48db-a6be-1f906e4b2619",
+  "siteName": "littlefightnyc",
+  "primaryUrl": "https://littlefightnyc.com",
+  "publishedDeployId": "6ac92de00a75ee000854a287",
+  "deployState": "ready",
+  "commit": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+  "publishedAt": "2026-10-09T18:10:40.215Z",
+  "method": "Read-only Netlify get-project currentDeploy and get-deploy-for-site",
+  "localWorkPublished": false
+}

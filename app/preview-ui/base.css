@@ -62,6 +62,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .utility-nav{display:flex;flex-wrap:wrap;justify-content:flex-start;align-items:center;width:100%;margin:0;padding:0;background:transparent;border:0;border-radius:0;font-size:16px}
 .utility-nav :is(a,.privacy-control){display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;border:0;background:transparent;color:#d3d3d9;font:inherit;text-decoration:none}
 .utility-nav :is(a,.privacy-control):hover,.utility-nav :is(a,.privacy-control):focus-visible{color:var(--lf-paper);text-decoration:underline;text-underline-offset:4px}
+.utility-nav [data-motion-toggle][hidden]{display:none}
+.utility-nav [data-motion-toggle]:disabled{cursor:default;color:#aeb0b7;text-decoration:none}
 
 @media (min-width:761px) and (max-width:1000px){
   /* This range has room for one calm navigation row.  Stacking the header

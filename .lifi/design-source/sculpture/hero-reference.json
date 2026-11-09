@@ -1,7 +1,7 @@
 {
   "kind": "owner-supplied-master-artwork",
   "authorization": "Owner instruction October 8, 2026: make this exact Master Design Mockup.png. The artwork is extracted from that supplied file without generation or substitution.",
-  "source": "/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Master Design Mockup.png",
+  "source": ".lifi/design-source/sculpture/approved-hero-master.png",
   "sourceSha256": "c64745aef55ea754f4b980701bafadd523b270c7307240e754ebdb0bb6253e38",
   "method": "Native-resolution lossless illustration crops. Desktop copy and CTA regions are made transparent for semantic HTML. Visible illustration RGB is unchanged. This is the supplied design artwork, not a newly captured client website.",
   "outputs": [

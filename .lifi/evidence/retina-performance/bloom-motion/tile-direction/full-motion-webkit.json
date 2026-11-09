@@ -1,0 +1,830 @@
+[
+  {
+    "id": "page-services-custom-local-websites",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999997, 0.00249, -0.00249, 0.999997, 0, 1.043078)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999943, -0.010646, 0.010646, 0.999943, 0, -0.034022)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-chromatic-painting-design",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999995, -0.003306, 0.003306, 0.999995, 0, -0.622474)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999957, -0.009268, 0.009268, 0.999957, 0, -0.081389)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-hair-by-rachel-charles",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-1",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "speed",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999996, 0.002871, -0.002871, 0.999996, 0, 1.14396)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999927, -0.012096, 0.012096, 0.999927, 0, 0.01584)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "booking",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-4",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999748, -0.022457, 0.022457, 0.999748, 0, 0.372072)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-cc-films",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999978, 0.00662, -0.00662, 0.999978, 0, 2.135149)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999647, -0.026569, 0.026569, 0.999647, 0, 0.513476)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-easy-tiger",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999983, 0.005822, -0.005822, 0.999983, 0, 1.924077)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999725, -0.023454, 0.023454, 0.999725, 0, 0.406367)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-the-break-room",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.99997, 0.007747, -0.007747, 0.99997, 0, 2.433367)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.99952, -0.030996, 0.030996, 0.99952, 0, 0.665741)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-clearhelp",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999965, 0.008336, -0.008336, 0.999965, 0, 2.589074)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999445, -0.033319, 0.033319, 0.999445, 0, 0.745635)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-brothers-pizzeria",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999981, 0.006083, -0.006083, 0.999981, 0, 1.993182)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999701, -0.024472, 0.024472, 0.999701, 0, 0.441371)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-grand-funding-llc",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-logan-loans",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-the-tarot-hotline",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-industries",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-services-it-support",
+    "art": {
+      "name": "sculpture-clay-settle",
+      "transform": "matrix(1.005198, -0.003492, 0.003456, 0.99479, 0, -0.398079)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999896, -0.014414, 0.014414, 0.999896, 0, 0.095525)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "wifi",
+    "art": {
+      "name": "sculpture-clay-settle",
+      "transform": "matrix(0.999657, -0.026177, 0.026177, 0.999657, 0, -3)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "email",
+    "art": {
+      "name": "sculpture-paper-settle",
+      "transform": "matrix(0.999973, -0.007282, 0.007282, 0.999973, 0, 0.362052)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999943, -0.010646, 0.010646, 0.999943, 0, -0.034022)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-3",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "computer",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "printer",
+    "art": {
+      "name": "sculpture-clay-settle",
+      "transform": "matrix(1.005729, -0.001184, 0.001171, 0.994269, 0, -0.134955)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999963, -0.008605, 0.008605, 0.999963, 0, -0.10417)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "backup",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-security-basics",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-password-ownership",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-video-call-room",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-2",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-storage-full",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-payment-device-check",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "it-vendor-handoff",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-areas",
+    "art": {
+      "name": "sculpture-clay-settle",
+      "transform": "matrix(1.005607, -0.001716, 0.001697, 0.99439, 0, -0.195551)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999957, -0.009268, 0.009268, 0.999957, 0, -0.081389)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-services-tech-consulting",
+    "art": {
+      "name": "sculpture-paper-settle",
+      "transform": "matrix(0.999947, -0.010309, 0.010309, 0.999947, 0, 0.651119)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999857, -0.01691, 0.01691, 0.999857, 0, 0.181334)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "album-nyc",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "maps",
+    "art": {
+      "name": "sculpture-paper-settle",
+      "transform": "matrix(0.999978, -0.006611, 0.006611, 0.999978, 0, 0.297979)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999957, -0.009268, 0.009268, 0.999957, 0, -0.081389)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "web-redesign-decision",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999968, -0.007965, 0.007965, 0.999968, 0, -1.734966)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999587, -0.028745, 0.028745, 0.999587, 0, 0.588305)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "album-hospitality",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "album-roofing",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.99997, 0.007747, -0.007747, 0.99997, 0, 2.433367)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.99952, -0.030996, 0.030996, 0.99952, 0, 0.665741)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "album-shops",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-5",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "consulting-first-priority",
+    "art": {
+      "name": "sculpture-paper-settle",
+      "transform": "matrix(0.999391, -0.034899, 0.034899, 0.999391, 0, 3)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "consulting-tool-choice",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "consulting-second-opinion",
+    "art": {
+      "name": "sculpture-clay-settle",
+      "transform": "matrix(1.005607, -0.001716, 0.001697, 0.99439, 0, -0.195551)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999951, -0.009948, 0.009948, 0.999951, 0, -0.058011)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-7",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-services-business-systems",
+    "art": {
+      "name": "sculpture-stack-settle",
+      "transform": "matrix(0.99259, 0, 0, 0.99259, 0, 0.967202)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999884, -0.015226, 0.015226, 0.999884, 0, 0.123435)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-venuecircuit",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "page-vera",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999848, -0.017452, 0.017452, 0.999848, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "software-repeat-work",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999962, -0.008764, 0.008764, 0.999962, 0, -1.925586)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999483, -0.032149, 0.032149, 0.999483, 0, 0.705392)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "google-review-6",
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "software-approval-path",
+    "art": {
+      "name": "sculpture-stamp-settle",
+      "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, -4)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-deckspace",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "case-after-hours-agenda",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999998, 0.002127, -0.002127, 0.999998, 0, 0.946969)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999957, -0.009268, 0.009268, 0.999957, 0, -0.081389)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "lab-pool-room",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "lab-walkup-3d",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999993, 0.003691, -0.003691, 0.999993, 0, 1.360642)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999884, -0.015226, 0.015226, 0.999884, 0, 0.123435)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "lab-micro-animations",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999997, 0.00249, -0.00249, 0.999997, 0, 1.043078)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999943, -0.010646, 0.010646, 0.999943, 0, -0.034022)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "lab-cabinet-concept",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "lab-house-explorer",
+    "art": {
+      "name": "sculpture-frame-settle",
+      "transform": "matrix(0.999848, 0.017452, -0.017452, 0.999848, 0, 5)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.997564, -0.069756, 0.069756, 0.997564, 0, 2)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "software-connect-existing-tools",
+    "art": {
+      "name": "sculpture-cast-settle",
+      "transform": "matrix(0.999992, -0.003993, 0.003993, 0.999992, 0, -0.786633)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999927, -0.012096, 0.012096, 0.999927, 0, 0.01584)",
+      "duration": 320,
+      "iterations": 1
+    }
+  },
+  {
+    "id": "software-business-ownership",
+    "art": {
+      "name": "sculpture-stack-settle",
+      "transform": "matrix(0.994125, 0, 0, 0.994125, 0, 0.702565)",
+      "duration": 360,
+      "iterations": 1
+    },
+    "icon": {
+      "name": "sculpture-symbol-settle",
+      "transform": "matrix(0.999943, -0.010646, 0.010646, 0.999943, 0, -0.034022)",
+      "duration": 320,
+      "iterations": 1
+    }
+  }
+]

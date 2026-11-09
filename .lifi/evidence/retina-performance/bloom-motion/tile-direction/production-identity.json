@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-10T12:26:54.098620+00:00",
+  "url": "https://littlefightnyc.com/release.json",
+  "siteId": "0907d8fe-7018-48db-a6be-1f906e4b2619",
+  "release": {
+    "schema_version": 1,
+    "project": "Little Fight NYC",
+    "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+    "branch": "main",
+    "context": "production",
+    "built_at": "2026-10-09T18:10:06.327Z",
+    "source_dirty": false
+  },
+  "action": "read only; system curl TLS verified"
+}

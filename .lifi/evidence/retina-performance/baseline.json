@@ -1,0 +1,85 @@
+{
+  "base": "http://127.0.0.1:64886",
+  "capturedAt": "2026-10-10T06:22:19.366Z",
+  "method": "Lighthouse 13.5.0, installed Google Chrome, serial mobile simulated throttling; lab evidence, not field Core Web Vitals",
+  "release": {
+    "schema_version": 1,
+    "project": "Little Fight NYC",
+    "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+    "branch": "main",
+    "context": "production",
+    "built_at": "2026-10-09T18:09:06.170Z",
+    "source_dirty": false
+  },
+  "pages": [
+    {
+      "name": "home-mobile",
+      "route": "/",
+      "lcpBudget": 2500,
+      "runs": [
+        {
+          "score": 93,
+          "lcp": 3153.9768000000004,
+          "tbt": 110,
+          "cls": 0
+        },
+        {
+          "score": 94,
+          "lcp": 3002.0766999999996,
+          "tbt": 103.99999999999977,
+          "cls": 0
+        },
+        {
+          "score": 93,
+          "lcp": 3002.236799999999,
+          "tbt": 127,
+          "cls": 0
+        }
+      ],
+      "median": {
+        "score": 93,
+        "lcp": 3002.236799999999,
+        "tbt": 110,
+        "cls": 0
+      }
+    },
+    {
+      "name": "websites-mobile",
+      "route": "/services/custom-local-websites/",
+      "lcpBudget": 3500,
+      "runs": [
+        {
+          "score": 86,
+          "lcp": 3978.57225,
+          "tbt": 0,
+          "cls": 0
+        },
+        {
+          "score": 86,
+          "lcp": 3977.6299500000005,
+          "tbt": 0,
+          "cls": 0.0006821339795189519
+        },
+        {
+          "score": 86,
+          "lcp": 3978.1686,
+          "tbt": 0,
+          "cls": 0.0006821339795189519
+        }
+      ],
+      "median": {
+        "score": 86,
+        "lcp": 3978.1686,
+        "tbt": 0,
+        "cls": 0.0006821339795189519
+      }
+    }
+  ],
+  "failures": [
+    "home-mobile: median LCP above 2500ms",
+    "websites-mobile: median score below 90",
+    "websites-mobile: median LCP above 3500ms"
+  ],
+  "result": "failed",
+  "purpose": "Unmodified released artifact served through the same local server for a like-for-like comparison."
+}

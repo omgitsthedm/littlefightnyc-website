@@ -96,7 +96,9 @@
     tileObserver.observe(tile);
     tile.addEventListener('pointerenter', () => request(tile), { passive: true });
     tile.addEventListener('focusin', () => request(tile));
-    tile.addEventListener('pointermove', event => {
+    // Sculptural fronts have a static ceramic bloom, so pointer tracking would
+    // measure layout and rewrite styles without changing a single visible pixel.
+    if (tile.dataset.sculpture !== 'true') tile.addEventListener('pointermove', event => {
       if (!motionEnabled()) return;
       const box = tile.getBoundingClientRect();
       if (!box.width || !box.height) return;
@@ -105,7 +107,7 @@
       tile.style.setProperty('--mineral-x', `${x.toFixed(1)}%`);
       tile.style.setProperty('--mineral-y', `${y.toFixed(1)}%`);
     }, { passive: true });
-    tile.addEventListener('pointerleave', () => {
+    if (tile.dataset.sculpture !== 'true') tile.addEventListener('pointerleave', () => {
       tile.style.removeProperty('--mineral-x');
       tile.style.removeProperty('--mineral-y');
     }, { passive: true });
@@ -271,4 +273,110 @@
   new MutationObserver(records => {
     if (records.some(record => record.attributeName === 'class')) pauseAll();
   }).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+})();
+
+/* Original signal-field ornament: sparse red pixels on quiet circuit paths.
+ * One bounded canvas, no media/dependency requests, and no work while paused. */
+(() => {
+  'use strict';
+  if (!document.body.classList.contains('mosaic-home')) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const contrast = matchMedia('(forced-colors: active)');
+  const connection = navigator.connection;
+  const allowed = () => !document.hidden && !reduced.matches && !contrast.matches && !connection?.saveData &&
+    !document.body.matches('.no-motion, .reader-open, .explore-open');
+  let canvas, context, width = 0, height = 0, timer = 0, frame = 0, phase = 0;
+  let paths = [], dots = [], ready = false, resizeTimer = 0, activePage = true;
+  const seed = n => { const value = Math.sin(n * 127.1 + 311.7) * 43758.5453; return value - Math.floor(value); };
+  const stop = () => { clearTimeout(timer); cancelAnimationFrame(frame); timer = frame = 0; };
+  const point = (path, distance) => {
+    const first = path.turnX + 64;
+    if (distance < first) return [distance - 64, path.y];
+    if (distance < first + path.rise) return [path.turnX, path.y + (distance - first) * path.direction];
+    return [path.turnX + distance - first - path.rise, path.y + path.rise * path.direction];
+  };
+  const draw = () => {
+    context.clearRect(0, 0, width, height);
+    // A faint, fixed matrix gives the moving signals context without a texture file.
+    context.fillStyle = '#eb514a';
+    dots.forEach(dot => { context.globalAlpha = dot.alpha; context.fillRect(dot.x, dot.y, 1, 1); });
+    paths.forEach(path => {
+      const distance = (path.offset + phase * path.speed) % path.length;
+      for (let tail = 3; tail >= 0; tail--) {
+        const [x, y] = point(path, (distance - tail * 8 + path.length) % path.length);
+        const edge = .45 + .55 * Math.abs(x - width / 2) / (width / 2);
+        context.globalAlpha = edge * (tail ? .14 : .72);
+        context.fillStyle = tail ? '#d94440' : '#f8594e';
+        context.fillRect(Math.round(x), Math.round(y), tail ? 2 : 3, 2);
+        if (!tail) {
+          context.globalAlpha = edge * .065;
+          context.fillRect(Math.round(x) - 3, Math.round(y) - 3, 9, 8);
+        }
+      }
+    });
+    context.globalAlpha = 1;
+  };
+  const size = () => {
+    const nextWidth = innerWidth, nextHeight = innerHeight;
+    if (nextWidth === width && nextHeight === height) return;
+    width = nextWidth; height = nextHeight;
+    const scale = Math.min(devicePixelRatio || 1, width < 700 ? 1 : 1.25);
+    canvas.width = Math.ceil(width * scale); canvas.height = Math.ceil(height * scale);
+    context.setTransform(scale, 0, 0, scale, 0, 0);
+    dots = [];
+    for (let x = 20; x < width; x += 40) for (let y = 20; y < height; y += 40) {
+      if (seed(x + y * 3) < .24) dots.push({ x, y, alpha: .085 + .075 * Math.abs(x - width / 2) / (width / 2) });
+    }
+    paths = Array.from({ length: width < 700 ? 12 : 24 }, (_, i) => {
+      const rise = (2 + Math.floor(seed(i + 90) * 4)) * 40;
+      return { y: Math.floor(seed(i + 4) * height / 40) * 40 + 20,
+        turnX: Math.floor((.2 + seed(i + 12) * .6) * width / 40) * 40 + 20,
+        rise, direction: i % 2 ? -1 : 1, length: width + 128 + rise,
+        offset: seed(i + 70) * (width + rise), speed: 12 + seed(i + 31) * 12 };
+    });
+    draw();
+  };
+  const tick = () => {
+    frame = 0;
+    if (!activePage || !allowed()) { stop(); return; }
+    phase += 1 / 20;
+    draw();
+    // Sleep between frames; do not wake a 60/120Hz display to discard frames.
+    timer = setTimeout(() => { timer = 0; frame = requestAnimationFrame(tick); }, 50);
+  };
+  const sync = () => {
+    stop();
+    if (!ready || !activePage || !allowed()) {
+      if (canvas) canvas.dataset.state = 'paused';
+      return;
+    }
+    if (!canvas) {
+      canvas = document.createElement('canvas');
+      canvas.className = 'signal-field'; canvas.setAttribute('aria-hidden', 'true');
+      context = canvas.getContext('2d');
+      if (!context) { canvas = undefined; return; }
+      document.body.prepend(canvas);
+      size();
+    }
+    canvas.dataset.state = 'running';
+    frame = requestAnimationFrame(tick);
+  };
+  const start = () => {
+    const initialize = () => { ready = true; sync(); };
+    if ('requestIdleCallback' in window) requestIdleCallback(initialize, { timeout: 1800 });
+    else setTimeout(initialize, 300);
+  };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
+  document.addEventListener('visibilitychange', sync);
+  reduced.addEventListener('change', sync);
+  contrast.addEventListener('change', sync);
+  connection?.addEventListener?.('change', sync);
+  new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('pagehide', () => { activePage = false; stop(); clearTimeout(resizeTimer); });
+  window.addEventListener('pageshow', () => { activePage = true; sync(); });
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => { if (canvas) size(); }, 150);
+  }, { passive: true });
 })();

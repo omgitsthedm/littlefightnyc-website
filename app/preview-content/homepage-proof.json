@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "sourcePolicy": "Process language is limited to the written service terms already published on the website. Case proof must use named public work with a current source, or an existing case-study fact. Google review excerpts are never assigned to a client unless the review record names that client.",
+  "process": {
+    "eyebrow": "How the work moves",
+    "heading": "See it first. Price it clearly. Build it together.",
+    "intro": "Start with the public customer path. Paid work starts only after the written scope makes the work clear.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "First look",
+        "body": "Show us the business and what needs to work better. We look at the public path and name the useful next move."
+      },
+      {
+        "number": "02",
+        "title": "Written scope and price",
+        "body": "Before paid work starts, you get the scope, exact price, responsibilities, review rounds, launch timing, and support terms in writing."
+      },
+      {
+        "number": "03",
+        "title": "Build, review, launch",
+        "body": "We build the agreed work. You review the working pages and customer path before launch."
+      }
+    ],
+    "action": {
+      "href": "/tech-audit/?intent=website",
+      "label": "Get a free first look"
+    }
+  },
+  "caseProof": {
+    "eyebrow": "Built sites. Publicly checkable.",
+    "heading": "Two customer paths, live now.",
+    "sourcePrefix": "Source",
+    "checkedPrefix": "Checked",
+    "items": [
+      {
+        "client": "Chromatic Painting & Design",
+        "caseHref": "/case-studies/chromatic-painting-design/",
+        "summary": "A Phoenix customer can recognize the work, find the relevant service, and start a project conversation without a generic contractor maze.",
+        "sourceHref": "https://chromaticaz.com/",
+        "sourceLabel": "chromaticaz.com",
+        "verifiedAt": "2026-10-09"
+      },
+      {
+        "client": "Hair By Rachel Charles",
+        "caseHref": "/case-studies/hair-by-rachel-charles/",
+        "summary": "A new client can book without a DM detour. The site explains Rachel’s work, then hands off to the booking tool clients already know.",
+        "sourceHref": "https://hairbyrachelcharles.com/",
+        "sourceLabel": "hairbyrachelcharles.com",
+        "verifiedAt": "2026-10-09"
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "artifactSha256": "d84c501a757028ec001a76bcc4bb6e8853e7aaa55932b5a1a3dd32cb56f4f108",
+  "routes": 421,
+  "tiles": 58,
+  "preview": "http://127.0.0.1:64358/",
+  "published": false,
+  "performance": [
+    {
+      "page": "home-mobile",
+      "before": {
+        "score": 93,
+        "lcp": 3002.236799999999,
+        "tbt": 110,
+        "cls": 0
+      },
+      "after": {
+        "score": 98,
+        "lcp": 2252.1285,
+        "tbt": 105,
+        "cls": 0
+      },
+      "lcpImprovementPercent": 25.0
+    },
+    {
+      "page": "websites-mobile",
+      "before": {
+        "score": 86,
+        "lcp": 3978.1686,
+        "tbt": 0,
+        "cls": 0.0006821339795189519
+      },
+      "after": {
+        "score": 92,
+        "lcp": 3077.9863499999997,
+        "tbt": 0,
+        "cls": 0
+      },
+      "lcpImprovementPercent": 22.6
+    }
+  ],
+  "initialCss": {
+    "beforeGzip": 40396,
+    "afterGzip": 22253,
+    "reductionPercent": 44.9
+  },
+  "checks": {
+    "functional": "quality-final.log",
+    "heroWide": "hero-wide.log",
+    "performance": "performance.json"
+  }
+}

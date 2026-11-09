@@ -1,0 +1,145 @@
+/* A compact afterword to the tile wall. It holds written process terms and
+   two checkable public client paths without competing with the sculpture. */
+.mosaic-home .homepage-proof {
+  padding: 8px 0 0;
+  color: #f7f7f5;
+  background: transparent;
+}
+
+.mosaic-home .homepage-proof__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr) auto;
+  grid-template-areas: "head steps action" "cases cases cases";
+  gap: 16px;
+  align-items: stretch;
+  padding: 18px;
+  border-top: 1px solid #ffffff1c;
+  border-bottom: 1px solid #ffffff12;
+  background: linear-gradient(115deg, #0d1216, #090b0e 68%);
+}
+
+.mosaic-home .homepage-proof__head {
+  grid-area: head;
+  min-width: 0;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+
+.mosaic-home .homepage-proof__head > p,
+.mosaic-home .homepage-proof__cases > div > p,
+.mosaic-home .homepage-case-proof__eyebrow {
+  margin: 0;
+  color: #ff9957;
+  font-family: "Atkinson Hyperlegible Next", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mosaic-home .homepage-proof h2,
+.mosaic-home .homepage-proof h3 {
+  margin: 0;
+  color: #f7f7f5;
+  font-family: "Atkinson Hyperlegible Next", Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.mosaic-home .homepage-proof h2 { font-size: clamp(21px, 2vw, 29px); line-height: 1.06; }
+.mosaic-home .homepage-proof__head > span { max-width: 42ch; color: #c7cbcf; font-size: 14px; line-height: 1.42; text-wrap: pretty; }
+
+.mosaic-home .homepage-proof__steps,
+.mosaic-home .homepage-proof__cases {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mosaic-home .homepage-proof__steps {
+  grid-area: steps;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-left: 1px solid #ffffff15;
+}
+
+.mosaic-home .homepage-proof__steps li {
+  min-width: 0;
+  padding: 1px 12px 4px;
+  border-right: 1px solid #ffffff15;
+}
+
+.mosaic-home .homepage-proof__steps span {
+  display: block;
+  margin-bottom: 11px;
+  color: #ff883f;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.mosaic-home .homepage-proof__steps strong { color: #f7f7f5; font-size: 15px; line-height: 1.12; }
+.mosaic-home .homepage-proof__steps p { margin: 7px 0 0; color: #b8bec3; font-size: 13px; line-height: 1.35; text-wrap: pretty; }
+
+.mosaic-home .homepage-proof__cases {
+  grid-area: cases;
+  grid-template-columns: minmax(0, 0.67fr) repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: #ffffff12;
+  border: 1px solid #ffffff15;
+}
+
+.mosaic-home .homepage-proof__cases > div,
+.mosaic-home .homepage-case-proof { min-width: 0; padding: 11px 12px; background: #0a0d10; }
+.mosaic-home .homepage-proof__cases > div { display: grid; align-content: center; gap: 5px; }
+.mosaic-home .homepage-proof__cases h3 { font-size: 15px; line-height: 1.12; }
+
+.mosaic-home .homepage-case-proof { display: grid; align-content: start; gap: 6px; }
+.mosaic-home .homepage-case-proof__eyebrow { display: none; }
+.mosaic-home .homepage-case-proof h3 { font-size: 15px; line-height: 1.12; }
+.mosaic-home .homepage-case-proof h3 a { color: inherit; text-decoration: underline; text-decoration-color: #ff883f99; text-underline-offset: 0.2em; }
+.mosaic-home .homepage-case-proof > p:not([class]) { margin: 0; color: #c7cbcf; font-size: 12px; line-height: 1.35; text-wrap: pretty; }
+.mosaic-home .homepage-case-proof__source { margin: 0; color: #959ca2; font-size: 11px; line-height: 1.35; }
+.mosaic-home .homepage-case-proof__source a { color: #ffae78; font-weight: 700; }
+
+.mosaic-home .homepage-proof__action {
+  grid-area: action;
+  display: inline-flex;
+  align-self: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #ffc19b;
+  border-radius: 999px;
+  color: #170b05;
+  background: linear-gradient(#ffae78, #ff7839);
+  box-shadow: inset 0 1px 1px #ffe0c6a8, 0 0 15px #ff742520;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 180ms cubic-bezier(0.2, 0, 0, 1), transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.mosaic-home .homepage-proof__action:hover,
+.mosaic-home .homepage-proof__action:focus-visible { color: #170b05; background: #ffb184; }
+.mosaic-home .homepage-proof__action:active { transform: scale(0.96); }
+
+@media (max-width: 1080px) {
+  .mosaic-home .homepage-proof__inner { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "head action" "steps steps" "cases cases"; }
+}
+
+@media (max-width: 600px) {
+  .mosaic-home .homepage-proof__inner { grid-template-columns: minmax(0, 1fr); grid-template-areas: "head" "steps" "cases" "action"; gap: 14px; padding: 15px 12px; }
+  .mosaic-home .homepage-proof__steps { grid-template-columns: 1fr; gap: 10px; border-left: 0; }
+  .mosaic-home .homepage-proof__steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 0 8px; padding: 0; border-right: 0; }
+  .mosaic-home .homepage-proof__steps span { grid-row: span 2; margin: 1px 0 0; }
+  .mosaic-home .homepage-proof__steps p { margin-top: 3px; }
+  .mosaic-home .homepage-proof__cases { grid-template-columns: 1fr; }
+  .mosaic-home .homepage-proof__cases > div { padding-bottom: 7px; }
+  .mosaic-home .homepage-proof__action { width: 100%; }
+}

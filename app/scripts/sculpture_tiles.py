@@ -179,6 +179,14 @@ def image(name, cls='', eager=False, alt=''):
     if cls.startswith('hero-image-'):
         sizes={'hero-image-main':'(max-width: 600px) 73vw, 790px', 'hero-image-secondary':'(max-width: 600px) 45vw, 490px', 'hero-image-stage':'(max-width: 600px) 100vw, 1320px', 'hero-image-boat':'(max-width: 600px) 30vw, 330px'}[cls]
     elif eager:sizes='(max-width: 600px) 80vw, (max-width: 1000px) 71vw, 770px'
+    # Lazy tile art has a stable rendered box, so browsers that implement
+    # `sizes=auto` can select from the existing 480/800/full sources using
+    # that exact box instead of an intentionally conservative estimate. The
+    # following media list remains the explicit fallback for Safari versions
+    # that do not implement automatic sizes. Eager artwork must keep a
+    # deterministic source size during first paint.
+    if variants and not eager:
+        sizes='auto, '+sizes
     responsive=' srcset="'+', '.join(ASSET+E(v['file'])+' '+str(v['width'])+'w' for v in variants)+'" sizes="'+sizes+'"' if variants else ''
     width,height=image_dimensions(name)
     return f'<img class="sculpture-object {E(cls)}" src="{ASSET}{E(name)}.webp"{responsive} width="{width}" height="{height}" alt="{E(alt)}" loading="{"eager" if eager else "lazy"}" decoding="async"'+(' fetchpriority="high"' if eager and cls=='hero-image-main' else '')+'>'
@@ -266,7 +274,13 @@ def sculptural_mosaic(markup):
         attrs['data-mobile-columns']=str(mcols);attrs['data-mobile-rows']=str(mrows)
         attrs['data-columns']=str(cols);attrs['data-rows']=str(rows)
         attrs['style']=f'--preferred-columns:{cols};--preferred-rows:{rows};--mobile-columns:{mcols};--mobile-rows:{mrows}'
-        if not attrs.get('aria-label'):
+        # The original answers use a long spoken question as their accessible
+        # name. These two card fronts deliberately show shorter, direct
+        # labels, so keep speech and visible text in agreement while retaining
+        # the authored question in the reader and source `title` attribute.
+        if identity in {'printer', 'it-security-basics'}:
+            attrs['aria-label']=_text(title)
+        elif not attrs.get('aria-label'):
             attrs['aria-label']=_text(title)+(('. '+copy) if copy else '')
         heading='blockquote' if modifier=='review' else 'strong'
         symbol=f'<span class="mineral-icon sculpture-symbol'+(' sculpture-service-icon' if is_service else '')+f'" aria-hidden="true" style="--mineral-asset:url(/assets/mineral/{E(icon)}.svg)"></span>'

@@ -1,0 +1,3068 @@
+[
+  {
+    "index": 1,
+    "id": "page-services-custom-local-websites",
+    "title": "Websites",
+    "kind": "service",
+    "art": "browser-chromatic-painting-design",
+    "ratio": "1.3490813648293962",
+    "family": "web",
+    "geometry": {
+      "x": 66,
+      "y": 995.796875,
+      "width": 648,
+      "height": 208
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 303.609375,
+      "height": 206
+    },
+    "titleBox": {
+      "x": 21,
+      "y": 79.5,
+      "width": 150,
+      "height": 39.328125
+    },
+    "image": {
+      "x": 261.875,
+      "y": 6,
+      "width": 381.125,
+      "height": 201
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/browser-chromatic-painting-design-480.webp",
+    "fit": "cover",
+    "position": "50% 0%",
+    "scrollOverflow": false,
+    "screenshot": "01-page-services-custom-local-websites-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 2,
+    "id": "page-services-it-support",
+    "title": "Tech support",
+    "kind": "service",
+    "art": "router",
+    "ratio": "2.5",
+    "family": "it",
+    "geometry": {
+      "x": 726,
+      "y": 995.796875,
+      "width": 648,
+      "height": 208
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 303.609375,
+      "height": 206
+    },
+    "titleBox": {
+      "x": 21,
+      "y": 79.5,
+      "width": 215.9375,
+      "height": 39.328125
+    },
+    "image": {
+      "x": 275.25,
+      "y": 6,
+      "width": 361.75,
+      "height": 198
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/router-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "02-page-services-it-support-1440.png",
+    "alphaBounds": {
+      "size": [
+        1600,
+        640
+      ],
+      "bbox": [
+        167,
+        55,
+        1424,
+        600
+      ],
+      "fractions": [
+        0.104,
+        0.086,
+        0.89,
+        0.938
+      ]
+    }
+  },
+  {
+    "index": 3,
+    "id": "page-services-tech-consulting",
+    "title": "Consulting",
+    "kind": "service",
+    "art": "notebook",
+    "ratio": "1.25",
+    "family": "consulting",
+    "geometry": {
+      "x": 66,
+      "y": 1215.796875,
+      "width": 648,
+      "height": 208
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 303.609375,
+      "height": 206
+    },
+    "titleBox": {
+      "x": 21,
+      "y": 79.5,
+      "width": 176.875,
+      "height": 39.328125
+    },
+    "image": {
+      "x": 246.484375,
+      "y": 6,
+      "width": 400.515625,
+      "height": 198
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/notebook-480.webp",
+    "fit": "cover",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "03-page-services-tech-consulting-1440.png",
+    "alphaBounds": {
+      "size": [
+        1000,
+        800
+      ],
+      "bbox": [
+        207,
+        91,
+        911,
+        723
+      ],
+      "fractions": [
+        0.207,
+        0.114,
+        0.911,
+        0.904
+      ]
+    }
+  },
+  {
+    "index": 4,
+    "id": "page-services-business-systems",
+    "title": "Custom software",
+    "kind": "service",
+    "art": "software",
+    "ratio": "1.7679558011049723",
+    "family": "software",
+    "geometry": {
+      "x": 726,
+      "y": 1215.796875,
+      "width": 648,
+      "height": 208
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 303.609375,
+      "height": 206
+    },
+    "titleBox": {
+      "x": 21,
+      "y": 79.5,
+      "width": 278.9375,
+      "height": 39.328125
+    },
+    "image": {
+      "x": 275.25,
+      "y": 6,
+      "width": 361.75,
+      "height": 198
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/software-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "04-page-services-business-systems-1440.png",
+    "alphaBounds": {
+      "size": [
+        1600,
+        905
+      ],
+      "bbox": [
+        95,
+        46,
+        1506,
+        849
+      ],
+      "fractions": [
+        0.059,
+        0.051,
+        0.941,
+        0.938
+      ]
+    }
+  },
+  {
+    "index": 5,
+    "id": "case-chromatic-painting-design",
+    "title": "Our work",
+    "kind": "proof",
+    "art": "work-chromatic",
+    "ratio": "1.4401440144014401",
+    "family": "brand",
+    "geometry": {
+      "x": 66,
+      "y": 1435.796875,
+      "width": 574.921875,
+      "height": 168
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 229.15625,
+      "height": 166
+    },
+    "titleBox": {
+      "x": 17,
+      "y": 92.71875,
+      "width": 131.640625,
+      "height": 37.546875
+    },
+    "image": {
+      "x": 207.265625,
+      "y": 1,
+      "width": 366.65625,
+      "height": 166
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/work-chromatic-480.webp",
+    "fit": "cover",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "05-case-chromatic-painting-design-1440.png",
+    "alphaBounds": {
+      "size": [
+        1600,
+        1111
+      ],
+      "bbox": [
+        0,
+        0,
+        1600,
+        1111
+      ],
+      "fractions": [
+        0.0,
+        0.0,
+        1.0,
+        1.0
+      ]
+    }
+  },
+  {
+    "index": 6,
+    "id": "google-review-1",
+    "title": "\u201cbuilt us a beautiful site\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 652.921875,
+      "y": 1435.796875,
+      "width": 325.78125,
+      "height": 168
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 323.78125,
+      "height": 166
+    },
+    "titleBox": {
+      "x": 39.390625,
+      "y": 73.15625,
+      "width": 247,
+      "height": 25.6875
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "06-google-review-1-1440.png"
+  },
+  {
+    "index": 7,
+    "id": "speed",
+    "title": "Hard to use on a phone?",
+    "kind": "question",
+    "art": "phone-chromatic",
+    "ratio": "0.5194508009153318",
+    "family": "web",
+    "geometry": {
+      "x": 990.703125,
+      "y": 1435.796875,
+      "width": 383.296875,
+      "height": 168
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 228.765625,
+      "height": 166
+    },
+    "titleBox": {
+      "x": 17,
+      "y": 57.125,
+      "width": 196.765625,
+      "height": 96.875
+    },
+    "image": {
+      "x": 217.15625,
+      "y": 6,
+      "width": 160.140625,
+      "height": 157
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/phone-chromatic.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "07-speed-1440.png",
+    "alphaBounds": {
+      "size": [
+        454,
+        874
+      ],
+      "bbox": [
+        25,
+        25,
+        429,
+        849
+      ],
+      "fractions": [
+        0.055,
+        0.029,
+        0.945,
+        0.971
+      ]
+    }
+  },
+  {
+    "index": 8,
+    "id": "case-hair-by-rachel-charles",
+    "title": "Hair By Rachel",
+    "kind": "proof",
+    "art": "website-hair-by-rachel-charles",
+    "ratio": "0.4899546338302009",
+    "family": "brand",
+    "geometry": {
+      "x": 66,
+      "y": 1724.390625,
+      "width": 153,
+      "height": 372
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 151,
+      "height": 87.75
+    },
+    "titleBox": {
+      "x": 13,
+      "y": 47,
+      "width": 111,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 93.75,
+      "width": 139,
+      "height": 273.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-hair-by-rachel-charles-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "08-case-hair-by-rachel-charles-1440.png",
+    "alphaBounds": {
+      "size": [
+        756,
+        1543
+      ],
+      "bbox": [
+        12,
+        12,
+        743,
+        1530
+      ],
+      "fractions": [
+        0.016,
+        0.008,
+        0.983,
+        0.992
+      ]
+    }
+  },
+  {
+    "index": 9,
+    "id": "booking",
+    "title": "Bookings, calls and messages.",
+    "kind": "question",
+    "art": "booking-calendar",
+    "ratio": "1.249554367201426",
+    "family": "web",
+    "geometry": {
+      "x": 231,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 64.375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 222,
+      "height": 46.375
+    },
+    "image": {
+      "x": 7,
+      "y": 70.375,
+      "width": 304,
+      "height": 104.625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/booking-calendar-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "09-booking-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        249,
+        104,
+        1309,
+        1028
+      ],
+      "fractions": [
+        0.178,
+        0.093,
+        0.934,
+        0.916
+      ]
+    }
+  },
+  {
+    "index": 10,
+    "id": "google-review-4",
+    "title": "\u201cClear communication, expectations and timelines!\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 561,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 15,
+      "y": 87.3125,
+      "width": 288,
+      "height": 46.375
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "10-google-review-4-1440.png"
+  },
+  {
+    "index": 11,
+    "id": "case-cc-films",
+    "title": "CC Films",
+    "kind": "proof",
+    "art": "website-cc-films",
+    "ratio": "1.5715555555555556",
+    "family": "brand",
+    "geometry": {
+      "x": 891,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-cc-films-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "11-case-cc-films-1440.png",
+    "alphaBounds": {
+      "size": [
+        1768,
+        1125
+      ],
+      "bbox": [
+        13,
+        7,
+        1755,
+        1118
+      ],
+      "fractions": [
+        0.007,
+        0.006,
+        0.993,
+        0.994
+      ]
+    }
+  },
+  {
+    "index": 12,
+    "id": "case-easy-tiger",
+    "title": "Easy Tiger Bar",
+    "kind": "proof",
+    "art": "website-easy-tiger",
+    "ratio": "0.4899546338302009",
+    "family": "brand",
+    "geometry": {
+      "x": 1221,
+      "y": 1724.390625,
+      "width": 153,
+      "height": 372
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 151,
+      "height": 87.75
+    },
+    "titleBox": {
+      "x": 13,
+      "y": 47,
+      "width": 111,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 93.75,
+      "width": 139,
+      "height": 273.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-easy-tiger-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "12-case-easy-tiger-1440.png",
+    "alphaBounds": {
+      "size": [
+        756,
+        1543
+      ],
+      "bbox": [
+        12,
+        12,
+        743,
+        1530
+      ],
+      "fractions": [
+        0.016,
+        0.008,
+        0.983,
+        0.992
+      ]
+    }
+  },
+  {
+    "index": 13,
+    "id": "case-the-break-room",
+    "title": "The Break Room",
+    "kind": "proof",
+    "art": "website-the-break-room",
+    "ratio": "1.3648315529991784",
+    "family": "brand",
+    "geometry": {
+      "x": 231,
+      "y": 1916.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-the-break-room-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "13-case-the-break-room-1440.png",
+    "alphaBounds": {
+      "size": [
+        1661,
+        1217
+      ],
+      "bbox": [
+        13,
+        13,
+        1648,
+        1205
+      ],
+      "fractions": [
+        0.008,
+        0.011,
+        0.992,
+        0.99
+      ]
+    }
+  },
+  {
+    "index": 14,
+    "id": "case-clearhelp",
+    "title": "ClearHelp",
+    "kind": "proof",
+    "art": "website-clearhelp",
+    "ratio": "0.7718120805369127",
+    "family": "brand",
+    "geometry": {
+      "x": 561,
+      "y": 1916.390625,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 221.5,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-clearhelp-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "14-case-clearhelp-1440.png",
+    "alphaBounds": {
+      "size": [
+        1150,
+        1490
+      ],
+      "bbox": [
+        14,
+        14,
+        1136,
+        1477
+      ],
+      "fractions": [
+        0.012,
+        0.009,
+        0.988,
+        0.991
+      ]
+    }
+  },
+  {
+    "index": 15,
+    "id": "case-brothers-pizzeria",
+    "title": "Brothers Pizzeria",
+    "kind": "proof",
+    "art": "website-brothers-pizzeria",
+    "ratio": "1.5715555555555556",
+    "family": "brand",
+    "geometry": {
+      "x": 808.5,
+      "y": 1916.390625,
+      "width": 400.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 183.296875,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 17.359375,
+      "y": 82,
+      "width": 150.5625,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 184.28125,
+      "y": 11,
+      "width": 207.21875,
+      "height": 158
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-brothers-pizzeria-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "15-case-brothers-pizzeria-1440.png",
+    "alphaBounds": {
+      "size": [
+        1768,
+        1125
+      ],
+      "bbox": [
+        13,
+        7,
+        1755,
+        1118
+      ],
+      "fractions": [
+        0.007,
+        0.006,
+        0.993,
+        0.994
+      ]
+    }
+  },
+  {
+    "index": 16,
+    "id": "case-grand-funding-llc",
+    "title": "Grand Funding LLC",
+    "kind": "proof",
+    "art": "website-grand-funding-llc",
+    "ratio": "0.7718120805369127",
+    "family": "brand",
+    "geometry": {
+      "x": 66,
+      "y": 2108.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-grand-funding-llc-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "16-case-grand-funding-llc-1440.png",
+    "alphaBounds": {
+      "size": [
+        1150,
+        1490
+      ],
+      "bbox": [
+        14,
+        14,
+        1136,
+        1477
+      ],
+      "fractions": [
+        0.012,
+        0.009,
+        0.988,
+        0.991
+      ]
+    }
+  },
+  {
+    "index": 17,
+    "id": "case-logan-loans",
+    "title": "Logan Loans",
+    "kind": "proof",
+    "art": "website-logan-loans",
+    "ratio": "0.4899546338302009",
+    "family": "brand",
+    "geometry": {
+      "x": 396,
+      "y": 2108.390625,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 221.5,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-logan-loans-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "17-case-logan-loans-1440.png",
+    "alphaBounds": {
+      "size": [
+        756,
+        1543
+      ],
+      "bbox": [
+        12,
+        12,
+        743,
+        1530
+      ],
+      "fractions": [
+        0.016,
+        0.008,
+        0.983,
+        0.992
+      ]
+    }
+  },
+  {
+    "index": 18,
+    "id": "case-the-tarot-hotline",
+    "title": "The Tarot Hotline",
+    "kind": "proof",
+    "art": "website-the-tarot-hotline",
+    "ratio": "1.3648315529991784",
+    "family": "brand",
+    "geometry": {
+      "x": 643.5,
+      "y": 2108.390625,
+      "width": 400.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 183.296875,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 17,
+      "y": 84.8125,
+      "width": 151.296875,
+      "height": 46.375
+    },
+    "image": {
+      "x": 184.28125,
+      "y": 11,
+      "width": 207.21875,
+      "height": 158
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/website-the-tarot-hotline-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "18-case-the-tarot-hotline-1440.png",
+    "alphaBounds": {
+      "size": [
+        1661,
+        1217
+      ],
+      "bbox": [
+        13,
+        13,
+        1648,
+        1205
+      ],
+      "fractions": [
+        0.008,
+        0.011,
+        0.992,
+        0.99
+      ]
+    }
+  },
+  {
+    "index": 19,
+    "id": "page-industries",
+    "title": "A website for your business.",
+    "kind": "question",
+    "art": "storefront",
+    "ratio": "0.8172727272727273",
+    "family": "web",
+    "geometry": {
+      "x": 1056,
+      "y": 2108.390625,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 64.375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 222,
+      "height": 46.375
+    },
+    "image": {
+      "x": 7,
+      "y": 70.375,
+      "width": 304,
+      "height": 104.625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/storefront-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "19-page-industries-1440.png",
+    "alphaBounds": {
+      "size": [
+        899,
+        1100
+      ],
+      "bbox": [
+        36,
+        69,
+        854,
+        1017
+      ],
+      "fractions": [
+        0.04,
+        0.063,
+        0.95,
+        0.925
+      ]
+    }
+  },
+  {
+    "index": 20,
+    "id": "wifi",
+    "title": "Wi-Fi keeps dropping?",
+    "kind": "question",
+    "art": "network-switch",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 66,
+      "y": 2408.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/network-switch-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "20-wifi-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        65,
+        233,
+        1361,
+        1021
+      ],
+      "fractions": [
+        0.046,
+        0.208,
+        0.971,
+        0.91
+      ]
+    }
+  },
+  {
+    "index": 21,
+    "id": "email",
+    "title": "Email not working?",
+    "kind": "question",
+    "art": "mail",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 313.5,
+      "y": 2408.984375,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 219
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/mail-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "21-email-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        265,
+        163,
+        1236,
+        976
+      ],
+      "fractions": [
+        0.189,
+        0.145,
+        0.882,
+        0.87
+      ]
+    }
+  },
+  {
+    "index": 22,
+    "id": "google-review-3",
+    "title": "\u201cQuick to respond\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 643.5,
+      "y": 2408.984375,
+      "width": 483,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 481,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 157.03125,
+      "y": 98.90625,
+      "width": 168.921875,
+      "height": 23.1875
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "22-google-review-3-1440.png"
+  },
+  {
+    "index": 23,
+    "id": "computer",
+    "title": "Set up your workspace",
+    "kind": "question",
+    "art": "desk-workstation",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 1138.5,
+      "y": 2408.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/desk-workstation-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "23-computer-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        315,
+        224,
+        1157,
+        1013
+      ],
+      "fractions": [
+        0.225,
+        0.2,
+        0.825,
+        0.903
+      ]
+    }
+  },
+  {
+    "index": 24,
+    "id": "printer",
+    "title": "Printer won\u2019t connect?",
+    "kind": "question",
+    "art": "printer",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 66,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/printer-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "24-printer-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        196,
+        226,
+        1323,
+        929
+      ],
+      "fractions": [
+        0.14,
+        0.201,
+        0.944,
+        0.828
+      ]
+    }
+  },
+  {
+    "index": 25,
+    "id": "backup",
+    "title": "Keep a second safe copy",
+    "kind": "question",
+    "art": "backup-drive",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 643.5,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/backup-drive-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "25-backup-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        78,
+        281,
+        1349,
+        875
+      ],
+      "fractions": [
+        0.056,
+        0.25,
+        0.962,
+        0.78
+      ]
+    }
+  },
+  {
+    "index": 26,
+    "id": "it-security-basics",
+    "title": "Check the security basics",
+    "kind": "question",
+    "art": "security",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 891,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/security-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "26-it-security-basics-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        223,
+        184,
+        1251,
+        971
+      ],
+      "fractions": [
+        0.159,
+        0.164,
+        0.892,
+        0.865
+      ]
+    }
+  },
+  {
+    "index": 27,
+    "id": "it-password-ownership",
+    "title": "Who controls your accounts?",
+    "kind": "question",
+    "art": "password-safe",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 313.5,
+      "y": 2696.984375,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 64.375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 222,
+      "height": 46.375
+    },
+    "image": {
+      "x": 7,
+      "y": 70.375,
+      "width": 304,
+      "height": 104.625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/password-safe-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "27-it-password-ownership-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        209,
+        123,
+        1195,
+        1006
+      ],
+      "fractions": [
+        0.149,
+        0.11,
+        0.852,
+        0.897
+      ]
+    }
+  },
+  {
+    "index": 28,
+    "id": "it-video-call-room",
+    "title": "Meeting room ready?",
+    "kind": "question",
+    "art": "video-meeting",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 1138.5,
+      "y": 2696.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/video-meeting-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "28-it-video-call-room-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        66,
+        251,
+        1333,
+        914
+      ],
+      "fractions": [
+        0.047,
+        0.224,
+        0.951,
+        0.815
+      ]
+    }
+  },
+  {
+    "index": 29,
+    "id": "google-review-2",
+    "title": "\u201ceasy to work with\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 643.5,
+      "y": 2792.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 274
+    },
+    "titleBox": {
+      "x": 41.453125,
+      "y": 148.0625,
+      "width": 152.59375,
+      "height": 20.875
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "29-google-review-2-1440.png"
+  },
+  {
+    "index": 30,
+    "id": "it-storage-full",
+    "title": "Computer storage full?",
+    "kind": "question",
+    "art": "storage-drives",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 66,
+      "y": 2888.984375,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/storage-drives-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "30-it-storage-full-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        338,
+        38,
+        1061,
+        1081
+      ],
+      "fractions": [
+        0.241,
+        0.034,
+        0.757,
+        0.963
+      ]
+    }
+  },
+  {
+    "index": 31,
+    "id": "it-payment-device-check",
+    "title": "Card reader dropping out?",
+    "kind": "question",
+    "art": "payment-terminal",
+    "ratio": "1.249554367201426",
+    "family": "it",
+    "geometry": {
+      "x": 396,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/payment-terminal-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "31-it-payment-device-check-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        179,
+        29,
+        1246,
+        1087
+      ],
+      "fractions": [
+        0.128,
+        0.026,
+        0.889,
+        0.969
+      ]
+    }
+  },
+  {
+    "index": 32,
+    "id": "it-vendor-handoff",
+    "title": "Changing IT providers?",
+    "kind": "question",
+    "art": "vendor-handoff",
+    "ratio": "1.5",
+    "family": "it",
+    "geometry": {
+      "x": 891,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/vendor-handoff-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "32-it-vendor-handoff-1440.png",
+    "alphaBounds": {
+      "size": [
+        1536,
+        1024
+      ],
+      "bbox": [
+        100,
+        61,
+        1460,
+        967
+      ],
+      "fractions": [
+        0.065,
+        0.06,
+        0.951,
+        0.944
+      ]
+    }
+  },
+  {
+    "index": 33,
+    "id": "page-areas",
+    "title": "New York.",
+    "kind": "question",
+    "art": "yellow-taxi-v1",
+    "ratio": "1.5",
+    "family": "it",
+    "geometry": {
+      "x": 1138.5,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 221.5,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/yellow-taxi-v1-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "33-page-areas-1440.png",
+    "alphaBounds": {
+      "size": [
+        1536,
+        1024
+      ],
+      "bbox": [
+        62,
+        191,
+        1474,
+        883
+      ],
+      "fractions": [
+        0.04,
+        0.187,
+        0.96,
+        0.862
+      ]
+    }
+  },
+  {
+    "index": 34,
+    "id": "album-nyc",
+    "title": "New York, at work.",
+    "kind": "photo",
+    "art": "photo-nyc",
+    "ratio": "1.3490813648293962",
+    "family": "consulting",
+    "geometry": {
+      "x": 66,
+      "y": 3189.578125,
+      "width": 400.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 398.5,
+      "height": 72.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 304.5,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 78.796875,
+      "width": 386.5,
+      "height": 192.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/photo-nyc-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "34-album-nyc-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 35,
+    "id": "maps",
+    "title": "Help people find you.",
+    "kind": "question",
+    "art": "map-red-pin",
+    "ratio": "1.249554367201426",
+    "family": "consulting",
+    "geometry": {
+      "x": 478.5,
+      "y": 3189.578125,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 219
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/map-red-pin-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "35-maps-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        76,
+        177,
+        1300,
+        1016
+      ],
+      "fractions": [
+        0.054,
+        0.158,
+        0.927,
+        0.906
+      ]
+    }
+  },
+  {
+    "index": 36,
+    "id": "web-redesign-decision",
+    "title": "Rebuild, or make a few fixes?",
+    "kind": "question",
+    "art": "redesign-paint",
+    "ratio": "1.249554367201426",
+    "family": "consulting",
+    "geometry": {
+      "x": 808.5,
+      "y": 3189.578125,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/redesign-paint-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "36-web-redesign-decision-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        303,
+        164,
+        1333,
+        952
+      ],
+      "fractions": [
+        0.216,
+        0.146,
+        0.951,
+        0.848
+      ]
+    }
+  },
+  {
+    "index": 37,
+    "id": "album-hospitality",
+    "title": "Good things brewing.",
+    "kind": "photo",
+    "art": "photo-hospitality",
+    "ratio": "1.3490813648293962",
+    "family": "consulting",
+    "geometry": {
+      "x": 1056,
+      "y": 3189.578125,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 72.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 78.796875,
+      "width": 304,
+      "height": 96.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/photo-hospitality-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "37-album-hospitality-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 38,
+    "id": "album-roofing",
+    "title": "Built to last.",
+    "kind": "photo",
+    "art": "photo-roofing",
+    "ratio": "1.3490813648293962",
+    "family": "consulting",
+    "geometry": {
+      "x": 1056,
+      "y": 3381.578125,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 72.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 78.796875,
+      "width": 304,
+      "height": 192.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/photo-roofing-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "38-album-roofing-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 39,
+    "id": "album-shops",
+    "title": "Your kind of place.",
+    "kind": "photo",
+    "art": "photo-shops",
+    "ratio": "1.3490813648293962",
+    "family": "consulting",
+    "geometry": {
+      "x": 66,
+      "y": 3477.578125,
+      "width": 648,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 297.15625,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 67.703125,
+      "y": 82,
+      "width": 163.75,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 303.09375,
+      "y": 11,
+      "width": 335.90625,
+      "height": 158
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/photo-shops-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "39-album-shops-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 40,
+    "id": "google-review-5",
+    "title": "\u201cAbsolutely love love love!\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 726,
+      "y": 3477.578125,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 38.65625,
+      "y": 98.90625,
+      "width": 240.671875,
+      "height": 23.1875
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "40-google-review-5-1440.png"
+  },
+  {
+    "index": 41,
+    "id": "consulting-first-priority",
+    "title": "Choose what to fix first",
+    "kind": "question",
+    "art": "priority-notes",
+    "ratio": "1.249554367201426",
+    "family": "consulting",
+    "geometry": {
+      "x": 66,
+      "y": 3669.578125,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 219
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/priority-notes-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "41-consulting-first-priority-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        95,
+        81,
+        1322,
+        1062
+      ],
+      "fractions": [
+        0.068,
+        0.072,
+        0.943,
+        0.947
+      ]
+    }
+  },
+  {
+    "index": 42,
+    "id": "consulting-tool-choice",
+    "title": "Keep useful tools. Cut wasted costs.",
+    "kind": "question",
+    "art": "consulting-toolbox",
+    "ratio": "1.249554367201426",
+    "family": "consulting",
+    "geometry": {
+      "x": 396,
+      "y": 3669.578125,
+      "width": 400.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 398.5,
+      "height": 64.375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 304.5,
+      "height": 46.375
+    },
+    "image": {
+      "x": 7,
+      "y": 70.375,
+      "width": 386.5,
+      "height": 200.625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/consulting-toolbox-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "42-consulting-tool-choice-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        145,
+        56,
+        1279,
+        1082
+      ],
+      "fractions": [
+        0.103,
+        0.05,
+        0.912,
+        0.964
+      ]
+    }
+  },
+  {
+    "index": 43,
+    "id": "consulting-second-opinion",
+    "title": "Get a second opinion",
+    "kind": "question",
+    "art": "rubber-duck",
+    "ratio": "1.249554367201426",
+    "family": "consulting",
+    "geometry": {
+      "x": 808.5,
+      "y": 3669.578125,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 304,
+      "height": 219
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/rubber-duck-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "43-consulting-second-opinion-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        261,
+        93,
+        1145,
+        1027
+      ],
+      "fractions": [
+        0.186,
+        0.083,
+        0.817,
+        0.915
+      ]
+    }
+  },
+  {
+    "index": 44,
+    "id": "google-review-7",
+    "title": "Five stars.",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 1138.5,
+      "y": 3669.578125,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 274
+    },
+    "titleBox": {
+      "x": 15,
+      "y": 148.0625,
+      "width": 81.28125,
+      "height": 20.875
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "44-google-review-7-1440.png"
+  },
+  {
+    "index": 45,
+    "id": "case-venuecircuit",
+    "title": "VenueCircuit",
+    "kind": "proof",
+    "art": "browser-venuecircuit",
+    "ratio": "1.5715555555555556",
+    "family": "brand",
+    "geometry": {
+      "x": 66,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 72.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 78.796875,
+      "width": 221.5,
+      "height": 192.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/browser-venuecircuit-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "45-case-venuecircuit-1440.png",
+    "alphaBounds": {
+      "size": [
+        1768,
+        1125
+      ],
+      "bbox": [
+        13,
+        7,
+        1755,
+        1118
+      ],
+      "fractions": [
+        0.007,
+        0.006,
+        0.993,
+        0.994
+      ]
+    }
+  },
+  {
+    "index": 46,
+    "id": "page-vera",
+    "title": "VERA.",
+    "kind": "question",
+    "art": "vera-brownstone",
+    "ratio": "1.249554367201426",
+    "family": "software",
+    "geometry": {
+      "x": 313.5,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 221.5,
+      "height": 219
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/vera-brownstone-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "46-page-vera-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        437,
+        30,
+        973,
+        1080
+      ],
+      "fractions": [
+        0.312,
+        0.027,
+        0.694,
+        0.963
+      ]
+    }
+  },
+  {
+    "index": 47,
+    "id": "software-repeat-work",
+    "title": "Stop entering things twice",
+    "kind": "question",
+    "art": "repeat-work-machine",
+    "ratio": "1.5",
+    "family": "software",
+    "geometry": {
+      "x": 561,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/repeat-work-machine-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "47-software-repeat-work-1440.png",
+    "alphaBounds": {
+      "size": [
+        1536,
+        1024
+      ],
+      "bbox": [
+        75,
+        34,
+        1527,
+        960
+      ],
+      "fractions": [
+        0.049,
+        0.033,
+        0.994,
+        0.938
+      ]
+    }
+  },
+  {
+    "index": 48,
+    "id": "google-review-6",
+    "title": "\u201censuring a painless experience.\u201d",
+    "kind": "review",
+    "family": "brand",
+    "geometry": {
+      "x": 808.5,
+      "y": 4066.171875,
+      "width": 318,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 15,
+      "y": 87.3125,
+      "width": 288,
+      "height": 46.375
+    },
+    "image": null,
+    "fit": null,
+    "position": null,
+    "scrollOverflow": false,
+    "screenshot": "48-google-review-6-1440.png"
+  },
+  {
+    "index": 49,
+    "id": "software-approval-path",
+    "title": "Make approvals clear",
+    "kind": "question",
+    "art": "approval-stamp",
+    "ratio": "1.249554367201426",
+    "family": "software",
+    "geometry": {
+      "x": 1138.5,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 205.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/approval-stamp-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "49-software-approval-path-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        147,
+        87,
+        1297,
+        1033
+      ],
+      "fractions": [
+        0.105,
+        0.078,
+        0.925,
+        0.921
+      ]
+    }
+  },
+  {
+    "index": 50,
+    "id": "case-deckspace",
+    "title": "DeckSpace",
+    "kind": "proof",
+    "art": "browser-deckspace",
+    "ratio": "1.3490813648293962",
+    "family": "brand",
+    "geometry": {
+      "x": 808.5,
+      "y": 4258.171875,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 72.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 78.796875,
+      "width": 304,
+      "height": 192.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/browser-deckspace-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "50-case-deckspace-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 51,
+    "id": "case-after-hours-agenda",
+    "title": "After Hours Agenda",
+    "kind": "proof",
+    "art": "browser-after-hours-agenda",
+    "ratio": "1.5715555555555556",
+    "family": "software",
+    "geometry": {
+      "x": 66,
+      "y": 4354.171875,
+      "width": 483,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 221.25,
+      "height": 178
+    },
+    "titleBox": {
+      "x": 24.890625,
+      "y": 96.40625,
+      "width": 173.453125,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 223.890625,
+      "y": 11,
+      "width": 250.109375,
+      "height": 158
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/browser-after-hours-agenda-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "51-case-after-hours-agenda-1440.png",
+    "alphaBounds": {
+      "size": [
+        1768,
+        1125
+      ],
+      "bbox": [
+        13,
+        7,
+        1755,
+        1118
+      ],
+      "fractions": [
+        0.007,
+        0.006,
+        0.993,
+        0.994
+      ]
+    }
+  },
+  {
+    "index": 52,
+    "id": "lab-pool-room",
+    "title": "The Pool Room",
+    "kind": "lab",
+    "art": "lab-pool-room",
+    "ratio": "1.3490813648293962",
+    "family": "software",
+    "geometry": {
+      "x": 561,
+      "y": 4354.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 121.59375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 127.59375,
+      "width": 221.5,
+      "height": 143.40625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/lab-pool-room-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "52-lab-pool-room-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 53,
+    "id": "lab-walkup-3d",
+    "title": "Six-Story Walk-Up",
+    "kind": "lab",
+    "art": "lab-walkup-3d",
+    "ratio": "1.3490813648293962",
+    "family": "software",
+    "geometry": {
+      "x": 1138.5,
+      "y": 4354.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 135.34375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 141.34375,
+      "width": 221.5,
+      "height": 129.65625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/lab-walkup-3d-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "53-lab-walkup-3d-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 54,
+    "id": "lab-micro-animations",
+    "title": "Micro-Animations",
+    "kind": "lab",
+    "art": "lab-micro-animations",
+    "ratio": "1.3490813648293962",
+    "family": "software",
+    "geometry": {
+      "x": 66,
+      "y": 4546.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 135.34375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 141.34375,
+      "width": 221.5,
+      "height": 129.65625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/lab-micro-animations-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "54-lab-micro-animations-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 55,
+    "id": "lab-cabinet-concept",
+    "title": "Cabinet Lab",
+    "kind": "lab",
+    "art": "lab-cabinet-concept",
+    "ratio": "1.3490813648293962",
+    "family": "software",
+    "geometry": {
+      "x": 313.5,
+      "y": 4546.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 141.59375
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 147.59375,
+      "width": 221.5,
+      "height": 123.40625
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/lab-cabinet-concept-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "55-lab-cabinet-concept-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 56,
+    "id": "lab-house-explorer",
+    "title": "Farm House",
+    "kind": "lab",
+    "art": "lab-house-explorer",
+    "ratio": "1.3490813648293962",
+    "family": "software",
+    "geometry": {
+      "x": 808.5,
+      "y": 4546.171875,
+      "width": 318,
+      "height": 276
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 316,
+      "height": 100.796875
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 17.40625,
+      "width": 222,
+      "height": 23.1875
+    },
+    "image": {
+      "x": 7,
+      "y": 106.796875,
+      "width": 304,
+      "height": 164.203125
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/lab-house-explorer-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "56-lab-house-explorer-1440.png",
+    "alphaBounds": {
+      "size": [
+        1028,
+        762
+      ],
+      "bbox": [
+        25,
+        25,
+        1003,
+        737
+      ],
+      "fractions": [
+        0.024,
+        0.033,
+        0.976,
+        0.967
+      ]
+    }
+  },
+  {
+    "index": 57,
+    "id": "software-connect-existing-tools",
+    "title": "Can our tools work together?",
+    "kind": "question",
+    "art": "connected-cables",
+    "ratio": "1.249554367201426",
+    "family": "software",
+    "geometry": {
+      "x": 561,
+      "y": 4642.171875,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 59.75
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 15,
+      "width": 139.5,
+      "height": 41.75
+    },
+    "image": {
+      "x": 7,
+      "y": 65.75,
+      "width": 221.5,
+      "height": 109.25
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/connected-cables-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "57-software-connect-existing-tools-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        0,
+        320,
+        1402,
+        814
+      ],
+      "fractions": [
+        0.0,
+        0.285,
+        1.0,
+        0.725
+      ]
+    }
+  },
+  {
+    "index": 58,
+    "id": "software-business-ownership",
+    "title": "Own your system",
+    "kind": "question",
+    "art": "custom-os-spheres",
+    "ratio": "1.249554367201426",
+    "family": "software",
+    "geometry": {
+      "x": 1138.5,
+      "y": 4642.171875,
+      "width": 235.5,
+      "height": 180
+    },
+    "copy": {
+      "x": 1,
+      "y": 1,
+      "width": 233.5,
+      "height": 46
+    },
+    "titleBox": {
+      "x": 51,
+      "y": 18.5625,
+      "width": 139.5,
+      "height": 20.875
+    },
+    "image": {
+      "x": 7,
+      "y": 52,
+      "width": 221.5,
+      "height": 123
+    },
+    "imageSrc": "http://127.0.0.1:63449/assets/sculpture/custom-os-spheres-480.webp",
+    "fit": "contain",
+    "position": "50% 50%",
+    "scrollOverflow": false,
+    "screenshot": "58-software-business-ownership-1440.png",
+    "alphaBounds": {
+      "size": [
+        1402,
+        1122
+      ],
+      "bbox": [
+        253,
+        224,
+        1149,
+        936
+      ],
+      "fractions": [
+        0.18,
+        0.2,
+        0.82,
+        0.834
+      ]
+    }
+  }
+]

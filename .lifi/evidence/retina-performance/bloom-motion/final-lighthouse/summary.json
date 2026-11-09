@@ -1,0 +1,82 @@
+{
+  "base": "http://127.0.0.1:63449",
+  "capturedAt": "2026-10-10T10:07:37.073Z",
+  "method": "Lighthouse 13.5.0, installed Google Chrome, serial mobile simulated throttling; lab evidence, not field Core Web Vitals",
+  "release": {
+    "schema_version": 1,
+    "project": "Little Fight NYC",
+    "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+    "branch": "codex/lifi-retina-performance-20261010",
+    "context": "local",
+    "built_at": "2026-10-10T10:06:31.843Z",
+    "source_dirty": true
+  },
+  "pages": [
+    {
+      "name": "home-mobile",
+      "route": "/",
+      "lcpBudget": 2500,
+      "runs": [
+        {
+          "score": 96,
+          "lcp": 2851.952000000002,
+          "tbt": 10,
+          "cls": 0
+        },
+        {
+          "score": 96,
+          "lcp": 2851.8429999999976,
+          "tbt": 9,
+          "cls": 0
+        },
+        {
+          "score": 96,
+          "lcp": 2851.951,
+          "tbt": 12,
+          "cls": 0
+        }
+      ],
+      "median": {
+        "score": 96,
+        "lcp": 2851.951,
+        "tbt": 10,
+        "cls": 0
+      }
+    },
+    {
+      "name": "websites-mobile",
+      "route": "/services/custom-local-websites/",
+      "lcpBudget": 3500,
+      "runs": [
+        {
+          "score": 93,
+          "lcp": 3078.3167999999996,
+          "tbt": 0,
+          "cls": 0.0006821339795189519
+        },
+        {
+          "score": 93,
+          "lcp": 3077.8863,
+          "tbt": 0,
+          "cls": 0.0006821339795189519
+        },
+        {
+          "score": 93,
+          "lcp": 3078.35715,
+          "tbt": 0,
+          "cls": 0.0006821339795189519
+        }
+      ],
+      "median": {
+        "score": 93,
+        "lcp": 3078.3167999999996,
+        "tbt": 0,
+        "cls": 0.0006821339795189519
+      }
+    }
+  ],
+  "failures": [
+    "home-mobile: median LCP above 2500ms"
+  ],
+  "result": "failed"
+}

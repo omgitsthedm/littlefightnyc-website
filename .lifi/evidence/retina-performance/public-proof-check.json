@@ -1,0 +1,21 @@
+{
+  "method": "Read-only GET of official website HTML; verified named navigation, service content, and inquiry or booking links; no form or booking submitted.",
+  "results": [
+    {
+      "url": "https://chromaticaz.com/",
+      "status": 200,
+      "verifiedPaths": [
+        "/estimate/"
+      ]
+    },
+    {
+      "url": "https://hairbyrachelcharles.com/",
+      "status": 200,
+      "verifiedPaths": [
+        "/booking",
+        "/contact"
+      ]
+    }
+  ],
+  "recordedAt": "2026-10-10T06:29:31.441115+00:00"
+}

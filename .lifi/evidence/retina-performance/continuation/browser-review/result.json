@@ -1,0 +1,20 @@
+{
+  "capturedAt": "2026-10-10T09:16:07.618212+00:00",
+  "method": "Independent read-only Chrome review, supplemented by settled-state parent reproduction",
+  "preview": "http://127.0.0.1:63449/?qa=1",
+  "screenshots": [
+    "home-desktop-1440.png",
+    "home-phone-393.png"
+  ],
+  "verified": [
+    "Homepage and Websites reader render without horizontal overflow",
+    "58 homepage tiles retained",
+    "Search returns the exact printer support answer; Escape restores Search focus",
+    "Reader close control is 44px",
+    "Independent review found no console warnings or errors",
+    "Parent reproduction passed six settled close/Escape cases: phone tile and desktop nav/tile restore Websites tile focus"
+  ],
+  "focusEvidence": "../settled-focus.json",
+  "discardedFinding": "Initial BODY focus observation was made before the close animation/history finished. Reviewer withdrew it; six settled reproductions passed without source changes.",
+  "sourceChangedByReviewer": false
+}

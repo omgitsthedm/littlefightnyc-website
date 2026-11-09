@@ -1,0 +1,44 @@
+ M .gitignore
+ M .lifi/design-source/sculpture/hero-reference.json
+ M app/package.json
+ M app/preview-content/import-provenance.json
+ M app/preview-content/website-body.html
+ M app/preview-ui/site.js
+ M app/preview-ui/vendor/mosaic-layout.js
+ M app/public/examples/lab/concepts/aha-laser/index.html
+ M app/public/examples/lab/concepts/goliath/index.html
+ M app/public/examples/lab/concepts/growth-street/index.html
+ M app/public/examples/lab/concepts/micro-animations/index.html
+ M app/public/examples/lab/concepts/pill-scroll/index.html
+ M app/public/examples/lab/concepts/studio-engine/index.html
+ M app/public/examples/lab/concepts/terminal-3d/index.html
+ M app/public/examples/lab/concepts/walkup-3d/index.html
+ M app/public/examples/lab/suites/brand-campaign/index.html
+ M app/public/examples/lab/suites/business-systems/index.html
+ M app/public/examples/lab/suites/cinema/index.html
+ M app/public/examples/lab/suites/motion-playground/index.html
+ M app/public/examples/lab/suites/spatial-nyc/index.html
+ M app/scripts/approved_screens.py
+ M app/scripts/build-tile-preview.py
+ M app/scripts/portfolio_media.py
+ M app/scripts/quality-tiles.mjs
+ M app/scripts/sculpture_tiles.py
+ M app/scripts/verify-hero-reference.cjs
+ M app/scripts/verify-sculpture.cjs
+?? .lifi/design-source/sculpture/approved-hero-master.png
+?? .lifi/design-source/sculpture/reader-delivery.json
+?? .lifi/evidence/retina-performance/
+?? .lifi/evidence/review-readers/
+?? app/.lifi/
+?? app/preview-content/homepage-proof.json
+?? app/preview-ui/homepage-proof.css
+?? app/public/assets/reader-images/
+?? app/scripts/build-reader-images.py
+?? app/scripts/homepage_proof.py
+?? app/scripts/measure-mosaic-layout.cjs
+?? app/scripts/measure-release-performance.mjs
+?? app/scripts/measure-sculpture-delivery.cjs
+?? app/scripts/test-lab-metadata.mjs
+?? app/scripts/test-sculpture-delivery.cjs
+?? app/scripts/tile_stylesheets.py
+?? app/scripts/verify-reader-delivery.cjs

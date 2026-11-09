@@ -1,0 +1,156 @@
+{
+  "base": "http://127.0.0.1:64578",
+  "checks": [
+    {
+      "name": "chrome: decorative, non-interactive animation with bounded resolution/frame rate",
+      "detail": {
+        "geometry": {
+          "width": 1440,
+          "height": 1000,
+          "decorative": true,
+          "interactive": "none"
+        },
+        "drawsIn1100ms": 21
+      },
+      "passed": true
+    },
+    {
+      "name": "chrome: opening a reader pauses the field; closing resumes it",
+      "passed": true
+    },
+    {
+      "name": "chrome: pause stops drawing and persists across reload",
+      "passed": true
+    },
+    {
+      "name": "chrome: device reduced-motion preference wins over saved motion preference",
+      "passed": true
+    },
+    {
+      "name": "chrome: simulated hidden-tab lifecycle stops drawing and resumes safely",
+      "passed": true
+    },
+    {
+      "name": "chrome: homepage accessibility scan passes",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 360px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 393px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 600px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 834px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 1100px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: 58 tiles fit at 1440px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "chrome: script-free fallback retains all real tile links and hides inactive motion controls",
+      "passed": true
+    },
+    {
+      "name": "chrome: save-data remains usable without unnecessary animation",
+      "passed": true
+    },
+    {
+      "name": "chrome: forced-colors remains usable without unnecessary animation",
+      "passed": true
+    },
+    {
+      "name": "chrome: blocked-storage remains usable without unnecessary animation",
+      "passed": true
+    },
+    {
+      "name": "webkit: decorative, non-interactive animation with bounded resolution/frame rate",
+      "detail": {
+        "geometry": {
+          "width": 1440,
+          "height": 1000,
+          "decorative": true,
+          "interactive": "none"
+        },
+        "drawsIn1100ms": 22
+      },
+      "passed": true
+    },
+    {
+      "name": "webkit: opening a reader pauses the field; closing resumes it",
+      "passed": true
+    },
+    {
+      "name": "webkit: pause stops drawing and persists across reload",
+      "passed": true
+    },
+    {
+      "name": "webkit: device reduced-motion preference wins over saved motion preference",
+      "passed": true
+    },
+    {
+      "name": "webkit: simulated hidden-tab lifecycle stops drawing and resumes safely",
+      "passed": true
+    },
+    {
+      "name": "webkit: homepage accessibility scan passes",
+      "passed": true
+    },
+    {
+      "name": "webkit: 58 tiles fit at 393px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "webkit: 58 tiles fit at 834px; reduced motion allocates no canvas",
+      "passed": true
+    },
+    {
+      "name": "webkit: script-free fallback retains all real tile links and hides inactive motion controls",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "after-home-chrome-1440.png",
+    "after-services-chrome-1440.png",
+    "after-tiles-chrome-1440.png",
+    "after-it-chrome-1440.png",
+    "after-consulting-chrome-1440.png",
+    "after-software-chrome-1440.png",
+    "after-reader-chrome.png",
+    "after-home-chrome-393.png",
+    "after-services-chrome-393.png",
+    "after-tiles-chrome-393.png",
+    "after-it-chrome-393.png",
+    "after-home-chrome-834.png",
+    "after-services-chrome-834.png",
+    "after-tiles-chrome-834.png",
+    "after-home-webkit-1440.png",
+    "after-services-webkit-1440.png",
+    "after-tiles-webkit-1440.png",
+    "after-it-webkit-1440.png",
+    "after-consulting-webkit-1440.png",
+    "after-software-webkit-1440.png",
+    "after-reader-webkit.png",
+    "after-home-webkit-393.png",
+    "after-services-webkit-393.png",
+    "after-tiles-webkit-393.png",
+    "after-it-webkit-393.png",
+    "after-home-webkit-834.png",
+    "after-services-webkit-834.png",
+    "after-tiles-webkit-834.png"
+  ],
+  "errors": [],
+  "failedResources": [],
+  "result": "passed"
+}

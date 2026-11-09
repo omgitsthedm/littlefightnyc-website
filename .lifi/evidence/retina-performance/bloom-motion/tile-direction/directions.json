@@ -1,0 +1,1070 @@
+[
+  {
+    "index": 1,
+    "id": "page-services-custom-local-websites",
+    "title": "Websites",
+    "direction": "Keep the large browser crop; reserve a clear right corner for the plus. On phone replace the tiny thumbnail with a lower browser scene.",
+    "variables": {
+      "--bloom-x": "79%",
+      "--bloom-width": "46%",
+      "--bloom-key-x": "83%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 2,
+    "id": "page-services-it-support",
+    "title": "Tech support",
+    "direction": "Lower the router and plant toward their amber floor; keep the two lights and yellow identity.",
+    "variables": {
+      "--bloom-x": "73%",
+      "--bloom-width": "51%",
+      "--bloom-key-x": "70%",
+      "--object-scale": "1.04",
+      "--object-y": "13px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 3,
+    "id": "page-services-tech-consulting",
+    "title": "Consulting",
+    "direction": "Retain the strong notebook crop and diagonal pencil; move the light below the notebook and the key above the plant.",
+    "variables": {
+      "--bloom-x": "79%",
+      "--bloom-width": "51%",
+      "--bloom-key-x": "86%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 4,
+    "id": "page-services-business-systems",
+    "title": "Custom software",
+    "direction": "Preserve the block arrangement; align the magenta floor with the block group, not the text column.",
+    "variables": {
+      "--bloom-x": "76%",
+      "--bloom-width": "52%",
+      "--bloom-key-x": "81%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 5,
+    "id": "case-chromatic-painting-design",
+    "title": "Our work",
+    "direction": "Retain the real edge-to-edge proof crop and orange title; move the warm pool under the copy side.",
+    "variables": {
+      "--bloom-x": "24%",
+      "--bloom-width": "47%",
+      "--bloom-key-x": "80%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 6,
+    "id": "google-review-1",
+    "title": "\u201cbuilt us a beautiful site\u201d",
+    "direction": "Retain the compact stars/quote/credit composition and earlier two-light finish.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 7,
+    "id": "speed",
+    "title": "Hard to use on a phone?",
+    "direction": "Keep the readable phone frame and horizontal question; move blue light under the phone.",
+    "variables": {
+      "--bloom-x": "79%",
+      "--bloom-width": "37%",
+      "--bloom-key-x": "89%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 8,
+    "id": "case-hair-by-rachel-charles",
+    "title": "Hair By Rachel",
+    "direction": "Keep the tall phone composition and yellow client identity; center the floor below its base.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "57%",
+      "--bloom-key-x": "88%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 9,
+    "id": "booking",
+    "title": "Bookings, calls and messages.",
+    "direction": "Enlarge the calendar and pencil within the existing text-safe area; center the blue floor under both.",
+    "variables": {
+      "--bloom-x": "54%",
+      "--bloom-width": "65%",
+      "--bloom-key-x": "72%",
+      "--object-scale": "1.15",
+      "--object-y": "1px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 10,
+    "id": "google-review-4",
+    "title": "\u201cClear communication, expectations and timelines!\u201d",
+    "direction": "Retain the fully readable longer quote and its existing desktop/phone composition.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 11,
+    "id": "case-cc-films",
+    "title": "CC Films",
+    "direction": "Retain the full dark film screenshot; align the warm floor under the frame instead of the empty right side.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "67%",
+      "--bloom-key-x": "82%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 12,
+    "id": "case-easy-tiger",
+    "title": "Easy Tiger Bar",
+    "direction": "Keep the tall phone on desktop and the full bar homepage on phone; center the base light.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "58%",
+      "--bloom-key-x": "86%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 13,
+    "id": "case-the-break-room",
+    "title": "The Break Room",
+    "direction": "Retain the full device duo; place warm light under its complete wide footprint.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "68%",
+      "--bloom-key-x": "78%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 14,
+    "id": "case-clearhelp",
+    "title": "ClearHelp",
+    "direction": "Use a larger tablet beside its label on large desktops; keep the portrait frame on phones/tablets without forcing the whole collection into equal rows.",
+    "variables": {
+      "--bloom-x": "66%",
+      "--bloom-width": "52%",
+      "--bloom-key-x": "83%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 15,
+    "id": "case-brothers-pizzeria",
+    "title": "Brothers Pizzeria",
+    "direction": "Preserve the design-concept label and browser view; reserve the upper-right opening affordance.",
+    "variables": {
+      "--bloom-x": "73%",
+      "--bloom-width": "51%",
+      "--bloom-key-x": "86%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 16,
+    "id": "case-grand-funding-llc",
+    "title": "Grand Funding LLC",
+    "direction": "Prefer a taller desktop card for the portrait screenshot; keep the complete client screen and its original phone/tablet treatment.",
+    "variables": {
+      "--bloom-x": "70%",
+      "--bloom-width": "48%",
+      "--bloom-key-x": "84%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 17,
+    "id": "case-logan-loans",
+    "title": "Logan Loans",
+    "direction": "Prefer a taller desktop card for the iPhone while letting the mosaic balance neighboring cards; keep the phone view.",
+    "variables": {
+      "--bloom-x": "74%",
+      "--bloom-width": "42%",
+      "--bloom-key-x": "88%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 18,
+    "id": "case-the-tarot-hotline",
+    "title": "The Tarot Hotline",
+    "direction": "Keep the client artwork complete and clear the plus from the browser frame.",
+    "variables": {
+      "--bloom-x": "73%",
+      "--bloom-width": "52%",
+      "--bloom-key-x": "84%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 19,
+    "id": "page-industries",
+    "title": "A website for your business.",
+    "direction": "Enlarge the storefront beside the title on desktop; keep the complete doorway and awning on phones.",
+    "variables": {
+      "--bloom-x": "73%",
+      "--bloom-width": "44%",
+      "--bloom-key-x": "81%",
+      "--object-scale": "1.05",
+      "--object-y": "1px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/",
+    "desktopRefinement": "Shift storefront 7px left so its roof clears the plus at wide widths."
+  },
+  {
+    "index": 20,
+    "id": "wifi",
+    "title": "Wi-Fi keeps dropping?",
+    "direction": "Enlarge the switch/cable pair and match the light to its low horizontal silhouette.",
+    "variables": {
+      "--bloom-x": "52%",
+      "--bloom-width": "68%",
+      "--bloom-key-x": "71%",
+      "--object-scale": "1.18",
+      "--object-y": "2px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 21,
+    "id": "email",
+    "title": "Email not working?",
+    "direction": "Increase the envelope slightly and lower it; leave breathing room for the pen at right.",
+    "variables": {
+      "--bloom-x": "54%",
+      "--bloom-width": "59%",
+      "--bloom-key-x": "78%",
+      "--object-scale": "1.08",
+      "--object-x": "-3px",
+      "--object-y": "10px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 22,
+    "id": "google-review-3",
+    "title": "\u201cQuick to respond\u201d",
+    "direction": "Keep the short quote, stars and attribution; retain the existing wide review composition.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 23,
+    "id": "computer",
+    "title": "Set up your workspace",
+    "direction": "Compensate for transparent margins around the desk, keeping the monitor and plant intact.",
+    "variables": {
+      "--bloom-x": "52%",
+      "--bloom-width": "65%",
+      "--bloom-key-x": "67%",
+      "--object-scale": "1.28",
+      "--object-x": "-4px",
+      "--object-y": "2px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 24,
+    "id": "printer",
+    "title": "Printer won\u2019t connect?",
+    "direction": "Enlarge the printer without clipping the yellow cable; bring the floor under the paper tray.",
+    "variables": {
+      "--bloom-x": "53%",
+      "--bloom-width": "68%",
+      "--bloom-key-x": "73%",
+      "--object-scale": "1.14",
+      "--object-x": "-8px",
+      "--object-y": "7px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 25,
+    "id": "backup",
+    "title": "Keep a second safe copy",
+    "direction": "Enlarge the drive and cable while preserving the complete silhouette at intermediate widths, including the user Chrome viewport.",
+    "variables": {
+      "--bloom-x": "52%",
+      "--bloom-width": "64%",
+      "--bloom-key-x": "76%",
+      "--object-scale": "1.16",
+      "--object-y": "6px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 26,
+    "id": "it-security-basics",
+    "title": "Check the security basics",
+    "direction": "Enlarge the folder and lock; cap the ordinary phone card at four rows so the subject fills its space, while measured enlarged text can still grow.",
+    "variables": {
+      "--bloom-x": "52%",
+      "--bloom-width": "59%",
+      "--bloom-key-x": "77%",
+      "--object-scale": "1.2",
+      "--object-x": "-3px",
+      "--object-y": "7px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 27,
+    "id": "it-password-ownership",
+    "title": "Who controls your accounts?",
+    "direction": "Give the safe slightly more presence; tighten the floor to its square footprint.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "48%",
+      "--bloom-key-x": "74%",
+      "--object-scale": "1.1"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 28,
+    "id": "it-video-call-room",
+    "title": "Meeting room ready?",
+    "direction": "Enlarge the speaker/camera pair together without losing the camera silhouette.",
+    "variables": {
+      "--bloom-x": "52%",
+      "--bloom-width": "68%",
+      "--bloom-key-x": "79%",
+      "--object-scale": "1.18",
+      "--object-y": "5px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 29,
+    "id": "google-review-2",
+    "title": "\u201ceasy to work with\u201d",
+    "direction": "Retain the calm centered review group; all quote and attribution lines already fit.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 30,
+    "id": "it-storage-full",
+    "title": "Computer storage full?",
+    "direction": "Preserve the tall drive tower; tighten the light underneath its narrow base.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "36%",
+      "--bloom-key-x": "69%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 31,
+    "id": "it-payment-device-check",
+    "title": "Card reader dropping out?",
+    "direction": "Retain the large diagonal terminal; align the floor with the terminal and blue card together.",
+    "variables": {
+      "--bloom-x": "54%",
+      "--bloom-width": "58%",
+      "--bloom-key-x": "75%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 32,
+    "id": "it-vendor-handoff",
+    "title": "Changing IT providers?",
+    "direction": "Keep the leather folder and keys complete; lower the folio into its floor light.",
+    "variables": {
+      "--bloom-x": "53%",
+      "--bloom-width": "66%",
+      "--bloom-key-x": "76%",
+      "--object-scale": "1.03",
+      "--object-y": "6px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 33,
+    "id": "page-areas",
+    "title": "New York.",
+    "direction": "Enlarge the taxi slightly; bring the wheels closer to the amber floor without cropping either bumper.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "71%",
+      "--bloom-key-x": "70%",
+      "--object-scale": "1.06",
+      "--object-y": "4px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 34,
+    "id": "album-nyc",
+    "title": "New York, at work.",
+    "direction": "Keep the large unaltered interior photograph; center a restrained green floor below its wooden frame.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "70%",
+      "--bloom-key-x": "85%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 35,
+    "id": "maps",
+    "title": "Help people find you.",
+    "direction": "Retain the complete folded map; lower the paper points into the broad green reflection.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "74%",
+      "--bloom-key-x": "80%",
+      "--object-scale": "1.03",
+      "--object-y": "7px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 36,
+    "id": "web-redesign-decision",
+    "title": "Rebuild, or make a few fixes?",
+    "direction": "Move the can and roller slightly left/down; put the light beneath the can instead of its handle.",
+    "variables": {
+      "--bloom-x": "44%",
+      "--bloom-width": "57%",
+      "--bloom-key-x": "76%",
+      "--object-scale": "1.07",
+      "--object-x": "-8px",
+      "--object-y": "7px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 37,
+    "id": "album-hospitality",
+    "title": "Good things brewing.",
+    "direction": "Enlarge the cafe photo beside copy on wide cards; retain the complete stacked image on phones.",
+    "variables": {
+      "--bloom-x": "75%",
+      "--bloom-width": "47%",
+      "--bloom-key-x": "88%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 38,
+    "id": "album-roofing",
+    "title": "Built to last.",
+    "direction": "Retain the large roofer photograph; center light below the full frame and keep all copy.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "70%",
+      "--bloom-key-x": "84%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 39,
+    "id": "album-shops",
+    "title": "Your kind of place.",
+    "direction": "Keep the wide two-part portrait composition; place the green pool below the frame.",
+    "variables": {
+      "--bloom-x": "74%",
+      "--bloom-width": "48%",
+      "--bloom-key-x": "86%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 40,
+    "id": "google-review-5",
+    "title": "\u201cAbsolutely love love love!\u201d",
+    "direction": "Retain the existing quote emphasis, five stars and authentic wording.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 41,
+    "id": "consulting-first-priority",
+    "title": "Choose what to fix first",
+    "direction": "Keep the distinct sticky-note arrangement; lower the whole group slightly toward the floor.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "74%",
+      "--bloom-key-x": "79%",
+      "--object-y": "5px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 42,
+    "id": "consulting-tool-choice",
+    "title": "Keep useful tools. Cut wasted costs.",
+    "direction": "Preserve the large wooden toolbox and tools; match green light to the box base.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "63%",
+      "--bloom-key-x": "75%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 43,
+    "id": "consulting-second-opinion",
+    "title": "Get a second opinion",
+    "direction": "Keep the expressive duck silhouette; lower it slightly and narrow the pool to its body.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "49%",
+      "--bloom-key-x": "77%",
+      "--object-scale": "1.04",
+      "--object-y": "6px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 44,
+    "id": "google-review-7",
+    "title": "Five stars.",
+    "direction": "Retain the concise five-star review and attribution without inventing a quote.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 45,
+    "id": "case-venuecircuit",
+    "title": "VenueCircuit",
+    "direction": "Retain the full live platform capture; lower the frame toward its warm floor, keeping the label readable.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "78%",
+      "--bloom-key-x": "86%",
+      "--object-y": "3px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 46,
+    "id": "page-vera",
+    "title": "VERA.",
+    "direction": "Scale the brownstone inside its transparent canvas so the architecture has more presence; retain the full stoop.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "42%",
+      "--bloom-key-x": "72%",
+      "--object-scale": "1.2",
+      "--object-x": "-2px",
+      "--object-y": "-2px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 47,
+    "id": "software-repeat-work",
+    "title": "Stop entering things twice",
+    "direction": "Retain the paper machine and crank; place magenta light under its asymmetric footprint.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "73%",
+      "--bloom-key-x": "73%",
+      "--object-scale": "1.03",
+      "--object-x": "-3px",
+      "--object-y": "8px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 48,
+    "id": "google-review-6",
+    "title": "\u201censuring a painless experience.\u201d",
+    "direction": "Keep the complete two-line quote, stars and attribution in the existing order.",
+    "variables": {},
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 49,
+    "id": "software-approval-path",
+    "title": "Make approvals clear",
+    "direction": "Preserve both the stamp and approval slip; lower them into a shared reflection.",
+    "variables": {
+      "--bloom-x": "54%",
+      "--bloom-width": "66%",
+      "--bloom-key-x": "65%",
+      "--object-scale": "1.04",
+      "--object-x": "-2px",
+      "--object-y": "8px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 50,
+    "id": "case-deckspace",
+    "title": "DeckSpace",
+    "direction": "Keep the complete bright software screenshot and concept label; align the light under its frame.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "76%",
+      "--bloom-key-x": "84%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 51,
+    "id": "case-after-hours-agenda",
+    "title": "After Hours Agenda",
+    "direction": "Keep the client headline and photograph intact; move the frame clear of the opening affordance.",
+    "variables": {
+      "--bloom-x": "72%",
+      "--bloom-width": "55%",
+      "--bloom-key-x": "84%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 52,
+    "id": "lab-pool-room",
+    "title": "The Pool Room",
+    "direction": "Remove the stray rectangular outline around the transparent screenshot; preserve its full invitation and pool view. Limit unnecessary phone height to four rows while retaining the text minimum.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "72%",
+      "--bloom-key-x": "79%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 53,
+    "id": "lab-walkup-3d",
+    "title": "Six-Story Walk-Up",
+    "direction": "Remove the outer outline; anchor the night-building screenshot lower in its tall phone tile. Limit unnecessary phone height to four rows while retaining the text minimum.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "72%",
+      "--bloom-key-x": "77%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 54,
+    "id": "lab-micro-animations",
+    "title": "Micro-Animations",
+    "direction": "Remove the outer outline; retain the whole UI demonstration and action label. Limit unnecessary phone height to four rows while retaining the text minimum.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "70%",
+      "--bloom-key-x": "80%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 55,
+    "id": "lab-cabinet-concept",
+    "title": "Cabinet Lab",
+    "direction": "Remove the outer outline and retain every line of the two-line action and cabinet screenshot. Limit unnecessary phone height to four rows while retaining the text minimum.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "70%",
+      "--bloom-key-x": "82%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 56,
+    "id": "lab-house-explorer",
+    "title": "Farm House",
+    "direction": "Remove the outer outline; retain the full property model, sky and invitation. Limit unnecessary phone height to four rows while retaining the text minimum.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "73%",
+      "--bloom-key-x": "80%"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 57,
+    "id": "software-connect-existing-tools",
+    "title": "Can our tools work together?",
+    "direction": "Enlarge the connected cable silhouette and bring the reflection up to its suspended junction.",
+    "variables": {
+      "--bloom-x": "51%",
+      "--bloom-width": "73%",
+      "--bloom-key-x": "70%",
+      "--object-scale": "1.12",
+      "--object-y": "2px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  },
+  {
+    "index": 58,
+    "id": "software-business-ownership",
+    "title": "Own your system",
+    "direction": "Enlarge the sphere cluster so it reads as the subject; center the light beneath the cluster.",
+    "variables": {
+      "--bloom-x": "50%",
+      "--bloom-width": "51%",
+      "--bloom-key-x": "75%",
+      "--object-scale": "1.2",
+      "--object-y": "3px"
+    },
+    "desktopReviewed": true,
+    "phoneReviewed": true,
+    "afterReviewed": true,
+    "afterDesktopReviewed": true,
+    "afterPhoneReviewed": true,
+    "afterTabletReviewed": true,
+    "finalEvidence": "final/"
+  }
+]

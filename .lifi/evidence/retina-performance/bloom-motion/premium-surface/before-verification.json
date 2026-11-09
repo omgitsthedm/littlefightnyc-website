@@ -1,0 +1,273 @@
+{
+  "status": "Soft floor, corner and side bloom verified locally; production unchanged; prior homepage LCP budget remains open",
+  "artifactSha256": "b45eacf94b01f5d7bc8b62d955704c85b4dba4c0b42080e433835f0fd88ba648",
+  "published": false,
+  "preview": "http://127.0.0.1:63449/?qa=1",
+  "hero": {
+    "approvedPixelsPreserved": true,
+    "geometryMatchesLive": true,
+    "sourceDimensions": {
+      "desktop": [
+        762,
+        337
+      ],
+      "phone": [
+        288,
+        194
+      ]
+    },
+    "sourceSearch": "No larger exact master found; larger alternatives have different compositions",
+    "visualEvidence": "hero-restored/hero-restored-report.json",
+    "restorationChecks": "hero-restoration-checks.log",
+    "losslessCompressionTrial": "hero-lossless-compression-trial.json",
+    "compressionTrialApplied": false,
+    "continuationHashesVerified": true,
+    "sourceLimitationNote": "The prior exact-master search and lossless-compression trial remain recorded; this continuation changes neither source artwork nor its resolution."
+  },
+  "performance": {
+    "status": "failed",
+    "failures": [
+      "home-mobile: median LCP above 2500ms"
+    ],
+    "medians": {
+      "home-mobile": {
+        "score": 96,
+        "lcp": 2851.951,
+        "tbt": 10,
+        "cls": 0
+      },
+      "websites-mobile": {
+        "score": 93,
+        "lcp": 3078.3167999999996,
+        "tbt": 0,
+        "cls": 0.0006821339795189519
+      }
+    },
+    "method": "Lighthouse 13.5.0, installed Google Chrome, serial mobile simulated throttling; lab evidence, not field Core Web Vitals",
+    "evidence": "bloom-motion/final-lighthouse/summary.json",
+    "baselineFreshSingleRun": {
+      "score": 95,
+      "lcp": 2926.946,
+      "tbt": 24,
+      "cls": 0
+    },
+    "baselineEvidence": "bloom-motion/before-lighthouse.json",
+    "note": "Three serial mobile runs per page after all functional browser work finished. Homepage CSS deferral improved median LCP from the previous 2926.8ms to 2852.0ms and score from 95 to 96; the unchanged 2500ms homepage budget still fails. These are local lab measurements, not field Core Web Vitals.",
+    "revertedTrials": "Hero preloading, synchronous decode, lower lazy-image priority, inline icon masks and deferred offscreen packing did not improve LCP and were removed. Only batched measurements and minified JS are retained.",
+    "nextConcreteExperiment": "Measure an isolated critical-CSS delivery experiment against this saved candidate before accepting any further change; preserve the approved hero pixels.",
+    "artifactSha256": "9df2e9477ab06d9268edce79bdb1a0f1f3391a59fd99c34a3ff0094752306420",
+    "scopeNote": "These lab measurements precede the subsequent static angled-bloom CSS revision; they are not new measurements of that revision."
+  },
+  "updatedAt": "2026-10-10T10:48:48.607036+00:00",
+  "continuation": {
+    "changedSource": [
+      "app/preview-ui/vendor/mosaic-layout.js",
+      "app/scripts/build-tile-preview.py"
+    ],
+    "scriptDelivery": {
+      "before": {
+        "raw": 132115,
+        "gzip": 37315
+      },
+      "after": {
+        "raw": 64447,
+        "gzip": 22561
+      }
+    },
+    "validation": {
+      "fullQualitySuite": "passed",
+      "qualityLog": "continuation/quality-full.log",
+      "tileGeometry": {
+        "widths": [
+          320,
+          393,
+          600,
+          744,
+          1024,
+          1440
+        ],
+        "cardsPerWidth": 58,
+        "changes": []
+      },
+      "geometryEvidence": "continuation/geometry-parity.json",
+      "settledFocusCases": 6,
+      "focusEvidence": "continuation/settled-focus.json",
+      "independentBrowserReview": "continuation/browser-review/result.json",
+      "productionIdentity": "continuation/production-identity.json",
+      "sourceDiff": "continuation/change.patch",
+      "workspaceCheck": {
+        "passed": true,
+        "checks": 506,
+        "liveChecked": true,
+        "evidence": "/Users/davidmarsh/Desktop/LiFi NYC/Business/Archive/Folder maintenance 2026-10-10/website-continuation-validation.json"
+      }
+    },
+    "agentStackDiagnostic": {
+      "report": "continuation/ai-system-doctor.log",
+      "result": "156 pass, 1 warn, 15 fail",
+      "workaround": "Default Python 3.10 lacks tomllib; reran the existing diagnostic with installed Python 3.11. Global configuration and billing-ledger drift were not modified by this website task."
+    }
+  },
+  "bloomMotion": {
+    "changedSource": [
+      "app/preview-ui/base.css",
+      "app/preview-ui/sculpture.css",
+      "app/preview-ui/site.js",
+      "app/preview-ui/tile-effects.js",
+      "app/scripts/build-tile-preview.py",
+      "app/scripts/tile_stylesheets.py",
+      "app/scripts/quality-tiles.mjs",
+      "app/scripts/verify-bloom-motion.cjs"
+    ],
+    "design": "Original service accents remain; concentrated warm-gold light and a pale reflection replace the muddy yellow wash, with the same layered finish on blue, green, pink and orange tiles. Geometry and artwork are unchanged.",
+    "motion": "Original sparse red-dot circuit paths inspired by the supplied Halt and Catch Fire credits. One canvas, no added media/dependency requests, capped at 20fps. Pauses for hidden pages, readers, search, saved pause, reduced motion, forced colors and save-data.",
+    "reference": "https://www.youtube.com/watch?v=ucSUs3adMQ8",
+    "delivery": {
+      "before": {
+        "homeCSS": {
+          "gzip": 22223
+        },
+        "sixScripts": {
+          "gzip": 22561
+        }
+      },
+      "after": {
+        "files": {
+          "home.css": {
+            "raw": 88522,
+            "gzip": 17006
+          },
+          "site.css": {
+            "raw": 245335,
+            "gzip": 41593
+          },
+          "mosaic-layout.js": {
+            "raw": 25034,
+            "gzip": 8436
+          },
+          "tile-motion.js": {
+            "raw": 6132,
+            "gzip": 2273
+          },
+          "tile-effects.js": {
+            "raw": 8267,
+            "gzip": 2972
+          },
+          "website-story.js": {
+            "raw": 2970,
+            "gzip": 1162
+          },
+          "search-relevance.js": {
+            "raw": 2343,
+            "gzip": 1220
+          },
+          "site.js": {
+            "raw": 22796,
+            "gzip": 7760
+          }
+        },
+        "sixScripts": {
+          "raw": 67542,
+          "gzip": 23823
+        }
+      }
+    },
+    "validation": {
+      "fullQualitySuite": "passed before the final palette-only refinement",
+      "fullQualityLog": "bloom-motion/quality-full.log",
+      "finalArtifactGate": "passed",
+      "finalArtifactLog": "bloom-motion/quality-final-fast.log",
+      "finalFocusedBrowserChecks": 25,
+      "focusedResult": "passed",
+      "browserEvidence": "bloom-motion/browser-verification.json",
+      "screenshots": 28,
+      "geometryWidths": [
+        360,
+        393,
+        600,
+        834,
+        1100,
+        1440
+      ],
+      "tilesAtEachWidth": 58,
+      "geometryChanges": [],
+      "consoleErrors": [],
+      "failedResources": [],
+      "accessibility": "Chrome and WebKit WCAG 2 A/AA and 2.1 AA automated scans passed. Reduced-motion, no-JS, save-data, forced-colors and blocked-storage cases passed.",
+      "productionIdentity": "bloom-motion/production-identity.json",
+      "diffCheck": "passed",
+      "workspaceCheck": {
+        "passed": true,
+        "checksPassed": 507,
+        "failures": [],
+        "fullChecksums": true,
+        "liveChecked": true,
+        "evidence": "/Users/davidmarsh/Desktop/LiFi NYC/Business/Archive/Folder maintenance 2026-10-10/website-bloom-motion-validation.json"
+      }
+    },
+    "checkpoint": {
+      "before": "bloom-motion/before-source.zip",
+      "after": "bloom-motion/after-source.zip",
+      "manifest": "bloom-motion/after-source-manifest.json",
+      "scopedDiff": "bloom-motion/change.patch",
+      "filesSavedAndByteVerified": 131,
+      "preexistingFilesChecked": 129,
+      "unexpectedChanges": []
+    },
+    "nextAction": "Historical baseline for angledBloom; use the current angledBloom record for local review.",
+    "visualReview": "Previous floor-only treatment rejected as too weak. Superseded by the user-directed angledBloom revision; previous proof and checkpoint retained."
+  },
+  "angledBloom": {
+    "status": "passed",
+    "updatedAt": "2026-10-10T10:48:48.607036+00:00",
+    "published": false,
+    "preview": "http://127.0.0.1:63449/?qa=1",
+    "artifactSha256": "b45eacf94b01f5d7bc8b62d955704c85b4dba4c0b42080e433835f0fd88ba648",
+    "changedSource": [
+      "app/preview-ui/sculpture.css"
+    ],
+    "sourceFilesCompared": 3343,
+    "unrelatedSourceChanges": [],
+    "design": "Existing floor bloom intensity and category palette preserved; soft upper-corner light, opposing side fill and faint side rim added. Light positions follow service and wide-card artwork.",
+    "qualityFast": "passed",
+    "qualityLog": "quality-fast.log",
+    "browserChecks": 25,
+    "screenshots": 28,
+    "browserReport": "browser-verification.json",
+    "geometryWidths": [
+      360,
+      393,
+      600,
+      834,
+      1100,
+      1440
+    ],
+    "tilesPerWidth": 58,
+    "geometryChanges": [],
+    "homeCSSGzipBytes": 17111,
+    "homeCSSAddedGzipBytes": 105,
+    "newMediaRequests": 0,
+    "animationCodeChanged": false,
+    "sourceCheckpoint": {
+      "before": "before-sculpture.css",
+      "after": "after-sculpture.css",
+      "diff": "change.patch",
+      "sha256": "a5a31e404e0a794b901bf7f560dc7fb9c4d40c653c6d626f709cf14bcea37cf3"
+    },
+    "visualReview": [
+      "Chrome desktop service tiles and all four collections",
+      "Chrome phone support tiles",
+      "WebKit tablet service tiles"
+    ],
+    "performanceScope": "No Lighthouse rerun for this static CSS lighting change. Prior lab measurements remain attached to their original artifact.",
+    "evidence": "bloom-motion/angled-light/verification.json",
+    "workspaceCheck": {
+      "passed": true,
+      "checksPassed": 508,
+      "failures": [],
+      "fullChecksums": true,
+      "liveChecked": true,
+      "evidence": "/Users/davidmarsh/Desktop/LiFi NYC/Business/Archive/Folder maintenance 2026-10-10/website-angled-light-validation.json"
+    }
+  }
+}

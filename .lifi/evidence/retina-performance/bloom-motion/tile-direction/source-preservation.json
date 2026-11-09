@@ -1,0 +1,9 @@
+{
+  "sampled": 2941,
+  "changed": [
+    "app/preview-ui/sculpture.css",
+    "app/preview-ui/vendor/mosaic-layout.js",
+    "app/scripts/verify-sculpture.cjs"
+  ],
+  "unchanged": 2938
+}

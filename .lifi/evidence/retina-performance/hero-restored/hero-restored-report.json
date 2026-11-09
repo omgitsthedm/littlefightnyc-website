@@ -1,0 +1,122 @@
+{
+  "capturedAt": "2026-10-10T07:03:20.066Z",
+  "reducedMotion": "reduce",
+  "profiles": {
+    "desktop": {
+      "candidate": {
+        "currentSrc": "http://127.0.0.1:64358/assets/sculpture/hero-reference-desktop.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 66,
+          "y": 102,
+          "width": 1308,
+          "height": 813.796875,
+          "bottom": 915.796875
+        },
+        "stage": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "image": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "reduced": true,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      },
+      "live": {
+        "currentSrc": "https://littlefightnyc.com/assets/sculpture/hero-reference-desktop.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 66,
+          "y": 102,
+          "width": 1308,
+          "height": 813.796875,
+          "bottom": 915.796875
+        },
+        "stage": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "image": {
+          "x": 32,
+          "y": 307.265625,
+          "width": 1376,
+          "height": 608.53125,
+          "bottom": 915.796875
+        },
+        "reduced": true,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    },
+    "phone": {
+      "candidate": {
+        "currentSrc": "http://127.0.0.1:64358/assets/sculpture/hero-reference-mobile.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 20,
+          "y": 72,
+          "width": 353,
+          "height": 533.875,
+          "bottom": 605.875
+        },
+        "stage": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "image": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "reduced": true,
+        "scrollWidth": 393,
+        "clientWidth": 393
+      },
+      "live": {
+        "currentSrc": "https://littlefightnyc.com/assets/sculpture/hero-reference-mobile.webp",
+        "sourceSrc": "/assets/sculpture/hero-reference-mobile.webp",
+        "hero": {
+          "x": 20,
+          "y": 72,
+          "width": 353,
+          "height": 533.875,
+          "bottom": 605.875
+        },
+        "stage": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "image": {
+          "x": 10,
+          "y": 346.625,
+          "width": 373,
+          "height": 251.25,
+          "bottom": 597.875
+        },
+        "reduced": true,
+        "scrollWidth": 393,
+        "clientWidth": 393
+      }
+    }
+  }
+}

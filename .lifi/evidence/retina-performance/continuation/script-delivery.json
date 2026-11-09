@@ -1,0 +1,80 @@
+{
+  "files": [
+    {
+      "file": "tile-motion.js",
+      "before": {
+        "raw": 9028,
+        "gzip": 2819
+      },
+      "after": {
+        "raw": 6132,
+        "gzip": 2273
+      }
+    },
+    {
+      "file": "mosaic-layout.js",
+      "before": {
+        "raw": 56623,
+        "gzip": 15726
+      },
+      "after": {
+        "raw": 25034,
+        "gzip": 8436
+      }
+    },
+    {
+      "file": "site.js",
+      "before": {
+        "raw": 44347,
+        "gzip": 12171
+      },
+      "after": {
+        "raw": 22498,
+        "gzip": 7648
+      }
+    },
+    {
+      "file": "search-relevance.js",
+      "before": {
+        "raw": 5345,
+        "gzip": 2018
+      },
+      "after": {
+        "raw": 2343,
+        "gzip": 1220
+      }
+    },
+    {
+      "file": "tile-effects.js",
+      "before": {
+        "raw": 11159,
+        "gzip": 2719
+      },
+      "after": {
+        "raw": 5470,
+        "gzip": 1822
+      }
+    },
+    {
+      "file": "website-story.js",
+      "before": {
+        "raw": 5613,
+        "gzip": 1862
+      },
+      "after": {
+        "raw": 2970,
+        "gzip": 1162
+      }
+    }
+  ],
+  "totals": {
+    "before": {
+      "raw": 132115,
+      "gzip": 37315
+    },
+    "after": {
+      "raw": 64447,
+      "gzip": 22561
+    }
+  }
+}

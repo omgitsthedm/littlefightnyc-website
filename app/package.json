@@ -73,7 +73,8 @@
     "test:tile-production": "node scripts/verify-tile-production.cjs",
     "quality:tile-artifact": "node scripts/quality-tiles.mjs --dist dist",
     "quality:tile-functional": "node scripts/quality-tiles.mjs --dist dist --functional",
-    "quality:tile-release": "node scripts/quality-tiles.mjs --dist dist --release"
+    "quality:tile-release": "node scripts/quality-tiles.mjs --dist dist --release",
+    "audit:retina-performance": "node scripts/measure-release-performance.mjs"
   },
   "dependencies": {
     "@fontsource-variable/oswald": "^5.2.8",

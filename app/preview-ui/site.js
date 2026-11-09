@@ -20,8 +20,10 @@
   let readerTrail = [];
   let readerRoutesPromise;
   let readerRoutes = {};
-  const motionToggle = document.querySelector('#motion-toggle');
+  const motionToggles = [...document.querySelectorAll('#motion-toggle, [data-motion-toggle]')];
   const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let savedMotion = '';
+  try { savedMotion = localStorage.getItem('lf-motion') || ''; } catch { /* Motion works without storage. */ }
 
   if (!detail || !panel || !detailBody) return;
 
@@ -159,13 +161,16 @@
   }
 
   function setMotionState(enabled, { announce = true } = {}) {
+    enabled = enabled && !prefersReducedMotion.matches;
     document.body.classList.toggle('no-motion', !enabled);
-    if (motionToggle) {
+    motionToggles.forEach(motionToggle => {
+      motionToggle.hidden = false;
       motionToggle.setAttribute('aria-pressed', String(!enabled));
-      motionToggle.setAttribute('aria-label', enabled ? 'Pause animations and image rotation' : 'Resume animations and image rotation');
+      motionToggle.disabled = prefersReducedMotion.matches;
+      motionToggle.setAttribute('aria-label', prefersReducedMotion.matches ? 'Motion paused by your device setting' : enabled ? 'Pause animations and image rotation' : 'Resume animations and image rotation');
       const label = motionToggle.querySelector('.motion-label');
-      if (label) label.textContent = enabled ? 'Pause motion & slideshows' : 'Resume motion & slideshows';
-    }
+      if (label) label.textContent = prefersReducedMotion.matches ? 'Reduced motion' : enabled ? 'Pause motion' : 'Resume motion';
+    });
     if (announce) interaction(enabled ? 'motion_on' : 'motion_off', 'mosaic', 'controls');
   }
 
@@ -325,6 +330,29 @@
     }
   }
 
+  let readerStylesPromise;
+  function ensureReaderStyles() {
+    if (document.getElementById('reader-styles')?.sheet) return Promise.resolve();
+    if (readerStylesPromise) return readerStylesPromise;
+    readerStylesPromise = new Promise((resolve, reject) => {
+      const link = document.createElement('link');
+      link.id = 'reader-styles';
+      link.rel = 'stylesheet';
+      link.href = '/site.css';
+      const timeout = setTimeout(() => fail(), 8000);
+      const fail = () => {
+        clearTimeout(timeout);
+        link.remove();
+        readerStylesPromise = undefined;
+        reject(new Error('Reader styles could not load.'));
+      };
+      link.onload = () => { clearTimeout(timeout); resolve(); };
+      link.onerror = fail;
+      document.head.append(link);
+    });
+    return readerStylesPromise;
+  }
+
   async function fetchReader(path, signal) {
     const response = await fetch(path, { credentials: 'same-origin', signal, headers: { Accept: 'text/html' } });
     if (!response.ok) throw new Error(`Reader request failed: ${response.status}`);
@@ -383,9 +411,13 @@
     if (menu?.open) setMenu(false, { returnFocus: false });
 
     try {
-      const readerDocument = await readerFetchPath(readerPath, findTile(readerPath) || source);
-      if (version !== requestVersion || controller.signal.aborted) return false;
-      const reader = await fetchReader(readerDocument, controller.signal);
+      // Fetch content and the complete reader cascade together. The dialog
+      // remains closed until both are ready, including on a slow connection.
+      const [reader] = await Promise.all([
+        readerFetchPath(readerPath, findTile(readerPath) || source)
+          .then(readerDocument => fetchReader(readerDocument, controller.signal)),
+        ensureReaderStyles(),
+      ]);
       if (version !== requestVersion || controller.signal.aborted) return false;
       releaseDemos();
       window.LFWebsiteStory?.release(panel);
@@ -429,7 +461,7 @@
       interaction(isInReader ? 'reader_change' : 'reader_open', contentId(readerPath), isInReader ? 'reader_link' : (source ? 'tile' : 'history'));
       return true;
     } catch (error) {
-      if (error.name !== 'AbortError') {
+      if (error.name !== 'AbortError' && version === requestVersion && !controller.signal.aborted) {
         // A real link remains the reliable fallback when an enhancement request fails.
         if (!options.fromHistory) location.assign(readerPath);
       }
@@ -688,11 +720,16 @@
     interaction('filter_select', filter, 'explore');
   }));
 
-  motionToggle?.addEventListener('click', () => setMotionState(document.body.classList.contains('no-motion')));
+  motionToggles.forEach(toggle => toggle.addEventListener('click', () => {
+    const enabled = document.body.classList.contains('no-motion');
+    savedMotion = enabled ? 'on' : 'off';
+    try { localStorage.setItem('lf-motion', savedMotion); } catch { /* Keep this visit usable. */ }
+    setMotionState(enabled);
+  }));
   prefersReducedMotion.addEventListener('change', () => {
-    if (prefersReducedMotion.matches) setMotionState(false);
+    setMotionState(savedMotion !== 'off', { announce: false });
   });
-  setMotionState(!prefersReducedMotion.matches && !document.body.classList.contains('no-motion'), { announce: false });
+  setMotionState(savedMotion !== 'off' && !document.body.classList.contains('no-motion'), { announce: false });
 
   async function loadSearchIndex() {
     if (!indexPromise) {

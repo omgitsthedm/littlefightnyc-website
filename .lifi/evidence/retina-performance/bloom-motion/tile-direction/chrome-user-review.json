@@ -1,0 +1,31 @@
+{
+  "browser": "Installed Google Chrome",
+  "tab": "341991922",
+  "origin": "http://127.0.0.1:63449",
+  "viewport": {
+    "width": 1048,
+    "height": 990,
+    "devicePixelRatio": 0.9
+  },
+  "checks": [
+    {
+      "tile": "case-clearhelp",
+      "interaction": "mouse click; return button",
+      "readerLoaded": true,
+      "focusRestored": true
+    },
+    {
+      "tile": "it-security-basics",
+      "interaction": "keyboard Enter; Escape",
+      "readerLoaded": true,
+      "focusRestored": true
+    }
+  ],
+  "scope": "Local preview only. No forms submitted and no external links followed.",
+  "updatedAt": "2026-10-10T12:37:11.596271+00:00",
+  "finalPixelRefinements": [
+    "Backup drive 1.16 scale verified at actual 1048px Chrome viewport and 90 percent zoom",
+    "Storefront shifted 7px left to clear plus corner"
+  ],
+  "finalArtifactSha256": "c86ad6e6fbcba5360279923c70eeac624dad46716188f30f647009a7d397a155"
+}

@@ -17,6 +17,7 @@ def approved_library_path():
     override = os.environ.get('LFNYC_APPROVED_SCREENSHOTS')
     candidates = [
         Path(override).expanduser() if override else None,
+        Path('/Users/davidmarsh/Desktop/LiFi NYC/Business/Website/Little Fight NYC Verified Screenshots 2026-10-07'),
         Path('/Users/davidmarsh/Desktop/LiFi NYC/Business/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07'),
         Path('/Users/davidmarsh/Desktop/Little Fight NYC Verified Screenshots 2026-10-07'),
     ]

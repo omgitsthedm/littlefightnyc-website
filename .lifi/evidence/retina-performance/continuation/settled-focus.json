@@ -1,0 +1,62 @@
+[
+  {
+    "width": 393,
+    "entry": "tile",
+    "close": "button",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  },
+  {
+    "width": 393,
+    "entry": "tile",
+    "close": "Escape",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  },
+  {
+    "width": 1032,
+    "entry": "nav",
+    "close": "button",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  },
+  {
+    "width": 1032,
+    "entry": "nav",
+    "close": "Escape",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  },
+  {
+    "width": 1032,
+    "entry": "tile",
+    "close": "button",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  },
+  {
+    "width": 1032,
+    "entry": "tile",
+    "close": "Escape",
+    "sameDocument": true,
+    "url": "/",
+    "tag": "A",
+    "href": "/services/custom-local-websites/",
+    "className": "tile sculpture-tile service-anchor"
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "hero-reference-mobile",
+    "beforeBytes": 69482,
+    "afterBytes": 67252,
+    "exactDecodedPixels": true
+  },
+  {
+    "name": "hero-reference-desktop",
+    "beforeBytes": 254530,
+    "afterBytes": 249406,
+    "exactDecodedPixels": true
+  }
+]

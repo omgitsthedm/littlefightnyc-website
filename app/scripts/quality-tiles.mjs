@@ -85,6 +85,7 @@ async function browserLanes() {
     run("node", ["scripts/verify-tile-preview.cjs"], env);
     run("node", ["scripts/verify-review-readers.cjs"], { ...env, REVIEW_READERS_URL: url });
     run("node", ["scripts/verify-card-app.cjs"], { ...env, CARD_APP_URL: url });
+    run("node", ["scripts/verify-reader-delivery.cjs"], env);
     // The selected sculpture composition has a shared four-service opening,
     // physical screenshot frames, and 58 curated sculptural fronts. Its new visual
     // contract replaces the previous 6x3-anchor/editorial-collage snapshots.
@@ -93,6 +94,9 @@ async function browserLanes() {
       run("node", ["scripts/verify-sculpture.cjs", "--webkit"], env);
       run("node", ["scripts/verify-responsive-sculpture.cjs"], env);
       run("node", ["scripts/verify-hero-reference.cjs"], env);
+      run("node", ["scripts/measure-sculpture-delivery.cjs"], env);
+      run("node", ["scripts/measure-mosaic-layout.cjs"], env);
+      run("node", ["scripts/verify-bloom-motion.cjs"], env);
     }
     run("node", ["scripts/verify-lab-fronts.cjs"], { ...env, LAB_FRONTS_URL: url });
     run("node", ["scripts/verify-construction-labs.cjs"], { ...env, CONSTRUCTION_URL: url });
@@ -109,11 +113,15 @@ async function browserLanes() {
     run("node", ["scripts/verify-answer-accessibility.cjs"], { ...env, ANSWER_HUB_URL: url });
     run("node", ["scripts/verify-search-browser.cjs"], { ...env, SEARCH_URL: url });
     run("npx", ["playwright", "test", "--config=playwright.support-form.config.ts"], { ...env, SUPPORT_FORM_URL: url });
+    if (release) run("node", ["scripts/measure-release-performance.mjs"], env);
   });
 }
 
 run("python3", ["scripts/audit-tile-content.py", "--dist", dist, ...(release ? ["--release"] : [])]);
 run("python3", ["scripts/audit-tile-rewrite.py", "--dist", dist]);
+run("node", ["scripts/test-lab-metadata.mjs"]);
+run("python3", ["scripts/homepage_proof.py", "--check", "preview-content/homepage-proof.json"]);
+run("node", ["scripts/test-sculpture-delivery.cjs"]);
 
 if (functional) {
   // Preserve real contracts: native inquiry delivery, consent/privacy,

@@ -28,7 +28,8 @@
     "construction.css",
     "sculpture.css",
     "master-reader.css",
-    "workbench.css"
+    "workbench.css",
+    "homepage-proof.css"
   ],
   "presentationScope": [
     "Homepage hero",

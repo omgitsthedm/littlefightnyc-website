@@ -1,0 +1,2450 @@
+{
+  "360": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 20,
+      "y": 615.109375,
+      "width": 155.5,
+      "height": 136
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 184.5,
+      "y": 615.109375,
+      "width": 155.5,
+      "height": 136
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 20,
+      "y": 760.109375,
+      "width": 155.5,
+      "height": 184
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 184.5,
+      "y": 760.109375,
+      "width": 155.5,
+      "height": 184
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 20,
+      "y": 954.109375,
+      "width": 162.890625,
+      "height": 116
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 191.890625,
+      "y": 954.109375,
+      "width": 148.109375,
+      "height": 116
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 20,
+      "y": 1079.109375,
+      "width": 320,
+      "height": 104
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 20,
+      "y": 1263.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 185,
+      "y": 1263.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 20,
+      "y": 1485.90625,
+      "width": 320,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 20,
+      "y": 1707.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 185,
+      "y": 1707.90625,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 20,
+      "y": 1929.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 185,
+      "y": 2003.90625,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 20,
+      "y": 2151.90625,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 185,
+      "y": 2299.90625,
+      "width": 155,
+      "height": 360
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 20,
+      "y": 2447.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 20,
+      "y": 2669.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/industries/",
+      "x": 185,
+      "y": 2669.90625,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 20,
+      "y": 2962.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 185,
+      "y": 2962.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 20,
+      "y": 3184.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 185,
+      "y": 3184.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 20,
+      "y": 3406.703125,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 185,
+      "y": 3406.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 185,
+      "y": 3628.703125,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 20,
+      "y": 3702.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 20,
+      "y": 3924.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 185,
+      "y": 3924.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 20,
+      "y": 4146.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 185,
+      "y": 4146.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 20,
+      "y": 4368.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/areas/",
+      "x": 185,
+      "y": 4368.703125,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 20,
+      "y": 4661.5,
+      "width": 320,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 20,
+      "y": 4883.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 185,
+      "y": 4883.5,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 20,
+      "y": 5105.5,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 185,
+      "y": 5179.5,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 20,
+      "y": 5401.5,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 185,
+      "y": 5475.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 20,
+      "y": 5697.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 185,
+      "y": 5697.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 20,
+      "y": 5919.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 185,
+      "y": 5919.5,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 20,
+      "y": 6212.296875,
+      "width": 155,
+      "height": 360
+    },
+    {
+      "href": "/vera/",
+      "x": 185,
+      "y": 6212.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 185,
+      "y": 6434.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 20,
+      "y": 6582.296875,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 185,
+      "y": 6656.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 20,
+      "y": 6878.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 185,
+      "y": 6878.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 20,
+      "y": 7100.296875,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 185,
+      "y": 7100.296875,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 20,
+      "y": 7396.296875,
+      "width": 320,
+      "height": 286
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 20,
+      "y": 7692.296875,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 185,
+      "y": 7692.296875,
+      "width": 155,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 20,
+      "y": 7988.296875,
+      "width": 155,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 185,
+      "y": 7988.296875,
+      "width": 155,
+      "height": 212
+    }
+  ],
+  "393": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 20,
+      "y": 654.28125,
+      "width": 172,
+      "height": 141.46875
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 201,
+      "y": 654.28125,
+      "width": 172,
+      "height": 141.46875
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 20,
+      "y": 804.75,
+      "width": 172,
+      "height": 184
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 201,
+      "y": 804.75,
+      "width": 172,
+      "height": 184
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 20,
+      "y": 998.75,
+      "width": 180.1875,
+      "height": 116
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 209.1875,
+      "y": 998.75,
+      "width": 163.8125,
+      "height": 116
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 20,
+      "y": 1123.75,
+      "width": 353,
+      "height": 104
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 20,
+      "y": 1310.15625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 201.5,
+      "y": 1310.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 201.5,
+      "y": 1532.15625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 20,
+      "y": 1606.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 20,
+      "y": 1828.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 201.5,
+      "y": 1828.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 20,
+      "y": 2050.15625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 201.5,
+      "y": 2050.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 201.5,
+      "y": 2272.15625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 20,
+      "y": 2346.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 20,
+      "y": 2568.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/industries/",
+      "x": 201.5,
+      "y": 2568.15625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 20,
+      "y": 2862.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 201.5,
+      "y": 2862.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 20,
+      "y": 3084.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 201.5,
+      "y": 3084.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 20,
+      "y": 3306.5625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 201.5,
+      "y": 3306.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 201.5,
+      "y": 3528.5625,
+      "width": 171.5,
+      "height": 360
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 20,
+      "y": 3602.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 20,
+      "y": 3824.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 201.5,
+      "y": 3898.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 20,
+      "y": 4046.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 201.5,
+      "y": 4120.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 20,
+      "y": 4268.5625,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/areas/",
+      "x": 201.5,
+      "y": 4342.5625,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 20,
+      "y": 4636.96875,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 201.5,
+      "y": 4636.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 201.5,
+      "y": 4858.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 20,
+      "y": 4932.96875,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 201.5,
+      "y": 5080.96875,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 20,
+      "y": 5228.96875,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 201.5,
+      "y": 5376.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 20,
+      "y": 5524.96875,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 201.5,
+      "y": 5598.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 20,
+      "y": 5820.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 201.5,
+      "y": 5820.96875,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 20,
+      "y": 6115.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/vera/",
+      "x": 201.5,
+      "y": 6115.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 201.5,
+      "y": 6337.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 20,
+      "y": 6411.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 20,
+      "y": 6633.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 201.5,
+      "y": 6633.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 20,
+      "y": 6855.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 201.5,
+      "y": 6855.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 20,
+      "y": 7077.375,
+      "width": 171.5,
+      "height": 360
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 201.5,
+      "y": 7151.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 20,
+      "y": 7447.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 201.5,
+      "y": 7447.375,
+      "width": 171.5,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 20,
+      "y": 7743.375,
+      "width": 171.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 201.5,
+      "y": 7743.375,
+      "width": 171.5,
+      "height": 212
+    }
+  ],
+  "600": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 20,
+      "y": 843.078125,
+      "width": 275.5,
+      "height": 195
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 304.5,
+      "y": 843.078125,
+      "width": 275.5,
+      "height": 195
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 20,
+      "y": 1047.078125,
+      "width": 275.5,
+      "height": 244
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 304.5,
+      "y": 1047.078125,
+      "width": 275.5,
+      "height": 244
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 20,
+      "y": 1301.078125,
+      "width": 288.609375,
+      "height": 116
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 317.609375,
+      "y": 1301.078125,
+      "width": 262.390625,
+      "height": 116
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 20,
+      "y": 1426.078125,
+      "width": 560,
+      "height": 104
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 20,
+      "y": 1622.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 162.5,
+      "y": 1622.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 305,
+      "y": 1622.96875,
+      "width": 275,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 20,
+      "y": 1844.96875,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 233.75,
+      "y": 1844.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 376.25,
+      "y": 1844.96875,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 20,
+      "y": 2066.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 162.5,
+      "y": 2066.96875,
+      "width": 275,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 447.5,
+      "y": 2066.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 20,
+      "y": 2288.96875,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 162.5,
+      "y": 2288.96875,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/industries/",
+      "x": 376.25,
+      "y": 2288.96875,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 20,
+      "y": 2593.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 162.5,
+      "y": 2593.859375,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 376.25,
+      "y": 2593.859375,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 20,
+      "y": 2815.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 162.5,
+      "y": 2815.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 305,
+      "y": 2815.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 447.5,
+      "y": 2815.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 20,
+      "y": 3037.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 162.5,
+      "y": 3037.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 305,
+      "y": 3037.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 447.5,
+      "y": 3037.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 20,
+      "y": 3259.859375,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 233.75,
+      "y": 3259.859375,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/areas/",
+      "x": 376.25,
+      "y": 3259.859375,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 20,
+      "y": 3564.75,
+      "width": 275,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 305,
+      "y": 3564.75,
+      "width": 275,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 20,
+      "y": 3786.75,
+      "width": 132.5,
+      "height": 286
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 162.5,
+      "y": 3786.75,
+      "width": 203.75,
+      "height": 286
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 376.25,
+      "y": 3786.75,
+      "width": 203.75,
+      "height": 286
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 20,
+      "y": 4082.75,
+      "width": 275,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 305,
+      "y": 4082.75,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 447.5,
+      "y": 4082.75,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 20,
+      "y": 4304.75,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 233.75,
+      "y": 4304.75,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 447.5,
+      "y": 4304.75,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 20,
+      "y": 4609.640625,
+      "width": 203.75,
+      "height": 360
+    },
+    {
+      "href": "/vera/",
+      "x": 233.75,
+      "y": 4609.640625,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 447.5,
+      "y": 4609.640625,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 233.75,
+      "y": 4831.640625,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 447.5,
+      "y": 4831.640625,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 20,
+      "y": 4979.640625,
+      "width": 203.75,
+      "height": 212
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 233.75,
+      "y": 5053.640625,
+      "width": 132.5,
+      "height": 286
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 376.25,
+      "y": 5053.640625,
+      "width": 203.75,
+      "height": 286
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 20,
+      "y": 5201.640625,
+      "width": 203.75,
+      "height": 360
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 233.75,
+      "y": 5349.640625,
+      "width": 203.75,
+      "height": 286
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 447.5,
+      "y": 5349.640625,
+      "width": 132.5,
+      "height": 286
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 20,
+      "y": 5571.640625,
+      "width": 203.75,
+      "height": 286
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 233.75,
+      "y": 5645.640625,
+      "width": 132.5,
+      "height": 212
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 376.25,
+      "y": 5645.640625,
+      "width": 203.75,
+      "height": 212
+    }
+  ],
+  "834": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 40,
+      "y": 653.75,
+      "width": 371,
+      "height": 148
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 423,
+      "y": 653.75,
+      "width": 371,
+      "height": 148
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 40,
+      "y": 813.75,
+      "width": 371,
+      "height": 148
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 423,
+      "y": 813.75,
+      "width": 371,
+      "height": 148
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 40,
+      "y": 973.75,
+      "width": 326.859375,
+      "height": 132
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 378.859375,
+      "y": 973.75,
+      "width": 185.21875,
+      "height": 132
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 576.078125,
+      "y": 973.75,
+      "width": 217.921875,
+      "height": 132
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 40,
+      "y": 1207.640625,
+      "width": 115.65625,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 167.65625,
+      "y": 1207.640625,
+      "width": 243.34375,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 423,
+      "y": 1207.640625,
+      "width": 370.984375,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 423,
+      "y": 1399.640625,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 678.328125,
+      "y": 1399.640625,
+      "width": 115.65625,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 40,
+      "y": 1495.640625,
+      "width": 179.484375,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 231.484375,
+      "y": 1495.640625,
+      "width": 179.515625,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 423,
+      "y": 1591.640625,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 40,
+      "y": 1687.640625,
+      "width": 179.484375,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 678.328125,
+      "y": 1687.640625,
+      "width": 115.65625,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 231.484375,
+      "y": 1783.640625,
+      "width": 179.515625,
+      "height": 180
+    },
+    {
+      "href": "/industries/",
+      "x": 423,
+      "y": 1783.640625,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 40,
+      "y": 2065.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 295.328125,
+      "y": 2065.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 550.65625,
+      "y": 2065.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 40,
+      "y": 2257.53125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 295.328125,
+      "y": 2257.53125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 550.65625,
+      "y": 2257.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 550.65625,
+      "y": 2449.53125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 40,
+      "y": 2545.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 295.328125,
+      "y": 2545.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 40,
+      "y": 2737.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 295.328125,
+      "y": 2737.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 550.65625,
+      "y": 2737.53125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 40,
+      "y": 2929.53125,
+      "width": 370.984375,
+      "height": 180
+    },
+    {
+      "href": "/areas/",
+      "x": 422.984375,
+      "y": 2929.53125,
+      "width": 371,
+      "height": 180
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 40,
+      "y": 3211.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 231.5,
+      "y": 3211.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 423,
+      "y": 3211.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 614.5,
+      "y": 3211.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 40,
+      "y": 3499.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 231.5,
+      "y": 3499.421875,
+      "width": 371,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 614.5,
+      "y": 3499.421875,
+      "width": 179.5,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 231.5,
+      "y": 3691.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 423,
+      "y": 3691.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 614.5,
+      "y": 3691.421875,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 40,
+      "y": 3787.421875,
+      "width": 179.5,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 40,
+      "y": 4069.3125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/vera/",
+      "x": 295.328125,
+      "y": 4069.3125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 550.65625,
+      "y": 4069.3125,
+      "width": 243.34375,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 295.328125,
+      "y": 4261.3125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 40,
+      "y": 4357.3125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 550.65625,
+      "y": 4357.3125,
+      "width": 243.34375,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 295.328125,
+      "y": 4453.3125,
+      "width": 243.328125,
+      "height": 180
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 40,
+      "y": 4645.3125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 295.328125,
+      "y": 4645.3125,
+      "width": 243.328125,
+      "height": 276
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 550.65625,
+      "y": 4645.3125,
+      "width": 243.34375,
+      "height": 276
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 40,
+      "y": 4933.3125,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 231.5,
+      "y": 4933.3125,
+      "width": 179.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 423,
+      "y": 4933.3125,
+      "width": 179.484375,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 614.484375,
+      "y": 4933.3125,
+      "width": 179.515625,
+      "height": 276
+    }
+  ],
+  "1100": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 52,
+      "y": 825.96875,
+      "width": 492,
+      "height": 187.40625
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 556,
+      "y": 825.96875,
+      "width": 492,
+      "height": 187.40625
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 52,
+      "y": 1025.375,
+      "width": 492,
+      "height": 187.40625
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 556,
+      "y": 1025.375,
+      "width": 492,
+      "height": 187.40625
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 52,
+      "y": 1224.78125,
+      "width": 435.21875,
+      "height": 136.390625
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 499.21875,
+      "y": 1224.78125,
+      "width": 246.625,
+      "height": 136.390625
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 757.84375,
+      "y": 1224.78125,
+      "width": 290.15625,
+      "height": 136.390625
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 52,
+      "y": 1472.3125,
+      "width": 156,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 220,
+      "y": 1472.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 472,
+      "y": 1472.3125,
+      "width": 156,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 640,
+      "y": 1472.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 892,
+      "y": 1472.3125,
+      "width": 156,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 220,
+      "y": 1664.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 640,
+      "y": 1664.3125,
+      "width": 156,
+      "height": 372
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 808,
+      "y": 1664.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 52,
+      "y": 1760.3125,
+      "width": 156,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 472,
+      "y": 1760.3125,
+      "width": 156,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 220,
+      "y": 1856.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/industries/",
+      "x": 808,
+      "y": 1856.3125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 52,
+      "y": 2147.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 304,
+      "y": 2147.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 556,
+      "y": 2147.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 808,
+      "y": 2147.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 556,
+      "y": 2339.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 52,
+      "y": 2435.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 304,
+      "y": 2435.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 808,
+      "y": 2435.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 52,
+      "y": 2627.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 556,
+      "y": 2627.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 808,
+      "y": 2627.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 304,
+      "y": 2723.453125,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 52,
+      "y": 2819.453125,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/areas/",
+      "x": 556,
+      "y": 2819.453125,
+      "width": 492,
+      "height": 180
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 52,
+      "y": 3110.59375,
+      "width": 324,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 388,
+      "y": 3110.59375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 640,
+      "y": 3110.59375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 892,
+      "y": 3110.59375,
+      "width": 156,
+      "height": 276
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 52,
+      "y": 3302.59375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 304,
+      "y": 3302.59375,
+      "width": 324,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 640,
+      "y": 3398.59375,
+      "width": 156,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 808,
+      "y": 3398.59375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 52,
+      "y": 3590.59375,
+      "width": 324,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 388,
+      "y": 3590.59375,
+      "width": 324,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 724,
+      "y": 3590.59375,
+      "width": 324,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 52,
+      "y": 3881.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/vera/",
+      "x": 304,
+      "y": 3881.734375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 556,
+      "y": 3881.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 808,
+      "y": 3881.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 304,
+      "y": 4073.734375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 52,
+      "y": 4169.734375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 556,
+      "y": 4169.734375,
+      "width": 492,
+      "height": 180
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 304,
+      "y": 4265.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 52,
+      "y": 4361.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 556,
+      "y": 4361.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 808,
+      "y": 4361.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 304,
+      "y": 4553.734375,
+      "width": 240,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 52,
+      "y": 4649.734375,
+      "width": 240,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 556,
+      "y": 4649.734375,
+      "width": 492,
+      "height": 180
+    }
+  ],
+  "1440": [
+    {
+      "href": "/services/custom-local-websites/",
+      "x": 66,
+      "y": 995.796875,
+      "width": 648,
+      "height": 208
+    },
+    {
+      "href": "/services/it-support/",
+      "x": 726,
+      "y": 995.796875,
+      "width": 648,
+      "height": 208
+    },
+    {
+      "href": "/services/tech-consulting/",
+      "x": 66,
+      "y": 1215.796875,
+      "width": 648,
+      "height": 208
+    },
+    {
+      "href": "/services/business-systems/",
+      "x": 726,
+      "y": 1215.796875,
+      "width": 648,
+      "height": 208
+    },
+    {
+      "href": "/case-studies/chromatic-painting-design/",
+      "x": 66,
+      "y": 1435.796875,
+      "width": 574.921875,
+      "height": 168
+    },
+    {
+      "href": "/reviews/google-review-1/",
+      "x": 652.921875,
+      "y": 1435.796875,
+      "width": 325.78125,
+      "height": 168
+    },
+    {
+      "href": "/answers/help/speed/",
+      "x": 990.703125,
+      "y": 1435.796875,
+      "width": 383.296875,
+      "height": 168
+    },
+    {
+      "href": "/case-studies/hair-by-rachel-charles/",
+      "x": 66,
+      "y": 1724.390625,
+      "width": 153,
+      "height": 372
+    },
+    {
+      "href": "/answers/help/booking/",
+      "x": 231,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-4/",
+      "x": 561,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/cc-films/",
+      "x": 891,
+      "y": 1724.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/easy-tiger/",
+      "x": 1221,
+      "y": 1724.390625,
+      "width": 153,
+      "height": 372
+    },
+    {
+      "href": "/case-studies/the-break-room/",
+      "x": 231,
+      "y": 1916.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/clearhelp/",
+      "x": 561,
+      "y": 1916.390625,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/brothers-pizzeria/",
+      "x": 808.5,
+      "y": 1916.390625,
+      "width": 400.5,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/grand-funding-llc/",
+      "x": 66,
+      "y": 2108.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/logan-loans/",
+      "x": 396,
+      "y": 2108.390625,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/case-studies/the-tarot-hotline/",
+      "x": 643.5,
+      "y": 2108.390625,
+      "width": 400.5,
+      "height": 180
+    },
+    {
+      "href": "/industries/",
+      "x": 1056,
+      "y": 2108.390625,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/wifi/",
+      "x": 66,
+      "y": 2408.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/email/",
+      "x": 313.5,
+      "y": 2408.984375,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-3/",
+      "x": 643.5,
+      "y": 2408.984375,
+      "width": 483,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/computer/",
+      "x": 1138.5,
+      "y": 2408.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/printer/",
+      "x": 66,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/backup/",
+      "x": 643.5,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-security-basics/",
+      "x": 891,
+      "y": 2600.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/it-password-ownership/",
+      "x": 313.5,
+      "y": 2696.984375,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-video-call-room/",
+      "x": 1138.5,
+      "y": 2696.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-2/",
+      "x": 643.5,
+      "y": 2792.984375,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/it-storage-full/",
+      "x": 66,
+      "y": 2888.984375,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-payment-device-check/",
+      "x": 396,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/it-vendor-handoff/",
+      "x": 891,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/areas/",
+      "x": 1138.5,
+      "y": 2888.984375,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/photos/nyc/",
+      "x": 66,
+      "y": 3189.578125,
+      "width": 400.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/maps/",
+      "x": 478.5,
+      "y": 3189.578125,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/web-redesign-decision/",
+      "x": 808.5,
+      "y": 3189.578125,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/photos/hospitality/",
+      "x": 1056,
+      "y": 3189.578125,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/photos/roofing/",
+      "x": 1056,
+      "y": 3381.578125,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/photos/shops/",
+      "x": 66,
+      "y": 3477.578125,
+      "width": 648,
+      "height": 180
+    },
+    {
+      "href": "/reviews/google-review-5/",
+      "x": 726,
+      "y": 3477.578125,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/consulting-first-priority/",
+      "x": 66,
+      "y": 3669.578125,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/consulting-tool-choice/",
+      "x": 396,
+      "y": 3669.578125,
+      "width": 400.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/consulting-second-opinion/",
+      "x": 808.5,
+      "y": 3669.578125,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-7/",
+      "x": 1138.5,
+      "y": 3669.578125,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/venuecircuit/",
+      "x": 66,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/vera/",
+      "x": 313.5,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-repeat-work/",
+      "x": 561,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/reviews/google-review-6/",
+      "x": 808.5,
+      "y": 4066.171875,
+      "width": 318,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-approval-path/",
+      "x": 1138.5,
+      "y": 4066.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/deckspace/",
+      "x": 808.5,
+      "y": 4258.171875,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/case-studies/after-hours-agenda/",
+      "x": 66,
+      "y": 4354.171875,
+      "width": 483,
+      "height": 180
+    },
+    {
+      "href": "/labs/pool-room/",
+      "x": 561,
+      "y": 4354.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/labs/walkup-3d/",
+      "x": 1138.5,
+      "y": 4354.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/labs/micro-animations/",
+      "x": 66,
+      "y": 4546.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/labs/cabinet-concept/",
+      "x": 313.5,
+      "y": 4546.171875,
+      "width": 235.5,
+      "height": 276
+    },
+    {
+      "href": "/labs/house-explorer/",
+      "x": 808.5,
+      "y": 4546.171875,
+      "width": 318,
+      "height": 276
+    },
+    {
+      "href": "/answers/help/software-connect-existing-tools/",
+      "x": 561,
+      "y": 4642.171875,
+      "width": 235.5,
+      "height": 180
+    },
+    {
+      "href": "/answers/help/software-business-ownership/",
+      "x": 1138.5,
+      "y": 4642.171875,
+      "width": 235.5,
+      "height": 180
+    }
+  ]
+}

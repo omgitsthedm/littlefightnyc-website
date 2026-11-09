@@ -5,7 +5,7 @@ const {chromium,webkit}=require('@playwright/test');
 const root=path.resolve(__dirname,'../..');
 const base=process.env.PREVIEW_URL||'http://127.0.0.1:57470';
 const receipt=JSON.parse(fs.readFileSync(path.join(root,'.lifi/design-source/sculpture/hero-reference.json')));
-const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(path.isAbsolute(p)?p:path.join(root,p))).digest('hex');
 const checks=[];
 function pass(name,value){assert.ok(value,name);checks.push(name);}
 (async()=>{
