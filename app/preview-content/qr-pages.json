@@ -1,0 +1,84 @@
+[
+  {
+    "path": "/start/",
+    "title": "Websites & Tech Support From Humans | Little Fight NYC",
+    "description": "You scanned the Little Fight NYC card. Websites that work, help when you need it, and tools that save time — from a real human. Call or text to start.",
+    "eyebrow": "You scanned the card",
+    "heading": "Websites & tech support from humans.",
+    "summary": "Websites, custom software development, and tech support for small businesses across the country.",
+    "sections": [
+      {
+        "heading": "Three things, done properly.",
+        "bullets": [
+          "Websites that work: fast, clear, and built to turn a visit into a call, a booking, or a sale. You own the domain, code, and data.",
+          "Help when you need it: something broken, slow, or confusing? Call or text. We explain the next step and what it will cost first.",
+          "Custom software and business tools: booking, invoicing, email, and the small systems that keep a business running — connected so you stop doing things twice."
+        ]
+      },
+      {
+        "heading": "Tell us what is in your way.",
+        "paragraphs": [
+          "The first conversation is free. No brief or tech words needed — describe what the business needs to do, or what stopped working. We confirm scope, price, and timing before work begins."
+        ],
+        "links": [
+          {
+            "label": "Tell us what you need",
+            "href": "/tech-audit/?intent=general&source=%2Fstart%2F"
+          },
+          {
+            "label": "See the whole site",
+            "href": "/"
+          },
+          {
+            "label": "What we fix",
+            "href": "/services/"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "path": "/trivia/1979/",
+    "title": "First Hip-Hop Song in the Billboard Top 40 | Little Fight NYC",
+    "description": "The answer to Little Fight NYC table trivia: “Rapper’s Delight” by The Sugarhill Gang became the first hip-hop song to reach the Billboard Top 40.",
+    "eyebrow": "Table trivia / answer 01",
+    "heading": "“Rapper’s Delight” by The Sugarhill Gang.",
+    "summary": "Released in 1979. On January 5, 1980, it reached No. 37 on the Billboard Hot 100 — the first hip-hop song to enter the chart’s Top 40.",
+    "sections": [
+      {
+        "heading": "Hip-hop entered the Top 40.",
+        "paragraphs": [
+          "The record later peaked at No. 36. It was not the beginning of hip-hop; it was the record that proved the music could become a national commercial hit."
+        ],
+        "bullets": [
+          "Released: 1979.",
+          "Top 40: January 5, 1980.",
+          "Entered: No. 37.",
+          "Peak: No. 36."
+        ],
+        "links": [
+          {
+            "label": "History.com: hip-hop’s first Top 40 hit",
+            "href": "https://www.history.com/this-day-in-history/january-5/the-sugarhill-gangs-rappers-delight-becomes-hip-hops-first-top-40-hit"
+          },
+          {
+            "label": "Billboard Hot 100, January 5, 1980",
+            "href": "https://www.billboard.com/charts/hot-100/1980-01-05/"
+          }
+        ]
+      },
+      {
+        "heading": "Now meet Little Fight.",
+        "paragraphs": [
+          "Websites, custom software development, tech support, and business systems for small businesses nationwide. Tell us what you need; we confirm scope, price, and timing before work begins."
+        ],
+        "links": [
+          {
+            "label": "Tell us what you need",
+            "href": "/tech-audit/?intent=general&source=%2Ftrivia%2F1979%2F"
+          }
+        ]
+      }
+    ]
+  }
+]

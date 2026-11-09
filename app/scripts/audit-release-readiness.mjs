@@ -12,7 +12,7 @@ const failures = [];
 const expectedTotalTileInventory = 129;
 const expectedOriginalTileCount = 106;
 const expectedConsolidatedGroups = 19;
-const expectedRouteCount = 400;
+const expectedRouteCount = 402;
 
 function git(args, fallback = "") {
   try {
