@@ -1,0 +1,1602 @@
+[
+  {
+    "mode": "baseline",
+    "resources": [
+      {
+        "url": "https://littlefightnyc.com/speculation-rules.json",
+        "bytes": 610,
+        "type": "other"
+      },
+      {
+        "url": "https://littlefightnyc.com/site.css",
+        "bytes": 38762,
+        "type": "link"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/atkinson-hyperlegible-next-latin.woff2",
+        "bytes": 34324,
+        "type": "link"
+      },
+      {
+        "url": "https://littlefightnyc.com/website-story.js",
+        "bytes": 2020,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/tile-motion.js",
+        "bytes": 2991,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/site.js",
+        "bytes": 11728,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/tile-effects.js",
+        "bytes": 2897,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/tile-bridge-MIzqeof-.js",
+        "bytes": 3192,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/mosaic-layout.js",
+        "bytes": 14968,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/search-relevance.js",
+        "bytes": 2221,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/boat-orange.svg",
+        "bytes": 1689,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/hero-reference-mobile.webp",
+        "bytes": 69782,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/magnifying-glass-duotone.svg",
+        "bytes": 616,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/list-duotone.svg",
+        "bytes": 597,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/browser-duotone.svg",
+        "bytes": 673,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/laptop-duotone.svg",
+        "bytes": 777,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/chats-circle-duotone.svg",
+        "bytes": 1111,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/cube-duotone.svg",
+        "bytes": 811,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/images-duotone.svg",
+        "bytes": 962,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/quotes-duotone.svg",
+        "bytes": 856,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/device-mobile-duotone.svg",
+        "bytes": 655,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/scissors-duotone.svg",
+        "bytes": 934,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/calendar-check-duotone.svg",
+        "bytes": 838,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/film-slate-duotone.svg",
+        "bytes": 960,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/martini-duotone.svg",
+        "bytes": 623,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/fork-knife-duotone.svg",
+        "bytes": 906,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/pizza-duotone.svg",
+        "bytes": 1003,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/lifebuoy-duotone.svg",
+        "bytes": 1015,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/house-line-duotone.svg",
+        "bytes": 744,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/bank-duotone.svg",
+        "bytes": 717,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/phone-duotone.svg",
+        "bytes": 811,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wifi-high-bold.svg",
+        "bytes": 833,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/storefront-duotone.svg",
+        "bytes": 1105,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wifi-high-duotone.svg",
+        "bytes": 913,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/envelope-simple-duotone.svg",
+        "bytes": 629,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/printer-duotone.svg",
+        "bytes": 896,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/desktop-tower-duotone.svg",
+        "bytes": 986,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/cloud-arrow-up-duotone.svg",
+        "bytes": 875,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/shield-check-duotone.svg",
+        "bytes": 944,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/password-duotone.svg",
+        "bytes": 948,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/video-camera-duotone.svg",
+        "bytes": 759,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/hard-drives-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/credit-card-duotone.svg",
+        "bytes": 725,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/handshake-duotone.svg",
+        "bytes": 864,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/map-pin-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/camera-duotone.svg",
+        "bytes": 987,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/map-trifold-duotone.svg",
+        "bytes": 778,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wrench-duotone.svg",
+        "bytes": 1124,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/hammer-duotone.svg",
+        "bytes": 1081,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/coffee-duotone.svg",
+        "bytes": 960,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/shopping-bag-duotone.svg",
+        "bytes": 695,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/list-numbers-duotone.svg",
+        "bytes": 1023,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sliders-horizontal-duotone.svg",
+        "bytes": 840,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/chat-circle-dots-duotone.svg",
+        "bytes": 905,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/app-window-duotone.svg",
+        "bytes": 773,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sliders-horizontal-bold.svg",
+        "bytes": 757,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/blueprint-duotone.svg",
+        "bytes": 889,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/repeat-duotone.svg",
+        "bytes": 853,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/check-square-duotone.svg",
+        "bytes": 757,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/coat-hanger-duotone.svg",
+        "bytes": 704,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/calendar-dots-duotone.svg",
+        "bytes": 928,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/film-reel-duotone.svg",
+        "bytes": 1093,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sparkle-duotone.svg",
+        "bytes": 1199,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/buildings-duotone.svg",
+        "bytes": 848,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/armchair-duotone.svg",
+        "bytes": 973,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/plugs-connected-duotone.svg",
+        "bytes": 784,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/fingerprint-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-800.webp",
+        "bytes": 52796,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/router-800.webp",
+        "bytes": 40544,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/software-800.webp",
+        "bytes": 57360,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/notebook-800.webp",
+        "bytes": 69540,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/phone-chromatic.webp",
+        "bytes": 35592,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-cc-films.webp",
+        "bytes": 123902,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/booking-calendar-800.webp",
+        "bytes": 59808,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-hair-by-rachel-charles.webp",
+        "bytes": 78336,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-easy-tiger.webp",
+        "bytes": 96126,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/work-chromatic-800.webp",
+        "bytes": 45822,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-break-room.webp",
+        "bytes": 89522,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-grand-funding-llc-800.webp",
+        "bytes": 76416,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-logan-loans.webp",
+        "bytes": 82238,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-clearhelp-800.webp",
+        "bytes": 58214,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/storefront-800.webp",
+        "bytes": 143572,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-tarot-hotline.webp",
+        "bytes": 192056,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-brothers-pizzeria.webp",
+        "bytes": 170744,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/boat-orange.svg",
+        "bytes": 1689,
+        "type": "other"
+      }
+    ],
+    "images": [
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 44,
+        "h": 44,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/router-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 55.78125,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/notebook-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 72.796875,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/software-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 72.796875,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/work-chromatic-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 85.515625,
+        "h": 114,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/phone-chromatic.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 91.25,
+        "h": 93,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-hair-by-rachel-charles.webp",
+        "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 208.125,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/booking-calendar-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-cc-films.webp",
+        "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 393
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-easy-tiger.webp",
+        "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-the-break-room.webp",
+        "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 392
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-clearhelp-800.webp",
+        "sizes": "(max-width: 1100px) 48vw, 420px",
+        "w": 157.5,
+        "h": 208.125,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-brothers-pizzeria.webp",
+        "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px",
+        "w": 157.5,
+        "h": 107.328125,
+        "nw": 393
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-grand-funding-llc-800.webp",
+        "sizes": "(max-width: 1100px) 48vw, 420px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-logan-loans.webp",
+        "sizes": "(max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 188
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-the-tarot-hotline.webp",
+        "sizes": "(max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 392
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/storefront-800.webp",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 188
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 261.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 160.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 181.328125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 107.328125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 206.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 112.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "(max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      }
+    ],
+    "overflow": false
+  },
+  {
+    "mode": "auto-sizes",
+    "resources": [
+      {
+        "url": "https://littlefightnyc.com/speculation-rules.json",
+        "bytes": 610,
+        "type": "other"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/atkinson-hyperlegible-next-latin.woff2",
+        "bytes": 34324,
+        "type": "link"
+      },
+      {
+        "url": "https://littlefightnyc.com/site.css",
+        "bytes": 38562,
+        "type": "link"
+      },
+      {
+        "url": "https://littlefightnyc.com/tile-effects.js",
+        "bytes": 2897,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/search-relevance.js",
+        "bytes": 2221,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/mosaic-layout.js",
+        "bytes": 14966,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/tile-motion.js",
+        "bytes": 2987,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/website-story.js",
+        "bytes": 2013,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/boat-orange.svg",
+        "bytes": 1689,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/hero-reference-mobile.webp",
+        "bytes": 69782,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/site.js",
+        "bytes": 11808,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/tile-bridge-MIzqeof-.js",
+        "bytes": 3158,
+        "type": "script"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/magnifying-glass-duotone.svg",
+        "bytes": 616,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/list-duotone.svg",
+        "bytes": 597,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/browser-duotone.svg",
+        "bytes": 673,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/laptop-duotone.svg",
+        "bytes": 777,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/chats-circle-duotone.svg",
+        "bytes": 1111,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/cube-duotone.svg",
+        "bytes": 811,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/images-duotone.svg",
+        "bytes": 962,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/quotes-duotone.svg",
+        "bytes": 856,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/device-mobile-duotone.svg",
+        "bytes": 655,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/scissors-duotone.svg",
+        "bytes": 934,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/calendar-check-duotone.svg",
+        "bytes": 838,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/film-slate-duotone.svg",
+        "bytes": 960,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/fork-knife-duotone.svg",
+        "bytes": 906,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/martini-duotone.svg",
+        "bytes": 623,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/lifebuoy-duotone.svg",
+        "bytes": 1015,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/pizza-duotone.svg",
+        "bytes": 1003,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/bank-duotone.svg",
+        "bytes": 717,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/house-line-duotone.svg",
+        "bytes": 744,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/phone-duotone.svg",
+        "bytes": 811,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/storefront-duotone.svg",
+        "bytes": 1105,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wifi-high-bold.svg",
+        "bytes": 833,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wifi-high-duotone.svg",
+        "bytes": 913,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/envelope-simple-duotone.svg",
+        "bytes": 629,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/desktop-tower-duotone.svg",
+        "bytes": 986,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/printer-duotone.svg",
+        "bytes": 896,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/cloud-arrow-up-duotone.svg",
+        "bytes": 875,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/password-duotone.svg",
+        "bytes": 948,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/shield-check-duotone.svg",
+        "bytes": 944,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/video-camera-duotone.svg",
+        "bytes": 759,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/hard-drives-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/credit-card-duotone.svg",
+        "bytes": 725,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/handshake-duotone.svg",
+        "bytes": 864,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/map-pin-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/camera-duotone.svg",
+        "bytes": 987,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/map-trifold-duotone.svg",
+        "bytes": 778,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/wrench-duotone.svg",
+        "bytes": 1124,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/coffee-duotone.svg",
+        "bytes": 960,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/hammer-duotone.svg",
+        "bytes": 1081,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/shopping-bag-duotone.svg",
+        "bytes": 695,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/list-numbers-duotone.svg",
+        "bytes": 1023,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sliders-horizontal-duotone.svg",
+        "bytes": 840,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/chat-circle-dots-duotone.svg",
+        "bytes": 905,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sliders-horizontal-bold.svg",
+        "bytes": 757,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/app-window-duotone.svg",
+        "bytes": 773,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/blueprint-duotone.svg",
+        "bytes": 889,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/repeat-duotone.svg",
+        "bytes": 853,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/calendar-dots-duotone.svg",
+        "bytes": 928,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/check-square-duotone.svg",
+        "bytes": 757,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/coat-hanger-duotone.svg",
+        "bytes": 704,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/film-reel-duotone.svg",
+        "bytes": 1093,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/buildings-duotone.svg",
+        "bytes": 848,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/sparkle-duotone.svg",
+        "bytes": 1199,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/armchair-duotone.svg",
+        "bytes": 973,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/plugs-connected-duotone.svg",
+        "bytes": 784,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/mineral/fingerprint-duotone.svg",
+        "bytes": 907,
+        "type": "css"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-480.webp",
+        "bytes": 25496,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/router-480.webp",
+        "bytes": 20694,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-break-room.webp",
+        "bytes": 89522,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/phone-chromatic.webp",
+        "bytes": 35592,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-cc-films.webp",
+        "bytes": 123902,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-easy-tiger-480.webp",
+        "bytes": 47344,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/software-480.webp",
+        "bytes": 22566,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/notebook-480.webp",
+        "bytes": 30848,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-hair-by-rachel-charles-480.webp",
+        "bytes": 42496,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/booking-calendar-480.webp",
+        "bytes": 28892,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/work-chromatic-480.webp",
+        "bytes": 22024,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-brothers-pizzeria.webp",
+        "bytes": 170744,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-tarot-hotline.webp",
+        "bytes": 192056,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-logan-loans-480.webp",
+        "bytes": 43274,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-clearhelp-480.webp",
+        "bytes": 31798,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-grand-funding-llc-480.webp",
+        "bytes": 39338,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/storefront-480.webp",
+        "bytes": 66602,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-break-room-480.webp",
+        "bytes": 22832,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-brothers-pizzeria-480.webp",
+        "bytes": 31894,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-the-tarot-hotline-480.webp",
+        "bytes": 39354,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/sculpture/website-cc-films-480.webp",
+        "bytes": 20270,
+        "type": "img"
+      },
+      {
+        "url": "https://littlefightnyc.com/assets/boat-orange.svg",
+        "bytes": 1689,
+        "type": "other"
+      }
+    ],
+    "images": [
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 44,
+        "h": 44,
+        "nw": 44
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/router-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 55.78125,
+        "nw": 104
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/notebook-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 72.796875,
+        "nw": 104
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/software-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 105.390625,
+        "h": 72.796875,
+        "nw": 104
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/work-chromatic-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 85.515625,
+        "h": 114,
+        "nw": 86
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/phone-chromatic.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 91.25,
+        "h": 93,
+        "nw": 91
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-hair-by-rachel-charles-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 208.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/booking-calendar-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-cc-films-480.webp",
+        "sizes": "auto, (max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-easy-tiger-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-the-break-room-480.webp",
+        "sizes": "auto, (max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-clearhelp-480.webp",
+        "sizes": "auto, (max-width: 1100px) 48vw, 420px",
+        "w": 157.5,
+        "h": 208.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-brothers-pizzeria-480.webp",
+        "sizes": "auto, (max-width: 600px) 100vw, (max-width: 1100px) 75vw, 720px",
+        "w": 157.5,
+        "h": 107.328125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-grand-funding-llc-480.webp",
+        "sizes": "auto, (max-width: 1100px) 48vw, 420px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-logan-loans-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, (max-width: 1100px) 30vw, 280px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/website-the-tarot-hotline-480.webp",
+        "sizes": "auto, (max-width: 600px) 100vw, (max-width: 1100px) 75vw, 680px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 158
+      },
+      {
+        "src": "https://littlefightnyc.com/assets/sculpture/storefront-480.webp",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 158
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 261.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 160.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 139.65625,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 181.328125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 187.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 107.328125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 206.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 112.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 132.53125,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 113.25,
+        "nw": 0
+      },
+      {
+        "src": "",
+        "sizes": "auto, (max-width: 600px) 48vw, 380px",
+        "w": 157.5,
+        "h": 134.125,
+        "nw": 0
+      }
+    ],
+    "overflow": false
+  }
+]

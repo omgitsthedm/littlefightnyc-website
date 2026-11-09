@@ -1,0 +1,426 @@
+{
+  "origin": "https://littlefightnyc.com",
+  "timestamp": "2026-10-10T06:02:51.584Z",
+  "checks": [
+    {
+      "name": "home responds",
+      "status": 200,
+      "path": "/",
+      "title": "Custom Websites for Independent Businesses | Little Fight NYC"
+    },
+    {
+      "name": "homepage main landmark",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], #main-content"
+    },
+    {
+      "name": "homepage skip link",
+      "status": "pass",
+      "selector": "a[href=\"#canvas\"]"
+    },
+    {
+      "name": "keyboard reaches skip link first",
+      "status": "pass",
+      "tag": "A",
+      "text": "Skip to the tiles",
+      "href": "#canvas"
+    },
+    {
+      "name": "homepage has named h1",
+      "status": "pass",
+      "headings": [
+        "A little fight.A big difference."
+      ]
+    },
+    {
+      "name": "visible tile label is included in accessible name",
+      "status": "fail",
+      "id": "printer",
+      "visibleLabel": "Printer won’t connect?",
+      "accessibleName": "Why does one office printer work from some computers but not others?"
+    },
+    {
+      "name": "visible tile label is included in accessible name",
+      "status": "fail",
+      "id": "it-security-basics",
+      "visibleLabel": "Check the security basics",
+      "accessibleName": "What practical security basics should a small business review first?"
+    },
+    {
+      "name": "axe homepage desktop",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "name": "search control available",
+      "status": "pass",
+      "selector": "button[aria-label*=\"Search\"]"
+    },
+    {
+      "name": "search field opens",
+      "status": "pass",
+      "selector": "input[type=\"search\"], input[placeholder*=\"Search\" i], [role=\"search\"] input"
+    },
+    {
+      "name": "search returns printer answer",
+      "status": "pass"
+    },
+    {
+      "name": "service reader card present",
+      "status": "pass",
+      "selector": "[data-answer=\"speed\"]"
+    },
+    {
+      "name": "card opens canonical reader route",
+      "status": "pass",
+      "url": "https://littlefightnyc.com/answers/help/speed/"
+    },
+    {
+      "name": "reader is visible",
+      "status": "pass",
+      "selector": ".workbench-reader, [data-reader], main"
+    },
+    {
+      "name": "reader close control",
+      "status": "pass",
+      "selector": "button[aria-label=\"Return to homepage hub\"]"
+    },
+    {
+      "name": "reader close is keyboard reachable",
+      "status": "pass",
+      "focusables": 94
+    },
+    {
+      "name": "axe service reader desktop",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "name": "reader close returns home",
+      "status": "pass"
+    },
+    {
+      "name": "case study responds",
+      "status": 200,
+      "path": "/case-studies/chromatic-painting-design/",
+      "title": "Chromatic Painting & Design Case Study | Little Fight NYC"
+    },
+    {
+      "name": "case study rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "case study labels content",
+      "status": "pass",
+      "headings": [
+        "Chromatic Painting & Design"
+      ]
+    },
+    {
+      "name": "journal responds",
+      "status": 200,
+      "path": "/journal/",
+      "title": "Answers for Independent Businesses | Little Fight NYC"
+    },
+    {
+      "name": "journal rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "journal labels content",
+      "status": "pass",
+      "headings": [
+        "Find your answer."
+      ]
+    },
+    {
+      "name": "axe journal desktop",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "name": "contact responds",
+      "status": 200,
+      "path": "/contact/",
+      "title": "Contact Little Fight NYC | Call, Text, Email, Form"
+    },
+    {
+      "name": "contact rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "contact labels content",
+      "status": "pass",
+      "headings": [
+        "Tell us what feels stuck."
+      ]
+    },
+    {
+      "name": "intake responds",
+      "status": 200,
+      "path": "/tech-audit/",
+      "title": "Tell Us What You Need | Little Fight NYC"
+    },
+    {
+      "name": "intake rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "intake labels content",
+      "status": "pass",
+      "headings": [
+        "Get a clear next step."
+      ]
+    },
+    {
+      "name": "pool room lab responds",
+      "status": 200,
+      "path": "/examples/lab/concepts/pool-room/",
+      "title": "The Pool Room | The Lab · Little Fight NYC"
+    },
+    {
+      "name": "pool room lab rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "pool room lab labels content",
+      "status": "pass",
+      "headings": [
+        "We built a barthat doesn’t exist.Then broke a rack in it."
+      ]
+    },
+    {
+      "name": "VERA public browse responds",
+      "status": 200,
+      "path": "/vera/#/browse",
+      "title": "VERA — NYC rental intelligence, on the record"
+    },
+    {
+      "name": "VERA public browse rendered",
+      "status": "pass",
+      "selector": "main, [role=\"main\"], body"
+    },
+    {
+      "name": "VERA public browse labels content",
+      "status": "pass",
+      "headings": [
+        "Every listing in the four-borough net"
+      ]
+    },
+    {
+      "name": "axe VERA public browse desktop",
+      "status": "pass",
+      "violations": 0
+    },
+    {
+      "name": "pool room lab interaction responds",
+      "status": 200,
+      "path": "/examples/lab/concepts/pool-room/",
+      "title": "The Pool Room | The Lab · Little Fight NYC"
+    },
+    {
+      "name": "TALK THROUGH YOUR BUILD",
+      "status": "pass"
+    },
+    {
+      "name": "high-DPI hero source resolution",
+      "status": "fail",
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/hero-reference-desktop.webp",
+      "naturalWidth": 762,
+      "naturalHeight": 337,
+      "renderedWidth": 1376,
+      "renderedHeight": 609,
+      "visible": true,
+      "requiredWidth": 2752
+    },
+    {
+      "name": "responsive tile image selected",
+      "status": "pass",
+      "src": "https://littlefightnyc.com/assets/sculpture/notebook-800.webp",
+      "renderedWidth": 401,
+      "naturalWidth": 380,
+      "note": "naturalWidth is density-corrected; no deficit inferred without decoding the selected candidate."
+    },
+    {
+      "name": "responsive tile image selected",
+      "status": "pass",
+      "src": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-800.webp",
+      "renderedWidth": 381,
+      "naturalWidth": 380,
+      "note": "naturalWidth is density-corrected; no deficit inferred without decoding the selected candidate."
+    },
+    {
+      "name": "responsive tile image selected",
+      "status": "pass",
+      "src": "https://littlefightnyc.com/assets/sculpture/router-800.webp",
+      "renderedWidth": 362,
+      "naturalWidth": 380,
+      "note": "naturalWidth is density-corrected; no deficit inferred without decoding the selected candidate."
+    },
+    {
+      "name": "responsive tile image selected",
+      "status": "pass",
+      "src": "https://littlefightnyc.com/assets/sculpture/software-800.webp",
+      "renderedWidth": 362,
+      "naturalWidth": 380,
+      "note": "naturalWidth is density-corrected; no deficit inferred without decoding the selected candidate."
+    },
+    {
+      "name": "responsive tile image selected",
+      "status": "pass",
+      "src": "https://littlefightnyc.com/assets/sculpture/work-chromatic-800.webp",
+      "renderedWidth": 367,
+      "naturalWidth": 380,
+      "note": "naturalWidth is density-corrected; no deficit inferred without decoding the selected candidate."
+    },
+    {
+      "name": "phone has no horizontal page overflow",
+      "status": "pass",
+      "scrollWidth": 393,
+      "innerWidth": 393,
+      "overflow": false
+    },
+    {
+      "name": "phone navigation opens and closes",
+      "status": "pass"
+    },
+    {
+      "name": "phone card opens reader route",
+      "status": "pass",
+      "url": "https://littlefightnyc.com/answers/help/booking/"
+    },
+    {
+      "name": "reduced motion suppresses running animations",
+      "status": "pass"
+    }
+  ],
+  "axe": [
+    {
+      "label": "homepage desktop",
+      "violations": []
+    },
+    {
+      "label": "service reader desktop",
+      "violations": []
+    },
+    {
+      "label": "journal desktop",
+      "violations": []
+    },
+    {
+      "label": "VERA public browse desktop",
+      "violations": []
+    }
+  ],
+  "problems": [
+    {
+      "name": "visible tile label is included in accessible name",
+      "id": "printer",
+      "visibleLabel": "Printer won’t connect?",
+      "accessibleName": "Why does one office printer work from some computers but not others?"
+    },
+    {
+      "name": "visible tile label is included in accessible name",
+      "id": "it-security-basics",
+      "visibleLabel": "Check the security basics",
+      "accessibleName": "What practical security basics should a small business review first?"
+    },
+    {
+      "name": "high-DPI hero source resolution",
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/hero-reference-desktop.webp",
+      "naturalWidth": 762,
+      "naturalHeight": 337,
+      "renderedWidth": 1376,
+      "renderedHeight": 609,
+      "visible": true,
+      "requiredWidth": 2752
+    }
+  ],
+  "browser": {
+    "consoleErrors": [],
+    "pageErrors": [],
+    "failedRequests": [],
+    "blockedMutations": []
+  },
+  "labelInNameReview": {
+    "lighthouseCandidates": 15,
+    "confirmed": [
+      {
+        "id": "printer",
+        "visibleLabel": "Printer won’t connect?",
+        "accessibleName": "Why does one office printer work from some computers but not others?"
+      },
+      {
+        "id": "it-security-basics",
+        "visibleLabel": "Check the security basics",
+        "accessibleName": "What practical security basics should a small business review first?"
+      }
+    ],
+    "excluded": 13,
+    "exclusionReason": "The other flagged links have no overriding aria-label. Chrome derives their accessible names from visible text; these two links use aria-label values that replace the visible labels."
+  },
+  "xdrHeroImages": [
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/hero-reference-desktop.webp",
+      "naturalWidth": 762,
+      "naturalHeight": 337,
+      "renderedWidth": 1376,
+      "renderedHeight": 609,
+      "visible": true
+    },
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/notebook-800.webp",
+      "naturalWidth": 380,
+      "naturalHeight": 304,
+      "renderedWidth": 401,
+      "renderedHeight": 198,
+      "visible": true
+    },
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/browser-chromatic-painting-design-800.webp",
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 381,
+      "renderedHeight": 201,
+      "visible": true
+    },
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/router-800.webp",
+      "naturalWidth": 380,
+      "naturalHeight": 152,
+      "renderedWidth": 362,
+      "renderedHeight": 198,
+      "visible": true
+    },
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/software-800.webp",
+      "naturalWidth": 380,
+      "naturalHeight": 214,
+      "renderedWidth": 362,
+      "renderedHeight": 198,
+      "visible": true
+    },
+    {
+      "alt": "",
+      "src": "https://littlefightnyc.com/assets/sculpture/work-chromatic-800.webp",
+      "naturalWidth": 380,
+      "naturalHeight": 264,
+      "renderedWidth": 367,
+      "renderedHeight": 166,
+      "visible": true
+    }
+  ],
+  "ok": false
+}

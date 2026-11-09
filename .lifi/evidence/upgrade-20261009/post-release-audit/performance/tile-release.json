@@ -1,0 +1,17 @@
+{
+  "kind": "static-production-candidate",
+  "artifactSha256": "ba70c27c5b91b01094819a7d42c859fd600010a3e610326636d995236fa7991d",
+  "routes": 421,
+  "tiles": 58,
+  "totalTileInventory": 132,
+  "consolidatedGroups": 19,
+  "originalTilesPreserved": 106,
+  "reviews": 7,
+  "analyticsDelivery": true,
+  "formDelivery": "native Netlify Forms",
+  "sourceBase": "05d6f5a425bffb548213545131a89f9c53e5a297",
+  "productionChanged": false,
+  "artifactFiles": 3025,
+  "sitemapUrls": 153,
+  "hashScope": "All final artifact files except release markers"
+}

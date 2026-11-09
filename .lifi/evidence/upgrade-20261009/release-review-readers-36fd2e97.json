@@ -1,0 +1,12 @@
+{
+  "base": "http://127.0.0.1:52135",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "Jenna tile flip, source link, blue family, and close focus",
+      "passed": true,
+      "detail": "430x932 screenshot captured"
+    }
+  ],
+  "failures": []
+}

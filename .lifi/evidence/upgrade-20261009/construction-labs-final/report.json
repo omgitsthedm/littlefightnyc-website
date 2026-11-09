@@ -1,0 +1,39 @@
+{
+  "assertions": [
+    "320px homepage omits the curated construction-showcase front; /construction/ remains the direct canonical route",
+    "390px homepage omits the curated construction-showcase front; /construction/ remains the direct canonical route",
+    "768px homepage omits the curated construction-showcase front; /construction/ remains the direct canonical route",
+    "1440px homepage omits the curated construction-showcase front; /construction/ remains the direct canonical route",
+    "320px showcase: images, flow, no overflow, share paths, accessibility",
+    "390px showcase: images, flow, no overflow, share paths, accessibility",
+    "768px showcase: images, flow, no overflow, share paths, accessibility",
+    "1440px showcase: images, flow, no overflow, share paths, accessibility",
+    "All 11 Labs have directly loadable, indexable, static reader pages",
+    "Copy link and denied-clipboard fallback both work",
+    "cabinet-concept: phone card, working canvas, same-origin close, focus restoration and engine disposal",
+    "Farm House Inside and Find: safe model, cutaway, barn, truss, search, Property return, and hub exit",
+    "Farm House desktop in-card: full viewer controls, embed exit restoration, and no overflow",
+    "Farm House direct route: 393px camera views, lighting, controls, and no overflow",
+    "Farm House direct route: 320px camera views, lighting, controls, and no overflow",
+    "Farm House share reader loads the same full property viewer",
+    "Farm House 320px direct and embedded routes keep every header and Property, Inside, Find control visible, separate, and tappable",
+    "Cabinet choices, comparison slot and PDF work; the design link restores the same study in a fresh browser"
+  ],
+  "screenshots": [
+    "/tmp/lfnyc-construction-labs/construction-320.png",
+    "/tmp/lfnyc-construction-labs/construction-390.png",
+    "/tmp/lfnyc-construction-labs/construction-768.png",
+    "/tmp/lfnyc-construction-labs/construction-1440.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-embed-393.png",
+    "/tmp/lfnyc-construction-labs/house-inside-default-393.png",
+    "/tmp/lfnyc-construction-labs/house-inside-barn-393.png",
+    "/tmp/lfnyc-construction-labs/house-inside-truss-393.png",
+    "/tmp/lfnyc-construction-labs/house-inside-selected-393.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-embed-open-1440.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-embed-1440.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-direct-393.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-direct-320.png",
+    "/tmp/lfnyc-construction-labs/house-explorer-reader-320.png"
+  ],
+  "errors": []
+}

@@ -1,0 +1,186 @@
+[
+  {
+    "label": "website-1440x1024",
+    "status": 200,
+    "axe": [],
+    "geometry": {
+      "chrome": {
+        "x": 56,
+        "y": 0,
+        "width": 1328,
+        "height": 136
+      },
+      "sidebar": {
+        "x": 56,
+        "y": 208,
+        "width": 491,
+        "height": 370
+      },
+      "article": {
+        "x": 648,
+        "y": 208,
+        "width": 736,
+        "height": 4789
+      },
+      "title": {
+        "x": 56,
+        "y": 243,
+        "width": 452,
+        "height": 90
+      },
+      "firstBody": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "contact": {
+        "x": 284,
+        "y": 20,
+        "width": 156,
+        "height": 44
+      },
+      "contactStyle": {
+        "color": "rgb(255, 120, 57)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "16px"
+      },
+      "titleStyle": {
+        "color": "rgb(146, 191, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "44px"
+      },
+      "casePrimaryStyle": null,
+      "caseMobileHeadingStyle": null
+    }
+  },
+  {
+    "label": "chromatic-1280x900",
+    "status": 200,
+    "axe": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "nodes": 1,
+        "targets": [
+          [
+            ".case-mobile-story > figure > figcaption"
+          ]
+        ]
+      }
+    ],
+    "geometry": {
+      "chrome": {
+        "x": 51,
+        "y": 0,
+        "width": 1178,
+        "height": 136
+      },
+      "sidebar": {
+        "x": 51,
+        "y": 200,
+        "width": 435,
+        "height": 500
+      },
+      "article": {
+        "x": 576,
+        "y": 200,
+        "width": 653,
+        "height": 312
+      },
+      "title": {
+        "x": 51,
+        "y": 336,
+        "width": 435,
+        "height": 88
+      },
+      "firstBody": {
+        "x": 576,
+        "y": 200,
+        "width": 653,
+        "height": 312
+      },
+      "contact": {
+        "x": 269,
+        "y": 20,
+        "width": 150,
+        "height": 44
+      },
+      "contactStyle": {
+        "color": "rgb(255, 120, 57)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "16px"
+      },
+      "titleStyle": {
+        "color": "rgb(246, 243, 236)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "40.96px"
+      },
+      "casePrimaryStyle": {
+        "color": "rgb(27, 16, 10)",
+        "background": "rgb(255, 120, 57)",
+        "fontSize": "15px"
+      },
+      "caseMobileHeadingStyle": {
+        "color": "rgb(246, 243, 236)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "64px"
+      }
+    }
+  },
+  {
+    "label": "website-390x844",
+    "status": 200,
+    "axe": [],
+    "geometry": {
+      "chrome": {
+        "x": 20,
+        "y": 0,
+        "width": 351,
+        "height": 160
+      },
+      "sidebar": {
+        "x": 20,
+        "y": 192,
+        "width": 351,
+        "height": 341
+      },
+      "article": {
+        "x": 20,
+        "y": 567,
+        "width": 351,
+        "height": 5880
+      },
+      "title": {
+        "x": 20,
+        "y": 227,
+        "width": 351,
+        "height": 73
+      },
+      "firstBody": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "contact": {
+        "x": 20,
+        "y": 58,
+        "width": 297,
+        "height": 45
+      },
+      "contactStyle": {
+        "color": "rgb(255, 120, 57)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "15px"
+      },
+      "titleStyle": {
+        "color": "rgb(146, 191, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "fontSize": "36px"
+      },
+      "casePrimaryStyle": null,
+      "caseMobileHeadingStyle": null
+    }
+  }
+]

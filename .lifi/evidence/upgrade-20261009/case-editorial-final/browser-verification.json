@@ -1,0 +1,394 @@
+{
+  "kind": "case-editorial-browser-verification",
+  "base": "http://127.0.0.1:65033",
+  "startedAt": "2026-10-09T16:17:42.075Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "local editorial candidate is available",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "editorial work index and case study retain complete useful no-JavaScript documents",
+      "passed": true,
+      "detail": "static work index and Chromatic case usable without JavaScript"
+    },
+    {
+      "name": "work index has nine public client cards, three design concepts, its current product route, and VERA reader card",
+      "passed": true,
+      "detail": "9 public client cards; 0 product cards; 3 design concepts; VERA reader card"
+    },
+    {
+      "name": "work index loads each project image and every Lab thumbnail",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "work index offers every shareable Lab route that opens its working card",
+      "passed": true,
+      "detail": "11 canonical Lab routes remain directly available; card embedding is verified separately"
+    },
+    {
+      "name": "public case studies expose exactly real new-tab website actions; design concepts do not",
+      "passed": true,
+      "detail": "all 15 case routes checked against their public presentation"
+    },
+    {
+      "name": "case stories keep public labels and omit private project notes or status history",
+      "passed": true,
+      "detail": "15 public stories use curated facts and plain public labels"
+    },
+    {
+      "name": "ten public client cases have case-specific social cards that resolve locally",
+      "passed": true,
+      "detail": "10 public client cases have dedicated, locally resolving og:image cards"
+    },
+    {
+      "name": "work index passes full Axe including color contrast",
+      "passed": true,
+      "detail": "full Axe audit including color contrast"
+    },
+    {
+      "name": "Chromatic public case has usable desktop and phone screens plus a real live site action",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "Chromatic public case passes full Axe including color contrast",
+      "passed": true,
+      "detail": "full Axe audit including color contrast"
+    },
+    {
+      "name": "homepage Website reader keeps two selected client proofs, a full-portfolio route, reader Back trails, and X returns to its hub tile",
+      "passed": true,
+      "detail": "tile → two selected proofs → client case → Back → full portfolio → Back → Website story → X → Website hub tile focus"
+    },
+    {
+      "name": "editorial headings and layouts avoid horizontal overflow from 320 through desktop",
+      "passed": true,
+      "detail": "320, 390, 768, and 1440px all have visible headings and no overflow"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "height": 740,
+      "workOverflow": "0px overflow",
+      "caseOverflow": "0px overflow",
+      "caseBrief": {
+        "headingTop": 180.46875,
+        "chromeBottom": 164
+      },
+      "enlargedCaseBrief": {
+        "headingTop": 180.46875,
+        "chromeBottom": 164
+      }
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "workOverflow": "0px overflow",
+      "caseOverflow": "0px overflow",
+      "caseBrief": {
+        "headingTop": 180.109375,
+        "chromeBottom": 164
+      },
+      "enlargedCaseBrief": {
+        "headingTop": 180.109375,
+        "chromeBottom": 164
+      }
+    },
+    {
+      "width": 768,
+      "height": 940,
+      "workOverflow": "0px overflow",
+      "caseOverflow": "0px overflow"
+    },
+    {
+      "width": 1440,
+      "height": 940,
+      "workOverflow": "0px overflow",
+      "caseOverflow": "0px overflow"
+    }
+  ],
+  "axe": [
+    {
+      "route": "/examples/",
+      "violations": []
+    },
+    {
+      "route": "/case-studies/chromatic-painting-design/",
+      "violations": []
+    }
+  ],
+  "imageAudit": [
+    {
+      "label": "work index project imagery",
+      "count": 9,
+      "images": [
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/easy-tiger-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/hair-by-rachel-charles-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-upgrade-20261009/the-tarot-hotline-desktop.webp",
+          "complete": true,
+          "width": 1440
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/grand-funding-llc-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/the-break-room-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/clearhelp-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/logan-loans-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/cc-films-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+          "complete": true,
+          "width": 1600
+        }
+      ]
+    },
+    {
+      "label": "work index Lab imagery",
+      "count": 11,
+      "images": [
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-pool-room.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-walkup-3d.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-terminal-3d.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-pill-scroll.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-micro-animations.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-aha-laser.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-studio-engine.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-growth-street.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-goliath.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-cabinet-concept.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/lab-house-explorer.webp",
+          "complete": true,
+          "width": 1600
+        }
+      ]
+    },
+    {
+      "label": "work index full-page evidence",
+      "screenshot": ".lifi/evidence/case-editorial/screenshots/work-index-1440.png",
+      "visibleImageCount": 21
+    },
+    {
+      "label": "Chromatic responsive case imagery",
+      "count": 3,
+      "images": [
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/chromatic-painting-design-desktop.webp",
+          "complete": true,
+          "width": 1600
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+          "complete": true,
+          "width": 780
+        },
+        {
+          "src": "http://127.0.0.1:65033/assets/portfolio-20261007/chromatic-painting-design-phone.webp",
+          "complete": true,
+          "width": 780
+        }
+      ]
+    },
+    {
+      "label": "Chromatic full-page evidence",
+      "screenshot": ".lifi/evidence/case-editorial/screenshots/chromatic-1440.png",
+      "visibleImageCount": 6
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "blockedMutations": [],
+  "labRoutes": [
+    {
+      "route": "/labs/aha-laser/",
+      "status": 200,
+      "title": "AHA Laser Poster | Little Fight NYC"
+    },
+    {
+      "route": "/labs/cabinet-concept/",
+      "status": 200,
+      "title": "Cabinet Lab | Little Fight NYC"
+    },
+    {
+      "route": "/labs/goliath/",
+      "status": 200,
+      "title": "Goliath | Little Fight NYC"
+    },
+    {
+      "route": "/labs/growth-street/",
+      "status": 200,
+      "title": "Growth Street | Little Fight NYC"
+    },
+    {
+      "route": "/labs/house-explorer/",
+      "status": 200,
+      "title": "Farm House | Little Fight NYC"
+    },
+    {
+      "route": "/labs/micro-animations/",
+      "status": 200,
+      "title": "Micro-Animations | Little Fight NYC"
+    },
+    {
+      "route": "/labs/pill-scroll/",
+      "status": 200,
+      "title": "Scroll Into Motion | Little Fight NYC"
+    },
+    {
+      "route": "/labs/pool-room/",
+      "status": 200,
+      "title": "The Pool Room | Little Fight NYC"
+    },
+    {
+      "route": "/labs/studio-engine/",
+      "status": 200,
+      "title": "Studio Engine | Little Fight NYC"
+    },
+    {
+      "route": "/labs/terminal-3d/",
+      "status": 200,
+      "title": "Neon District | Little Fight NYC"
+    },
+    {
+      "route": "/labs/walkup-3d/",
+      "status": 200,
+      "title": "Six-Story Walk-Up | Little Fight NYC"
+    }
+  ],
+  "shareCards": [
+    {
+      "slug": "cc-films",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-cc-films.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-cc-films.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "chromatic-painting-design",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-chromatic-painting-design.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-chromatic-painting-design.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "clearhelp",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-clearhelp.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-clearhelp.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "easy-tiger",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-easy-tiger.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-easy-tiger.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "grand-funding-llc",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-grand-funding-llc.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-grand-funding-llc.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "hair-by-rachel-charles",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-hair-by-rachel-charles.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-hair-by-rachel-charles.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "legacy-music-group",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-legacy-music-group.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-legacy-music-group.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "logan-loans",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-logan-loans.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-logan-loans.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "the-break-room",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-20261007/share-the-break-room.jpg",
+      "localAsset": "/assets/portfolio-20261007/share-the-break-room.jpg",
+      "contentType": "image/jpeg"
+    },
+    {
+      "slug": "the-tarot-hotline",
+      "ogImage": "https://littlefightnyc.com/assets/portfolio-upgrade-20261009/share-the-tarot-hotline.jpg",
+      "localAsset": "/assets/portfolio-upgrade-20261009/share-the-tarot-hotline.jpg",
+      "contentType": "image/jpeg"
+    }
+  ],
+  "finishedAt": "2026-10-09T16:18:19.330Z",
+  "passed": true
+}

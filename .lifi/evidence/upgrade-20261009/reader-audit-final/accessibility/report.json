@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "Visible help → printer search → useful answer → contextual support form → Back → Escape restores search, then the hub control",
+    "Six representative answers lead with the question and answer, preserve direct URLs, and keep human contact available",
+    "Apple, Windows, and Microsoft 365 guidance and official sources reach the generated readers"
+  ],
+  "violations": [],
+  "errors": [],
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: last control wraps to close\n\nfalse !== true\n\n    at /Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/app/scripts/verify-answer-accessibility.cjs:112:11\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:502:9)"
+}

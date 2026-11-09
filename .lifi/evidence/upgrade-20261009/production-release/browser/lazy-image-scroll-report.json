@@ -1,0 +1,67 @@
+{
+  "base": "https://littlefightnyc.com",
+  "viewport": {
+    "width": 1440,
+    "height": 1024
+  },
+  "consent": "denied",
+  "sections": [
+    {
+      "topic": "services",
+      "tileCount": 4,
+      "illustratedTiles": 4,
+      "loadedImages": 4,
+      "brokenImages": [],
+      "visibleImageChecks": 4
+    },
+    {
+      "topic": "featured",
+      "tileCount": 3,
+      "illustratedTiles": 2,
+      "loadedImages": 2,
+      "brokenImages": [],
+      "visibleImageChecks": 2
+    },
+    {
+      "topic": "web",
+      "tileCount": 12,
+      "illustratedTiles": 11,
+      "loadedImages": 11,
+      "brokenImages": [],
+      "visibleImageChecks": 11
+    },
+    {
+      "topic": "it",
+      "tileCount": 14,
+      "illustratedTiles": 12,
+      "loadedImages": 12,
+      "brokenImages": [],
+      "visibleImageChecks": 12
+    },
+    {
+      "topic": "consulting",
+      "tileCount": 11,
+      "illustratedTiles": 9,
+      "loadedImages": 9,
+      "brokenImages": [],
+      "visibleImageChecks": 9
+    },
+    {
+      "topic": "software",
+      "tileCount": 14,
+      "illustratedTiles": 13,
+      "loadedImages": 13,
+      "brokenImages": [],
+      "visibleImageChecks": 13
+    }
+  ],
+  "pageErrors": [],
+  "localResourceFailures": [],
+  "blockedMutations": [],
+  "screenshots": [
+    "/tmp/lfnyc-live-workbench-20261009/desktop-homepage-viewport.png",
+    "/tmp/lfnyc-live-workbench-20261009/desktop-websites-viewport.png"
+  ],
+  "passed": true,
+  "finishedAt": "2026-10-09T18:12:58.040Z"
+}

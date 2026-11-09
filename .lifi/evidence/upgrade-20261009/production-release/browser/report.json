@@ -1,0 +1,70 @@
+{
+  "kind": "little-fight-live-workbench-smoke",
+  "base": "https://littlefightnyc.com",
+  "startedAt": "2026-10-09T18:11:22.915Z",
+  "browser": "Installed Google Chrome via Playwright channel chrome",
+  "consent": "denied",
+  "checks": [
+    {
+      "name": "homepage delivers 58 curated tiles",
+      "passed": true,
+      "detail": "58"
+    },
+    {
+      "name": "homepage preserves the one-image master hero and two project actions",
+      "passed": true,
+      "detail": "{\"master\":\"master-reference\",\"images\":1,\"desktop\":\"/assets/sculpture/hero-reference-desktop.webp\",\"mobile\":\"/assets/sculpture/hero-reference-mobile.webp\",\"actions\":2}"
+    },
+    {
+      "name": "Websites card opens as the shared reader",
+      "passed": true,
+      "detail": "/services/custom-local-websites/"
+    },
+    {
+      "name": "Websites card closes and restores its source focus",
+      "passed": true,
+      "detail": "focus restored"
+    },
+    {
+      "name": "Jenna review opens its local five-star reader",
+      "passed": true,
+      "detail": "Jenna / 5 stars / original source link"
+    },
+    {
+      "name": "Jenna reader returns focus to its card",
+      "passed": true,
+      "detail": "focus restored"
+    },
+    {
+      "name": "search returns a printer support reader with its contextual inquiry link",
+      "passed": true,
+      "detail": "/tech-audit/?intent=support&source=%2Fanswers%2Fhelp%2Fprinter%2F"
+    },
+    {
+      "name": "393px homepage has no horizontal overflow",
+      "passed": true,
+      "detail": "{\"width\":393,\"scroll\":393}"
+    },
+    {
+      "name": "393px Websites reader keeps close inside the viewport",
+      "passed": true,
+      "detail": "{\"close\":{\"x\":329.359375,\"y\":15,\"width\":44,\"height\":44},\"geometry\":{\"width\":393,\"scroll\":393}}"
+    },
+    {
+      "name": "no page errors or unexpected first-party asset failures",
+      "passed": true,
+      "detail": "clean browser console and same-origin network"
+    }
+  ],
+  "pageErrors": [],
+  "localResourceFailures": [],
+  "blockedMutations": [],
+  "screenshots": [
+    "/tmp/lfnyc-live-workbench-20261009/desktop-homepage.png",
+    "/tmp/lfnyc-live-workbench-20261009/desktop-websites-reader.png",
+    "/tmp/lfnyc-live-workbench-20261009/phone-393-homepage.png",
+    "/tmp/lfnyc-live-workbench-20261009/phone-393-websites-reader.png"
+  ],
+  "result": "passed",
+  "finishedAt": "2026-10-09T18:11:31.213Z"
+}

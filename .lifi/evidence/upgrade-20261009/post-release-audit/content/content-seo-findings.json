@@ -1,0 +1,131 @@
+{
+  "auditedAt": "2026-10-10T06:05:30.226Z",
+  "release": {
+    "repository": "omgitsthedm/littlefightnyc-website",
+    "commit": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+    "origin": "https://littlefightnyc.com"
+  },
+  "coverage": {
+    "readerRoutesPlusHome": 421,
+    "liveGet": {
+      "status200": 421,
+      "non2xx": 0,
+      "redirects": 0,
+      "concurrency": 4,
+      "evidence": "all-route-get-metadata.json"
+    },
+    "sitemap": {
+      "routes": 153,
+      "title": 153,
+      "description": 153,
+      "canonical": 153,
+      "selfCanonical": 153,
+      "uniqueDescriptions": 153,
+      "uniqueTitles": 152,
+      "ogImage": 148,
+      "twitterImage": 145,
+      "jsonLd": 140,
+      "explicitRobots": 144,
+      "inboundOrphans": 0
+    }
+  },
+  "findings": [
+    {
+      "priority": "medium",
+      "kind": "discovery-policy-defect",
+      "title": "Eight raw Lab concept routes do not declare canonical URLs; seven have no robots directive",
+      "routes": [
+        "/examples/lab/concepts/aha-laser/",
+        "/examples/lab/concepts/goliath/",
+        "/examples/lab/concepts/growth-street/",
+        "/examples/lab/concepts/micro-animations/",
+        "/examples/lab/concepts/pill-scroll/",
+        "/examples/lab/concepts/studio-engine/",
+        "/examples/lab/concepts/terminal-3d/",
+        "/examples/lab/concepts/walkup-3d/"
+      ],
+      "evidence": [
+        "app/public/examples/lab/concepts/aha-laser/index.html:6-15",
+        "app/public/examples/lab/concepts/goliath/index.html:3-14",
+        "app/public/examples/lab/concepts/growth-street/index.html:3-14",
+        "app/public/examples/lab/concepts/micro-animations/index.html:3-14",
+        "app/public/examples/lab/concepts/pill-scroll/index.html:3-14",
+        "app/public/examples/lab/concepts/studio-engine/index.html:3-14",
+        "app/public/examples/lab/concepts/terminal-3d/index.html:3-14",
+        "app/public/examples/lab/concepts/walkup-3d/index.html:3-14"
+      ],
+      "recommendation": "Confirm which public Lab engine URLs should be indexed versus their story pages, then apply the appropriate canonical and indexing policy consistently. Preserve the existing intentional noindex policy on AHA and the deliberate indexed Pool Room exception. Missing robots markup alone is not a defect; default indexing may be intended."
+    },
+    {
+      "priority": "medium",
+      "kind": "sharing-defect",
+      "title": "Five indexable Lab suite pages omit Open Graph and Twitter preview metadata",
+      "routes": [
+        "/examples/lab/suites/brand-campaign/",
+        "/examples/lab/suites/business-systems/",
+        "/examples/lab/suites/cinema/",
+        "/examples/lab/suites/motion-playground/",
+        "/examples/lab/suites/spatial-nyc/"
+      ],
+      "evidence": [
+        "app/public/examples/lab/suites/brand-campaign/index.html:6-13",
+        "app/public/examples/lab/suites/business-systems/index.html:6-13",
+        "app/public/examples/lab/suites/cinema/index.html:6-13",
+        "app/public/examples/lab/suites/motion-playground/index.html:6-13",
+        "app/public/examples/lab/suites/spatial-nyc/index.html:6-13"
+      ],
+      "recommendation": "Add title, description, canonical URL, and an existing suite-specific preview image for OG/Twitter."
+    },
+    {
+      "priority": "medium",
+      "kind": "metadata-opportunity",
+      "title": "The homepage and custom-websites service page use the same title and social image",
+      "routes": [
+        "/",
+        "/services/custom-local-websites/"
+      ],
+      "evidence": [
+        "app/scripts/build-tile-preview.py:711-713",
+        "app/dist/services/custom-local-websites/index.html:1"
+      ],
+      "recommendation": "Give the homepage a broader brand/service title and distinct share image while keeping the exact service title on the website service page. This is a differentiation opportunity, not proven ranking loss."
+    },
+    {
+      "priority": "low",
+      "kind": "release-tooling-drift",
+      "title": "The final tile generator overwrites the richer prerender sitemap, robots, and llms artifacts; the integrity audit still requires retired brand-kit output",
+      "evidence": [
+        "app/scripts/build-tile-preview.py:721-730",
+        "app/scripts/prerender-seo.mjs:2547-2569",
+        "app/scripts/audit-site-integrity.mjs:292-306",
+        "app/scripts/audit-site-integrity.mjs:399-402"
+      ],
+      "recommendation": "Align the legacy integrity command with the current final tile build before reusing it as a gate. The earlier generator artifacts are superseded by the final writer intentionally; preserve a single clear discovery contract. This finding does not invalidate the current release checks or prove live metadata is missing."
+    }
+  ],
+  "contentOpportunities": [
+    {
+      "priority": "high",
+      "title": "Add a verified outcome card to public case studies only when client-approved",
+      "evidence": [
+        "app/src/data/site-cases.ts:29-47",
+        "app/src/data/site-cases.ts:49-80"
+      ],
+      "recommendation": "Use a client-approved quote or verified operational before/after with evidence ID and check date. Do not create revenue, booking, or traffic claims without proof."
+    },
+    {
+      "priority": "medium",
+      "title": "Put the existing first-look process one step closer to the homepage decision",
+      "evidence": [
+        "app/scripts/build-tile-preview.py:624-626",
+        "app/scripts/build-tile-preview.py:711-713"
+      ],
+      "recommendation": "Keep the hero and card flip. Add one small linked sequence beneath the first screen: free first look, written scope and exact price, build/review/launch. Do not add invented price tiers, SLAs, or delivery promises: the service pages already carry the known terms."
+    }
+  ],
+  "notes": [
+    "All 153 sitemap URLs are live 200 and no sitemap page is orphaned in prerendered HTML.",
+    "The 421-route audit found every declared reader route plus home live 200.",
+    "Minimal llms.txt is treated as intentional and is not a prioritized finding."
+  ]
+}

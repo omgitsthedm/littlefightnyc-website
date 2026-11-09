@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "brand: initial HTML includes full story, visual evidence, contacts, canonical metadata and matching FAQ schema",
+    "web: initial HTML includes full story, visual evidence, contacts, canonical metadata and matching FAQ schema",
+    "it: initial HTML includes full story, visual evidence, contacts, canonical metadata and matching FAQ schema",
+    "consulting: initial HTML includes full story, visual evidence, contacts, canonical metadata and matching FAQ schema",
+    "software: initial HTML includes full story, visual evidence, contacts, canonical metadata and matching FAQ schema",
+    "320px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks",
+    "390px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks",
+    "200% text: all new readers preserve content without horizontal overflow",
+    "768px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks",
+    "1024px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks",
+    "1440px: all four service anchors open, readers scroll independently, category colors hold, no horizontal overflow, Escape restores focus; retained brand route is covered by static checks",
+    "The reference hero has two authentic screens, a shared storefront ground and tugboat, with two useful actions and no pointer or caption rail; pause and reduced motion suppress decorative tile motion",
+    "Without JavaScript, the complete reference hero and both actions remain available"
+  ],
+  "errors": [],
+  "failures": [],
+  "passed": true
+}

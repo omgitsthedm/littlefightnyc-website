@@ -1,0 +1,190 @@
+{
+  "startedAt": "2026-10-09T16:20:56.060Z",
+  "base": "http://127.0.0.1:65033",
+  "artifactSha256": "e0ed66b98a796dd9338003e2d5898b010a669850afdaba58e6ddb1aadfc2ba38",
+  "results": [
+    {
+      "name": "sculpture-chrome",
+      "command": "node",
+      "args": [
+        "scripts/verify-sculpture.cjs"
+      ],
+      "startedAt": "2026-10-09T16:20:56.061Z",
+      "finishedAt": "2026-10-09T16:22:11.537Z",
+      "exitCode": 1,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/sculpture-chrome.log"
+    },
+    {
+      "name": "sculpture-webkit",
+      "command": "node",
+      "args": [
+        "scripts/verify-sculpture.cjs",
+        "--webkit"
+      ],
+      "startedAt": "2026-10-09T16:20:56.062Z",
+      "finishedAt": "2026-10-09T16:22:30.441Z",
+      "exitCode": 1,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/sculpture-webkit.log"
+    },
+    {
+      "name": "responsive-sculpture",
+      "command": "node",
+      "args": [
+        "scripts/verify-responsive-sculpture.cjs"
+      ],
+      "startedAt": "2026-10-09T16:22:11.538Z",
+      "finishedAt": "2026-10-09T16:23:51.807Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/responsive-sculpture.log"
+    },
+    {
+      "name": "tile-production",
+      "command": "node",
+      "args": [
+        "scripts/verify-tile-production.cjs"
+      ],
+      "startedAt": "2026-10-09T16:23:51.808Z",
+      "finishedAt": "2026-10-09T16:24:14.027Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/tile-production.log"
+    },
+    {
+      "name": "vera-freshness",
+      "command": "node",
+      "args": [
+        "scripts/verify-vera-freshness.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:14.028Z",
+      "finishedAt": "2026-10-09T16:24:18.419Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/vera-freshness.log"
+    },
+    {
+      "name": "hero-reference",
+      "command": "node",
+      "args": [
+        "scripts/verify-hero-reference.cjs"
+      ],
+      "startedAt": "2026-10-09T16:22:30.442Z",
+      "finishedAt": "2026-10-09T16:24:31.770Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/hero-reference.log"
+    },
+    {
+      "name": "inquiry-enhancement",
+      "command": "node",
+      "args": [
+        "scripts/verify-inquiry-enhancement.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:31.770Z",
+      "finishedAt": "2026-10-09T16:24:35.128Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/inquiry-enhancement.log"
+    },
+    {
+      "name": "reader-audit",
+      "command": "node",
+      "args": [
+        "scripts/verify-reader-audit.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:35.129Z",
+      "finishedAt": "2026-10-09T16:24:47.419Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/reader-audit.log"
+    },
+    {
+      "name": "case-editorial",
+      "command": "node",
+      "args": [
+        "scripts/verify-case-editorial.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:18.420Z",
+      "finishedAt": "2026-10-09T16:24:56.474Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/case-editorial.log"
+    },
+    {
+      "name": "anchor-readers",
+      "command": "node",
+      "args": [
+        "scripts/verify-anchor-readers.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:56.475Z",
+      "finishedAt": "2026-10-09T16:25:08.732Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/anchor-readers.log"
+    },
+    {
+      "name": "research-improvements",
+      "command": "node",
+      "args": [
+        "scripts/verify-research-improvements.cjs"
+      ],
+      "startedAt": "2026-10-09T16:25:08.733Z",
+      "finishedAt": "2026-10-09T16:25:26.029Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/research-improvements.log"
+    },
+    {
+      "name": "answer-hub",
+      "command": "node",
+      "args": [
+        "scripts/verify-answer-hub.cjs"
+      ],
+      "startedAt": "2026-10-09T16:25:26.030Z",
+      "finishedAt": "2026-10-09T16:25:49.990Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/answer-hub.log"
+    },
+    {
+      "name": "answer-accessibility",
+      "command": "node",
+      "args": [
+        "scripts/verify-answer-accessibility.cjs"
+      ],
+      "startedAt": "2026-10-09T16:25:49.990Z",
+      "finishedAt": "2026-10-09T16:26:03.230Z",
+      "exitCode": 1,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/answer-accessibility.log"
+    },
+    {
+      "name": "search-browser",
+      "command": "node",
+      "args": [
+        "scripts/verify-search-browser.cjs"
+      ],
+      "startedAt": "2026-10-09T16:26:03.231Z",
+      "finishedAt": "2026-10-09T16:26:08.396Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/search-browser.log"
+    },
+    {
+      "name": "support-form",
+      "command": "npx",
+      "args": [
+        "playwright",
+        "test",
+        "--config=playwright.support-form.config.ts"
+      ],
+      "startedAt": "2026-10-09T16:26:08.396Z",
+      "finishedAt": "2026-10-09T16:26:14.491Z",
+      "exitCode": 0,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/support-form.log"
+    },
+    {
+      "name": "card-interiors",
+      "command": "node",
+      "args": [
+        "scripts/verify-card-interiors.cjs"
+      ],
+      "startedAt": "2026-10-09T16:24:47.419Z",
+      "finishedAt": "2026-10-09T16:26:44.714Z",
+      "exitCode": 1,
+      "log": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-complete-upgrade-20261009/.lifi/evidence/upgrade-20261009/browser-matrix/card-interiors.log"
+    }
+  ],
+  "finalArtifactSha256": "e0ed66b98a796dd9338003e2d5898b010a669850afdaba58e6ddb1aadfc2ba38",
+  "artifactUnchanged": true,
+  "finishedAt": "2026-10-09T16:26:44.715Z",
+  "passed": false
+}

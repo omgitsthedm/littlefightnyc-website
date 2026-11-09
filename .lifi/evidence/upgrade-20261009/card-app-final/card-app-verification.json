@@ -1,0 +1,1419 @@
+{
+  "kind": "card-app-browser-verification",
+  "base": "http://127.0.0.1:64745",
+  "startedAt": "2026-10-09T16:44:37.630Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "all Labs open inside reader cards and keep the parent document alive",
+      "passed": true,
+      "detail": "5 homepage and 6 Work-index Labs loaded with video, interaction, and WebGL coverage"
+    },
+    {
+      "name": "reader navigation persists and returns Previous, All tiles, and Next behavior",
+      "passed": true,
+      "detail": "{\"before\":\"/labs/micro-animations/\",\"next\":\"/labs/cabinet-concept/\"}"
+    },
+    {
+      "name": "Escape from a focused Lab iframe closes the reader and unmounts its frame",
+      "passed": true,
+      "detail": "child-frame Escape closes outer reader and cleans up iframe"
+    },
+    {
+      "name": "Lab exit messages require the active frame and the same origin",
+      "passed": true,
+      "detail": "wrong origin and wrong sender both ignored"
+    },
+    {
+      "name": "iframe Escape works while a nonessential asset is still downloading",
+      "passed": true,
+      "detail": "a deliberately delayed asset cannot block iframe Escape or return to the hub"
+    },
+    {
+      "name": "retained Lab agency links route through the top-level reader and preserve its Back trail",
+      "passed": true,
+      "detail": "Micro CTA → top-level inquiry reader → Back to working Lab → All tiles hub"
+    },
+    {
+      "name": "a directly opened Lab reader returns home through its in-app exit",
+      "passed": true,
+      "detail": "direct reader → embedded exit → homepage"
+    },
+    {
+      "name": "VERA opens as an immersive, same-origin full-card working app",
+      "passed": true,
+      "detail": "VERA uses the full reader card, handles in-frame navigation, and retains a visible X"
+    },
+    {
+      "name": "all Labs fit 320×740 and exit back to their originating tile",
+      "passed": true,
+      "detail": "11 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus"
+    },
+    {
+      "name": "all Labs fit 390×844 and exit back to their originating tile",
+      "passed": true,
+      "detail": "11 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus"
+    },
+    {
+      "name": "all Labs fit 568×320 and exit back to their originating tile",
+      "passed": true,
+      "detail": "11 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus"
+    },
+    {
+      "name": "all Labs fit 844×390 and exit back to their originating tile",
+      "passed": true,
+      "detail": "11 compact working demos; both exits reachable; in-app exit unmounts demo and restores tile focus"
+    },
+    {
+      "name": "VERA full card remains usable on a 390px phone",
+      "passed": true,
+      "detail": "390px VERA frame + persistent 44px close target"
+    }
+  ],
+  "labs": [
+    {
+      "slug": "pool-room",
+      "route": "/labs/pool-room/",
+      "entry": "/",
+      "src": "/examples/lab/concepts/pool-room/?embed=1",
+      "interaction": "video controls; readyState 1"
+    },
+    {
+      "slug": "walkup-3d",
+      "route": "/labs/walkup-3d/",
+      "entry": "/",
+      "src": "/examples/lab/concepts/walkup-3d/?embed=1",
+      "interaction": "WebGL 628×675; three camera presets exercised"
+    },
+    {
+      "slug": "terminal-3d",
+      "route": "/labs/terminal-3d/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/terminal-3d/?embed=1",
+      "interaction": "WebGL 628×675; time controls and guided tour exercised"
+    },
+    {
+      "slug": "pill-scroll",
+      "route": "/labs/pill-scroll/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/pill-scroll/?embed=1",
+      "interaction": "native scroll advances film to 03 / 16"
+    },
+    {
+      "slug": "micro-animations",
+      "route": "/labs/micro-animations/",
+      "entry": "/",
+      "src": "/examples/lab/concepts/micro-animations/?embed=1",
+      "interaction": "theme toggle clicked"
+    },
+    {
+      "slug": "aha-laser",
+      "route": "/labs/aha-laser/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/aha-laser/?embed=1",
+      "interaction": "pull-chain switches off by touch and back on by keyboard"
+    },
+    {
+      "slug": "studio-engine",
+      "route": "/labs/studio-engine/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/studio-engine/?embed=1",
+      "interaction": "sample business choice clicked"
+    },
+    {
+      "slug": "growth-street",
+      "route": "/labs/growth-street/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/growth-street/?embed=1",
+      "interaction": "third chapter reached through native scrolling"
+    },
+    {
+      "slug": "goliath",
+      "route": "/labs/goliath/",
+      "entry": "/examples/",
+      "src": "/examples/lab/concepts/goliath/?embed=1",
+      "interaction": "native scroll advances film to 02 / 10"
+    },
+    {
+      "slug": "cabinet-concept",
+      "route": "/labs/cabinet-concept/",
+      "entry": "/",
+      "src": "/examples/lab/concepts/cabinet-concept/?embed=1",
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "house-explorer",
+      "route": "/labs/house-explorer/",
+      "entry": "/",
+      "src": "/examples/lab/concepts/house-explorer/?embed=1",
+      "interaction": "document loaded"
+    }
+  ],
+  "mobileLabs": [
+    {
+      "slug": "pool-room",
+      "entry": "/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.34375,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "video controls; readyState 4"
+    },
+    {
+      "slug": "walkup-3d",
+      "entry": "/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.25,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 264×412; three camera presets exercised"
+    },
+    {
+      "slug": "terminal-3d",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.34375,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 264×412; time controls and guided tour exercised"
+    },
+    {
+      "slug": "pill-scroll",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.25,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 03 / 16"
+    },
+    {
+      "slug": "micro-animations",
+      "entry": "/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.25,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "theme toggle clicked"
+    },
+    {
+      "slug": "aha-laser",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.25,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "pull-chain switches off by touch and back on by keyboard"
+    },
+    {
+      "slug": "studio-engine",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 262.046875,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "sample business choice clicked"
+    },
+    {
+      "slug": "growth-street",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.34375,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "third chapter reached through native scrolling"
+    },
+    {
+      "slug": "goliath",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.34375,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 02 / 10"
+    },
+    {
+      "slug": "cabinet-concept",
+      "entry": "/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 261.34375,
+        "width": 264,
+        "height": 412.390625
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 212,
+        "y": 6,
+        "right": 256,
+        "bottom": 50,
+        "viewport": [
+          264,
+          412
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "house-explorer",
+      "entry": "/",
+      "viewport": {
+        "width": 320,
+        "height": 740
+      },
+      "box": {
+        "x": 28,
+        "y": 236.234375,
+        "width": 264,
+        "height": 438
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 212,
+        "y": 6,
+        "right": 256,
+        "bottom": 50,
+        "viewport": [
+          264,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "pool-room",
+      "entry": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "video controls; readyState 4"
+    },
+    {
+      "slug": "walkup-3d",
+      "entry": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 334×438; three camera presets exercised"
+    },
+    {
+      "slug": "terminal-3d",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 334×438; time controls and guided tour exercised"
+    },
+    {
+      "slug": "pill-scroll",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 03 / 16"
+    },
+    {
+      "slug": "micro-animations",
+      "entry": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "theme toggle clicked"
+    },
+    {
+      "slug": "aha-laser",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "pull-chain switches off by touch and back on by keyboard"
+    },
+    {
+      "slug": "studio-engine",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "sample business choice clicked"
+    },
+    {
+      "slug": "growth-street",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "third chapter reached through native scrolling"
+    },
+    {
+      "slug": "goliath",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 02 / 10"
+    },
+    {
+      "slug": "cabinet-concept",
+      "entry": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.578125,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 282,
+        "y": 6,
+        "right": 326,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "house-explorer",
+      "entry": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "box": {
+        "x": 28,
+        "y": 341.671875,
+        "width": 334,
+        "height": 438
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 282,
+        "y": 6,
+        "right": 326,
+        "bottom": 50,
+        "viewport": [
+          334,
+          438
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "pool-room",
+      "entry": "/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "video controls; readyState 4"
+    },
+    {
+      "slug": "walkup-3d",
+      "entry": "/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 511×238; three camera presets exercised"
+    },
+    {
+      "slug": "terminal-3d",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 511×238; time controls and guided tour exercised"
+    },
+    {
+      "slug": "pill-scroll",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 03 / 16"
+    },
+    {
+      "slug": "micro-animations",
+      "entry": "/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "theme toggle clicked"
+    },
+    {
+      "slug": "aha-laser",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "pull-chain switches off by touch and back on by keyboard"
+    },
+    {
+      "slug": "studio-engine",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "sample business choice clicked"
+    },
+    {
+      "slug": "growth-street",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "third chapter reached through native scrolling"
+    },
+    {
+      "slug": "goliath",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 02 / 10"
+    },
+    {
+      "slug": "cabinet-concept",
+      "entry": "/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 82.484375,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 459,
+        "y": 6,
+        "right": 503,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "house-explorer",
+      "entry": "/",
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "box": {
+        "x": 28.71875,
+        "y": 81.578125,
+        "width": 510.5625,
+        "height": 238
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 459,
+        "y": 6,
+        "right": 503,
+        "bottom": 50,
+        "viewport": [
+          511,
+          238
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "pool-room",
+      "entry": "/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "video controls; readyState 4"
+    },
+    {
+      "slug": "walkup-3d",
+      "entry": "/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 765×279; three camera presets exercised"
+    },
+    {
+      "slug": "terminal-3d",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "WebGL 765×279; time controls and guided tour exercised"
+    },
+    {
+      "slug": "pill-scroll",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 03 / 16"
+    },
+    {
+      "slug": "micro-animations",
+      "entry": "/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "theme toggle clicked"
+    },
+    {
+      "slug": "aha-laser",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "pull-chain switches off by touch and back on by keyboard"
+    },
+    {
+      "slug": "studio-engine",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "sample business choice clicked"
+    },
+    {
+      "slug": "growth-street",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "third chapter reached through native scrolling"
+    },
+    {
+      "slug": "goliath",
+      "entry": "/examples/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 143.109375,
+        "height": 44,
+        "x": 6,
+        "y": 6,
+        "right": 149.109375,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "native scroll advances film to 02 / 10"
+    },
+    {
+      "slug": "cabinet-concept",
+      "entry": "/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.21875,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 713,
+        "y": 6,
+        "right": 757,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    },
+    {
+      "slug": "house-explorer",
+      "entry": "/",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "box": {
+        "x": 39.75,
+        "y": 111.3125,
+        "width": 764.5,
+        "height": 278.796875
+      },
+      "target": {
+        "width": 44,
+        "height": 44,
+        "x": 713,
+        "y": 6,
+        "right": 757,
+        "bottom": 50,
+        "viewport": [
+          765,
+          279
+        ],
+        "hit": true
+      },
+      "interaction": "document loaded"
+    }
+  ],
+  "vera": [
+    {
+      "viewport": {
+        "width": 1440,
+        "height": 940
+      },
+      "closeBox": {
+        "x": 1338,
+        "y": 20,
+        "width": 46,
+        "height": 46
+      },
+      "childUrl": "http://127.0.0.1:64745/vera/?embed=1#/atlas"
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "closeBox": {
+        "x": 327,
+        "y": 15,
+        "width": 44,
+        "height": 44
+      },
+      "childUrl": "http://127.0.0.1:64745/vera/?embed=1"
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "blockedMutations": [],
+  "passed": true,
+  "completedAt": "2026-10-09T16:48:12.081Z"
+}

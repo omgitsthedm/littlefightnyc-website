@@ -1,0 +1,253 @@
+{
+  "reason": "Not imported: unused exploratory hero; the selected reference-locked hero has its own source and output hash gate. Originals preserved in recovery.",
+  "receipts": [
+    {
+      "name": "hero-browser-slim",
+      "frame": "independent-hero-display",
+      "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-hero-slim.png",
+      "sourceSha256": "bdb9b20c074396122896b8eabed0ae37545312adb17a2836c3f83913efef8c78",
+      "frameSource": ".lifi/asset-work/hero-physics/browser/thin-browser-physical-v1.png",
+      "frameSourceSha256": "e04c350c600a22519d75b079ff416f142587039d1f1d2bbbd4ab81e582dc03a7",
+      "screenSize": [
+        1328,
+        798
+      ],
+      "screenMapping": [
+        [
+          90,
+          138
+        ],
+        [
+          1418,
+          138
+        ],
+        [
+          1418,
+          936
+        ],
+        [
+          90,
+          936
+        ]
+      ],
+      "sourceSize": [
+        2656,
+        1596
+      ],
+      "frameCrop": [
+        55,
+        76,
+        1450,
+        971
+      ],
+      "outputSize": [
+        1395,
+        895
+      ],
+      "outputSha256": "8fe4f6273d76fd604fe236e399e92782631fdbc68a349d8cdb0af5654c7a5d9b",
+      "method": "One uniform source-pixel scale and crop, then projection onto the physical screen. No generated client content, reconstructed client UI, recoloring or nonuniform screenshot resize."
+    },
+    {
+      "name": "hero-master-desktop",
+      "frame": "master-hero",
+      "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "sources": [
+        {
+          "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+          "sha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6"
+        },
+        {
+          "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-hero-photo.png",
+          "sha256": "d6f257f87a7b92435da472519866bda93e0b07ed1d5f7d138ced2afe73b81d2d"
+        }
+      ],
+      "portraitCrop": [
+        1560,
+        400,
+        2784,
+        2000
+      ],
+      "portraitMask": "Apple Vision person segmentation; alpha only, original RGB retained",
+      "screenQuadrilaterals": {
+        "rear": [
+          [
+            369,
+            249
+          ],
+          [
+            1180,
+            298
+          ],
+          [
+            1180,
+            620
+          ],
+          [
+            369,
+            665
+          ]
+        ],
+        "front": [
+          [
+            814,
+            484
+          ],
+          [
+            1325,
+            484
+          ],
+          [
+            1325,
+            735
+          ],
+          [
+            814,
+            735
+          ]
+        ]
+      },
+      "outputSize": [
+        1881,
+        836
+      ],
+      "outputSha256": "6b82e5156314b7306d52b8ade6fb81b1e217a2fd6484031ed779001908fd0581",
+      "method": "Approved source pixels in the master-derived physical stage; real navigation, real original building photo, and original portrait on its existing website yellow. No generated client imagery survives in the visible display interiors."
+    },
+    {
+      "name": "hero-master-mobile",
+      "frame": "master-hero",
+      "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "sources": [
+        {
+          "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-painting-design-desktop.png",
+          "sha256": "ab719275c7fd9ed2a7f930a8e07c980e7bb12f82031c4c760c1a84ef4c44f3c6"
+        },
+        {
+          "path": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/chromatic-painting-design/chromatic-hero-photo.png",
+          "sha256": "d6f257f87a7b92435da472519866bda93e0b07ed1d5f7d138ced2afe73b81d2d"
+        }
+      ],
+      "portraitCrop": [
+        1560,
+        400,
+        2784,
+        2000
+      ],
+      "portraitMask": "Apple Vision person segmentation; alpha only, original RGB retained",
+      "screenQuadrilaterals": {
+        "rear": [
+          [
+            229,
+            221
+          ],
+          [
+            993,
+            272
+          ],
+          [
+            993,
+            650
+          ],
+          [
+            229,
+            692
+          ]
+        ],
+        "front": [
+          [
+            625,
+            459
+          ],
+          [
+            1160,
+            459
+          ],
+          [
+            1160,
+            782
+          ],
+          [
+            625,
+            782
+          ]
+        ]
+      },
+      "outputSize": [
+        1634,
+        963
+      ],
+      "outputSha256": "da46664055a4959650b4e00054e34f7915936bcd8f2ff98d791fff6a915385d5",
+      "method": "Approved source pixels in the master-derived physical stage; real navigation, real original building photo, and original portrait on its existing website yellow. No generated client imagery survives in the visible display interiors."
+    },
+    {
+      "name": "hero-duo-rachel",
+      "frame": "independent-hero-display",
+      "source": "/Users/davidmarsh/Desktop/Active Projects/LiFi Tile Website/Little Fight NYC Verified Screenshots 2026-10-07/hair-by-rachel-charles/hair-by-rachel-charles-desktop.png",
+      "sourceSha256": "26c01fcf3531d452d1da0044a3cc240cfe61d0754e7087ab31b2f67e48a7a032",
+      "frameSource": ".lifi/asset-work/hero-physics/duo/duo-foldable-blank-v3.png",
+      "frameSourceSha256": "b9afa91361e1de170e05925aced23c7015991fae9cf54b5f26c693a313fa3298",
+      "screenSize": [
+        1192,
+        740
+      ],
+      "screenMapping": [
+        [
+          [
+            173,
+            135
+          ],
+          [
+            768,
+            241
+          ],
+          [
+            768,
+            780
+          ],
+          [
+            173,
+            877
+          ]
+        ],
+        [
+          [
+            768,
+            241
+          ],
+          [
+            1363,
+            135
+          ],
+          [
+            1363,
+            877
+          ],
+          [
+            768,
+            780
+          ]
+        ]
+      ],
+      "sourceSize": [
+        2880,
+        2000
+      ],
+      "frameCrop": [
+        120,
+        94,
+        1418,
+        918
+      ],
+      "apertureMask": "duo/screen-aperture-mask.png",
+      "apertureMaskSha256": "61172c202a785760bb189f1de5939bcd6963fedc9a4f5df63078e9a084bbde50",
+      "outputSize": [
+        1298,
+        824
+      ],
+      "outputSha256": "9a19880e2d6bc18eccb00dd762ddc2fb8bc270016a168c0a7b15843292e908ce",
+      "method": "One uniform source-pixel scale and crop, then projection onto the physical screen. No generated client content, reconstructed client UI, recoloring or nonuniform screenshot resize."
+    }
+  ]
+}

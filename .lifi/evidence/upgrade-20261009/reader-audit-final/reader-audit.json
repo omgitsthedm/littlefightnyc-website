@@ -1,0 +1,52 @@
+{
+  "kind": "reader-audit-browser-verification",
+  "base": "http://127.0.0.1:65033",
+  "startedAt": "2026-10-09T16:12:51.204Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "standalone Tech Audit retains every immediate contact channel",
+      "passed": true,
+      "detail": "Call, Text, and Email stay in the persistent rail; the intro keeps its form link"
+    },
+    {
+      "name": "two website readers retain distinct inquiry origins",
+      "passed": true,
+      "detail": "same service, two distinct canonical reader origins in the form payload"
+    },
+    {
+      "name": "in-reader Form jump preserves the reader shell at 390px",
+      "passed": true,
+      "detail": "{\"detailScrollTop\":0,\"bodyScrollTop\":770,\"target\":{\"top\":166.625,\"right\":332,\"bottom\":223.125,\"left\":58},\"rail\":{\"top\":62,\"right\":316.5,\"bottom\":111,\"left\":19.5},\"close\":{\"top\":15,\"right\":370.5,\"bottom\":59,\"left\":326.5},\"viewport\":{\"width\":390,\"height\":844}}"
+    },
+    {
+      "name": "in-reader Form jump preserves the reader shell at 1440px",
+      "passed": true,
+      "detail": "{\"detailScrollTop\":0,\"bodyScrollTop\":973,\"target\":{\"top\":136.421875,\"right\":771.6875,\"bottom\":239.140625,\"left\":240},\"rail\":{\"top\":19,\"right\":1354,\"bottom\":65,\"left\":1130.265625},\"close\":{\"top\":20,\"right\":1384,\"bottom\":66,\"left\":1338},\"viewport\":{\"width\":1440,\"height\":900}}"
+    },
+    {
+      "name": "selected-work labels, full-portfolio route, and contact controls remain whole at 320px / 100% text",
+      "passed": true,
+      "detail": "selected-work plus, full-portfolio route, and four contact actions remain bounded at 320px / 100% text"
+    },
+    {
+      "name": "selected-work labels, full-portfolio route, and contact controls remain whole at 390px / 100% text",
+      "passed": true,
+      "detail": "selected-work plus, full-portfolio route, and four contact actions remain bounded at 390px / 100% text"
+    },
+    {
+      "name": "selected-work labels, full-portfolio route, and contact controls remain whole at 390px / 200% text",
+      "passed": true,
+      "detail": "selected-work plus, full-portfolio route, and four contact actions remain bounded at 390px / 200% text"
+    },
+    {
+      "name": "ordinary reader animation frames do not treat rAF timestamps as force",
+      "passed": true,
+      "detail": "source and VM prove an ordinary rAF timestamp does not force offscreen work"
+    }
+  ],
+  "blockedMutations": [],
+  "localFailures": [],
+  "pageErrors": [],
+  "finishedAt": "2026-10-09T16:13:03.185Z"
+}

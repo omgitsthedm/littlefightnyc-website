@@ -1,0 +1,22 @@
+{
+  "url": "http://127.0.0.1:65033/services/custom-local-websites/",
+  "status": 200,
+  "title": "Custom Websites for Independent Businesses | Little Fight NYC",
+  "article": 1,
+  "selectedWork": 2,
+  "contacts": [
+    {
+      "text": "Call",
+      "color": "rgb(255, 120, 57)"
+    },
+    {
+      "text": "Text",
+      "color": "rgb(255, 120, 57)"
+    },
+    {
+      "text": "Email",
+      "color": "rgb(255, 120, 57)"
+    }
+  ],
+  "capturedAt": "2026-10-09T16:13:51.345Z"
+}

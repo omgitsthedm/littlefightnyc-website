@@ -1,0 +1,1186 @@
+{
+  "kind": "lab-fronts-browser-verification",
+  "base": "http://127.0.0.1:65033",
+  "startedAt": "2026-10-09T15:40:47.360Z",
+  "browser": "Google Chrome via Playwright channel chrome",
+  "assertions": [
+    {
+      "name": "local Lab-front candidate is available",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "320x740: visible Lab routes survive and curation cuts remain absent",
+      "passed": true,
+      "detail": "5 visible Lab fronts; 6 named curation cuts absent"
+    },
+    {
+      "name": "320x740: full mosaic grid fits",
+      "passed": true,
+      "detail": "6 grids fit with no horizontal overflow or overlaps"
+    },
+    {
+      "name": "320x740: each Lab front is readable and its cover decodes",
+      "passed": true,
+      "detail": "5 visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers"
+    },
+    {
+      "name": "320x740: Lab fronts remain focusable",
+      "passed": true,
+      "detail": "first Lab tile accepts keyboard focus"
+    },
+    {
+      "name": "320x740: paused motion keeps Lab content",
+      "passed": true,
+      "detail": "paused motion retains every visible Lab title, hook, action, and cover"
+    },
+    {
+      "name": "320x740: actual 200% Lab text stays usable",
+      "passed": true,
+      "detail": "title, hook, and action doubled once for every visible Lab tile without clipping or collisions"
+    },
+    {
+      "name": "390x844: visible Lab routes survive and curation cuts remain absent",
+      "passed": true,
+      "detail": "5 visible Lab fronts; 6 named curation cuts absent"
+    },
+    {
+      "name": "390x844: full mosaic grid fits",
+      "passed": true,
+      "detail": "6 grids fit with no horizontal overflow or overlaps"
+    },
+    {
+      "name": "390x844: each Lab front is readable and its cover decodes",
+      "passed": true,
+      "detail": "5 visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers"
+    },
+    {
+      "name": "390x844: Lab fronts remain focusable",
+      "passed": true,
+      "detail": "first Lab tile accepts keyboard focus"
+    },
+    {
+      "name": "390x844: paused motion keeps Lab content",
+      "passed": true,
+      "detail": "paused motion retains every visible Lab title, hook, action, and cover"
+    },
+    {
+      "name": "390x844: actual 200% Lab text stays usable",
+      "passed": true,
+      "detail": "title, hook, and action doubled once for every visible Lab tile without clipping or collisions"
+    },
+    {
+      "name": "768x1024: visible Lab routes survive and curation cuts remain absent",
+      "passed": true,
+      "detail": "5 visible Lab fronts; 6 named curation cuts absent"
+    },
+    {
+      "name": "768x1024: full mosaic grid fits",
+      "passed": true,
+      "detail": "6 grids fit with no horizontal overflow or overlaps"
+    },
+    {
+      "name": "768x1024: each Lab front is readable and its cover decodes",
+      "passed": true,
+      "detail": "5 visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers"
+    },
+    {
+      "name": "768x1024: Lab fronts remain focusable",
+      "passed": true,
+      "detail": "first Lab tile accepts keyboard focus"
+    },
+    {
+      "name": "768x1024: paused motion keeps Lab content",
+      "passed": true,
+      "detail": "paused motion retains every visible Lab title, hook, action, and cover"
+    },
+    {
+      "name": "1024x900: visible Lab routes survive and curation cuts remain absent",
+      "passed": true,
+      "detail": "5 visible Lab fronts; 6 named curation cuts absent"
+    },
+    {
+      "name": "1024x900: full mosaic grid fits",
+      "passed": true,
+      "detail": "6 grids fit with no horizontal overflow or overlaps"
+    },
+    {
+      "name": "1024x900: each Lab front is readable and its cover decodes",
+      "passed": true,
+      "detail": "5 visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers"
+    },
+    {
+      "name": "1024x900: Lab fronts remain focusable",
+      "passed": true,
+      "detail": "first Lab tile accepts keyboard focus"
+    },
+    {
+      "name": "1024x900: paused motion keeps Lab content",
+      "passed": true,
+      "detail": "paused motion retains every visible Lab title, hook, action, and cover"
+    },
+    {
+      "name": "1440x940: visible Lab routes survive and curation cuts remain absent",
+      "passed": true,
+      "detail": "5 visible Lab fronts; 6 named curation cuts absent"
+    },
+    {
+      "name": "1440x940: full mosaic grid fits",
+      "passed": true,
+      "detail": "6 grids fit with no horizontal overflow or overlaps"
+    },
+    {
+      "name": "1440x940: each Lab front is readable and its cover decodes",
+      "passed": true,
+      "detail": "5 visible Lab fronts match catalog copy, fit their tiles, and decode their lazy covers"
+    },
+    {
+      "name": "1440x940: Lab fronts remain focusable",
+      "passed": true,
+      "detail": "first Lab tile accepts keyboard focus"
+    },
+    {
+      "name": "1440x940: paused motion keeps Lab content",
+      "passed": true,
+      "detail": "paused motion retains every visible Lab title, hook, action, and cover"
+    },
+    {
+      "name": "320px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "360px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "361px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "375px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "390px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "414px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "768px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "1024px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "1440px: Lab fronts work without JavaScript",
+      "passed": true,
+      "detail": "all visible Lab descriptions, previews, and native links remain readable"
+    },
+    {
+      "name": "browser reports no same-origin resource failures",
+      "passed": true,
+      "detail": "no same-origin 4xx/5xx or failed assets"
+    },
+    {
+      "name": "browser reports no page errors",
+      "passed": true,
+      "detail": "no JavaScript errors"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 320,
+      "height": 740,
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "passed": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "passed": true
+    },
+    {
+      "width": 1024,
+      "height": 900,
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "height": 940,
+      "passed": true
+    }
+  ],
+  "images": [
+    {
+      "label": "320x740/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 121,
+      "renderedHeight": 144.859375
+    },
+    {
+      "label": "320x740/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 121,
+      "renderedHeight": 185.65625
+    },
+    {
+      "label": "320x740/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 266,
+      "renderedHeight": 153.265625
+    },
+    {
+      "label": "320x740/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 121,
+      "renderedHeight": 91.734375
+    },
+    {
+      "label": "320x740/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 121,
+      "renderedHeight": 91.734375
+    },
+    {
+      "label": "320x740/200-percent-text/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 125.203125,
+      "renderedHeight": 100.59375
+    },
+    {
+      "label": "320x740/200-percent-text/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 266,
+      "renderedHeight": 94.3125
+    },
+    {
+      "label": "320x740/200-percent-text/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 266,
+      "renderedHeight": 100.375
+    },
+    {
+      "label": "320x740/200-percent-text/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 266,
+      "renderedHeight": 96.0625
+    },
+    {
+      "label": "320x740/200-percent-text/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 266,
+      "renderedHeight": 90.46875
+    },
+    {
+      "label": "390x844/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 156,
+      "renderedHeight": 132.53125
+    },
+    {
+      "label": "390x844/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 156,
+      "renderedHeight": 206.53125
+    },
+    {
+      "label": "390x844/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 156,
+      "renderedHeight": 132.53125
+    },
+    {
+      "label": "390x844/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 156,
+      "renderedHeight": 112.53125
+    },
+    {
+      "label": "390x844/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 156,
+      "renderedHeight": 132.53125
+    },
+    {
+      "label": "390x844/200-percent-text/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 135.59375,
+      "renderedHeight": 99.78125
+    },
+    {
+      "label": "390x844/200-percent-text/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 336,
+      "renderedHeight": 100.0625
+    },
+    {
+      "label": "390x844/200-percent-text/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 336,
+      "renderedHeight": 100.0625
+    },
+    {
+      "label": "390x844/200-percent-text/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 158.609375,
+      "renderedHeight": 89.53125
+    },
+    {
+      "label": "390x844/200-percent-text/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 153.390625,
+      "renderedHeight": 171.125
+    },
+    {
+      "label": "768x1024/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 236.5,
+      "renderedHeight": 143.40625
+    },
+    {
+      "label": "768x1024/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 149,
+      "renderedHeight": 101.65625
+    },
+    {
+      "label": "768x1024/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 236.5,
+      "renderedHeight": 143.40625
+    },
+    {
+      "label": "768x1024/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 236.5,
+      "renderedHeight": 123.40625
+    },
+    {
+      "label": "768x1024/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 236.5,
+      "renderedHeight": 143.40625
+    },
+    {
+      "label": "1024x900/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 207,
+      "renderedHeight": 122.53125
+    },
+    {
+      "label": "1024x900/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 284.671875,
+      "renderedHeight": 164.203125
+    },
+    {
+      "label": "1024x900/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 207,
+      "renderedHeight": 122.53125
+    },
+    {
+      "label": "1024x900/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 129.328125,
+      "renderedHeight": 157.734375
+    },
+    {
+      "label": "1024x900/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 207,
+      "renderedHeight": 122.53125
+    },
+    {
+      "label": "1440x940/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 221.5,
+      "renderedHeight": 143.40625
+    },
+    {
+      "label": "1440x940/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 221.5,
+      "renderedHeight": 129.65625
+    },
+    {
+      "label": "1440x940/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 221.5,
+      "renderedHeight": 129.65625
+    },
+    {
+      "label": "1440x940/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 221.5,
+      "renderedHeight": 123.40625
+    },
+    {
+      "label": "1440x940/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 304,
+      "renderedHeight": 164.203125
+    },
+    {
+      "label": "320px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 117,
+      "renderedHeight": 144
+    },
+    {
+      "label": "320px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 117,
+      "renderedHeight": 164
+    },
+    {
+      "label": "320px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 262,
+      "renderedHeight": 144
+    },
+    {
+      "label": "320px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 117,
+      "renderedHeight": 144
+    },
+    {
+      "label": "320px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 153,
+      "naturalHeight": 113,
+      "renderedWidth": 117,
+      "renderedHeight": 144
+    },
+    {
+      "label": "360px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 172,
+      "naturalHeight": 128,
+      "renderedWidth": 137,
+      "renderedHeight": 144
+    },
+    {
+      "label": "360px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 172,
+      "naturalHeight": 128,
+      "renderedWidth": 137,
+      "renderedHeight": 144
+    },
+    {
+      "label": "360px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 172,
+      "naturalHeight": 128,
+      "renderedWidth": 302,
+      "renderedHeight": 144
+    },
+    {
+      "label": "360px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 172,
+      "naturalHeight": 128,
+      "renderedWidth": 137,
+      "renderedHeight": 144.875
+    },
+    {
+      "label": "360px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 172,
+      "naturalHeight": 128,
+      "renderedWidth": 137,
+      "renderedHeight": 144
+    },
+    {
+      "label": "361px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 173,
+      "naturalHeight": 128,
+      "renderedWidth": 137.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "361px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 173,
+      "naturalHeight": 128,
+      "renderedWidth": 137.5,
+      "renderedHeight": 184.796875
+    },
+    {
+      "label": "361px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 173,
+      "naturalHeight": 128,
+      "renderedWidth": 137.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "361px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 173,
+      "naturalHeight": 128,
+      "renderedWidth": 137.5,
+      "renderedHeight": 164.796875
+    },
+    {
+      "label": "361px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 173,
+      "naturalHeight": 128,
+      "renderedWidth": 137.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "375px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 180,
+      "naturalHeight": 133,
+      "renderedWidth": 144.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "375px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 180,
+      "naturalHeight": 133,
+      "renderedWidth": 144.5,
+      "renderedHeight": 164.796875
+    },
+    {
+      "label": "375px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 180,
+      "naturalHeight": 133,
+      "renderedWidth": 144.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "375px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 180,
+      "naturalHeight": 133,
+      "renderedWidth": 144.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "375px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 180,
+      "naturalHeight": 133,
+      "renderedWidth": 144.5,
+      "renderedHeight": 144
+    },
+    {
+      "label": "390px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 152,
+      "renderedHeight": 144
+    },
+    {
+      "label": "390px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 152,
+      "renderedHeight": 144
+    },
+    {
+      "label": "390px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 152,
+      "renderedHeight": 144
+    },
+    {
+      "label": "390px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 152,
+      "renderedHeight": 144
+    },
+    {
+      "label": "390px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 187,
+      "naturalHeight": 138,
+      "renderedWidth": 152,
+      "renderedHeight": 144
+    },
+    {
+      "label": "414px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 198,
+      "naturalHeight": 147,
+      "renderedWidth": 164,
+      "renderedHeight": 144
+    },
+    {
+      "label": "414px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 198,
+      "naturalHeight": 147,
+      "renderedWidth": 164,
+      "renderedHeight": 144
+    },
+    {
+      "label": "414px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 198,
+      "naturalHeight": 147,
+      "renderedWidth": 164,
+      "renderedHeight": 144
+    },
+    {
+      "label": "414px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 198,
+      "naturalHeight": 147,
+      "renderedWidth": 164,
+      "renderedHeight": 144
+    },
+    {
+      "label": "414px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 198,
+      "naturalHeight": 147,
+      "renderedWidth": 164,
+      "renderedHeight": 164
+    },
+    {
+      "label": "768px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 320,
+      "renderedHeight": 144
+    },
+    {
+      "label": "768px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 320,
+      "renderedHeight": 144
+    },
+    {
+      "label": "768px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 320,
+      "renderedHeight": 144
+    },
+    {
+      "label": "768px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 320,
+      "renderedHeight": 144
+    },
+    {
+      "label": "768px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 320,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1024px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 203,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1024px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 203,
+      "renderedHeight": 151.046875
+    },
+    {
+      "label": "1024px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 203,
+      "renderedHeight": 150.25
+    },
+    {
+      "label": "1024px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 203,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1024px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 203,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1440px/no-js/pool-room",
+      "src": "/assets/sculpture/lab-pool-room-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 300,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1440px/no-js/walkup-3d",
+      "src": "/assets/sculpture/lab-walkup-3d-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 300,
+      "renderedHeight": 164.796875
+    },
+    {
+      "label": "1440px/no-js/micro-animations",
+      "src": "/assets/sculpture/lab-micro-animations-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 300,
+      "renderedHeight": 144
+    },
+    {
+      "label": "1440px/no-js/cabinet-concept",
+      "src": "/assets/sculpture/lab-cabinet-concept-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 300,
+      "renderedHeight": 164.796875
+    },
+    {
+      "label": "1440px/no-js/house-explorer",
+      "src": "/assets/sculpture/lab-house-explorer-480.webp",
+      "loading": "lazy",
+      "complete": true,
+      "naturalWidth": 380,
+      "naturalHeight": 281,
+      "renderedWidth": 300,
+      "renderedHeight": 164.796875
+    }
+  ],
+  "screenshots": [
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-pool-room-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-walkup-3d-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-micro-animations-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-cabinet-concept-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-house-explorer-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/topic-software-390.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-pool-room-1440.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-walkup-3d-1440.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-micro-animations-1440.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-cabinet-concept-1440.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/lab-house-explorer-1440.png",
+    "../../../../../../../tmp/lfnyc-lab-fronts/screenshots/topic-software-1440.png"
+  ],
+  "textEnlargement": [
+    {
+      "label": "320x740",
+      "before": [
+        {
+          "slug": "pool-room",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "walkup-3d",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "micro-animations",
+          "title": 18.07,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "cabinet-concept",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "house-explorer",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        }
+      ],
+      "after": [
+        {
+          "slug": "pool-room",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "walkup-3d",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "micro-animations",
+          "title": 36.14,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "cabinet-concept",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "house-explorer",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        }
+      ]
+    },
+    {
+      "label": "390x844",
+      "before": [
+        {
+          "slug": "pool-room",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "walkup-3d",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "micro-animations",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "cabinet-concept",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        },
+        {
+          "slug": "house-explorer",
+          "title": 18,
+          "hook": 16,
+          "action": 16
+        }
+      ],
+      "after": [
+        {
+          "slug": "pool-room",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "walkup-3d",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "micro-animations",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "cabinet-concept",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        },
+        {
+          "slug": "house-explorer",
+          "title": 36,
+          "hook": 32,
+          "action": 32
+        }
+      ]
+    }
+  ],
+  "pageErrors": [],
+  "resourceFailures": [],
+  "blockedMutations": [],
+  "finishedAt": "2026-10-09T15:41:09.174Z"
+}

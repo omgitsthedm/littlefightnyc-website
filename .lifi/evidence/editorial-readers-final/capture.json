@@ -1,0 +1,56 @@
+[
+  {
+    "name": "websites-1440x1024.png",
+    "url": "/services/custom-local-websites/",
+    "title": "Custom Websites for Independent Businesses | Little Fight NYC",
+    "header": 2
+  },
+  {
+    "name": "wifi-390x844.png",
+    "url": "/answers/help/wifi/",
+    "title": "Wi-Fi keeps dropping? | Little Fight NYC",
+    "header": 2
+  },
+  {
+    "name": "vera-dialog-1100x760.png",
+    "contacts": [
+      {
+        "text": "Call",
+        "color": "rgb(255, 120, 57)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "box": [
+          307.078125,
+          46
+        ]
+      },
+      {
+        "text": "Text",
+        "color": "rgb(255, 120, 57)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "box": [
+          309.796875,
+          46
+        ]
+      },
+      {
+        "text": "Email",
+        "color": "rgb(255, 120, 57)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "box": [
+          319.9375,
+          46
+        ]
+      },
+      {
+        "text": "Write",
+        "color": "rgb(255, 120, 57)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "box": [
+          0,
+          0
+        ]
+      }
+    ],
+    "detailFamily": "software"
+  }
+]

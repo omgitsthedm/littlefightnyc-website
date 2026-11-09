@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "status": "published-and-live-verified",
+  "project": "Little Fight NYC",
+  "authorization": "alright push it live",
+  "siteId": "0907d8fe-7018-48db-a6be-1f906e4b2619",
+  "commit": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+  "artifactSha256": "ba70c27c5b91b01094819a7d42c859fd600010a3e610326636d995236fa7991d",
+  "deployId": "6ac92de00a75ee000854a287",
+  "publishedAt": "2026-10-09T18:10:40.215Z",
+  "productionUrl": "https://littlefightnyc.com",
+  "deployUrl": "https://6ac92de00a75ee000854a287--littlefightnyc.netlify.app",
+  "releaseReason": "Publish the approved master hero, 58 curated tile fronts, editorial Workbench card backs, seven review readers, refreshed portfolio imagery, and responsive interaction fixes.",
+  "method": "GitHub main continuous deployment; no manual deploy",
+  "creditEffect": {
+    "successfulProductionDeploys": 1,
+    "deployPreviews": 0,
+    "failedBuildsBeforePublication": 1,
+    "meteredCreditTotal": null,
+    "note": "Successful production release count is known; account credit usage was not queried."
+  },
+  "validation": {
+    "approvedArtifactFullQuality": "passed before authorization",
+    "committedReleaseFunctionalStages": "all passed; final clean-tree check initially found only its generated review report, which was preserved outside the release checkout",
+    "releaseReadinessAfterReportMove": "passed at36fd2e97",
+    "hostedBuildCorrection": "Removed the Pillow dependency used only for WebP dimensions; all263assets match Pillow, and the build passed with Python site packages disabled.",
+    "finalQualityFastExitCode": 0,
+    "finalReleaseReadinessExitCode": 0,
+    "finalArtifactMatchesApprovedExactly": true,
+    "qualityLiveExitCode": 0,
+    "liveBrowserSmoke": "10 checks passed; no page errors, asset failures, or blocked mutations",
+    "immutableAndCanonicalParity": "same revision and artifact hash; homepage, Websites reader, Jenna reader, and both master hero images byte-exact on both origins",
+    "wwwRedirect": "200 at https://littlefightnyc.com/",
+    "customerInquiriesSubmitted": 0,
+    "githubRepositoryGuard": {
+      "runId": 37971329123,
+      "conclusion": "success"
+    },
+    "githubCodeQL": {
+      "runId": 37971329004,
+      "conclusion": "success"
+    },
+    "lazyTileArtwork": {
+      "illustratedTiles": 51,
+      "loadedImages": 51,
+      "totalTiles": 58,
+      "brokenImages": 0,
+      "pageErrors": 0,
+      "assetFailures": 0,
+      "passed": true
+    }
+  },
+  "priorProductionDeploy": "6ac795a17f079d0008cd9c5d",
+  "failedAttempt": {
+    "deployId": "6ac92ce0f6bb2a00080a4a90",
+    "commit": "36fd2e97da9a49127d9dbe7cd1668985d30e870d",
+    "published": false,
+    "reason": "Hosted Python environment lacked PIL; fixed in361aa534."
+  },
+  "releaseCheckout": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-release-20261009",
+  "canonicalDirtyWork": "preserved without checkout, reset, stash, or overwrite"
+}

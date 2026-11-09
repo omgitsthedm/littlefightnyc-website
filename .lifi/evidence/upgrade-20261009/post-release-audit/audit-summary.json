@@ -1,0 +1,190 @@
+{
+  "release": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+  "mode": "read-only live audit, browser response override experiment only; source unchanged",
+  "performance": {
+    "type": "Lighthouse lab measurements, not field Core Web Vitals",
+    "runs": [
+      {
+        "run": "home-mobile-1",
+        "url": "https://littlefightnyc.com/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 94,
+          "accessibility": 100,
+          "best-practices": 96,
+          "seo": 100
+        },
+        "lcpMs": 2151.922,
+        "tbtMs": 187,
+        "cls": 0
+      },
+      {
+        "run": "home-mobile-2",
+        "url": "https://littlefightnyc.com/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 96,
+          "seo": 100
+        },
+        "lcpMs": 2052.43,
+        "tbtMs": 116,
+        "cls": 0
+      },
+      {
+        "run": "home-mobile-3",
+        "url": "https://littlefightnyc.com/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 95,
+          "accessibility": 100,
+          "best-practices": 96,
+          "seo": 100
+        },
+        "lcpMs": 1937.158,
+        "tbtMs": 150.5,
+        "cls": 0
+      },
+      {
+        "run": "home-desktop",
+        "url": "https://littlefightnyc.com/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 97,
+          "accessibility": 100,
+          "best-practices": 96,
+          "seo": 100
+        },
+        "lcpMs": 1196.2604999999999,
+        "tbtMs": 91,
+        "cls": 0
+      },
+      {
+        "run": "service-mobile",
+        "url": "https://littlefightnyc.com/services/custom-local-websites/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 91,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lcpMs": 3034.4315,
+        "tbtMs": 0,
+        "cls": 0
+      },
+      {
+        "run": "intake-mobile",
+        "url": "https://littlefightnyc.com/tech-audit/",
+        "lighthouseVersion": "13.5.0",
+        "scores": {
+          "performance": 96,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "lcpMs": 2476.5675,
+        "tbtMs": 3.5,
+        "cls": 0
+      }
+    ],
+    "homeMobileMedianScore": 95,
+    "homeMobileMedianLcpMs": 2052.43,
+    "homeMobileMedianTbtMs": 150.5
+  },
+  "imageSizingExperiment": {
+    "viewport": {
+      "width": 393,
+      "height": 852,
+      "dpr": 3
+    },
+    "method": "isolated Chrome response override: auto sizes on lazy images with current srcset; existing candidates only",
+    "beforeImageBytes": 1544059,
+    "afterImageBytes": 1219009,
+    "reductionPercent": 21.1,
+    "productionChanged": false,
+    "meaning": "Feasibility measurement; further Safari and sharpness validation needed before implementation"
+  },
+  "findings": [
+    {
+      "priority": 1,
+      "id": "hero-resolution",
+      "evidence": "app/scripts/sculpture_tiles.py:306; .lifi/design-source/sculpture/hero-reference.json",
+      "current": "Desktop762x337 rendered1376CSSpx across, DPR2 demand2752pixels; mobile288x194 at393DPR3 demand1119pixels",
+      "recommendation": "Reconstruct original approved composition at >=2752px across (target3200), mobile >=1230px, responsive source candidates, preserve hot zones and card flip; do not simply upscale screenshot"
+    },
+    {
+      "priority": 2,
+      "id": "tile-responsive-sizes",
+      "evidence": "app/scripts/sculpture_tiles.py:167-182; performance/size-experiment.json",
+      "current": "Source sizes overstate several rendered card widths",
+      "recommendation": "Accurate responsive sizes and small candidates, validated at target DPR; measured21.1percent fewer image bytes with existing candidates"
+    },
+    {
+      "priority": 2,
+      "id": "reader-images-css",
+      "evidence": "app/preview-content/website-body.html:9-10; app/scripts/build-tile-preview.py:732-737; performance/service-mobile.report.json",
+      "current": "Selected-work1600px images eager before reaching their section; one combined20file stylesheet, home initialcoverage85percent unused accordingtoLighthouse",
+      "recommendation": "Responsive/lazy noncritical reader images; split initial homepage styles from reader/Lab styles; do not delete CSS based only on initial coverage"
+    },
+    {
+      "priority": 2,
+      "id": "tile-accessible-names",
+      "evidence": "browser/live-browser-audit.json; app/preview-ui/vendor/mosaic-layout.js:902-904",
+      "current": "Printer and security existing aria-label text replaces visible tile titles",
+      "recommendation": "Accessible name starts with exact visible title, supporting long question may be description"
+    },
+    {
+      "priority": 3,
+      "id": "mosaic-main-thread",
+      "evidence": "app/preview-ui/vendor/mosaic-layout.js:529-556,923-945; performance/home-mobile-3.report.json",
+      "current": "Repeated layout writes and geometry reads; two approximately150ms tasks in throttled mobile lab run",
+      "recommendation": "Batch reads/writes and avoid redundant full packing; preserve text zoom, source order, tile layout, motion"
+    },
+    {
+      "priority": 3,
+      "id": "share-metadata",
+      "evidence": "app/public/examples/lab/suites/brand-campaign/index.html:6-13 and four other suite heads",
+      "current": "8 standalone public Lab concept routes lack canonical tags; 5 indexable Lab suite pages lack explicit OG/Twitter images; homepage and Websites service duplicate title.",
+      "recommendation": "Add canonicals and explicit intended indexing policy to legacy Lab concepts, complete branded suite share cards, and distinguish homepage title from service page; no ranking-loss claim."
+    },
+    {
+      "priority": 3,
+      "id": "proof-and-next-steps",
+      "evidence": "app/src/data/site-cases.ts:29-47; app/preview-content/website-body.html",
+      "current": "Service process/pricing/scope explanation exists; outcome-proof schema requires client approval",
+      "recommendation": "Bring brief next-step sequence closer to inquiry decision; add verified/client-approved outcomes to existing case cards when evidence exists"
+    },
+    {
+      "priority": 2,
+      "id": "retina-release-check",
+      "evidence": "app/scripts/verify-hero-reference.cjs:15-21",
+      "current": "Tests verify master identity and interaction but not sufficient source pixel density",
+      "recommendation": "Check actual selected file resolution against object-fit painted dimensions andDPR at phone/desktop/5K/6KCSS sizes; repeat mobile labmedian gate"
+    }
+  ],
+  "coverage": {
+    "declaredRoutesFetched": 421,
+    "http200": 421,
+    "sitemapRoutesReviewed": 153,
+    "sitemapOrphans": 0,
+    "browserRepresentativeSurfaces": [
+      "homepage",
+      "answer reader",
+      "case study",
+      "journal",
+      "contact",
+      "intake",
+      "Pool Room",
+      "VERA"
+    ],
+    "browserChecks": 50,
+    "axeSurfaces": 4,
+    "sourceEdited": false,
+    "liveWrites": false,
+    "formsSubmitted": false,
+    "limitations": "Read-only anonymous public audit; no form submission, provider inbox delivery, or private analytics review. Browser interactions sampled across route classes, not all421pages."
+  },
+  "heroSourcesAvailable": "1800px device frames,2880px client captures,1600px tugboat available; exact high-res final composite absent; controlled reconstruction needs visual comparison to approved master."
+}

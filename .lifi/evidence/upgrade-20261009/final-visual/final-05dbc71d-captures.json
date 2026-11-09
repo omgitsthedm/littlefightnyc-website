@@ -1,0 +1,35 @@
+{
+  "artifact": "05dbc71d599bc8df6deec857b3af9cd76271ce06b28c0c297924df95e6427bed",
+  "captures": [
+    {
+      "name": "homepage-1440x1024-final-05dbc71d.png",
+      "url": "/",
+      "status": 200,
+      "title": "Custom Websites for Independent Businesses | Little Fight NYC",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      }
+    },
+    {
+      "name": "homepage-393x852-final-05dbc71d.png",
+      "url": "/",
+      "status": 200,
+      "title": "Custom Websites for Independent Businesses | Little Fight NYC",
+      "viewport": {
+        "width": 393,
+        "height": 852
+      }
+    },
+    {
+      "name": "websites-1440x1024-final-05dbc71d.png",
+      "url": "/services/custom-local-websites/",
+      "status": 200,
+      "title": "Custom Websites for Independent Businesses | Little Fight NYC",
+      "viewport": {
+        "width": 1440,
+        "height": 1024
+      }
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "scope": "Read-only live hero density and constituent-asset audit",
+  "liveMeasurement": {
+    "url": "https://littlefightnyc.com/",
+    "desktopAsset": "/assets/sculpture/hero-reference-desktop.webp",
+    "desktopNaturalPixels": [762, 337],
+    "renderedCssPixels": [1376, 608.5],
+    "dpr2RequiredPixels": [2752, 1217],
+    "dpr2LinearUpscale": 3.612,
+    "mobileAsset": "/assets/sculpture/hero-reference-mobile.webp",
+    "mobileNaturalPixels": [288, 194],
+    "phone393Dpr3RequiredWidth": 1119,
+    "phone393Dpr3Coverage": 0.257
+  },
+  "usableConstituents": [
+    {
+      "file": ".lifi/design-source/sculpture/website-devices/desktop-frame.png",
+      "pixels": [1800, 1125],
+      "role": "desktop device housing and aperture; usable for the main Chromatic device"
+    },
+    {
+      "file": ".lifi/design-source/sculpture/website-devices/duo-frame.png",
+      "pixels": [1800, 1350],
+      "role": "folded Rachel device housing and aperture"
+    },
+    {
+      "file": "app/public/assets/sculpture/boat.webp",
+      "pixels": [1600, 1067],
+      "role": "exact tactile boat object"
+    },
+    {
+      "file": "app/public/assets/sculpture/storefront.webp",
+      "pixels": [899, 1100],
+      "role": "exact storefront object; adequate only near its existing visual scale"
+    },
+    {
+      "file": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/asset-work/hero-physics/hero-browser-slim.png",
+      "pixels": [1395, 895],
+      "role": "precomposed Chromatic browser from the prior fidelity worktree"
+    },
+    {
+      "file": "/Users/davidmarsh/Code/LiFi NYC/Little Fight NYC Business/Website/lfnyc-master-fidelity-20261007/.lifi/asset-work/hero-physics/hero-duo-rachel.png",
+      "pixels": [1298, 824],
+      "role": "precomposed Rachel Duo from the prior fidelity worktree"
+    },
+    {
+      "file": "app/public/assets/cases/2026-09-29/case-chromatic-painting-design-desktop-1440.webp",
+      "pixels": [2880, 2000],
+      "role": "Chromatic screen content"
+    },
+    {
+      "file": "app/public/assets/cases/2026-09-29/case-hair-by-rachel-charles-desktop-1440.webp",
+      "pixels": [2880, 2000],
+      "role": "Rachel screen content"
+    }
+  ],
+  "limitation": "The owner-approved master is a 1672x941 raster. Its current extracted hero crop is the only documented exact final composition. The original .lifi/asset-work source files named for the tugboat and stage are absent from this checkout, and the verified source PNG paths named by screen-composites.json are absent from the Desktop. A higher-density exact-composition result therefore requires a controlled reconstruction from the listed parts; bitmap upscaling is not a quality fix."
+}

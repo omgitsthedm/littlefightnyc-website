@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "origin": "https://littlefightnyc.com",
+      "release": {
+        "schema_version": 1,
+        "project": "Little Fight NYC",
+        "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+        "branch": "main",
+        "context": "production",
+        "built_at": "2026-10-09T18:10:06.327Z",
+        "source_dirty": false
+      },
+      "artifactSha256": "ba70c27c5b91b01094819a7d42c859fd600010a3e610326636d995236fa7991d",
+      "fiveFilesByteExact": true
+    },
+    {
+      "origin": "https://6ac92de00a75ee000854a287--littlefightnyc.netlify.app",
+      "release": {
+        "schema_version": 1,
+        "project": "Little Fight NYC",
+        "revision": "361aa534819be1ea0f6306c4ff0080d1e7e70897",
+        "branch": "main",
+        "context": "production",
+        "built_at": "2026-10-09T18:10:06.327Z",
+        "source_dirty": false
+      },
+      "artifactSha256": "ba70c27c5b91b01094819a7d42c859fd600010a3e610326636d995236fa7991d",
+      "fiveFilesByteExact": true
+    }
+  ],
+  "www": {
+    "status": 200,
+    "finalUrl": "https://littlefightnyc.com/"
+  }
+}
