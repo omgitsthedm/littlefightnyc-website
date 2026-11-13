@@ -131,7 +131,7 @@ async function run() {
       await page.locator('#fit-name').fill('Original local draft');
       await page.locator('.workbench-page > .workbench-chrome .workbench-tab[data-family="web"]').click();
       await page.locator('#detail .website-service-body').waitFor();
-      assert.ok(await page.getByRole('dialog', { name: 'A website that feels like your business.', exact: true }).isVisible());
+      assert.ok(await page.getByRole('dialog', { name: 'Custom websites. Built around your business.', exact: true }).isVisible());
       await page.locator('#detail-body a[href*="/tech-audit/?intent=website"]').first().click();
       await page.locator('#detail .lf-audit__form').waitFor();
       const name = page.locator('#detail').getByLabel('Your name', { exact: true });
