@@ -1,6 +1,93 @@
 # Little Fight NYC Search Acquisition Runbook
 
-Last updated: 2026-10-20
+Last updated: 2026-11-13
+
+## Current acquisition focus — November 13, 2026
+
+Improve the four existing buyer pages before adding more content:
+
+| Page | Job | Evidence and next step |
+| --- | --- | --- |
+| `/services/custom-local-websites/` | Explain the website offer quickly | Relevant real projects, ownership, scope, and one website inquiry route |
+| `/markets/arizona/phoenix/` | Connect Phoenix businesses to applicable work | Hair By Rachel and Chromatic; service choice, booking and quote requests |
+| `/markets/marthas-vineyard/` | Explain seasonal and year-round website needs | Honest remote delivery; Arizona examples clearly identified, no invented island clients or office |
+| `/markets/nyc/` | Explain the NYC small-business website offer | Actual work and clear project scope; no unsupported traffic or revenue claims |
+
+The local November 13 candidate shortens the offer and market introductions,
+clarifies two service-page decision sections, adds a contextual inquiry link,
+and updates the service share card. Existing URLs, profile identities, case
+studies and form behavior are retained. This is a local candidate, not a release.
+
+### Baseline and diagnosis
+
+Authenticated Search Console, Web, selected 28 days, October 14–November 10:
+3 clicks, 603 impressions, 0.5% CTR, average position 13.9. The website service
+page had 0 clicks / 3 impressions; NYC had 0 / 36. Phoenix and Vineyard had no
+separate row in the observed page table. URL Inspection showed the main website
+service, Phoenix and Vineyard indexed. Google AI's separate report showed 24
+impressions; it is not a ChatGPT attribution report.
+
+This supports a weak-discovery diagnosis. It does not prove why individual
+buyers did not inquire or that copy changes alone will produce more leads.
+Do not repeat indexing requests for already-indexed pages.
+
+GA4 production-host reports for the matched window timed out in this pass.
+A native GA4 home view loaded, but its date/host scope did not match; do not
+substitute that view or call unavailable inquiry coverage zero. The aggregate
+private-ledger summary also has no matched window and is not a campaign result.
+
+Detailed evidence and separate client reviews:
+`agency-ops/receipts/search-audit/2026-11-13/`. Fleet checks covered 260 client
+sitemap/home URLs plus 231 Little Fight URLs; canonical aliases may duplicate
+content. Nine client Search Console properties were readable. Grand Funding's
+property was unverified/inaccessible and remains held.
+
+### Relevant proof and distribution
+
+The competitor review found clear offers, named projects and industry context
+across the three markets. These are observable presentation patterns, not proof
+that competitors get more qualified traffic or revenue. Source pages:
+
+- Phoenix: [Ivio work](https://ivioagency.com/work/),
+  [Garrison web design](https://www.garrisonagency.com/web-design),
+  [Rytell portfolio](https://rytelldigitalstudio.com/portfolio).
+- Vineyard: [MVOL web design](https://mvol.com/web-design/),
+  [MVY Web](https://mvyweb.com/),
+  [Vesna's dated spring campaign](https://vesnadesignstudio.com/spring2026).
+  Older campaign pages are presentation examples, not evidence of current offers.
+- NYC: [Squeaky cases](https://www.squeaky.com/case-studies/),
+  [Zay's NYC page](https://www.zaywebsolutions.com/locations/ny/new-york),
+  [Web Design by Robert](https://www.webdesignbyrobert.com/).
+
+Use `CLIENT-PROOF-COLLECTION.md` for client-approved examples. Prioritize a
+specific before/after customer task, a permitted screenshot and an attributable
+quote. Add outcome numbers only when the client/source verifies them. The
+Vineyard page especially needs a genuine island relationship or project before
+it can claim local proof.
+
+Prepare relevant partner or client shares for David's review when there is an
+actual relationship and audience. A useful share describes the customer's task
+and links to the matching case study. Verify directory eligibility and costs
+before proposing it. Do not buy bulk press releases or links, publish fabricated
+locations, or send outreach from this runbook without scoped approval.
+
+### Weekly scorecard — manual review
+
+During an authorized weekly review, record the date range and production hosts:
+
+1. Search Console: branded and relevant non-branded queries, clicks, impressions,
+   CTR and priority-page indexing. Keep Google AI data separate.
+2. GA4: consented landing sessions by source, case-study visits and contact
+   intent. Contact clicks and Square handoffs are not received inquiries.
+3. Private inquiry records: accepted requests, relevant serious inquiries,
+   conversations, proposals and paid work, deduplicated and separately counted.
+4. Note changes published during the window and attribution/access gaps.
+
+Use unknown for missing coverage. A serious website inquiry needs a real
+business/project, a usable reply route and intent to discuss help. Budget and
+audience size remain unknown when not provided; do not invent qualification
+thresholds. Compare equivalent windows; small counts are directional, not a
+causal experiment. No new recurring automation is enabled by this document.
 
 ## Current code readiness
 
@@ -78,7 +165,7 @@ In the verified profile:
 8. Ask real clients for reviews without incentives. Reply to every review with specific, private-data-safe language.
 9. Check profile performance monthly: website clicks, calls, direction requests if applicable, and the search terms report. Record raw counts and date ranges.
 
-## Current acquisition focus — 2026-10-05
+## Historical acquisition focus — 2026-10-05
 
 Prioritize three existing buyer paths with actual published work:
 

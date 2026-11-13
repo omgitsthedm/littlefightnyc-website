@@ -151,7 +151,7 @@ async function inspectWebsiteBody(page, label) {
   const reader = page.locator('.lf-reader[data-reader-template="website-service"]').filter({ has: body }).last();
   const hero = reader.locator('.rw-scene--hero[data-rw-scene="opening"]');
   assert.equal(await hero.count(), 1, label + ': one Website opening scene');
-  assert.equal((await hero.locator('#detail-title').innerText()).replace(/\s+/g, ' ').trim(), 'A website that feels like your business.', label + ': Website opening follows the approved master');
+  assert.equal((await hero.locator('#detail-title').innerText()).replace(/\s+/g, ' ').trim(), 'Custom websites. Built around your business.', label + ': Website opening follows the reviewed acquisition copy');
   assert.equal(await hero.locator('.rw-kinetic-phrase').count(), 0, label + ': reference headline remains still and readable');
 
   const benefitLinks = hero.locator('.rw-benefits a');

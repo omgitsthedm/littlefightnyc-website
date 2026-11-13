@@ -174,7 +174,7 @@ const server = createServer(async (req,res) => {
     const source = path.resolve(app, 'dist', '.'+pathname);
     if (!source.startsWith(path.join(app,'dist')+path.sep)) throw new Error('Invalid path');
     const body = await readFile(source);
-    const mime = {'.woff2':'font/woff2','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.css':'text/css'}[path.extname(source)] || 'text/html';
+    const mime = {'.woff2':'font/woff2','.svg':'image/svg+xml','.png':'image/png','.webp':'image/webp','.avif':'image/avif','.jpg':'image/jpeg','.css':'text/css'}[path.extname(source)] || 'text/html';
     res.writeHead(200, {'Content-Type':mime});res.end(body);
   } catch { res.writeHead(404);res.end(); }
 });
@@ -184,7 +184,12 @@ const browser = await chromium.launch({ channel:'chrome', headless:true });
 const context = await browser.newContext({ viewport:{width:1200,height:630}, deviceScaleFactor:2, reducedMotion:'reduce' });
 const page = await context.newPage();
 const broken = [];
-page.on('requestfailed', request => broken.push(request.url()));
+page.on('requestfailed', request => {
+  const reason = request.failure()?.errorText || 'unknown error';
+  // Replacing the source homepage with a card cancels its lazy image requests.
+  // Card images still must decode below; genuine network failures remain fatal.
+  if (reason !== 'net::ERR_ABORTED') broken.push(`${request.url()} (${reason})`);
+});
 await page.goto(local+'/__social-card.html');
 await page.setContent(homeHTML.replace(/<script\b[\s\S]*?<\/script>/gi,'').replace('<head>', `<head><base href="${local}/">`));
 await page.evaluate(() => document.fonts.ready);
